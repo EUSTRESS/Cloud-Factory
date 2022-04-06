@@ -4,19 +4,19 @@
 
 마음이 아픈가요? 지치고 힘이 드나요? Cloud Factory(클라우드 팩토리)에 방문하세요!  
 
-Cloud Factory는 손님의 이야기를 듣고, 여러 가지 재료들을 조합해 **"개인 맞춤형 치유 구름"**을 만들어드립니다. 
+Cloud Factory는 손님의 이야기를 듣고, 여러 가지 재료들을 조합해 <strong>"개인 맞춤형 치유 구름"</strong>을 만들어드립니다. 
 
-날씨는 기분에 영향을 미치는 요소 중 하나입니다. 나에게 꼭 맞는 구름이 만들어 주는 **맞춤형 날씨 **속에서 내면을 깊숙이 들여다봐요. 그 어떤 문제 도 이겨낼 수 있을 거예요
+날씨는 기분에 영향을 미치는 요소 중 하나입니다. 나에게 꼭 맞는 구름이 만들어 주는 <strong>맞춤형 날씨</strong>속에서 내면을 깊숙이 들여다봐요. 그 어떤 문제 도 이겨낼 수 있을 거예요
 
 
 
 ## 📄 개발 정보
 
-        - 장르: 힐링 / 스토리 / 시뮬레이션
-        - 타겟층 : 귀여운 그래픽의 힐링 게임을 좋아하는 PC 게이머
-        - 개발 환경 : 유니티
-        - 플랫폼 : PC
-        - 시점 : 2D 사이드뷰
+- 장르: 힐링 / 스토리 / 시뮬레이션
+- 타겟층 : 귀여운 그래픽의 힐링 게임을 좋아하는 PC 게이머
+- 개발 환경 : 유니티
+- 플랫폼 : PC
+- 시점 : 2D 사이드뷰
 
 
 
@@ -48,7 +48,24 @@ Cloud Factory는 손님의 이야기를 듣고, 여러 가지 재료들을 조�
 
 
 ## 💖 CONTRIBUTORS 💖
-
+<table>
+    <tr height="160px">
+        <td align="center" width="150px">
+            <a href="https://github.com/happy-jinsu"><img height="120px" width="120px" src="https://avatars.githubusercontent.com/u/68191793?v=4"/></a>
+            <br />
+            <strong>수진</strong>
+        </td>
+    </tr>
+    <tr height="50px">
+        <td align="center">
+            팀장, 기획
+            <br />
+            <a href="https://github.com/happy-jinsu">:octocat: GitHub</a>
+            <br />
+        </td>
+    </tr>
+</table>
+ <br />
 <table>
     <tr height="160px">
         <td align="center" width="150px">
@@ -74,25 +91,25 @@ Cloud Factory는 손님의 이야기를 듣고, 여러 가지 재료들을 조�
     </tr>
     <tr height="50px">
         <td align="center">
-            <strong>리드 프로그래머, 소프트 팀장</strong>
+            리드 프로그래머, 소프트 팀장
             <br />
             <a href="https://github.com/ChoiHyunSan">:octocat: GitHub</a>
             <br />
         </td>
         <td align="center">
-            <strong>부팀장, 서브 프로그래머</strong>
+            부팀장, 서브 프로그래머
             <br />
             <a href="https://github.com/limjh1">:octocat: GitHub</a>
             <br />
         </td>
         <td align="center">
-            <strong>서브 프로그래머</strong>
+            서브 프로그래머
             <br />
             <a href="https://github.com/gustlr3294">:octocat: GitHub</a>
             <br />
          </td>
         <td align="center">
-            <strong>서브 프로그래머, 서기</strong>
+            서브 프로그래머, 서기
             <br />
             <a href="https://github.com/Yeram522">:octocat: GitHub</a>
             <br />

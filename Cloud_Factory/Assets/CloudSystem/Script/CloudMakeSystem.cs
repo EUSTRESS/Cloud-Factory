@@ -100,10 +100,23 @@ public class CloudMakeSystem : MonoBehaviour
 
     private void Del_ReadCSV(string name)
     {
+        //구름 조합법 나오면 그때 스크립트 작성.
         Debug.Log("조합재료를 확인합니다.");
     }
     private void Del_CreateCloud(string name)
     {
+        if (total < 5)
+        {
+            Debug.Log("재료수가 부족합니다.");
+            return;
+        }//5개 안채우면 제작 안됨
+
+        //UI 초기화
+        for(int i = 0; i < total;i++)
+        {
+            UI_slct_mtrl[i].GetComponent<SpriteRenderer>().sprite = default_sprite;
+        }
+        total = 0;
         Debug.Log("구름이 만들어졌습니다.");
     }
 

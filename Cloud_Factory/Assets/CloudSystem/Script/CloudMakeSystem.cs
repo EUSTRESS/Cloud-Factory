@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CloudSystem
 {
@@ -33,7 +34,8 @@ public class CloudMakeSystem : MonoBehaviour
     private int UI_mtrl_count; //선택할 수 있는 재료 개수
     [SerializeField]
     private List<GameObject> UI_slct_mtrl; //UI_selected_material
-
+    [SerializeField]
+    private Text UI_btn_txt;
 
     //Debug
     private List<string> L_mtrls;// 나중에 지워도 될듯? 약간 디버깅 용임..ㅎ
@@ -111,14 +113,56 @@ public class CloudMakeSystem : MonoBehaviour
             return;
         }//5개 안채우면 제작 안됨
 
+        float time = 5f;
+        //코루틴
+        UI_btn_txt.text = "만드는 중";
+        StartCoroutine(isMaking(time));
+        
+    }
+
+ 
+
+    IEnumerator isMaking(float time)
+    {
+        this.transform.Find("Button").GetComponent<Button>().enabled = false;
+
+        //색 어둡게
+        for (int i = 0; i < total; i++)
+        {
+            UI_slct_mtrl[i].GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f, 1f);
+        }
+
+        yield return new WaitForSeconds(time);
+
+        this.transform.Find("Button").GetComponent<Button>().enabled = true;
+
+        yield return new WaitForSeconds(1);
+        //색 밝게
+        for (int i = 0; i < total; i++)
+        {
+            UI_slct_mtrl[i].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+        }
+
         //UI 초기화
-        for(int i = 0; i < total;i++)
+        init_UI();
+
+        total = 0;
+        UI_btn_txt.text = "제작하기";
+
+        Debug.Log("구름이 만들어졌습니다.");
+
+        yield break;
+    }
+
+
+    private void init_UI()
+    {
+        for (int i = 0; i < total; i++)
         {
             UI_slct_mtrl[i].GetComponent<SpriteRenderer>().sprite = default_sprite;
         }
-        total = 0;
-        Debug.Log("구름이 만들어졌습니다.");
     }
+
 
     private void init()
     {
@@ -127,7 +171,9 @@ public class CloudMakeSystem : MonoBehaviour
         UI_mtrl_count = T_mtrl.childCount;
         UI_slct_mtrl = new List<GameObject>(); //구름제작 UI창의 선택된 재료.
         L_mtrls = new List<string>(); //구름제작 UI창의 선택된 재료.
-        
+        UI_btn_txt = this.transform.Find("Button").GetComponentInChildren<Text>();
+        UI_btn_txt.text = "제작하기";
+
         for (int i = 0; i < UI_mtrl_count; i++)
         {
             UI_slct_mtrl.Add(T_mtrl.GetChild(i).gameObject);

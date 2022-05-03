@@ -35,7 +35,14 @@ public class DemoFunc : MonoBehaviour
         Cloudmakesystem.E_createCloud(EventSystem.current.currentSelectedGameObject.name);
     }
 
+    public void Btn_GoCloudFac()
+    {
 
-   
+    }
+
+    public void Btn_GoCloudInv()
+    {
+
+    }
 
 }

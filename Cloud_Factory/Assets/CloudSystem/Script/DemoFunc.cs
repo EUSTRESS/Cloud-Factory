@@ -18,7 +18,6 @@ public class DemoFunc : MonoBehaviour
         Cloudmakesystem = GameObject.FindWithTag("CloudSystem").GetComponent<CloudMakeSystem>();
     }
 
-    
     public void clicked() //matarial in inventory selected
     {   
         Cloudmakesystem.E_Selected(EventSystem.current.currentSelectedGameObject.name);

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class YardHandleSystem : MonoBehaviour
 {
-    public IngredientData[] ingredients;
+    public IngredientList[] Lrarity;
+
+    private bool isAble;
     struct Yard //마당 구조체 정의
     {
         private GameObject self;
@@ -64,17 +67,55 @@ public class YardHandleSystem : MonoBehaviour
         }
     };
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        for (int i = 0; i < ingredients.Length; i++)
-        {
-            ingredients[i].init();
-        }
+        Lrarity = new IngredientList[3]; //희귀도 1,2,3 ... 4(는 추후 추가)
+
+        for (int i = 0; i < Lrarity.Length; i++)
+            Lrarity[i].init();
+ 
     }
 
-    // Update is called once per frame
-    void Update()
+    private List<IngredientData> getRndGatheredResult() //랜덤으로 채집한 리스트 3개 리턴.
     {
-        
+        List<IngredientData> result = new List<IngredientData>();
+        //희귀도 랜덤, 그중에서도 종류 랜덤.
+        int cnt = 0;
+        while(true)
+        {
+            if (cnt >= 3) break;
+            IngredientData tmp = Lrarity[getRndRarityType(1)].getRndIngredient();
+            if (result.Contains(tmp)) continue; //중복방지
+            cnt++;
+            result.Add(tmp);
+        }
+
+        return result;
+    }
+
+   
+   private int getRndRarityType(int _invenLv) //매개변수: 인벤토리 lv, 인벤토리 lv에 따라서 어떤 희귀도의 재료가 나올지 return
+    {
+        int randomValue= Random.Range(0,100);
+        int rarity = 0;
+        switch(_invenLv)
+        {
+            case 1: //100%의 확률로 rarity = 1;
+                rarity = 1;
+                break;
+            case 2:
+                if (randomValue < 80) rarity = 1;
+                else rarity = 2;
+                break;
+            case 3:
+                if (randomValue < 60) rarity = 1;
+                else if (60 <= randomValue && randomValue < 90) rarity = 2;
+                else rarity = 3;
+                break;
+            default:
+                break;
+        }
+
+        return rarity;
     }
 }

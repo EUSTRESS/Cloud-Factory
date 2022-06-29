@@ -7,4 +7,15 @@ using UnityEngine;
 public class IngredientList : ScriptableObject
 {
     public List<IngredientData> itemList;
+
+    public void init()
+    {
+        for (int i = 0; i < itemList.Count; i++)
+            itemList[i].init();
+    }
+    public IngredientData getRndIngredient()
+    {
+        int randomValue = Random.Range(0, itemList.Count);
+        return itemList[randomValue];
+    }
 }

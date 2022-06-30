@@ -29,7 +29,7 @@ namespace CloudSystem
 
         public void add(IngredientList mtrlDATA,int total,string name)
         {
-            IngredientData data = mtrlDATA.itemList.Find(item => name == item.ingredientName);
+            IngredientData data = mtrlDATA.mItemList.Find(item => name == item.ingredientName);
             UI_slct_mtrl[total - 1].GetComponent<SpriteRenderer>().sprite = data.image;
         }
 

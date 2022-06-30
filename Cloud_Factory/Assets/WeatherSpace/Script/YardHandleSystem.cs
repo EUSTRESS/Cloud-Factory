@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class YardHandleSystem : MonoBehaviour
 {
-    public IngredientList[] Lrarity;
+    public IngredientList[] mRarityList;
 
-    private bool isAble;
+    private bool mIsAble; 
     struct Yard //마당 구조체 정의
     {
         private GameObject self;
@@ -67,30 +67,47 @@ public class YardHandleSystem : MonoBehaviour
         }
     };
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        Lrarity = new IngredientList[3]; //희귀도 1,2,3 ... 4(는 추후 추가)
+      //  mRarityList = new IngredientList[3]; //희귀도 1,2,3 ... 4(는 추후 추가)
 
-        for (int i = 0; i < Lrarity.Length; i++)
-            Lrarity[i].init();
+        for (int i = 0; i < mRarityList.Length; i++)
+            mRarityList[i].init();
  
     }
 
-    private List<IngredientData> getRndGatheredResult() //랜덤으로 채집한 리스트 3개 리턴.
+    
+    public void  bGathered()
     {
-        List<IngredientData> result = new List<IngredientData>();
-        //희귀도 랜덤, 그중에서도 종류 랜덤.
-        int cnt = 0;
-        while(true)
+        Dictionary<IngredientData, int> results = getRndGatheredResult();
+        Debug.Log("[System]총" + results.Count + "가 채집되었습니다!");
+        foreach(KeyValuePair<IngredientData, int> result in results)
         {
-            if (cnt >= 3) break;
-            IngredientData tmp = Lrarity[getRndRarityType(1)].getRndIngredient();
-            if (result.Contains(tmp)) continue; //중복방지
+            Debug.Log("[System]채집 성공| 종류:" + result.Key + "|개수: "+result.Value);
+            
+        }
+    }
+
+    private Dictionary<IngredientData, int> getRndGatheredResult() //랜덤으로 채집한 리스트 리턴.
+    {
+        //Key: 재료 종류  Value: 획득할 재료 개수
+        Dictionary<IngredientData, int> results= new Dictionary<IngredientData, int>();
+         
+        //희귀도 랜덤, 그중에서도 종류 랜덤.
+        //Random: 희귀도, 희귀도 내 종류, 재료 수, 채집할 재료 종류 수
+        int cnt = 0;
+      //  int total = Random.Range(3, 6); 
+        int total = 3; 
+        while (cnt <= total)
+        {
+            IngredientData tmp = mRarityList[getRndRarityType(1)].getRndIngredient();
+            Debug.Log(tmp);
+            if (results.ContainsKey(tmp)) continue; //중복방지
             cnt++;
-            result.Add(tmp);
+            results.Add(tmp, Random.Range(1, 6));
         }
 
-        return result;
+        return results;
     }
 
    

@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 
 public class YardHandleSystem : MonoBehaviour
 {
     public IngredientList[] mRarityList;
+    public Sprite[] mImages;
 
-    private bool mIsAble; 
+    private Dictionary<GameObject, int> mYards;
+
     struct Yard //마당 구조체 정의
     {
         private GameObject self;
@@ -69,42 +72,50 @@ public class YardHandleSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      //  mRarityList = new IngredientList[3]; //희귀도 1,2,3 ... 4(는 추후 추가)
+        mYards = new Dictionary<GameObject, int>();
 
         for (int i = 0; i < mRarityList.Length; i++)
             mRarityList[i].init();
- 
+
+        for (int i = 0; i < transform.childCount; i++)      
+            mYards.Add(transform.GetChild(i).gameObject,2); //Yard 그룹에 속한 yard들을 리스트에 넣어서 관리.
+            //이 딕셔너리의 int는 채집 횟수 0이 되면 채집 불가능하다!
     }
 
     
-    public void  bGathered()
+    public void  bGathered() //클릭함수
     {
+        GameObject iClickedYard = EventSystem.current.currentSelectedGameObject;
+        if (mYards[iClickedYard] == 0) return;
+
         Dictionary<IngredientData, int> results = getRndGatheredResult();
         Debug.Log("[System]총" + results.Count + "가 채집되었습니다!");
         foreach(KeyValuePair<IngredientData, int> result in results)
         {
-            Debug.Log("[System]채집 성공| 종류:" + result.Key + "|개수: "+result.Value);
-            
+            Debug.Log("[System]채집 성공| 종류:" + result.Key + "|개수: "+result.Value);           
         }
+
+        mYards[iClickedYard]--;
+        if (mYards[iClickedYard] == 0) iClickedYard.GetComponent<Image>().sprite = mImages[0];
     }
 
     private Dictionary<IngredientData, int> getRndGatheredResult() //랜덤으로 채집한 리스트 리턴.
     {
+        int test_invenLevel = 2;
         //Key: 재료 종류  Value: 획득할 재료 개수
         Dictionary<IngredientData, int> results= new Dictionary<IngredientData, int>();
-         
+
         //희귀도 랜덤, 그중에서도 종류 랜덤.
         //Random: 희귀도, 희귀도 내 종류, 재료 수, 채집할 재료 종류 수
-        int cnt = 0;
-      //  int total = Random.Range(3, 6); 
-        int total = 3; 
-        while (cnt <= total)
+        int total = Random.Range(3, 6);
+        Debug.Log("총 채집할 종류:" + total);
+        while (results.Count < total)
         {
-            IngredientData tmp = mRarityList[getRndRarityType(1)].getRndIngredient();
+            IngredientData tmp = mRarityList[getRndRarityType(test_invenLevel) -1].getRndIngredient();
             Debug.Log(tmp);
             if (results.ContainsKey(tmp)) continue; //중복방지
-            cnt++;
             results.Add(tmp, Random.Range(1, 6));
+            Debug.Log("추가: " + tmp);
         }
 
         return results;
@@ -114,7 +125,8 @@ public class YardHandleSystem : MonoBehaviour
    private int getRndRarityType(int _invenLv) //매개변수: 인벤토리 lv, 인벤토리 lv에 따라서 어떤 희귀도의 재료가 나올지 return
     {
         int randomValue= Random.Range(0,100);
-        int rarity = 0;
+       
+        int rarity = 1;
         switch(_invenLv)
         {
             case 1: //100%의 확률로 rarity = 1;
@@ -132,7 +144,7 @@ public class YardHandleSystem : MonoBehaviour
             default:
                 break;
         }
-
+        Debug.Log("rarity" + rarity);
         return rarity;
     }
 }

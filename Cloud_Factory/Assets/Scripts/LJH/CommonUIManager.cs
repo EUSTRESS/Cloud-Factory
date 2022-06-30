@@ -14,9 +14,8 @@ public class CommonUIManager : MonoBehaviour
     public GameObject   gOption;    // 옵션 게임 오브젝트
 
     [Header("TEXT")]
-    // 화면에 보이는 TEXT 오브젝트
-    public Text         tSeason;    // 계절 텍스트
-    public Text         tdate;      // 날짜 텍스트
+    public Text         tDate;      // 날짜 텍스트
+    public Text         tYear;      // 날짜 텍스트
     [Space (3f)]
     public Text         tBgmValue;  // BGM 볼륨 텍스트
     public Text         tSfxValue;  // SFx 볼륨 텍스트
@@ -24,6 +23,12 @@ public class CommonUIManager : MonoBehaviour
     [Header("SLIDER")]
     public Slider       sBGM;       // BGM 슬라이더
     public Slider       sSFx;       // SFx 슬라이더
+
+    [Header("SPRITES")]
+    public Sprite[]     sSeasons = new Sprite[4]; // 봄 여름 가을 겨울 달력
+
+    [Header("IMAGES")]
+    public Image        iSeasons;   // 달력 이미지
 
     private AudioSource mSFx;       // 효과음 오디오 소스 예시
 
@@ -34,17 +39,19 @@ public class CommonUIManager : MonoBehaviour
 
     void Update()
     {
-        if (tSeason && tdate)       // null check
+        if (tDate && tYear && iSeasons)        // null check
         {
-            tdate.text = SeasonDateCalc.Instance.day.ToString() + "일차";
+            tDate.text = SeasonDateCalc.Instance.day.ToString() + "일";
+            tYear.text = SeasonDateCalc.Instance.year.ToString() + "년차";
+
             if (SeasonDateCalc.Instance.season == 1)
-                tSeason.text = "봄";
+                iSeasons.sprite = sSeasons[0]; // 봄
             else if (SeasonDateCalc.Instance.season == 2)
-                tSeason.text = "여름";
+                iSeasons.sprite = sSeasons[1]; // 여름
             else if (SeasonDateCalc.Instance.season == 3)
-                tSeason.text = "가을";
+                iSeasons.sprite = sSeasons[2]; // 가을
             else if (SeasonDateCalc.Instance.season == 4)
-                tSeason.text = "겨울";
+                iSeasons.sprite = sSeasons[3]; // 겨울
         }
 
         // 현재 음량으로 업데이트

@@ -21,8 +21,16 @@ public class SceneData : MonoBehaviour
     }
 
     [SerializeField]
+    private int mCurrentSceneIndex;    // 현재 씬 인덱스
+    public int currentSceneIndex
+    {
+        get { return mCurrentSceneIndex; }
+        set { mCurrentSceneIndex = value; }
+    }
+
+    [SerializeField]
     private int     mPrevSceneIndex;    // 이전 씬 인덱스
-    public int prevSceneIndex
+    public  int     prevSceneIndex
     {
         get { return mPrevSceneIndex; }
         set { mPrevSceneIndex = value; }
@@ -35,7 +43,7 @@ public class SceneData : MonoBehaviour
         set { mBGMValue = value; }
     }
     private float   mSFxValue;          // SFx 소리 크기 
-    public float SFxValue
+    public  float   SFxValue
     {
         get { return mSFxValue; }
         set { mSFxValue = value; }
@@ -58,6 +66,62 @@ public class SceneData : MonoBehaviour
         // 초기값 할당
         mBGMValue = 0.5f;
         mSFxValue = 1.0f;
-    }    
-
+    }
 }
+
+//// 직렬화 하기 위해서
+//[System.Serializable]
+//// 날짜 계절 데이터를 저장하는 박스
+//public class SeasonDateDataBox
+//{
+//    // SceneData 인스턴스를 담는 전역 변수
+//    private static SeasonDateDataBox instance = null;
+//    public static SeasonDateDataBox Instance
+//    {
+//        get
+//        {
+//            if (null == instance) return null;
+
+//            return instance;
+//        }
+//    }
+
+//    public float mSecond
+//    {
+//        get { return mSecond; }
+//        set { mSecond = value; }
+//    }
+//    public int mDay
+//    {
+//        get { return mDay; }
+//        set { mDay = value; }
+//    }
+
+//    public int mWeek
+//    {
+//        get { return mWeek; }
+//        set { mWeek = value; }
+//    }
+//    public int mSeason
+//    {
+//        get { return mSeason; }
+//        set { mSeason = value; }
+//    }
+//    public int mYear
+//    {
+//        get { return mYear; }
+//        set { mYear = value; }
+//    }
+
+//    // 생성자
+//    public SeasonDateDataBox()
+//    {
+//        // 초기화
+//        mSecond = 0;
+//        mDay = 1;
+//        mWeek = 0;
+//        mSeason = 1;
+//        mYear = 1;
+//    }
+//}
+

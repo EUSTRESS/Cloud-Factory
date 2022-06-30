@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
+using System.Text;
+using Newtonsoft.Json;
 
 // 로비 씬 UI 담당
 // 설정 창, 새로하기, 이어하기
@@ -48,15 +51,32 @@ public class LobbyUIManager : MonoBehaviour
      */
 
     public void NewGame()
-    {
-        SceneManager.LoadScene("Space Of Weather");
+    {        
         mSFx.Play();
+
+        SceneManager.LoadScene("Space Of Weather");
+
+        // 데이터를 초기화 시키는 함수 호출하기.
+        // 현재는 씬 이동만 저장하기 때문에 그냥 날씨의 공간으로 이동하면 된다.
     }
     public void ContinueGame()
     {
-        // json 데이터 저장 파일 불러와서 씬 이름 할당하기
-        // SceneManager.LoadScene("");
         mSFx.Play();
+
+        // 로드하는 함수 호출 후에 그 씬 인덱스로 이동
+        FileStream fSceneBuildIndexStream 
+            // 해당 경로에 있는 json 파일을 연다
+            = new FileStream(Application.dataPath + "/Data/SceneBuildIndex.json", FileMode.Open);
+        // 열려있는 json 값들을 byte배열에 넣는다
+        byte[] bData = new byte[fSceneBuildIndexStream.Length];
+        // 끝까지 읽는다
+        fSceneBuildIndexStream.Read(bData, 0, bData.Length);
+        fSceneBuildIndexStream.Close();
+        // 문자열로 변환한다
+        string sData = Encoding.UTF8.GetString(bData);
+
+        // 문자열을 int형으로 파싱해서 빌드 인덱스로 활용한다
+        SceneManager.LoadScene(int.Parse(sData));
     }
 
     public void ActiveOption()

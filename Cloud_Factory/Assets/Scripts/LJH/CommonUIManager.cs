@@ -11,26 +11,30 @@ public class CommonUIManager : MonoBehaviour
 {
     [Header("GAME OBJECT")]
     // 오브젝트 Active 관리
-    public GameObject   gOption;    // 옵션 게임 오브젝트
+    public GameObject   gOption;       // 옵션 게임 오브젝트
+
+    // 응접실
+    public GameObject   gSpeechBubble; // 응접실 대화창
+    public GameObject   gOkNoGroup;    // 응접실 수락 거절 그룹
 
     [Header("TEXT")]
-    public Text         tDate;      // 날짜 텍스트
-    public Text         tYear;      // 날짜 텍스트
+    public Text         tDate;         // 날짜 텍스트
+    public Text         tYear;         // 날짜 텍스트
     [Space (3f)]
-    public Text         tBgmValue;  // BGM 볼륨 텍스트
-    public Text         tSfxValue;  // SFx 볼륨 텍스트
+    public Text         tBgmValue;     // BGM 볼륨 텍스트
+    public Text         tSfxValue;     // SFx 볼륨 텍스트
 
     [Header("SLIDER")]
-    public Slider       sBGM;       // BGM 슬라이더
-    public Slider       sSFx;       // SFx 슬라이더
+    public Slider       sBGM;          // BGM 슬라이더
+    public Slider       sSFx;          // SFx 슬라이더
 
     [Header("SPRITES")]
     public Sprite[]     sSeasons = new Sprite[4]; // 봄 여름 가을 겨울 달력
 
     [Header("IMAGES")]
-    public Image        iSeasons;   // 달력 이미지
+    public Image        iSeasons;      // 달력 이미지
 
-    private AudioSource mSFx;       // 효과음 오디오 소스 예시
+    private AudioSource mSFx;          // 효과음 오디오 소스 예시
 
     void Awake()
     {
@@ -41,16 +45,16 @@ public class CommonUIManager : MonoBehaviour
     {
         if (tDate && tYear && iSeasons)        // null check
         {
-            tDate.text = SeasonDateCalc.Instance.day.ToString() + "일";
-            tYear.text = SeasonDateCalc.Instance.year.ToString() + "년차";
+            tDate.text = SeasonDateCalc.Instance.mDay.ToString() + "일";
+            tYear.text = SeasonDateCalc.Instance.mYear.ToString() + "년차";
 
-            if (SeasonDateCalc.Instance.season == 1)
+            if (SeasonDateCalc.Instance.mSeason == 1)
                 iSeasons.sprite = sSeasons[0]; // 봄
-            else if (SeasonDateCalc.Instance.season == 2)
+            else if (SeasonDateCalc.Instance.mSeason == 2)
                 iSeasons.sprite = sSeasons[1]; // 여름
-            else if (SeasonDateCalc.Instance.season == 3)
+            else if (SeasonDateCalc.Instance.mSeason == 3)
                 iSeasons.sprite = sSeasons[2]; // 가을
-            else if (SeasonDateCalc.Instance.season == 4)
+            else if (SeasonDateCalc.Instance.mSeason == 4)
                 iSeasons.sprite = sSeasons[3]; // 겨울
         }
 
@@ -114,5 +118,23 @@ public class CommonUIManager : MonoBehaviour
     {
         mSFx.Play();
         Application.Quit();
+    }
+
+    // 응접실
+
+    public void ActiveOk()
+    {
+        gSpeechBubble.SetActive(true);
+        gOkNoGroup.SetActive(false);
+
+        // 수락했을 때 메소드 호출
+    }
+
+    public void ActiveNo()
+    {
+        gSpeechBubble.SetActive(true);
+        gOkNoGroup.SetActive(false);
+
+        // 거절했을 때 메소드 호출
     }
 }

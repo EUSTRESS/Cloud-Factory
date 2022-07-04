@@ -20,28 +20,11 @@ public class SeasonDateCalc : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private float    mSecond; // 초, 시간, 600초=10분=하루
-    [SerializeField]
-    private int      mDay;    // 일 (1~20일)
-    public  int      day 
-    {
-        get { return mDay; }
-    }
-    [SerializeField]
-    private int      mWeek;   // 주 (5일마다 1주, 4주가 최대)
-    [SerializeField]
-    private int      mSeason; // 달, 계절 (4주마다 1달, 봄,여름,가을,겨울 순으로 4달)
-    public  int      season 
-    {
-        get { return mSeason; }
-    }
-    [SerializeField]
-    private int      mYear;   // 년 (~)    
-    public  int      year
-    {
-        get { return mYear; }
-    }
+    public float    mSecond; // 초, 시간, 600초=10분=하루
+    public int      mDay;    // 일 (1~20일)
+    public int      mWeek;   // 주 (5일마다 1주, 4주가 최대)
+    public int      mSeason; // 달, 계절 (4주마다 1달, 봄,여름,가을,겨울 순으로 4달)
+    public int      mYear;   // 년 (~)    
 
     void Awake()
     {

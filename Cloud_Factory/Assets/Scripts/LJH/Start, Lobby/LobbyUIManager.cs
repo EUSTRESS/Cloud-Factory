@@ -13,17 +13,18 @@ public class LobbyUIManager : MonoBehaviour
 {
     [Header("GAME OBJECT")]
     // 오브젝트 Active 관리
-    public GameObject   gOption; // 옵션 게임 오브젝트
+    public GameObject   gOption;     // 옵션 게임 오브젝트
+    public GameObject   gWarning;    // 새로운 게임 경고창
 
     [Header("TEXT")]
-    public Text     tBgmValue;   // BGM 볼륨 텍스트
-    public Text     tSfxValue;   // SFx 볼륨 텍스트
+    public Text         tBgmValue;   // BGM 볼륨 텍스트
+    public Text         tSfxValue;   // SFx 볼륨 텍스트
 
     [Header("SLIDER")]
-    public Slider   sBGM;        // BGM 슬라이더
-    public Slider   sSFx;        // SFx 슬라이더
+    public Slider       sBGM;        // BGM 슬라이더
+    public Slider       sSFx;        // SFx 슬라이더
 
-    private AudioSource mSFx;    // 효과음 오디오 소스
+    private AudioSource mSFx;        // 효과음 오디오 소스
 
     void Awake()
     {
@@ -56,27 +57,58 @@ public class LobbyUIManager : MonoBehaviour
 
         SceneManager.LoadScene("Space Of Weather");
 
-        // 데이터를 초기화 시키는 함수 호출하기.
-        // 현재는 씬 이동만 저장하기 때문에 그냥 날씨의 공간으로 이동하면 된다.
+        // 데이터를 초기화 시키는 함수 호출할 필요 없이
+        // 각 클래스 생성자에서 자동 초기화된다.
     }
+
     public void ContinueGame()
     {
         mSFx.Play();
 
+        /*
+         저장된 씬 넘버 로딩         
+         */
+
+        // newtonsoft library (모노비헤이비어 상속된 클래스 사용 불가능, 딕셔너리 사용 가능)
         // 로드하는 함수 호출 후에 그 씬 인덱스로 이동
         FileStream fSceneBuildIndexStream 
             // 해당 경로에 있는 json 파일을 연다
             = new FileStream(Application.dataPath + "/Data/SceneBuildIndex.json", FileMode.Open);
         // 열려있는 json 값들을 byte배열에 넣는다
-        byte[] bData = new byte[fSceneBuildIndexStream.Length];
+        byte[] bSceneData = new byte[fSceneBuildIndexStream.Length];
         // 끝까지 읽는다
-        fSceneBuildIndexStream.Read(bData, 0, bData.Length);
+        fSceneBuildIndexStream.Read(bSceneData, 0, bSceneData.Length);
         fSceneBuildIndexStream.Close();
         // 문자열로 변환한다
-        string sData = Encoding.UTF8.GetString(bData);
+        string sSceneData = Encoding.UTF8.GetString(bSceneData);
 
+        /*
+         저장된 날짜 시간 계절 로딩         
+         */
+
+        // jsonUitlity (모노비헤이비어 상속된 클래스 사용 가능, 딕셔너리 사용 불가능)
+        string mSeasonDatePath = Path.Combine(Application.dataPath + "/Data/", "SeasonDate.json");
+
+        if (File.Exists(mSeasonDatePath)) // null check
+        {
+            // 새로운 오브젝트를 생성하고
+            GameObject gSeasonDate = new GameObject();
+            string sDateData = File.ReadAllText(mSeasonDatePath);
+
+            Debug.Log(sDateData);
+            
+            // 데이터를 새로운 오브젝트에 덮어씌운다
+            JsonUtility.FromJsonOverwrite(sDateData, gSeasonDate.AddComponent<SeasonDateCalc>());
+
+            // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
+            SeasonDateCalc.Instance.mSecond = gSeasonDate.GetComponent<SeasonDateCalc>().mSecond;
+            SeasonDateCalc.Instance.mDay = gSeasonDate.GetComponent<SeasonDateCalc>().mDay;
+            SeasonDateCalc.Instance.mSeason = gSeasonDate.GetComponent<SeasonDateCalc>().mSeason;
+            SeasonDateCalc.Instance.mYear = gSeasonDate.GetComponent<SeasonDateCalc>().mYear;
+        }
+        
         // 문자열을 int형으로 파싱해서 빌드 인덱스로 활용한다
-        SceneManager.LoadScene(int.Parse(sData));
+        SceneManager.LoadScene(int.Parse(sSceneData));
     }
 
     public void ActiveOption()
@@ -100,6 +132,15 @@ public class LobbyUIManager : MonoBehaviour
     public void GoCredit()
     {
         // 크레딧 화면으로 전환
+    }
+
+    public void ActiveWarning()
+    {
+        gWarning.SetActive(true);
+    }
+    public void UnAcitveWarning()
+    {
+        gWarning.SetActive(false);
     }
 }
 

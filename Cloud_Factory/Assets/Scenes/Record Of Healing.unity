@@ -667,12 +667,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gOption: {fileID: 0}
-  tSeason: {fileID: 0}
-  tdate: {fileID: 0}
+  tDate: {fileID: 0}
+  tYear: {fileID: 0}
   tBgmValue: {fileID: 0}
   tSfxValue: {fileID: 0}
   sBGM: {fileID: 0}
   sSFx: {fileID: 0}
+  sSeasons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  iSeasons: {fileID: 0}
 --- !u!4 &1269960227
 Transform:
   m_ObjectHideFlags: 0
@@ -856,7 +862,7 @@ GameObject:
   - component: {fileID: 1671980945}
   - component: {fileID: 1671980944}
   m_Layer: 0
-  m_Name: SceneUnitManager
+  m_Name: SaveUnitManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

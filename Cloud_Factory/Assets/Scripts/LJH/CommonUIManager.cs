@@ -166,18 +166,18 @@ public class CommonUIManager : MonoBehaviour
         mIsNext = true;
         mIsPrev = false;
 
-        mProfile1.isMoving = true;
-        mProfile2.isMoving = true;
-        mProfile3.isMoving = true;
+        mProfile1.mIsMoving = true;
+        mProfile2.mIsMoving = true;
+        mProfile3.mIsMoving = true;
     }
     public void ShowPrevProfile()
     {
         mIsNext = false;
         mIsPrev = true;
 
-        mProfile1.isMoving = true;
-        mProfile2.isMoving = true;
-        mProfile3.isMoving = true;
+        mProfile1.mIsMoving = true;
+        mProfile2.mIsMoving = true;
+        mProfile3.mIsMoving = true;
     }
     public void ShowUpsetMoongti()
     {

@@ -36,9 +36,22 @@ public class CommonUIManager : MonoBehaviour
 
     private AudioSource mSFx;          // 효과음 오디오 소스 예시
 
+    public bool mIsNext;              // 치유의 기록 다음 페이지   
+    public bool mIsPrev;              // 치유의 기록 이전 페이지
+
+    private ProfileMoving mProfile1; // 프로필 움직임 담당 스크립트
+    private ProfileMoving mProfile2; // 프로필 움직임 담당 스크립트
+    private ProfileMoving mProfile3; // 프로필 움직임 담당 스크립트
+
     void Awake()
     {
         mSFx = GameObject.Find("SFx").GetComponent<AudioSource>();
+        if (SceneManager.GetActiveScene().name == "Record Of Healing")
+        {
+            mProfile1 = GameObject.Find("I_ProfileBG1").GetComponent<ProfileMoving>();
+            mProfile2 = GameObject.Find("I_ProfileBG2").GetComponent<ProfileMoving>();
+            mProfile3 = GameObject.Find("I_ProfileBG3").GetComponent<ProfileMoving>();
+        }
     }
 
     void Update()
@@ -76,6 +89,10 @@ public class CommonUIManager : MonoBehaviour
      * BUTTON에 할당할 메소드
      */
 
+
+    /*
+     공통
+     */
     public void GoSpaceOfWeather()
     {
         SceneManager.LoadScene("Space Of Weather");
@@ -120,7 +137,9 @@ public class CommonUIManager : MonoBehaviour
         Application.Quit();
     }
 
-    // 응접실
+    /*
+     응접실
+     */
 
     public void ActiveOk()
     {
@@ -137,4 +156,36 @@ public class CommonUIManager : MonoBehaviour
 
         // 거절했을 때 메소드 호출
     }
+
+    /*
+     치유의 기록
+     */
+
+    public void ShowNextProfile()
+    {
+        mIsNext = true;
+        mIsPrev = false;
+
+        mProfile1.isMoving = true;
+        mProfile2.isMoving = true;
+        mProfile3.isMoving = true;
+    }
+    public void ShowPrevProfile()
+    {
+        mIsNext = false;
+        mIsPrev = true;
+
+        mProfile1.isMoving = true;
+        mProfile2.isMoving = true;
+        mProfile3.isMoving = true;
+    }
+    public void ShowUpsetMoongti()
+    {
+
+    }
+    public void ShowAllMoongti()
+    {
+
+    }
+
 }

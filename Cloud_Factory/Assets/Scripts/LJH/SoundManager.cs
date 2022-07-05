@@ -20,9 +20,12 @@ public class SoundManager : MonoBehaviour
     // 유니티 생명주기 활용
     void Start()
     {
-        // 씬이 변경될 때 저장된 값으로 새로 업데이트
-        mBGM.volume = SceneData.Instance.BGMValue;
-        mSFx.volume = SceneData.Instance.SFxValue;
+        if (SceneData.Instance) // null check
+        {
+            // 씬이 변경될 때 저장된 값으로 새로 업데이트
+            mBGM.volume = SceneData.Instance.BGMValue;
+            mSFx.volume = SceneData.Instance.SFxValue;
+        }
     }
 
     // BGM 볼륨 조정

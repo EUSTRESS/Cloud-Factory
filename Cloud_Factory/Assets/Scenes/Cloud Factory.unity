@@ -1089,6 +1089,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gOption: {fileID: 1508871790}
+  gSpeechBubble: {fileID: 0}
+  gOkNoGroup: {fileID: 0}
   tDate: {fileID: 801787438}
   tYear: {fileID: 1154718865}
   tBgmValue: {fileID: 578151916}
@@ -2412,7 +2414,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -10, y: 10}
+  m_AnchoredPosition: {x: -10, y: 175}
   m_SizeDelta: {x: 310, y: 180}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1199265736
@@ -2805,7 +2807,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -10, y: 175}
+  m_AnchoredPosition: {x: -10, y: 10}
   m_SizeDelta: {x: 310, y: 180}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1325076338

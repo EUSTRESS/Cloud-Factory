@@ -39,7 +39,7 @@ public class SaveUnitManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {       
         // 로비에서는 저장할 필요가 없음
-        if (scene.name != "Lobby")
+        if (scene.name != "Lobby" && SceneData.Instance) // null check && lobby 제한
         {
             //================================================================================//
             //==================================현재 씬 저장==================================//

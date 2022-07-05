@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 
 public class YardHandleSystem : MonoBehaviour
 {
+    public InventoryManager inventoryManager;
+
     public IngredientList[] mRarityList;
     public Sprite[] mImages;
 
@@ -41,10 +43,6 @@ public class YardHandleSystem : MonoBehaviour
         {
             if (gatherCnt == 0) return; //이미 가능 횟수가 모두 소진 되면 채집이 진행되지 않는다.
 
-
-
-
-
             gatherCnt--;
             updateSprite();
 
@@ -69,9 +67,12 @@ public class YardHandleSystem : MonoBehaviour
                 self.GetComponent<SpriteRenderer>().sprite = sprites[1];
         }
     };
+
     // Start is called before the first frame update
     void Start()
     {
+        inventoryManager = GameObject.Find("InventorySystem").GetComponent<InventoryManager>();
+
         mYards = new Dictionary<GameObject, int>();
 
         for (int i = 0; i < mRarityList.Length; i++)
@@ -92,7 +93,10 @@ public class YardHandleSystem : MonoBehaviour
         Debug.Log("[System]총" + results.Count + "가 채집되었습니다!");
         foreach(KeyValuePair<IngredientData, int> result in results)
         {
-            Debug.Log("[System]채집 성공| 종류:" + result.Key + "|개수: "+result.Value);           
+            if(inventoryManager.addStock(result)) Debug.Log("[System]채집 성공| 종류:" + result.Key + "|개수: " + result.Value);
+            else
+                Debug.Log("[System]채집 실패| 인벤토리가 꽉 찼거나 수집 가능 재료 개수를 초과하였습니다| 종류:."+ result.Key + "|개수: " + result.Value);
+
         }
 
         mYards[iClickedYard]--;

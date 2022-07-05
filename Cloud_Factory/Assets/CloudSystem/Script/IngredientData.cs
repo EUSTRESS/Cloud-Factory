@@ -1,32 +1,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Emotion
+{   //PLEASURE부터 0~ 의 값을 갖음
+    PLEASURE,
+    UNREST,
+    SADNESS,
+    IRRITATION,
+    ACCEPT,
+    SUPCON, //SUPRISE+CONFUSION
+    DISGUST,
+    INTEXPEC, //INTERSTING+EXPECTATION
+    LOVE,
+    ROMANCE, //순정만화가 ROMANCE COMICS여서 PURE LOVE보단 나을 것 같아서 이렇게 함.
+    AWE,
+    CONTRAY,//반대
+    BLAME,
+    DESPISE,
+    AGGRESS,//AGGRESSION 공격성
+    OPTIMISM,//낙천
+    BITTER,
+    LOVHAT, //LOVE AND HATRED
+    FREEZE,
+    CHAOTIC//혼란스러움
+}
+
 [CreateAssetMenu(fileName = "IngredientData", menuName = "ScriptableObjects/IngredientData", order = 1)]
 public class IngredientData : ScriptableObject
 {
-    public enum Emotion
-    {   //PLEASURE부터 0~ 의 값을 갖음
-        PLEASURE,
-        UNREST,
-        SADNESS,
-        IRRITATION,
-        ACCEPT,
-        SUPCON, //SUPRISE+CONFUSION
-        DISGUST,
-        INTEXPEC, //INTERSTING+EXPECTATION
-        LOVE,
-        ROMANCE, //순정만화가 ROMANCE COMICS여서 PURE LOVE보단 나을 것 같아서 이렇게 함.
-        AWE,
-        CONTRAY,//반대
-        BLAME,
-        DESPISE,
-        AGGRESS,//AGGRESSION 공격성
-        OPTIMISM,//낙천
-        BITTER,
-        LOVHAT, //LOVE AND HATRED
-        FREEZE,
-        CHAOTIC//혼란스러움
-    }
+    
 
     [System.Serializable]
     public struct emotioninfo
@@ -62,9 +64,11 @@ public class IngredientData : ScriptableObject
     private int rarity;
 
     [SerializeField]
-    private Dictionary<int, int> iEmotion;
+    private emotioninfo[] emotions;
 
-    public emotioninfo[] emotions;
+    public Dictionary<int, int> iEmotion;
+
+   
 
 
     public void init()

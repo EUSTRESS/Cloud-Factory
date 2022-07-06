@@ -30,20 +30,18 @@ public class WeatherUIManager : MonoBehaviour
         mGuideGather.SetActive(false);
         mGathering.SetActive(true);
         mGatheringTextCount = 0;
+        tGatheringText.text = "재료 채집 중";
 
         if (SeasonDateCalc.Instance) // null check
         {                            // 각 해당하는 애니메이션 출력
+            Invoke("PrintGatheringText", 0.5f); // 0.5초 딜레이마다 . 추가
             if (SeasonDateCalc.Instance.mSeason == 1) // 봄이라면
-            {
-                tGatheringText.text = "재료 채집 중";
-                Invoke("PrintGatheringText", 0.5f); // 0.5초 딜레이마다 . 추가
-
+            {                
                 mGatheringAnim.SetBool("Spring", true);
                 mGatheringAnim.SetBool("Summer", false);
             }
             else if (SeasonDateCalc.Instance.mSeason == 2) // 여름이라면
             {
-
                 mGatheringAnim.SetBool("Spring", false);
                 mGatheringAnim.SetBool("Summer", true);
             }
@@ -83,9 +81,9 @@ public class WeatherUIManager : MonoBehaviour
             Invoke("PrintGatheringText", 0.5f); // 0.5초 딜레이마다 . 추가
         }
     }
-
+    
     public void CloseResultGather()
     {
-        mGatherResult.SetActive(false);
+        mGatherResult.SetActive(false);        
     }
 }

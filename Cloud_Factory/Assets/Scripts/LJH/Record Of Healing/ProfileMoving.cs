@@ -35,7 +35,7 @@ namespace ConstantsVector
 
 public class ProfileMoving : MonoBehaviour
 {    
-    private CommonUIManager mUIManager;   // UI Manager 스크립트
+    private RecordUIManager mUIManager;   // UI Manager 스크립트
 
     private RectTransform   rProflieBG;   // UI의 이동은 RectTransform이 담당함
 
@@ -49,15 +49,13 @@ public class ProfileMoving : MonoBehaviour
 
     [HideInInspector]
     public  bool            mIsMoving;    // 페이지가 움직이는지 판단하는 bool값
-
-    public  Button          bNextBtn;     // 다음 페이지 버튼
-    public  Button          bPrevBtn;     // 이전 페이지 버튼
+    public bool mIsUpset; // 불만뭉티를 보는지 전체뭉티를 보는지
 
     void Awake()
     {
-        mMoveSpeed = 1.0f; // 페이지 넘기는 속도
+        mMoveSpeed = 0.5f; // 페이지 넘기는 속도
 
-        mUIManager = GameObject.Find("UIManager").GetComponent<CommonUIManager>();
+        mUIManager = GameObject.Find("UIManager").GetComponent<RecordUIManager>();
         mPageAnim  = GetComponent<Animator>();
         rProflieBG = GetComponent<RectTransform>();
 
@@ -82,8 +80,6 @@ public class ProfileMoving : MonoBehaviour
                     // mMoveSpeed 만큼 움직인다.
                     this.gameObject.transform.
                         Translate(new Vector2(-mMoveSpeed * Time.timeScale, -mMoveSpeed * Time.timeScale));
-                    bNextBtn.interactable = false;      // 이동하는 동안에 버튼 비활성화
-                    bPrevBtn.interactable = false;      // 이동하는 동안에 버튼 비활성화
                 }
                 // 다음 위치에 도달하거나 그 이상 넘어갈 경우 바로 현재 위치값으로 갱신
                 else if (mUIManager.mIsNext && rProflieBG.anchoredPosition.x <= vNextPos.x
@@ -98,8 +94,6 @@ public class ProfileMoving : MonoBehaviour
                 {
                     this.gameObject.transform.
                         Translate(new Vector2(mMoveSpeed * Time.timeScale, mMoveSpeed * Time.timeScale));
-                    bNextBtn.interactable = false;      // 이동하는 동안에 버튼 비활성화
-                    bPrevBtn.interactable = false;      // 이동하는 동안에 버튼 비활성화
                 }
                 else if (mUIManager.mIsPrev && rProflieBG.anchoredPosition.x >= vPrevPos.x
                                             && rProflieBG.anchoredPosition.y >= vPrevPos.y)
@@ -110,11 +104,25 @@ public class ProfileMoving : MonoBehaviour
                 // 페이지가 넘어가는 애니메이션을 실행할 위치
                 if (rProflieBG.anchoredPosition.x <= (int)ConstantsVector.EFrontToBack.X
                  && rProflieBG.anchoredPosition.y <= (int)ConstantsVector.EFrontToBack.Y)
-                {   
-                    mPageAnim.enabled = true;           // 애니메이터 엑티브하여 사용할 수 있게 한다                    
-                    mPageAnim.SetTrigger("isLastPage"); // 애니메이션 실행
-                    
-                    Invoke("NextAnimDelay", 0.5f);      // 애니메이션이 끝나면 실행
+                {
+                    // 불만 뭉티만 보기
+                    if (mIsUpset == true)
+                    {
+                        // 위치 이동
+                        rProflieBG.anchoredPosition = new Vector2((int)ConstantsVector.EThirdPos.X,
+                                                                  (int)ConstantsVector.EThirdPos.Y);
+                        InitPosValue();                // 벡터 갱신
+                    }
+                    // 전체보기
+                    else if (mIsUpset == false)
+                    {
+                        this.gameObject.transform.SetSiblingIndex(3);
+                        Invoke("DelaySibling", 0.12f);
+
+                        mPageAnim.enabled = true;           // 애니메이터 엑티브하여 사용할 수 있게 한다                    
+                        mPageAnim.SetTrigger("isLastPage"); // 애니메이션 실행
+                        Invoke("DelayMoveProfile", 0.5f);
+                    }
                 }
                 // 제일 뒈에 보이는 것에서 앞으로 이동할 때
                 else if (rProflieBG.anchoredPosition.x >= (int)ConstantsVector.EBackToFront.X
@@ -148,14 +156,17 @@ public class ProfileMoving : MonoBehaviour
             }            
         }
     }
-
+    void DelaySibling()
+    {
+        this.gameObject.transform.SetSiblingIndex(0);
+    }
     // 애니메이션이 조작되는 동안 시간 딜레이
-    void NextAnimDelay()
+    void DelayMoveProfile()
     {
         // 위치 이동
-        rProflieBG.anchoredPosition = new Vector2((int)ConstantsVector.EThirdPos.X, 
-                                                  (int)ConstantsVector.EThirdPos.Y); 
-        mPageAnim.enabled     = false; // 애니메이션 끔   
+        rProflieBG.anchoredPosition = new Vector2((int)ConstantsVector.EThirdPos.X,
+                                                  (int)ConstantsVector.EThirdPos.Y);
+        mPageAnim.enabled = false; // 애니메이션 끔   
         InitPosValue();                // 벡터 갱신
     }
     // 벡터 갱신
@@ -165,9 +176,5 @@ public class ProfileMoving : MonoBehaviour
         vNextPos = new Vector2(vOriginalPos.x - 50, vOriginalPos.y - 50); // 다음페이지 위치
         vPrevPos = new Vector2(vOriginalPos.x + 50, vOriginalPos.y + 50); // 이전페이지 위치
         mIsMoving = false;                                                // 이동을 멈춘다
-
-        // 인보크 충돌로 인해서 갑자기 켜지는 경우가 있음
-        bNextBtn.interactable = true;       // 이동 끝나면 버튼 활성화
-        bPrevBtn.interactable = true;       // 이동 끝나면 버튼 활성화
     }    
 }

@@ -35,28 +35,14 @@ public class CommonUIManager : MonoBehaviour
     public Image        iSeasons;      // 달력 이미지
 
     private AudioSource mSFx;          // 효과음 오디오 소스 예시
-
-    public bool mIsNext;              // 치유의 기록 다음 페이지   
-    public bool mIsPrev;              // 치유의 기록 이전 페이지
-
-    private ProfileMoving mProfile1; // 프로필 움직임 담당 스크립트
-    private ProfileMoving mProfile2; // 프로필 움직임 담당 스크립트
-    private ProfileMoving mProfile3; // 프로필 움직임 담당 스크립트
-
     void Awake()
     {
-        mSFx = GameObject.Find("SFx").GetComponent<AudioSource>();
-        if (SceneManager.GetActiveScene().name == "Record Of Healing")
-        {
-            mProfile1 = GameObject.Find("I_ProfileBG1").GetComponent<ProfileMoving>();
-            mProfile2 = GameObject.Find("I_ProfileBG2").GetComponent<ProfileMoving>();
-            mProfile3 = GameObject.Find("I_ProfileBG3").GetComponent<ProfileMoving>();
-        }
+        mSFx = GameObject.Find("SFx").GetComponent<AudioSource>();        
     }
 
     void Update()
     {
-        if (tDate && tYear && iSeasons)        // null check
+        if (tDate && tYear && iSeasons && SeasonDateCalc.Instance)        // null check
         {
             tDate.text = SeasonDateCalc.Instance.mDay.ToString() + "일";
             tYear.text = SeasonDateCalc.Instance.mYear.ToString() + "년차";
@@ -72,7 +58,7 @@ public class CommonUIManager : MonoBehaviour
         }
 
         // 현재 음량으로 업데이트
-        if (sBGM && sSFx)           // null check
+        if (sBGM && sSFx && SceneData.Instance)           // null check
         {
             sBGM.value = SceneData.Instance.BGMValue;
             sSFx.value = SceneData.Instance.SFxValue;
@@ -84,15 +70,8 @@ public class CommonUIManager : MonoBehaviour
             tSfxValue.text = Mathf.Ceil(sSFx.value * 100).ToString();
         }
     }
-
-    /*
-     * BUTTON에 할당할 메소드
-     */
-
-
-    /*
-     공통
-     */
+    
+    // 버튼들
     public void GoSpaceOfWeather()
     {
         SceneManager.LoadScene("Space Of Weather");
@@ -138,7 +117,7 @@ public class CommonUIManager : MonoBehaviour
     }
 
     /*
-     응접실
+     응접실 메소드가 많아질 경우 따로 매니져를 뺄 것
      */
 
     public void ActiveOk()
@@ -156,36 +135,4 @@ public class CommonUIManager : MonoBehaviour
 
         // 거절했을 때 메소드 호출
     }
-
-    /*
-     치유의 기록
-     */
-
-    public void ShowNextProfile()
-    {
-        mIsNext = true;
-        mIsPrev = false;
-
-        mProfile1.mIsMoving = true;
-        mProfile2.mIsMoving = true;
-        mProfile3.mIsMoving = true;
-    }
-    public void ShowPrevProfile()
-    {
-        mIsNext = false;
-        mIsPrev = true;
-
-        mProfile1.mIsMoving = true;
-        mProfile2.mIsMoving = true;
-        mProfile3.mIsMoving = true;
-    }
-    public void ShowUpsetMoongti()
-    {
-
-    }
-    public void ShowAllMoongti()
-    {
-
-    }
-
 }

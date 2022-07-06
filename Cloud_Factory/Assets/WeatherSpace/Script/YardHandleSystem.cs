@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 
+
 public class YardHandleSystem : MonoBehaviour
 {
     public InventoryManager inventoryManager;
@@ -84,6 +85,7 @@ public class YardHandleSystem : MonoBehaviour
     }
 
     
+
     public void  bGathered() //클릭함수
     {
         GameObject iClickedYard = EventSystem.current.currentSelectedGameObject;
@@ -105,7 +107,6 @@ public class YardHandleSystem : MonoBehaviour
 
     private Dictionary<IngredientData, int> getRndGatheredResult() //랜덤으로 채집한 리스트 리턴.
     {
-        int test_invenLevel = 2;
         //Key: 재료 종류  Value: 획득할 재료 개수
         Dictionary<IngredientData, int> results= new Dictionary<IngredientData, int>();
 
@@ -115,7 +116,7 @@ public class YardHandleSystem : MonoBehaviour
         Debug.Log("총 채집할 종류:" + total);
         while (results.Count < total)
         {
-            IngredientData tmp = mRarityList[getRndRarityType(test_invenLevel) -1].getRndIngredient();
+            IngredientData tmp = mRarityList[getRndRarityType(inventoryManager.minvenLevel) -1].getRndIngredient();
             Debug.Log(tmp);
             if (results.ContainsKey(tmp)) continue; //중복방지
             results.Add(tmp, Random.Range(1, 6));

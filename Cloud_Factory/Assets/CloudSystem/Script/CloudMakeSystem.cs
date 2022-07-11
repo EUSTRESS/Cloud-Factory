@@ -47,7 +47,7 @@ namespace CloudSystem
             int idx = UI_slct_mtrl.FindIndex(item => ERSD == item);
             if (total <= 0) return;
 
-            total--; //update total count
+          
 
             //list reorder Algorithm
             for (int i = idx; i < total; i++)
@@ -136,11 +136,13 @@ public class CloudMakeSystem : MonoBehaviour
         total++; //update total count
 
         slct_mtrl.add(mtrlDATA, total, name);
+
+
     }
 
     private void d_deselectMtrl(string name)
     {
-      
+        total--; //update total count
         slct_mtrl.m_sort(slct_mtrl.getErsdobj(name),total);
 
     }

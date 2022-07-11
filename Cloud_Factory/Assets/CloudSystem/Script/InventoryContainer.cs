@@ -22,6 +22,7 @@ public class InventoryContainer : MonoBehaviour
     //날씨의 공간에서 구름 공장으로 넘어갈 때, 가상의 채집 인벤토리 데이터를 구름공장의 UI인벤토리로 넘겨준다.
     public void initInven(Dictionary<IngredientData, int> invenData)
     {
+        mUiStocksData = new Dictionary<IngredientData, int>();
         mUiStocksData = invenData; //UI목록에 복붙!
 
         //invenData를 invenContainer(UI)List에 넣어준다.
@@ -80,7 +81,7 @@ public class InventoryContainer : MonoBehaviour
     void Start()
     {
         Cloudmakesystem = GameObject.FindWithTag("CloudSystem").GetComponent<CloudMakeSystem>();
-        mUiStocksData = new Dictionary<IngredientData, int>();
+     
 
     }
 
@@ -134,6 +135,7 @@ public class InventoryContainer : MonoBehaviour
         //1. 인벤토리의 마지막 stock의 컴포넌트 삭제 및 이미지 초기화.
         // tmp instance
         GameObject lastStockInInven = mUiInvenStocks[mUiStocksData.Count];
+        lastStockInInven.name = "000"; //Game Object Name 초기화
         lastStockInInven.transform.GetComponent<Image>().sprite = mDefaultSprite; //img초기화
         Destroy(lastStockInInven.transform.GetComponent<Button>()); // button component 삭제
         Destroy(lastStockInInven.transform.GetChild(0).gameObject); // cnt txt 삭제
@@ -145,6 +147,8 @@ public class InventoryContainer : MonoBehaviour
         {
             GameObject stockObj = mUiInvenStocks[tmp];
 
+            //GameObject name
+            stockObj.name = data.Key.ingredientName;
             //이미지
             stockObj.transform.GetComponent<Image>().sprite = data.Key.image;
             //cnt

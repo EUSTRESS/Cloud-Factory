@@ -3,14 +3,14 @@ using UnityEngine;
 
 public enum Emotion
 {   //PLEASURE부터 0~ 의 값을 갖음
-    PLEASURE,
-    UNREST,
-    SADNESS,
-    IRRITATION,
-    ACCEPT,
-    SUPCON, //SUPRISE+CONFUSION
-    DISGUST,
-    INTEXPEC, //INTERSTING+EXPECTATION
+    PLEASURE, //기쁨
+    UNREST, //불안
+    SADNESS, //슬픔
+    IRRITATION, //짜증
+    ACCEPT,//수용
+    SUPCON, //SUPRISE+CONFUSION 논란,혼란
+    DISGUST, //혐오
+    INTEXPEC, //INTERSTING+EXPECTATION 관심,기대
     LOVE,
     ROMANCE, //순정만화가 ROMANCE COMICS여서 PURE LOVE보단 나을 것 같아서 이렇게 함.
     AWE,

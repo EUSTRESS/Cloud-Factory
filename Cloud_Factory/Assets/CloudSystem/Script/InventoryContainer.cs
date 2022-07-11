@@ -7,6 +7,7 @@ using System.Linq;
 
 public class InventoryContainer : MonoBehaviour
 {
+
     public List<GameObject> mUiInvenStocks;
     public GameObject[] mTxtInfoPrefab;
     public Sprite mDefaultSprite;
@@ -18,53 +19,22 @@ public class InventoryContainer : MonoBehaviour
 
     private Dictionary<IngredientData, int> mUiStocksData; //UI상에 보여지는 StocksData
 
+    /////////////////////
+    //인벤토리 정렬 UI//
+    ////////////////////
+    [SerializeField]
+    private Dropdown mUIEmotionDropDown;
+
+
     void Start()
     {
         Cloudmakesystem = GameObject.FindWithTag("CloudSystem").GetComponent<CloudMakeSystem>();
+        mUIEmotionDropDown = GameObject.Find("Dropdown").GetComponent<Dropdown>(); //같은 레벨의 오브젝트라 검색 가능.
     }
 
-    //날씨의 공간에서 구름 공장으로 넘어갈 때, 가상의 채집 인벤토리 데이터를 구름공장의 UI인벤토리로 넘겨준다.
-    public void initInven(Dictionary<IngredientData, int> invenData)
-    {
-        mUiStocksData = new Dictionary<IngredientData, int>();
-        mUiStocksData = invenData; //UI목록에 복붙!
-
-        //invenData를 invenContainer(UI)List에 넣어준다.
-        int tmp = 0;
-        foreach(KeyValuePair<IngredientData, int> stock in mUiStocksData)
-        {
-            GameObject invenUI = transform.GetChild(tmp).gameObject;
-            mUiInvenStocks.Add(invenUI);
-
-            if(invenUI.transform.childCount == 0)
-            {
-                GameObject cntTxt = Instantiate(mTxtInfoPrefab[0]);
-                cntTxt.transform.SetParent(invenUI.transform, false);
-                cntTxt.transform.GetComponent<Text>().text = stock.Value.ToString();
-
-                GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
-                nameTxt.transform.SetParent(invenUI.transform, false);
-                nameTxt.transform.GetComponent<Text>().text = stock.Key.ingredientName.ToString();
-            }
-            
-            //버튼 컴포넌트가 없으면 만들어준다.
-            if (invenUI.transform.GetComponent<Button>() == null)
-            {
-                Button btn = invenUI.AddComponent<Button>();
-                btn.onClick.AddListener(clicked);     
-            }
-
-            //Image Update
-            invenUI.transform.GetComponent<Image>().sprite = stock.Key.image;
-
-            //Name Upadate
-            invenUI.name = stock.Key.ingredientName;
-
-            tmp++;
-        }
-    }
-
-    //Btn click 함수
+    /////////////////////
+    //Button Interact///
+    ////////////////////
     public void clicked() //matarial in inventory selected
     {
         if (inventoryManager == null)
@@ -87,18 +57,102 @@ public class InventoryContainer : MonoBehaviour
         Cloudmakesystem.E_UnSelected(target.name);
         Debug.Log("클릭");
     }
-    public IngredientData getDataWithSprite(string _spritename) //Sprite를 매개변수로 해당 아이템 data를 검색한다.
+   
+    public void sortWithCnt() //Button Interaction Function
+    {
+        mUiStocksData = sortStock();
+
+        updateInven(mUiStocksData);
+    }
+
+    public void activeDropDown()
+    {
+        if (mUIEmotionDropDown.interactable) mUIEmotionDropDown.interactable = false;
+        else
+            mUIEmotionDropDown.interactable = true;
+
+
+    }
+
+    //날씨의 공간에서 구름 공장으로 넘어갈 때, 가상의 채집 인벤토리 데이터를 구름공장의 UI인벤토리로 넘겨준다.
+    public void initInven(Dictionary<IngredientData, int> invenData)
+    {
+        mUiStocksData = new Dictionary<IngredientData, int>();
+        mUiStocksData = invenData; //UI목록에 복붙!
+
+        clearInven(mUiStocksData);
+    }
+
+    private void clearInven(Dictionary<IngredientData, int> _mData)
+    {
+        //invenData를 invenContainer(UI)List에 넣어준다.
+        int tmp = 0;
+        foreach (KeyValuePair<IngredientData, int> stock in _mData)
+        {
+            GameObject invenUI = transform.GetChild(tmp).gameObject;
+            mUiInvenStocks.Add(invenUI);
+
+            if (invenUI.transform.childCount == 0)
+            {
+                GameObject cntTxt = Instantiate(mTxtInfoPrefab[0]);
+                cntTxt.transform.SetParent(invenUI.transform, false);
+                cntTxt.transform.GetComponent<Text>().text = stock.Value.ToString();
+
+                GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
+                nameTxt.transform.SetParent(invenUI.transform, false);
+                nameTxt.transform.GetComponent<Text>().text = stock.Key.ingredientName.ToString();
+            }
+
+            //버튼 컴포넌트가 없으면 만들어준다.
+            if (invenUI.transform.GetComponent<Button>() == null)
+            {
+                Button btn = invenUI.AddComponent<Button>();
+                btn.onClick.AddListener(clicked);
+            }
+
+            //Image Update
+            invenUI.transform.GetComponent<Image>().sprite = stock.Key.image;
+
+            //Name Upadate
+            invenUI.name = stock.Key.ingredientName;
+
+            tmp++;
+        }
+    }
+    //해당 data 딕셔너리의 개수 만큼 데이터를 바꾼다.
+    private void updateInven(Dictionary<IngredientData, int> _mData)
+    {
+        int tmp = 0;
+        foreach (KeyValuePair<IngredientData, int> data in _mData)
+        {
+            GameObject stockObj = mUiInvenStocks[tmp];
+
+            //GameObject name
+            stockObj.name = data.Key.ingredientName;
+            //이미지
+            stockObj.transform.GetComponent<Image>().sprite = data.Key.image;
+            //cnt
+            stockObj.transform.GetChild(0).GetComponent<Text>().text = data.Value.ToString();
+            //name
+            stockObj.transform.GetChild(1).GetComponent<Text>().text = data.Key.ingredientName.ToString();
+
+            tmp++; //plus index value
+        }
+    }
+
+    private IngredientData getDataWithSprite(string _spritename) //Sprite를 매개변수로 해당 아이템 data를 검색한다.
     {
         IngredientData data = inventoryManager.mIngredientDatas[inventoryManager.minvenLevel - 1].mItemList.Find(item => _spritename == item.image.name);
 
         return data;
     }
 
+
     //////////////////////////////
     /////////재료 선택 함수////////
     //////////////////////////////
     //재료 선택시에 해당 재료 개수가 0이 되면 리스트에서 제거, 해당 재료개수가 0에서 1이 되면 리스트에 추가.
-    public void updateStockCnt(string _dtName, bool _switch)
+    private void updateStockCnt(string _dtName, bool _switch)
     {
         //switch = true 인 경우에는 재료 선택, switch = false 인 경우에는 재료 취소의 업데이트 경우
         //매개인자는 무조건 인벤토리에 존재 했던, 또는 존재하는 재료이다.
@@ -149,25 +203,11 @@ public class InventoryContainer : MonoBehaviour
         else
             addStockInInven(_stockDt, uiGameObj);
     }
+
     private void addStockInInven(IngredientData stockDt, GameObject uiGameObj)
     {
         //1. 나머지 데이터 하나씩 덮어 씌우기.
-        int tmp = 0;
-        foreach (KeyValuePair<IngredientData, int> data in mUiStocksData)
-        {
-            GameObject stockObj = mUiInvenStocks[tmp];
-
-            //GameObject name
-            stockObj.name = data.Key.ingredientName;
-            //이미지
-            stockObj.transform.GetComponent<Image>().sprite = data.Key.image;
-            //cnt
-            stockObj.transform.GetChild(0).GetComponent<Text>().text = data.Value.ToString();
-            //name
-            stockObj.transform.GetChild(1).GetComponent<Text>().text = data.Key.ingredientName.ToString();
-
-            tmp++; //plus index value
-        }
+        updateInven(mUiStocksData);
 
         //Data 추가
         mUiStocksData.Add(stockDt,1); //리스트에서 해당 data 추가
@@ -213,22 +253,7 @@ public class InventoryContainer : MonoBehaviour
         Destroy(lastStockInInven.transform.GetChild(1).gameObject); // name txt 삭제
 
         //2. 나머지 데이터 하나씩 덮어 씌우기.
-        int tmp = 0;
-        foreach (KeyValuePair<IngredientData, int> data in mUiStocksData)
-        {
-            GameObject stockObj = mUiInvenStocks[tmp];
-
-            //GameObject name
-            stockObj.name = data.Key.ingredientName;
-            //이미지
-            stockObj.transform.GetComponent<Image>().sprite = data.Key.image;
-            //cnt
-            stockObj.transform.GetChild(0).GetComponent<Text>().text = data.Value.ToString();
-            //name
-            stockObj.transform.GetChild(1).GetComponent<Text>().text = data.Key.ingredientName.ToString();
-
-            tmp++; //plus index value
-        }
+        updateInven(mUiStocksData);
     }
 
     
@@ -238,6 +263,8 @@ public class InventoryContainer : MonoBehaviour
     /////////////////////
     //인벤토리 정렬 함수//
     ////////////////////
+
+
     //리스트 자체를 정렬한다. 정렬 할 때는 새 리스트를 만들어서 UI에 반영한다.
     private Dictionary<IngredientData, int> sortStock(Emotion _emotion)
     {

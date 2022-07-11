@@ -30,36 +30,33 @@ namespace CloudSystem
         public void add(IngredientList mtrlDATA,int total,string name)
         {
             IngredientData data = mtrlDATA.mItemList.Find(item => name == item.ingredientName);
-            UI_slct_mtrl[total - 1].GetComponent<SpriteRenderer>().sprite = data.image;
+            UI_slct_mtrl[total - 1].GetComponent<Image>().sprite = data.image;
         }
 
         public GameObject getErsdobj(string name)
         {
             GameObject ERSD = UI_slct_mtrl.Find(item => name == item.name); //삭제된 빈칸 찾기.
-            ERSD.GetComponent<SpriteRenderer>().sprite = default_sprite;
+            ERSD.GetComponent<Image>().sprite = default_sprite;
 
             return ERSD;
         }
 
         public void m_sort(GameObject ERSD,int total) //리스트UI 정렬
         {
-
             int idx = UI_slct_mtrl.FindIndex(item => ERSD == item);
             if (total <= 0) return;
-
-          
 
             //list reorder Algorithm
             for (int i = idx; i < total; i++)
             {
                 GameObject curr = UI_slct_mtrl[i];
                 GameObject next = UI_slct_mtrl[i + 1];
-                curr.GetComponent<SpriteRenderer>().sprite = next.GetComponent<SpriteRenderer>().sprite;
+                curr.GetComponent<Image>().sprite = next.GetComponent<Image>().sprite;
             }
 
             //exception handling
             if (total == 0) return;
-            UI_slct_mtrl[total].GetComponent<SpriteRenderer>().sprite = default_sprite;
+            UI_slct_mtrl[total].GetComponent<Image>().sprite = default_sprite;
         }
         public void u_setUIbright(int total,bool isBright = true)
         {
@@ -68,7 +65,7 @@ namespace CloudSystem
                 //색 밝게
                 for (int i = 0; i < total; i++)
                 {
-                    UI_slct_mtrl[i].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+                    UI_slct_mtrl[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
                 }
             }
             else
@@ -76,7 +73,7 @@ namespace CloudSystem
                 //색 어둡게
                 for (int i = 0; i < total; i++)
                 {
-                    UI_slct_mtrl[i].GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f, 1f);
+                    UI_slct_mtrl[i].GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f, 1f);
                 }
             }
         }
@@ -84,13 +81,9 @@ namespace CloudSystem
         {
             for (int i = 0; i < _total; i++)
             {
-                UI_slct_mtrl[i].GetComponent<SpriteRenderer>().sprite = default_sprite;
+                Debug.Log("이미지 초기화");
+                UI_slct_mtrl[i].GetComponent<Image>().sprite = default_sprite;
             }
-        }
-
-        void update()
-        {
-
         }
     }
 }
@@ -143,8 +136,7 @@ public class CloudMakeSystem : MonoBehaviour
     private void d_deselectMtrl(string name)
     {
         total--; //update total count
-        slct_mtrl.m_sort(slct_mtrl.getErsdobj(name),total);
-
+        slct_mtrl.m_sort(slct_mtrl.getErsdobj(name),total); //구름공장에서의 이미지 정렬
     }
 
     private void d_readCSV(string name)
@@ -227,6 +219,7 @@ public class CloudMakeSystem : MonoBehaviour
       
         slct_mtrl = new CloudSystem.S_list();
         slct_mtrl.init(this.transform.Find("selectedIngredient").transform);
+        slct_mtrl.default_sprite = default_sprite;
 
         UI_btn_txt = this.transform.Find("Button").GetComponentInChildren<Text>();
         UI_btn_txt.text = "제작하기";

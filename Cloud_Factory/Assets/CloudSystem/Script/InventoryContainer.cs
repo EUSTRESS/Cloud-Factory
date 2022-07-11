@@ -18,6 +18,10 @@ public class InventoryContainer : MonoBehaviour
 
     private Dictionary<IngredientData, int> mUiStocksData; //UI상에 보여지는 StocksData
 
+    void Start()
+    {
+        Cloudmakesystem = GameObject.FindWithTag("CloudSystem").GetComponent<CloudMakeSystem>();
+    }
 
     //날씨의 공간에서 구름 공장으로 넘어갈 때, 가상의 채집 인벤토리 데이터를 구름공장의 UI인벤토리로 넘겨준다.
     public void initInven(Dictionary<IngredientData, int> invenData)
@@ -60,13 +64,6 @@ public class InventoryContainer : MonoBehaviour
         }
     }
 
-    //클릭으로 인해 실제 inven Data(Inventory Manager)의 데이터는 바뀌지 않지만, UI상으로는 개수의 변화가 보여야 한다.
-    //따라서 예비 인벤토리 리스트의 값을 변경 후 UI도 변경해준다.
-    private void updateInven()
-    {
-       
-
-    }
     //Btn click 함수
     public void clicked() //matarial in inventory selected
     {
@@ -78,11 +75,23 @@ public class InventoryContainer : MonoBehaviour
         updateStockCnt(name, true);
     }
 
-    void Start()
+    public void unclicked() //matarial in cloudmaker deselected
     {
-        Cloudmakesystem = GameObject.FindWithTag("CloudSystem").GetComponent<CloudMakeSystem>();
-     
+        GameObject target = EventSystem.current.currentSelectedGameObject;
+        Sprite sprite = target.GetComponent<Image>().sprite;
 
+        if (sprite.name == "Circle") return; //예외처리
+
+        updateStockCnt(getDataWithSprite(sprite.name).ingredientName, false);
+
+        Cloudmakesystem.E_UnSelected(target.name);
+        Debug.Log("클릭");
+    }
+    public IngredientData getDataWithSprite(string _spritename) //Sprite를 매개변수로 해당 아이템 data를 검색한다.
+    {
+        IngredientData data = inventoryManager.mIngredientDatas[inventoryManager.minvenLevel - 1].mItemList.Find(item => _spritename == item.image.name);
+
+        return data;
     }
 
     //////////////////////////////
@@ -126,6 +135,68 @@ public class InventoryContainer : MonoBehaviour
         removeStockInInven(stockDt, uiGameObj);
     }
 
+    private void cancelStock(string dataName)
+    {
+        IngredientData _stockDt = inventoryManager.mIngredientDatas[inventoryManager.minvenLevel - 1].mItemList.Find(item => dataName == item.ingredientName);
+        GameObject uiGameObj = findObjectWithData(_stockDt);
+        //구름제작 재료 선택에서 취소된 재료가 인벤토리에 있는지 검사.
+        //만약 없다면 취소했을 시 리스트에 새 재료 추가해서 개수 +1 한다.
+        if (mUiStocksData.ContainsKey(_stockDt))
+        {
+            mUiStocksData[_stockDt]++;
+            uiGameObj.transform.GetChild(0).GetComponent<Text>().text = mUiStocksData[_stockDt].ToString();
+        }   
+        else
+            addStockInInven(_stockDt, uiGameObj);
+    }
+    private void addStockInInven(IngredientData stockDt, GameObject uiGameObj)
+    {
+        //1. 나머지 데이터 하나씩 덮어 씌우기.
+        int tmp = 0;
+        foreach (KeyValuePair<IngredientData, int> data in mUiStocksData)
+        {
+            GameObject stockObj = mUiInvenStocks[tmp];
+
+            //GameObject name
+            stockObj.name = data.Key.ingredientName;
+            //이미지
+            stockObj.transform.GetComponent<Image>().sprite = data.Key.image;
+            //cnt
+            stockObj.transform.GetChild(0).GetComponent<Text>().text = data.Value.ToString();
+            //name
+            stockObj.transform.GetChild(1).GetComponent<Text>().text = data.Key.ingredientName.ToString();
+
+            tmp++; //plus index value
+        }
+
+        //Data 추가
+        mUiStocksData.Add(stockDt,1); //리스트에서 해당 data 추가
+
+        //인벤토리 전체 업데이트
+
+        //2. 인벤토리의 마지막 stock의 컴포넌트 추가 및 이미지 초기화.
+        // tmp instance
+        GameObject lastStockInInven = mUiInvenStocks[mUiStocksData.Count-1];
+        
+        //Component 추가
+        GameObject cntTxt = Instantiate(mTxtInfoPrefab[0]);
+        cntTxt.transform.SetParent(lastStockInInven.transform, false);
+        cntTxt.transform.GetComponent<Text>().text = mUiStocksData[stockDt].ToString();
+
+        GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
+        nameTxt.transform.SetParent(lastStockInInven.transform, false);
+        nameTxt.transform.GetComponent<Text>().text = stockDt.ingredientName.ToString();
+
+        Button btn = lastStockInInven.AddComponent<Button>();
+        btn.onClick.AddListener(clicked);
+
+        //Image Update
+        lastStockInInven.transform.GetComponent<Image>().sprite = stockDt.image; 
+
+        //Name Upadate
+        lastStockInInven.name = stockDt.ingredientName; ; //Game Object Name 초기화       
+    }
+
     private void removeStockInInven(IngredientData stockDt, GameObject uiGameObj)
     {
         mUiStocksData.Remove(stockDt); //리스트에서 해당 data 삭제
@@ -160,26 +231,13 @@ public class InventoryContainer : MonoBehaviour
         }
     }
 
-    private void cancelStock(string dataName)
-    {
-        IngredientData _stockDt = inventoryManager.mIngredientDatas[inventoryManager.minvenLevel - 1].mItemList.Find(item => dataName == item.ingredientName);
-
-        //구름제작 재료 선택에서 취소된 재료가 인벤토리에 있는지 검사.
-        //만약 없다면 취소했을 시 리스트에 새 재료 추가해서 개수 +1 한다.
-        if (mUiStocksData.ContainsKey(_stockDt)) mUiStocksData[_stockDt]++;
-        else
-            mUiStocksData.Add(_stockDt,1);
-        
-    }
+    
 
     //인벤토리 목록이 수정된 후에는 무조건 재정렬하여서 UI에 보여주는 목록도 Update해주어야 한다.
 
     /////////////////////
     //인벤토리 정렬 함수//
     ////////////////////
-
-   
-
     //리스트 자체를 정렬한다. 정렬 할 때는 새 리스트를 만들어서 UI에 반영한다.
     private Dictionary<IngredientData, int> sortStock(Emotion _emotion)
     {

@@ -55,7 +55,7 @@ public class InventoryManager : MonoBehaviour
             mInventoryContainer = GameObject.Find("Cloud-System").transform.Find("PU_CloudCreater").transform.Find("Inventory").transform.Find("Container").gameObject;
             //Inventory level 확인 후 리스트 크기 조정
             //데이터 상의 인벤토리 목록, 컨테이너에 전달
-            mInventoryContainer.transform.GetComponent<InventoryContainer>().initInven(mergeList2Dic());
+            mInventoryContainer.transform.GetComponent<InventoryContainer>().initInven(mergeList2Dic(),"public");
             mIsSceneChange = false;
         }
 

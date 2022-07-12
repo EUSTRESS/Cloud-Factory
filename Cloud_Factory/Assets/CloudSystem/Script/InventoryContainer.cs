@@ -24,8 +24,8 @@ public class InventoryContainer : MonoBehaviour
     ////////////////////
     [SerializeField]
     private Dropdown mDropDown;
-
-
+    private int mSortedCnt; //선택정렬된개수
+    private Dictionary<IngredientData, int> mSortedData; //UI상에 보여지는 StocksData
     void Start()
     {
         Cloudmakesystem = GameObject.FindWithTag("CloudSystem").GetComponent<CloudMakeSystem>();
@@ -42,6 +42,7 @@ public class InventoryContainer : MonoBehaviour
 
         string name = EventSystem.current.currentSelectedGameObject.name;
         Cloudmakesystem.E_Selected(name);
+
         updateStockCnt(name, true);
     }
 
@@ -67,7 +68,11 @@ public class InventoryContainer : MonoBehaviour
 
     public void activeDropDown()
     {
-        if (mDropDown.interactable) mDropDown.interactable = false;
+        if (mDropDown.interactable)
+        {
+            mDropDown.interactable = false;
+            mSortedCnt = mUiStocksData.Count;
+        }
         else
         {
             mDropDown.interactable = true;
@@ -81,66 +86,12 @@ public class InventoryContainer : MonoBehaviour
     {     
         Debug.Log("[DropdownEvent] {" + mDropDown.value + "} clicked.");
 
-        Dictionary<IngredientData, int> sortedDt = sortStock(mDropDown.value);
-
-        //현재 있는 게임 오브젝트와 새로 들어오는 개수 비교한다.
-        int difference = sortedDt.Count - mUiInvenStocks.Count;
-        //현재 있는게 더 많을 경우 : 차액을 초기화
-        if (difference < 0) //difference가 2이면 
-        {
-            for (int i = sortedDt.Count; i < mUiInvenStocks.Count; i++)
-            {
-                mUiInvenStocks[i].name = "000";
-                mUiInvenStocks[i].GetComponent<Image>().sprite = mDefaultSprite;
-
-                if (mUiInvenStocks[i].transform.GetComponent<Button>())
-                {
-                    Destroy(mUiInvenStocks[i].GetComponent<Button>());
-                }
-               
-                if (mUiInvenStocks[i].transform.childCount != 0)
-                {
-                    Destroy(mUiInvenStocks[i].transform.GetChild(1).gameObject);
-                    Destroy(mUiInvenStocks[i].transform.GetChild(0).gameObject);
-                }
-                      
-            }
-        }
-        else
-        {
-            //현재 있는게 더 적을 경우 : 차액만큼 컴포넌트 생성
-            for (int i = mUiInvenStocks.Count; i < sortedDt.Count; i++)
-            {
-                GameObject invenUI = mUiInvenStocks[i];
-
-                if (invenUI.transform.childCount == 0)
-                {
-                    GameObject cntTxt = Instantiate(mTxtInfoPrefab[0]);
-                    cntTxt.transform.SetParent(invenUI.transform, false);
-                    cntTxt.transform.GetComponent<Text>().text = "0";
-
-                    GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
-                    nameTxt.transform.SetParent(invenUI.transform, false);
-                    nameTxt.transform.GetComponent<Text>().text = "000";
-                }
-
-                //버튼 컴포넌트가 없으면 만들어준다.
-                if (invenUI.transform.GetComponent<Button>() == null)
-                {
-                    Button btn = invenUI.AddComponent<Button>();
-                    btn.onClick.AddListener(clicked);
-                }
-
-                //Image Update
-                invenUI.transform.GetComponent<Image>().sprite = mDefaultSprite;
-
-                //Name Upadate
-                invenUI.name = "000";
-            }
-        }
-
-        initInven(sortedDt, "private");
-        updateInven(sortedDt);
+        mSortedData = new Dictionary<IngredientData, int>(); //init
+        mSortedData = sortStock(mDropDown.value);
+        mSortedCnt = mSortedData.Count;
+        clearInven(mSortedData);
+        initInven(mSortedData, "private");
+        updateInven(mSortedData);
     }
 
     //날씨의 공간에서 구름 공장으로 넘어갈 때, 가상의 채집 인벤토리 데이터를 구름공장의 UI인벤토리로 넘겨준다.
@@ -200,7 +151,64 @@ public class InventoryContainer : MonoBehaviour
             tmp++;
         }
     }
+    private void clearInven(Dictionary<IngredientData, int> _mData)
+    {
+        //현재 있는 게임 오브젝트와 새로 들어오는 개수 비교한다.
+        int difference = _mData.Count - mUiInvenStocks.Count;
+        //현재 있는게 더 많을 경우 : 차액을 초기화
+        if (difference < 0) //difference가 2이면 
+        {
+            for (int i = _mData.Count; i < mUiInvenStocks.Count; i++)
+            {
+                mUiInvenStocks[i].name = "000";
+                mUiInvenStocks[i].GetComponent<Image>().sprite = mDefaultSprite;
 
+                if (mUiInvenStocks[i].transform.GetComponent<Button>())
+                {
+                    Destroy(mUiInvenStocks[i].GetComponent<Button>());
+                }
+
+                if (mUiInvenStocks[i].transform.childCount != 0)
+                {
+                    Destroy(mUiInvenStocks[i].transform.GetChild(1).gameObject);
+                    Destroy(mUiInvenStocks[i].transform.GetChild(0).gameObject);
+                }
+
+            }
+        }
+        else
+        {
+            //현재 있는게 더 적을 경우 : 차액만큼 컴포넌트 생성
+            for (int i = mUiInvenStocks.Count; i < _mData.Count; i++)
+            {
+                GameObject invenUI = mUiInvenStocks[i];
+
+                if (invenUI.transform.childCount == 0)
+                {
+                    GameObject cntTxt = Instantiate(mTxtInfoPrefab[0]);
+                    cntTxt.transform.SetParent(invenUI.transform, false);
+                    cntTxt.transform.GetComponent<Text>().text = "0";
+
+                    GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
+                    nameTxt.transform.SetParent(invenUI.transform, false);
+                    nameTxt.transform.GetComponent<Text>().text = "000";
+                }
+
+                //버튼 컴포넌트가 없으면 만들어준다.
+                if (invenUI.transform.GetComponent<Button>() == null)
+                {
+                    Button btn = invenUI.AddComponent<Button>();
+                    btn.onClick.AddListener(clicked);
+                }
+
+                //Image Update
+                invenUI.transform.GetComponent<Image>().sprite = mDefaultSprite;
+
+                //Name Upadate
+                invenUI.name = "000";
+            }
+        }
+    }
 
     //해당 data 딕셔너리의 개수 만큼 데이터를 바꾼다.
     private void updateInven(Dictionary<IngredientData, int> _mData)
@@ -290,16 +298,24 @@ public class InventoryContainer : MonoBehaviour
     private void addStockInInven(IngredientData stockDt, GameObject uiGameObj)
     {
         //1. 나머지 데이터 하나씩 덮어 씌우기.
-        updateInven(mUiStocksData);
+        //인벤토리 전체 업데이트
+        if (!mDropDown.interactable)
+            updateInven(mUiStocksData);
+        else
+            updateInven(mSortedData);
 
         //Data 추가
-        mUiStocksData.Add(stockDt,1); //리스트에서 해당 data 추가
+        mUiStocksData.Add(stockDt, 1); //리스트에서 해당 data 추가
+        mSortedData.Add(stockDt, 1); //리스트에서 해당 data 추가
 
-        //인벤토리 전체 업데이트
+        if (!mDropDown.interactable)
+            mSortedCnt = mUiStocksData.Count;
+        else
+            mSortedCnt = mSortedData.Count;
 
         //2. 인벤토리의 마지막 stock의 컴포넌트 추가 및 이미지 초기화.
         // tmp instance
-        GameObject lastStockInInven = mUiInvenStocks[mUiStocksData.Count-1];
+        GameObject lastStockInInven = mUiInvenStocks[mSortedCnt - 1];
         
         //Component 추가
         GameObject cntTxt = Instantiate(mTxtInfoPrefab[0]);
@@ -323,12 +339,17 @@ public class InventoryContainer : MonoBehaviour
     private void removeStockInInven(IngredientData stockDt, GameObject uiGameObj)
     {
         mUiStocksData.Remove(stockDt); //리스트에서 해당 data 삭제
+        mSortedData.Remove(stockDt); //리스트에서 해당 data 삭제
+
 
         //인벤토리 전체 업데이트
-
+        if (!mDropDown.interactable) 
+            mSortedCnt = mUiStocksData.Count;
+        else
+            mSortedCnt = mSortedData.Count;
         //1. 인벤토리의 마지막 stock의 컴포넌트 삭제 및 이미지 초기화.
         // tmp instance
-        GameObject lastStockInInven = mUiInvenStocks[mUiStocksData.Count];
+        GameObject lastStockInInven = mUiInvenStocks[mSortedCnt];
         lastStockInInven.name = "000"; //Game Object Name 초기화
         lastStockInInven.transform.GetComponent<Image>().sprite = mDefaultSprite; //img초기화
         Destroy(lastStockInInven.transform.GetComponent<Button>()); // button component 삭제
@@ -336,7 +357,10 @@ public class InventoryContainer : MonoBehaviour
         Destroy(lastStockInInven.transform.GetChild(1).gameObject); // name txt 삭제
 
         //2. 나머지 데이터 하나씩 덮어 씌우기.
-        updateInven(mUiStocksData);
+        if (!mDropDown.interactable)
+            updateInven(mUiStocksData);
+        else
+            updateInven(mSortedData);
     }
 
     
@@ -362,10 +386,9 @@ public class InventoryContainer : MonoBehaviour
 
             //내림차순으로 정렬
             var queryAsc = stock.Key.iEmotion.OrderByDescending(x => x.Value);// int, int
-            Debug.Log("[Emotion Sorting] Target:{" + _emotion + "} : PreOrderEmo :{" + queryAsc.First().Key + "}");
+
             //첫번째 값이 제일 크므로 제일 큰 값이 매개인자와 같은 감정이라면 추가해준다.
             if(_emotion != queryAsc.First().Key) continue;
-            Debug.Log("목록에 추가되었습니다");
             results.Add(stock.Key, stock.Value);
         }
 

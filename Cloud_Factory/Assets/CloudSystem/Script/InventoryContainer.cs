@@ -355,12 +355,16 @@ public class InventoryContainer : MonoBehaviour
 
         //Data 추가
         mUiStocksData.Add(stockDt, 1); //리스트에서 해당 data 추가
-        mSortedData.Add(stockDt, 1); //리스트에서 해당 data 추가
+       
 
         if (!mDropDown.interactable)
             mSortedCnt = mUiStocksData.Count;
         else
+        {
+            mSortedData.Add(stockDt, 1); //리스트에서 해당 data 추가
             mSortedCnt = mSortedData.Count;
+        }
+            
 
         //2. 인벤토리의 마지막 stock의 컴포넌트 추가 및 이미지 초기화.
         // tmp instance
@@ -388,14 +392,17 @@ public class InventoryContainer : MonoBehaviour
     private void removeStockInInven(IngredientData stockDt, GameObject uiGameObj)
     {
         mUiStocksData.Remove(stockDt); //리스트에서 해당 data 삭제
-        mSortedData.Remove(stockDt); //리스트에서 해당 data 삭제
-
+        
 
         //인벤토리 전체 업데이트
         if (!mDropDown.interactable) 
             mSortedCnt = mUiStocksData.Count;
         else
+        {
+            mSortedData.Remove(stockDt); //리스트에서 해당 data 삭제
             mSortedCnt = mSortedData.Count;
+        }
+            
         //1. 인벤토리의 마지막 stock의 컴포넌트 삭제 및 이미지 초기화.
         // tmp instance
         GameObject lastStockInInven = mUiInvenStocks[mSortedCnt];

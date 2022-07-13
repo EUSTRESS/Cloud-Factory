@@ -146,7 +146,7 @@ public class CloudMakeSystem : MonoBehaviour
     }
     private void d_createCloud(string name = null)
     {
-        if (total < 1)
+        if (total < 2)
         {
             Debug.Log("재료수가 부족합니다.");
             return;

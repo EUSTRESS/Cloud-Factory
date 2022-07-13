@@ -61,9 +61,14 @@ public class InventoryContainer : MonoBehaviour
    
     public void sortWithCnt() //Button Interaction Function
     {
-        mUiStocksData = sortStock();
+        Dictionary<IngredientData, int> targetDt = new Dictionary<IngredientData, int>();
 
-        updateInven(mUiStocksData);
+        if (mDropDown.interactable)
+            targetDt = sortStock(mSortedData);
+        else
+            targetDt = sortStock(mUiStocksData);
+
+        updateInven(targetDt);
     }
 
     public void activeDropDown()
@@ -72,6 +77,9 @@ public class InventoryContainer : MonoBehaviour
         {
             mDropDown.interactable = false;
             mSortedCnt = mUiStocksData.Count;
+            clearInven(mUiStocksData);
+            initInven(mUiStocksData, "private");
+            updateInven(mUiStocksData);
         }
         else
         {
@@ -269,9 +277,11 @@ public class InventoryContainer : MonoBehaviour
     {
         IngredientData stockDt = inventoryManager.mIngredientDatas[inventoryManager.minvenLevel - 1].mItemList.Find(item => dataName == item.ingredientName);
         
+        //전체 Data에서 삭제
         mUiStocksData[stockDt]--;
 
         GameObject uiGameObj = findObjectWithData(stockDt);
+
         uiGameObj.transform.GetChild(0).GetComponent<Text>().text = mUiStocksData[stockDt].ToString();
 
         if (mUiStocksData[stockDt] != 0) return;
@@ -280,19 +290,58 @@ public class InventoryContainer : MonoBehaviour
         removeStockInInven(stockDt, uiGameObj);
     }
 
+    private bool isStockInSortedLayer(IngredientData stockDt) //선택된 재료가 현재 보여지고 있는 인벤토리 레이어에 있는지 bool값 반환
+    {
+        //해당 감정이 stock의 iEmotion리스트에 존재하는지 확인
+        bool isContain = stockDt.iEmotion.ContainsKey(mDropDown.value);
+        bool isSorting = mDropDown.interactable; //정렬레이어가 적용된 상태인지 확인.
+
+
+        if (isSorting) //정렬 상태 && 선택된 감정의 가장 큰 값이 현재 목차와 맞지 않을 떄.
+        {
+            //감정값 내림차순으로 정렬
+            var queryAsc = stockDt.iEmotion.OrderByDescending(x => x.Value);// int, int
+            int maxEmo = queryAsc.First().Key;
+            if (mDropDown.value != maxEmo)         
+                return false;
+        }
+
+        return true;
+    }
     private void cancelStock(string dataName)
     {
-        IngredientData _stockDt = inventoryManager.mIngredientDatas[inventoryManager.minvenLevel - 1].mItemList.Find(item => dataName == item.ingredientName);
-        GameObject uiGameObj = findObjectWithData(_stockDt);
+        IngredientData stockDt = inventoryManager.mIngredientDatas[inventoryManager.minvenLevel - 1].mItemList.Find(item => dataName == item.ingredientName);
+        GameObject uiGameObj = findObjectWithData(stockDt);
+
         //구름제작 재료 선택에서 취소된 재료가 인벤토리에 있는지 검사.
         //만약 없다면 취소했을 시 리스트에 새 재료 추가해서 개수 +1 한다.
-        if (mUiStocksData.ContainsKey(_stockDt))
+        if (mUiStocksData.ContainsKey(stockDt))
         {
-            mUiStocksData[_stockDt]++;
-            uiGameObj.transform.GetChild(0).GetComponent<Text>().text = mUiStocksData[_stockDt].ToString();
-        }   
+            mUiStocksData[stockDt]++;
+
+            if (!isStockInSortedLayer(stockDt)) return;
+
+
+            if (mDropDown.interactable)
+            {
+                mSortedData[stockDt]++;
+            }
+
+
+            uiGameObj.transform.GetChild(0).GetComponent<Text>().text = mUiStocksData[stockDt].ToString();
+        }
         else
-            addStockInInven(_stockDt, uiGameObj);
+        {
+            if (!isStockInSortedLayer(stockDt))
+            {
+                mUiStocksData.Add(stockDt, 1); //리스트에서 해당 data 추가
+                return;
+            }
+            
+            addStockInInven(stockDt, uiGameObj);
+
+        }
+            
     }
 
     private void addStockInInven(IngredientData stockDt, GameObject uiGameObj)
@@ -396,11 +445,11 @@ public class InventoryContainer : MonoBehaviour
         return results;
     }
 
-    private Dictionary<IngredientData, int> sortStock() // 개수별로 분류:
+    private Dictionary<IngredientData, int> sortStock(Dictionary<IngredientData, int> _target) // 개수별로 분류:
     {
         Dictionary<IngredientData, int> results = new Dictionary<IngredientData, int>();
 
-        var queryAsc = mUiStocksData.OrderBy(x => x.Value);
+        var queryAsc = _target.OrderBy(x => x.Value);
 
         foreach (var dictionary in queryAsc)
             results.Add(dictionary.Key, dictionary.Value);

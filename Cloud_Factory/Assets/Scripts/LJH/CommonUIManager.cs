@@ -96,6 +96,14 @@ public class CommonUIManager : MonoBehaviour
         // 치유의 기록을 들어가기전 씬으로 이동   
         SceneManager.LoadScene(SceneData.Instance.prevSceneIndex);
     }
+    public void GoGiveCloud()
+    {
+        SceneManager.LoadScene("Give Cloud");
+    }
+    public void GoCloudStorage()
+    {
+        SceneManager.LoadScene("Cloud Storage");
+    }
 
     // 옵션창 활성화, 비활성화
     public void ActiveOption()

@@ -9,6 +9,7 @@ public class RecordUIManager : MonoBehaviour
     // 치유의 기록
     public GameObject gShowUpset;
     public GameObject gShowAll;
+    public GameObject[] gStampF = new GameObject[4]; // 불만 뭉티 스탬프
     // 치유의기록
     public Image[] iProfileBG = new Image[4]; // 프로필 배경
 
@@ -107,6 +108,11 @@ public class RecordUIManager : MonoBehaviour
 
         MainCam.backgroundColor = new Color(222f / 255f, 219f / 255f, 217f / 255f);
 
+        for (int index = 0; index < gStampF.Length; index++)
+        { // stamp 활성화
+            gStampF[index].SetActive(true);
+        }
+
         // 뭉티 정보 불러오는 메소드 호출하는 부분
     }
 
@@ -130,6 +136,11 @@ public class RecordUIManager : MonoBehaviour
         gShowUpset.SetActive(true);
 
         MainCam.backgroundColor = new Color(194f / 255f, 216f / 255f, 233f / 255f);
+
+        for (int index = 0; index < gStampF.Length; index++)
+        { // stamp 비활성화
+            gStampF[index].SetActive(false);
+        }
 
         // 뭉티 정보 불러오는 메소드 호출하는 부분
     }

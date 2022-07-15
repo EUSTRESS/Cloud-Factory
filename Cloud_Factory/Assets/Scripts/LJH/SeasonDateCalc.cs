@@ -46,8 +46,9 @@ public class SeasonDateCalc : MonoBehaviour
     void Update()
     {
         // 로비, 구름제작, 구름제공 화면에서는 제한
-        if (SceneManager.GetActiveScene().name != "Lobby")
-        // || SceneManager.GetActiveScene().name != "구름제작, 구름 제공")
+        if (SceneManager.GetActiveScene().name != "Lobby"
+         || SceneManager.GetActiveScene().name != "Cloud Storage"
+         || SceneManager.GetActiveScene().name != "Give Cloud")
         {
             // 초 계산
             mSecond += Time.deltaTime;

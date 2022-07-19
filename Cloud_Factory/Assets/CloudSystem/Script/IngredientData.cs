@@ -12,17 +12,43 @@ public enum Emotion
     DISGUST, //혐오
     INTEXPEC, //INTERSTING+EXPECTATION 관심,기대
     LOVE,
-    ROMANCE, //순정만화가 ROMANCE COMICS여서 PURE LOVE보단 나을 것 같아서 이렇게 함.
+    OBED, //순종.
     AWE,
     CONTRAY,//반대
     BLAME,
     DESPISE,
     AGGRESS,//AGGRESSION 공격성
-    OPTIMISM,//낙천
+    OPTIMISM,//낙r관, 낙천
     BITTER,
     LOVHAT, //LOVE AND HATRED
     FREEZE,
-    CHAOTIC//혼란스러움
+    CHAOTIC,//혼란스러움
+    NONE
+}
+
+[System.Serializable]
+public struct EmotionInfo
+{
+    [SerializeField]
+    public Emotion Key;
+    [SerializeField]
+    public int Value;
+
+    public void init(Emotion _Key, int _Value)
+    {
+        Key = _Key;
+        Value = _Value;
+    }
+
+    public int getKey2Int()
+    {
+        return (int)Key; //Emotion Enum 의 고유값(index값)으로 변환해서 제공
+    }
+
+    public int getValue()
+    {
+        return Value;
+    }
 }
 
 [CreateAssetMenu(fileName = "IngredientData", menuName = "ScriptableObjects/IngredientData", order = 1)]
@@ -30,30 +56,7 @@ public class IngredientData : ScriptableObject
 {
     
 
-    [System.Serializable]
-    public struct emotioninfo
-    {
-        [SerializeField]
-        private Emotion Key;
-        [SerializeField]
-        private int Value;
-
-        void init(Emotion _Key, int _Value)
-        {
-            Key = _Key;
-            Value = _Value;
-        }
-
-        public int getKey2Int()
-        {
-            return (int)Key; //Emotion Enum 의 고유값(index값)으로 변환해서 제공
-        }
-
-        public int getValue()
-        {
-            return Value;
-        }
-    }
+    
 
     public string ingredientName; //재료 이름
 
@@ -64,7 +67,7 @@ public class IngredientData : ScriptableObject
     private int rarity;
 
     [SerializeField]
-    private emotioninfo[] emotions;
+    private EmotionInfo[] emotions;
 
     public Dictionary<int, int> iEmotion;
 
@@ -74,7 +77,7 @@ public class IngredientData : ScriptableObject
     public void init()
     {
         iEmotion = new Dictionary<int, int>();
-        foreach (emotioninfo emotion in emotions)
+        foreach (EmotionInfo emotion in emotions)
         {
             iEmotion.Add(emotion.getKey2Int(), emotion.getValue());
         }

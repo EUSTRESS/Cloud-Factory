@@ -33,6 +33,41 @@ namespace CloudSystem
             UI_slct_mtrl[total - 1].GetComponent<Image>().sprite = data.image;
         }
 
+        private List<IngredientData> mGetingredientDatas(IngredientList mtrlDATA) //확정된 리스트를 IngredientData를 갖고있는 리스트로 변환하여 제공.
+        {
+            List<IngredientData> results = new List<IngredientData>();
+            foreach(GameObject stock in UI_slct_mtrl)
+            {
+                string targetImgNm = stock.GetComponent<Image>().sprite.name;
+                if (targetImgNm == default_sprite.name) continue;
+                IngredientData data = mtrlDATA.mItemList.Find(item => targetImgNm == item.image.name);
+                results.Add(data);
+            }
+
+            return results;
+        }
+
+        public List<EmotionInfo> mGetTotalEmoList(IngredientList mtrlDATA)
+        {
+            List<IngredientData> raw = mGetingredientDatas(mtrlDATA);
+            List<EmotionInfo> results = new List<EmotionInfo>();
+
+            //재료들의 감정들을 차례로 리스트에 추가한다.
+            foreach(IngredientData data in raw)
+            {
+                foreach (KeyValuePair<int, int> emo in data.iEmotion)
+                {
+                    EmotionInfo emoDt = new EmotionInfo();
+                    emoDt.init((Emotion)emo.Key, emo.Value);
+                    results.Add(emoDt);
+                }
+                    
+            }
+
+            return results;
+
+        }
+
         public GameObject getErsdobj(string name)
         {
             GameObject ERSD = UI_slct_mtrl.Find(item => name == item.name); //삭제된 빈칸 찾기.
@@ -112,7 +147,10 @@ public class CloudMakeSystem : MonoBehaviour
     //Data
     [SerializeField]
     public IngredientList mtrlDATA; // 모든 재료 정보를 갖고 있는 리스트 scriptable data
-   
+
+    //Total Emotion Input List 
+    private List<EmotionInfo> mEmotions;
+
     //UI
     [SerializeField]
     private CloudSystem.S_list slct_mtrl; //selected_material data class
@@ -143,10 +181,62 @@ public class CloudMakeSystem : MonoBehaviour
     {
         //구름 조합법 나오면 그때 스크립트 작성.
         Debug.Log("조합재료를 확인합니다.");
+
+        //계산 들어갈 감정 리스트 추출. => Base Emotion List
+        List<EmotionInfo> emotionList = slct_mtrl.mGetTotalEmoList(mtrlDATA);
+
+        
+        //중복되는 감정이 리스트에 없을 떄 까지 계속 작업을 반복한다.
+        while (true)
+        {
+            List<EmotionInfo> overlapList = mIsOverlap(emotionList);
+            if (overlapList == null) break;
+
+            //중복감정 처리.
+            EmotionInfo target = new EmotionInfo();
+            //1. 조합에 사용될 감정 추출하기.
+            if (overlapList[0].Value >= overlapList[1].Value) target = overlapList[1]; //작은 것 선택. 같다면 뒤에꺼 선택.
+            else target = overlapList[0];
+
+            //2. 가까운 감정과 조합하기.
+              //(1) 우선순위<1> : 조합재료로 사용되는 감정보다 앞에 위치 함.
+
+              //(2) 우선순위<2> : 조합재료로 사용되는 감정보다 뒤에 위치함.
+
+              //(3) 가까운 두 감정과 조합이 불가능하다면 조합은 발생하지 않는다.
+        }
     }
+
+    private List<EmotionInfo> mIsOverlap(List<EmotionInfo> emotionList)
+    {
+        //1. 중복되는 감정이 존재하는지 검사.
+        List<Emotion> overlapsK = new List<Emotion>();
+        List<int> overlapsV = new List<int>();
+        foreach (EmotionInfo info in emotionList)
+        {
+            //2. 위의 감정이 이미 리스트에 있으면 탐색을 즉시 멈추고, list(중복되는 두가지 재료정보를 갖는 리스트)를 리턴한다.
+            if (overlapsK.Contains(info.Key))
+            { 
+                List<EmotionInfo> results = new List<EmotionInfo>();
+
+                int idx = overlapsK.IndexOf(info.Key);
+                EmotionInfo preInfo = new EmotionInfo();
+                preInfo.init(info.Key, overlapsV[idx]);
+
+                results.Add(preInfo);
+                results.Add(info);
+
+                return results;
+            }
+            overlapsK.Add(info.Key);
+            overlapsV.Add(info.Value);
+        }
+        return null; //중복 재료가 없으면 false를 return한다.
+    }
+
     private void d_createCloud(string name = null)
     {
-        if (total < 2)
+        if (total < 1)
         {
             Debug.Log("재료수가 부족합니다.");
             return;
@@ -155,11 +245,10 @@ public class CloudMakeSystem : MonoBehaviour
         float time = 5f;
         //코루틴
         UI_btn_txt.text = "만드는 중";
-        StartCoroutine(isMaking(time));
-        
+        StartCoroutine(isMaking(time));        
     }
 
-    IEnumerator isMaking(float time)
+    IEnumerator isMaking(float time) //UI 처리
     {
         this.transform.Find("Button").GetComponent<Button>().enabled = false;
 
@@ -181,6 +270,7 @@ public class CloudMakeSystem : MonoBehaviour
         UI_btn_txt.text = "제작하기";
 
         Debug.Log("구름이 만들어졌습니다.");
+
         m_saveCloud();
 
         yield break;
@@ -248,6 +338,7 @@ public class CloudMakeSystem : MonoBehaviour
     ////////////////////////////////////////////////////////
     void Start()
     {
+        mEmotions = new List<EmotionInfo>(); //감정계산할 떄 쓰이는 Emotion List
         init();
     }
 

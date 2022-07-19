@@ -49,11 +49,12 @@ public class ProfileMoving : MonoBehaviour
 
     [HideInInspector]
     public  bool            mIsMoving;    // 페이지가 움직이는지 판단하는 bool값
-    public bool mIsUpset; // 불만뭉티를 보는지 전체뭉티를 보는지
+
+    public  bool mIsUpset;                // 불만뭉티를 보는지 전체뭉티를 보는지
 
     void Awake()
     {
-        mMoveSpeed = 0.5f; // 페이지 넘기는 속도
+        mMoveSpeed = 250f; // 페이지 넘기는 속도
 
         mUIManager = GameObject.Find("UIManager").GetComponent<RecordUIManager>();
         mPageAnim  = GetComponent<Animator>();
@@ -66,7 +67,8 @@ public class ProfileMoving : MonoBehaviour
         mIsMoving = true; // 초기값은 움직일 수 있다.
     }
 
-    void Update()
+    // 움직이는 거라서 물리기반 업데이트 사용해야 랜덤으로 프레임호출 되는 Update에 비해서 버그 안생김
+    void FixedUpdate() 
     {
         if (mUIManager) // null check
         {
@@ -79,7 +81,7 @@ public class ProfileMoving : MonoBehaviour
                 {
                     // mMoveSpeed 만큼 움직인다.
                     this.gameObject.transform.
-                        Translate(new Vector2(-mMoveSpeed * Time.timeScale, -mMoveSpeed * Time.timeScale));
+                        Translate(new Vector2(-1, -1) * mMoveSpeed * Time.deltaTime);
                 }
                 // 다음 위치에 도달하거나 그 이상 넘어갈 경우 바로 현재 위치값으로 갱신
                 else if (mUIManager.mIsNext && rProflieBG.anchoredPosition.x <= vNextPos.x
@@ -93,7 +95,7 @@ public class ProfileMoving : MonoBehaviour
                                        && rProflieBG.anchoredPosition.y < vPrevPos.y)
                 {
                     this.gameObject.transform.
-                        Translate(new Vector2(mMoveSpeed * Time.timeScale, mMoveSpeed * Time.timeScale));
+                        Translate(new Vector2(1, 1) * mMoveSpeed * Time.deltaTime);
                 }
                 else if (mUIManager.mIsPrev && rProflieBG.anchoredPosition.x >= vPrevPos.x
                                             && rProflieBG.anchoredPosition.y >= vPrevPos.y)
@@ -105,6 +107,7 @@ public class ProfileMoving : MonoBehaviour
                 if (rProflieBG.anchoredPosition.x <= (int)ConstantsVector.EFrontToBack.X
                  && rProflieBG.anchoredPosition.y <= (int)ConstantsVector.EFrontToBack.Y)
                 {
+                    // 불만 뭉티랑 전체 보기랑 페이지 넘기는 방식이 다름
                     // 불만 뭉티만 보기
                     if (mIsUpset == true)
                     {
@@ -156,6 +159,7 @@ public class ProfileMoving : MonoBehaviour
             }            
         }
     }
+    // 0번 시블링 인덱스 살짝 딜레이 연출
     void DelaySibling()
     {
         this.gameObject.transform.SetSiblingIndex(0);

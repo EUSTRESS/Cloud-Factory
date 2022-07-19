@@ -22,17 +22,18 @@ public class WeatherUIManager : MonoBehaviour
     {
         if (mGatherResult.activeSelf)
         {
+            // 채집 결과 효과
             mFxShine[0].Rotate(0, 0, 25.0f * Time.deltaTime, 0);
             mFxShine[1].Rotate(0, 0, 25.0f * Time.deltaTime, 0);
             mFxShine[2].Rotate(0, 0, 25.0f * Time.deltaTime, 0);
         }
     }
-    // 마당 버튼 클릭 시
+    // 마당 버튼 클릭 시, 채집하시겠씁니까? 오브젝트 활성화    
     public void OpenGuideGather()
     {
         mGuideGather.SetActive(true);
     }
-    // 나가기
+    // 나가기, 채집하시겠씁니까? 오브젝트 비활성화    
     public void CloseGuideGather()
     {
         mGuideGather.SetActive(false);
@@ -42,8 +43,8 @@ public class WeatherUIManager : MonoBehaviour
     {
         mGuideGather.SetActive(false);
         mGathering.SetActive(true);
-        mGatheringTextCount = 0;
-        tGatheringText.text = "재료 채집 중";
+        mGatheringTextCount = 0; // 초기화
+        tGatheringText.text = "재료 채집 중"; // 초기화
 
         if (SeasonDateCalc.Instance) // null check
         {                            // 각 해당하는 애니메이션 출력
@@ -51,7 +52,7 @@ public class WeatherUIManager : MonoBehaviour
             if (SeasonDateCalc.Instance.mSeason == 1) // 봄이라면
             {
                 mGatherImageRect.sizeDelta = new Vector2(1090, 590); // 이미지 사이즈 맞추기
-
+                
                 mGatheringAnim.SetBool("Spring", true);
                 mGatheringAnim.SetBool("Summer", false);
                 mGatheringAnim.SetBool("Fall", false);
@@ -85,7 +86,7 @@ public class WeatherUIManager : MonoBehaviour
                 mGatheringAnim.SetBool("Winter", true);
             }
         }
-        // 5초 동안 딜레이 후 결과 출력
+        // 5초 동안 채집 후 결과 출력
         Invoke("Gathering", 5.0f);
     }
     void Gathering()
@@ -103,16 +104,16 @@ public class WeatherUIManager : MonoBehaviour
 
         if (mGatheringTextCount <= 3)
         {
-            Invoke("PrintGatheringText", 0.25f); // 0.5초 딜레이마다 . 추가
+            Invoke("PrintGatheringText", 0.25f); // 0.25초 딜레이마다 . 추가
         }
         else // 초기화
         {
             mGatheringTextCount = 0;
             tGatheringText.text = "재료 채집 중";
-            Invoke("PrintGatheringText", 0.25f); // 0.5초 딜레이마다 . 추가
+            Invoke("PrintGatheringText", 0.25f); // 0.25초 딜레이마다 . 추가
         }
     }
-    
+    // 채집 끝!
     public void CloseResultGather()
     {
         mGatherResult.SetActive(false);        

@@ -93,6 +93,7 @@ public class SaveUnitManager : MonoBehaviour
             Debug.Log(sSeasonData);
 
             File.WriteAllText(mSeasonDatePath, sSeasonData);
+
         }        
     }
 

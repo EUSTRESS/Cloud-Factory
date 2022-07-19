@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 치유의 기록 UI
 public class RecordUIManager : MonoBehaviour
 {
     [Header("GAME OBJECT")]
     // 치유의 기록
-    public GameObject gShowUpset;
-    public GameObject gShowAll;
+    public GameObject gShowUpset; // 불만 뭉티보기
+    public GameObject gShowAll;   // 전체 보기 
     public GameObject[] gStampF = new GameObject[4]; // 불만 뭉티 스탬프
     // 치유의기록
     public Image[] iProfileBG = new Image[4]; // 프로필 배경
@@ -20,8 +21,8 @@ public class RecordUIManager : MonoBehaviour
     [Header("BUTTON")]
 
     //치유의 기록     
-    public Button btNextBtn;            // 다음페이지 버튼
-    public Button btPrevBtn;            // 이전페이지 버튼
+    public Button btNextBtn;           // 다음페이지 버튼
+    public Button btPrevBtn;           // 이전페이지 버튼
 
     [HideInInspector]
     public bool mIsNext;               // 치유의 기록 다음 페이지   
@@ -33,10 +34,9 @@ public class RecordUIManager : MonoBehaviour
     private ProfileMoving mProfile3;   // 프로필 움직임 담당 스크립트
 
     // **********임시로써 지워야 함***********
-    public Camera MainCam;
+    public Camera MainCam; // 카메라로 배경 색깔 조정함
     // **********임시로써 지워야 함***********
 
-    // Start is called before the first frame update
     void Awake()
     {
         mProfile1 = GameObject.Find("I_ProfileBG1").GetComponent<ProfileMoving>();
@@ -64,7 +64,8 @@ public class RecordUIManager : MonoBehaviour
         else if (!mProfile1.mIsUpset && !mProfile2.mIsUpset && !mProfile3.mIsUpset)
             Invoke("DelayActiveBtn", 1.0f);  // 활성화 딜레이        
 
-        // 뭉티 정보 불러오는 메소드 호출하는 부분
+        // 다음 뭉티 정보 불러오는 메소드 호출하는 부분
+        Debug.Log("다음 뭉티 정보 호출");
     }
     public void ShowPrevProfile()
     {
@@ -76,17 +77,20 @@ public class RecordUIManager : MonoBehaviour
         mProfile2.mIsMoving = true;
         mProfile3.mIsMoving = true;
 
+        // 버그 방지를 위한 버튼 비활성화
         btNextBtn.interactable = false;
         btPrevBtn.interactable = false;
         Invoke("DelayActiveBtn", 0.5f);
 
-        // 뭉티 정보 불러오는 메소드 호출하는 부분
+        // 다음 뭉티 정보 불러오는 메소드 호출하는 부분
+        Debug.Log("이전 뭉티 정보 호출");
     }
     void DelayActiveBtn()
     {
         btNextBtn.interactable = true;
         btPrevBtn.interactable = true;
     }
+    // 불만 뭉티 보여주는 함수
     public void ShowUpsetMoongti()
     {
         // 화난배경으로 스프라이트 교체
@@ -114,8 +118,9 @@ public class RecordUIManager : MonoBehaviour
         }
 
         // 뭉티 정보 불러오는 메소드 호출하는 부분
+        Debug.Log("불만 뭉티 정보 불러오는 메소드 호출");
     }
-
+    // 전체 보기
     public void ShowAllMoongti()
     {
         // 기본배경으로 스프라이트 교체
@@ -143,11 +148,12 @@ public class RecordUIManager : MonoBehaviour
         }
 
         // 뭉티 정보 불러오는 메소드 호출하는 부분
+        Debug.Log("전체 뭉티 정보 불러오는 메소드 호출");
     }
 
     public void GiveCloud()
     {
         // 구름 제공하는 메소드 호출
-        Debug.Log("구름제공");
+        Debug.Log("구름제공 메소드 호출");
     }
 }

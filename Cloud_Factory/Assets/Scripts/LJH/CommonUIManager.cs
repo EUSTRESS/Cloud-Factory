@@ -13,10 +13,6 @@ public class CommonUIManager : MonoBehaviour
     // 오브젝트 Active 관리
     public GameObject   gOption;       // 옵션 게임 오브젝트
 
-    // 응접실
-    public GameObject   gSpeechBubble; // 응접실 대화창
-    public GameObject   gOkNoGroup;    // 응접실 수락 거절 그룹
-
     [Header("TEXT")]
     public Text         tDate;         // 날짜 텍스트
     public Text         tYear;         // 날짜 텍스트
@@ -42,7 +38,7 @@ public class CommonUIManager : MonoBehaviour
 
     void Update()
     {
-        if (tDate && tYear && iSeasons && SeasonDateCalc.Instance)        // null check
+        if (tDate && tYear && iSeasons && SeasonDateCalc.Instance) // null check
         {
             tDate.text = SeasonDateCalc.Instance.mDay.ToString() + "일";
             tYear.text = SeasonDateCalc.Instance.mYear.ToString() + "년차";
@@ -71,7 +67,7 @@ public class CommonUIManager : MonoBehaviour
         }
     }
     
-    // 버튼들
+    // 씬 이동 버튼들
     public void GoSpaceOfWeather()
     {
         SceneManager.LoadScene("Space Of Weather");
@@ -122,25 +118,5 @@ public class CommonUIManager : MonoBehaviour
     {
         mSFx.Play();
         Application.Quit();
-    }
-
-    /*
-     응접실 메소드가 많아질 경우 따로 매니져를 뺄 것
-     */
-
-    public void ActiveOk()
-    {
-        gSpeechBubble.SetActive(true);
-        gOkNoGroup.SetActive(false);
-
-        // 수락했을 때 메소드 호출
-    }
-
-    public void ActiveNo()
-    {
-        gSpeechBubble.SetActive(true);
-        gOkNoGroup.SetActive(false);
-
-        // 거절했을 때 메소드 호출
     }
 }

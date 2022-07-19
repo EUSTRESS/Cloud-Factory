@@ -5,8 +5,12 @@ using TMPro;
 public class Dropdown : MonoBehaviour
 {
     [SerializeField]
-    private TMP_Dropdown mDropdown;
-    private string[]     mEmotionArray = new string[20]
+    private TMP_Dropdown mDropdown; // 드롭다운
+
+    public int mDropdownIndex;
+
+    // 20가지 감정인데 일단 예람이꺼랑 기획서 보고 했음 틀리면 수정해줘..
+    private string[]     mEmotionArray = new string[20] 
     {
         "기쁨",      "불안",   "슬픔",      "짜증",     "수용",
         "놀람,혼란", "혐오",   "관심,기대", "사랑",     "순정만화가",
@@ -37,7 +41,9 @@ public class Dropdown : MonoBehaviour
 
     public void OnDropdownEvent(int index)
     {
-        Debug.Log("현재 드롭다운 인덱스 : " + index);
+        mDropdownIndex = index;
+        Debug.Log("현재 드롭다운 인덱스 : " + mDropdownIndex);
+        Debug.Log("여기서 인덱스에 따라서 변경할 때 감정별로 정렬 메소드 호출");
     }
 }
 

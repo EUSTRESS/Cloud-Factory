@@ -28,7 +28,7 @@ public class LobbyUIManager : MonoBehaviour
 
     void Awake()
     {
-        mSFx = GameObject.Find("SFx").GetComponent<AudioSource>();
+        mSFx = GameObject.Find("SFx").GetComponent<AudioSource>();        
     }
 
     void Update()
@@ -132,8 +132,9 @@ public class LobbyUIManager : MonoBehaviour
     public void GoCredit()
     {
         // 크레딧 화면으로 전환
+        Debug.Log("크레딧화면으로 전환");
     }
-
+    // 새로하기 경고창
     public void ActiveWarning()
     {
         gWarning.SetActive(true);

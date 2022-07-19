@@ -11,11 +11,18 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField]
     private GameObject mInventoryContainer;
+
+    private CommonUIManager commonUIManger;
     //Debug를 위한 임시 Button 함수. 나중에 삭제할 예정
-    public void go2CloudFacBtn()
+    public void GoCloudFactory()
     {
-        SceneManager.LoadScene("Cloud-Factory-Scene");
-        mIsSceneChange = true;
+        commonUIManger.GoCloudFactory();
+       
+    }
+
+    public void setIsSceneChange(bool trigger)
+    {
+        mIsSceneChange = trigger;
     }
 
     /////////////////
@@ -29,6 +36,7 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {
+        commonUIManger = GameObject.Find("UIManager").GetComponent<CommonUIManager>();
         if (_instance == null) // 게임 시작되면 자기자신을 넣는다.
         {
             _instance = this;
@@ -49,10 +57,10 @@ public class InventoryManager : MonoBehaviour
     private void Update()
     {
         //씬이 구름공장씬으로 이동하면 한번만 인벤토리가 Update 된다.
-        if (mIsSceneChange && SceneManager.GetActiveScene().name == "Cloud-Factory-Scene")
+        if (mIsSceneChange && SceneManager.GetActiveScene().name == "Cloud Storage")
         {
             //Hierachy창에서 InventoryContainer을 찾는다.
-            mInventoryContainer = GameObject.Find("Cloud-System").transform.Find("PU_CloudCreater").transform.Find("Inventory").transform.Find("Container").gameObject;
+            mInventoryContainer = GameObject.Find("Canvas").transform.Find("I_Scroll View Inventory").transform.Find("Viewport").transform.GetChild(0).Find("Container").gameObject;
             //Inventory level 확인 후 리스트 크기 조정
             //데이터 상의 인벤토리 목록, 컨테이너에 전달
             mInventoryContainer.transform.GetComponent<InventoryContainer>().initInven(mergeList2Dic(),"public");

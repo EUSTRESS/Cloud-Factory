@@ -40,6 +40,8 @@ public class StorageUIManager : MonoBehaviour
     // 개수 별로 정렬
     public void SortNumber()
     {
+        InventoryContainer inventoryContainer = gameObject.GetComponent<UIDropdown>().inventoryContainer;
+
         // 호출 최소화, 여기는 2개밖에 없어서 그냥 이렇게 해도 됌
         // 하나는 무조건 활성화 되어있어야 하기 때문에
         if (!mGiveCloudCheckBox[(int)ECheckBox.Number].activeSelf)
@@ -49,16 +51,16 @@ public class StorageUIManager : MonoBehaviour
             mGiveCloudCheckBox[(int)ECheckBox.Emotion].SetActive(false);
 
             Debug.Log("개수 별로 정렬 메소드 호출");
-            InventoryContainer inventoryContainer = gameObject.GetComponent<UIDropdown>().inventoryContainer;
             inventoryContainer.sortWithCnt();
-        }        
+        }     
+
+
     }
     // 감정으로 정렬
     public void SortEmotion()
     {
         InventoryContainer inventoryContainer = gameObject.GetComponent<UIDropdown>().inventoryContainer;
-        inventoryContainer.activeDropDown();
-
+        
         // 호출 최소화
         if (!mGiveCloudCheckBox[(int)ECheckBox.Emotion].activeSelf)
         {
@@ -68,8 +70,12 @@ public class StorageUIManager : MonoBehaviour
             mGiveCloudCheckBox[(int)ECheckBox.Emotion].SetActive(true);
 
             Debug.Log("현재 인덱스 : " + mDropdown.mDropdownIndex);
-            Debug.Log("인덱스 받아와서 현재 적용되어 있는 인덱스로 감정별 정렬 메소드 호출");    
+            Debug.Log("인덱스 받아와서 현재 적용되어 있는 인덱스로 감정별 정렬 메소드 호출");
+
+            inventoryContainer.OnDropdownEvent();
         }
+        else
+            inventoryContainer.activeDropDown();
     }
 
     // 돌아가기 버튼

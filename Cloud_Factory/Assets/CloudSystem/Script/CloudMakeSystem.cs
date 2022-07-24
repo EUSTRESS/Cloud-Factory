@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace CloudSystem
 {
     public delegate void EventHandler(string name);//재료이름 혹은 키를 인자로 받아 넘김.
 
     //selected ingredients list
+    [System.Serializable]
     class S_list
     {
-        private List<GameObject> UI_slct_mtrl;
-        private int UI_mtrl_count;
+        public List<GameObject> UI_slct_mtrl;
+        public int UI_mtrl_count;
 
         public Sprite default_sprite;//private으로 바꿀 예정.
         public Sprite cloud_sprite;//Data structure로 바꿀 예정.
@@ -308,10 +310,10 @@ public class CloudMakeSystem : MonoBehaviour
         total = 0;
       
         slct_mtrl = new CloudSystem.S_list();
-        slct_mtrl.init(this.transform.Find("selectedIngredient").transform);
+        slct_mtrl.init(this.transform.Find("Contents").transform);
         slct_mtrl.default_sprite = default_sprite;
 
-        UI_btn_txt = this.transform.Find("Button").GetComponentInChildren<Text>();
+        UI_btn_txt = this.transform.Find("B_CloudGIve").GetComponentInChildren<Text>();
         UI_btn_txt.text = "제작하기";
 
         

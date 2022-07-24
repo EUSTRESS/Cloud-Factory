@@ -20,7 +20,6 @@ public class InventoryManager : MonoBehaviour
        
     }
 
-   
     public void setIsSceneChange(bool trigger)
     {
         mIsSceneChange = trigger;

@@ -7,23 +7,10 @@ using System.Linq;
 using TMPro;
 public class InventoryContainer : MonoBehaviour
 {
-    [System.Serializable]
-    public class debugDec
-    {
-        public IngredientData ingredDt;
-        public int cntDt;
-        public debugDec(IngredientData Key, int Value)
-        {
-            ingredDt = Key;
-            cntDt = Value;
-        }
-    }
 
     public List<GameObject> mUiInvenStocks;
     public GameObject[] mTxtInfoPrefab;
     public Sprite mDefaultSprite;
-
-    public List<debugDec> debugdec;//debug
 
     [SerializeField]
     CloudMakeSystem Cloudmakesystem;
@@ -34,7 +21,6 @@ public class InventoryContainer : MonoBehaviour
 
     private Dictionary<IngredientData, int> mUiStocksData; //UI상에 보여지는 StocksData
     
-   
     /////////////////////
     //인벤토리 정렬 UI//
     ////////////////////
@@ -44,14 +30,11 @@ public class InventoryContainer : MonoBehaviour
     private Dictionary<IngredientData, int> mSortedData; //UI상에 보여지는 StocksData
     void Start()
     {
-        debugdec = new List<debugDec>(); //debug
-
         Cloudmakesystem = GameObject.FindWithTag("CloudSystem").GetComponent<CloudMakeSystem>();
         inventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
 
         storageUIManager = GameObject.Find("UIManager").GetComponent<StorageUIManager>();
-        mUiStocksData = new Dictionary<IngredientData, int>();
-        // mDropDown = GameObject.Find("D_Sort").GetComponent<TMP_Dropdown>(); //같은 레벨의 오브젝트라 검색 가능.
+       // mDropDown = GameObject.Find("D_Sort").GetComponent<TMP_Dropdown>(); //같은 레벨의 오브젝트라 검색 가능.
     }
 
     /////////////////////
@@ -59,15 +42,12 @@ public class InventoryContainer : MonoBehaviour
     ////////////////////
     public void clicked() //matarial in inventory selected
     {
+        if (inventoryManager == null)
+            inventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
 
         string name = EventSystem.current.currentSelectedGameObject.name;
-        Debug.Log("선택된 재료 이름:"+name);
         Cloudmakesystem.E_Selected(name);
-        foreach (KeyValuePair<IngredientData, int> dt in mUiStocksData)
-        {
-            debugDec tmp1 = new debugDec(dt.Key, dt.Value);
-            debugdec.Add(tmp1);
-        }
+
         updateStockCnt(name, true);
     }
 
@@ -78,13 +58,9 @@ public class InventoryContainer : MonoBehaviour
 
         if (sprite.name == "Circle") return; //예외처리
 
-        //왜 이걸 다시 지정해줘야 하지..?
-        Cloudmakesystem = GameObject.FindWithTag("CloudSystem").GetComponent<CloudMakeSystem>();
+        updateStockCnt(getDataWithSprite(sprite.name).ingredientName, false);
 
         Cloudmakesystem.E_UnSelected(target.name);
-
-        updateStockCnt(getDataWithSprite(sprite.name).ingredientName, false);
-        
         Debug.Log("클릭");
     }
    
@@ -92,18 +68,17 @@ public class InventoryContainer : MonoBehaviour
     {
         Dictionary<IngredientData, int> targetDt = new Dictionary<IngredientData, int>();
 
-        //if (mDropDown.interactable) //드롭다운이 켜져있는 상태면
-        //    targetDt = sortStock(mSortedData);
-        //else
-        //    targetDt = sortStock(mUiStocksData);
+        if (mDropDown.interactable)
+            targetDt = sortStock(mSortedData);
+        else
+            targetDt = sortStock(mUiStocksData);
 
-        targetDt = sortStock(mUiStocksData);
         updateInven(targetDt);
     }
 
     public void activeDropDown()
     {
-        if (mDropDown.interactable)//드롭다운 끄는거
+        if (mDropDown.interactable)
         {
            // mDropDown.interactable = false;
             mSortedCnt = mUiStocksData.Count;
@@ -111,7 +86,12 @@ public class InventoryContainer : MonoBehaviour
             initInven(mUiStocksData, "private");
             updateInven(mUiStocksData);
         }
-
+        else
+        {
+            //mDropDown.interactable = true;
+            //mDropDown.value = 0;
+            OnDropdownEvent();
+        }
     }
 
     //DropDown public Method
@@ -132,13 +112,9 @@ public class InventoryContainer : MonoBehaviour
     {
         if(order == "public")
         {
+            mUiStocksData = new Dictionary<IngredientData, int>();
             mUiStocksData = invenData; //UI목록에 복붙!
 
-            foreach(KeyValuePair<IngredientData,int> dt in invenData)
-            {
-                debugDec tmp1 = new debugDec(dt.Key, dt.Value);
-                debugdec.Add(tmp1);
-            }
             int tmp = 0;
             foreach (KeyValuePair<IngredientData, int> stock in mUiStocksData)
             {
@@ -146,8 +122,6 @@ public class InventoryContainer : MonoBehaviour
                 mUiInvenStocks.Add(invenUI); //UIInvenGameObject List 추가.
                 tmp++;
             }
-
-
         }
        
 
@@ -272,9 +246,8 @@ public class InventoryContainer : MonoBehaviour
 
     private IngredientData getDataWithSprite(string _spritename) //Sprite를 매개변수로 해당 아이템 data를 검색한다.
     {
-        inventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
-        IngredientData data = inventoryManager.mIngredientDatas[inventoryManager.minvenLevel - 1].mItemList.Find(item => item.image.name == _spritename  );
-        Debug.Log(data.ingredientName);
+        IngredientData data = inventoryManager.mIngredientDatas[inventoryManager.minvenLevel - 1].mItemList.Find(item => _spritename == item.image.name);
+
         return data;
     }
 
@@ -315,7 +288,7 @@ public class InventoryContainer : MonoBehaviour
         GameObject uiGameObj = findObjectWithData(stockDt);
 
         uiGameObj.transform.GetChild(0).GetComponent<TMP_Text>().text = mUiStocksData[stockDt].ToString();
-       
+
         if (mUiStocksData[stockDt] != 0) return;
 
         //남은 재고가 0이라면 아예 리스트에서 삭제
@@ -344,12 +317,8 @@ public class InventoryContainer : MonoBehaviour
     {
         IngredientData stockDt = inventoryManager.mIngredientDatas[inventoryManager.minvenLevel - 1].mItemList.Find(item => dataName == item.ingredientName);
         GameObject uiGameObj = findObjectWithData(stockDt);
-        Debug.Log(stockDt.ingredientName);
-        if (mUiStocksData == null)
-        {
-            Debug.Log("[cancelStock] mUIStockData is NULL");
-        }
-        //구름제작 재료 선택에서 취소된 재료s가 인벤토리에 있는지 검사.
+
+        //구름제작 재료 선택에서 취소된 재료가 인벤토리에 있는지 검사.
         //만약 없다면 취소했을 시 리스트에 새 재료 추가해서 개수 +1 한다.
         if (mUiStocksData.ContainsKey(stockDt))
         {
@@ -428,11 +397,7 @@ public class InventoryContainer : MonoBehaviour
     private void removeStockInInven(IngredientData stockDt, GameObject uiGameObj)
     {
         mUiStocksData.Remove(stockDt); //리스트에서 해당 data 삭제
-        foreach (KeyValuePair<IngredientData, int> dt in mUiStocksData)
-        {
-            debugDec tmp1 = new debugDec(dt.Key, dt.Value);
-            debugdec.Add(tmp1);
-        }
+        
 
         //인벤토리 전체 업데이트
         if (!mDropDown.interactable) 
@@ -503,5 +468,4 @@ public class InventoryContainer : MonoBehaviour
 
         return results;
     }
-
 }

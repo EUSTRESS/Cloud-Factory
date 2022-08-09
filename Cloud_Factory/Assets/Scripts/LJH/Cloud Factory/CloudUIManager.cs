@@ -72,6 +72,7 @@ public class CloudUIManager : MonoBehaviour
         else
         {
             ToggleCheckBox(mGiveCloudCheckBox[(int)ECheckBox.Emotion]);
+            ToggleDropBox(mSortDropBox);
         }
     }
 

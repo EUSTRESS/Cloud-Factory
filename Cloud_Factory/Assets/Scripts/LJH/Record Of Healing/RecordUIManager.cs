@@ -11,6 +11,7 @@ public class RecordUIManager : MonoBehaviour
     public GameObject gShowUpset; // 불만 뭉티보기
     public GameObject gShowAll;   // 전체 보기 
     public GameObject[] gStampF = new GameObject[4]; // 불만 뭉티 스탬프
+    public GameObject gUpsetStory; // 불만 뭉티는 스토리 없어짐
     // 치유의기록
     public Image[] iProfileBG = new Image[4]; // 프로필 배경
 
@@ -117,6 +118,8 @@ public class RecordUIManager : MonoBehaviour
             gStampF[index].SetActive(true);
         }
 
+        gUpsetStory.SetActive(false);
+
         // 뭉티 정보 불러오는 메소드 호출하는 부분
         Debug.Log("불만 뭉티 정보 불러오는 메소드 호출");
     }
@@ -146,6 +149,8 @@ public class RecordUIManager : MonoBehaviour
         { // stamp 비활성화
             gStampF[index].SetActive(false);
         }
+
+        gUpsetStory.SetActive(true);
 
         // 뭉티 정보 불러오는 메소드 호출하는 부분
         Debug.Log("전체 뭉티 정보 불러오는 메소드 호출");

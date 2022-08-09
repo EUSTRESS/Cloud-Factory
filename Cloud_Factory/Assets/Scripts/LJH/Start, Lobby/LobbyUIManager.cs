@@ -6,15 +6,22 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using AESWithJava.Con;
+using System;
 
 // 로비 씬 UI 담당
 // 설정 창, 새로하기, 이어하기
 public class LobbyUIManager : MonoBehaviour
 {
+    private SeasonDateCalc mSeason; // 계절 스크립트
+
     [Header("GAME OBJECT")]
     // 오브젝트 Active 관리
     public GameObject   gOption;     // 옵션 게임 오브젝트
     public GameObject   gWarning;    // 새로운 게임 경고창
+
+    // INDEX -> [0]: C04 [1]: C07 [2]: C10 [3]:C13 [4]:C14
+    public GameObject[] gSpringMoongti = new GameObject[5]; // 봄 타이틀 뭉티 관리
 
     [Header("TEXT")]
     public Text         tBgmValue;   // BGM 볼륨 텍스트
@@ -26,9 +33,13 @@ public class LobbyUIManager : MonoBehaviour
 
     private AudioSource mSFx;        // 효과음 오디오 소스
 
+    [Header("BOOL")]
+    public bool[] bSpringMoongti = new bool[5]; // 봄 타이틀 뭉티 Bool로 만족도 5 관리
+
     void Awake()
     {
-        mSFx = GameObject.Find("SFx").GetComponent<AudioSource>();        
+        mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
+        mSeason = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>();
     }
 
     void Update()
@@ -45,6 +56,31 @@ public class LobbyUIManager : MonoBehaviour
             tBgmValue.text = Mathf.Ceil(sBGM.value * 100).ToString();
             tSfxValue.text = Mathf.Ceil(sSFx.value * 100).ToString();
         }
+
+        switch (mSeason.mSeason)
+        {
+            case 1: // 봄
+                // 봄 뭉티 만족도 5 관리
+                if (bSpringMoongti[0])
+                    gSpringMoongti[0].SetActive(true);
+                if (bSpringMoongti[1])
+                    gSpringMoongti[1].SetActive(true);
+                if (bSpringMoongti[2])
+                    gSpringMoongti[2].SetActive(true);
+                if (bSpringMoongti[3])
+                    gSpringMoongti[3].SetActive(true);
+                if (bSpringMoongti[4])
+                    gSpringMoongti[4].SetActive(true);
+                break;
+            case 2: // 여름
+                break;
+            case 3: // 가을
+                break;
+            case 4: // 겨울
+                break;
+            default:
+                break;
+        }
     }
 
     /*
@@ -55,7 +91,7 @@ public class LobbyUIManager : MonoBehaviour
     {        
         mSFx.Play();
 
-        SceneManager.LoadScene("Space Of Weather");
+        LoadingSceneController.Instance.LoadScene("Space Of Weather");
 
         // 데이터를 초기화 시키는 함수 호출할 필요 없이
         // 각 클래스 생성자에서 자동 초기화된다.
@@ -63,6 +99,8 @@ public class LobbyUIManager : MonoBehaviour
 
     public void ContinueGame()
     {
+        String key = "key"; // 암호화 복호화 키 값
+
         mSFx.Play();
 
         /*
@@ -81,6 +119,8 @@ public class LobbyUIManager : MonoBehaviour
         fSceneBuildIndexStream.Close();
         // 문자열로 변환한다
         string sSceneData = Encoding.UTF8.GetString(bSceneData);
+        // 복호화
+        sSceneData = AESWithJava.Con.Program.Decrypt(sSceneData, key);
 
         /*
          저장된 날짜 시간 계절 로딩         
@@ -94,6 +134,8 @@ public class LobbyUIManager : MonoBehaviour
             // 새로운 오브젝트를 생성하고
             GameObject gSeasonDate = new GameObject();
             string sDateData = File.ReadAllText(mSeasonDatePath);
+            // 복호화
+            sDateData = AESWithJava.Con.Program.Decrypt(sDateData, key);
 
             Debug.Log(sDateData);
             
@@ -106,9 +148,9 @@ public class LobbyUIManager : MonoBehaviour
             SeasonDateCalc.Instance.mSeason = gSeasonDate.GetComponent<SeasonDateCalc>().mSeason;
             SeasonDateCalc.Instance.mYear = gSeasonDate.GetComponent<SeasonDateCalc>().mYear;
         }
-        
+
         // 문자열을 int형으로 파싱해서 빌드 인덱스로 활용한다
-        SceneManager.LoadScene(int.Parse(sSceneData));
+        LoadingSceneController.Instance.LoadScene(int.Parse(sSceneData));
     }
 
     public void ActiveOption()

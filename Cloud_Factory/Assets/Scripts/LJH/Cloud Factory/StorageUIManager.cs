@@ -52,6 +52,6 @@ public class StorageUIManager : MonoBehaviour
     // 돌아가기 버튼
     public void GoToCloudFactory()
     {
-        SceneManager.LoadScene("Cloud Factory");
+        LoadingSceneController.Instance.LoadScene("Cloud Factory");
     }
 }

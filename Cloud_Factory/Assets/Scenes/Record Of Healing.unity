@@ -692,7 +692,7 @@ GameObject:
   - component: {fileID: 186154055}
   - component: {fileID: 186154054}
   m_Layer: 0
-  m_Name: B_MouseCursorManger
+  m_Name: MouseCursorManger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -714,6 +714,7 @@ MonoBehaviour:
   mCursorHold: {fileID: 2800000, guid: e370db330992de94ebb5df4a7f24d848, type: 3}
   mCursorPoint: {fileID: 2800000, guid: 85428286428920d48875fd21616ee255, type: 3}
   mCursorType: {fileID: 2800000, guid: d1e987a3bf4011045bea6d905491d131, type: 3}
+  mCuusorLoad: {fileID: 2800000, guid: f6b54ce45652b9f4e99c190409c02bf1, type: 3}
 --- !u!4 &186154055
 Transform:
   m_ObjectHideFlags: 0
@@ -1208,7 +1209,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 30, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &408751449
@@ -3476,7 +3477,7 @@ GameObject:
   - component: {fileID: 1182055166}
   - component: {fileID: 1182055167}
   m_Layer: 0
-  m_Name: SFx
+  m_Name: mSFx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3822,6 +3823,7 @@ MonoBehaviour:
   - {fileID: 1069647855}
   - {fileID: 1489154992}
   - {fileID: 1737436911}
+  gUpsetStory: {fileID: 756623013}
   iProfileBG:
   - {fileID: 758903056}
   - {fileID: 905211597}
@@ -4901,6 +4903,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2635393f453c4429228229b36bc165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mSeasonBGMArray:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  mBGMArray:
+  - {fileID: 8300000, guid: 03e10a8feff3ffd43b232d6172700da9, type: 3}
+  - {fileID: 8300000, guid: 15d3e6b28e55ee748beeb48cbb4c54fb, type: 3}
+  isOneTime: 00000000
 --- !u!4 &1641263741
 Transform:
   m_ObjectHideFlags: 0
@@ -6309,7 +6320,7 @@ GameObject:
   - component: {fileID: 1967661927}
   - component: {fileID: 1967661928}
   m_Layer: 0
-  m_Name: BGM
+  m_Name: mBGM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6339,7 +6350,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 10cb02ccdf8cb8d4fa04caa1d949a2e3, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 03e10a8feff3ffd43b232d6172700da9, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1

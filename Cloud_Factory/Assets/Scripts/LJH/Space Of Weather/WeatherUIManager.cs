@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class WeatherUIManager : MonoBehaviour
 {
+    private SeasonDateCalc mSeason; // 계절 계산 스크립트
+
+    [Header("Gather")]
     public GameObject mGuideGather; // 채집할건지 안할건지 알려주는 UI
     public GameObject mGathering;   // 채집 중 출력하는 UI
     public GameObject mGatherResult;// 채집 결과를 출력하는 UI
@@ -22,6 +25,15 @@ public class WeatherUIManager : MonoBehaviour
 
     public int mRandomGather; // 재료 채집 랜덤 개수
 
+    [Header("BackGround")]
+    public Image iMainBG; // 메인 배경 이미지 
+    public Sprite[] mBackground = new Sprite[4]; // 계절별로 달라지는 배경
+
+    private void Awake()
+    {
+        mSeason = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>();
+    }
+
     void Update()
     {
         if (mGatherResult.activeSelf)
@@ -32,6 +44,24 @@ public class WeatherUIManager : MonoBehaviour
             mFxShine[2].Rotate(0, 0, 25.0f * Time.deltaTime, 0);
             mFxShine[3].Rotate(0, 0, 25.0f * Time.deltaTime, 0);
             mFxShine[4].Rotate(0, 0, 25.0f * Time.deltaTime, 0);
+        }
+
+        switch (mSeason.mSeason)
+        {
+            case 1:
+                iMainBG.sprite = mBackground[0]; // 봄 
+                break;
+            case 2:
+                iMainBG.sprite = mBackground[1]; // 여름
+                break;
+            case 3:
+                iMainBG.sprite = mBackground[2]; // 가을
+                break;
+            case 4:
+                iMainBG.sprite = mBackground[3]; // 겨울
+                break;
+            default:
+                break;
         }
     }
     // 마당 버튼 클릭 시, 채집하시겠씁니까? 오브젝트 활성화    

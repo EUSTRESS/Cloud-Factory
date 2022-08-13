@@ -36,6 +36,17 @@ public class LobbyUIManager : MonoBehaviour
     [Header("BOOL")]
     public bool[] bSpringMoongti = new bool[5]; // 봄 타이틀 뭉티 Bool로 만족도 5 관리
 
+    [Header("IMAGE")]
+    public Image iNewGame;
+    public Image iContiueGame;
+
+    [Header("SPRITES")]
+    public Sprite sHoveringNew;
+    public Sprite sUnHoveringNew;
+    public Sprite sHoveringCon;
+    public Sprite sUnHoveringCon;
+
+
     void Awake()
     {
         mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
@@ -135,7 +146,7 @@ public class LobbyUIManager : MonoBehaviour
             GameObject gSeasonDate = new GameObject();
             string sDateData = File.ReadAllText(mSeasonDatePath);
             // 복호화
-            sDateData = AESWithJava.Con.Program.Decrypt(sDateData, key);
+            //sDateData = AESWithJava.Con.Program.Decrypt(sDateData, key);
 
             Debug.Log(sDateData);
             
@@ -184,6 +195,36 @@ public class LobbyUIManager : MonoBehaviour
     public void UnAcitveWarning()
     {
         gWarning.SetActive(false);
+    }
+    public void HoveringNewGame()
+    {
+        iNewGame.sprite = sHoveringNew;
+    }
+    public void UnHoveringNewGame()
+    {
+        iNewGame.sprite = sUnHoveringNew;
+    }
+    public void HoveringContinueGame()
+    {
+        iContiueGame.sprite = sHoveringCon;
+    }
+    public void UnHoveringContinueGame()
+    {
+        iContiueGame.sprite = sUnHoveringCon;
+    }
+
+    // 한영 버전의 씬으로 전환 전환할 때 해당 씬 인덱스들을 활용해서 전환
+    // 전환되면 bool등을 활ㅇ용해서 영어->영어, 한글->한글로 이용
+    public void ChangeKor()
+    {
+        // 일단은 로비만 되니까 
+        if (SceneManager.GetActiveScene().name == "Eng_Lobby")
+            SceneManager.LoadScene("Lobby");
+    }
+    public void ChangeEng()
+    {
+        if (SceneManager.GetActiveScene().name == "Lobby")
+            SceneManager.LoadScene("Eng_Lobby");
     }
 }
 

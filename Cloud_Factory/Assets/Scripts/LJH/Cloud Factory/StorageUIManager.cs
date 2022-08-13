@@ -54,4 +54,8 @@ public class StorageUIManager : MonoBehaviour
     {
         LoadingSceneController.Instance.LoadScene("Cloud Factory");
     }
+    public void MakeCloud()
+    {
+        Debug.Log("구름 제작 메소드 호출");
+    }
 }

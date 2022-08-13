@@ -21,7 +21,7 @@ public class SoundManager : MonoBehaviour
         // 오디오 소스 찾기
         mBGM = GameObject.Find("mBGM").GetComponent<AudioSource>();
         mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
-
+                
         mSeason = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>();
     }
     // 유니티 생명주기 활용

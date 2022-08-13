@@ -12,6 +12,8 @@ public class WeatherUIManager : MonoBehaviour
     public GameObject mGathering;   // 채집 중 출력하는 UI
     public GameObject mGatherResult;// 채집 결과를 출력하는 UI
 
+    public GameObject[] mSeasonObj = new GameObject[4]; // 4계절 오브젝트
+
     public Animator mGatheringAnim; // 채집 애니메이션
 
     public Text tGatheringText;      // 채집 중... 텍스트
@@ -19,9 +21,9 @@ public class WeatherUIManager : MonoBehaviour
 
     public RectTransform mGatherImageRect; // 채집 이미지 Rect Transform
 
-    public RectTransform[] mFxShine       = new RectTransform[5]; // 5개의 채집 결과 회전 효과
-    public RectTransform[] mGatherRect    = new RectTransform[5]; // 5개의 채집 결과 UI 이동
-    public GameObject[]    mGatherObj     = new GameObject[5]; // 5개의 채집 게임 오브젝트
+    public RectTransform[] mFxShine = new RectTransform[5]; // 5개의 채집 결과 회전 효과
+    public RectTransform[] mGatherRect = new RectTransform[5]; // 5개의 채집 결과 UI 이동
+    public GameObject[] mGatherObj = new GameObject[5]; // 5개의 채집 게임 오브젝트
 
     public int mRandomGather; // 재료 채집 랜덤 개수
 
@@ -49,21 +51,29 @@ public class WeatherUIManager : MonoBehaviour
         switch (mSeason.mSeason)
         {
             case 1:
-                iMainBG.sprite = mBackground[0]; // 봄 
+                UpdateSeasonBg(0, 3);// 봄
                 break;
             case 2:
-                iMainBG.sprite = mBackground[1]; // 여름
+                UpdateSeasonBg(1, 0);// 여름
                 break;
             case 3:
-                iMainBG.sprite = mBackground[2]; // 가을
+                UpdateSeasonBg(2, 1);// 가을
                 break;
             case 4:
-                iMainBG.sprite = mBackground[3]; // 겨울
+                UpdateSeasonBg(3, 2); // 겨울
                 break;
             default:
                 break;
         }
     }
+
+    void UpdateSeasonBg(int _iCurrent, int _iPrev)
+    {
+        iMainBG.sprite = mBackground[_iCurrent];
+        mSeasonObj[_iPrev].SetActive(false);
+        mSeasonObj[_iCurrent].SetActive(true);
+    }
+
     // 마당 버튼 클릭 시, 채집하시겠씁니까? 오브젝트 활성화    
     public void OpenGuideGather()
     {
@@ -86,45 +96,27 @@ public class WeatherUIManager : MonoBehaviour
         {                            // 각 해당하는 애니메이션 출력
             Invoke("PrintGatheringText", 0.5f); // 0.5초 딜레이마다 . 추가
             if (SeasonDateCalc.Instance.mSeason == 1) // 봄이라면
-            {
-                mGatherImageRect.sizeDelta = new Vector2(1090, 590); // 이미지 사이즈 맞추기
-                
-                mGatheringAnim.SetBool("Spring", true);
-                mGatheringAnim.SetBool("Summer", false);
-                mGatheringAnim.SetBool("Fall", false);
-                mGatheringAnim.SetBool("Winter", false);
-            }
+                UpdateGatherAnim(1090, 590, true, false, false, false);
             else if (SeasonDateCalc.Instance.mSeason == 2) // 여름이라면
-            {
-                mGatherImageRect.sizeDelta = new Vector2(1090, 590); // 이미지 사이즈 맞추기
-
-                mGatheringAnim.SetBool("Spring", false);
-                mGatheringAnim.SetBool("Summer", true);
-                mGatheringAnim.SetBool("Fall", false);
-                mGatheringAnim.SetBool("Winter", false);
-            }
+                UpdateGatherAnim(1090, 590, false, true, false, false);
             else if (SeasonDateCalc.Instance.mSeason == 3) // 가을이라면
-            {
-                mGatherImageRect.sizeDelta = new Vector2(735, 420); // 이미지 사이즈 맞추기
-
-                mGatheringAnim.SetBool("Spring", false);
-                mGatheringAnim.SetBool("Summer", false);
-                mGatheringAnim.SetBool("Fall", true);
-                mGatheringAnim.SetBool("Winter", false);
-            }
+                UpdateGatherAnim(735, 420, false, false, true, false);
             else if (SeasonDateCalc.Instance.mSeason == 4) // 겨울이라면
-            {
-                mGatherImageRect.sizeDelta = new Vector2(560, 570); // 이미지 사이즈 맞추기
-
-                mGatheringAnim.SetBool("Spring", false);
-                mGatheringAnim.SetBool("Summer", false);
-                mGatheringAnim.SetBool("Fall", false);
-                mGatheringAnim.SetBool("Winter", true);
-            }
+                UpdateGatherAnim(560, 570, false, false, false, true);
         }
         // 5초 동안 채집 후 결과 출력
         Invoke("Gathering", 5.0f);
     }
+    
+    void UpdateGatherAnim(int _iX, int _iY, bool _bSpring, bool _bSummer, bool _bFall, bool _bWinter)
+    {
+        mGatherImageRect.sizeDelta = new Vector2(_iX, _iY); // 이미지 사이즈 맞추기
+        mGatheringAnim.SetBool("Spring", _bSpring);
+        mGatheringAnim.SetBool("Summer", _bSummer);
+        mGatheringAnim.SetBool("Fall", _bFall);
+        mGatheringAnim.SetBool("Winter", _bWinter);
+    }
+
     void Gathering()
     {
         // 랜덤 작업
@@ -148,39 +140,19 @@ public class WeatherUIManager : MonoBehaviour
         switch (mRandomGather) // active 관리
         {
             case 0:
-                mGatherObj[0].SetActive(true);
-                mGatherObj[1].SetActive(false);
-                mGatherObj[2].SetActive(false);
-                mGatherObj[3].SetActive(false);
-                mGatherObj[4].SetActive(false);
+                ActiveRandGather(true, false, false, false, false);
                 break;
             case 1:
-                mGatherObj[0].SetActive(true);
-                mGatherObj[1].SetActive(true);
-                mGatherObj[2].SetActive(false);
-                mGatherObj[3].SetActive(false);
-                mGatherObj[4].SetActive(false);
+                ActiveRandGather(true, true, false, false, false);
                 break;
             case 2:
-                mGatherObj[0].SetActive(true);
-                mGatherObj[1].SetActive(true);
-                mGatherObj[2].SetActive(true);
-                mGatherObj[3].SetActive(false);
-                mGatherObj[4].SetActive(false);
+                ActiveRandGather(true, true, true, false, false);
                 break;
             case 3:
-                mGatherObj[0].SetActive(true);
-                mGatherObj[1].SetActive(true);
-                mGatherObj[2].SetActive(true);
-                mGatherObj[3].SetActive(true);
-                mGatherObj[4].SetActive(false);
+                ActiveRandGather(true, true, true, true, false);
                 break;
             case 4:
-                mGatherObj[0].SetActive(true);
-                mGatherObj[1].SetActive(true);
-                mGatherObj[2].SetActive(true);
-                mGatherObj[3].SetActive(true);
-                mGatherObj[4].SetActive(true);
+                ActiveRandGather(true, true, true, true, true);
                 break;
             default:
                 break;
@@ -192,6 +164,16 @@ public class WeatherUIManager : MonoBehaviour
 
         CancelInvoke(); // 인보크 충돌 방지를 위해서 출력 결과가 나오면 모든 인보크 꺼버림
     }
+
+    void ActiveRandGather(bool _bOne, bool _bTwo, bool _bThree, bool _bFour, bool _bFive)
+    {
+        mGatherObj[0].SetActive(_bOne);
+        mGatherObj[1].SetActive(_bTwo);
+        mGatherObj[2].SetActive(_bThree);
+        mGatherObj[3].SetActive(_bFour);
+        mGatherObj[4].SetActive(_bFive);
+    }
+
     // 재귀함수로 마침표를 재귀적으로 출력한다
     void PrintGatheringText()
     {

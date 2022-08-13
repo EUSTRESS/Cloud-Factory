@@ -12,6 +12,7 @@ public class CommonUIManager : MonoBehaviour
     [Header("GAME OBJECT")]
     // 오브젝트 Active 관리
     public GameObject   gOption;       // 옵션 게임 오브젝트
+    public GameObject   gGuideBook;
 
     [Header("TEXT")]
     public Text         tDate;         // 날짜 텍스트
@@ -115,6 +116,14 @@ public class CommonUIManager : MonoBehaviour
     {
         mSFx.Play();
         gOption.SetActive(false);
+    }
+    public void ActiveGuideBook()
+    {
+        gGuideBook.SetActive(true);
+    }
+    public void UnActiveGuideBook()
+    {
+        gGuideBook.SetActive(false);
     }
 
     // 게임 종료

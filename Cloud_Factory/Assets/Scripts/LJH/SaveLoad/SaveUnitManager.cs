@@ -104,7 +104,7 @@ public class SaveUnitManager : MonoBehaviour
             string sSeasonData = JsonUtility.ToJson(gSeasonDate.GetComponent<SeasonDateCalc>(), true);
             Debug.Log(sSeasonData);
             // ¾ÏÈ£È­
-            sSeasonData = AESWithJava.Con.Program.Encrypt(sSeasonData, key);
+            // sSeasonData = AESWithJava.Con.Program.Encrypt(sSeasonData, key);
 
             Debug.Log(sSeasonData);
 

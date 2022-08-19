@@ -20,7 +20,6 @@ public class ChangeCursor : MonoBehaviour
     [SerializeField] Texture2D mCursorHold;
     [SerializeField] Texture2D mCursorPoint;
     [SerializeField] Texture2D mCursorType;
-    [SerializeField] Texture2D mCuusorLoad;
 
     void Start()
     {
@@ -42,9 +41,5 @@ public class ChangeCursor : MonoBehaviour
     public void SetTypeCursor() // 타이핑 칠 때 커서
     {
         Cursor.SetCursor(mCursorType, Vector2.zero, CursorMode.ForceSoftware);
-    }
-    public void SetLoadCursor() // 로딩 커서
-    {        
-        Cursor.SetCursor(mCuusorLoad, Vector2.zero, CursorMode.ForceSoftware);        
     }
 }

@@ -12,7 +12,6 @@ public class CommonUIManager : MonoBehaviour
     [Header("GAME OBJECT")]
     // 오브젝트 Active 관리
     public GameObject   gOption;       // 옵션 게임 오브젝트
-    public GameObject   gGuideBook;
 
     [Header("TEXT")]
     public Text         tDate;         // 날짜 텍스트
@@ -34,11 +33,7 @@ public class CommonUIManager : MonoBehaviour
     private AudioSource mSFx;          // 효과음 오디오 소스 예시
     void Awake()
     {
-        if (SceneManager.GetActiveScene().name == "Lobby" ||
-            SceneManager.GetActiveScene().name == "Space Of Weather" ||
-            SceneManager.GetActiveScene().name == "Drawing Room" ||
-            SceneManager.GetActiveScene().name == "Cloud Factory")
-            mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();        
+        mSFx = GameObject.Find("SFx").GetComponent<AudioSource>();        
     }
 
     void Update()
@@ -74,37 +69,40 @@ public class CommonUIManager : MonoBehaviour
     
     // 씬 이동 버튼들
     public void GoSpaceOfWeather()
-    {        
-        LoadingSceneController.Instance.LoadScene("Space Of Weather");
+    {
+        SceneManager.LoadScene("Space Of Weather");
     }
     public void GoCloudFactory()
     {
-        LoadingSceneController.Instance.LoadScene("Cloud Factory");
+        SceneManager.LoadScene("Cloud Factory");
+
+        InventoryManager inventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
+        inventoryManager.setIsSceneChange(true);
+
     }
     public void GoDrawingRoom()
     {
-        LoadingSceneController.Instance.LoadScene("Drawing Room");
+        SceneManager.LoadScene("Drawing Room");
     }
     public void GoRecordOfHealing()
     {
         // 치유의 기록 이전 씬 인덱스 저장
         SceneData.Instance.prevSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
-        LoadingSceneController.Instance.LoadScene("Record Of Healing");
+        SceneManager.LoadScene("Record Of Healing");
     }
     public void GoPrevScene()
     {
         // 치유의 기록을 들어가기전 씬으로 이동   
-        LoadingSceneController.Instance.LoadScene(SceneData.Instance.prevSceneIndex);
+        SceneManager.LoadScene(SceneData.Instance.prevSceneIndex);
     }
     public void GoGiveCloud()
     {
-        LoadingSceneController.Instance.LoadScene("Give Cloud");
-        GameObject.Find("InventoryManager").GetComponent<InventoryManager>().go2CloudFacBtn();
+        SceneManager.LoadScene("Give Cloud");
     }
     public void GoCloudStorage()
     {
-        LoadingSceneController.Instance.LoadScene("Cloud Storage");
+        SceneManager.LoadScene("Cloud Storage");
     }
 
     // 옵션창 활성화, 비활성화
@@ -117,14 +115,6 @@ public class CommonUIManager : MonoBehaviour
     {
         mSFx.Play();
         gOption.SetActive(false);
-    }
-    public void ActiveGuideBook()
-    {
-        gGuideBook.SetActive(true);
-    }
-    public void UnActiveGuideBook()
-    {
-        gGuideBook.SetActive(false);
     }
 
     // 게임 종료

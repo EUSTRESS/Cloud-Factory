@@ -15,7 +15,6 @@ public class YardHandleSystem : MonoBehaviour
 
     private Dictionary<GameObject, int> mYards;
 
-    private WeatherUIManager weatherUIManager;
     struct Yard //마당 구조체 정의
     {
         private GameObject self;
@@ -74,7 +73,7 @@ public class YardHandleSystem : MonoBehaviour
     void Start()
     {
         inventoryManager = GameObject.Find("InventorySystem").GetComponent<InventoryManager>();
-        weatherUIManager = GameObject.Find("UIManager").GetComponent<WeatherUIManager>();
+
         mYards = new Dictionary<GameObject, int>();
 
         for (int i = 0; i < mRarityList.Length; i++)
@@ -89,21 +88,18 @@ public class YardHandleSystem : MonoBehaviour
 
     public void  bGathered() //클릭함수
     {
-        weatherUIManager.OpenGuideGather();
         GameObject iClickedYard = EventSystem.current.currentSelectedGameObject;
         if (mYards[iClickedYard] == 0) return;
 
-        Dictionary<IngredientData, int> gathers = getRndGatheredResult();
-        Debug.Log("[System]총" + gathers.Count + "가 채집되었습니다!");
-        foreach(KeyValuePair<IngredientData, int> gather in gathers)
+        Dictionary<IngredientData, int> results = getRndGatheredResult();
+        Debug.Log("[System]총" + results.Count + "가 채집되었습니다!");
+        foreach(KeyValuePair<IngredientData, int> result in results)
         {
-            if (inventoryManager.addStock(gather))Debug.Log("[System]채집 성공| 종류:" + gather.Key + "|개수: " + gather.Value);
+            if(inventoryManager.addStock(result)) Debug.Log("[System]채집 성공| 종류:" + result.Key + "|개수: " + result.Value);
             else
-                Debug.Log("[System]채집 실패| 인벤토리가 꽉 찼거나 수집 가능 재료 개수를 초과하였습니다| 종류:." + gather.Key + "|개수: " + gather.Value);
+                Debug.Log("[System]채집 실패| 인벤토리가 꽉 찼거나 수집 가능 재료 개수를 초과하였습니다| 종류:."+ result.Key + "|개수: " + result.Value);
 
         }
-
-        weatherUIManager.ChangeGatherResultImg(gathers);
 
         mYards[iClickedYard]--;
         if (mYards[iClickedYard] == 0) iClickedYard.GetComponent<Image>().sprite = mImages[0];

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Linq;
-using TMPro;
+
 public class InventoryContainer : MonoBehaviour
 {
 
@@ -17,24 +17,19 @@ public class InventoryContainer : MonoBehaviour
     [SerializeField]
     InventoryManager inventoryManager;
 
-    private StorageUIManager storageUIManager;
-
     private Dictionary<IngredientData, int> mUiStocksData; //UI상에 보여지는 StocksData
-    
+
     /////////////////////
     //인벤토리 정렬 UI//
     ////////////////////
     [SerializeField]
-    private TMP_Dropdown mDropDown;
+    private Dropdown mDropDown;
     private int mSortedCnt; //선택정렬된개수
     private Dictionary<IngredientData, int> mSortedData; //UI상에 보여지는 StocksData
     void Start()
     {
         Cloudmakesystem = GameObject.FindWithTag("CloudSystem").GetComponent<CloudMakeSystem>();
-        inventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
-
-        storageUIManager = GameObject.Find("UIManager").GetComponent<StorageUIManager>();
-       // mDropDown = GameObject.Find("D_Sort").GetComponent<TMP_Dropdown>(); //같은 레벨의 오브젝트라 검색 가능.
+        mDropDown = GameObject.Find("Dropdown").GetComponent<Dropdown>(); //같은 레벨의 오브젝트라 검색 가능.
     }
 
     /////////////////////
@@ -80,7 +75,7 @@ public class InventoryContainer : MonoBehaviour
     {
         if (mDropDown.interactable)
         {
-           // mDropDown.interactable = false;
+            mDropDown.interactable = false;
             mSortedCnt = mUiStocksData.Count;
             clearInven(mUiStocksData);
             initInven(mUiStocksData, "private");
@@ -88,8 +83,8 @@ public class InventoryContainer : MonoBehaviour
         }
         else
         {
-            //mDropDown.interactable = true;
-            //mDropDown.value = 0;
+            mDropDown.interactable = true;
+            mDropDown.value = 0;
             OnDropdownEvent();
         }
     }
@@ -141,11 +136,11 @@ public class InventoryContainer : MonoBehaviour
             {
                 GameObject cntTxt = Instantiate(mTxtInfoPrefab[0]);
                 cntTxt.transform.SetParent(invenUI.transform, false);
-                cntTxt.transform.GetComponent<TMP_Text>().text = stock.Value.ToString();
+                cntTxt.transform.GetComponent<Text>().text = stock.Value.ToString();
 
                 GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
                 nameTxt.transform.SetParent(invenUI.transform, false);
-                nameTxt.transform.GetComponent<TMP_Text>().text = stock.Key.ingredientName.ToString();
+                nameTxt.transform.GetComponent<Text>().text = stock.Key.ingredientName.ToString();
             }
 
             //버튼 컴포넌트가 없으면 만들어준다.
@@ -200,11 +195,11 @@ public class InventoryContainer : MonoBehaviour
                 {
                     GameObject cntTxt = Instantiate(mTxtInfoPrefab[0]);
                     cntTxt.transform.SetParent(invenUI.transform, false);
-                    cntTxt.transform.GetComponent<TMP_Text>().text = "0";
+                    cntTxt.transform.GetComponent<Text>().text = "0";
 
                     GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
                     nameTxt.transform.SetParent(invenUI.transform, false);
-                    nameTxt.transform.GetComponent<TMP_Text>().text = "000";
+                    nameTxt.transform.GetComponent<Text>().text = "000";
                 }
 
                 //버튼 컴포넌트가 없으면 만들어준다.
@@ -236,9 +231,9 @@ public class InventoryContainer : MonoBehaviour
             //이미지
             stockObj.transform.GetComponent<Image>().sprite = data.Key.image;
             //cnt
-            stockObj.transform.GetChild(0).GetComponent<TMP_Text>().text = data.Value.ToString();
+            stockObj.transform.GetChild(0).GetComponent<Text>().text = data.Value.ToString();
             //name
-            stockObj.transform.GetChild(1).GetComponent<TMP_Text>().text = data.Key.ingredientName.ToString();
+            stockObj.transform.GetChild(1).GetComponent<Text>().text = data.Key.ingredientName.ToString();
 
             tmp++; //plus index value
         }
@@ -287,7 +282,7 @@ public class InventoryContainer : MonoBehaviour
 
         GameObject uiGameObj = findObjectWithData(stockDt);
 
-        uiGameObj.transform.GetChild(0).GetComponent<TMP_Text>().text = mUiStocksData[stockDt].ToString();
+        uiGameObj.transform.GetChild(0).GetComponent<Text>().text = mUiStocksData[stockDt].ToString();
 
         if (mUiStocksData[stockDt] != 0) return;
 
@@ -333,7 +328,7 @@ public class InventoryContainer : MonoBehaviour
             }
 
 
-            uiGameObj.transform.GetChild(0).GetComponent<TMP_Text>().text = mUiStocksData[stockDt].ToString();
+            uiGameObj.transform.GetChild(0).GetComponent<Text>().text = mUiStocksData[stockDt].ToString();
         }
         else
         {
@@ -378,11 +373,11 @@ public class InventoryContainer : MonoBehaviour
         //Component 추가
         GameObject cntTxt = Instantiate(mTxtInfoPrefab[0]);
         cntTxt.transform.SetParent(lastStockInInven.transform, false);
-        cntTxt.transform.GetComponent<TMP_Text>().text = mUiStocksData[stockDt].ToString();
+        cntTxt.transform.GetComponent<Text>().text = mUiStocksData[stockDt].ToString();
 
         GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
         nameTxt.transform.SetParent(lastStockInInven.transform, false);
-        nameTxt.transform.GetComponent<TMP_Text>().text = stockDt.ingredientName.ToString();
+        nameTxt.transform.GetComponent<Text>().text = stockDt.ingredientName.ToString();
 
         Button btn = lastStockInInven.AddComponent<Button>();
         btn.onClick.AddListener(clicked);

@@ -319,14 +319,12 @@ public class CloudMakeSystem : MonoBehaviour
 
     IEnumerator isMaking(float time) //UI Ã³¸®
     {
-        this.transform.Find("Button").GetComponent<Button>().enabled = false;
 
         //»ö ¾îµÓ°Ô
         slct_mtrl.u_setUIbright(total, false);
 
         yield return new WaitForSeconds(time);
 
-        this.transform.Find("Button").GetComponent<Button>().enabled = true;
 
         yield return new WaitForSeconds(1);
         //»ö ¹à°Ô

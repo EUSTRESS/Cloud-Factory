@@ -141,4 +141,9 @@ public class InventoryManager : MonoBehaviour
 
         return results;
     }
+
+
+    //////////////////////////////
+    //구름인벤토리 관련 함수//
+    //////////////////////////////
 }

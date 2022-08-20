@@ -25,6 +25,7 @@ public class InventoryContainer : MonoBehaviour
     ////////////////////
     [SerializeField]
     private Dropdown mDropDown;
+    
     private int mSortedCnt; //선택정렬된개수
     private Dictionary<IngredientData, int> mSortedData; //UI상에 보여지는 StocksData
 
@@ -32,8 +33,12 @@ public class InventoryContainer : MonoBehaviour
     void Start()
     {
         Cloudmakesystem = GameObject.FindWithTag("CloudSystem").GetComponent<CloudMakeSystem>();
-        //mDropDown = GameObject.Find("Dropdown").GetComponent<Dropdown>(); //같은 레벨의 오브젝트라 검색 가능.
-
+        mDropDown = GameObject.Find("UIManager").GetComponent<Dropdown>();
+        mDropDown.mDropdown.onValueChanged.AddListener(delegate
+        {
+            OnDropdownEvent();
+        });
+        inventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
     }
 
     /////////////////////
@@ -75,31 +80,22 @@ public class InventoryContainer : MonoBehaviour
         updateInven(targetDt);
     }
 
-    public void activeDropDown()
+    public void cancelDropdownEvent()
     {
-        if (mDropDown.mDropdown.interactable)
-        {
-            mDropDown.mDropdown.interactable = false;
-            mSortedCnt = mUiStocksData.Count;
-            clearInven(mUiStocksData);
-            initInven(mUiStocksData, "private");
-            updateInven(mUiStocksData);
-        }
-        else
-        {
-            mDropDown.mDropdown.interactable = true;
-            mDropDown.mDropdown.value = 0;
-            OnDropdownEvent();
-        }
+        mDropDown.mDropdown.interactable = false;
+        mSortedCnt = mUiStocksData.Count;
+        clearInven(mUiStocksData);
+        initInven(mUiStocksData, "private");
+        updateInven(mUiStocksData);
     }
 
     //DropDown public Method
     public void OnDropdownEvent()
     {     
         Debug.Log("[DropdownEvent] {" + mDropDown.mDropdown.value + "} clicked.");
-
+        mDropDown.mDropdownIndex = mDropDown.mDropdown.value;
         mSortedData = new Dictionary<IngredientData, int>(); //init
-        mSortedData = sortStock(mDropDown.mDropdown.value);
+        mSortedData = sortStock(mDropDown.mDropdownIndex);
         mSortedCnt = mSortedData.Count;
         clearInven(mSortedData);
         initInven(mSortedData, "private");
@@ -433,7 +429,7 @@ public class InventoryContainer : MonoBehaviour
 
 
     //리스트 자체를 정렬한다. 정렬 할 때는 새 리스트를 만들어서 UI에 반영한다.
-    private Dictionary<IngredientData, int> sortStock(int _emotion) //감정별로 분류
+    public Dictionary<IngredientData, int> sortStock(int _emotion) //감정별로 분류
     {
         Dictionary<IngredientData, int> results = new Dictionary<IngredientData, int>();
 

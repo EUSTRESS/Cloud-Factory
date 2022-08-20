@@ -377,10 +377,10 @@ public class CloudMakeSystem : MonoBehaviour
         total = 0;
       
         slct_mtrl = new CloudSystem.S_list();
-        slct_mtrl.init(this.transform.Find("selectedIngredient").transform);
+        slct_mtrl.init(this.transform.Find("Contents").transform);
         slct_mtrl.default_sprite = default_sprite;
 
-        UI_btn_txt = this.transform.Find("Button").GetComponentInChildren<Text>();
+        UI_btn_txt = this.transform.Find("B_CloudGIve").GetComponentInChildren<Text>();
         UI_btn_txt.text = "제작하기";
 
         

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Linq;
-
+using TMPro;
 public class InventoryContainer : MonoBehaviour
 {
     //Interface UI
@@ -140,11 +140,11 @@ public class InventoryContainer : MonoBehaviour
             {
                 GameObject cntTxt = Instantiate(mTxtInfoPrefab[0]);
                 cntTxt.transform.SetParent(invenUI.transform, false);
-                cntTxt.transform.GetComponent<Text>().text = stock.Value.ToString();
+                cntTxt.transform.GetComponent<TMP_Text>().text = stock.Value.ToString();
 
                 GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
                 nameTxt.transform.SetParent(invenUI.transform, false);
-                nameTxt.transform.GetComponent<Text>().text = stock.Key.dataName.ToString();
+                nameTxt.transform.GetComponent<TMP_Text>().text = stock.Key.dataName.ToString();
             }
 
             //버튼 컴포넌트가 없으면 만들어준다.
@@ -199,11 +199,11 @@ public class InventoryContainer : MonoBehaviour
                 {
                     GameObject cntTxt = Instantiate(mTxtInfoPrefab[0]);
                     cntTxt.transform.SetParent(invenUI.transform, false);
-                    cntTxt.transform.GetComponent<Text>().text = "0";
+                    cntTxt.transform.GetComponent<TMP_Text>().text = "0";
 
                     GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
                     nameTxt.transform.SetParent(invenUI.transform, false);
-                    nameTxt.transform.GetComponent<Text>().text = "000";
+                    nameTxt.transform.GetComponent<TMP_Text>().text = "000";
                 }
 
                 //버튼 컴포넌트가 없으면 만들어준다.
@@ -235,9 +235,9 @@ public class InventoryContainer : MonoBehaviour
             //이미지
             stockObj.transform.GetComponent<Image>().sprite = data.Key.image;
             //cnt
-            stockObj.transform.GetChild(0).GetComponent<Text>().text = data.Value.ToString();
+            stockObj.transform.GetChild(0).GetComponent<TMP_Text>().text = data.Value.ToString();
             //name
-            stockObj.transform.GetChild(1).GetComponent<Text>().text = data.Key.dataName.ToString();
+            stockObj.transform.GetChild(1).GetComponent<TMP_Text>().text = data.Key.dataName.ToString();
 
             tmp++; //plus index value
         }
@@ -286,7 +286,7 @@ public class InventoryContainer : MonoBehaviour
 
         GameObject uiGameObj = findObjectWithData(stockDt);
 
-        uiGameObj.transform.GetChild(0).GetComponent<Text>().text = mUiStocksData[stockDt].ToString();
+        uiGameObj.transform.GetChild(0).GetComponent<TMP_Text>().text = mUiStocksData[stockDt].ToString();
 
         if (mUiStocksData[stockDt] != 0) return;
 
@@ -332,7 +332,7 @@ public class InventoryContainer : MonoBehaviour
             }
 
 
-            uiGameObj.transform.GetChild(0).GetComponent<Text>().text = mUiStocksData[stockDt].ToString();
+            uiGameObj.transform.GetChild(0).GetComponent<TMP_Text>().text = mUiStocksData[stockDt].ToString();
         }
         else
         {
@@ -377,11 +377,11 @@ public class InventoryContainer : MonoBehaviour
         //Component 추가
         GameObject cntTxt = Instantiate(mTxtInfoPrefab[0]);
         cntTxt.transform.SetParent(lastStockInInven.transform, false);
-        cntTxt.transform.GetComponent<Text>().text = mUiStocksData[stockDt].ToString();
+        cntTxt.transform.GetComponent<TMP_Text>().text = mUiStocksData[stockDt].ToString();
 
         GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
         nameTxt.transform.SetParent(lastStockInInven.transform, false);
-        nameTxt.transform.GetComponent<Text>().text = stockDt.dataName.ToString();
+        nameTxt.transform.GetComponent<TMP_Text>().text = stockDt.dataName.ToString();
 
         Button btn = lastStockInInven.AddComponent<Button>();
         btn.onClick.AddListener(clicked);

@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using AESWithJava.Con;
+using System;
 
 public class SaveUnitManager : MonoBehaviour
 {
@@ -38,22 +40,24 @@ public class SaveUnitManager : MonoBehaviour
     // 씬이 변경될 때마다 호출된다.
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {       
-        if (!Directory.Exists(Application.dataPath + "/Data/")) // Data 폴더가 없으면 생성하기
+        // 데이터 폴더가 없다면 생성하기
+        if (!File.Exists(Application.dataPath + "/Data/"))
         {
-            Debug.Log("생성");
             Directory.CreateDirectory(Application.dataPath + "/Data/");
         }
 
         // 로비에서는 저장할 필요가 없음
         if (scene.name != "Lobby" && SceneData.Instance) // null check && lobby 제한
         {
+            String key = "key";
+
             //================================================================================//
             //==================================현재 씬 저장==================================//
             //================================================================================//
 
             // 새롭게 로딩된 씬의 데이터를 저장한다
             SceneData.Instance.currentSceneIndex = scene.buildIndex;
-                        
+
             // 저장하는 함수 호출
             // 일단은 하나니까 이렇게 넣고 많아지면 클래스 만들어서 정리하기
             FileStream fSceneBuildIndexStream
@@ -63,6 +67,8 @@ public class SaveUnitManager : MonoBehaviour
             // sData로 변수를 직렬화한다        
             // 현재 씬 인덱스 저장
             string sSceneData = JsonConvert.SerializeObject(SceneData.Instance.currentSceneIndex);
+            // 암호화
+            sSceneData = AESWithJava.Con.Program.Encrypt(sSceneData, key);
 
             // text 데이터로 인코딩한다
             byte[] bSceneData = Encoding.UTF8.GetBytes(sSceneData);
@@ -96,6 +102,10 @@ public class SaveUnitManager : MonoBehaviour
             // 클래스의 맴버변수들을 json파일로 변환한다 (class, prettyPrint) true면 읽기 좋은 형태로 저장해줌
             // seasonDataSaveBox 클래스 단위로 json 변환
             string sSeasonData = JsonUtility.ToJson(gSeasonDate.GetComponent<SeasonDateCalc>(), true);
+            Debug.Log(sSeasonData);
+            // 암호화
+            // sSeasonData = AESWithJava.Con.Program.Encrypt(sSeasonData, key);
+
             Debug.Log(sSeasonData);
 
             File.WriteAllText(mSeasonDatePath, sSeasonData);

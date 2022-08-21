@@ -30,6 +30,7 @@ public class InventoryContainer : MonoBehaviour
     private Dictionary<IngredientData, int> mSortedData; //UI상에 보여지는 StocksData
 
 
+    
     void Start()
     {
         Cloudmakesystem = GameObject.FindWithTag("CloudSystem").GetComponent<CloudMakeSystem>();

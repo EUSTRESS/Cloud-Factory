@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//구름 및 재료 인벤토리 관련 매니저
 public class InventoryManager : MonoBehaviour
 {
     public IngredientList[] mIngredientDatas; // 모든 재료 정보를 갖고 있는 리스트 scriptable data
@@ -11,6 +12,11 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField]
     private GameObject mInventoryContainer;
+
+    //구름 데코 관련
+    public Cloud createdCloudData;
+
+
 
     public void setDataList(List<IngredientList> Ltotal)
     {

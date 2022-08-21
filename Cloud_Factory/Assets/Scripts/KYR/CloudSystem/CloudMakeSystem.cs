@@ -336,6 +336,7 @@ public class CloudMakeSystem : MonoBehaviour
 
         emotionList = LfinalEmo;
         Debug_PrintState("[최종감정리스트]", emotionList);
+        mEmotions = emotionList;
     }
 
     
@@ -404,6 +405,9 @@ public class CloudMakeSystem : MonoBehaviour
     //구름 생성 후 인벤토리에 저장
     private void m_saveCloud()
     {
+        GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>().createdCloudData = new Cloud(mEmotions);
+
+        ////////////////////아래는 변경될 예정. 
         //구름 인벤토리 리스트 가져와서
         int cnt = 0;
 

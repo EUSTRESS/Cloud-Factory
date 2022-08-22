@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//구름 및 재료 인벤토리 관련 매니저
 public class InventoryManager : MonoBehaviour
 {
     public IngredientList[] mIngredientDatas; // 모든 재료 정보를 갖고 있는 리스트 scriptable data
@@ -11,6 +12,11 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField]
     private GameObject mInventoryContainer;
+
+    //구름 데코 관련
+    public Cloud createdCloudData;
+
+
 
     public void setDataList(List<IngredientList> Ltotal)
     {
@@ -62,7 +68,7 @@ public class InventoryManager : MonoBehaviour
         if (mIsSceneChange && SceneManager.GetActiveScene().name == "Give Cloud")
         {
             //Hierachy창에서 InventoryContainer을 찾는다.
-            mInventoryContainer = GameObject.Find("Cloud-System").transform.Find("PU_CloudCreater").transform.Find("Inventory").transform.Find("Container").gameObject;
+            mInventoryContainer = GameObject.Find("Canvas").transform.Find("I_Scroll View Inventory").transform.Find("Viewport").transform.Find("Content").transform.Find("Container").gameObject;
             //Inventory level 확인 후 리스트 크기 조정
             //데이터 상의 인벤토리 목록, 컨테이너에 전달
             mInventoryContainer.transform.GetComponent<InventoryContainer>().initInven(mergeList2Dic(),"public");
@@ -141,4 +147,9 @@ public class InventoryManager : MonoBehaviour
 
         return results;
     }
+
+
+    //////////////////////////////
+    //구름인벤토리 관련 함수//
+    //////////////////////////////
 }

@@ -68,6 +68,8 @@ public class CloudUIManager : MonoBehaviour
 
             Debug.Log("현재 인덱스 : " + mDropdown.mDropdownIndex);
             Debug.Log("인덱스 받아와서 현재 적용되어 있는 인덱스로 감정별 정렬 메소드 호출");
+
+            
         }
         else
         {

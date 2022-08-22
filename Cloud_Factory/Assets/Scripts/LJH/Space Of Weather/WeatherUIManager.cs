@@ -13,6 +13,7 @@ public class WeatherUIManager : MonoBehaviour
     public GameObject mGatherResult;// 채집 결과를 출력하는 UI
 
     public GameObject[] mSeasonObj = new GameObject[4]; // 4계절 오브젝트
+    public GameObject[] mSeasonUIObj = new GameObject[4]; // 4계절 UI오브젝트
 
     public Animator mGatheringAnim; // 채집 애니메이션
 
@@ -28,7 +29,7 @@ public class WeatherUIManager : MonoBehaviour
     public int mRandomGather; // 재료 채집 랜덤 개수
 
     [Header("BackGround")]
-    public Image iMainBG; // 메인 배경 이미지 
+    public GameObject iMainBG; // 메인 배경 이미지 
     public Sprite[] mBackground = new Sprite[4]; // 계절별로 달라지는 배경
 
     //예람
@@ -71,9 +72,11 @@ public class WeatherUIManager : MonoBehaviour
 
     void UpdateSeasonBg(int _iCurrent, int _iPrev)
     {
-        iMainBG.sprite = mBackground[_iCurrent];
+        iMainBG.GetComponent<SpriteRenderer>().sprite = mBackground[_iCurrent];
         mSeasonObj[_iPrev].SetActive(false);
         mSeasonObj[_iCurrent].SetActive(true);
+        mSeasonUIObj[_iPrev].SetActive(false);
+        mSeasonUIObj[_iCurrent].SetActive(true);
     }
 
     // 마당 버튼 클릭 시, 채집하시겠씁니까? 오브젝트 활성화    

@@ -278,6 +278,65 @@ public class CloudMakeSystem : MonoBehaviour
         }
 
         //최종 감정 리스트 저장.
+        //중복이 있다면 그중 가장 큰 감정 채용
+        Dictionary<Emotion, int> LoverlapsEmo = new Dictionary<Emotion, int>();
+        
+        foreach (EmotionInfo emotion in emotionList)
+        {
+            if(LoverlapsEmo.Count == 0)
+            {
+                LoverlapsEmo.Add(emotion.Key, emotion.Value);
+                continue;
+            }
+
+            if(LoverlapsEmo.ContainsKey(emotion.Key))
+            {
+                if (LoverlapsEmo[emotion.Key] < emotion.Value)
+                    LoverlapsEmo[emotion.Key] = emotion.Value;
+            }
+            else
+                LoverlapsEmo.Add(emotion.Key, emotion.Value);
+
+        }
+        Debug_PrintState("[중복 감정 중 큰감정 채용]", LoverlapsEmo);
+
+        List<EmotionInfo> LfinalEmo = new List<EmotionInfo>();
+        foreach (KeyValuePair<Emotion,int> overlap in LoverlapsEmo)
+        {
+            EmotionInfo tmp = new EmotionInfo(overlap.Key, overlap.Value);
+            LfinalEmo.Add(tmp);
+        }
+
+        emotionList = LfinalEmo;
+        Debug_PrintState("[최종감정리스트(1)]", emotionList);
+
+        LfinalEmo = new List<EmotionInfo>();
+
+        //2가지 감정 선택(제일 큰 감정 + 두번째로 큰 감정)
+        int roopCnt = 2;
+        while(roopCnt!=0)
+        {
+            EmotionInfo maxValue = new EmotionInfo(emotionList[0].Key, emotionList[0].Value);
+            foreach (EmotionInfo emotion in emotionList)
+            {
+                if (maxValue.Value < emotion.Value)
+                    maxValue = emotion;
+                else if(maxValue.Value == emotion.Value) //같다면 둘 중 랜덤으로 선택.
+                {
+                    int i = Random.Range(0, 2);
+                    maxValue = (i == 0 ? maxValue : emotion);
+
+                }
+
+            }
+            LfinalEmo.Add(maxValue);
+            emotionList.Remove(maxValue);
+            roopCnt--;
+        }
+
+        emotionList = LfinalEmo;
+        Debug_PrintState("[최종감정리스트]", emotionList);
+        mEmotions = emotionList;
     }
 
     
@@ -287,7 +346,7 @@ public class CloudMakeSystem : MonoBehaviour
         string result = sTitle;
         foreach(EmotionInfo info in emotionList)
         {
-            result += (info.Key.ToString()+"|");
+            result += (info.Key.ToString()+":" + info.Value + "|");
         }
 
         Debug.Log(result);
@@ -319,14 +378,12 @@ public class CloudMakeSystem : MonoBehaviour
 
     IEnumerator isMaking(float time) //UI 처리
     {
-        this.transform.Find("Button").GetComponent<Button>().enabled = false;
 
         //색 어둡게
         slct_mtrl.u_setUIbright(total, false);
 
         yield return new WaitForSeconds(time);
 
-        this.transform.Find("Button").GetComponent<Button>().enabled = true;
 
         yield return new WaitForSeconds(1);
         //색 밝게
@@ -348,6 +405,9 @@ public class CloudMakeSystem : MonoBehaviour
     //구름 생성 후 인벤토리에 저장
     private void m_saveCloud()
     {
+        GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>().createdCloudData = new Cloud(mEmotions);
+
+        ////////////////////아래는 변경될 예정. 
         //구름 인벤토리 리스트 가져와서
         int cnt = 0;
 
@@ -377,10 +437,10 @@ public class CloudMakeSystem : MonoBehaviour
         total = 0;
       
         slct_mtrl = new CloudSystem.S_list();
-        slct_mtrl.init(this.transform.Find("selectedIngredient").transform);
+        slct_mtrl.init(this.transform.Find("Contents").transform);
         slct_mtrl.default_sprite = default_sprite;
 
-        UI_btn_txt = this.transform.Find("Button").GetComponentInChildren<Text>();
+        UI_btn_txt = this.transform.Find("B_CloudGIve").GetComponentInChildren<Text>();
         UI_btn_txt.text = "제작하기";
 
         

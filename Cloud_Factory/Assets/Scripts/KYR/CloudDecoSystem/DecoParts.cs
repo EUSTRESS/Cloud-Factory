@@ -56,5 +56,13 @@ public class DecoParts : MonoBehaviour
             isEditActive = false;
     }
 
+    public void ActiveCanEdit()
+    {
+        canEdit = true;
+    }
 
+    public void UnactiveCanEdit()
+    {
+        canEdit = false;
+    }
 }

@@ -52,7 +52,7 @@ public class CloudDecoManager : MonoBehaviour
     private DecoParts selectedParts;
     private List<List<GameObject>> mUIDecoParts;
     private InventoryManager inventoryManager;
-
+    private List<GameObject> LDecoParts;
     //스케치북 기즈모
     public Vector2 top_right_corner;
     public Vector2 bottom_left_corner;
@@ -61,7 +61,7 @@ public class CloudDecoManager : MonoBehaviour
     private void Start()
     {
         mUIDecoParts = new List<List<GameObject>>();
-
+        LDecoParts = new List<GameObject>();
         //(씬 이동시에만 가능)
         //inventoryManager = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>();
 
@@ -114,7 +114,9 @@ public class CloudDecoManager : MonoBehaviour
         selectedParts.transform.SetParent(this.transform, true);
 
         newParts.GetComponent<Button>().onClick.AddListener(EPartsClickedInArea);
-     
+
+        LDecoParts.Add(newParts);//파츠 관리하는 리스트에 추가.
+
         cursorChasing = true;
     }
 
@@ -138,7 +140,6 @@ public class CloudDecoManager : MonoBehaviour
 
             GameObject B_Rotate = Instantiate(B_Edits[1], Vector2.zero, selectedParts.transform.rotation);
             B_Rotate.transform.SetParent(selectedParts.transform, false);
-            B_Rotate.GetComponent<Button>().onClick.AddListener(EEditPartsRot);
             B_Rotate.AddComponent<MouseDragRotate>();
 
 
@@ -184,10 +185,6 @@ public class CloudDecoManager : MonoBehaviour
 
     }
 
-    private void EEditPartsRot()
-    {
-
-    }
 
     private void Update_PartsMoving()
     {

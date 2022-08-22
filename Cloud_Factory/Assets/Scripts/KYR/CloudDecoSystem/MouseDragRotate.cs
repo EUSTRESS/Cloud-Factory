@@ -18,15 +18,14 @@ public class MouseDragRotate : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         currentMousePos = Input.mousePosition;
         float angle = Mathf.Atan2(currentMousePos.y - myPos.y, currentMousePos.x - myPos.x) * Mathf.Rad2Deg;
         this.transform.parent.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-
-        
-        //처음 드래그 시작할때 마우스 위치 - 현재 위치
-        //transform.parent.Rotate(0, 0, (initialMousePos.x - currentMousePos.x) * rotSpeed);
-
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        transform.parent.GetComponent<DecoParts>().canEdit = false;
+
+        transform.parent.GetChild(0).gameObject.SetActive(false);
+        transform.parent.GetChild(1).gameObject.SetActive(false);
     }
 
  

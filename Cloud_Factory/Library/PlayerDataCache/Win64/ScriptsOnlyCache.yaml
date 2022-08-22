@@ -1,48 +1,11 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - Aflip_next_report
-    - ChangeCursor
-    - CloudFac_UI_Handler
-    - CloudMakeSystem
-    - CloudUIManager
-    - CommonUIManager
-    - DemoFunc
-    - DialogDB
-    - DialogIndex
-    - DialogManager
-    - DrawingUIManager
-    - Dropdown
-    - EmotionsTable
-    - Guest
-    - GuestInfo
-    - GuestObject
-    - GuideBook
-    - IngredientDataAutoCreator
-    - InventoryContainer
-    - InventoryManager
+    - CloudDecoManager
     - LoadingSceneController
-    - LobbyUIManager
-    - ProfileMoving
-    - RecordUIManager
-    - SOWManager
-    - SaveUnitManager
-    - SceneData
-    - SeasonDateCalc
-    - SoundManager
-    - StorageUIManager
-    - WayPoint
-    - WeatherUIManager
-    - YardHandleSystem
-    AstarPathfindingProject.dll:
-    - AstarPath
-    - Pathfinding.AIDestinationSetter
-    - Pathfinding.AIPath
-    - Pathfinding.Seeker
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.TextMeshPro.dll:
-    - TMPro.TMP_Dropdown
     - TMPro.TMP_FontAsset
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
@@ -54,24 +17,14 @@ ScriptsOnlyBuild:
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
-    - UnityEngine.EventSystems.EventTrigger
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
-    - UnityEngine.UI.ContentSizeFitter
-    - UnityEngine.UI.Dropdown
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
-    - UnityEngine.UI.Mask
-    - UnityEngine.UI.RawImage
-    - UnityEngine.UI.ScrollRect
-    - UnityEngine.UI.Scrollbar
-    - UnityEngine.UI.Slider
     - UnityEngine.UI.Text
-    - UnityEngine.UI.Toggle
-    - UnityEngine.UI.VerticalLayoutGroup
   sceneClasses:
-    Assets/Scenes/Cloud Factory.unity:
+    Assets/Scenes/DecoCloud.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -84,520 +37,40 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 82
-      Script: {instanceID: 0}
-    - Class: 83
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 1494}
-    - Class: 114
-      Script: {instanceID: 1496}
-    - Class: 114
-      Script: {instanceID: 1698}
-    - Class: 114
-      Script: {instanceID: 1834}
-    - Class: 114
-      Script: {instanceID: 2390}
-    - Class: 114
-      Script: {instanceID: 2500}
-    - Class: 114
-      Script: {instanceID: 2680}
-    - Class: 114
-      Script: {instanceID: 2900}
-    - Class: 114
-      Script: {instanceID: 2990}
-    - Class: 114
-      Script: {instanceID: 3012}
-    - Class: 114
-      Script: {instanceID: 3514}
-    - Class: 114
-      Script: {instanceID: 3868}
-    - Class: 114
-      Script: {instanceID: 3914}
-    - Class: 114
-      Script: {instanceID: 4136}
-    - Class: 114
-      Script: {instanceID: 4446}
-    - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
-      Script: {instanceID: 0}
-    Assets/Scenes/Cloud Storage.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
-      Script: {instanceID: 0}
-    - Class: 21
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 48
-      Script: {instanceID: 0}
-    - Class: 74
-      Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 82
-      Script: {instanceID: 0}
-    - Class: 83
-      Script: {instanceID: 0}
-    - Class: 91
-      Script: {instanceID: 0}
-    - Class: 95
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 1494}
-    - Class: 114
-      Script: {instanceID: 1496}
-    - Class: 114
-      Script: {instanceID: 1500}
-    - Class: 114
-      Script: {instanceID: 1788}
-    - Class: 114
-      Script: {instanceID: 1834}
-    - Class: 114
-      Script: {instanceID: 2390}
-    - Class: 114
-      Script: {instanceID: 2500}
-    - Class: 114
-      Script: {instanceID: 2510}
-    - Class: 114
-      Script: {instanceID: 2544}
-    - Class: 114
-      Script: {instanceID: 2680}
-    - Class: 114
-      Script: {instanceID: 2702}
-    - Class: 114
-      Script: {instanceID: 2900}
-    - Class: 114
-      Script: {instanceID: 2910}
-    - Class: 114
-      Script: {instanceID: 2990}
-    - Class: 114
-      Script: {instanceID: 3008}
-    - Class: 114
-      Script: {instanceID: 3124}
-    - Class: 114
-      Script: {instanceID: 3154}
-    - Class: 114
-      Script: {instanceID: 3262}
-    - Class: 114
-      Script: {instanceID: 3514}
-    - Class: 114
-      Script: {instanceID: 3710}
-    - Class: 114
-      Script: {instanceID: 3808}
-    - Class: 114
-      Script: {instanceID: 3834}
-    - Class: 114
-      Script: {instanceID: 3868}
-    - Class: 114
-      Script: {instanceID: 3914}
-    - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
-      Script: {instanceID: 0}
-    Assets/Scenes/Drawing Room.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
-      Script: {instanceID: 0}
-    - Class: 21
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 48
-      Script: {instanceID: 0}
-    - Class: 74
-      Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 82
-      Script: {instanceID: 0}
-    - Class: 83
-      Script: {instanceID: 0}
-    - Class: 91
-      Script: {instanceID: 0}
-    - Class: 95
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 1494}
-    - Class: 114
-      Script: {instanceID: 1496}
-    - Class: 114
-      Script: {instanceID: 1698}
-    - Class: 114
-      Script: {instanceID: 1834}
-    - Class: 114
-      Script: {instanceID: 2390}
-    - Class: 114
-      Script: {instanceID: 2500}
-    - Class: 114
-      Script: {instanceID: 2680}
-    - Class: 114
-      Script: {instanceID: 2900}
-    - Class: 114
-      Script: {instanceID: 2990}
-    - Class: 114
-      Script: {instanceID: 2992}
-    - Class: 114
-      Script: {instanceID: 3514}
-    - Class: 114
-      Script: {instanceID: 3868}
-    - Class: 114
-      Script: {instanceID: 3914}
-    - Class: 114
-      Script: {instanceID: 3944}
-    - Class: 114
-      Script: {instanceID: 4048}
-    - Class: 114
-      Script: {instanceID: 4118}
-    - Class: 114
-      Script: {instanceID: 4136}
-    - Class: 114
-      Script: {instanceID: 4446}
-    - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
-      Script: {instanceID: 0}
-    - Class: 212
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
-      Script: {instanceID: 0}
-    Assets/Scenes/Give Cloud.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
-      Script: {instanceID: 0}
-    - Class: 21
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 48
-      Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 82
-      Script: {instanceID: 0}
-    - Class: 83
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 1494}
-    - Class: 114
-      Script: {instanceID: 1496}
-    - Class: 114
-      Script: {instanceID: 1500}
-    - Class: 114
-      Script: {instanceID: 1788}
-    - Class: 114
-      Script: {instanceID: 1834}
-    - Class: 114
-      Script: {instanceID: 2390}
-    - Class: 114
-      Script: {instanceID: 2500}
-    - Class: 114
-      Script: {instanceID: 2510}
-    - Class: 114
-      Script: {instanceID: 2544}
-    - Class: 114
-      Script: {instanceID: 2680}
-    - Class: 114
-      Script: {instanceID: 2900}
-    - Class: 114
-      Script: {instanceID: 2906}
-    - Class: 114
-      Script: {instanceID: 2910}
-    - Class: 114
-      Script: {instanceID: 2990}
-    - Class: 114
-      Script: {instanceID: 3124}
-    - Class: 114
-      Script: {instanceID: 3130}
-    - Class: 114
-      Script: {instanceID: 3154}
-    - Class: 114
-      Script: {instanceID: 3242}
-    - Class: 114
-      Script: {instanceID: 3262}
-    - Class: 114
-      Script: {instanceID: 3514}
-    - Class: 114
-      Script: {instanceID: 3560}
-    - Class: 114
-      Script: {instanceID: 3710}
-    - Class: 114
-      Script: {instanceID: 3834}
-    - Class: 114
-      Script: {instanceID: 3868}
-    - Class: 114
-      Script: {instanceID: 3914}
-    - Class: 114
-      Script: {instanceID: 3972}
-    - Class: 114
-      Script: {instanceID: 4670}
-    - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
-      Script: {instanceID: 0}
-    Assets/Scenes/KYR/Cloud-Factory-Scene.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
-      Script: {instanceID: 0}
-    - Class: 21
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 48
-      Script: {instanceID: 0}
-    - Class: 74
+    - Class: 60
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
-    - Class: 111
-      Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 1494}
-    - Class: 114
-      Script: {instanceID: 1496}
-    - Class: 114
-      Script: {instanceID: 1500}
-    - Class: 114
-      Script: {instanceID: 2176}
-    - Class: 114
-      Script: {instanceID: 2390}
-    - Class: 114
-      Script: {instanceID: 2500}
-    - Class: 114
-      Script: {instanceID: 2680}
-    - Class: 114
-      Script: {instanceID: 2900}
-    - Class: 114
-      Script: {instanceID: 2910}
-    - Class: 114
-      Script: {instanceID: 2990}
-    - Class: 114
-      Script: {instanceID: 3130}
-    - Class: 114
-      Script: {instanceID: 3242}
-    - Class: 114
-      Script: {instanceID: 3560}
-    - Class: 114
-      Script: {instanceID: 3710}
-    - Class: 114
-      Script: {instanceID: 3834}
-    - Class: 114
-      Script: {instanceID: 3972}
-    - Class: 114
-      Script: {instanceID: 4018}
-    - Class: 114
-      Script: {instanceID: 4670}
-    - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
-      Script: {instanceID: 0}
-    Assets/Scenes/KYR/Weather-Space-Scene.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
-      Script: {instanceID: 0}
-    - Class: 21
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 48
-      Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 1494}
     - Class: 114
       Script: {instanceID: 1496}
     - Class: 114
       Script: {instanceID: 1498}
     - Class: 114
-      Script: {instanceID: 2390}
+      Script: {instanceID: 1504}
     - Class: 114
-      Script: {instanceID: 2500}
+      Script: {instanceID: 1634}
     - Class: 114
-      Script: {instanceID: 2680}
+      Script: {instanceID: 1798}
     - Class: 114
-      Script: {instanceID: 2784}
+      Script: {instanceID: 2086}
     - Class: 114
-      Script: {instanceID: 2900}
+      Script: {instanceID: 2292}
     - Class: 114
-      Script: {instanceID: 2990}
+      Script: {instanceID: 2416}
     - Class: 114
-      Script: {instanceID: 3014}
+      Script: {instanceID: 2530}
     - Class: 114
-      Script: {instanceID: 3106}
-    - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
-      Script: {instanceID: 0}
-    Assets/Scenes/Lobby.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
-      Script: {instanceID: 0}
-    - Class: 21
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 48
-      Script: {instanceID: 0}
-    - Class: 49
-      Script: {instanceID: 0}
-    - Class: 74
-      Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 82
-      Script: {instanceID: 0}
-    - Class: 83
-      Script: {instanceID: 0}
-    - Class: 91
-      Script: {instanceID: 0}
-    - Class: 95
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
+      Script: {instanceID: 2572}
     - Class: 114
-      Script: {instanceID: 1494}
+      Script: {instanceID: 2710}
     - Class: 114
-      Script: {instanceID: 1496}
+      Script: {instanceID: 2932}
     - Class: 114
-      Script: {instanceID: 1624}
+      Script: {instanceID: 3994}
     - Class: 114
-      Script: {instanceID: 1698}
-    - Class: 114
-      Script: {instanceID: 1788}
-    - Class: 114
-      Script: {instanceID: 1834}
-    - Class: 114
-      Script: {instanceID: 2068}
-    - Class: 114
-      Script: {instanceID: 2390}
-    - Class: 114
-      Script: {instanceID: 2500}
-    - Class: 114
-      Script: {instanceID: 2680}
-    - Class: 114
-      Script: {instanceID: 2788}
-    - Class: 114
-      Script: {instanceID: 2826}
-    - Class: 114
-      Script: {instanceID: 2900}
-    - Class: 114
-      Script: {instanceID: 2990}
-    - Class: 114
-      Script: {instanceID: 3514}
-    - Class: 114
-      Script: {instanceID: 3868}
-    - Class: 114
-      Script: {instanceID: 3914}
-    - Class: 114
-      Script: {instanceID: 3936}
-    - Class: 114
-      Script: {instanceID: 4208}
-    - Class: 114
-      Script: {instanceID: 4492}
+      Script: {instanceID: 4274}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -615,213 +88,6 @@ ScriptsOnlyBuild:
     - Class: 224
       Script: {instanceID: 0}
     - Class: 225
-      Script: {instanceID: 0}
-    Assets/Scenes/Record Of Healing.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
-      Script: {instanceID: 0}
-    - Class: 21
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 48
-      Script: {instanceID: 0}
-    - Class: 74
-      Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 82
-      Script: {instanceID: 0}
-    - Class: 83
-      Script: {instanceID: 0}
-    - Class: 91
-      Script: {instanceID: 0}
-    - Class: 95
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 1494}
-    - Class: 114
-      Script: {instanceID: 1496}
-    - Class: 114
-      Script: {instanceID: 1834}
-    - Class: 114
-      Script: {instanceID: 2390}
-    - Class: 114
-      Script: {instanceID: 2500}
-    - Class: 114
-      Script: {instanceID: 2680}
-    - Class: 114
-      Script: {instanceID: 2702}
-    - Class: 114
-      Script: {instanceID: 2900}
-    - Class: 114
-      Script: {instanceID: 2910}
-    - Class: 114
-      Script: {instanceID: 2990}
-    - Class: 114
-      Script: {instanceID: 3154}
-    - Class: 114
-      Script: {instanceID: 3262}
-    - Class: 114
-      Script: {instanceID: 3514}
-    - Class: 114
-      Script: {instanceID: 3710}
-    - Class: 114
-      Script: {instanceID: 3808}
-    - Class: 114
-      Script: {instanceID: 3834}
-    - Class: 114
-      Script: {instanceID: 3868}
-    - Class: 114
-      Script: {instanceID: 3914}
-    - Class: 114
-      Script: {instanceID: 4136}
-    - Class: 114
-      Script: {instanceID: 4446}
-    - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
-      Script: {instanceID: 0}
-    Assets/Scenes/SampleScene.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
-      Script: {instanceID: 0}
-    Assets/Scenes/Space Of Weather.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
-      Script: {instanceID: 0}
-    - Class: 21
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 48
-      Script: {instanceID: 0}
-    - Class: 50
-      Script: {instanceID: 0}
-    - Class: 58
-      Script: {instanceID: 0}
-    - Class: 61
-      Script: {instanceID: 0}
-    - Class: 74
-      Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 82
-      Script: {instanceID: 0}
-    - Class: 83
-      Script: {instanceID: 0}
-    - Class: 91
-      Script: {instanceID: 0}
-    - Class: 95
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 1494}
-    - Class: 114
-      Script: {instanceID: 1496}
-    - Class: 114
-      Script: {instanceID: 1560}
-    - Class: 114
-      Script: {instanceID: 1582}
-    - Class: 114
-      Script: {instanceID: 1604}
-    - Class: 114
-      Script: {instanceID: 1646}
-    - Class: 114
-      Script: {instanceID: 1698}
-    - Class: 114
-      Script: {instanceID: 1834}
-    - Class: 114
-      Script: {instanceID: 1912}
-    - Class: 114
-      Script: {instanceID: 2390}
-    - Class: 114
-      Script: {instanceID: 2500}
-    - Class: 114
-      Script: {instanceID: 2570}
-    - Class: 114
-      Script: {instanceID: 2666}
-    - Class: 114
-      Script: {instanceID: 2680}
-    - Class: 114
-      Script: {instanceID: 2784}
-    - Class: 114
-      Script: {instanceID: 2900}
-    - Class: 114
-      Script: {instanceID: 2990}
-    - Class: 114
-      Script: {instanceID: 3012}
-    - Class: 114
-      Script: {instanceID: 3014}
-    - Class: 114
-      Script: {instanceID: 3106}
-    - Class: 114
-      Script: {instanceID: 3514}
-    - Class: 114
-      Script: {instanceID: 3868}
-    - Class: 114
-      Script: {instanceID: 3914}
-    - Class: 114
-      Script: {instanceID: 3966}
-    - Class: 114
-      Script: {instanceID: 4118}
-    - Class: 114
-      Script: {instanceID: 4136}
-    - Class: 114
-      Script: {instanceID: 4446}
-    - Class: 114
-      Script: {instanceID: 4452}
-    - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
-      Script: {instanceID: 0}
-    - Class: 212
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -848,6 +114,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Toggle
+  - hash:
+      serializedVersion: 2
+      Hash: 69415240821be7986b27e72bf9609a30
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Button
   - hash:
       serializedVersion: 2
       Hash: de673e1340c90424cfde9cdd2df0ab93
@@ -1036,7 +308,7 @@ ScriptsOnlyBuild:
     className: AnimationManager
   - hash:
       serializedVersion: 2
-      Hash: c0e3c45a3eecefbaea24ad7784d153a7
+      Hash: 235f84db841e884fe3bca0f8186256c2
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CloudDecoManager
@@ -1126,12 +398,6 @@ ScriptsOnlyBuild:
     className: RelevantGraphSurface
   - hash:
       serializedVersion: 2
-      Hash: fd37939930520e4be31a28250d1768c4
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: WeatherUIManager
-  - hash:
-      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestRunner.Utils
@@ -1186,7 +452,7 @@ ScriptsOnlyBuild:
     className: AstarSmoothFollow2
   - hash:
       serializedVersion: 2
-      Hash: b8a641670afc594fe8e37a1d90443d0b
+      Hash: a3a92577c6608afbc2d6366e26f8ed6a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: DecoParts
@@ -1280,12 +546,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: ToggleGroup
-  - hash:
-      serializedVersion: 2
-      Hash: 69415240821be7986b27e72bf9609a30
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Button
   - hash:
       serializedVersion: 2
       Hash: 33c3e060e0488e88f3ead4107f659c9d
@@ -1516,12 +776,6 @@ ScriptsOnlyBuild:
     className: ScrollRect
   - hash:
       serializedVersion: 2
-      Hash: 2ea954a872684b69c3b82fc31db8392a
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: SoundManager
-  - hash:
-      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -1712,16 +966,19 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EmotionsTable
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MouseDragMove
+  - hash:
+      serializedVersion: 2
+      Hash: f2937f2ba8a51378df4c56c6d9c28782
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MouseDragRotate
   platform: 19
   scenePathNames:
-  - Assets/Scenes/Lobby.unity
-  - Assets/Scenes/KYR/Weather-Space-Scene.unity
-  - Assets/Scenes/KYR/Cloud-Factory-Scene.unity
-  - Assets/Scenes/Cloud Factory.unity
-  - Assets/Scenes/Cloud Storage.unity
-  - Assets/Scenes/Drawing Room.unity
-  - Assets/Scenes/Give Cloud.unity
-  - Assets/Scenes/Record Of Healing.unity
-  - Assets/Scenes/SampleScene.unity
-  - Assets/Scenes/Space Of Weather.unity
-  playerPath: "G:/\uBC14\uD0D5\uD654\uBA74/Cloud_Factory.exe"
+  - Assets/Scenes/DecoCloud.unity
+  playerPath: "C:/Users/user/Desktop/\uC0C8 \uD3F4\uB354/CloudDecoSystemBuild/Cloud_Factory.exe"

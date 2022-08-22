@@ -161,6 +161,7 @@ public class CloudDecoManager : MonoBehaviour
 
         if (!selectedParts.canEdit)
         {
+            selectedParts.canEdit = true;
             selectedParts.transform.GetChild(0).gameObject.SetActive(true);
             selectedParts.transform.GetChild(1).gameObject.SetActive(true);
         }

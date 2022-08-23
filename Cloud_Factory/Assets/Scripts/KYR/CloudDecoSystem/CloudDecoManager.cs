@@ -122,7 +122,10 @@ public class CloudDecoManager : MonoBehaviour
 
     public void EPartsClickedInArea()
     {
-        //클릭된 객체로 변경해줘야함.
+        //클릭된 객체로 변경해줘야함
+        if(LDecoParts.Count>1 && EventSystem.current.currentSelectedGameObject.transform.parent != selectedParts.transform.parent)
+                return;
+        
         selectedParts = EventSystem.current.currentSelectedGameObject.GetComponent<DecoParts>();
 
         if (!selectedParts.canAttached) return; 

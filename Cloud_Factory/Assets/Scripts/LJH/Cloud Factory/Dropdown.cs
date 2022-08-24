@@ -5,7 +5,7 @@ using TMPro;
 public class Dropdown : MonoBehaviour
 {
     [SerializeField]
-    private TMP_Dropdown mDropdown; // 드롭다운
+    public TMP_Dropdown mDropdown; // 드롭다운
 
     public int mDropdownIndex;
 
@@ -39,11 +39,5 @@ public class Dropdown : MonoBehaviour
         mDropdown.value = 0;
     }
 
-    public void OnDropdownEvent(int index)
-    {
-        mDropdownIndex = index;
-        Debug.Log("현재 드롭다운 인덱스 : " + mDropdownIndex);
-        Debug.Log("여기서 인덱스에 따라서 변경할 때 감정별로 정렬 메소드 호출");
-    }
 }
 

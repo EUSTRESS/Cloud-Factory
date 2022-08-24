@@ -19,10 +19,16 @@ public class StorageUIManager : MonoBehaviour
 
     public TMP_Dropdown mSortDropBox; // 드롭박스
 
+    public CloudMakeSystem cloudMakeSystem;
     private Dropdown    mDropdown;    // 드롭다운 클래스
+
+    private InventoryContainer inventoryContainer; //yeram
+
     void Start()
     {
         mDropdown = GetComponent<Dropdown>();
+        inventoryContainer = GameObject.Find("I_Scroll View Inventory").transform.Find("Viewport").transform.Find("Content").GetChild(0).GetComponent<InventoryContainer>();
+
     }
     void Update()
     {
@@ -41,11 +47,13 @@ public class StorageUIManager : MonoBehaviour
 
             Debug.Log("현재 인덱스 : " + mDropdown.mDropdownIndex);
             Debug.Log("인덱스 받아와서 현재 적용되어 있는 인덱스로 감정별 정렬 메소드 호출");
+            inventoryContainer.OnDropdownEvent();
         }
         else
         {
             mSortDropBox.interactable = false;
             mGiveCloudCheckBox[(int)ECheckBox.Emotion].SetActive(false);
+            inventoryContainer.cancelDropdownEvent();
         }
     }
 
@@ -57,5 +65,6 @@ public class StorageUIManager : MonoBehaviour
     public void MakeCloud()
     {
         Debug.Log("구름 제작 메소드 호출");
+        cloudMakeSystem.E_createCloud(EventSystem.current.currentSelectedGameObject.name);
     }
 }

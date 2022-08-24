@@ -100,6 +100,7 @@ public class CommonUIManager : MonoBehaviour
     public void GoGiveCloud()
     {
         LoadingSceneController.Instance.LoadScene("Give Cloud");
+        GameObject.Find("InventoryManager").GetComponent<InventoryManager>().go2CloudFacBtn();
     }
     public void GoCloudStorage()
     {

@@ -58,6 +58,7 @@ public class SoundManager : MonoBehaviour
                         mBGM.clip = mSeasonBGMArray[0];
                         mBGM.Play();
                         isOneTime[0] = true;
+                        isOneTime[3] = false;
                     }                    
                     break;
                 case 2:
@@ -66,6 +67,7 @@ public class SoundManager : MonoBehaviour
                         mBGM.clip = mSeasonBGMArray[1];
                         mBGM.Play();
                         isOneTime[1] = true;
+                        isOneTime[0] = false;
                     }
                     break;
                 case 3:
@@ -74,6 +76,7 @@ public class SoundManager : MonoBehaviour
                         mBGM.clip = mSeasonBGMArray[2];
                         mBGM.Play();
                         isOneTime[2] = true;
+                        isOneTime[1] = false;
                     }
                     break;
                 case 4:
@@ -82,6 +85,7 @@ public class SoundManager : MonoBehaviour
                         mBGM.clip = mSeasonBGMArray[3];
                         mBGM.Play();
                         isOneTime[3] = true;
+                        isOneTime[2] = false;
                     }
                     break;
                 default:

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 응접실에 누가 방문했을 때 나오는 UI
+
 public class DrawingRoomAnim : MonoBehaviour
 {
     private Guest mGuestManager;

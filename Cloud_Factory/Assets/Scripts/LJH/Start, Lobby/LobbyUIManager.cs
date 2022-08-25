@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ using System;
 public class LobbyUIManager : MonoBehaviour
 {
     private SeasonDateCalc mSeason; // 계절 스크립트
+    private InventoryManager mInvenManager;
 
     [Header("GAME OBJECT")]
     // 오브젝트 Active 관리
@@ -51,6 +53,7 @@ public class LobbyUIManager : MonoBehaviour
     {
         mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
         mSeason = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>();
+        mInvenManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
     }
 
     void Update()
@@ -120,7 +123,7 @@ public class LobbyUIManager : MonoBehaviour
 
         // newtonsoft library (모노비헤이비어 상속된 클래스 사용 불가능, 딕셔너리 사용 가능)
         // 로드하는 함수 호출 후에 그 씬 인덱스로 이동
-        FileStream fSceneBuildIndexStream 
+        FileStream fSceneBuildIndexStream
             // 해당 경로에 있는 json 파일을 연다
             = new FileStream(Application.dataPath + "/Data/SceneBuildIndex.json", FileMode.Open);
         // 열려있는 json 값들을 byte배열에 넣는다
@@ -149,7 +152,7 @@ public class LobbyUIManager : MonoBehaviour
             //sDateData = AESWithJava.Con.Program.Decrypt(sDateData, key);
 
             Debug.Log(sDateData);
-            
+
             // 데이터를 새로운 오브젝트에 덮어씌운다
             JsonUtility.FromJsonOverwrite(sDateData, gSeasonDate.AddComponent<SeasonDateCalc>());
 
@@ -159,6 +162,38 @@ public class LobbyUIManager : MonoBehaviour
             SeasonDateCalc.Instance.mSeason = gSeasonDate.GetComponent<SeasonDateCalc>().mSeason;
             SeasonDateCalc.Instance.mYear = gSeasonDate.GetComponent<SeasonDateCalc>().mYear;
         }
+
+        //******************************************//
+        // 예람이꺼 저장(인벤토리)
+        // 파일 경로로 파일이 있는 지 체크
+        string mInvenDataPath = Path.Combine(Application.dataPath + "/Data/", "InventoryData.json");
+        // 파일 스트림 개방
+        FileStream stream = new FileStream(Application.dataPath + "/Data/InventoryData.json", FileMode.Open);
+
+        if (File.Exists(mInvenDataPath)) // 해당 파일이 생성되었으면 불러오기
+        {
+            // 복호화는 나중에 한번에 하기
+            // 스트림 배열만큼 바이트 배열 생성
+            byte[] bInventoryData = new byte[stream.Length];
+            // 읽어오기
+            stream.Read(bInventoryData, 0, bInventoryData.Length);
+            stream.Close();
+
+            // jsondata를 스트링 타입으로 가져오기
+            string jInventoryData = Encoding.UTF8.GetString(bInventoryData);
+            Debug.Log(jInventoryData);
+
+            // 역직렬화
+            InventoryData dInventoryData = JsonConvert.DeserializeObject<InventoryData>(jInventoryData);
+
+            // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
+            mInvenManager.mType = dInventoryData.mType.ToList();
+            mInvenManager.mCnt = dInventoryData.mCnt.ToList();
+            mInvenManager.minvenLevel = dInventoryData.minvenLevel;
+            mInvenManager.mMaxInvenCnt = dInventoryData.mMaxInvenCnt;
+            mInvenManager.mMaxStockCnt = dInventoryData.mMaxStockCnt;
+        }
+        //******************************************//
 
         // 문자열을 int형으로 파싱해서 빌드 인덱스로 활용한다
         LoadingSceneController.Instance.LoadScene(int.Parse(sSceneData));

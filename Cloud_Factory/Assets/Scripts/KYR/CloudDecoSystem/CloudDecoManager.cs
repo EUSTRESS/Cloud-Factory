@@ -43,15 +43,16 @@ public class CloudDecoManager : MonoBehaviour
     //데코용 버튼 그룹
     public GameObject B_decoParts;
     public GameObject B_PosNeg;
-
+    public GameObject[] B_Edits; //frame : 이동, Rotate: 회전. 외부에서 대입.
 
     public Cloud mtargetCloud;// 구름공장에서 구름 데이터 제공.
 
     private bool cursorChasing;
-    private GameObject selectedParts;
+    
+    private DecoParts selectedParts;
     private List<List<GameObject>> mUIDecoParts;
     private InventoryManager inventoryManager;
-
+    private List<GameObject> LDecoParts;
     //스케치북 기즈모
     public Vector2 top_right_corner;
     public Vector2 bottom_left_corner;
@@ -60,7 +61,7 @@ public class CloudDecoManager : MonoBehaviour
     private void Start()
     {
         mUIDecoParts = new List<List<GameObject>>();
-
+        LDecoParts = new List<GameObject>();
         //(씬 이동시에만 가능)
         //inventoryManager = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>();
 
@@ -105,31 +106,96 @@ public class CloudDecoManager : MonoBehaviour
     public void EClickedDecoParts()
     {
         GameObject target = EventSystem.current.currentSelectedGameObject;
-        selectedParts = Instantiate(target.transform.GetChild(0).gameObject, Input.mousePosition, target.transform.rotation);
-        selectedParts.AddComponent<DecoParts>();
-        selectedParts.GetComponent<DecoParts>().init(top_right_corner, bottom_left_corner);
-        selectedParts.AddComponent<Button>();
+        GameObject newParts = Instantiate(target.transform.GetChild(0).gameObject, Input.mousePosition, target.transform.rotation);
+        newParts.AddComponent<DecoParts>();
+        selectedParts = newParts.GetComponent<DecoParts>();
+        selectedParts.init(top_right_corner, bottom_left_corner);
+        newParts.AddComponent<Button>();
         selectedParts.transform.SetParent(this.transform, true);
 
-        selectedParts.GetComponent<Button>().onClick.AddListener(newPartsAttach);
-     
+        newParts.GetComponent<Button>().onClick.AddListener(EPartsClickedInArea);
+
+        LDecoParts.Add(newParts);//파츠 관리하는 리스트에 추가.
+
         cursorChasing = true;
     }
 
-    public void newPartsAttach()
+    public void EPartsClickedInArea()
     {
-        if (!selectedParts.GetComponent<DecoParts>().canAttached) return;
-        cursorChasing = false;
+        //클릭된 객체로 변경해줘야함
+        if(LDecoParts.Count>1 && EventSystem.current.currentSelectedGameObject.transform.parent != selectedParts.transform.parent)
+                return;
+        
+        selectedParts = EventSystem.current.currentSelectedGameObject.GetComponent<DecoParts>();
+
+        if (!selectedParts.canAttached) return; 
+        if(!selectedParts.isEditActive)//처음 파츠를 선택한 상태. 부착가능한 공간에 부착 가능.
+        {
+            cursorChasing = false; //커서 따라다니지 않게 설정.
+            selectedParts.ReSettingDecoParts(); //CanEdit = true로 만듦.
+
+            //새로운 버튼 만들어서 덮어 씌움.
+            GameObject B_Frame = Instantiate(B_Edits[0], Vector2.zero, selectedParts.transform.rotation);
+            B_Frame.transform.SetParent(selectedParts.transform,false);
+            B_Frame.AddComponent<MouseDragMove>();
+            B_Frame.GetComponent<Button>().onClick.AddListener(EEditPartsPos);
+            B_Frame.GetComponent<RectTransform>().sizeDelta = selectedParts.GetComponent<RectTransform>().sizeDelta;
+
+            GameObject B_Rotate = Instantiate(B_Edits[1], Vector2.zero, selectedParts.transform.rotation);
+            B_Rotate.transform.SetParent(selectedParts.transform, false);
+            B_Rotate.AddComponent<MouseDragRotate>();
+
+
+            //Rotation Button Frame 조정.
+            float rotateImg_H = B_Rotate.GetComponent<RectTransform>().sizeDelta.y/2.0f;
+            float PartsImg_H = selectedParts.gameObject.GetComponent<RectTransform>().sizeDelta.y/2.0f;
+            float correctionPos = PartsImg_H - rotateImg_H + rotateImg_H * 2;
+            B_Rotate.transform.position = new Vector2(B_Rotate.transform.position.x, B_Rotate.transform.position.y+correctionPos);
+
+            B_Frame.SetActive(false);
+            B_Rotate.SetActive(false);
+
+            selectedParts.isEditActive = true;
+            return;
+        }
+
+        //부착이 한번 되면 canEdit상태는 언제나 true이다.
+        if (!selectedParts.isEditActive) return;
+        //스케치북에 부착된 상태에서만 아래코드 접근 가능.
+
+        if (!selectedParts.canEdit)
+        {
+            selectedParts.canEdit = true;
+            selectedParts.transform.GetChild(0).gameObject.SetActive(true);
+            selectedParts.transform.GetChild(1).gameObject.SetActive(true);
+        }
     }
 
-    
+    private void EEditPartsPos()
+    {
+        if (!selectedParts.canEdit)
+        {
+            selectedParts.canEdit = true;
+            selectedParts.transform.GetChild(0).gameObject.SetActive(true);
+            selectedParts.transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else
+        {
+            selectedParts.canEdit = false;
+            selectedParts.transform.GetChild(0).gameObject.SetActive(false);
+            selectedParts.transform.GetChild(1).gameObject.SetActive(false);
+        }
+
+    }
+
+
     private void Update_PartsMoving()
     {
         if (!cursorChasing) return;
         selectedParts.transform.position = Input.mousePosition;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         
         Update_PartsMoving();

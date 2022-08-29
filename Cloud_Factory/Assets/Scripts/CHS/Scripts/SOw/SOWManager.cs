@@ -5,13 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class SOWManager : MonoBehaviour
 {
+    [SerializeField]
     public Queue<int>               mWaitGuestList;         // 응접실에서 수락을 받고 넘어온 손님들의 리스트
+    [SerializeField]
     public Queue<int>               mUsingGuestList;        // 날씨의 공간에서 자리에 앉아 구름을 제공받을 준비가 된 손님들의 리스트
     int                             mMaxNumOfUsingGuest;    // mUsingGuestList가 가질 수 있는 최대의 크기
     int                             mTempGuestNum;           // 임시 손님 번호값
 
-    private Queue<GameObject>       mWaitGuestObjectList;   // 대기 손님 오브젝트들을 관리할 리스트
-    private Queue<GameObject>       mUsingGuestObjectList;  // 사용 손님 오브젝트들을 관리할 리스트
+    [SerializeField]
+    public Queue<GameObject>       mWaitGuestObjectList;   // 대기 손님 오브젝트들을 관리할 리스트
+    [SerializeField]
+    public Queue<GameObject>       mUsingGuestObjectList;  // 사용 손님 오브젝트들을 관리할 리스트
 
     [SerializeField]
     private GameObject              mGuestObject;           // 인스턴스하여 생성할 손님 오브젝트

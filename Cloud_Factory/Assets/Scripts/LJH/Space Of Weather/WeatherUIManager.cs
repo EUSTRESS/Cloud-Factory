@@ -54,28 +54,34 @@ public class WeatherUIManager : MonoBehaviour
         switch (mSeason.mSeason)
         {
             case 1:
-                UpdateSeasonBg(0, 3);// 봄
+                UpdateSeasonBg(0);// 봄
                 break;
             case 2:
-                UpdateSeasonBg(1, 0);// 여름
+                UpdateSeasonBg(1);// 여름
                 break;
             case 3:
-                UpdateSeasonBg(2, 1);// 가을
+                UpdateSeasonBg(2);// 가을
                 break;
             case 4:
-                UpdateSeasonBg(3, 2); // 겨울
+                UpdateSeasonBg(3); // 겨울
                 break;
             default:
                 break;
         }
     }
 
-    void UpdateSeasonBg(int _iCurrent, int _iPrev)
+    void UpdateSeasonBg(int _iCurrent)
     {
         iMainBG.GetComponent<SpriteRenderer>().sprite = mBackground[_iCurrent];
-        mSeasonObj[_iPrev].SetActive(false);
+        for (int i = 0; i < 4; i++)
+        {
+            if (_iCurrent == i) continue;
+
+            mSeasonObj[i].SetActive(false);
+            mSeasonUIObj[i].SetActive(false);
+        }
+
         mSeasonObj[_iCurrent].SetActive(true);
-        mSeasonUIObj[_iPrev].SetActive(false);
         mSeasonUIObj[_iCurrent].SetActive(true);
     }
 

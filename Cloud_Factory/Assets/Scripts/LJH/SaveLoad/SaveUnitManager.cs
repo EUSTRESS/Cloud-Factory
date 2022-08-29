@@ -1,3 +1,4 @@
+using System.Linq; // list 복사
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,15 @@ using System.Text;
 using Newtonsoft.Json;
 using AESWithJava.Con;
 using System;
+using UnityEditor;
 
 public class SaveUnitManager : MonoBehaviour
 {
     // SaveUnitManager 인스턴스를 담는 전역 변수
     private static SaveUnitManager instance = null;
-        
+
+    private InventoryManager mInvenManager;
+
     // 모든 씬에 넣어 놓을 것이기 때문에 중복은 파괴처리
     // 어느 씬에서 저장되고 로드될 것인지 모르기 때문에
     void Awake()
@@ -24,9 +28,12 @@ public class SaveUnitManager : MonoBehaviour
         }
         else
         {
-            Destroy(this.gameObject);            
+            Destroy(this.gameObject);
         }
+
+        mInvenManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
     }
+
 
     // Awake->OnEnable->Start순으로 생명주기
     void OnEnable()
@@ -39,7 +46,7 @@ public class SaveUnitManager : MonoBehaviour
     // 체인을 걸어서 이 함수는 매 씬마다 호출된다.
     // 씬이 변경될 때마다 호출된다.
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {       
+    {
         // 데이터 폴더가 없다면 생성하기
         if (!File.Exists(Application.dataPath + "/Data/"))
         {
@@ -110,13 +117,53 @@ public class SaveUnitManager : MonoBehaviour
 
             File.WriteAllText(mSeasonDatePath, sSeasonData);
 
-        }        
-    }
+            //******************************************//
+            // 예람이꺼 저장(인벤토리)
+            if (mInvenManager) // null check
+            {
+                // 암호화는 나중에 한번에 하기
 
-    // 종료될 때
-    void OnDisable()
-    {
-        // 제거
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+                // 파일이 있다면
+                if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "InventoryData.json")))
+                {
+                    // 삭제
+                    System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "InventoryData.json"));
+
+                }
+                // 삭제 후 다시 개방
+                // 이유는, 동적으로 생성 될 경우에 json을 초기화 하지 않고 덮어 씌우기 때문에 전에 있던 데이터보다 적을 경우
+                // 뒤에 남는 쓰레기 값들로 인하여 역직렬화 오류 발생함
+                // 동적으로 생성하는 경우가 아닌 경우 (ex, 현재 씬 인덱스 등)은 상관 없음
+                // 파일 스트림 개방
+                FileStream stream = new FileStream(Application.dataPath + "/Data/InventoryData.json", FileMode.OpenOrCreate);
+
+                // 저장할 변수가 담긴 클래스 생성
+                InventoryData mInventoryData = new InventoryData();
+
+                // 데이터 업데이트
+                mInventoryData.mType = mInvenManager.mType.ToList();
+                mInventoryData.mCnt = mInvenManager.mCnt.ToList();
+                mInventoryData.minvenLevel = mInvenManager.minvenLevel;
+                mInventoryData.mMaxInvenCnt = mInvenManager.mMaxInvenCnt;
+                mInventoryData.mMaxStockCnt = mInvenManager.mMaxStockCnt;
+
+                // 데이터 직렬화
+                string jInventoryData = JsonConvert.SerializeObject(mInventoryData);
+                
+                // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+                byte[] bInventoryData = Encoding.UTF8.GetBytes(jInventoryData);
+                Debug.Log(jInventoryData);
+                // 해당 파일 스트림에 적는다.                
+                stream.Write(bInventoryData, 0, bInventoryData.Length);
+                // 스트림 닫기
+                stream.Close();                
+            }
+        }
+        // 종료될 때
+        void OnDisable()
+        {
+            // 제거
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
     }
 }

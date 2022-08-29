@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public enum Emotion
 {   //PLEASURE부터 0~ 의 값을 갖음
@@ -54,12 +55,14 @@ public class EmotionInfo
 [CreateAssetMenu(fileName = "IngredientData", menuName = "ScriptableObjects/IngredientData", order = 1)]
 public class IngredientData : ScriptableObject
 {
-    
 
-    
 
+    // LJH, 변수마다 직렬화
+    [SerializeField]
     public string dataName; //재료 이름
 
+    // LJH, 스프라이트는 직렬화 불가능이어서 JsonIgnore안하면 오류
+    [JsonIgnore]
     public Sprite image;// 이미지
 
     //희귀도 : 희귀도에 따라서 감정의 구성 종류 및 개수가 달라진다.
@@ -69,10 +72,8 @@ public class IngredientData : ScriptableObject
     [SerializeField]
     public EmotionInfo[] emotions;
 
+    [SerializeField]
     public Dictionary<int, int> iEmotion;
-
-   
-
 
     public void init()
     {

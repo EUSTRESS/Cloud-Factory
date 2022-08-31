@@ -40,6 +40,9 @@ public class InventoryContainer : MonoBehaviour
             OnDropdownEvent();
         });
         inventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
+
+        inventoryManager.mInventoryContainer = this.gameObject;
+        initInven(inventoryManager.mergeList2Dic(), "public");
     }
 
     /////////////////////

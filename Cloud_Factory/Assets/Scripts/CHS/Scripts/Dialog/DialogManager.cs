@@ -3,58 +3,54 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Animations;
 
 public class DialogManager : MonoBehaviour
 {
     // 불러올 값들 선언
-    private Guest                   mGuestManager;
-    private SOWManager              mSOWManager;
+    private Guest mGuestManager;
+    private SOWManager mSOWManager;
 
-    public int                      mGuestNum;           // 손님의 번호를 넘겨받는다.
-    private int                     mGuestSat;           // 손님의 현재 만족도
-    string                          mTestName;           // 테스트를 위한 임시 이름 ( 손님의 이름을 가져왔다고 가정)
+    public int mGuestNum;           // 손님의 번호를 넘겨받는다.
+    private int mGuestSat;           // 손님의 현재 만족도
+    private int mGuestVisitCount;    // 손님의 현재 방문 횟수
+    string mTestName;           // 테스트를 위한 임시 이름 ( 손님의 이름을 가져왔다고 가정)
 
     [SerializeField]
-    private DialogDB                mDialogDB;           // 대화 내용을 저장해 놓은 DB
-    private string[]                mTextList;           // 대화 내용을 불러와서 저장해둘 리스트
-    private int[]                   mGuestImageList;     // 대화 내용에 맞는 표정을 저장해둘 리스트
+    private DialogDB mDialogDB;           // 대화 내용을 저장해 놓은 DB
+    private string[] mTextList;           // 대화 내용을 불러와서 저장해둘 리스트
+    private int[] mGuestImageList;     // 대화 내용에 맞는 표정을 저장해둘 리스트
+    private int[] mIsGuset;            // 누가 이야기하는 내용인지 처리하기
 
     // 씬 화면에 나올 텍스트에 들어갈 내용 
-    private string                  mDialogGuestName;    // 화면에 출력시킬 손님 이름
-    private string                  mDialogText;         // 실제로 화면에 출력시킬 내용
+    private string mDialogGuestName;    // 화면에 출력시킬 손님 이름
+    private string mDialogText;         // 실제로 화면에 출력시킬 내용
 
     // 씬 화면에 들어가는 텍스트 오브젝트 선언
-    public GameObject               gTextPanel;          // 대화 창
-    public GameObject               gTakeGuestPanel;     // 손님 받기/ 거절 버튼
-    public Text                     tGuestText;          // 대화가 진행 될 텍스트
-    public Text                     tGuestName;          // 대화중이 손님의 이름이 표시될 텍스트
+    public GameObject gTextPanel;          // 대화 창
+    public GameObject gTakeGuestPanel;     // 손님 받기/ 거절 버튼
+
+    public Text tText;               // 대화가 진행 될 텍스트
+    public Text tGuestName;          // 대화중이 손님의 이름이 표시될 텍스트
+    public Text tPlayerText;         // 대화중에 플레이어의 대화가 진행 될 텍스트
+    public Text tGuestText;          // 대화중에 플레이어의 대화가 진행 될 텍스트
 
     // 손님의 이미지를 띄우는데 필요한 변수들 선언
-    public Sprite[]                 sGuestImageArr;      // 이미지 인덱스들
-    public GameObject               gGuestSprite;        // 실제 화면에 출력되는 이미지 오브젝트
-    private SpriteRenderer          sGuestSpriteRender;  // 오브젝트의 Sprite 컴포넌트를 읽어올 SpriteRenderer
+    public Sprite[] sGuestImageArr;      // 이미지 인덱스들
+    public GameObject gGuestSprite;        // 실제 화면에 출력되는 이미지 오브젝트
+    private SpriteRenderer sGuestSpriteRender;  // 오브젝트의 Sprite 컴포넌트를 읽어올 SpriteRenderer
+    public Animator mGuestAnimator;
 
     // 대화 구현에 필요한 변수값 선언
-    private int                     mDialogIndex;        // 해당 만족도에 속하는 지문의 인덱스s
-    private int                     mDialogCharIndex;    // 실제로 화면에 출력시키는 내용의 인덱스
-    private int                     mDialogImageIndex;   // 실제로 화면에 출력시키는 이미지의 인덱스
-    private bool                    isReading;           // 현재 대화창에서 대화를 출력하는 중인가?
-    private bool                    isLastDialog;        // 마지막 대화를 불러왔는가?
+    private int mDialogIndex;        // 해당 만족도에 속하는 지문의 인덱스s
+    private int mDialogCharIndex;    // 실제로 화면에 출력시키는 내용의 인덱스
+    private int mDialogImageIndex;   // 실제로 화면에 출력시키는 이미지의 인덱스
+    private bool isReading;           // 현재 대화창에서 대화를 출력하는 중인가?
+    private bool isLastDialog;        // 마지막 대화를 불러왔는가?
 
     // 테스트 함수
     // 대화창에서 다른 캐릭터 혹은 다른 만족도의 텍스트를 받아오는 경우 오류가 있는지 확인하기 위한 함수
-    void A() 
-    {
-        tGuestName.text = mGuestManager.GetName(0);  // 날씨의 공간에서 응접실로 갈때 변수를 받아서 넘어가게끔 설정하면 될 것 같다. 
-        mGuestSat =  mGuestManager.mGuestInfos[0].mSatatisfaction;
 
-        mDialogIndex = 0;
-        mDialogCharIndex = 0;
-        mDialogImageIndex = 0;
-        tGuestText.text = "";
-
-        LoadDialogInfo();
-    }
 
     void Awake()
     {
@@ -62,19 +58,21 @@ public class DialogManager : MonoBehaviour
         mDialogIndex = GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex;
         mDialogCharIndex = 0;
         mDialogImageIndex = 0;
-        tGuestText.text = "";
+        tText.text = "";
         tGuestName.text = "실연";
 
         mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         sGuestSpriteRender = gGuestSprite.GetComponent<SpriteRenderer>();
         mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
-   
+
+        mGuestAnimator = gGuestSprite.GetComponent<Animator>();
+
         mGuestNum = mGuestManager.mGuestIndex;
         mGuestSat = mGuestManager.mGuestInfos[mGuestNum].mSatatisfaction;
 
         mGuestImageList = new int[20];
         mTextList = new string[20];
-
+        mIsGuset = new int[20];
         isReading = false;
 
         // 방문주기가 되지 않으면 손님이 나오지 않는다.
@@ -87,22 +85,14 @@ public class DialogManager : MonoBehaviour
             gTextPanel.SetActive(true);
 
             // 손님 이미지를 활성화
+            gGuestSprite.SetActive(true);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 싱글톤 기법 확인을 위한 테스트코드
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            MoveScenetoWeatherSpace();
-            GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex--;
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            A();
-        }
+
     }
 
     public void MoveScenetoWeatherSpace()
@@ -119,15 +109,21 @@ public class DialogManager : MonoBehaviour
         int i;
         int j = 0;
 
+        // 손님 번호 -> 방문 횟수 -> 만족도 순으로 엑셀 텍스트 파일을 체크한다.
         for (i = 0; i < mDialogDB.DialogText.Count; ++i)
         {
             if (mDialogDB.DialogText[i].GuestID == mGuestNum)
             {
-                if (mDialogDB.DialogText[i].Sat == mGuestSat) 
+                if (mDialogDB.DialogText[i].VisitCount == mGuestVisitCount)
                 {
-                    mTextList[j] = mDialogDB.DialogText[i].Text;
-                    mGuestImageList[j] = mDialogDB.DialogText[i].DialogImageNumber;
-                    j++;
+                    if (mDialogDB.DialogText[i].Sat == mGuestSat)
+                    {
+                        mTextList[j] = mDialogDB.DialogText[i].Text;
+                        mGuestImageList[j] = mDialogDB.DialogText[i].DialogImageNumber;
+                        mIsGuset[j] = mDialogDB.DialogText[i].isGuest;
+                        Debug.Log(j + " " + mIsGuset[j]);
+                        j++;
+                    }
                 }
             }
         }
@@ -138,6 +134,18 @@ public class DialogManager : MonoBehaviour
     {
         mDialogCharIndex = 0;
         tGuestText.text = "";
+        tPlayerText.text = "";
+
+        // 손님의 대사라면
+        if (mIsGuset[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex] == 1)
+        {
+            tText = tGuestText;
+        }
+        else
+        {
+            tText = tPlayerText;
+        }
+        Debug.Log(mDialogIndex + " " + mIsGuset[mDialogIndex]);
     }
     public string GetDialog(int dialogindex) // 만족도 , 대화 내용 순번
     {
@@ -146,7 +154,7 @@ public class DialogManager : MonoBehaviour
 
     private void ReadDialogAtAll()
     {
-        tGuestText.text += GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex);
+        tText.text += GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex);
         isReading = false;
     }
 
@@ -154,19 +162,18 @@ public class DialogManager : MonoBehaviour
     {
         isReading = true;
         //GuestName.text = testName;
-        if (tGuestText.text == GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex))
+        if (tText.text == GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex))
         {
             // 텍스트가 모두 출력이 된 경우에 클릭 시, 다음 문장이 출력된다.
             if (GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex) != "End")
             {
                 GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex += 1;
                 mDialogImageIndex++;
-                sGuestSpriteRender.sprite = sGuestImageArr[mDialogImageIndex];
                 isReading = false;
             }
             return;
         }
-        tGuestText.text += GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex];
+        tText.text += GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex];
         mDialogCharIndex++;
 
         Invoke("ReadDialogAtOne", 0.05f);
@@ -176,7 +183,9 @@ public class DialogManager : MonoBehaviour
     public void ReadDialog()
     {
         InitDialog();
-        Debug.Log(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex);
+
+        mGuestAnimator.SetInteger("index", mGuestImageList[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex]);
+
         // 마지막 End 문자열이 나오는 경우 ( 대화를 모두 불러온 경우)
         if (GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex) == "End")
         {
@@ -194,7 +203,7 @@ public class DialogManager : MonoBehaviour
         // 기본적으로 빈 텍스트에서 대화 내용을 한 글자씩 추가하여 출력하고 딜레이 하기를 반복한다.
         ReadDialogAtOne();
         return;
-  
+
         // 어느 문장까지 출력하였는지 저장한다.
         // DialogIndex 를 초기화 하지 않는 이상, 대화는 이전 혹은 이후로 넘어가지 않기 때문에 우선은 보류하는 것으로 생각 중.
     }

@@ -2,7 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Newtonsoft.Json; // LJH, Json Namespace
 
+// LJH, Data 저장할 임시 복사 공간, Monobehaviour 상속 금지
+[System.Serializable]
+public class InventoryData
+{
+    public List<IngredientData> mType;
+    public List<int> mCnt;   
+
+    public int minvenLevel = 1;
+
+    public int mMaxStockCnt = 10; //우선은 10개이하까지 가능
+    public int mMaxInvenCnt; //우선은 10개이하까지 가능
+}
+
+[System.Serializable]
 //구름 및 재료 인벤토리 관련 매니저
 public class InventoryManager : MonoBehaviour
 {
@@ -11,7 +26,7 @@ public class InventoryManager : MonoBehaviour
     private bool mIsSceneChange = false;
 
     [SerializeField]
-    private GameObject mInventoryContainer;
+    public GameObject mInventoryContainer;
 
     //구름 데코 관련
     public Cloud createdCloudData;
@@ -62,39 +77,23 @@ public class InventoryManager : MonoBehaviour
         mCnt = new List<int>(); //리스트 초기화
     }
 
-    private void Update()
-    {
-        //씬이 구름공장씬으로 이동하면 한번만 인벤토리가 Update 된다.
-        if (mIsSceneChange && SceneManager.GetActiveScene().name == "Give Cloud")
-        {
-            //Hierachy창에서 InventoryContainer을 찾는다.
-            mInventoryContainer = GameObject.Find("Canvas").transform.Find("I_Scroll View Inventory").transform.Find("Viewport").transform.Find("Content").transform.Find("Container").gameObject;
-            //Inventory level 확인 후 리스트 크기 조정
-            //데이터 상의 인벤토리 목록, 컨테이너에 전달
-            mInventoryContainer.transform.GetComponent<InventoryContainer>().initInven(mergeList2Dic(),"public");
-            mIsSceneChange = false;
-        }
-
-    }
     /////////////////
     //서버 저장 변수//
     /////////////////
+    
     public List<IngredientData>  mType;
     public List<int>  mCnt;
 
     public int minvenLevel=1;
 
-    private int mMaxStockCnt = 10; //우선은 10개이하까지 가능
-    private int mMaxInvenCnt; //우선은 10개이하까지 가능
-
-
-
+    public int mMaxStockCnt = 10; //우선은 10개이하까지 가능
+    public int mMaxInvenCnt; //우선은 10개이하까지 가능
 
     //////////////////////////////
     //채집 관련 인벤토리 연동 함수//
     //////////////////////////////
     public bool addStock(KeyValuePair<IngredientData, int> _stock)
-    {
+    {        
         mMaxInvenCnt = getInvenSize(minvenLevel);
         if (mType.Count >= mMaxInvenCnt) return false; // 인벤토리 자체가 아예 가득 찬 경우 return false
         //인벤토리에 자리가 있는 경우
@@ -139,7 +138,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     //나눠져있는 2개의 리스트를 딕셔너리 형식으로 리턴: 원활한 정렬을 위해서!
-    private Dictionary<IngredientData, int> mergeList2Dic()
+    public Dictionary<IngredientData, int> mergeList2Dic()
     {
         Dictionary<IngredientData, int> results = new Dictionary<IngredientData, int>();
         foreach (IngredientData stock in mType)

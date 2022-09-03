@@ -53,44 +53,36 @@ public class SoundManager : MonoBehaviour
             switch (mSeason.mSeason)
             {
                 case 1:
-                    if (!isOneTime[0])
-                    {
-                        mBGM.clip = mSeasonBGMArray[0];
-                        mBGM.Play();
-                        isOneTime[0] = true;
-                        isOneTime[3] = false;
-                    }                    
+                    UpdateAudio(0);
                     break;
                 case 2:
-                    if (!isOneTime[1])
-                    {
-                        mBGM.clip = mSeasonBGMArray[1];
-                        mBGM.Play();
-                        isOneTime[1] = true;
-                        isOneTime[0] = false;
-                    }
+                    UpdateAudio(1);
                     break;
                 case 3:
-                    if (!isOneTime[2])
-                    {
-                        mBGM.clip = mSeasonBGMArray[2];
-                        mBGM.Play();
-                        isOneTime[2] = true;
-                        isOneTime[1] = false;
-                    }
+                    UpdateAudio(2);
                     break;
                 case 4:
-                    if (!isOneTime[3])
-                    {
-                        mBGM.clip = mSeasonBGMArray[3];
-                        mBGM.Play();
-                        isOneTime[3] = true;
-                        isOneTime[2] = false;
-                    }
+                    UpdateAudio(3);
                     break;
                 default:
                     break;
             }           
+        }
+    }
+
+    void UpdateAudio(int _iIndex)
+    {
+        if (!isOneTime[_iIndex])
+        {
+            mBGM.clip = mSeasonBGMArray[_iIndex];
+            mBGM.Play();
+            for (int i = 0; i < 4; i++)
+            {
+                if (_iIndex == i) continue;
+
+                isOneTime[i] = false;
+            }
+            isOneTime[_iIndex] = true;
         }
     }
 

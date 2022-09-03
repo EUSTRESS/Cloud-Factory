@@ -12,7 +12,7 @@ public class Guest : MonoBehaviour
     public int              mGuestIndex;                        // 이번에 방문할 뭉티의 번호
 
     [SerializeField]
-    private int[]           mTodayGuestList = new int[6];       // 오늘 방문 예정인 뭉티 목록
+    public int[]           mTodayGuestList = new int[6];       // 오늘 방문 예정인 뭉티 목록
     [SerializeField]
     public bool             isGuestInLivingRoom;                // 응접실에 손님이 방문해있는가?
 

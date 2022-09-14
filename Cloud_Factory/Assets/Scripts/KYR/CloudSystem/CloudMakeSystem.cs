@@ -373,6 +373,8 @@ public class CloudMakeSystem : MonoBehaviour
         float time = 5f;
         //코루틴
         UI_btn_txt.text = "만드는 중";
+
+        //making UI 처리
         StartCoroutine(isMaking(time));        
     }
 
@@ -395,35 +397,46 @@ public class CloudMakeSystem : MonoBehaviour
         total = 0;
         UI_btn_txt.text = "제작하기";
 
+
+        int emotionCnt = mEmotions.Count;
+
+        InventoryManager inventoryManager = GameObject.FindWithTag("InventoryManager").transform.GetComponent<InventoryManager>();
+        inventoryManager.createdCloudData = new CloudData(mEmotions); //createdCloudData 갱신.
+        //큰 수치 = 구름색
+        //다음 수치 = 구름의 장식
+        
+        transform.Find("I_Result").gameObject.GetComponent<Image>().sprite = inventoryManager.createdCloudData.getBaseCloudSprite();
         Debug.Log("구름이 만들어졌습니다.");
 
-        m_saveCloud();
+        m_sendCloud();
 
         yield break;
     }
 
     //구름 생성 후 인벤토리에 저장
-    private void m_saveCloud()
+    private void m_sendCloud()
     {
-        GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>().createdCloudData = new Cloud(mEmotions);
+        //해당 감정에 맞는 구름 이미지 생성
+
+        GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>().createdCloudData = new CloudData(mEmotions);
 
         ////////////////////아래는 변경될 예정. 
         //구름 인벤토리 리스트 가져와서
         int cnt = 0;
 
         //빈 인벤토리 추척해서 구름 넣기.
-        while(true)
-        {
-            if (cnt >= 5) break; //인벤토리 크기 초과하면 실행X
-            if (L_cloudsInven[cnt].GetComponent<Image>().sprite != default_sprite)
-            {
-                cnt++;
-                continue;
-            }
-            L_cloudsInven[cnt].GetComponent<Image>().sprite = cloud_sprite;
-            L_cloudsInven[cnt].GetComponent<Button>().onClick.AddListener(DEMOcreateCloud);
-            break;
-        }
+        //while(true)
+        //{
+        //    if (cnt >= 5) break; //인벤토리 크기 초과하면 실행X
+        //    if (L_cloudsInven[cnt].GetComponent<Image>().sprite != default_sprite)
+        //    {
+        //        cnt++;
+        //        continue;
+        //    }
+        //    L_cloudsInven[cnt].GetComponent<Image>().sprite = cloud_sprite;
+        //    L_cloudsInven[cnt].GetComponent<Button>().onClick.AddListener(DEMOcreateCloud);
+        //    break;
+        //}
     }
 
     public void DEMOcreateCloud()

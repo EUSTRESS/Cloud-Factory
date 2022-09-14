@@ -4,39 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Cloud
-{
-    public int mShelfLife;
-    public List<EmotionInfo> mEmotions;
 
-    private bool mState; //0 = 폐기 1 = 가능
-    private Image cloudImage;
-    private List<Image> decoImages;
-    
-    public Cloud(List<EmotionInfo> Emotions)
-    {
-        mEmotions = Emotions;
-
-        //계산식함수로 자동으로 데이터 세팅
-        setShelfLife(mEmotions);
-        setCloudImage(mEmotions);
-        setDecoImage(mEmotions);
-    }
-
-    private void setShelfLife(List<EmotionInfo> Emotions)
-    {
-        //감정에 따라 맞는 보관기간
-    }
-    private void setCloudImage(List<EmotionInfo> Emotions)
-    {
-        //감정에 따라 맞는 base 구름이미지
-    }
-
-    private void setDecoImage(List<EmotionInfo> Emotions)
-    {
-        //감정에 따라 맞는 데코 이미지
-    }
-}
 public class CloudDecoManager : MonoBehaviour
 {
 
@@ -45,7 +13,7 @@ public class CloudDecoManager : MonoBehaviour
     public GameObject B_PosNeg;
     public GameObject[] B_Edits; //frame : 이동, Rotate: 회전. 외부에서 대입.
 
-    public Cloud mtargetCloud;// 구름공장에서 구름 데이터 제공.
+    public CloudData mtargetCloud;// 구름공장에서 구름 데이터 제공.
 
     private bool cursorChasing;
     
@@ -96,7 +64,7 @@ public class CloudDecoManager : MonoBehaviour
 
     }
 
-    private Cloud getTargetCloudData()
+    private CloudData getTargetCloudData()
     {
         return GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>().createdCloudData;
     }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Newtonsoft.Json; // LJH, Json Namespace
 
 // LJH, Data 저장할 임시 복사 공간, Monobehaviour 상속 금지
@@ -18,6 +19,60 @@ public class InventoryData
 }
 
 [System.Serializable]
+public class CloudData
+{
+    public int mShelfLife;
+    public List<EmotionInfo> mEmotions;
+
+    private bool mState; //0 = 폐기 1 = 가능
+    private Sprite mcloudBaseImage;
+    private List<List<Sprite>> mdecoImages; //2차원 리스트: L M S 사이즈 필요!
+
+    public CloudData(List<EmotionInfo> Emotions)
+    {
+        mEmotions = Emotions;
+
+        //계산식함수로 자동으로 데이터 세팅
+        setShelfLife(mEmotions);
+        setCloudImage(mEmotions);
+        setDecoImage(mEmotions);
+    }
+    public Sprite getBaseCloudSprite()
+    {
+        return mcloudBaseImage;
+    }
+
+    public int getBaseCloudColorIdx()
+    {
+        return (int)mEmotions[0].Key;
+    }
+    private void setShelfLife(List<EmotionInfo> Emotions)
+    {
+        //감정에 따라 맞는 보관기간
+    }
+    private void setCloudImage(List<EmotionInfo> Emotions)
+    {
+        //감정에 따라 맞는 base 구름이미지
+        string targetImgName = ((int)mEmotions[0].Key).ToString();
+        if ((int)mEmotions[0].Key < 8)
+            targetImgName = "0";
+        mcloudBaseImage = Resources.Load<Sprite>("Sprite/CloudBase/2union/" + "OC_Cloud2_" + ((int)mEmotions[0].Key).ToString());
+    }
+
+    private void setDecoImage(List<EmotionInfo> Emotions)
+    {
+        //감정에 따라 맞는 데코 이미지
+        for(int i = 1; i < Emotions.Count;i++)
+        {
+            List<Sprite> decoList = new List<Sprite>();
+            decoList.Add(Resources.Load<Sprite>("Sprite/CloudDeco/L/" + "OC_L_" + ((int)mEmotions[i].Key).ToString()));
+            decoList.Add(Resources.Load<Sprite>("Sprite/CloudDeco/M/" + "OC_M_" + ((int)mEmotions[i].Key).ToString()));
+            decoList.Add(Resources.Load<Sprite>("Sprite/CloudDeco/S/" + "OC_S_" + ((int)mEmotions[i].Key).ToString()));
+        }
+    }
+}
+
+[System.Serializable]
 //구름 및 재료 인벤토리 관련 매니저
 public class InventoryManager : MonoBehaviour
 {
@@ -29,9 +84,9 @@ public class InventoryManager : MonoBehaviour
     public GameObject mInventoryContainer;
 
     //구름 데코 관련
-    public Cloud createdCloudData;
+    public CloudData createdCloudData = null;
 
-
+    
 
     public void setDataList(List<IngredientList> Ltotal)
     {

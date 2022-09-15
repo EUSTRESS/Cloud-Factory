@@ -107,6 +107,11 @@ public class CommonUIManager : MonoBehaviour
         LoadingSceneController.Instance.LoadScene("Cloud Storage");
     }
 
+    public void GoDecoCloud()
+    {
+        LoadingSceneController.Instance.LoadScene("DecoCloud");
+    }
+
     // 옵션창 활성화, 비활성화
     public void ActiveOption()
     {

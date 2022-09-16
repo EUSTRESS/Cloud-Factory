@@ -155,6 +155,26 @@ public class CloudDecoManager : MonoBehaviour
 
 
     //UI Button Function
+    public void clickedAutoSettingBtn() //자동 배치
+    {
+        float width_max_range = I_targetCloud.GetComponent<RectTransform>().rect.width/2;
+        float Height_max_range = I_targetCloud.GetComponent<RectTransform>().rect.height/2;
+        // Vector2 top_right_corner = I_targetCloud.Rect
+        for (int i = 0; i < mBaseCloudDt.getDecoPartsCount(); i++)
+        {
+            for (int j = 0; j < int.Parse(T_CountInfo[i].GetComponent<TMP_Text>().text); j++)
+            {
+                GameObject partsObj = B_decoParts.transform.GetChild(i + 1).GetChild(Random.Range(0,3)).GetChild(0).gameObject; //Image GameObject
+                float x = Random.Range(-width_max_range, width_max_range);
+                float y = Random.Range(-Height_max_range, Height_max_range);
+                GameObject instance  = Instantiate(partsObj, new Vector2(0, 0), transform.rotation);
+                instance.transform.SetParent(transform);
+                instance.transform.localPosition = new Vector2(x, y);
+            }
+
+            T_CountInfo[i].GetComponent<TMP_Text>().text = "0";
+        }
+    }
     public void clickedPosNegButton()
     {
         GameObject target = EventSystem.current.currentSelectedGameObject.transform.gameObject;
@@ -328,6 +348,8 @@ public class CloudDecoManager : MonoBehaviour
         yield break;
 
     }
+   
+    
     private void FixedUpdate()
     {        
         Update_PartsMoving();

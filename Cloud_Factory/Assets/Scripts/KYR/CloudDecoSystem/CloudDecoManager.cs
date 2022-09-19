@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CloudDecoManager : MonoBehaviour
 {
@@ -15,9 +16,9 @@ public class CloudDecoManager : MonoBehaviour
         private GameObject B_Pos;
         private GameObject B_Neg;
 
-        private bool state; //감소 혹은 증가?
+        public bool state; //감소 혹은 증가?
         public bool isInit;
-        public PartsMenu(GameObject _B_decoParts,GameObject _I_PartsMenu, GameObject _B_PosNeg, int _idx)
+        public PartsMenu(GameObject _B_decoParts, GameObject _I_PartsMenu, GameObject _B_PosNeg, int _idx)
         {
             I_Image = _I_PartsMenu.transform.GetChild(_idx).GetChild(0).gameObject;
             B_Pos = _B_PosNeg.transform.GetChild(_idx).GetChild(0).gameObject;
@@ -26,21 +27,26 @@ public class CloudDecoManager : MonoBehaviour
 
             I_Image.transform.GetComponent<Image>().sprite = _B_decoParts.transform.GetChild(_idx).GetChild(0).GetChild(0).GetComponent<Image>().sprite;
         }
-    
+
         public void btnClicked(Sprite[] _I_SelectedSticker, Sprite[] _I_UnSelectedSticker)
         {
-            if (state)
+            if (!state)
             {
                 B_Pos.GetComponent<Image>().sprite = _I_SelectedSticker[0];
                 B_Neg.GetComponent<Image>().sprite = _I_UnSelectedSticker[1];
-                state = false;
+                state = true;
             }
             else
             {
                 B_Pos.GetComponent<Image>().sprite = _I_UnSelectedSticker[0];
-                B_Neg.GetComponent<Image>().sprite = _I_SelectedSticker[1];   
-                state = true;
+                B_Neg.GetComponent<Image>().sprite = _I_SelectedSticker[1];
+                state = false;
             }
+        }
+
+        public bool getPartsNPState()
+        {
+            return state;
         }
 
     }
@@ -76,14 +82,15 @@ public class CloudDecoManager : MonoBehaviour
     //스케치북 기즈모
     public Vector2 top_right_corner;
     public Vector2 bottom_left_corner;
+
+    
   
-   
     private void Start()
     {
         mUIDecoParts = new List<List<GameObject>>();
         LDecoParts = new List<GameObject>();
         //(씬 이동시에만 가능)
-        //inventoryManager = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>();
+        inventoryManager = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>();
 
 
         initParam();
@@ -150,11 +157,43 @@ public class CloudDecoManager : MonoBehaviour
 
     private CloudData getTargetCloudData()
     {
-        return GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>().createdCloudData;
+        return inventoryManager.createdCloudData;
     }
 
 
-    //UI Button Function
+    //UI Button Functions
+    public void cloudDecoDoneBtn() //마지막 스케치북 결과 ㅣ OK 버튼
+    {
+        inventoryManager.addStock(I_targetCloud);
+
+        List<int> mEmoValues = new List<int>();
+        //감정계산.
+        for(int i = 0; i < mLPartsMenu.Count; i++)
+        {
+            if (mLPartsMenu[i].getPartsNPState())
+                mEmoValues.Add(1);
+            else
+                mEmoValues.Add(-1);
+        }
+        mBaseCloudDt.addFinalEmotion(mEmoValues);
+        //LoadScene
+        //SceneManager.LoadScene("Cloud Storage");
+    }
+
+    public void cloudDecoBackBtn() // 스케치북 결과 | Reset 버튼
+    {
+        Destroy(P_FinSBook.transform.GetChild(0).GetChild(0).gameObject); //삭제
+        initParam();
+        init();
+
+        for(int i = 0; i < B_PosNeg.transform.childCount; i++)
+        {
+            B_PosNeg.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = I_UnSelectedSticker[0];
+            B_PosNeg.transform.GetChild(i).GetChild(1).GetComponent<Image>().sprite = I_UnSelectedSticker[1];
+        }
+        
+        P_FinSBook.SetActive(false);
+    }
     public void clickedAutoSettingBtn() //자동 배치
     {
         float width_max_range = I_targetCloud.GetComponent<RectTransform>().rect.width/2;
@@ -186,6 +225,8 @@ public class CloudDecoManager : MonoBehaviour
         if(mLPartsMenu[idx].isInit) //처음이면 둘다 체크가 안되어있음.
         {
             target.transform.GetComponent<Image>().sprite = target.transform.GetSiblingIndex() == 0 ? I_SelectedSticker[0] : I_SelectedSticker[1];
+            mLPartsMenu[idx].state = target.transform.GetSiblingIndex() == 0 ? true : false;
+
             mLPartsMenu[idx].isInit = false;
         }
         else
@@ -331,18 +372,18 @@ public class CloudDecoManager : MonoBehaviour
     IEnumerator popUpFinSBook()
     {
         isDecoDone = true;
-
-        while(transform.childCount != 0)
+        GameObject FinCloud = Instantiate(I_targetCloud, I_targetCloud.transform.position, I_targetCloud.transform.rotation);
+        //스케치북에 붙여진 파츠들은 <CloudDecoManager>아래에 저장되는데, 이를 저장할때는 구름베이스 하위로 바꾼다.
+        while (transform.childCount != 0)
         {
-            transform.GetChild(0).SetParent(I_targetCloud.transform);
+            transform.GetChild(0).SetParent(FinCloud.transform);
         }
 
         yield return new WaitForSeconds(1.0f);
 
-       
 
-        I_targetCloud.transform.SetParent(P_FinSBook.transform.GetChild(0).transform);
-        I_targetCloud.transform.localPosition = new Vector3(0, 0, 0);
+        FinCloud.transform.SetParent(P_FinSBook.transform.GetChild(0).transform);
+        FinCloud.transform.localPosition = new Vector3(0, 0, 0);
         P_FinSBook.SetActive(true);
 
         yield break;

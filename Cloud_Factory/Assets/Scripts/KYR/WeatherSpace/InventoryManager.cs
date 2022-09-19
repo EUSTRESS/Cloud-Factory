@@ -19,6 +19,30 @@ public class InventoryData
 }
 
 [System.Serializable]
+public class CloudStorageData
+{
+    public List<StoragedCloudData> mDatas;
+
+    public CloudStorageData()
+    {
+        mDatas = new List<StoragedCloudData>();
+    }
+}
+
+[System.Serializable]
+public class StoragedCloudData
+{
+    public GameObject mFinalCloud; //다 꾸민 구름 오브젝트.
+    public List<EmotionInfo> mFinalEmotions; //구름 꾸미기 이후의 최종 감정.
+
+    public StoragedCloudData(GameObject _cloudObject, List<EmotionInfo> _FinalEmotions)
+    {
+        mFinalCloud = _cloudObject ;
+        mFinalEmotions = _FinalEmotions;
+    }
+
+}
+[System.Serializable]
 public class CloudData
 {
     public int mShelfLife;
@@ -47,6 +71,11 @@ public class CloudData
         return mdecoImages.Count;
     }
 
+    public List<EmotionInfo> getFinalEmotion()
+    {
+        return mFinalEmotions;
+    }
+ 
     public Sprite getBaseCloudSprite()
     {
         return mcloudBaseImage;
@@ -86,9 +115,13 @@ public class CloudData
         return Lresult;
     }
 
-    public void addFinalEmotion(Emotion _emo, int _value)
+    public void addFinalEmotion(List<int> _value)
     {
-        mFinalEmotions.Add(new EmotionInfo(_emo, _value));
+        for(int i = 0; i < mEmotions.Count; i++)
+        {
+            mFinalEmotions.Add(new EmotionInfo(mEmotions[i].Key, mEmotions[i].Value * _value[i]));
+        }
+       
     }
 
 
@@ -188,12 +221,15 @@ public class InventoryManager : MonoBehaviour
 
         mType = new List<IngredientData>(); //리스트 초기화
         mCnt = new List<int>(); //리스트 초기화
+
+        mCloudStorageData = new CloudStorageData();
     }
 
     /////////////////
     //서버 저장 변수//
     /////////////////
-    
+    public CloudStorageData mCloudStorageData; //구름 인벤토리 데이터 리스트 클래스.
+
     public List<IngredientData>  mType;
     public List<int>  mCnt;
 
@@ -264,4 +300,10 @@ public class InventoryManager : MonoBehaviour
     //////////////////////////////
     //구름인벤토리 관련 함수//
     //////////////////////////////
+    ///
+    //데코 되어진 구름 오브젝트 저장
+    public void addStock(GameObject _cloudObject)
+    {
+        mCloudStorageData.mDatas.Add(new StoragedCloudData(Instantiate(_cloudObject, _cloudObject.transform.position, _cloudObject.transform.rotation), createdCloudData.getFinalEmotion()));
+    }
 }

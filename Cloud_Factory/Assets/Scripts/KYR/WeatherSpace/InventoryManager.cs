@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Newtonsoft.Json; // LJH, Json Namespace
 
 // LJH, Data 저장할 임시 복사 공간, Monobehaviour 상속 금지
@@ -18,6 +19,151 @@ public class InventoryData
 }
 
 [System.Serializable]
+public class CloudStorageData
+{
+    public List<StoragedCloudData> mDatas;
+
+    public CloudStorageData()
+    {
+        mDatas = new List<StoragedCloudData>();
+    }
+}
+
+[System.Serializable]
+public class StoragedCloudData
+{
+    public GameObject mFinalCloud; //다 꾸민 구름 오브젝트.
+    public List<EmotionInfo> mFinalEmotions; //구름 꾸미기 이후의 최종 감정.
+
+    public StoragedCloudData(GameObject _cloudObject, List<EmotionInfo> _FinalEmotions)
+    {
+        mFinalCloud = _cloudObject ;
+        mFinalEmotions = _FinalEmotions;
+    }
+
+}
+[System.Serializable]
+public class CloudData
+{
+    public int mShelfLife;
+    public List<EmotionInfo> mEmotions;
+
+    private bool mState; //0 = 폐기 1 = 가능
+    private Sprite mcloudBaseImage;
+    private Sprite mcloudDecoBaseImage;
+
+    private List<Sprite> mcloudParts; //무조건 있음 필수!
+    private List<List<Sprite>> mdecoImages; //2차원 리스트: L M S 사이즈 필요! 최대 2개
+
+    private List<EmotionInfo> mFinalEmotions; //구름 꾸미기 이후의 최종 감정.
+    public CloudData(List<EmotionInfo> Emotions)
+    {
+        mEmotions = Emotions;
+        mFinalEmotions = new List<EmotionInfo>();
+        //계산식함수로 자동으로 데이터 세팅
+        setShelfLife(mEmotions);
+        setCloudImage(mEmotions);
+        setDecoImage(mEmotions);
+    }
+
+    public int getDecoPartsCount()
+    {
+        return mdecoImages.Count;
+    }
+
+    public List<EmotionInfo> getFinalEmotion()
+    {
+        return mFinalEmotions;
+    }
+ 
+    public Sprite getBaseCloudSprite()
+    {
+        return mcloudBaseImage;
+    }
+
+    public Sprite getForDecoCloudSprite()
+    {
+        return mcloudDecoBaseImage;
+    }
+    public List<Sprite> getSizeDifferParts(int _idx)
+    {
+        return mdecoImages[_idx];
+    }
+
+    public List<Sprite> getCloudParts()
+    {
+        return mcloudParts;
+    }
+
+    public int getBaseCloudColorIdx()
+    {
+        return (int)mEmotions[0].Key;
+    }
+
+    public List<int> getMaxDecoPartsCount()
+    {
+        List<int> Lresult = new List<int>();
+
+        for (int i = 1; i < mEmotions.Count; i++)
+        {
+            int value = mEmotions[i].Value;
+
+            int iReuslt = (value % 10 >= 0 && value % 10 <= 4) ? value - (value % 10) : (value + 10) - (value % 10);
+            Lresult.Add(iReuslt / 10);
+        }
+
+        return Lresult;
+    }
+
+    public void addFinalEmotion(List<int> _value)
+    {
+        for(int i = 0; i < mEmotions.Count; i++)
+        {
+            mFinalEmotions.Add(new EmotionInfo(mEmotions[i].Key, mEmotions[i].Value * _value[i]));
+        }
+       
+    }
+
+
+    //Private method
+    private void setShelfLife(List<EmotionInfo> Emotions)
+    {
+        //감정에 따라 맞는 보관기간
+    }
+    private void setCloudImage(List<EmotionInfo> Emotions)
+    {
+        //감정에 따라 맞는 base 구름이미지
+        string targetImgName = ((int)mEmotions[0].Key).ToString();
+        if ((int)mEmotions[0].Key < 8)
+            targetImgName = "0";
+        mcloudBaseImage = Resources.Load<Sprite>("Sprite/CloudBase/2union/" + "OC_Cloud2_" + ((int)mEmotions[0].Key).ToString());
+        mcloudDecoBaseImage = Resources.Load<Sprite>("Sprite/CloudBase/DecoSpaceVer/" + "OC_Cloud_" + ((int)mEmotions[0].Key).ToString());
+    }
+    private void setDecoImage(List<EmotionInfo> Emotions)
+    {
+        //구름 조각 파츠
+        mcloudParts = new List<Sprite>();
+        mcloudParts.Add(Resources.Load<Sprite>("Sprite/CloudDeco/CloudParts/OC_" + ((int)mEmotions[0].Key).ToString() + "_piece_" + "1"));
+        mcloudParts.Add(Resources.Load<Sprite>("Sprite/CloudDeco/CloudParts/OC_" + ((int)mEmotions[0].Key).ToString() + "_piece_" + "2"));
+        mcloudParts.Add(Resources.Load<Sprite>("Sprite/CloudDeco/CloudParts/OC_" + ((int)mEmotions[0].Key).ToString() + "_piece_" + "3"));
+
+        //Assets/Resources/Sprite/CloudDeco/CloudParts/OC_0_piece_3.png
+
+        //감정 파츠
+        mdecoImages = new List<List<Sprite>>();
+        //감정에 따라 맞는 데코 이미지
+        for (int i = 1; i < Emotions.Count;i++)
+        {
+            List<Sprite> decoList = new List<Sprite>();
+            decoList.Add(Resources.Load<Sprite>("Sprite/CloudDeco/L/" + "OC_L_" + ((int)mEmotions[i].Key).ToString()));
+            decoList.Add(Resources.Load<Sprite>("Sprite/CloudDeco/M/" + "OC_M_" + ((int)mEmotions[i].Key).ToString()));
+            decoList.Add(Resources.Load<Sprite>("Sprite/CloudDeco/S/" + "OC_S_" + ((int)mEmotions[i].Key).ToString()));
+            mdecoImages.Add(decoList);
+        }
+    }
+}
+
+[System.Serializable]
 //구름 및 재료 인벤토리 관련 매니저
 public class InventoryManager : MonoBehaviour
 {
@@ -29,9 +175,9 @@ public class InventoryManager : MonoBehaviour
     public GameObject mInventoryContainer;
 
     //구름 데코 관련
-    public Cloud createdCloudData;
+    public CloudData createdCloudData = null;
 
-
+    
 
     public void setDataList(List<IngredientList> Ltotal)
     {
@@ -75,12 +221,15 @@ public class InventoryManager : MonoBehaviour
 
         mType = new List<IngredientData>(); //리스트 초기화
         mCnt = new List<int>(); //리스트 초기화
+
+        mCloudStorageData = new CloudStorageData();
     }
 
     /////////////////
     //서버 저장 변수//
     /////////////////
-    
+    public CloudStorageData mCloudStorageData; //구름 인벤토리 데이터 리스트 클래스.
+
     public List<IngredientData>  mType;
     public List<int>  mCnt;
 
@@ -151,4 +300,10 @@ public class InventoryManager : MonoBehaviour
     //////////////////////////////
     //구름인벤토리 관련 함수//
     //////////////////////////////
+    ///
+    //데코 되어진 구름 오브젝트 저장
+    public void addStock(GameObject _cloudObject)
+    {
+        mCloudStorageData.mDatas.Add(new StoragedCloudData(Instantiate(_cloudObject, _cloudObject.transform.position, _cloudObject.transform.rotation), createdCloudData.getFinalEmotion()));
+    }
 }

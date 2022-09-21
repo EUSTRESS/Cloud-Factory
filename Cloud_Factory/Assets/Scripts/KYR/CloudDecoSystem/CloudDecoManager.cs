@@ -51,6 +51,9 @@ public class CloudDecoManager : MonoBehaviour
 
     }
 
+    //Sprite Merger
+    public SpriteMerger spriteMerger;
+
     public List<PartsMenu> mLPartsMenu;
     //데코용 버튼 그룹
     public GameObject B_decoParts;
@@ -177,7 +180,7 @@ public class CloudDecoManager : MonoBehaviour
         }
         mBaseCloudDt.addFinalEmotion(mEmoValues);
         //LoadScene
-        //SceneManager.LoadScene("Cloud Storage");
+      //  SceneManager.LoadScene("Cloud Storage");
     }
 
     public void cloudDecoBackBtn() // 스케치북 결과 | Reset 버튼
@@ -385,7 +388,8 @@ public class CloudDecoManager : MonoBehaviour
         FinCloud.transform.SetParent(P_FinSBook.transform.GetChild(0).transform);
         FinCloud.transform.localPosition = new Vector3(0, 0, 0);
         P_FinSBook.SetActive(true);
-
+        
+        spriteMerger.SaveTextureToPNGFile(spriteMerger.Merge(FinCloud), "Assets/Resources/DecoCloudResult","cloud");
         yield break;
 
     }

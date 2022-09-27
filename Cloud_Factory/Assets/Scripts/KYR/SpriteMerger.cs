@@ -88,17 +88,31 @@ public class SpriteMerger : MonoBehaviour
         return newText;
     }
 
-    public void SaveTextureToPNGFile(Texture texture, string directoryPath, string fileName)
+    private string overLapFileNameCheck(string filename,int num)
     {
-        if(true == string.IsNullOrEmpty(directoryPath))
+        if (false == Directory.Exists("Assets/Resources/DecoCloudResult/" + num.ToString() + ".png")) return filename;
+
+        return overLapFileNameCheck(filename, ++num);
+    }
+    public Texture2D SaveTextureToPNGFile(Texture texture, CloudData cloudDt)
+    {
+        string directoryPath = "Assets/Resources/DecoCloudResult/";
+        string fileName = cloudDt.mEmotions[0].Key.ToString() + cloudDt.mEmotions[1].Key.ToString();
+
+        if (true == string.IsNullOrEmpty(directoryPath))
         {
-            return;
+            return null;
         }
 
-        if(false == Directory.Exists(directoryPath))
+        if (false == Directory.Exists(directoryPath))
         {
-            return;
+            return null;
         }
+
+        if (Directory.Exists(directoryPath + fileName + "0".ToString() + ".png"))
+            fileName = overLapFileNameCheck(fileName, 0);
+
+        fileName += "0";
 
         int width = texture.width;
         int height = texture.height;
@@ -111,7 +125,6 @@ public class SpriteMerger : MonoBehaviour
         RenderTexture.active = copiendRenderTexture;
 
         Texture2D texture2D = new Texture2D(width, height, TextureFormat.RGB24, false);
-
         texture2D.ReadPixels(new Rect(0, 0, width, height), 0, 0);
         texture2D.Apply();
 
@@ -122,6 +135,8 @@ public class SpriteMerger : MonoBehaviour
         string filePath = directoryPath + fileName + ".png";
 
         File.WriteAllBytes(filePath, texturePNGBytes);
+
+        return texture2D;
     }
 
 

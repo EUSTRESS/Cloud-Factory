@@ -19,7 +19,7 @@ public class CloudObject : MonoBehaviour
 
     public int mGuestNum;                       // 타겟 손님 번호
     public int cloudSpeed;                      // 구름 속도
-    public Dictionary<int, int> emotionList;    // 변환할 감정값 딕셔너리
+    public List<EmotionInfo> mFinalEmotions;    // 변환할 감정값 리스트
 
     // 내부에서 수행해야 할 기능
     // 1) 손님과의 충돌 처리 (충돌 시 사용한다는 판정)
@@ -47,9 +47,12 @@ public class CloudObject : MonoBehaviour
         if (Mathf.Abs(this.transform.position.x - targetChairPos.position.x) < 0.1f)
         {
             // 감정 값 변환함수 호출
-            GuestManager.SetEmotion(mGuestNum, 0, 1, 10, 10);
-            Debug.Log("감정변환 함수 호출");
-
+            for (int i = 0; i < mFinalEmotions.Count; ++i)
+            {
+                GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value);
+                Debug.Log("감정변환 함수 호출" + (int)mFinalEmotions[i].Key + " " + mFinalEmotions[i].Value);
+            }
+            Debug.Log(mFinalEmotions.Count);
             // 감정 값 변환함수 호출 후, 제거
             Destroy(this.gameObject);
             Debug.Log("구름을 화면상에서 제거");
@@ -66,5 +69,30 @@ public class CloudObject : MonoBehaviour
         targetChairPos = SOWManager.mChairPos[0].transform;
     }
     
-    
+    public void SetValue(List<EmotionInfo> CloudData)
+    {
+        mFinalEmotions = CloudData;
+    }
+
+    private void OnCollisionEnter(Collision2D other)
+    {
+        if(other.gameObject.tag == "Guest")
+        {
+            int guestNum = other.gameObject.GetComponent<GuestObject>().mGuestNum;
+
+            // 감정 값 변환함수 호출
+            for (int i = 0; i < mFinalEmotions.Count; ++i)
+            {
+                GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value);
+                Debug.Log("감정변환 함수 호출" + (int)mFinalEmotions[i].Key + " " + mFinalEmotions[i].Value);
+            }
+            Debug.Log(mFinalEmotions.Count);
+            // 감정 값 변환함수 호출 후, 제거
+            Destroy(this.gameObject);
+            Debug.Log("구름을 화면상에서 제거");
+
+        }
+    }
+
+
 }

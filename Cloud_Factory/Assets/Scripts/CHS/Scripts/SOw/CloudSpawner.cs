@@ -5,6 +5,9 @@ using UnityEngine;
 public class CloudSpawner : MonoBehaviour
 {
     SOWManager SOWManager;
+    InventoryManager InventoryManager;
+    StoragedCloudData CloudData;
+
     bool isCloudGive;
 
     public GameObject CloudObject;
@@ -12,6 +15,7 @@ public class CloudSpawner : MonoBehaviour
     public int cloudSpeed;
 
     private GameObject tempCLoud;
+
 
     // 처음 받아와야 하는 값
     // 1) 날아갈 의자의 인덱스
@@ -27,6 +31,7 @@ public class CloudSpawner : MonoBehaviour
         isCloudGive = false;
         cloudSpeed = 3;
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+        InventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
     }
 
     // Update is called once per frame
@@ -51,16 +56,21 @@ public class CloudSpawner : MonoBehaviour
     // 구름 생성
     public void SpawnCloud()
     {
+        // 구름 인스턴스 생성
         tempCLoud = Instantiate(CloudObject);
         tempCLoud.transform.position = this.transform.position;
+
+        // 목표 의자 위치 설정
         tempCLoud.GetComponent<CloudObject>().SetTargetChair();
+
+        // 임시로 인벤토리에 들어있는 구름 중, 맨 앞에 있는 구름의 값을 가져온다.
+        CloudData = InventoryManager.mCloudStorageData.mDatas[0];
+
+        tempCLoud.GetComponent<CloudObject>().SetValue(CloudData.mFinalEmotions);
+
+
     }
 
-    // 구름 값 초기화
-    public void InitCloud()
-    {
-        //CloudObject
-    }
 
     // 구름 이동
     public void MoveCloud()

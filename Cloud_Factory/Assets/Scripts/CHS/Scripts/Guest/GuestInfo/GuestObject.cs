@@ -7,16 +7,16 @@ using Pathfinding;
 public class GuestObject : MonoBehaviour
 {
     // 오브젝트 내에서 필요한 변수
-    public float mLimitTime;         // 손님이 대기하는 시간의 한계값
-    public int mGuestNum;          // 해당 오브젝트의 손님번호
-    public bool isSit;              // 자리에 앉아있는가?
-    public bool isUsing;            // 구름 치료를 받는중인가?
-    private Transform mTransform;         // 위치값이 변하는지 확인하기 위한 변수
+    public float mLimitTime;            // 손님이 대기하는 시간의 한계값
+    public int mGuestNum;               // 해당 오브젝트의 손님번호
+    public bool isSit;                  // 자리에 앉아있는가?
+    public bool isUsing;                // 구름 치료를 받는중인가?
+    private Transform mTransform;       // 위치값이 변하는지 확인하기 위한 변수
     private Guest mGuestManager;
-    public GameObject mTargetChair;       // 목표로 하는 의자의 위치
+    public GameObject mTargetChair;     // 목표로 하는 의자의 위치
     public int mTargetChiarIndex;
-    public bool isMove;             // 이동중인가?   
-    public bool isUse;              // 사용을 완료 했는가?
+    public bool isMove;                 // 이동중인가?   
+    public bool isUse;                  // 사용을 완료 했는가?
     public Animator mGuestAnim;         // 손님의 애니메이션 변수
     public SOWManager mSOWManager;
 

@@ -32,14 +32,24 @@ public class CloudStorageData
 [System.Serializable]
 public class StoragedCloudData
 {
-    public GameObject mFinalCloud; //다 꾸민 구름 오브젝트.
     public List<EmotionInfo> mFinalEmotions; //구름 꾸미기 이후의 최종 감정.
+    public int mdate;
+    private Sprite mImage;
+    public Texture2D mTexImage;
 
-    public StoragedCloudData(GameObject _cloudObject, List<EmotionInfo> _FinalEmotions)
+    public StoragedCloudData(List<EmotionInfo> _FinalEmotions, Texture2D _image)
     {
-        mFinalCloud = _cloudObject ;
+        mdate = 10; //일단 기본으로 세팅
         mFinalEmotions = _FinalEmotions;
+        mTexImage = _image;
     }
+
+    //public Sprite getImage(Sprite emptySprite)
+    //{
+    //    Rect rect = new Rect(0, 0, mTexImage.width, mTexImage.height);
+    //    mImage.GetComponent<SpriteRenderer>().sprite = Sprite.Create(mTexImage, rect, new Vector2(0.5f, 0.5f));
+    //    return mImage;
+    //}
 
 }
 [System.Serializable]
@@ -302,8 +312,8 @@ public class InventoryManager : MonoBehaviour
     //////////////////////////////
     ///
     //데코 되어진 구름 오브젝트 저장
-    public void addStock(GameObject _cloudObject)
+    public void addStock(GameObject _cloudObject,Texture2D _image)
     {
-        mCloudStorageData.mDatas.Add(new StoragedCloudData(Instantiate(_cloudObject, _cloudObject.transform.position, _cloudObject.transform.rotation), createdCloudData.getFinalEmotion()));
+        mCloudStorageData.mDatas.Add(new StoragedCloudData(createdCloudData.getFinalEmotion(), _image));
     }
 }

@@ -51,6 +51,9 @@ public class CloudDecoManager : MonoBehaviour
 
     }
 
+    //Sprite Merger
+    public SpriteMerger spriteMerger;
+
     public List<PartsMenu> mLPartsMenu;
     //데코용 버튼 그룹
     public GameObject B_decoParts;
@@ -79,6 +82,7 @@ public class CloudDecoManager : MonoBehaviour
     private int mCloudPieceDecoMax;
     private InventoryManager inventoryManager;
     private List<GameObject> LDecoParts;
+    private Texture2D newCloudImg;
     //스케치북 기즈모
     public Vector2 top_right_corner;
     public Vector2 bottom_left_corner;
@@ -164,8 +168,7 @@ public class CloudDecoManager : MonoBehaviour
     //UI Button Functions
     public void cloudDecoDoneBtn() //마지막 스케치북 결과 ㅣ OK 버튼
     {
-        inventoryManager.addStock(I_targetCloud);
-
+      
         List<int> mEmoValues = new List<int>();
         //감정계산.
         for(int i = 0; i < mLPartsMenu.Count; i++)
@@ -176,8 +179,11 @@ public class CloudDecoManager : MonoBehaviour
                 mEmoValues.Add(-1);
         }
         mBaseCloudDt.addFinalEmotion(mEmoValues);
+             
+        inventoryManager.addStock(I_targetCloud, newCloudImg);
+        Debug.Log(Resources.Load("newCloudImgPath", typeof(Texture2D)) as Texture2D); 
         //LoadScene
-        //SceneManager.LoadScene("Cloud Storage");
+        SceneManager.LoadScene("Cloud Storage");
     }
 
     public void cloudDecoBackBtn() // 스케치북 결과 | Reset 버튼
@@ -385,6 +391,11 @@ public class CloudDecoManager : MonoBehaviour
         FinCloud.transform.SetParent(P_FinSBook.transform.GetChild(0).transform);
         FinCloud.transform.localPosition = new Vector3(0, 0, 0);
         P_FinSBook.SetActive(true);
+
+
+        newCloudImg = spriteMerger.SaveTextureToPNGFile(spriteMerger.Merge(FinCloud), mBaseCloudDt);
+
+       
 
         yield break;
 

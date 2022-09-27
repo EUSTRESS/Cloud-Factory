@@ -79,11 +79,6 @@ public class Guest : MonoBehaviour
         {
             TakeGuest();
         }
-        // 감정값 변환을 위한 함수 테스트 (성공)
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            SetEmotion(0, 0, 1, 5, 10);
-        }
         // 만족도 갱신을 위한 함수 테스트 (성공)
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -160,10 +155,9 @@ public class Guest : MonoBehaviour
 
     // 뭉티의 정보값 변경에 필요한 API 
     // Event Handler를 이용하여 만족도 범위안에 들지 못하거나 감정 상하한선을 침범하여 불만 뭉티가 되는경우 이벤트를 발동시켜 관리
-    public void SetEmotion(int guestNum, int emotionNum0, int emotionNum1, int value0, int value1) 
+    public void SetEmotion(int guestNum, int emotionNum, int value) 
     { 
-        mGuestInfos[guestNum].mEmotion[emotionNum0] += value0; 
-        mGuestInfos[guestNum].mEmotion[emotionNum1] += value1; 
+        mGuestInfos[guestNum].mEmotion[emotionNum] += value; 
     }
 
     public int IsExcessLine(int guestNum) // 감정 상하한선을 침범했는지 확인하는 함수. -> 구름 제공 순서 4번에서 진행

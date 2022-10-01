@@ -16,7 +16,7 @@ public class GuestObject : MonoBehaviour
     public GameObject mTargetChair;     // 목표로 하는 의자의 위치
     public int mTargetChiarIndex;
     public bool isMove;                 // 이동중인가?   
-    public bool isUse;                  // 사용을 완료 했는가?
+    public bool isAlreadyUse;                  // 사용을 완료 했는가?
     public Animator mGuestAnim;         // 손님의 애니메이션 변수
     public SOWManager mSOWManager;
 
@@ -37,7 +37,7 @@ public class GuestObject : MonoBehaviour
         isSit = false;
         isUsing = false;
         isMove = false;
-        isUse = false;
+        isAlreadyUse = false;
         mTransform = this.transform;
         mTargetChiarIndex = -1;
         mTargetChair = null;
@@ -45,8 +45,7 @@ public class GuestObject : MonoBehaviour
         mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         mGuestAnim = GetComponent<Animator>();
         // 손님에 따라서 이미지(애니메이션)을 변경시킨다.
-        InitAnimationClip();
-
+        initAnimator();
 
     }
 
@@ -56,7 +55,7 @@ public class GuestObject : MonoBehaviour
     private void Update()
     {
         // 할당받는 의자 설정
-        if (mTargetChiarIndex != -1 && isUse == false)
+        if (mTargetChiarIndex != -1 && isAlreadyUse == false)
         {
             mTargetChair = mSOWManager.mChairPos[mTargetChiarIndex];
             this.GetComponent<AIDestinationSetter>().enabled = true;
@@ -74,8 +73,12 @@ public class GuestObject : MonoBehaviour
             }
         }
 
-        // 대기시간을 갱신시킨다.
-        mLimitTime += Time.deltaTime;
+        // 구름을 제공받는 상태가 아니라면 대기시간을 갱신시킨다.
+        if (isUsing != true)
+        {
+            mLimitTime += Time.deltaTime;
+        }
+        
 
         bool GoHome = false;
         // 대기시간이 지나거나 불만뭉티가 된 경우에
@@ -90,15 +93,15 @@ public class GuestObject : MonoBehaviour
         }
 
         // 입구에 도달한 경우
-        if (isUse == true && transform.position.x - mSOWManager.mWayPoint[0].transform.position.x <= 0.2f)
+        if (isAlreadyUse == true && transform.position.x - mSOWManager.mWayPoint[0].transform.position.x <= 0.2f)
         {
             Destroy(this.gameObject);
         }
 
-        // 의자에 도달한 경우'
+        // 의자에 도달한 경우
         if (mTargetChiarIndex != -1)
         {
-            if (isUse == false && Mathf.Abs(transform.position.x - mTargetChair.transform.position.x) <= 0.1f)
+            if (isAlreadyUse == false && Mathf.Abs(transform.position.x - mTargetChair.transform.position.x) <= 0.1f)
             {
                 // 의자 위치로 이동
                 transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
@@ -112,13 +115,23 @@ public class GuestObject : MonoBehaviour
         // 상태에 따라서 애니메이션 제공
         if (isSit)
         {
-            // 구름을 제공받기 위해 의자에 위치하기 때문에 앉아있는 모션을 제공
-
-
+            if(mGuestManager.mGuestInfos[mGuestNum-1].isUsing == true)
+            {
+                isUsing = true;
+                Debug.Log("isUsing : true");
+                mGuestManager.mGuestInfos[mGuestNum - 1].isUsing = false;
+            }
             // 치료 중인 경우 치료효과에 따라서 주기적으로 애니메이션을 제공
             if (isUsing)
             {
 
+                // 제공 받은 구름의 영향에 따라서 앉아있는 모습이 긍정적/부정적 중 하나가 나온다.
+                // 테스트를 위해 일단은 웃는 모습으로 진행한다.
+                mGuestAnim.SetBool("isUsing", true);
+
+                // 5초 후에 Invoke 함수를 이용해서 사용중인 상태를 종료하고, 귀가하는 모션을 집어넣는다.
+                Invoke("TakeCloud", 5.0f);
+                isUsing = false;
             }
         }
         else
@@ -128,32 +141,41 @@ public class GuestObject : MonoBehaviour
             // 오브젝트의 위치값이 변하지 않았다면 서있는 애니메이션을 출력해준다.
             if (mTransform == transform)
             {
-
+                mGuestAnim.SetBool("isStand", true);
             }
             // 다시 변하는 경우에는 걷는 애니메이션을 출력한다.
-
-            // 걷는 방향에 따라 애니메이션의 방향을 다르게 지정한다.
-            if (GetComponent<AIPath>().desiredVelocity.x >= 0.01f)
+            else
             {
-                transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-            }
-            else if (GetComponent<AIPath>().desiredVelocity.x <= -0.01f)
-            {
-                transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f);
+                mGuestAnim.SetBool("isStand", false);
             }
 
+        }
+
+        // 걷는 방향에 따라 애니메이션의 방향을 다르게 지정한다.
+        if (GetComponent<AIPath>().desiredVelocity.x >= 0.01f)
+        {
+            transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        }
+        else if (GetComponent<AIPath>().desiredVelocity.x <= -0.01f)
+        {
+            transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f);
         }
 
         // 현재 위치를 저장한다.
         mTransform = transform;
 
     }
-
-    // 클릭 시 상호작용
-    public void OpenCloudWindow()
+    
+    private void TakeCloud()
     {
-        // 구름 제공 화면을 활성화한다.
-        Debug.Log("구름 화면을 제공합니다");
+        Debug.Log("Take Cloud");
+        isUsing = false;
+        mGuestAnim.SetBool("isUsing", false);
+
+        // 상하한선 값 및 만족도 갱신
+
+
+        MoveToEntrance();
     }
 
     public void SpeakEmotion()
@@ -161,13 +183,10 @@ public class GuestObject : MonoBehaviour
         Debug.Log("감정 모션을 출력합니다");
         // 감정 상한, 하한 범위에 가장 가까운 감정에 대한 힌트(이펙트)
         // 만족도 반영 범위에서 가장 먼 감정을 알려주는 대사
-
-
-
     }
 
     // 애니메이션 클립들을 손님에 맞게 초기화한다.
-    private void InitAnimationClip()
+    private void initAnimator()
     {
 
     }
@@ -175,8 +194,11 @@ public class GuestObject : MonoBehaviour
     // 입구로 퇴장하는 함수이다.
     private void MoveToEntrance()
     {
-        isUse = true;
+        isAlreadyUse = true;
         mGuestAnim.SetBool("isSit", false);
+
+        // 부여받은 의자 인덱스값 초기화
+        mGuestManager.mGuestInfos[mGuestNum].mSitChairIndex = -1;
 
         Invoke("ChangeTarget", 1.5f);
         //this.GetComponent<AIDestinationSetter>().target = mSOWManager.mWayPoint[0].transform;

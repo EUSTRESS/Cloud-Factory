@@ -33,7 +33,6 @@ public class CloudObject : MonoBehaviour
         GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
 
         // 테스트를 위한 고정값 넣기
-        mGuestNum = 1;
         cloudSpeed = 1;
 
         // 테스트를 위한 고정 값 넣기
@@ -50,49 +49,36 @@ public class CloudObject : MonoBehaviour
             for (int i = 0; i < mFinalEmotions.Count; ++i)
             {
                 GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value);
-                Debug.Log("감정변환 함수 호출" + (int)mFinalEmotions[i].Key + " " + mFinalEmotions[i].Value);
+                Debug.Log(mGuestNum + "번 손님 감정변환 함수 호출" + (int)mFinalEmotions[i].Key + " " + mFinalEmotions[i].Value);
             }
             Debug.Log(mFinalEmotions.Count);
+
             // 감정 값 변환함수 호출 후, 제거
             Destroy(this.gameObject);
             Debug.Log("구름을 화면상에서 제거");
+
+            // 구름을 받은 손님을 사용상태로 변경
+            GuestManager.mGuestInfos[mGuestNum-1].isUsing = true;
         }
         else
         {
             transform.position = Vector2.MoveTowards(transform.position, targetChairPos.position, cloudSpeed * Time.deltaTime);
         }
-
     }
 
-    public void SetTargetChair()
+    public void SetTargetChair(int guestNum)
     {
-        targetChairPos = SOWManager.mChairPos[0].transform;
+        targetChairPos = SOWManager.mChairPos[GuestManager.mGuestInfos[guestNum].mSitChairIndex].transform;
     }
-    
+
     public void SetValue(List<EmotionInfo> CloudData)
     {
         mFinalEmotions = CloudData;
     }
 
-    private void OnCollisionEnter(Collision2D other)
+    public void SetGuestNum(int _guestNum)
     {
-        if(other.gameObject.tag == "Guest")
-        {
-            int guestNum = other.gameObject.GetComponent<GuestObject>().mGuestNum;
-
-            // 감정 값 변환함수 호출
-            for (int i = 0; i < mFinalEmotions.Count; ++i)
-            {
-                GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value);
-                Debug.Log("감정변환 함수 호출" + (int)mFinalEmotions[i].Key + " " + mFinalEmotions[i].Value);
-            }
-            Debug.Log(mFinalEmotions.Count);
-            // 감정 값 변환함수 호출 후, 제거
-            Destroy(this.gameObject);
-            Debug.Log("구름을 화면상에서 제거");
-
-        }
+        mGuestNum = _guestNum;
     }
-
 
 }

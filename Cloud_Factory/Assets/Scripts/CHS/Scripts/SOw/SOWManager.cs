@@ -6,28 +6,31 @@ using UnityEngine.SceneManagement;
 public class SOWManager : MonoBehaviour
 {
     [SerializeField]
-    public Queue<int>               mWaitGuestList;         // 응접실에서 수락을 받고 넘어온 손님들의 리스트
+    public Queue<int> mWaitGuestList;               // 응접실에서 수락을 받고 넘어온 손님들의 리스트
     [SerializeField]
-    public Queue<int>               mUsingGuestList;        // 날씨의 공간에서 자리에 앉아 구름을 제공받을 준비가 된 손님들의 리스트
-    int                             mMaxNumOfUsingGuest;    // mUsingGuestList가 가질 수 있는 최대의 크기
-    int                             mTempGuestNum;           // 임시 손님 번호값
+    public Queue<int> mUsingGuestList;              // 날씨의 공간에서 자리에 앉아 구름을 제공받을 준비가 된 손님들의 리스트
+    int mMaxNumOfUsingGuest;                        // mUsingGuestList가 가질 수 있는 최대의 크기
+    int mTempGuestNum;                              // 임시 손님 번호값
 
     [SerializeField]
-    public Queue<GameObject>       mWaitGuestObjectList;   // 대기 손님 오브젝트들을 관리할 리스트
+    public Queue<GameObject> mWaitGuestObjectList;   // 대기 손님 오브젝트들을 관리할 리스트
     [SerializeField]
-    public Queue<GameObject>       mUsingGuestObjectList;  // 사용 손님 오브젝트들을 관리할 리스트
+    public Queue<GameObject> mUsingGuestObjectList;  // 사용 손님 오브젝트들을 관리할 리스트
 
     [SerializeField]
-    private GameObject              mGuestObject;           // 인스턴스하여 생성할 손님 오브젝트
-    public GameObject[]             mChairPos;              // 손님이 앉아서 구름을 사용할 의자(구름)
-    public GameObject[]             mWayPoint;              // 손님이 걸어다니며 산책하는 경로들
-    public Dictionary<int, bool>    mCheckChairEmpty;       // 의자마다 의자가 비어있는지를 확인하는 딕셔너리 변수
-    public bool                     isNewGuest;             // 응접실에서 넘어올때 새로운 손님이 오는가?
-    public int                      mMaxChairNum;           // 현재 단계에 따른 의자의 개수
+    private GameObject mGuestObject;           // 인스턴스하여 생성할 손님 오브젝트
+    public GameObject[] mChairPos;              // 손님이 앉아서 구름을 사용할 의자(구름)
+    public GameObject[] mWayPoint;              // 손님이 걸어다니며 산책하는 경로들
+    public Dictionary<int, bool> mCheckChairEmpty;       // 의자마다 의자가 비어있는지를 확인하는 딕셔너리 변수
+    public bool isNewGuest;             // 응접실에서 넘어올때 새로운 손님이 오는가?
+    public int mMaxChairNum;           // 현재 단계에 따른 의자의 개수
 
-    private Guest                   mGuestManager;          // GuestManager를 가져온다.
-    private static  SOWManager      instance = null;
+    private Guest mGuestManager;          // GuestManager를 가져온다.
+    private static SOWManager instance = null;
 
+    public int mCloudGuestNum;
+    public StoragedCloudData mStorageCloudData;
+    public bool isCloudGet;
 
     void Start()
     {
@@ -48,7 +51,7 @@ public class SOWManager : MonoBehaviour
             mUsingGuestObjectList = new Queue<GameObject>();
             mCheckChairEmpty = new Dictionary<int, bool>();
             isNewGuest = false;
-            
+            isCloudGet = false;
             // 현재 단계에 맞는 의자 개수 설정
             mMaxChairNum = 3;
             InitSOW();
@@ -101,10 +104,6 @@ public class SOWManager : MonoBehaviour
                 MoveToUsingList(chairNum);
             }
         }
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            MakeGuestDisSat();
-        }
 
         // 날씨의 공간 상의 손님을 선택하기
         if (Input.GetMouseButtonDown(0))
@@ -117,21 +116,24 @@ public class SOWManager : MonoBehaviour
                 if (hit.transform.gameObject.tag == "Guest")
                 {
                     Debug.Log(hitObject.GetComponent<GuestObject>().mGuestNum + "번 손님을 클릭하였습니다.");
-                    // 클릭 된 손님의 상태에 따라 다른 상호작용
-                    if (hitObject.GetComponent<GuestObject>().isSit)
-                    {
-                        hit.transform.gameObject.GetComponent<GuestObject>().OpenCloudWindow();
-                    }
-                    else
-                    {
-                        hit.transform.gameObject.GetComponent<GuestObject>().SpeakEmotion();
-                    }
+
+                    hit.transform.gameObject.GetComponent<GuestObject>().SpeakEmotion();
+
                     Debug.Log(hit.transform.gameObject.GetComponent<GuestObject>().mTargetChiarIndex);
                 }
                 else
                 {
                     Debug.Log(hit.transform.gameObject);
                 }
+            }
+        }
+
+        if(isCloudGet)
+        {
+            if (SceneManager.GetActiveScene().name == "Space Of Weather")
+            {
+                GetCloudToGuest(mCloudGuestNum, mStorageCloudData);
+                isCloudGet = false;
             }
         }
     }
@@ -145,7 +147,7 @@ public class SOWManager : MonoBehaviour
 
         // 업그레이드 단계에 따라 mCheckChairEmpty에서 확인하는 의자의 개수가 줄어든다.
         // 아직 합치지 않았으므로 일괄적으로 3개로 가정하고 개발한다.
-        for (int i = 0; i< mMaxChairNum; i++)
+        for (int i = 0; i < mMaxChairNum; i++)
         {
             // 모든 의자는 비어있는 상태로 초기화
             mCheckChairEmpty.Add(i, true);
@@ -167,41 +169,40 @@ public class SOWManager : MonoBehaviour
     // 대기 리스트에서 손님을 제공 받는 리스트로 추가시켜주는 함수
     private void MoveToUsingList(int chairNum)
     {
-            // 사용자 목록으로 이동할 손님의 번호를 받아온다.
-            int guestNum = mWaitGuestList.Dequeue();
+        // 사용자 목록으로 이동할 손님의 번호를 받아온다.
+        int guestNum = mWaitGuestList.Dequeue();
 
-            // 받아온 손님의 정보를 사용자 목록으로 넣는다.
-            mUsingGuestList.Enqueue(guestNum);
+        // 받아온 손님의 정보를 사용자 목록으로 넣는다.
+        mUsingGuestList.Enqueue(guestNum);
 
-            // tempObject를 통해 의자를 배정한다.    
-            GameObject tempObject = mWaitGuestObjectList.Dequeue();
-            
-            tempObject.GetComponent<GuestObject>().mTargetChiarIndex = chairNum;
+        // tempObject를 통해 의자를 배정한다.    
+        GameObject tempObject = mWaitGuestObjectList.Dequeue();
 
-            Debug.Log(chairNum + "번 의자를 배정받았습니다.");
-            // 오브젝트를 사용자 오브젝트 목록으로 넣는다.
-            mUsingGuestObjectList.Enqueue(tempObject);
+        tempObject.GetComponent<GuestObject>().mTargetChiarIndex = chairNum;
 
-            // 확인을 위한 디버깅
-            Debug.Log(guestNum + "번 손님이 대기 리스트에서 사용자 리스트로 이동하였습니다.");
+        Debug.Log(chairNum + "번 의자를 배정받았습니다.");
+        // 오브젝트를 사용자 오브젝트 목록으로 넣는다.
+        mUsingGuestObjectList.Enqueue(tempObject);
 
-            // 해당 번호를 가진 오브젝트의 상태를 변경한다.
+        // 확인을 위한 디버깅
+        Debug.Log(guestNum + "번 손님이 대기 리스트에서 사용자 리스트로 이동하였습니다.");
 
-
-            // 해당 guestNum을 가지고 있는 손님을 비어있는 의자의 위치를 타겟으로 위치이동 시킨다.
-
+        // Guest의 부여받은 의자 인덱스를 갱신
+        mGuestManager.mGuestInfos[guestNum].mSitChairIndex = chairNum;
     }
 
     // 하루가 끝날 때 Queue에 남아있는 뭉티들을 불만 뭉티로 만들어준다.
     private void MakeGuestDisSat()
     {
-        for(int i = 0; i< mWaitGuestList.Count; i++)
+        for (int i = 0; i < mWaitGuestList.Count; i++)
         {
             mGuestManager.mGuestInfos[mWaitGuestList.Dequeue()].isDisSat = true;
         }
         for (int i = 0; i < mUsingGuestList.Count; i++)
         {
-            mGuestManager.mGuestInfos[mUsingGuestList.Dequeue()].isDisSat = true;
+            int guestNum = mUsingGuestList.Dequeue();
+            mGuestManager.mGuestInfos[guestNum].isDisSat = true;
+            mGuestManager.mGuestInfos[guestNum].mSitChairIndex = -1;
         }
     }
 
@@ -213,25 +214,25 @@ public class SOWManager : MonoBehaviour
 
         // 모든 의자가 차 있는지 확인
         int count = 0;
-        for(int i = 0; i< mMaxChairNum; i++)
+        for (int i = 0; i < mMaxChairNum; i++)
         {
-            if(mCheckChairEmpty[i] == false)
+            if (mCheckChairEmpty[i] == false)
             {
                 count++;
             }
         }
-        if(count == mMaxChairNum)
+        if (count == mMaxChairNum)
         {
             //Debug.Log("의자를 배정받지 못하였습니다");
             return -1;
         }
 
         // 빈 의자를 선택할 때까지 진행
-        while(!isSelect)
+        while (!isSelect)
         {
             result = -1;
             result = Random.Range(0, mMaxChairNum);
-            if(mCheckChairEmpty[result] == true)
+            if (mCheckChairEmpty[result] == true)
             {
                 isSelect = true;
                 mCheckChairEmpty[result] = false;
@@ -239,4 +240,18 @@ public class SOWManager : MonoBehaviour
         }
         return result;
     }
+
+    // 구름 스포너로 구름정보를 넘긴다.
+    public void GetCloudToGuest(int guestNum, StoragedCloudData storagedCloudData)
+    {
+        GameObject.Find("CloudSpawner").GetComponent<CloudSpawner>().SpawnCloud(guestNum, storagedCloudData);
+    }
+
+    public void SetCloudData(int guestNum, StoragedCloudData storagedCloudData)
+    {
+        mCloudGuestNum = guestNum;
+        mStorageCloudData = storagedCloudData;
+        isCloudGet = true;
+    }
 }
+

@@ -37,38 +37,25 @@ public class CloudSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            isCloudGive = true;
-            Debug.Log("p");
-        }
 
-        // 구름 보관함에서 값이 넘어오면 구름을 생성
-        if (isCloudGive)
-        {
-            SpawnCloud();
-            //MoveCloud();
-
-            isCloudGive = false;
-        }
     }
 
     // 구름 생성
-    public void SpawnCloud()
+    public void SpawnCloud(int guestNum, StoragedCloudData storagedCloudData)
     {
         // 구름 인스턴스 생성
         tempCLoud = Instantiate(CloudObject);
         tempCLoud.transform.position = this.transform.position;
 
         // 목표 의자 위치 설정
-        tempCLoud.GetComponent<CloudObject>().SetTargetChair();
+        tempCLoud.GetComponent<CloudObject>().SetTargetChair(guestNum);
 
         // 임시로 인벤토리에 들어있는 구름 중, 맨 앞에 있는 구름의 값을 가져온다.
-        CloudData = InventoryManager.mCloudStorageData.mDatas[0];
+        CloudData = storagedCloudData;
 
         tempCLoud.GetComponent<CloudObject>().SetValue(CloudData.mFinalEmotions);
-
-
+        tempCLoud.GetComponent<CloudObject>().SetGuestNum(guestNum);
+        
     }
 
 

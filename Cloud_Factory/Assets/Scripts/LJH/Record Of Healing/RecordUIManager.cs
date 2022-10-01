@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 // 치유의 기록 UI
 public class RecordUIManager : MonoBehaviour
@@ -34,6 +35,10 @@ public class RecordUIManager : MonoBehaviour
     private ProfileMoving mProfile1;   // 프로필 움직임 담당 스크립트
     private ProfileMoving mProfile2;   // 프로필 움직임 담당 스크립트
     private ProfileMoving mProfile3;   // 프로필 움직임 담당 스크립트
+
+    // 구름 제공을 위한 참조 오브젝트
+    public GameObject mGetCloudContainer;
+
 
     void Awake()
     {
@@ -143,6 +148,19 @@ public class RecordUIManager : MonoBehaviour
     public void GiveCloud()
     {
         // 구름 제공하는 메소드 호출
+        SOWManager SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+
+        StoragedCloudData storagedCloudData
+            = mGetCloudContainer.GetComponent<CloudContainer>().mSelecedCloud;
+
+        int[] tempList = SOWManager.mUsingGuestList.ToArray();
+
+        int guestNum = tempList[0];
+
+        SOWManager.SetCloudData(guestNum, storagedCloudData);
+
+        SceneManager.LoadScene("Space Of Weather");
+
         Debug.Log("구름제공 메소드 호출");
     }
 }

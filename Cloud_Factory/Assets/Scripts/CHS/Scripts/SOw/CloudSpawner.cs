@@ -55,7 +55,7 @@ public class CloudSpawner : MonoBehaviour
 
         tempCLoud.GetComponent<CloudObject>().SetValue(CloudData.mFinalEmotions);
         tempCLoud.GetComponent<CloudObject>().SetGuestNum(guestNum);
-        
+        tempCLoud.GetComponent<CloudObject>().SetSprite(CloudData.mTexImage);
     }
 
 

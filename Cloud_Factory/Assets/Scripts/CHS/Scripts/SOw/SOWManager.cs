@@ -10,6 +10,7 @@ public class SOWManager : MonoBehaviour
     [SerializeField]
     public Queue<int> mUsingGuestList;              // 날씨의 공간에서 자리에 앉아 구름을 제공받을 준비가 된 손님들의 리스트
     int mMaxNumOfUsingGuest;                        // mUsingGuestList가 가질 수 있는 최대의 크기
+    [SerializeField]
     int mTempGuestNum;                              // 임시 손님 번호값
 
     [SerializeField]
@@ -81,6 +82,7 @@ public class SOWManager : MonoBehaviour
 
             // 손님 오브젝트에 해당하는 번호를 넣어준다.
             tempObject.GetComponent<GuestObject>().setGuestNum(mTempGuestNum);
+            tempObject.GetComponent<GuestObject>().initAnimator();
 
             // 산책로를 설정한다. <- 계절별로 달라지게 만들어야 한다.
             tempObject.GetComponent<WayPoint>().WayPos = mWayPoint;

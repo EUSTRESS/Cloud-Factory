@@ -50,7 +50,7 @@ public class CloudDecoManager : MonoBehaviour
         }
 
     }
-
+    public GameObject CaptureZone;
     //Sprite Merger
     public SpriteMerger spriteMerger;
 
@@ -384,6 +384,8 @@ public class CloudDecoManager : MonoBehaviour
         {
             transform.GetChild(0).SetParent(FinCloud.transform);
         }
+        GameObject Capture = Instantiate(FinCloud, FinCloud.transform.position, FinCloud.transform.rotation);
+        Capture.transform.SetParent(CaptureZone.transform);
 
         yield return new WaitForSeconds(1.0f);
 

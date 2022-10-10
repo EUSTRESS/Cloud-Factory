@@ -17,6 +17,7 @@ public class CloudContainer : MonoBehaviour
     [SerializeField]
     InventoryManager inventoryManager;
 
+    [SerializeField]
     private List<StoragedCloudData> mUiStocksData; //UI상에 보여지는 StocksData
 
     /////////////////////
@@ -132,16 +133,17 @@ public class CloudContainer : MonoBehaviour
                 Button btn = invenUI.AddComponent<Button>();
                 btn.onClick.AddListener(clicked);
             }
-           // Sprite tmp = invenUI.transform.GetComponent<Image>().sprite.width;
-           // Rect rect = new Rect(0, 0, invenUI.transform.GetComponent<Image>().sprite.width, stock.mTexImage.height);
+            // Sprite tmp = invenUI.transform.GetComponent<Image>().sprite.width;
+            // Rect rect = new Rect(0, 0, invenUI.transform.GetComponent<Image>().sprite.width, stock.mTexImage.height);
             //Image Update
-            //invenUI.transform.GetComponent<Image>().sprite = Sprite.Create(stock.mTexImage, rect, new Vector2(0.5f, 0.5f));
+            Sprite sprite = Sprite.Create(stock.mTexImage, new Rect(0, 0, stock.mTexImage.width, stock.mTexImage.height), new Vector2(0.5f, 0.5f));
+            invenUI.transform.GetComponent<Image>().sprite = sprite;
       
 
             //Name Upadate
             invenUI.name = stock.mdate.ToString();
 
-          //  tmp++;
+            tmp++;
         }
     }
     private void clearInven(List<StoragedCloudData> _mData)

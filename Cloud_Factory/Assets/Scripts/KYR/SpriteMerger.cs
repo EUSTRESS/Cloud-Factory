@@ -136,7 +136,10 @@ public class SpriteMerger : MonoBehaviour
 
         File.WriteAllBytes(filePath, texturePNGBytes);
 
-        return texture2D;
+        Texture2D tex = new Texture2D(2, 2);
+        tex.LoadImage(texturePNGBytes);
+        tex.alphaIsTransparency = true;
+        return tex;
     }
 
 

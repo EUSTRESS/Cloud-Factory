@@ -535,7 +535,13 @@ public class Guest : MonoBehaviour
         mGuestIndex = 0;
         mGuestCount = -1;
         mGuestMax = 0;
-        mTodayGuestList = NewChoiceGuest();
+
+        // 새로운 리스트를 뽑는 함수를 호출 (테스트를 위해서 잠시 주석처리)
+        int[] list = { 0, 1, 2, 0, 1, 2 };
+        mGuestMax = 6;
+        mTodayGuestList = list;
+
+        //mTodayGuestList = NewChoiceGuest();
 
         // 방문 주기를 초기화한다.
         InitGuestTime();

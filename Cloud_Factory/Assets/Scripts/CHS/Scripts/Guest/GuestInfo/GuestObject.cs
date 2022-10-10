@@ -21,6 +21,11 @@ public class GuestObject : MonoBehaviour
     public SOWManager mSOWManager;
 
 
+    const int MAX_GUEST_NUM = 20;
+
+    // 각 손님의 번호에 따라 애니메이터를 만들어서 저장한다.
+    public RuntimeAnimatorController[] animators = new RuntimeAnimatorController[MAX_GUEST_NUM];
+
     // 손님 번호를 저장해준다.
     public void setGuestNum(int guestNum = 0)
     {
@@ -45,7 +50,6 @@ public class GuestObject : MonoBehaviour
         mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         mGuestAnim = GetComponent<Animator>();
         // 손님에 따라서 이미지(애니메이션)을 변경시킨다.
-        initAnimator();
 
     }
 
@@ -115,11 +119,11 @@ public class GuestObject : MonoBehaviour
         // 상태에 따라서 애니메이션 제공
         if (isSit)
         {
-            if(mGuestManager.mGuestInfos[mGuestNum-1].isUsing == true)
+            if(mGuestManager.mGuestInfos[mGuestNum].isUsing == true)
             {
                 isUsing = true;
                 Debug.Log("isUsing : true");
-                mGuestManager.mGuestInfos[mGuestNum - 1].isUsing = false;
+                mGuestManager.mGuestInfos[mGuestNum].isUsing = false;
             }
             // 치료 중인 경우 치료효과에 따라서 주기적으로 애니메이션을 제공
             if (isUsing)
@@ -186,9 +190,10 @@ public class GuestObject : MonoBehaviour
     }
 
     // 애니메이션 클립들을 손님에 맞게 초기화한다.
-    private void initAnimator()
+    public void initAnimator()
     {
-
+        GetComponent<Animator>().runtimeAnimatorController = animators[mGuestNum];
+        Debug.Log("init Guest Anim");
     }
 
     // 입구로 퇴장하는 함수이다.

@@ -6654,7 +6654,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 542907435}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 23e535191f89d194fb218e598782e158, type: 3}
@@ -10815,7 +10815,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 923613851}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 91478e0634ab4b64a93b181110dc36a3, type: 3}
@@ -11644,6 +11644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef603a5a044e9342be25e9caba3b61f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mTempGuestNum: 0
   mGuestObject: {fileID: 5879352038581427232, guid: 34625bd7b84cc3b4f95c4d352ce59686, type: 3}
   mChairPos:
   - {fileID: 859313169}

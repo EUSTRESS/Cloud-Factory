@@ -85,6 +85,7 @@ public class SOWManager : MonoBehaviour
             tempObject.GetComponent<GuestObject>().initAnimator();
 
             // 산책로를 설정한다. <- 계절별로 달라지게 만들어야 한다.
+            // 계절별로 만들어서 봄 여름 가을 겨울의 배열값을 받게끔 하는것을 고려중.
             tempObject.GetComponent<WayPoint>().WayPos = mWayPoint;
 
             // 기본 위치값을 선언한다. <- 산책로의 첫번째 값으로 설정

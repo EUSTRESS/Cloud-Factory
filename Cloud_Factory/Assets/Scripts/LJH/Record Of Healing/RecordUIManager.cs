@@ -27,6 +27,7 @@ public class RecordUIManager : MonoBehaviour
     public Button btNextBtn;           // 다음페이지 버튼
     public Button btPrevBtn;           // 이전페이지 버튼
 
+
     [HideInInspector]
     public bool mIsNext;               // 치유의 기록 다음 페이지   
     [HideInInspector]
@@ -38,14 +39,37 @@ public class RecordUIManager : MonoBehaviour
 
     // 구름 제공을 위한 참조 오브젝트
     public GameObject mGetCloudContainer;
-
+    SOWManager SOWManager;
 
     void Awake()
     {
         mProfile1 = GameObject.Find("I_ProfileBG1").GetComponent<ProfileMoving>();
         mProfile2 = GameObject.Find("I_ProfileBG2").GetComponent<ProfileMoving>();
         mProfile3 = GameObject.Find("I_ProfileBG3").GetComponent<ProfileMoving>();
+
+        SOWManager SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+        // 구름 이용이 가능한 뭉티들의 리스트를 초기화 하는 함수 호출
+        initProfileList();
     }
+    private void Update()
+    {
+
+
+    }
+    void initProfileList()
+    {
+
+
+    }
+
+    void updateProfileList()
+    {
+        // 보여지는 리스트를 기준으로 1번은 현재 프로필이 보이는 뭉티, 2번은 다음 뭉티, 3번은 현재 이전의 뭉티를 업데이트한다.
+        // 만약 1,2,3번 중 존재하지 않는 경우에는 따로 업데이트 하지 않는다.
+
+
+    }
+
 
     public void ShowNextProfile()
     {
@@ -86,6 +110,9 @@ public class RecordUIManager : MonoBehaviour
         Invoke("DelayActiveBtn", 0.5f);
 
         // 다음 뭉티 정보 불러오는 메소드 호출하는 부분
+        
+
+
         Debug.Log("이전 뭉티 정보 호출");
     }
     void DelayActiveBtn()
@@ -145,22 +172,4 @@ public class RecordUIManager : MonoBehaviour
         gUpsetStory.SetActive(!_bisUpset);
     }
 
-    public void GiveCloud()
-    {
-        // 구름 제공하는 메소드 호출
-        SOWManager SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
-
-        StoragedCloudData storagedCloudData
-            = mGetCloudContainer.GetComponent<CloudContainer>().mSelecedCloud;
-
-        int[] tempList = SOWManager.mUsingGuestList.ToArray();
-
-        int guestNum = tempList[0];
-
-        SOWManager.SetCloudData(guestNum, storagedCloudData);
-
-        SceneManager.LoadScene("Space Of Weather");
-
-        Debug.Log("구름제공 메소드 호출");
-    }
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.Windows;
 public class CloudDecoManager : MonoBehaviour
 {
     //파츠 증감소 클래스
@@ -75,8 +75,8 @@ public class CloudDecoManager : MonoBehaviour
 
     private bool cursorChasing;
     private bool isDecoDone;
-    
-    
+
+
     private DecoParts selectedParts;
     private List<List<GameObject>> mUIDecoParts;
     private int mCloudPieceDecoMax;
@@ -87,8 +87,8 @@ public class CloudDecoManager : MonoBehaviour
     public Vector2 top_right_corner;
     public Vector2 bottom_left_corner;
 
-    
-  
+
+
     private void Start()
     {
         mUIDecoParts = new List<List<GameObject>>();
@@ -120,7 +120,7 @@ public class CloudDecoManager : MonoBehaviour
 
     }
     private void init()
-    {     
+    {
         //Cloud data 가져오기.(씬이동시에만가능)
         mBaseCloudDt = getTargetCloudData();
 
@@ -128,23 +128,23 @@ public class CloudDecoManager : MonoBehaviour
         //클라우드 데이터에 따라 UI에 이미지 삽입.
         //Set Base Cloud Image on Sketchbook.
         I_targetCloud.transform.GetComponent<Image>().sprite = mBaseCloudDt.getForDecoCloudSprite();
-       
+
         //Set Deco Parts as Dt cnt: mUIDecoParts[1],mUIDecoParts[2]
         for (int i = 0; i < mBaseCloudDt.getDecoPartsCount(); i++)
         {
             List<GameObject> tmpList = mUIDecoParts[i];
-            for(int j = 0; j<3;j++)
+            for (int j = 0; j < 3; j++)
             {
-                if(i == 0)        //Set CloudPiece        
+                if (i == 0)        //Set CloudPiece        
                     mUIDecoParts[i][j].transform.GetChild(0).GetComponent<Image>().sprite = mBaseCloudDt.getCloudParts()[j];
-                
 
-                mUIDecoParts[i+1][j].transform.GetChild(0).GetComponent<Image>().sprite = mBaseCloudDt.getSizeDifferParts(i)[j];
+
+                mUIDecoParts[i + 1][j].transform.GetChild(0).GetComponent<Image>().sprite = mBaseCloudDt.getSizeDifferParts(i)[j];
             }
 
         }
 
-        for (int i = 0; i < mBaseCloudDt.getDecoPartsCount()+1; i++)
+        for (int i = 0; i < mBaseCloudDt.getDecoPartsCount() + 1; i++)
         {
             mLPartsMenu.Add(new PartsMenu(B_decoParts, I_PartsMenu, B_PosNeg, i));
 
@@ -164,14 +164,13 @@ public class CloudDecoManager : MonoBehaviour
         return inventoryManager.createdCloudData;
     }
 
-
     //UI Button Functions
     public void cloudDecoDoneBtn() //마지막 스케치북 결과 ㅣ OK 버튼
     {
-      
+
         List<int> mEmoValues = new List<int>();
         //감정계산.
-        for(int i = 0; i < mLPartsMenu.Count; i++)
+        for (int i = 0; i < mLPartsMenu.Count; i++)
         {
             if (mLPartsMenu[i].getPartsNPState())
                 mEmoValues.Add(1);
@@ -179,9 +178,9 @@ public class CloudDecoManager : MonoBehaviour
                 mEmoValues.Add(-1);
         }
         mBaseCloudDt.addFinalEmotion(mEmoValues);
-             
+
         inventoryManager.addStock(I_targetCloud, newCloudImg);
-        Debug.Log(Resources.Load("newCloudImgPath", typeof(Texture2D)) as Texture2D); 
+        Debug.Log(Resources.Load("newCloudImgPath", typeof(Texture2D)) as Texture2D);
         //LoadScene
         SceneManager.LoadScene("Cloud Storage");
     }
@@ -192,14 +191,15 @@ public class CloudDecoManager : MonoBehaviour
         initParam();
         init();
 
-        for(int i = 0; i < B_PosNeg.transform.childCount; i++)
+        for (int i = 0; i < B_PosNeg.transform.childCount; i++)
         {
             B_PosNeg.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = I_UnSelectedSticker[0];
             B_PosNeg.transform.GetChild(i).GetChild(1).GetComponent<Image>().sprite = I_UnSelectedSticker[1];
         }
-        
+
         P_FinSBook.SetActive(false);
     }
+
     public void clickedAutoSettingBtn() //자동 배치
     {
         float width_max_range = I_targetCloud.GetComponent<RectTransform>().rect.width/2;

@@ -58,7 +58,7 @@ public class CloudObject : MonoBehaviour
             Debug.Log("구름을 화면상에서 제거");
 
             // 구름을 받은 손님을 사용상태로 변경
-            GuestManager.mGuestInfos[mGuestNum-1].isUsing = true;
+            GuestManager.mGuestInfos[mGuestNum].isUsing = true;
         }
         else
         {

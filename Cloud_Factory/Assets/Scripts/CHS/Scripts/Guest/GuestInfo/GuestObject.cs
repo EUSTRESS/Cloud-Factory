@@ -16,10 +16,9 @@ public class GuestObject : MonoBehaviour
     public GameObject mTargetChair;     // 목표로 하는 의자의 위치
     public int mTargetChiarIndex;
     public bool isMove;                 // 이동중인가?   
-    public bool isAlreadyUse;                  // 사용을 완료 했는가?
+    public bool isAlreadyUse;           // 사용을 완료 했는가?
     public Animator mGuestAnim;         // 손님의 애니메이션 변수
     public SOWManager mSOWManager;
-
 
     const int MAX_GUEST_NUM = 20;
 
@@ -135,7 +134,6 @@ public class GuestObject : MonoBehaviour
 
                 // 5초 후에 Invoke 함수를 이용해서 사용중인 상태를 종료하고, 귀가하는 모션을 집어넣는다.
                 Invoke("TakeCloud", 5.0f);
-                isUsing = false;
             }
         }
         else
@@ -175,7 +173,6 @@ public class GuestObject : MonoBehaviour
         Debug.Log("Take Cloud");
         isUsing = false;
         mGuestAnim.SetBool("isUsing", false);
-
         // 상하한선 값 및 만족도 갱신
 
 

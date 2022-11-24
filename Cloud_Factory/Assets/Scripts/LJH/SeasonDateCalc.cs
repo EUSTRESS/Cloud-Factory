@@ -72,6 +72,9 @@ public class SeasonDateCalc : MonoBehaviour
         // 10분당 1일, 600초당 1일 추가
         if (second >= 600.0f)
         {
+            // 날짜 변하는 부분 -> 날짜단위 변환내용은 여기에 작성
+
+
             temp += 1;
             second = 0;
         }
@@ -90,6 +93,8 @@ public class SeasonDateCalc : MonoBehaviour
         // 4주가 최대, 5주차부터는 없음
         if (week > 4)
         {
+            // 달 변하는 부분 -> 달 단위 변환내용은 여기에 작성
+
             temp += 1;
             week = 1;
         }
@@ -99,7 +104,9 @@ public class SeasonDateCalc : MonoBehaviour
     {
         int temp = 0;
         if (month > 4)
-        {
+        { 
+            // 년 변하는 부분 -> 년 단위 변환내용은 여기에 작성
+
             temp += 1;
             month = 1;
         }

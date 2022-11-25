@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CloudSpawner : MonoBehaviour
 {
@@ -55,10 +56,47 @@ public class CloudSpawner : MonoBehaviour
 
         tempCLoud.GetComponent<CloudObject>().SetValue(CloudData.mFinalEmotions);
         tempCLoud.GetComponent<CloudObject>().SetGuestNum(guestNum);
-        tempCLoud.GetComponent<CloudObject>().SetSprite(CloudData.mTexImage);
+
+
+
+        tempCLoud.GetComponent<CloudObject>().SetSprite(ConvertTextureWithAlpha(CloudData.mTexImage));
+
+        tempCLoud.transform.localScale = new Vector3(0.11f, 0.12f, 0.5f);
     }
 
+    private Sprite ConvertTextureWithAlpha(Texture2D target)
+    {
+        Texture2D newText = new Texture2D(target.width, target.height, TextureFormat.RGBA32, false);
 
+        for (int x = 0; x < newText.width; x++)
+        {
+            for (int y = 0; y < newText.height; y++)
+            {
+                newText.SetPixel(x, y, new Color(1, 1, 1, 0));
+            }
+        }
+
+        for (int x = 0; x < target.width; x++)
+        {
+            for (int y = 0; y < target.height; y++)
+            {
+                var color = target.GetPixel(x, y);
+                if (target.GetPixel(x, y).a == 1 && target.GetPixel(x, y).g == 1 && target.GetPixel(x, y).b == 1)
+                {
+                    color.a = 0;
+                }
+
+
+                newText.SetPixel(x, y, color);
+            }
+            //Debug.Log("IMAGE LocalScale" + mspriteToMerge[i].texture.width + "///" + mspriteToMerge[i].texture.height);
+        }
+        newText.Apply();
+
+        Sprite sprite = Sprite.Create(newText, new Rect(0, 0, newText.width, newText.height), new Vector2(0.5f, 0.5f));
+
+        return sprite;
+    }
     // 구름 이동
     public void MoveCloud()
     {

@@ -83,23 +83,30 @@ public class YardHandleSystem : MonoBehaviour
 
     
 
-    public void  Gathered(GameObject iClickedYard,int totalCnt) //클릭함수
+    public Dictionary<IngredientData, int>Gathered(GameObject iClickedYard,int totalCnt) //클릭함수
     {
-        if (mYards[iClickedYard] == 0) return;
+        if (mYards[iClickedYard] == 0) return null;
 
         Dictionary<IngredientData, int> results = getRndGatheredResult(totalCnt);
+        Dictionary<IngredientData, int> complete = new Dictionary<IngredientData, int>();
         Debug.Log("[System]총" + results.Count + "가 채집되었습니다!");
         foreach(KeyValuePair<IngredientData, int> result in results)
         {
-            if(inventoryManager.addStock(result)) Debug.Log("[System]채집 성공| 종류:" + result.Key + "|개수: " + result.Value);
+            if (inventoryManager.addStock(result))
+            {
+                Debug.Log("[System]채집 성공| 종류:" + result.Key + "|개수: " + result.Value);
+                complete.Add(result.Key, result.Value);
+            }
             else
-                Debug.Log("[System]채집 실패| 인벤토리가 꽉 찼거나 수집 가능 재료 개수를 초과하였습니다| 종류:."+ result.Key + "|개수: " + result.Value);
+                Debug.Log("[System]채집 실패| 인벤토리가 꽉 찼거나 수집 가능 재료 개수를 초과하였습니다| 종류:." + result.Key + "|개수: " + result.Value);
 
         }
 
         mYards[iClickedYard]--;
-       // if (mYards[iClickedYard] == 0) iClickedYard.GetComponent<Image>().sprite = mImages[0];
+
+        return complete; //저장에 성공한 리스트만 반환한다.
     }
+
 
     private Dictionary<IngredientData, int> getRndGatheredResult(int totalCnt) //랜덤으로 채집한 리스트 리턴.
     {

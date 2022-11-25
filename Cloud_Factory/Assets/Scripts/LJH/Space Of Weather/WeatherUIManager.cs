@@ -129,15 +129,15 @@ public class WeatherUIManager : MonoBehaviour
         mGatheringAnim.SetBool("Winter", _bWinter);
     }
 
+  
     void Gathering()
     {
         YardHandleSystem system = selectedYard.GetComponentInParent<YardHandleSystem>();
 
         mRandomGather = Random.Range(0, 5); // 0~4
 
-        system.Gathered(selectedYard, mRandomGather);
-        // 랜덤 작업
-
+        // Result Image match
+        GatherResultMatchWithUI(system.Gathered(selectedYard, mRandomGather));
 
         if (mRandomGather % 2 == 1) // 홀수
         {
@@ -180,6 +180,23 @@ public class WeatherUIManager : MonoBehaviour
         mGatherResult.SetActive(true);
 
         CancelInvoke(); // 인보크 충돌 방지를 위해서 출력 결과가 나오면 모든 인보크 꺼버림
+    }
+
+    private void GatherResultMatchWithUI(Dictionary<IngredientData, int> results)
+    {
+        int i = 0;
+        foreach (KeyValuePair<IngredientData, int> data in results)
+        {
+            GameObject targetUI = mGatherObj[i];
+            Image image = targetUI.transform.GetChild(1).GetComponent<Image>();
+            Text text = targetUI.transform.GetChild(1).GetChild(0).GetComponent<Text>();
+
+            image.sprite = data.Key.image;
+            text.text = data.Value.ToString();
+
+            i++;
+
+        }
     }
 
     void ActiveRandGather(bool _bOne, bool _bTwo, bool _bThree, bool _bFour, bool _bFive)

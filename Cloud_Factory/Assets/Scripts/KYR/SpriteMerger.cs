@@ -13,12 +13,12 @@ public class SpriteMerger : MonoBehaviour
     [SerializeField]
     private List<Sprite> mspriteToMerge;
 
-    public Image finalSpriteRenderer = null;
+    public RawImage finalSpriteRenderer = null;
     // Start is called before the first frame update
     void Start()
     {
         mRawList = new List<Transform>();
-        finalSpriteRenderer = transform.GetComponent<Image>();
+        finalSpriteRenderer = transform.GetComponent<RawImage>();
     }
 
     private void initMergeList(GameObject _Fincloud)
@@ -43,7 +43,7 @@ public class SpriteMerger : MonoBehaviour
         initMergeList( _Fincloud);
 
         Resources.UnloadUnusedAssets();
-        var newText = new Texture2D( (int)mRawList[0].GetComponent<RectTransform>().rect.width+150, (int)mRawList[0].GetComponent<RectTransform>().rect.height);
+        Texture2D newText = new Texture2D( (int)mRawList[0].GetComponent<RectTransform>().rect.width+150, (int)mRawList[0].GetComponent<RectTransform>().rect.height);
 
         for(int x = 0; x < newText.width; x++)
         {
@@ -66,7 +66,9 @@ public class SpriteMerger : MonoBehaviour
 
             Debug.Log("보정된 벡터2 값"+ startPoint.x +"     " + startPoint.y);
 
-
+            int width = (int)mRawList[i].GetComponent<RectTransform>().rect.width;
+            int height = (int)mRawList[i].GetComponent<RectTransform>().rect.height;
+            Debug.Log("LocalScale" + width + "///" + height);
             for (int x = 0; x <mspriteToMerge[i].texture.width; x++)
             {
                 for(int y = 0; y < mspriteToMerge[i].texture.height; y++)
@@ -77,13 +79,13 @@ public class SpriteMerger : MonoBehaviour
 
                     newText.SetPixel((int)startPoint.x + x, (int)startPoint.y + y, color);
                 }
+                Debug.Log("IMAGE LocalScale" + mspriteToMerge[i].texture.width + "///" + mspriteToMerge[i].texture.height);
             }
         }
-
         newText.Apply();
         var finalSprite = Sprite.Create(newText, new Rect(0, 0, newText.width, newText.height), new Vector2(0.5f, 0.5f));
         finalSprite.name = "New Sprite";
-        finalSpriteRenderer.sprite = finalSprite;
+        finalSpriteRenderer.texture = finalSprite.texture;
 
         return newText;
     }

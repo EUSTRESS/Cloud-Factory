@@ -13,18 +13,24 @@ public class CloudStorageProfile : MonoBehaviour
     RecordUIManager UIManager;
 
     [SerializeField]
-    Image[] iPortrait  = new Image[20];
+    Image[] iPortrait = new Image[20];
 
     public Button btNextBtn;           // 다음페이지 버튼
     public Button btPrevBtn;           // 이전페이지 버튼
     public Button btGiveBtn;           // 구름 제공 버튼
 
     // 가장 앞에 있는 프로필의 인덱스 정보
+    [SerializeField]
     int frontProfileInfo;
     public GameObject mGetCloudContainer;
 
+    // 화면상에 나오고 있는 손님의 손님번호
     int frontGuestIndex;
+
+    // 구름을 제공받을 수 있는 손님들의 손님번호 리스트
     int[] UsingGuestNumList;
+
+    // 구름을 제공받을 수 있는 손님들의 리스트의 길이
     int numOfUsingGuestList;
 
     void Awake()
@@ -40,6 +46,14 @@ public class CloudStorageProfile : MonoBehaviour
 
         if (numOfUsingGuestList != 0)
             frontGuestIndex = UsingGuestNumList[0];
+
+        Profiles = new GameObject[3];
+
+        Profiles[0] = GameObject.Find("I_ProfileBG1");
+        Profiles[1] = GameObject.Find("I_ProfileBG2");
+        Profiles[2] = GameObject.Find("I_ProfileBG3");
+
+        btGiveBtn = GameObject.Find("B_CloudGIve").GetComponent<Button>();
 
         initProfileList();
     }

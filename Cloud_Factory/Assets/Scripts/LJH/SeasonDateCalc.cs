@@ -73,10 +73,17 @@ public class SeasonDateCalc : MonoBehaviour
         if (second >= 600.0f)
         {
             // 날짜 변하는 부분 -> 날짜단위 변환내용은 여기에 작성
-
-
-            temp += 1;
-            second = 0;
+            // 날마다 초기화 해야하는 사항 : 방문할 손님 리스트 
+            if(!GameObject.FindWithTag("Guest"))
+            {
+                Debug.Log("모든 손님이 퇴장하였기 때문에 하루가 넘어갑니다");
+                temp += 1;
+                second = 0;
+            }
+            else
+            {
+                Debug.Log("하루의 시간이 지났지만 모든 손님이 퇴장하지 않아서 다음날이 되지 않습니다.");
+            }
         }
         return temp;
     }
@@ -94,6 +101,7 @@ public class SeasonDateCalc : MonoBehaviour
         if (week > 4)
         {
             // 달 변하는 부분 -> 달 단위 변환내용은 여기에 작성
+            // 계절마다 변해야 하는 사항 :  
 
             temp += 1;
             week = 1;

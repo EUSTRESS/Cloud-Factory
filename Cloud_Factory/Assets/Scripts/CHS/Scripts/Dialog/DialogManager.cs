@@ -18,6 +18,7 @@ public class DialogManager : MonoBehaviour
 
     [SerializeField]
     private DialogDB mDialogDB;                 // 대화 내용을 저장해 놓은 DB
+    [SerializeField]
     private string[] mTextList;                 // 대화 내용을 불러와서 저장해둘 리스트
     private int[] mGuestImageList;              // 대화 내용에 맞는 표정을 저장해둘 리스트
     private int[] mIsGuset;                     // 누가 이야기하는 내용인지 처리하기
@@ -51,7 +52,7 @@ public class DialogManager : MonoBehaviour
     // 수락/거절 패널에 필요한 텍스트 오브젝트 받기
     [SerializeField]
     private Text tPanelName;                    // 방문 손님의 이름
-    [SerializeField]            
+    [SerializeField]
     private Text tPanelAge;                     // 방문 손님의 나이
     [SerializeField]
     private Text tPanelJob;                     // 방문 손님의 직업
@@ -100,7 +101,7 @@ public class DialogManager : MonoBehaviour
 
         mGuestNum = mGuestManager.mGuestIndex;
         mGuestSat = mGuestManager.mGuestInfos[mGuestNum].mSatatisfaction;
-
+        mGuestVisitCount = mGuestManager.mGuestInfos[mGuestNum].mVisitCount;
         tGuestName.text = mGuestManager.mGuestInfos[mGuestNum].mName;
 
         mGuestImageList = new int[20];
@@ -118,10 +119,9 @@ public class DialogManager : MonoBehaviour
     {
         // 초상화의 애니메이션 클립을 초기화한다.
         mGuestAnimator.runtimeAnimatorController = GetComponent<DrawAniClip>().animators[mGuestNum];
-        Debug.Log(mGuestNum + "번 손님으로 애니메이션 초기화");
     }
 
-    public void MoveScenetoWeatherSpace()
+    public void MoveSceneToWeatherSpace()
     {
         SceneManager.LoadScene("Space Of Weather");
     }
@@ -138,7 +138,7 @@ public class DialogManager : MonoBehaviour
         // 손님 번호 -> 방문 횟수 -> 만족도 순으로 엑셀 텍스트 파일을 체크한다.
         for (i = 0; i < mDialogDB.DialogText.Count; ++i)
         {
-            if (mDialogDB.DialogText[i].GuestID == mGuestNum)
+            if (mDialogDB.DialogText[i].GuestID == mGuestNum + 1)
             {
                 if (mDialogDB.DialogText[i].VisitCount == mGuestVisitCount)
                 {
@@ -187,7 +187,6 @@ public class DialogManager : MonoBehaviour
     private void ReadDialogAtOne()
     {
         isReading = true;
-        //GuestName.text = testName;
         if (tText.text == GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex))
         {
             // 텍스트가 모두 출력이 된 경우에 클릭 시, 다음 문장이 출력된다.
@@ -229,9 +228,6 @@ public class DialogManager : MonoBehaviour
         // 기본적으로 빈 텍스트에서 대화 내용을 한 글자씩 추가하여 출력하고 딜레이 하기를 반복한다.
         ReadDialogAtOne();
         return;
-
-        // 어느 문장까지 출력하였는지 저장한다.
-        // DialogIndex 를 초기화 하지 않는 이상, 대화는 이전 혹은 이후로 넘어가지 않기 때문에 우선은 보류하는 것으로 생각 중.
     }
 
     private void TakeGuest()
@@ -247,9 +243,10 @@ public class DialogManager : MonoBehaviour
         mSOWManager.isNewGuest = true;
 
         mGuestManager.InitGuestTime();
+
         // 손님이 이동했으므로 응접실에 있는 것들을 초기화 시켜준다.
         ClearGuest();
-        MoveScenetoWeatherSpace();
+        MoveSceneToWeatherSpace();
     }
 
     // 손님 거절하기
@@ -263,7 +260,7 @@ public class DialogManager : MonoBehaviour
 
         // 손님이 이동했으므로 응접실에 있는 것들을 초기화 시켜준다.
         ClearGuest();
-        MoveScenetoWeatherSpace();
+        MoveSceneToWeatherSpace();
     }
 
     // 응접실을 초기화 시켜준다.
@@ -296,9 +293,3 @@ public class DialogManager : MonoBehaviour
     }
 
 }
-// 추가할 기능 구현목록
-
-// 대화 도중이나 대화 시작 전에 하루가 종료되는 경우 해당 뭉티의 방문 이력은 없는 것으로 처리
-// -> 수락, 거절 버튼 누를때 방문한 것으로 추가시키는 방식으로 진행 
-
-// 수락, 거절 버튼을 누를때는 배경화면이 페이드아웃 되면서 버튼만 하이라이트 되어야 함.

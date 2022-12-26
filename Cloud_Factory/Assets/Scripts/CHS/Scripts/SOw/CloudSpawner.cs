@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 public class CloudSpawner : MonoBehaviour
 {
-    SOWManager SOWManager;
-    InventoryManager InventoryManager;
-    StoragedCloudData CloudData;
+    SOWManager          SOWManager;
+    InventoryManager    InventoryManager;
+    StoragedCloudData   CloudData;
 
-    bool isCloudGive;
+    bool                isCloudGive;
 
-    public GameObject CloudObject;
+    public GameObject   CloudObject;
 
-    public int cloudSpeed;
+    public int          cloudSpeed;
 
-    private GameObject tempCLoud;
+    private GameObject  tempCLoud;
 
 
     // 처음 받아와야 하는 값
@@ -41,7 +41,7 @@ public class CloudSpawner : MonoBehaviour
 
     }
 
-    // 구름 생성
+    // 구름을 생성하고 초기화한다.
     public void SpawnCloud(int guestNum, StoragedCloudData storagedCloudData)
     {
         // 구름 인스턴스 생성
@@ -56,9 +56,6 @@ public class CloudSpawner : MonoBehaviour
 
         tempCLoud.GetComponent<CloudObject>().SetValue(CloudData.mFinalEmotions);
         tempCLoud.GetComponent<CloudObject>().SetGuestNum(guestNum);
-
-
-
         tempCLoud.GetComponent<CloudObject>().SetSprite(ConvertTextureWithAlpha(CloudData.mTexImage));
 
         tempCLoud.transform.localScale = new Vector3(0.11f, 0.12f, 0.5f);
@@ -86,10 +83,8 @@ public class CloudSpawner : MonoBehaviour
                     color.a = 0;
                 }
 
-
                 newText.SetPixel(x, y, color);
             }
-            //Debug.Log("IMAGE LocalScale" + mspriteToMerge[i].texture.width + "///" + mspriteToMerge[i].texture.height);
         }
         newText.Apply();
 
@@ -101,7 +96,6 @@ public class CloudSpawner : MonoBehaviour
     public void MoveCloud()
     {
         Transform t_target = tempCLoud.GetComponent<CloudObject>().targetChairPos;
-
         tempCLoud.transform.position = Vector2.MoveTowards(transform.position, t_target.position, cloudSpeed * Time.deltaTime);
     }
 

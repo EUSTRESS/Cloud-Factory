@@ -9,7 +9,6 @@ public class GuestStat : MonoBehaviour
     public int[] mEmotion = new int[20];                            // 손님의 감정 값. 총 20가지
 
     public int mSatatisfaction;                                     // 손님의 만족도
-    public EState EState;                                           // 손님의 현재 행동 상태
     public Sprite[] sImg;                                           // 손님의 이미지 -> 날씨의 공간에서의 상태     
 
     public SSatEmotion[] mSatEmotions = new SSatEmotion[5];         // 손님의 만족도 범위 5종류

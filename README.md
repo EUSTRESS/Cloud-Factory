@@ -79,11 +79,6 @@ Cloud Factory는 손님의 이야기를 듣고, 여러 가지 재료들을 조�
             <strong>재혁</strong>
         </td>
         <td align="center" width="150px">
-            <a href="https://github.com/gustlr3294"><img height="120px" width="120px" src="https://avatars.githubusercontent.com/u/35206867?v=4"/></a>
-            <br />
-            <strong>현식</strong>
-        </td>
-        <td align="center" width="150px">
             <a href="https://github.com/Yeram522"><img height="120px" width="120px" src="https://avatars.githubusercontent.com/u/63442636?v=4"/></a>
             <br />
             <strong>예람</strong>
@@ -102,12 +97,6 @@ Cloud Factory는 손님의 이야기를 듣고, 여러 가지 재료들을 조�
             <a href="https://github.com/limjh1">:octocat: GitHub</a>
             <br />
         </td>
-        <td align="center">
-            서브 프로그래머
-            <br />
-            <a href="https://github.com/gustlr3294">:octocat: GitHub</a>
-            <br />
-         </td>
         <td align="center">
             서브 프로그래머, 서기
             <br />

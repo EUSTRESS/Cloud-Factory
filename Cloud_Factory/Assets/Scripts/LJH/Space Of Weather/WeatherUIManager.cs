@@ -79,10 +79,14 @@ public class WeatherUIManager : MonoBehaviour
 
             mSeasonObj[i].SetActive(false);
             mSeasonUIObj[i].SetActive(false);
+            // 산책로 오브젝트 추가
+
         }
 
         mSeasonObj[_iCurrent].SetActive(true);
         mSeasonUIObj[_iCurrent].SetActive(true);
+        // 산책로 오브젝트 추가
+
     }
 
     // 마당 버튼 클릭 시, 채집하시겠씁니까? 오브젝트 활성화    

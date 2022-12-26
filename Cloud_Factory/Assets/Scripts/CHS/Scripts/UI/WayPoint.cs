@@ -21,20 +21,18 @@ public class WayPoint : MonoBehaviour
             Invoke("MovePath", 2.0f);
         }
     }
-
     public void MovePath()
     {
-
-            transform.position = Vector2.MoveTowards
-                (transform.position, WayPos[WayNum].transform.position, speed * Time.deltaTime);
-            if (transform.position == WayPos[WayNum].transform.position)
-            {
-                WayNum++;
-            }
-            if (WayNum == WayPos.Length)
-            {
-                WayNum = 0;
-            }
+        transform.position = Vector2.MoveTowards
+            (transform.position, WayPos[WayNum].transform.position, speed * Time.deltaTime);
+        if (transform.position == WayPos[WayNum].transform.position)
+        {
+            WayNum++;
+        }
+        if (WayNum == WayPos.Length)
+        {
+            WayNum = 0;
+        }
      }
     
 }

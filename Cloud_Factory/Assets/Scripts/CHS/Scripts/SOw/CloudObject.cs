@@ -10,8 +10,6 @@ struct GavedGuestInfo
 
 public class CloudObject : MonoBehaviour
 {
-    // 처음 받아와야 하는 값
-    // 1) Cloud Spawner로부터 정보값을 받아온다.
     public Transform targetChairPos;
 
     SOWManager SOWManager;
@@ -20,6 +18,9 @@ public class CloudObject : MonoBehaviour
     public int mGuestNum;                       // 타겟 손님 번호
     public int cloudSpeed;                      // 구름 속도
     public List<EmotionInfo> mFinalEmotions;    // 변환할 감정값 리스트
+
+    // 처음 받아와야 하는 값
+    // 1) Cloud Spawner로부터 정보값을 받아온다.
 
     // 내부에서 수행해야 할 기능
     // 1) 손님과의 충돌 처리 (충돌 시 사용한다는 판정)
@@ -43,7 +44,8 @@ public class CloudObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Abs(this.transform.position.x - targetChairPos.position.x) < 0.1f)
+        if (Mathf.Abs(this.transform.position.x - targetChairPos.position.x) < 0.1f
+            && Mathf.Abs(this.transform.position.y - targetChairPos.position.y) < 0.1f)
         {
             // 감정 값 변환함수 호출
             for (int i = 0; i < mFinalEmotions.Count; ++i)
@@ -51,20 +53,28 @@ public class CloudObject : MonoBehaviour
                 GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value);
                 Debug.Log(mGuestNum + "번 손님 감정변환 함수 호출" + (int)mFinalEmotions[i].Key + " " + mFinalEmotions[i].Value);
             }
-            Debug.Log(mFinalEmotions.Count);
+
+            // TODO : 구름을 사용한 손님의 정보값 갱신 (LIST : 감정 값, 상하한선 계산, 만족도 갱신)
+
 
             // 감정 값 변환함수 호출 후, 제거
             Destroy(this.gameObject);
-            Debug.Log("구름을 화면상에서 제거");
 
             // 구름을 받은 손님을 사용상태로 변경
             GuestManager.mGuestInfos[mGuestNum].isUsing = true;
         }
         else
         {
-            transform.position = Vector2.MoveTowards(transform.position, targetChairPos.position, cloudSpeed * Time.deltaTime);
+            Vector3 temp;
+            temp = new Vector3(-0.4f, 1.4f, 0f);
+
+            // TODO : 의자를 앉는 방향에 따라서 targetChairPos에 대한 값을 변환시켜준다.
+            transform.position = Vector2.MoveTowards(transform.position, targetChairPos.position + temp, cloudSpeed * Time.deltaTime);
         }
     }
+
+
+    // 아래의 4개의 함수는 구름이 생성될 때 스포너에서 사용하는 함수이다.
 
     public void SetTargetChair(int guestNum)
     {

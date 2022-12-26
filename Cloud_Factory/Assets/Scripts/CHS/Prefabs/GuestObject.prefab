@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5270018100128509971}
   - component: {fileID: 5712268908780832859}
   - component: {fileID: 4218080184777723134}
+  - component: {fileID: -2148519100487382919}
   m_Layer: 3
   m_Name: GuestObject
   m_TagString: Guest
@@ -288,3 +289,14 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!210 &-2148519100487382919
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5879352038581427232}
+  m_Enabled: 1
+  m_SortingLayerID: 29016165
+  m_SortingLayer: 1
+  m_SortingOrder: 0

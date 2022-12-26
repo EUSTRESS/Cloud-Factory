@@ -5,24 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class Guest : MonoBehaviour
 {
-    public GuestInfo[] mGuestInfos;                        // Scriptable Objects들의 정보를 담고 있는 배열
+    public GuestInfo[] mGuestInfos;                         // Scriptable Objects들의 정보를 담고 있는 배열
 
-    public float mGuestTime;                         // 뭉티의 방문 주기
+    public float mGuestTime;                                // 뭉티의 방문 주기의 현재 값
+    public float mMaxGuestTime;                             // 뭉티의 방문 주기
 
-    public int mGuestIndex;                        // 이번에 방문할 뭉티의 번호
+    public int mGuestIndex;                                 // 이번에 방문할 뭉티의 번호
 
     [SerializeField]
-    public int[] mTodayGuestList = new int[6];       // 오늘 방문 예정인 뭉티 목록
+    public int[] mTodayGuestList = new int[6];              // 오늘 방문 예정인 뭉티 목록
     [SerializeField]
-    public bool isGuestInLivingRoom;                // 응접실에 손님이 방문해있는가?
+    public bool isGuestInLivingRoom;                        // 응접실에 손님이 방문해있는가?
 
-    public bool isTimeToTakeGuest;                  // 뭉티 방문주기가 지났는지 확인
+    public bool isTimeToTakeGuest;                          // 뭉티 방문주기가 지났는지 확인
     [SerializeField]
-    private int mGuestCount;                       // 이번에 방문할 뭉티의 순서
+    private int mGuestCount;                                // 이번에 방문할 뭉티의 순서
     [SerializeField]
-    private int mGuestMax;                         // 오늘 방문하는 뭉티의 최대 숫자
+    private int mGuestMax;                                  // 오늘 방문하는 뭉티의 최대 숫자
 
-    private static Guest instance = null;                    // 싱글톤 기법을 위함 instance 생성
+    private static Guest instance = null;                   // 싱글톤 기법을 위함 instance 생성
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class Guest : MonoBehaviour
             mGuestTime = 0;
             mGuestCount = -1;
             mGuestMax = 0;
+            mMaxGuestTime = 5.0f;
 
             InitDay();
 
@@ -51,16 +53,15 @@ public class Guest : MonoBehaviour
     void Update()
     {
         // 뭉티의 방문주기를 돌린다.
-        if (mGuestTime < 5.0f)
+        if (mGuestTime < mMaxGuestTime)
         {
             mGuestTime += Time.deltaTime;
         }
-        else if (mGuestTime >= 5.0f && isTimeToTakeGuest == false)
+        else if (mGuestTime >= mMaxGuestTime && isTimeToTakeGuest == false)
         {
             // 모든 인덱스가 다 되지 않는 한 뭉티 방문주기가 다된경우 새로운 뭉티를 들여보낸다.
             if (mGuestCount < mGuestMax - 1) // 0 1 2 3 4 5 
             {
-                Debug.Log("뭉티 방문시간이 되었습니다");
                 isTimeToTakeGuest = true;
                 TakeGuest();
                 // 응접실 이동하는 버튼들에 대한 상호작용
@@ -94,14 +95,6 @@ public class Guest : MonoBehaviour
         {
             InitGuestTime();
         }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            NewChoiceGuest();
-            for (int i = 0; i < 6; i++)
-            {
-                Debug.Log(mTodayGuestList[i] + "번 뭉티가 추가되었습니다.");
-            }
-        }
     }
 
     public void TakeGuest()
@@ -109,7 +102,6 @@ public class Guest : MonoBehaviour
         if (isTimeToTakeGuest == true && isGuestInLivingRoom == false)
         {
             mGuestCount++;
-            Debug.Log("mGuestCount가 증가합니다.");
             mGuestIndex = mTodayGuestList[mGuestCount];
             isGuestInLivingRoom = true;
         }
@@ -120,19 +112,6 @@ public class Guest : MonoBehaviour
     {
         return mGuestInfos[gusetNum].mName;
     }
-
-    //------------------------------------------------------------------------------------------------------------------------------------------
-    // 구름 제공 순서 (구름이 화면상에서 뭉티까지 도착하여지는 작업은 해당 순서에서 생략)
-    // 1. 구름을 선택하여 뭉티에게 제공 (뭉티가 앉아있는 상태가 아니라면 제공 불가능) 
-    // 2. 구름의 이용시간만큼을 대기 (대기도중 날이 바뀌면 제공 실패)
-    // 3. 구름의 감정값만큼을 뭉티의 감정에 더하기 - 함수 생성
-    // 4. 구름을 제공받은 뭉티의 감정선들을 확인. (만족도와 감정 상하한선 침범 여부) - 함수 생성
-    // 5. 만약 감정 상하한선을 침범했을 경우 뭉티를 불만 뭉티로 설정 (불만 뭉티에 대한 관리는 스크립트 추가 작성) - 함수 생성
-    // 6. 만약 만족도가 변경되었을 시에 만족도 값 갱신 (해당 뭉티의 대표감정 갱신) - 함수 생성
-
-    // 7. 만족도가 올라갔을 경우 마당에 뿌릴 수 있는 씨앗(재료)에 관련된 값을 받아서 심기
-    // 8. 구름 제공에 관한 결과를 화면에 띄워주고 뭉티를 날씨의 공간에서 내보내기
-    //------------------------------------------------------------------------------------------------------------------------------------------
 
     public bool CheckIsDisSat(int guestNum)
     {
@@ -145,7 +124,7 @@ public class Guest : MonoBehaviour
             mGuestInfos[guestNum].mSatatisfaction = 0;          // 만족도 0 으로 갱신
             mGuestInfos[guestNum].mVisitCount = 0;              // 남은 방문횟수 0으로 갱신
 
-            // 치유의 기록으로 불만 뭉티가 된 상태와 손님 번호, 어떤 감정 변화로 인한 것인지 전달해주기
+            // TODO : 치유의 기록으로 불만 뭉티가 된 상태와 손님 번호, 어떤 감정 변화로 인한 것인지 전달해주기
 
 
             return true;
@@ -154,15 +133,13 @@ public class Guest : MonoBehaviour
     }
 
     // 뭉티의 정보값 변경에 필요한 API 
-    // Event Handler를 이용하여 만족도 범위안에 들지 못하거나 감정 상하한선을 침범하여 불만 뭉티가 되는경우 이벤트를 발동시켜 관리
     public void SetEmotion(int guestNum, int emotionNum, int value)
     {
         mGuestInfos[guestNum].mEmotion[emotionNum] += value;
     }
 
-    public int IsExcessLine(int guestNum) // 감정 상하한선을 침범했는지 확인하는 함수. -> 구름 제공 순서 4번에서 진행
+    public int IsExcessLine(int guestNum) // 감정 상하한선을 침범했는지 확인하는 함수. 
     {
-
         SLimitEmotion[] limitEmotion = mGuestInfos[guestNum].mLimitEmotions;
 
         for (int i = 0; i < 2; i++)
@@ -201,31 +178,17 @@ public class Guest : MonoBehaviour
         Debug.Log(temp);
     }
 
-    public int CheckDisSat(int[] guestList, int Index)
-    {
-        int result = 0;
-
-        for (int i = 0; i <= Index; i++)
-        {
-            if (mGuestInfos[i].isDisSat == true || mGuestInfos[i].mNotVisitCount != 0)
-            {
-                result++;
-            }
-        }
-
-        return result;
-    }
     // 뭉티 리스트를 새로 생성하는 함수
     public int[] NewChoiceGuest()
     {
-        int[] guestList = new int[6];       // 반환시킬 뭉티의 리스트
-        int possibleToTake = 6;                // 받을 수 있는 총 뭉티의 수
+        int[] guestList = new int[6];                   // 반환시킬 뭉티의 리스트
+        int possibleToTake = 6;                         // 받을 수 있는 총 뭉티의 수
 
-        int totalGuestNum = 20;               // 총 뭉티의 수
-        int possibleGuestNum = 0;                // 방문이 가능한 뭉티의 수
+        int totalGuestNum = 20;                         // 총 뭉티의 수
+        int possibleGuestNum = 0;                       // 방문이 가능한 뭉티의 수
 
-        List<int> VisitedGuestNum = new List<int>();  // 방문 이력이 있는 뭉티의 리스트
-        List<int> NotVisitedGuestNum = new List<int>();  // 방문 이력이 없는 뭉티의 리스트
+        List<int> VisitedGuestNum = new List<int>();    // 방문 이력이 있는 뭉티의 리스트
+        List<int> NotVisitedGuestNum = new List<int>(); // 방문 이력이 없는 뭉티의 리스트
 
         // 방문 횟수가 끝난 뭉티와 만족도가 5가 된 뭉티는 제외되어야 하므로 먼저 리스트에서 빼낸다.
         for (int i = 0; i < totalGuestNum; i++)
@@ -537,7 +500,7 @@ public class Guest : MonoBehaviour
         mGuestMax = 0;
 
         // 새로운 리스트를 뽑는 함수를 호출 (테스트를 위해서 잠시 주석처리)
-        int[] list = { 0, 1, 2, 0, 1, 2 };
+        int[] list = { 0, 1, 2, 3, 1, 2 };
         mGuestMax = 6;
         mTodayGuestList = list;
 
@@ -555,7 +518,6 @@ public class Guest : MonoBehaviour
         int temp = -1;              // result의 상하한선과의 차이값
 
         // 상한선 값보다 높거나 하한선보다 낮다면 불만 뭉티이므로 표현할 일이 없기 때문에 고려하지 않는다.
-
         // 첫번째 상하한선 값 중에서 더 상하한선에 근접한 값을 초기 결과값으로 놓는다. 
         if (mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mLimitEmotions[0].downLimitEmotion]
             - mGuestInfos[guestNum].mLimitEmotions[0].downLimitEmotionValue >
@@ -613,7 +575,6 @@ public class Guest : MonoBehaviour
                     - mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mSatEmotions[i].emotionNum];
             }
             // 이외의 경우는 만족범위안에 있는 것이므로 무시한다.
-
             // temp값이 기존 저장된 값보다 만족도 범위와 멀다면 갱신한다.
             if (maxValue < temp)
             {

@@ -19,7 +19,7 @@ public class CloudStorageProfile : MonoBehaviour
     public Button btPrevBtn;           // 이전페이지 버튼
     public Button btGiveBtn;           // 구름 제공 버튼
 
-    // 가장 앞에 있는 프로필의 인덱스 정보
+    // 가장 앞에 있는 프로필 오브젝트의 인덱스 정보
     [SerializeField]
     int frontProfileInfo;
     public GameObject mGetCloudContainer;
@@ -28,7 +28,9 @@ public class CloudStorageProfile : MonoBehaviour
     int frontGuestIndex;
 
     // 구름을 제공받을 수 있는 손님들의 손님번호 리스트
-    int[] UsingGuestNumList;
+    [SerializeField]
+    int[]   UsingGuestNumList;
+    int     UsingGuestIndex;
 
     // 구름을 제공받을 수 있는 손님들의 리스트의 길이
     int numOfUsingGuestList;
@@ -43,9 +45,10 @@ public class CloudStorageProfile : MonoBehaviour
         numOfUsingGuestList = SOWManager.mUsingGuestList.Count;
 
         frontProfileInfo = 0;
+        UsingGuestIndex = 0;
 
         if (numOfUsingGuestList != 0)
-            frontGuestIndex = UsingGuestNumList[0];
+            frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
 
         Profiles = new GameObject[3];
 
@@ -62,7 +65,7 @@ public class CloudStorageProfile : MonoBehaviour
     {
         // 이전 프로필을 불러온다.
         frontProfileInfo++;
-        frontGuestIndex++;
+        UsingGuestIndex++;
 
         if (frontProfileInfo >= 3)
         {
@@ -70,8 +73,9 @@ public class CloudStorageProfile : MonoBehaviour
         }
         if (frontGuestIndex >= numOfUsingGuestList)
         {
-            frontGuestIndex = 0;
+            UsingGuestIndex = 0;
         }
+        frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
 
         updateProfileList();
     }
@@ -80,7 +84,7 @@ public class CloudStorageProfile : MonoBehaviour
     {
         // 다음 프로필을 불러온다.
         frontProfileInfo--;
-        frontGuestIndex--;
+        UsingGuestIndex--;
 
         if (frontProfileInfo < 0)
         {
@@ -88,35 +92,33 @@ public class CloudStorageProfile : MonoBehaviour
         }
         if (frontGuestIndex < 0)
         {
-            frontGuestIndex = numOfUsingGuestList - 1;
+            UsingGuestIndex = numOfUsingGuestList - 1;
         }
-
+        frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
         updateProfileList();
     }
 
     void initProfileList()
     {
-        if (numOfUsingGuestList == 0)
-        {
-            // 손님이 없는 경우 구름 제공버튼 무효
-            btGiveBtn.interactable = false;
-        }
-
         updateProfileList();
     }
 
     void updateProfileList()
     {
-        // 손님이 없는 경우에는 정보 업데이트를 하지 않는다.
-        if (numOfUsingGuestList == 0) return;
 
         GameObject Profile = Profiles[frontProfileInfo];
+        // Button
+        btGiveBtn = Profile.transform.GetChild(1).GetComponent<Button>();
+
+        // 손님이 없는 경우에는 정보 업데이트를 하지 않는다.
+        if (numOfUsingGuestList == 0)
+        {
+            btGiveBtn.interactable = false;
+            return;   
+        }
 
         // Image
         Image iProfile = Profile.transform.GetChild(0).GetComponent<Image>();
-
-        // Button
-        btGiveBtn = Profile.transform.GetChild(1).GetComponent<Button>();
 
         // 나이 이름 직업
         Text tName = Profile.transform.GetChild(7).GetComponent<Text>();
@@ -156,9 +158,18 @@ public class CloudStorageProfile : MonoBehaviour
         StoragedCloudData storagedCloudData
             = mGetCloudContainer.GetComponent<CloudContainer>().mSelecedCloud;
 
-        int[] tempList = SOWManager.mUsingGuestList.ToArray();
-
         int guestNum = frontGuestIndex;
+
+        // 리스트에서 사용받은 손님 제거하기
+        SOWManager sow = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+        int count = sow.mUsingGuestList.Count;
+        
+        for(int i = 0; i< count; i++)
+        {
+            if (sow.mUsingGuestList[i] == guestNum)
+                sow.mUsingGuestList.RemoveAt(i);
+        }
+       
 
         SOWManager.SetCloudData(guestNum, storagedCloudData);
 

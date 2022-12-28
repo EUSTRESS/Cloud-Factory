@@ -26,6 +26,10 @@ public class SeasonDateCalc : MonoBehaviour
     public int      mSeason; // 달, 계절 (4주마다 1달, 봄,여름,가을,겨울 순으로 4달)
     public int      mYear;   // 년 (~)    
 
+    [Header("테스트 변수")]
+    [SerializeField]
+    private float   MaxSecond = 600.0f; // 하루 단위(초)를 테스트 목적으로 바꾸기 위한 변수
+
     void Awake()
     {
         // 인스턴스 할당
@@ -70,7 +74,7 @@ public class SeasonDateCalc : MonoBehaviour
     {
         int temp = 0;
         // 10분당 1일, 600초당 1일 추가
-        if (second >= 600.0f)
+        if (second >= MaxSecond)
         {
             // 날짜 변하는 부분 -> 날짜단위 변환내용은 여기에 작성
             // 날마다 초기화 해야하는 사항 : 방문할 손님 리스트 
@@ -83,6 +87,13 @@ public class SeasonDateCalc : MonoBehaviour
             else
             {
                 Debug.Log("하루의 시간이 지났지만 모든 손님이 퇴장하지 않아서 다음날이 되지 않습니다.");
+
+                // SOWMangaer를 불러와서 날씨의 공간에 존재하는 손님들을 모두 퇴장시킨다.
+                SOWManager sowManager;
+                sowManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+
+                if(sowManager != null)
+                    sowManager.MakeGuestDisSat();
             }
         }
         return temp;

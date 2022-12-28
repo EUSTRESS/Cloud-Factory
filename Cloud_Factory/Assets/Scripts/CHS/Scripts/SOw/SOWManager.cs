@@ -5,34 +5,41 @@ using UnityEngine.SceneManagement;
 
 public class SOWManager : MonoBehaviour
 {
+    [Header("[날씨의 공간에 배치된 손님 정보]")]
     public Queue<int> mWaitGuestList;                   // 응접실에서 수락을 받고 넘어온 손님들의 리스트
     public List<int> mUsingGuestList;                   // 날씨의 공간에서 자리에 앉아 구름을 제공받을 준비가 된 손님들의 리스트
 
-    int mMaxNumOfUsingGuest;                            // mUsingGuestList가 가질 수 있는 최대의 크기
-    [SerializeField]
-    int mTempGuestNum;                                  // 임시 손님 번호값
-
-    [SerializeField]
-    public Queue<GameObject> mWaitGuestObjectQueue;      // 대기 손님 오브젝트들을 관리할 리스트
-    [SerializeField]
+    [HideInInspector]
+    public Queue<GameObject> mWaitGuestObjectQueue;     // 대기 손님 오브젝트들을 관리할 리스트
+    [HideInInspector]
     public Queue<GameObject> mUsingGuestObjectList;     // 사용 손님 오브젝트들을 관리할 리스트
-
-    [SerializeField]
-    private GameObject mGuestObject;                    // 인스턴스하여 생성할 손님 오브젝트
-
+    
+    [Header("[의자 & 웨이포인트 관련]")]
     public GameObject[] mChairPos;                      // 손님이 앉아서 구름을 사용할 의자(구름)
     public GameObject[] mWayPoint;                      // 손님이 걸어다니며 산책하는 경로들
 
+    [HideInInspector]
     public Dictionary<int, bool> mCheckChairEmpty;      // 의자마다 의자가 비어있는지를 확인하는 딕셔너리 변수
+    [HideInInspector]
     public bool isNewGuest;                             // 응접실에서 넘어올때 새로운 손님이 오는가?
+    [HideInInspector]
     public int mMaxChairNum;                            // 현재 단계에 따른 의자의 개수
+
+    [Header("[프리팹]")]
+    [SerializeField]
+    private GameObject mGuestObject;                    // 인스턴스하여 생성할 손님 오브젝트 프리팹
 
     private Guest mGuestManager;                        // GuestManager를 가져온다.
     private static SOWManager instance = null;
 
-    public int mCloudGuestNum;                          
+    [HideInInspector]
+    public int mCloudGuestNum;
+    [HideInInspector]
     public StoragedCloudData mStorageCloudData;
+    [HideInInspector]
     public bool isCloudGet;
+
+    private int mTempGuestNum;                          // 임시 손님 번호값
 
     private void Awake()
     {
@@ -194,21 +201,21 @@ public class SOWManager : MonoBehaviour
         mUsingGuestObjectList.Enqueue(tempObject);
 
         // Guest의 부여받은 의자 인덱스를 갱신
-        mGuestManager.mGuestInfos[guestNum].mSitChairIndex = chairNum;
+        mGuestManager.mGuestInfo[guestNum].mSitChairIndex = chairNum;
     }
 
     // 하루가 끝날 때 Queue에 남아있는 뭉티들을 불만 뭉티로 만들어준다.
-    private void MakeGuestDisSat()
+    public void MakeGuestDisSat()
     {
         for (int i = 0; i < mWaitGuestList.Count; i++)
         {
-            mGuestManager.mGuestInfos[mWaitGuestList.Dequeue()].isDisSat = true;
+            mGuestManager.mGuestInfo[mWaitGuestList.Dequeue()].isDisSat = true;
         }
         for (int i = 0; i < mUsingGuestList.Count; i++)
         {
             int guestNum = mUsingGuestList[i];
-            mGuestManager.mGuestInfos[guestNum].isDisSat = true;
-            mGuestManager.mGuestInfos[guestNum].mSitChairIndex = -1;
+            mGuestManager.mGuestInfo[guestNum].isDisSat = true;
+            mGuestManager.mGuestInfo[guestNum].mSitChairIndex = -1;
         }
     }
 

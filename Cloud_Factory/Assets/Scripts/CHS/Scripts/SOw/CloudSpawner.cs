@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 public class CloudSpawner : MonoBehaviour
 {
-    SOWManager          SOWManager;
+    SOWManager          SOWManager;         
     InventoryManager    InventoryManager;
     StoragedCloudData   CloudData;
 
-    bool                isCloudGive;
+    bool                isCloudGive;        // 창고에서 구름을 제공하였는가
+        
+    public GameObject   CloudObject;        // 구름 오브젝트 프리팹
 
-    public GameObject   CloudObject;
+    public int          cloudSpeed;         // 구름이 이동하는 속도
 
-    public int          cloudSpeed;
-
-    private GameObject  tempCLoud;
+    private GameObject  tempCLoud;          // 구름 제공 전 정보값을 채우기 위한 Temp 오브젝트
 
 
     // 처음 받아와야 하는 값

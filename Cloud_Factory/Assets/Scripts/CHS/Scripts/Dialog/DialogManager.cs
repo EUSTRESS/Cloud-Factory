@@ -100,9 +100,9 @@ public class DialogManager : MonoBehaviour
         mGuestAnimator = gGuestSprite.GetComponent<Animator>();
 
         mGuestNum = mGuestManager.mGuestIndex;
-        mGuestSat = mGuestManager.mGuestInfos[mGuestNum].mSatatisfaction;
-        mGuestVisitCount = mGuestManager.mGuestInfos[mGuestNum].mVisitCount;
-        tGuestName.text = mGuestManager.mGuestInfos[mGuestNum].mName;
+        mGuestSat = mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
+        mGuestVisitCount = mGuestManager.mGuestInfo[mGuestNum].mVisitCount;
+        tGuestName.text = mGuestManager.mGuestInfo[mGuestNum].mName;
 
         mGuestImageList = new int[20];
         mTextList = new string[20];
@@ -129,30 +129,55 @@ public class DialogManager : MonoBehaviour
     // 해당 손님에 대한 대화값 정보를 불러오는 함수
     private void LoadDialogInfo()
     {
-        // 게임 내에 GameManager 한개를 생성하고, 그 곳에서 하루마다 5명의 손님을 지정하여 응접실에 플레이어가 없는 시간에 한하여 랜덤하게 한명씩 방문시킨다.
+        // 게임 내에 GameManager 한개를 생성하고, 그 곳에서 하루마다 6명의 손님을 지정하여 응접실에 플레이어가 없는 시간에 한하여 랜덤하게 한명씩 방문시킨다.
         // GameManager에서 지정한 손님의 번호를 받아오고, 손님의 번호에 맞는 손님의 정보를 가져온다.
 
         int i;
         int j = 0;
 
+        List<DialogDBEntity> Dialog;
+        Dialog = mDialogDB.SetDialogByGuestNum(mGuestNum);
+
+        // Dialog Null 반환시 오류 출력
+        if (Dialog == null)
+            Debug.Log("대화를 불러오는데에 오류가 발생하였습니다.");
+
         // 손님 번호 -> 방문 횟수 -> 만족도 순으로 엑셀 텍스트 파일을 체크한다.
-        for (i = 0; i < mDialogDB.DialogText.Count; ++i)
+        for (i = 0; i < Dialog.Count; ++i)
         {
-            if (mDialogDB.DialogText[i].GuestID == mGuestNum + 1)
+            if (Dialog[i].GuestID == mGuestNum + 1)
             {
-                if (mDialogDB.DialogText[i].VisitCount == mGuestVisitCount)
+                if (Dialog[i].VisitCount == mGuestVisitCount)
                 {
-                    if (mDialogDB.DialogText[i].Sat == mGuestSat)
+                    if (Dialog[i].Sat == mGuestSat)
                     {
-                        mTextList[j] = mDialogDB.DialogText[i].Text;
-                        mGuestImageList[j] = mDialogDB.DialogText[i].DialogImageNumber;
-                        mIsGuset[j] = mDialogDB.DialogText[i].isGuest;
+                        mTextList[j] = Dialog[i].Text;
+                        mGuestImageList[j] = Dialog[i].DialogImageNumber;
+                        mIsGuset[j] = Dialog[i].isGuest;
                         Debug.Log(j + " " + mIsGuset[j]);
                         j++;
                     }
                 }
             }
         }
+        //for (i = 0; i < mDialogDB.DialogText1.Count; ++i)
+        //{
+        //    if (mDialogDB.DialogText1[i].GuestID == mGuestNum + 1)
+        //    {
+        //        if (mDialogDB.DialogText1[i].VisitCount == mGuestVisitCount)
+        //        {
+        //            if (mDialogDB.DialogText1[i].Sat == mGuestSat)
+        //            {
+        //                mTextList[j] = mDialogDB.DialogText1[i].Text;
+        //                mGuestImageList[j] = mDialogDB.DialogText1[i].DialogImageNumber;
+        //                mIsGuset[j] = mDialogDB.DialogText1[i].isGuest;
+        //                Debug.Log(j + " " + mIsGuset[j]);
+        //                j++;
+        //            }
+        //        }
+        //    }
+        //}
+
         mTextList[j] = "End";
     }
 
@@ -255,7 +280,7 @@ public class DialogManager : MonoBehaviour
         Debug.Log("손님을 받지 않습니다.");
 
         // 방문하지 않는 횟수를 3으로 지정한다. (3일간 방문 X)
-        mGuestManager.mGuestInfos[mGuestNum].mNotVisitCount = 3;
+        mGuestManager.mGuestInfo[mGuestNum].mNotVisitCount = 3;
         mGuestManager.InitGuestTime();
 
         // 손님이 이동했으므로 응접실에 있는 것들을 초기화 시켜준다.
@@ -267,7 +292,7 @@ public class DialogManager : MonoBehaviour
     private void ClearGuest()
     {
         // 방문횟수 1회 증가
-        mGuestManager.mGuestInfos[mGuestNum].mVisitCount++;
+        mGuestManager.mGuestInfo[mGuestNum].mVisitCount++;
 
         // 손님이 응접실에 없다고 표시
         mGuestManager.isGuestInLivingRoom = false;
@@ -284,7 +309,7 @@ public class DialogManager : MonoBehaviour
     // 수락/거절 하는 패널을 방문한 손님의 정보로 초기화 한다.
     private void initTakeGuestPanel()
     {
-        GuestInfo guest = mGuestManager.mGuestInfos[mGuestNum];
+        GuestInfos guest = mGuestManager.mGuestInfo[mGuestNum];
 
         tPanelName.text = "이름: " + guest.mName;
         tPanelAge.text = "나이: " + guest.mAge;

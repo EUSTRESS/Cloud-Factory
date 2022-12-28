@@ -5,26 +5,35 @@ using UnityEngine.SceneManagement;
 
 public class Guest : MonoBehaviour
 {
-    public GuestInfo[] mGuestInfos;                         // Scriptable Objects들의 정보를 담고 있는 배열
+    // 상수 선언
+    private const int NUM_OF_GUEST = 20;                                // 손님의 총 인원 수
+    private const int NUM_OF_TODAY_GUEST_LIST = 6;                      // 하루에 방문하는 손님의 총 인원 수
 
-    public float mGuestTime;                                // 뭉티의 방문 주기의 현재 값
-    public float mMaxGuestTime;                             // 뭉티의 방문 주기
+    [Header ("[손님 정보값 리스트]")]
+    public GuestInfos[] mGuestInfo;                                     // 손님들의 정보값
+    [SerializeField]
+    private GuestInfo[] mGuestInitInfos;                                // Scriptable Objects들의 정보를 담고 있는 배열
 
-    public int mGuestIndex;                                 // 이번에 방문할 뭉티의 번호
+    [Header ("[손님 방문 관련 정보]")]
+    public bool isGuestInLivingRoom;                                    // 응접실에 손님이 방문해있는가?
+    public bool isTimeToTakeGuest;                                      // 뭉티 방문주기가 지났는지 확인
+
+    [Space(10f)]
+    public int mGuestIndex;                                             // 이번에 방문할 뭉티의 번호
+    public int[] mTodayGuestList = new int[NUM_OF_TODAY_GUEST_LIST];    // 오늘 방문 예정인 뭉티 목록
+    [SerializeField]
+    private int mGuestCount;                                            // 이번에 방문할 뭉티의 순서
+
+    [Space (10f)]
+    public float mGuestTime;                                            // 뭉티의 방문 주기의 현재 값
+    public float mMaxGuestTime;                                         // 뭉티의 방문 주기
+
 
     [SerializeField]
-    public int[] mTodayGuestList = new int[6];              // 오늘 방문 예정인 뭉티 목록
-    [SerializeField]
-    public bool isGuestInLivingRoom;                        // 응접실에 손님이 방문해있는가?
+    private int mGuestMax;                                              // 오늘 방문하는 뭉티의 최대 숫자
 
-    public bool isTimeToTakeGuest;                          // 뭉티 방문주기가 지났는지 확인
-    [SerializeField]
-    private int mGuestCount;                                // 이번에 방문할 뭉티의 순서
-    [SerializeField]
-    private int mGuestMax;                                  // 오늘 방문하는 뭉티의 최대 숫자
 
-    private static Guest instance = null;                   // 싱글톤 기법을 위함 instance 생성
-
+    private static Guest instance = null;                               // 싱글톤 기법을 위함 instance 생성
     private void Awake()
     {
         // 싱글톤 기법 사용
@@ -37,6 +46,12 @@ public class Guest : MonoBehaviour
             mGuestCount = -1;
             mGuestMax = 0;
             mMaxGuestTime = 5.0f;
+            
+            mGuestInfo = new GuestInfos[NUM_OF_GUEST];
+            for (int i = 0; i< NUM_OF_GUEST; i++)
+            {
+                InitGuestData(i);
+            }
 
             InitDay();
 
@@ -71,10 +86,6 @@ public class Guest : MonoBehaviour
                 Debug.Log("모든 뭉티가 방문하였습니다.");
             }
         }
-
-        // 구름을 수령 받고 이용을 마친 경우에만 해당 뭉티의 감정의 변화값을 부여함
-
-
         // 싱글톤 기법 확인을 위한 테스트코드
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -88,12 +99,8 @@ public class Guest : MonoBehaviour
         // 상하한선 침범 확인을 위한 함수 테스트 (성공)
         if (Input.GetKeyDown(KeyCode.D))
         {
-            mGuestInfos[0].isDisSat = CheckIsDisSat(0);
-            Debug.Log(mGuestInfos[0].isDisSat);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            InitGuestTime();
+            mGuestInfo[0].isDisSat = CheckIsDisSat(0);
+            Debug.Log(mGuestInfo[0].isDisSat);
         }
     }
 
@@ -110,7 +117,7 @@ public class Guest : MonoBehaviour
     // 뭉티의 정보값들을 받아오는 API
     public string GetName(int gusetNum)
     {
-        return mGuestInfos[gusetNum].mName;
+        return mGuestInfo[gusetNum].mName;
     }
 
     public bool CheckIsDisSat(int guestNum)
@@ -120,9 +127,9 @@ public class Guest : MonoBehaviour
         // 상하한 선을 침범한 경우를 확인
         if (temp != -1)
         {
-            mGuestInfos[guestNum].isDisSat = true;              // 불만 뭉티로 변환
-            mGuestInfos[guestNum].mSatatisfaction = 0;          // 만족도 0 으로 갱신
-            mGuestInfos[guestNum].mVisitCount = 0;              // 남은 방문횟수 0으로 갱신
+            mGuestInfo[guestNum].isDisSat = true;              // 불만 뭉티로 변환
+            mGuestInfo[guestNum].mSatatisfaction = 0;          // 만족도 0 으로 갱신
+            mGuestInfo[guestNum].mVisitCount = 0;              // 남은 방문횟수 0으로 갱신
 
             // TODO : 치유의 기록으로 불만 뭉티가 된 상태와 손님 번호, 어떤 감정 변화로 인한 것인지 전달해주기
 
@@ -135,21 +142,21 @@ public class Guest : MonoBehaviour
     // 뭉티의 정보값 변경에 필요한 API 
     public void SetEmotion(int guestNum, int emotionNum, int value)
     {
-        mGuestInfos[guestNum].mEmotion[emotionNum] += value;
+        mGuestInfo[guestNum].mEmotion[emotionNum] += value;
     }
 
     public int IsExcessLine(int guestNum) // 감정 상하한선을 침범했는지 확인하는 함수. 
     {
-        SLimitEmotion[] limitEmotion = mGuestInfos[guestNum].mLimitEmotions;
+        SLimitEmotion[] limitEmotion = mGuestInfo[guestNum].mLimitEmotions;
 
         for (int i = 0; i < 2; i++)
         {
-            if (mGuestInfos[guestNum].mEmotion[limitEmotion[i].upLimitEmotion] >= limitEmotion[i].upLimitEmotionValue) // 상하한선을 침범한 경우
+            if (mGuestInfo[guestNum].mEmotion[limitEmotion[i].upLimitEmotion] >= limitEmotion[i].upLimitEmotionValue) // 상하한선을 침범한 경우
             {
                 Debug.Log("상하한선을 침범하였습니다");
                 return limitEmotion[i].upLimitEmotion;
             }
-            else if (mGuestInfos[guestNum].mEmotion[limitEmotion[i].downLimitEmotion] <= limitEmotion[i].downLimitEmotionValue)
+            else if (mGuestInfo[guestNum].mEmotion[limitEmotion[i].downLimitEmotion] <= limitEmotion[i].downLimitEmotionValue)
             {
                 Debug.Log("상하한선을 침범하였습니다");
                 return limitEmotion[i].downLimitEmotion;
@@ -168,13 +175,13 @@ public class Guest : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             // 만족도 범위 내에 들어가는지 확인
-            if (mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mSatEmotions[i].emotionNum] <= mGuestInfos[guestNum].mSatEmotions[i].up &&
-             mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mSatEmotions[i].emotionNum] >= mGuestInfos[guestNum].mSatEmotions[i].down)
+            if (mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mSatEmotions[i].emotionNum] <= mGuestInfo[guestNum].mSatEmotions[i].up &&
+             mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mSatEmotions[i].emotionNum] >= mGuestInfo[guestNum].mSatEmotions[i].down)
             {
                 temp++;
             }
         }
-        mGuestInfos[guestNum].mSatatisfaction = temp;
+        mGuestInfo[guestNum].mSatatisfaction = temp;
         Debug.Log(temp);
     }
 
@@ -193,9 +200,9 @@ public class Guest : MonoBehaviour
         // 방문 횟수가 끝난 뭉티와 만족도가 5가 된 뭉티는 제외되어야 하므로 먼저 리스트에서 빼낸다.
         for (int i = 0; i < totalGuestNum; i++)
         {
-            if (mGuestInfos[i].mVisitCount != 10 && mGuestInfos[i].isCure == false)
+            if (mGuestInfo[i].mVisitCount != 10 && mGuestInfo[i].isCure == false)
             {
-                if (mGuestInfos[i].mVisitCount == 0)
+                if (mGuestInfo[i].mVisitCount == 0)
                 {
                     NotVisitedGuestNum.Add(i);
                 }
@@ -204,7 +211,7 @@ public class Guest : MonoBehaviour
                     VisitedGuestNum.Add(i);
                 }
             }
-            if (mGuestInfos[i].isDisSat == false && mGuestInfos[i].mNotVisitCount == 0 && mGuestInfos[i].mVisitCount != 10 && mGuestInfos[i].isCure == false)
+            if (mGuestInfo[i].isDisSat == false && mGuestInfo[i].mNotVisitCount == 0 && mGuestInfo[i].mVisitCount != 10 && mGuestInfo[i].isCure == false)
             {
                 possibleGuestNum++;
             }
@@ -238,13 +245,13 @@ public class Guest : MonoBehaviour
                     // 불만 뭉티이거나 방문 불가 상태 뭉티의 수를 구해야 한다.
                     for (int j = 0; j < GuestIndex; j++)
                     {
-                        if (mGuestInfos[guestList[j]].isDisSat == true || mGuestInfos[guestList[j]].mNotVisitCount != 0)
+                        if (mGuestInfo[guestList[j]].isDisSat == true || mGuestInfo[guestList[j]].mNotVisitCount != 0)
                         {
                             rejectCount++;
                         }
                     }
                     //Debug.Log("reject Count : " + rejectCount);
-                    if ((mGuestInfos[VisitedGuestNum[temp]].isDisSat == true || mGuestInfos[VisitedGuestNum[temp]].mNotVisitCount != 0)
+                    if ((mGuestInfo[VisitedGuestNum[temp]].isDisSat == true || mGuestInfo[VisitedGuestNum[temp]].mNotVisitCount != 0)
                         && rejectCount >= possibleToTake - 2)
                     {
                         if (possibleGuestNum >= 2)
@@ -283,12 +290,12 @@ public class Guest : MonoBehaviour
                     // 불만 뭉티이거나 방문 불가 상태 뭉티의 수를 구해야 한다.
                     for (int j = 0; j < GuestIndex; j++)
                     {
-                        if (mGuestInfos[guestList[j]].isDisSat == true || mGuestInfos[guestList[j]].mNotVisitCount != 0)
+                        if (mGuestInfo[guestList[j]].isDisSat == true || mGuestInfo[guestList[j]].mNotVisitCount != 0)
                         {
                             rejectCount++;
                         }
                     }
-                    if ((mGuestInfos[NotVisitedGuestNum[temp]].isDisSat == true || mGuestInfos[NotVisitedGuestNum[temp]].mNotVisitCount != 0)
+                    if ((mGuestInfo[NotVisitedGuestNum[temp]].isDisSat == true || mGuestInfo[NotVisitedGuestNum[temp]].mNotVisitCount != 0)
                         && rejectCount >= possibleToTake - 2)
                     {
                         if (possibleGuestNum >= 2)
@@ -333,12 +340,12 @@ public class Guest : MonoBehaviour
                     // 불만 뭉티이거나 방문 불가 상태 뭉티의 수를 구해야 한다.
                     for (int j = 0; j < GuestIndex; j++)
                     {
-                        if (mGuestInfos[guestList[j]].isDisSat == true || mGuestInfos[guestList[j]].mNotVisitCount != 0)
+                        if (mGuestInfo[guestList[j]].isDisSat == true || mGuestInfo[guestList[j]].mNotVisitCount != 0)
                         {
                             rejectCount++;
                         }
                     }
-                    if ((mGuestInfos[VisitedGuestNum[temp]].isDisSat == true || mGuestInfos[VisitedGuestNum[temp]].mNotVisitCount != 0)
+                    if ((mGuestInfo[VisitedGuestNum[temp]].isDisSat == true || mGuestInfo[VisitedGuestNum[temp]].mNotVisitCount != 0)
                         && rejectCount >= possibleToTake - 2)
                     {
                         if (possibleGuestNum >= 2)
@@ -383,12 +390,12 @@ public class Guest : MonoBehaviour
                     // 불만 뭉티이거나 방문 불가 상태 뭉티의 수를 구해야 한다.
                     for (int j = 0; j < GuestIndex; j++)
                     {
-                        if (mGuestInfos[guestList[j]].isDisSat == true || mGuestInfos[guestList[j]].mNotVisitCount != 0)
+                        if (mGuestInfo[guestList[j]].isDisSat == true || mGuestInfo[guestList[j]].mNotVisitCount != 0)
                         {
                             rejectCount++;
                         }
                     }
-                    if ((mGuestInfos[VisitedGuestNum[temp]].isDisSat == true || mGuestInfos[VisitedGuestNum[temp]].mNotVisitCount != 0)
+                    if ((mGuestInfo[VisitedGuestNum[temp]].isDisSat == true || mGuestInfo[VisitedGuestNum[temp]].mNotVisitCount != 0)
                         && rejectCount >= possibleToTake - 2)
                     {
                         if (possibleGuestNum >= 2)
@@ -427,12 +434,12 @@ public class Guest : MonoBehaviour
                     // 불만 뭉티이거나 방문 불가 상태 뭉티의 수를 구해야 한다.
                     for (int j = 0; j < GuestIndex; j++)
                     {
-                        if (mGuestInfos[guestList[j]].isDisSat == true || mGuestInfos[guestList[j]].mNotVisitCount != 0)
+                        if (mGuestInfo[guestList[j]].isDisSat == true || mGuestInfo[guestList[j]].mNotVisitCount != 0)
                         {
                             rejectCount++;
                         }
                     }
-                    if ((mGuestInfos[NotVisitedGuestNum[temp]].isDisSat == true || mGuestInfos[NotVisitedGuestNum[temp]].mNotVisitCount != 0)
+                    if ((mGuestInfo[NotVisitedGuestNum[temp]].isDisSat == true || mGuestInfo[NotVisitedGuestNum[temp]].mNotVisitCount != 0)
                         && rejectCount >= possibleToTake - 2)
                     {
                         if (possibleGuestNum >= 2)
@@ -460,7 +467,7 @@ public class Guest : MonoBehaviour
         }
         for (int i = 0; i < possibleToTake; i++)
         {
-            if (mGuestInfos[guestList[i]].isDisSat == false && mGuestInfos[guestList[i]].mNotVisitCount == 0)
+            if (mGuestInfo[guestList[i]].isDisSat == false && mGuestInfo[guestList[i]].mNotVisitCount == 0)
             {
                 tempList[a] = guestList[i];
                 a++;
@@ -474,10 +481,31 @@ public class Guest : MonoBehaviour
     }
 
     // 해당 뭉티를 초기화 시켜주는 함수
-    public void InitGuestData() // 추후에 개발
+    public void InitGuestData(int guestNum) // 추후에 개발
     {
-        // 스크립터블 오브젝트를 하나 더 만들어서 그 값을 받아오는 식으로 설계 예정
+        // 스크립터블 오브젝트로 만들어 놓은 초기 데이터값을 받아와서 초기화를 시킨다.
 
+        GuestInfos temp = new GuestInfos();
+        temp.mName = mGuestInitInfos[guestNum].mName;
+        temp.mSeed = mGuestInitInfos[guestNum].mSeed;
+        temp.mEmotion = mGuestInitInfos[guestNum].mEmotion;
+        temp.mAge = mGuestInitInfos[guestNum].mAge;
+        temp.mJob = mGuestInitInfos[guestNum].mJob;
+        temp.mSatatisfaction = mGuestInitInfos[guestNum].mSatatisfaction;
+        temp.mSatEmotions = mGuestInitInfos[guestNum].mSatEmotions;
+        temp.mLimitEmotions = mGuestInitInfos[guestNum].mLimitEmotions;
+        temp.isDisSat = mGuestInitInfos[guestNum].isDisSat;
+        temp.isCure = mGuestInitInfos[guestNum].isCure;
+        temp.mVisitCount = mGuestInitInfos[guestNum].mVisitCount;
+        temp.mNotVisitCount = mGuestInitInfos[guestNum].mNotVisitCount;
+        temp.isChosen = mGuestInitInfos[guestNum].isChosen;
+        temp.mUsedCloud = mGuestInitInfos[guestNum].mUsedCloud;
+        temp.mSitChairIndex = mGuestInitInfos[guestNum].mSitChairIndex;
+        temp.isUsing = mGuestInitInfos[guestNum].isUsing;
+
+        mGuestInfo[guestNum] = temp;
+
+        Debug.Log(mGuestInitInfos[guestNum].mName);
     }
 
     // 방문주기를 초기화 해주는 함수
@@ -501,7 +529,7 @@ public class Guest : MonoBehaviour
 
         // 새로운 리스트를 뽑는 함수를 호출 (테스트를 위해서 잠시 주석처리)
         int[] list = { 0, 1, 2, 3, 1, 2 };
-        mGuestMax = 6;
+        mGuestMax = NUM_OF_TODAY_GUEST_LIST;
         mTodayGuestList = list;
 
         //mTodayGuestList = NewChoiceGuest();
@@ -519,34 +547,34 @@ public class Guest : MonoBehaviour
 
         // 상한선 값보다 높거나 하한선보다 낮다면 불만 뭉티이므로 표현할 일이 없기 때문에 고려하지 않는다.
         // 첫번째 상하한선 값 중에서 더 상하한선에 근접한 값을 초기 결과값으로 놓는다. 
-        if (mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mLimitEmotions[0].downLimitEmotion]
-            - mGuestInfos[guestNum].mLimitEmotions[0].downLimitEmotionValue >
-            mGuestInfos[guestNum].mLimitEmotions[0].upLimitEmotionValue
-            - mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mLimitEmotions[0].upLimitEmotion])
+        if (mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mLimitEmotions[0].downLimitEmotion]
+            - mGuestInfo[guestNum].mLimitEmotions[0].downLimitEmotionValue >
+            mGuestInfo[guestNum].mLimitEmotions[0].upLimitEmotionValue
+            - mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mLimitEmotions[0].upLimitEmotion])
         {
-            result = mGuestInfos[guestNum].mLimitEmotions[0].upLimitEmotion;
-            temp = mGuestInfos[guestNum].mLimitEmotions[0].upLimitEmotionValue
-            - mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mLimitEmotions[0].upLimitEmotion];
+            result = mGuestInfo[guestNum].mLimitEmotions[0].upLimitEmotion;
+            temp = mGuestInfo[guestNum].mLimitEmotions[0].upLimitEmotionValue
+            - mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mLimitEmotions[0].upLimitEmotion];
         }
         else
         {
-            result = mGuestInfos[guestNum].mLimitEmotions[0].downLimitEmotion;
-            temp = mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mLimitEmotions[0].downLimitEmotion]
-            - mGuestInfos[guestNum].mLimitEmotions[0].downLimitEmotionValue;
+            result = mGuestInfo[guestNum].mLimitEmotions[0].downLimitEmotion;
+            temp = mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mLimitEmotions[0].downLimitEmotion]
+            - mGuestInfo[guestNum].mLimitEmotions[0].downLimitEmotionValue;
         }
-        if (temp > mGuestInfos[guestNum].mLimitEmotions[1].upLimitEmotionValue
-             - mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mLimitEmotions[1].upLimitEmotion])
+        if (temp > mGuestInfo[guestNum].mLimitEmotions[1].upLimitEmotionValue
+             - mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mLimitEmotions[1].upLimitEmotion])
         {
-            result = mGuestInfos[guestNum].mLimitEmotions[1].upLimitEmotion;
-            temp = mGuestInfos[guestNum].mLimitEmotions[1].upLimitEmotionValue
-             - mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mLimitEmotions[1].upLimitEmotion];
+            result = mGuestInfo[guestNum].mLimitEmotions[1].upLimitEmotion;
+            temp = mGuestInfo[guestNum].mLimitEmotions[1].upLimitEmotionValue
+             - mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mLimitEmotions[1].upLimitEmotion];
         }
-        if (temp > mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mLimitEmotions[1].downLimitEmotion]
-            - mGuestInfos[guestNum].mLimitEmotions[1].downLimitEmotionValue)
+        if (temp > mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mLimitEmotions[1].downLimitEmotion]
+            - mGuestInfo[guestNum].mLimitEmotions[1].downLimitEmotionValue)
         {
-            result = mGuestInfos[guestNum].mLimitEmotions[1].downLimitEmotion;
-            temp = mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mLimitEmotions[1].downLimitEmotion]
-            - mGuestInfos[guestNum].mLimitEmotions[1].downLimitEmotionValue;
+            result = mGuestInfo[guestNum].mLimitEmotions[1].downLimitEmotion;
+            temp = mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mLimitEmotions[1].downLimitEmotion]
+            - mGuestInfo[guestNum].mLimitEmotions[1].downLimitEmotionValue;
         }
 
         return result;
@@ -561,25 +589,25 @@ public class Guest : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             // 만족도 범위보다 현재 값이 높다면
-            if (mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mSatEmotions[i].emotionNum]
-                > mGuestInfos[guestNum].mSatEmotions[i].up)
+            if (mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mSatEmotions[i].emotionNum]
+                > mGuestInfo[guestNum].mSatEmotions[i].up)
             {
-                temp = mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mSatEmotions[i].emotionNum]
-                    - mGuestInfos[guestNum].mSatEmotions[i].up;
+                temp = mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mSatEmotions[i].emotionNum]
+                    - mGuestInfo[guestNum].mSatEmotions[i].up;
             }
             // 만족도 범위보다 현재 값이 낮다면
-            else if (mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mSatEmotions[i].emotionNum]
-                < mGuestInfos[guestNum].mSatEmotions[i].down)
+            else if (mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mSatEmotions[i].emotionNum]
+                < mGuestInfo[guestNum].mSatEmotions[i].down)
             {
-                temp = mGuestInfos[guestNum].mSatEmotions[i].down
-                    - mGuestInfos[guestNum].mEmotion[mGuestInfos[guestNum].mSatEmotions[i].emotionNum];
+                temp = mGuestInfo[guestNum].mSatEmotions[i].down
+                    - mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mSatEmotions[i].emotionNum];
             }
             // 이외의 경우는 만족범위안에 있는 것이므로 무시한다.
             // temp값이 기존 저장된 값보다 만족도 범위와 멀다면 갱신한다.
             if (maxValue < temp)
             {
                 maxValue = temp;
-                result = mGuestInfos[guestNum].mSatEmotions[i].emotionNum;
+                result = mGuestInfo[guestNum].mSatEmotions[i].emotionNum;
             }
         }
         return result;

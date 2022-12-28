@@ -44,8 +44,7 @@ public class CloudObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Abs(this.transform.position.x - targetChairPos.position.x) < 0.1f
-            && Mathf.Abs(this.transform.position.y - targetChairPos.position.y) < 0.1f)
+        if (Mathf.Abs(this.transform.position.x - targetChairPos.position.x) < 0.1f)
         {
             // 감정 값 변환함수 호출
             for (int i = 0; i < mFinalEmotions.Count; ++i)
@@ -61,7 +60,7 @@ public class CloudObject : MonoBehaviour
             Destroy(this.gameObject);
 
             // 구름을 받은 손님을 사용상태로 변경
-            GuestManager.mGuestInfos[mGuestNum].isUsing = true;
+            GuestManager.mGuestInfo[mGuestNum].isUsing = true;
         }
         else
         {
@@ -78,7 +77,7 @@ public class CloudObject : MonoBehaviour
 
     public void SetTargetChair(int guestNum)
     {
-        targetChairPos = SOWManager.mChairPos[GuestManager.mGuestInfos[guestNum].mSitChairIndex].transform;
+        targetChairPos = SOWManager.mChairPos[GuestManager.mGuestInfo[guestNum].mSitChairIndex].transform;
     }
 
     public void SetValue(List<EmotionInfo> CloudData)

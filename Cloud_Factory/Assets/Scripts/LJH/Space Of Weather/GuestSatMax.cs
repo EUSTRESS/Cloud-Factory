@@ -24,7 +24,7 @@ public class GuestSatMax : MonoBehaviour
         {
             /// 만족도 5인 뭉티를 찾는 작업
             if (!isMaxSat[i] &&
-                5 == mGuestManager.mGuestInfos[mGuestManager.mTodayGuestList[i]].mSatatisfaction)
+                5 == mGuestManager.mGuestInfo[mGuestManager.mTodayGuestList[i]].mSatatisfaction)
             {
                 // 만족도 5 팝업 Bool 켜놓고
                 isMaxSat[i] = true;

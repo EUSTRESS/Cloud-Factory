@@ -7,18 +7,25 @@ using Pathfinding;
 public class GuestObject : MonoBehaviour
 {
     // 오브젝트 내에서 필요한 변수
-    public float mLimitTime;            // 손님이 대기하는 시간의 한계값
-    public int mGuestNum;               // 해당 오브젝트의 손님번호
-    public bool isSit;                  // 자리에 앉아있는가?
-    public bool isUsing;                // 구름 치료를 받는중인가?
-    private Transform mTransform;       // 위치값이 변하는지 확인하기 위한 변수
-    private Guest mGuestManager;
-    public GameObject mTargetChair;     // 목표로 하는 의자의 위치
-    public int mTargetChiarIndex;
-    public bool isMove;                 // 이동중인가?   
-    public bool isAlreadyUse;           // 사용을 완료 했는가?
-    public Animator mGuestAnim;         // 손님의 애니메이션 변수
-    public SOWManager mSOWManager;
+    [Header("[손님 정보]")]
+    public float        mLimitTime;         // 손님이 대기한 시간
+    public float        mMaxLimitTime;      // 손님이 대기하는 시간의 최대값
+    public int          mGuestNum;          // 해당 오브젝트의 손님번호
+    private Transform   mTransform;         // 위치값이 변하는지 확인하기 위한 변수
+    public GameObject   mTargetChair;       // 목표로 하는 의자의 위치
+    public int          mTargetChiarIndex;
+
+    [Header("[FSM 관련]")]
+    public bool isSit;                      // 자리에 앉아있는가?
+    public bool isUsing;                    // 구름 치료를 받는중인가?
+    public bool isMove;                     // 이동중인가?   
+    public bool isAlreadyUse;               // 사용을 완료 했는가?
+
+
+    [Header("[기타]")]
+    public Animator     mGuestAnim;         // 손님의 애니메이션 변수
+    private Guest       mGuestManager;
+    public SOWManager   mSOWManager;
 
     const int MAX_GUEST_NUM = 20;
 
@@ -38,6 +45,7 @@ public class GuestObject : MonoBehaviour
 
         // 대기시간 초기화
         mLimitTime = 0.0f;
+        mMaxLimitTime = 50.0f;
         isSit = false;
         isUsing = false;
         isMove = false;
@@ -48,7 +56,6 @@ public class GuestObject : MonoBehaviour
         mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
         mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         mGuestAnim = GetComponent<Animator>();
-        // 손님에 따라서 이미지(애니메이션)을 변경시킨다.
 
     }
 
@@ -85,7 +92,7 @@ public class GuestObject : MonoBehaviour
 
         bool GoHome = false;
         // 대기시간이 지나거나 불만뭉티가 된 경우에
-        if ((mLimitTime > 50.0f || mGuestManager.mGuestInfos[mGuestNum].isDisSat == true) && GoHome == false)
+        if ((mLimitTime > mMaxLimitTime || mGuestManager.mGuestInfo[mGuestNum].isDisSat == true) && GoHome == false)
         {
             // 사용자 리스트에서 없애고, 해당 의자를 다시 true로 바꿔주어야 한다.
             mSOWManager.mCheckChairEmpty[mTargetChiarIndex] = true;
@@ -103,7 +110,7 @@ public class GuestObject : MonoBehaviour
             }
 
             // 불만 손님으로 변환 후, 귀가
-            mGuestManager.mGuestInfos[mGuestNum].isDisSat = true;
+            mGuestManager.mGuestInfo[mGuestNum].isDisSat = true;
             MoveToEntrance();
         }
 
@@ -131,11 +138,11 @@ public class GuestObject : MonoBehaviour
         // 상태에 따라서 애니메이션 제공
         if (isSit)
         {
-            if(mGuestManager.mGuestInfos[mGuestNum].isUsing == true)
+            if(mGuestManager.mGuestInfo[mGuestNum].isUsing == true)
             {
                 isUsing = true;
                 Debug.Log("isUsing : true");
-                mGuestManager.mGuestInfos[mGuestNum].isUsing = false;
+                mGuestManager.mGuestInfo[mGuestNum].isUsing = false;
             }
             // 치료 중인 경우 치료효과에 따라서 주기적으로 애니메이션을 제공
             if (isUsing)
@@ -209,7 +216,7 @@ public class GuestObject : MonoBehaviour
         mGuestAnim.SetBool("isSit", false);
 
         // 부여받은 의자 인덱스값 초기화
-        mGuestManager.mGuestInfos[mGuestNum].mSitChairIndex = -1;
+        mGuestManager.mGuestInfo[mGuestNum].mSitChairIndex = -1;
 
         Invoke("ChangeTarget", 3.0f);
     }

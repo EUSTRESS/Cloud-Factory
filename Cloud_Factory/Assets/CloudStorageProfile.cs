@@ -130,7 +130,7 @@ public class CloudStorageProfile : MonoBehaviour
         Text tSentence = Profile.transform.GetChild(11).GetComponent<Text>();
 
         // 뭉티 정보를 가져온다.
-        GuestInfo info = GuestManager.GetComponent<Guest>().mGuestInfos[frontGuestIndex];
+        GuestInfos info = GuestManager.GetComponent<Guest>().mGuestInfo[frontGuestIndex];
 
         // 가져온 정보값을 이용하여 채운다.
         iProfile.sprite = UIManager.sBasicProfile[frontGuestIndex];

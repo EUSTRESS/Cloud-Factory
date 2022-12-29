@@ -210,7 +210,7 @@ public class CloudMakeSystem : MonoBehaviour
 
         while (isOverlapState(emotionList))
         {
-
+            bool possibility = false;
             for (int i = 0; i < emotionList.Count; i++)
             {
                 EmotionInfo content = emotionList[i];
@@ -239,7 +239,7 @@ public class CloudMakeSystem : MonoBehaviour
                     //앞에 채택 경우: outOfBound
                     //뒤에 채택 경우: outOfBound, 앞에서 none 결과 값이 나왔기 떄문.
                     if (subTargetIdx >= 0 ? true : false)//우선순위(1): 대상의 앞의 감정과 조합한다.
-                        commend = emoTableDATA.getCombineResult(emotionList[targetIdx].Key, emotionList[subTargetIdx].Key) != Emotion.NONE ? true : false;//index가 OutOfBound가 아니고 조합의 결과가 있다면! command = false
+                        commend = emoTableDATA.getCombineResult(emotionList[targetIdx].Key, emotionList[subTargetIdx].Key) != Emotion.NONE ? false : true;//index가 OutOfBound가 아니고 조합의 결과가 있다면! command = false
                     else
                     {
                         commend = false;
@@ -262,11 +262,16 @@ public class CloudMakeSystem : MonoBehaviour
                         emotionList[targetIdx] = finalEmo;//(2)targetEmotion을 조합된 새 감정으로 바꾼다.
                         Debug.Log("[조합결과]" + finalEmo.Key);
                         //(2)조합에 사용 된 감정은 리스트에서 제외한다.(for문 안이기 떄문에 index 관리 해줘야 한다.)
+                        if (finalEmo.Key == Emotion.NONE) continue;
+
                         emotionList.RemoveAt(subTargetIdx);
                         // 삭제할 값의 index가 현재 타겟 중인  index보다 작은 경우(상관 있음. 현재 타겟중인 값이 앞으로 밀리기 때문에, index를 -1 해주어야 한다.
                         if (subTargetIdx < i) i--;
                         // 삭제할 값의 index가 현재 타겟 중인 index보다 클 경우.(상관 없음: 리스트의 길이만 달라진다.)
+
+                        possibility = true;
                     }
+  
                 }
                 else
                 {
@@ -276,6 +281,10 @@ public class CloudMakeSystem : MonoBehaviour
                 Debug_PrintState("[현재감정리스트]", emotionList);
                 Debug_PrintState("[현재중복리스트]", tmpList);
             }
+
+            if (!possibility)
+                break;
+
         }
 
         //최종 감정 리스트 저장.

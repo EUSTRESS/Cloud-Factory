@@ -55,6 +55,14 @@ public class CloudObject : MonoBehaviour
 
             // TODO : 구름을 사용한 손님의 정보값 갱신 (LIST : 감정 값, 상하한선 계산, 만족도 갱신)
 
+            // 감정 상하한선 검사
+            if (GuestManager.IsExcessLine(mGuestNum) != -1)
+                GuestManager.mGuestInfo[mGuestNum].isDisSat = true;
+            else
+                Debug.Log("상하한선을 침범하지 않았습니다.");
+
+            // 만족도 값 갱신
+            GuestManager.RenewakSat(mGuestNum);
 
             // 감정 값 변환함수 호출 후, 제거
             Destroy(this.gameObject);

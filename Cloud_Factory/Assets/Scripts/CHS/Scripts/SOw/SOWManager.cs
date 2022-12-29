@@ -118,21 +118,18 @@ public class SOWManager : MonoBehaviour
             }
         }
 
-        // 날씨의 공간 상의 손님을 선택하기
+        // 날씨의 공간 상의 손님을 선택하기 <- 상호작용
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(vec, Vector2.zero);
             if (hit.collider != null)
             {
-                GameObject hitObject = hit.transform.gameObject;
+                GameObject hitObject = hit.transform.root.gameObject;
                 if (hit.transform.gameObject.tag == "Guest")
                 {
                     Debug.Log(hitObject.GetComponent<GuestObject>().mGuestNum + "번 손님을 클릭하였습니다.");
-
                     hit.transform.gameObject.GetComponent<GuestObject>().SpeakEmotion();
-
-                    Debug.Log(hit.transform.gameObject.GetComponent<GuestObject>().mTargetChiarIndex);
                 }
                 else
                 {
@@ -165,10 +162,6 @@ public class SOWManager : MonoBehaviour
             // 모든 의자는 비어있는 상태로 초기화
             mCheckChairEmpty.Add(i, true);
         }
-
-        // TODO : 계절 별 이동해야 할 오브젝트들 옮기거나 활성화 (LIST : 의자, 구름 스포너, 산책 WayPoint, 뭉티 이동 가능 경로)
-
-
         // TODO : 방문할 뭉티, 끝나는 시점에 날씨의 공간에 있는 뭉티들 불만 뭉티로 전환
 
 

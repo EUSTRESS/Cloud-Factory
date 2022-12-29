@@ -75,7 +75,7 @@ public class Guest : MonoBehaviour
         else if (mGuestTime >= mMaxGuestTime && isTimeToTakeGuest == false)
         {
             // 모든 인덱스가 다 되지 않는 한 뭉티 방문주기가 다된경우 새로운 뭉티를 들여보낸다.
-            if (mGuestCount < mGuestMax - 1) // 0 1 2 3 4 5 
+            if (mGuestCount < mGuestMax - 1) 
             {
                 isTimeToTakeGuest = true;
                 TakeGuest();
@@ -185,6 +185,7 @@ public class Guest : MonoBehaviour
         Debug.Log(temp);
     }
 
+    // TODO : 함수 개편
     // 뭉티 리스트를 새로 생성하는 함수
     public int[] NewChoiceGuest()
     {
@@ -485,29 +486,30 @@ public class Guest : MonoBehaviour
     {
         // 스크립터블 오브젝트로 만들어 놓은 초기 데이터값을 받아와서 초기화를 시킨다.
 
-        GuestInfos temp = new GuestInfos();
-        temp.mName = mGuestInitInfos[guestNum].mName;
-        temp.mSeed = mGuestInitInfos[guestNum].mSeed;
-        temp.mEmotion = mGuestInitInfos[guestNum].mEmotion;
-        temp.mAge = mGuestInitInfos[guestNum].mAge;
-        temp.mJob = mGuestInitInfos[guestNum].mJob;
-        temp.mSatatisfaction = mGuestInitInfos[guestNum].mSatatisfaction;
-        temp.mSatEmotions = mGuestInitInfos[guestNum].mSatEmotions;
-        temp.mLimitEmotions = mGuestInitInfos[guestNum].mLimitEmotions;
-        temp.isDisSat = mGuestInitInfos[guestNum].isDisSat;
-        temp.isCure = mGuestInitInfos[guestNum].isCure;
-        temp.mVisitCount = mGuestInitInfos[guestNum].mVisitCount;
-        temp.mNotVisitCount = mGuestInitInfos[guestNum].mNotVisitCount;
-        temp.isChosen = mGuestInitInfos[guestNum].isChosen;
-        temp.mUsedCloud = mGuestInitInfos[guestNum].mUsedCloud;
-        temp.mSitChairIndex = mGuestInitInfos[guestNum].mSitChairIndex;
-        temp.isUsing = mGuestInitInfos[guestNum].isUsing;
+        GuestInfos temp         = new GuestInfos();
+        temp.mName              = mGuestInitInfos[guestNum].mName;
+        temp.mSeed              = mGuestInitInfos[guestNum].mSeed;
+        temp.mEmotion           = mGuestInitInfos[guestNum].mEmotion;
+        temp.mAge               = mGuestInitInfos[guestNum].mAge;
+        temp.mJob               = mGuestInitInfos[guestNum].mJob;
+        temp.mSatatisfaction    = mGuestInitInfos[guestNum].mSatatisfaction;
+        temp.mSatEmotions       = mGuestInitInfos[guestNum].mSatEmotions;
+        temp.mLimitEmotions     = mGuestInitInfos[guestNum].mLimitEmotions;
+        temp.isDisSat           = mGuestInitInfos[guestNum].isDisSat;
+        temp.isCure             = mGuestInitInfos[guestNum].isCure;
+        temp.mVisitCount        = mGuestInitInfos[guestNum].mVisitCount;
+        temp.mNotVisitCount     = mGuestInitInfos[guestNum].mNotVisitCount;
+        temp.isChosen           = mGuestInitInfos[guestNum].isChosen;
+        temp.mUsedCloud         = mGuestInitInfos[guestNum].mUsedCloud;
+        temp.mSitChairIndex     = mGuestInitInfos[guestNum].mSitChairIndex;
+        temp.isUsing            = mGuestInitInfos[guestNum].isUsing;
 
-        mGuestInfo[guestNum] = temp;
+        mGuestInfo[guestNum]    = temp;
 
         Debug.Log(mGuestInitInfos[guestNum].mName);
     }
 
+    // TODO : 함수 개편
     // 방문주기를 초기화 해주는 함수
     public void InitGuestTime()
     {
@@ -528,7 +530,7 @@ public class Guest : MonoBehaviour
         mGuestMax = 0;
 
         // 새로운 리스트를 뽑는 함수를 호출 (테스트를 위해서 잠시 주석처리)
-        int[] list = { 0, 1, 2, 3, 1, 2 };
+        int[] list = { 0, 1, 0, 1, 0, 1 };
         mGuestMax = NUM_OF_TODAY_GUEST_LIST;
         mTodayGuestList = list;
 
@@ -540,6 +542,7 @@ public class Guest : MonoBehaviour
         // 채집물들이 다시 갱신된다.
     }
 
+    // TODO : 함수 개편
     public int SpeakEmotionEffect(int guestNum)
     {
         int result = -1;            // 상하한선에 가장 근접한 감정 번호

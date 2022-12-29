@@ -19,7 +19,7 @@ public class GuestObject : MonoBehaviour
     public bool isSit;                      // 자리에 앉아있는가?
     public bool isUsing;                    // 구름 치료를 받는중인가?
     public bool isMove;                     // 이동중인가?   
-    public bool isAlreadyUse;               // 사용을 완료 했는가?
+    public bool isGotoEntrance;             // 출구로 나가는 중인가?
 
 
     [Header("[기타]")]
@@ -28,6 +28,11 @@ public class GuestObject : MonoBehaviour
     public SOWManager   mSOWManager;
 
     const int MAX_GUEST_NUM = 20;
+
+
+    // 손님과 상호작용을 위해 필요한 콜라이더 
+    private Collider2D sitCollider;
+    private Collider2D walkCollider;
 
     // 각 손님의 번호에 따라 애니메이터를 만들어서 저장한다.
     public RuntimeAnimatorController[] animators = new RuntimeAnimatorController[MAX_GUEST_NUM];
@@ -49,7 +54,7 @@ public class GuestObject : MonoBehaviour
         isSit = false;
         isUsing = false;
         isMove = false;
-        isAlreadyUse = false;
+        isGotoEntrance = false;
         mTransform = this.transform;
         mTargetChiarIndex = -1;
         mTargetChair = null;
@@ -57,6 +62,8 @@ public class GuestObject : MonoBehaviour
         mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         mGuestAnim = GetComponent<Animator>();
 
+        sitCollider = this.transform.GetChild(0).transform.GetChild(0).gameObject.GetComponent<CircleCollider2D>();
+        walkCollider = this.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<CircleCollider2D>();
     }
 
     // 걷는 애니메이션 출력
@@ -65,7 +72,7 @@ public class GuestObject : MonoBehaviour
     private void Update()
     {
         // 할당받는 의자 설정
-        if (mTargetChiarIndex != -1 && isAlreadyUse == false)
+        if (mTargetChiarIndex != -1 && isGotoEntrance == false)
         {
             mTargetChair = mSOWManager.mChairPos[mTargetChiarIndex];
             this.GetComponent<AIDestinationSetter>().enabled = true;
@@ -88,21 +95,17 @@ public class GuestObject : MonoBehaviour
         {
             mLimitTime += Time.deltaTime;
         }
-        
 
-        bool GoHome = false;
         // 대기시간이 지나거나 불만뭉티가 된 경우에
-        if ((mLimitTime > mMaxLimitTime || mGuestManager.mGuestInfo[mGuestNum].isDisSat == true) && GoHome == false)
+        if ((mLimitTime > mMaxLimitTime || mGuestManager.mGuestInfo[mGuestNum].isDisSat == true))
         {
             // 사용자 리스트에서 없애고, 해당 의자를 다시 true로 바꿔주어야 한다.
             mSOWManager.mCheckChairEmpty[mTargetChiarIndex] = true;
             mTargetChair = null;
             isSit = false;
-            GoHome = true;
 
             // 구름 사용가능 리스트에서 삭제
             int count = mSOWManager.mUsingGuestList.Count;
-
             for (int i = 0; i < count; i++)
             {
                 if (mSOWManager.mUsingGuestList[i] == mGuestNum)
@@ -115,7 +118,7 @@ public class GuestObject : MonoBehaviour
         }
 
         // 입구에 도달한 경우
-        if (isAlreadyUse == true && transform.position.x - mSOWManager.mWayPoint[0].transform.position.x <= 0.2f)
+        if (isGotoEntrance == true && transform.position.x - mSOWManager.mWayPoint[0].transform.position.x <= 0.2f)
         {
             Destroy(this.gameObject);
         }
@@ -123,12 +126,17 @@ public class GuestObject : MonoBehaviour
         // 의자에 도달한 경우
         if (mTargetChiarIndex != -1)
         {
-            if (isAlreadyUse == false && Mathf.Abs(transform.position.x - mTargetChair.transform.position.x) 
+            if (isGotoEntrance == false && Mathf.Abs(transform.position.x - mTargetChair.transform.position.x) 
                 <= 0.1f && Mathf.Abs(transform.position.y - mTargetChair.transform.position.y) <= 0.1f)
             {
                 // 의자 위치로 이동
                 transform.localScale = new Vector3(1f, 1f, 1f);
                 mGuestAnim.SetBool("isSit", true);
+
+                // TODO : 콜라이더 변경 Walking ->Sitting
+                sitCollider.enabled = true;
+                walkCollider.enabled = false;
+
                 this.transform.position = mTargetChair.transform.position;
                 isSit = true;
 
@@ -168,9 +176,10 @@ public class GuestObject : MonoBehaviour
             {
                 mGuestAnim.SetBool("isStand", false);
             }
-
         }
 
+
+        
         // 걷는 방향에 따라 애니메이션의 방향을 다르게 지정한다.
         if (GetComponent<AIPath>().desiredVelocity.x >= 0.01f)
         {
@@ -198,8 +207,17 @@ public class GuestObject : MonoBehaviour
     public void SpeakEmotion()
     {
         Debug.Log("감정 모션을 출력합니다");
+
+        // 서있는 경우에만 클릭 시 상호작용을 통해 감정을 표현한다.
+        if (mGuestAnim.GetBool("isSit")) return;
+
         // 감정 상한, 하한 범위에 가장 가까운 감정에 대한 힌트(이펙트)
-        // 만족도 반영 범위에서 가장 먼 감정을 알려주는 대사
+
+
+        // 만족도 반영 범위에서 가장 먼 감정을 알려주는 말풍선  -> 손님의 위치값에 따라 좌/우 측에 생성
+    
+
+    
     }
 
     // 애니메이션 클립들을 손님에 맞게 초기화한다.
@@ -212,8 +230,12 @@ public class GuestObject : MonoBehaviour
     // 입구로 퇴장하는 함수이다.
     private void MoveToEntrance()
     {
-        isAlreadyUse = true;
+        isGotoEntrance = true;
         mGuestAnim.SetBool("isSit", false);
+
+        // TODO : 콜라이더 변경 Sitting -> Walking
+        sitCollider.enabled = false;
+        walkCollider.enabled = true;
 
         // 부여받은 의자 인덱스값 초기화
         mGuestManager.mGuestInfo[mGuestNum].mSitChairIndex = -1;

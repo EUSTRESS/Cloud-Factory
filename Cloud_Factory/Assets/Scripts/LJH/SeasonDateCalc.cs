@@ -67,6 +67,14 @@ public class SeasonDateCalc : MonoBehaviour
             // 년 계산
             mYear += CalcYear(ref mSeason);
         }
+
+        // 계절별 테스트를 위한 핫키
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            mSeason++;
+        }
+
+
     }
 
     // ref를 선언해서 변수의 주소 값 접근
@@ -112,7 +120,10 @@ public class SeasonDateCalc : MonoBehaviour
         if (week > 4)
         {
             // 달 변하는 부분 -> 달 단위 변환내용은 여기에 작성
-            // 계절마다 변해야 하는 사항 :  
+            // 계절마다 변해야 하는 사항 : (LIST : 의자 위치, 구름 스포너, 산책 WayPoint, 뭉티 이동 가능 경로)
+            // TODO : 계절 별 이동해야 할 오브젝트들 옮기거나 활성화
+
+
 
             temp += 1;
             week = 1;

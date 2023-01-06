@@ -29,28 +29,52 @@ public class CloudStorageData
     }
 }
 
+
+[System.Serializable]
+public class VirtualGameObject
+{
+    //Transform
+    public Vector3 mPosition;
+    public Quaternion mRotation;
+    public Vector3 mScale;
+
+    public Sprite mImage;
+
+    public VirtualGameObject(Vector3 position, Quaternion rotation, Vector3 scale, Sprite image)
+    {
+        mPosition = position;
+        mRotation = rotation;
+        mScale = scale;
+        mImage = image;
+    }
+}
+
 [System.Serializable]
 public class StoragedCloudData
 {
     public List<EmotionInfo> mFinalEmotions; //구름 꾸미기 이후의 최종 감정.
+    public List<GameObject> mPartsList; //구름 꾸미기 이후의 최종 감정.
     public int mdate;
-    private Sprite mImage;
-    public Texture2D mTexImage;
+    public GameObject mBase;
+    public VirtualGameObject mVBase;
+    public List<VirtualGameObject> mVPartsList; //구름 꾸미기 이후의 최종 감정.
 
-    public StoragedCloudData(List<EmotionInfo> _FinalEmotions, Texture2D _image)
+    public StoragedCloudData(List<EmotionInfo> _FinalEmotions, GameObject _base, List<GameObject> _mPartsList)
     {
         mdate = 10; //일단 기본으로 세팅
         mFinalEmotions = _FinalEmotions;
-        mTexImage = _image;
+        mBase = _base;
+        mPartsList = _mPartsList;
+
+
+        //VirtualSetting
+        mVPartsList = new List<VirtualGameObject>();
+        mVBase = new VirtualGameObject(mBase.transform.position, mBase.transform.rotation, mBase.transform.localScale, mBase.GetComponent<Image>().sprite);
+        for(int i = 0; i < mPartsList.Count; i++)
+        {
+            mVPartsList.Add(new VirtualGameObject(_mPartsList[i].transform.GetComponent<RectTransform>().anchoredPosition, _mPartsList[i].transform.rotation, _mPartsList[i].transform.localScale, _mPartsList[i].GetComponent<Image>().sprite));
+        }
     }
-
-    //public Sprite getImage(Sprite emptySprite)
-    //{
-    //    Rect rect = new Rect(0, 0, mTexImage.width, mTexImage.height);
-    //    mImage.GetComponent<SpriteRenderer>().sprite = Sprite.Create(mTexImage, rect, new Vector2(0.5f, 0.5f));
-    //    return mImage;
-    //}
-
 }
 [System.Serializable]
 public class CloudData
@@ -314,6 +338,15 @@ public class InventoryManager : MonoBehaviour
     //데코 되어진 구름 오브젝트 저장
     public void addStock(GameObject _cloudObject,Texture2D _image)
     {
-        mCloudStorageData.mDatas.Add(new StoragedCloudData(createdCloudData.getFinalEmotion(), _image));
+        List<GameObject> parts = new List<GameObject>();
+        GameObject cloudBase = Instantiate(_cloudObject.gameObject, _cloudObject.transform.position, _cloudObject.transform.rotation);
+
+        DontDestroyOnLoad(cloudBase);
+        for (int i = 0; i < cloudBase.transform.childCount; i++)
+        {
+            DontDestroyOnLoad(cloudBase.transform.GetChild(i).gameObject);
+            parts.Add(cloudBase.transform.GetChild(i).gameObject);
+        }
+        mCloudStorageData.mDatas.Add(new StoragedCloudData(createdCloudData.getFinalEmotion(), cloudBase, parts));
     }
 }

@@ -20,22 +20,26 @@ public class DecoParts : MonoBehaviour
         canAttached = true;// ³ªÁß¿¡ false·Î ¹Ù²ãÁà¾ßÇÔ.
         isEditActive = false;
         canEdit = false;
-        top_right_corner = _top_right_corner;
-        bottom_left_corner = _bottom_left_corner;
+       // top_right_corner = _top_right_corner;
+        top_right_corner =new Vector2(4,2);
+        bottom_left_corner = new Vector2(-8, -4);
+        // bottom_left_corner = _bottom_left_corner;
     }
 
-    //private void Update()
-    //{
-    //    mouseWorld = Camera.main.ScreenToWorldPoint(gameObject.transform.position);
-    //    Collider2D _collider = Physics2D.OverlapArea(bottom_left_corner, top_right_corner,LayerMask.GetMask());
-    //    if (_collider != null)
-    //    {
-    //        Debug.Log(_collider.name);
-    //        canAttached = true;
-    //    }
-    //    else
-    //        canAttached = false;
-    //}
+    private void Update()
+    {
+        mouseWorld = Camera.main.ScreenToWorldPoint(gameObject.transform.position);
+        if (mouseWorld.x < top_right_corner.x && mouseWorld.y < top_right_corner.y &&
+            mouseWorld.x > bottom_left_corner.x && mouseWorld.y > bottom_left_corner.y)
+        {
+            Debug.Log("Crash");
+            canAttached = true;
+        }
+        else
+            canAttached = false;
+
+        Debug.Log(mouseWorld.x + "   " + mouseWorld.y);
+    }
 
     //private void OnTriggerEnter(Collider other)
     //{

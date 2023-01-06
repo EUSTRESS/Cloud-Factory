@@ -220,6 +220,7 @@ public class CloudDecoManager : MonoBehaviour
             T_CountInfo[i].GetComponent<TMP_Text>().text = "0";
         }
     }
+
     public void clickedPosNegButton()
     {
         GameObject target = EventSystem.current.currentSelectedGameObject.transform.gameObject;
@@ -392,6 +393,9 @@ public class CloudDecoManager : MonoBehaviour
 
         FinCloud.transform.SetParent(P_FinSBook.transform.GetChild(0).transform);
         FinCloud.transform.localPosition = new Vector3(0, 0, 0);
+
+        I_targetCloud = FinCloud;
+
         P_FinSBook.SetActive(true);
 
 

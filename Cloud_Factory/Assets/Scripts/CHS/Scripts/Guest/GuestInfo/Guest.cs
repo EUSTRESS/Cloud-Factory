@@ -10,7 +10,7 @@ public class Guest : MonoBehaviour
     private const int NUM_OF_TODAY_GUEST_LIST = 6;                      // 하루에 방문하는 손님의 총 인원 수
 
     [Header ("[손님 정보값 리스트]")]
-    public GuestInfos[] mGuestInfo;                                     // 손님들의 정보값
+    public GuestInfos[] mGuestInfo;                                     // 손님들의 인게임 정보값
     [SerializeField]
     private GuestInfo[] mGuestInitInfos;                                // Scriptable Objects들의 정보를 담고 있는 배열
 
@@ -189,6 +189,7 @@ public class Guest : MonoBehaviour
     // 뭉티 리스트를 새로 생성하는 함수
     public int[] NewChoiceGuest()
     {
+        /*
         int[] guestList = new int[6];                   // 반환시킬 뭉티의 리스트
         int possibleToTake = 6;                         // 받을 수 있는 총 뭉티의 수
 
@@ -478,7 +479,132 @@ public class Guest : MonoBehaviour
         Debug.Log(mGuestMax);
         guestList = tempList;
 
-        return guestList;
+        return guestList;*/
+
+        List<int> guestList = new List<int>();          // 저장할 뭉티의 리스트
+        int[] returnValueList = new int[6];             // 반환할 뭉티의 리스트
+        int possibleToTake = 6;                         // 받을 수 있는 총 뭉티의 수
+
+        int totalGuestNum = 20;                         // 총 뭉티의 수
+        int possibleGuestNum = 0;                       // 방문이 가능한 뭉티의 수
+
+        List<int> VisitedGuestNum = new List<int>();    // 방문 이력이 있는 뭉티의 리스트
+        List<int> NotVisitedGuestNum = new List<int>(); // 방문 이력이 없는 뭉티의 리스트
+
+        // 방문 횟수가 끝난 뭉티와 만족도가 5가 된 뭉티는 제외되어야 하므로 먼저 리스트에서 빼낸다.
+        for (int i = 0; i < totalGuestNum; i++)
+        {
+            if (mGuestInfo[i].mVisitCount < 10 && mGuestInfo[i].isCure == false)
+            {
+                if (mGuestInfo[i].mVisitCount == 0)
+                {
+                    NotVisitedGuestNum.Add(i);
+                    Debug.Log("not visited: " + i);
+                }
+                else
+                {
+                    VisitedGuestNum.Add(i);
+                    Debug.Log("visited: " + i);
+                }
+            }
+            if (mGuestInfo[i].isDisSat == false && mGuestInfo[i].mNotVisitCount == 0 && mGuestInfo[i].mVisitCount != 10 && mGuestInfo[i].isCure == false)
+            {
+                possibleGuestNum++;             //방문 가능한 뭉티의 수를 총합한다
+            }
+        }
+
+        bool isFinishedChoice = false;          //리스트 선정 완료 여부 확인
+
+        while (!isFinishedChoice)
+        {
+            int guestListIndex = 0;     //guestList에 들어간 index의 개수
+            int currentNum = -1;        //랜덤 변수
+
+            //방문 이력이 없는 뭉티의 자리를 최소 한 자리 비우고, 방문 이력이 있는 뭉티를 최대로 뽑는다
+            //방문 이력이 있는 뭉티의 수가 possibleToTake - 1 이하일 때
+            if (VisitedGuestNum.Count <= possibleToTake - 1)
+            {
+                if (VisitedGuestNum.Count > 0) { currentNum = Random.Range(0, VisitedGuestNum.Count); }
+                for (; guestListIndex < VisitedGuestNum.Count;)
+                {
+                    if (guestList.Contains(VisitedGuestNum[currentNum])) { currentNum = Random.Range(0, VisitedGuestNum.Count); }
+                    else
+                    {
+                        guestList.Add(VisitedGuestNum[currentNum]);
+                        guestListIndex++;
+                    }
+                }
+            }
+            //방문 이력이 있는 뭉티의 수가 possibleToTake 이상일 때
+            else
+            {
+                currentNum = Random.Range(0, VisitedGuestNum.Count);
+                for (; guestListIndex < (possibleToTake - 1);)
+                {
+                    if (guestList.Contains(VisitedGuestNum[currentNum])) { currentNum = Random.Range(0, VisitedGuestNum.Count); }
+                    else
+                    {
+                        guestList.Add(VisitedGuestNum[currentNum]);
+                        guestListIndex++;
+                    }
+                }
+            }
+
+            //방문 이력이 없는 뭉티가 없을 때, 방문 이력이 있는 뭉티로 남은 자리를 채운다.
+            if (NotVisitedGuestNum.Count <= 0)
+            {
+                if (VisitedGuestNum.Count > 0) { currentNum = Random.Range(0, VisitedGuestNum.Count); }
+                for (; guestListIndex < possibleToTake;)
+                {
+                    if (guestListIndex > VisitedGuestNum.Count) { break; } //자리를 모두 채우기 전에 남아있는 방문 이력이 있는 뭉티가 없으면 반복문을 빠져나온다
+
+                    if (guestList.Contains(VisitedGuestNum[currentNum])) { currentNum = Random.Range(0, VisitedGuestNum.Count); }
+                    else
+                    {
+                        guestList.Add(VisitedGuestNum[currentNum]);
+                        guestListIndex++;
+                    }
+                }
+            }
+            //방문 이력이 없는 뭉티가 있을 때, 남은 자리를 모두 방문 이력이 없는 뭉티로 채운다
+            else
+            {
+                if (NotVisitedGuestNum.Count > 0) { currentNum = Random.Range(0, NotVisitedGuestNum.Count); }
+                for (int num = 0; num < NotVisitedGuestNum.Count; num++)
+                {
+                    if (guestListIndex > possibleToTake) { break; }    //자리를 모두 채우기 전에 남아있는 방문 이력이 없는 뭉티가 없으면 반복문을 빠져나온다
+
+                    if (guestList.Contains(NotVisitedGuestNum[currentNum])) { currentNum = Random.Range(0, NotVisitedGuestNum.Count); }
+                    else
+                    {
+                        guestList.Add(NotVisitedGuestNum[currentNum]);
+                        guestListIndex++;
+                    }
+                }
+            }
+
+            //리스트에서 불만 뭉티의 수를 저장하는 변수
+            int rejectCount = 0;
+            foreach (var num in guestList)
+            {
+                if (mGuestInfo[num].isDisSat == true || mGuestInfo[num].mNotVisitCount > 0) { rejectCount++; }
+            }
+
+            //다시 뽑게되는 불만/방문 불가 뭉티 수가 4 이상이면 다시 뽑기
+            if (rejectCount >= 4) { continue; }
+            //guest list 작성 while문 종료 및 불만/방문 불가 뭉티 guestList에서 제외
+            else
+            {
+                isFinishedChoice = true;
+
+                int tempNum = 0;
+                foreach (var num in guestList)
+                {
+                    if (mGuestInfo[num].isDisSat == false && mGuestInfo[num].mNotVisitCount <= 0) { returnValueList[tempNum++] = num; }
+                }
+            }
+        }
+        return returnValueList;
     }
 
     // 해당 뭉티를 초기화 시켜주는 함수
@@ -540,6 +666,7 @@ public class Guest : MonoBehaviour
         InitGuestTime();
 
         // 채집물들이 다시 갱신된다.
+
     }
 
     // TODO : 함수 개편

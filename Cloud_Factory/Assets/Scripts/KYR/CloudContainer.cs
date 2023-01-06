@@ -136,38 +136,10 @@ public class CloudContainer : MonoBehaviour
             }
             // Sprite tmp = invenUI.transform.GetComponent<Image>().sprite.width;
             // Rect rect = new Rect(0, 0, invenUI.transform.GetComponent<Image>().sprite.width, stock.mTexImage.height);
-            //Image Update
-            Texture2D newText = new Texture2D(stock.mTexImage.width, stock.mTexImage.height,TextureFormat.RGBA32,false);
 
-            for (int x = 0; x < newText.width; x++)
-            {
-                for (int y = 0; y < newText.height; y++)
-                {
-                    newText.SetPixel(x, y, new Color(1, 1, 1, 0));
-                }
-            }
-
-            for (int x = 0; x < stock.mTexImage.width; x++)
-            {
-                for (int y = 0; y < stock.mTexImage.height; y++)
-                {
-                    var color = stock.mTexImage.GetPixel(x, y);
-                    if (stock.mTexImage.GetPixel(x, y).a == 1 && stock.mTexImage.GetPixel(x, y).g == 1 && stock.mTexImage.GetPixel(x, y).b==1)
-                    {
-                        color.a = 0;
-                    }
-
-
-                    newText.SetPixel(x, y, color);
-                }
-                //Debug.Log("IMAGE LocalScale" + mspriteToMerge[i].texture.width + "///" + mspriteToMerge[i].texture.height);
-            }
-            newText.Apply();
-
-
-            Sprite sprite = Sprite.Create(newText, new Rect(0, 0, newText.width, newText.height), new Vector2(0.5f, 0.5f));
-            invenUI.transform.GetComponent<Image>().sprite = sprite;
+            Instantiate(stock.mBase, stock.mBase.transform.position, stock.mBase.transform.rotation);
             
+
 
             //Name Upadate
             invenUI.name = stock.mdate.ToString();

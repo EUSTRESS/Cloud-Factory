@@ -28,7 +28,7 @@ public class SeasonDateCalc : MonoBehaviour
 
     [Header("테스트 변수")]
     [SerializeField]
-    private float   MaxSecond = 600.0f; // 하루 단위(초)를 테스트 목적으로 바꾸기 위한 변수
+    private float   MaxSecond = 60.0f; // 하루 단위(초)를 테스트 목적으로 바꾸기 위한 변수
 
     void Awake()
     {
@@ -51,8 +51,8 @@ public class SeasonDateCalc : MonoBehaviour
     {
         // 로비, 구름제작, 구름제공 화면에서는 제한
         if (SceneManager.GetActiveScene().name != "Lobby"
-         || SceneManager.GetActiveScene().name != "Cloud Storage"
-         || SceneManager.GetActiveScene().name != "Give Cloud")
+         && SceneManager.GetActiveScene().name != "Cloud Storage"
+         && SceneManager.GetActiveScene().name != "Give Cloud")
         {
             // 초 계산
             mSecond += Time.deltaTime;
@@ -71,9 +71,15 @@ public class SeasonDateCalc : MonoBehaviour
         // 계절별 테스트를 위한 핫키
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            mSeason++;
+            mWeek = 5;
+            mSeason += CalcSeason(ref mWeek);
         }
-
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            mSecond = 600;
+            mDay += CalcDay(ref mSecond);
+            mWeek = CalcWeek(ref mDay);
+        }
 
     }
 
@@ -85,10 +91,20 @@ public class SeasonDateCalc : MonoBehaviour
         if (second >= MaxSecond)
         {
             // 날짜 변하는 부분 -> 날짜단위 변환내용은 여기에 작성
-            // 날마다 초기화 해야하는 사항 : 방문할 손님 리스트 
             if(!GameObject.FindWithTag("Guest"))
             {
                 Debug.Log("모든 손님이 퇴장하였기 때문에 하루가 넘어갑니다");
+
+                // 방문할 손님 리스트 초기화
+                Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
+                SOWManager SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+
+                if (GuestManager != null && SOWManager != null)
+                {
+                    GuestManager.InitDay();
+                    SOWManager.InitSOW();
+                }
+
                 temp += 1;
                 second = 0;
             }
@@ -123,10 +139,14 @@ public class SeasonDateCalc : MonoBehaviour
             // 계절마다 변해야 하는 사항 : (LIST : 의자 위치, 구름 스포너, 산책 WayPoint, 뭉티 이동 가능 경로)
             // TODO : 계절 별 이동해야 할 오브젝트들 옮기거나 활성화
 
-
-
             temp += 1;
             week = 1;
+
+            SOWManager sowManager;
+            sowManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+
+            if (sowManager != null)
+                sowManager.ChangeWeatherObject(mSeason%4);
         }
         return temp;
     }

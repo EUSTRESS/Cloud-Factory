@@ -56,7 +56,7 @@ public class CloudSpawner : MonoBehaviour
 
         tempCLoud.GetComponent<CloudObject>().SetValue(CloudData.mFinalEmotions);
         tempCLoud.GetComponent<CloudObject>().SetGuestNum(guestNum);
-        tempCLoud.GetComponent<CloudObject>().SetSprite(ConvertTextureWithAlpha(CloudData.mTexImage));
+        //tempCLoud.GetComponent<CloudObject>().SetSprite(ConvertTextureWithAlpha(CloudData.mTexImage));
 
         tempCLoud.transform.localScale = new Vector3(0.11f, 0.12f, 0.5f);
     }

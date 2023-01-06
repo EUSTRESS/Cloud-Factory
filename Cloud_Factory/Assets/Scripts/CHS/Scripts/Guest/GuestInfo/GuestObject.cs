@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 using Pathfinding;
-
+using UnityEngine.Rendering;
 public class GuestObject : MonoBehaviour
 {
     // 오브젝트 내에서 필요한 변수
@@ -41,7 +41,10 @@ public class GuestObject : MonoBehaviour
     public void setGuestNum(int guestNum = 0)
     {
         mGuestNum = guestNum;
+
+        
     }
+
 
     private void Awake()
     {
@@ -50,7 +53,7 @@ public class GuestObject : MonoBehaviour
 
         // 대기시간 초기화
         mLimitTime = 0.0f;
-        mMaxLimitTime = 50.0f;
+        //mMaxLimitTime = 50.0f;
         isSit = false;
         isUsing = false;
         isMove = false;
@@ -129,9 +132,14 @@ public class GuestObject : MonoBehaviour
             if (isGotoEntrance == false && Mathf.Abs(transform.position.x - mTargetChair.transform.position.x) 
                 <= 0.1f && Mathf.Abs(transform.position.y - mTargetChair.transform.position.y) <= 0.1f)
             {
-                // 의자 위치로 이동
-                transform.localScale = new Vector3(1f, 1f, 1f);
+                // 의자 위치로 이동 , 방향에 따라서 LocalScale 조정
+                if(mSOWManager.mSitDir[mTargetChiarIndex] == 1)
+                    transform.localScale = new Vector3(1f, 1f, 1f);
+                else
+                    transform.localScale = new Vector3(-1f, 1f, 1f);
+
                 mGuestAnim.SetBool("isSit", true);
+                ChangeLayerToSit();
 
                 // TODO : 콜라이더 변경 Walking ->Sitting
                 sitCollider.enabled = true;
@@ -216,8 +224,7 @@ public class GuestObject : MonoBehaviour
 
         // 만족도 반영 범위에서 가장 먼 감정을 알려주는 말풍선  -> 손님의 위치값에 따라 좌/우 측에 생성
     
-
-    
+  
     }
 
     // 애니메이션 클립들을 손님에 맞게 초기화한다.
@@ -232,6 +239,7 @@ public class GuestObject : MonoBehaviour
     {
         isGotoEntrance = true;
         mGuestAnim.SetBool("isSit", false);
+        ChangeLayerToDefault();
 
         // TODO : 콜라이더 변경 Sitting -> Walking
         sitCollider.enabled = false;
@@ -246,5 +254,15 @@ public class GuestObject : MonoBehaviour
     private void ChangeTarget()
     {
         this.GetComponent<AIDestinationSetter>().target = mSOWManager.mWayPoint[0].transform;
+    }
+
+    public void ChangeLayerToSit()
+    {
+        this.GetComponent<SortingGroup>().sortingLayerName = "SittingGuest";
+    }
+
+    public void ChangeLayerToDefault()
+    {
+        this.GetComponent<SortingGroup>().sortingLayerName = "Guest";
     }
 }

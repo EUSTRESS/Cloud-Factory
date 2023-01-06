@@ -83,6 +83,16 @@ Cloud Factory는 손님의 이야기를 듣고, 여러 가지 재료들을 조�
             <br />
             <strong>예람</strong>
         </td>
+        <td align="center" width="150px">
+            <a href="https://github.com/hazasue"><img height="120px" width="120px" src="https://avatars.githubusercontent.com/u/81288172?v=4"/></a>
+            <br />
+            <strong>창현</strong>
+        </td>
+        <td align="center" width="150px">
+            <a href="https://github.com/Dong-0211"><img height="120px" width="120px" src="https://avatars.githubusercontent.com/u/74246692?v=4"/></a>
+            <br />
+            <strong>동규</strong>
+        </td>
     </tr>
     <tr height="50px">
         <td align="center">
@@ -101,6 +111,16 @@ Cloud Factory는 손님의 이야기를 듣고, 여러 가지 재료들을 조�
             서브 프로그래머, 서기
             <br />
             <a href="https://github.com/Yeram522">:octocat: GitHub</a>
+            <br />
+         <td align="center">
+            서브 프로그래머
+            <br />
+            <a href="https://github.com/hazasue">:octocat: GitHub</a>
+            <br />
+         <td align="center">
+            서브 프로그래머
+            <br />
+            <a href="https://github.com/Dong-0211">:octocat: GitHub</a>
             <br />
     </tr>
 </table>

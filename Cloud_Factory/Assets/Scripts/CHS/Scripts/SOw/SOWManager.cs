@@ -17,6 +17,7 @@ public class SOWManager : MonoBehaviour
     [Header("[의자 & 웨이포인트 관련]")]
     public GameObject[] mChairPos;                      // 손님이 앉아서 구름을 사용할 의자(구름)
     public GameObject[] mWayPoint;                      // 손님이 걸어다니며 산책하는 경로들
+    public int[]mSitDir = {1,1,1,1};                                // 손님이 의자에 앉는 방향 ( 좌 : 0 , 우 : 1로 표시)
 
     [HideInInspector]
     public Dictionary<int, bool> mCheckChairEmpty;      // 의자마다 의자가 비어있는지를 확인하는 딕셔너리 변수
@@ -40,6 +41,29 @@ public class SOWManager : MonoBehaviour
     public bool isCloudGet;
 
     private int mTempGuestNum;                          // 임시 손님 번호값
+
+
+    private float[][][] ChairPosList = new float[][][]{ 
+        new float[][]{ new float[]{ 1.75f, -2.97f }, new float[] { -3.54f, -0.38f }, new float[] { -0.48f, -0.37f }, new float[] { 1.55f, 0.53f } } ,
+        new float[][]{ new float[]{ 1.39f, -2.18f }, new float[] { -3.46f, -0.17f }, new float[] { -0.12f, -2.8f }, new float[] { -1.64f, -2.07f } } ,
+        new float[][]{ new float[]{ 3.11f, -2.76f }, new float[] { 0.02f, -2.44f }, new float[] { 0.98f, 0.22f }, new float[] { 1.97f, 0.23f } } ,
+        new float[][]{ new float[]{ 1.9f, -3.21f }, new float[] { -1.11f, 0.19f }, new float[] { 2.06f, 0.15f }, new float[] { -0.16f, 0.17f } }
+    };
+
+    private float[][][] WayPosList = new float[][][]{
+        new float[][]{ new float[]{ -6.71f, -1.34f }, new float[] { -3.93f, -0.5f }, new float[] { -0.71f, 0.15f }, new float[] { 1.97f, -1.1f }, new float[] { 4.68f, -2.25f }, new float[] { -0.91f, 0.13f }, new float[] { -4.14f, -0.64f } } ,
+        new float[][]{ new float[]{ -6.84f, -1.56f }, new float[] { -3.51f, -0.69f }, new float[] { -0.65f, -1.27f }, new float[] { 1.36f, -0.52f }, new float[] { 2.47f, 0.09f}, new float[] { -0.64f, -1.27f }, new float[] { -3.25f, -0.76f } } ,
+        new float[][]{ new float[]{ -6.73f, -1.22f }, new float[] { 0.49f, 0.58f }, new float[] { 5.64f, -2.16f }, new float[] { 1.57f, -4.22f}, new float[] { -2.11f, -2.13f }, new float[] { 1.97f, -0.36f }, new float[] { 0.36f, 0.53f } } ,
+        new float[][]{ new float[]{ -6.26f, -1.58f }, new float[] { -2.6f, -0.87f }, new float[] { 2.04f, -2.49f }, new float[] { 4.25f, -1.96f}, new float[] { 2.19f, -2.47f }, new float[] { -2.53f, -0.79f }, new float[] { -5.08f, -1.38f} } 
+    };
+
+    private int[][] SitDirList = new int[][] {
+        new int[]{ 1,1,1,1 },
+        new int[]{ 0,1,1,1 },
+        new int[]{ 0,1,0,1 },
+        new int[]{ 1,0,0,1 }
+    };
+
 
     private void Awake()
     {
@@ -149,7 +173,7 @@ public class SOWManager : MonoBehaviour
     }
 
     // 하루가 지나면 날씨의 공간을 초기화한다.
-    private void InitSOW()
+    public void InitSOW()
     {
         mWaitGuestList.Clear();
         mUsingGuestList.Clear();
@@ -162,10 +186,6 @@ public class SOWManager : MonoBehaviour
             // 모든 의자는 비어있는 상태로 초기화
             mCheckChairEmpty.Add(i, true);
         }
-        // TODO : 방문할 뭉티, 끝나는 시점에 날씨의 공간에 있는 뭉티들 불만 뭉티로 전환
-
-
-
     }
 
     // 대기 리스트에 손님을 추가시켜주는 함수
@@ -258,5 +278,20 @@ public class SOWManager : MonoBehaviour
         mStorageCloudData = storagedCloudData;
         isCloudGet = true;
     }
+
+
+    public void ChangeWeatherObject(int weather)
+    {
+        for(int i = 0; i< 4; i++)
+        {
+            mChairPos[i].transform.position = new Vector3(ChairPosList[weather][i][0], ChairPosList[weather][i][1],0f);
+            mSitDir[i] = SitDirList[weather][i];
+        }
+        for (int i = 0; i < 7; i++)
+        {
+            mWayPoint[i].transform.position = new Vector3(WayPosList[weather][i][0], WayPosList[weather][i][1], 0f);
+        }
+    }
+
 }
 

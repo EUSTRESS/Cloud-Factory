@@ -146,7 +146,7 @@ public class SeasonDateCalc : MonoBehaviour
             sowManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
             if (sowManager != null)
-                sowManager.ChangeWeatherObject(mSeason%4);
+                sowManager.ChangeWeatherObject(mSeason % 4);
         }
         return temp;
     }

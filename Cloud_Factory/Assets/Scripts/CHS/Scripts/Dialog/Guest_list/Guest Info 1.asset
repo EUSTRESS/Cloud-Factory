@@ -14,42 +14,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mName: "\uB85C\uC9C0"
   mSeed: 
-  mEmotion: 4100000082000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   mAge: 25
   mJob: "\uC608\uB2A5 PD"
-  mSatatisfaction: 1
-  EState: 0
-  sImg: []
+  mEmotion: 5a0000004b0000000a0000000f00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   mSatEmotions:
   - emotionNum: 0
-    up: 0
-    down: 0
-  - emotionNum: 0
-    up: 0
-    down: 0
-  - emotionNum: 0
-    up: 0
-    down: 0
-  - emotionNum: 0
-    up: 0
-    down: 0
-  - emotionNum: 0
-    up: 0
-    down: 0
+    up: 20
+    down: 10
+  - emotionNum: 1
+    up: 30
+    down: 20
+  - emotionNum: 2
+    up: 40
+    down: 30
+  - emotionNum: 3
+    up: 50
+    down: 40
+  - emotionNum: 4
+    up: 60
+    down: 50
   mLimitEmotions:
   - upLimitEmotion: 0
-    upLimitEmotionValue: 0
-    downLimitEmotion: 0
+    upLimitEmotionValue: 100
+    downLimitEmotion: 2
     downLimitEmotionValue: 0
-  - upLimitEmotion: 0
-    upLimitEmotionValue: 0
-    downLimitEmotion: 0
-    downLimitEmotionValue: 0
-  isDisSat: 0
+  - upLimitEmotion: 1
+    upLimitEmotionValue: 90
+    downLimitEmotion: 3
+    downLimitEmotionValue: 10
+  mSatatisfaction: 1
+  isDisSat: 1
   isCure: 0
   mVisitCount: 1
-  mNotVisitCount: 3
+  mNotVisitCount: 0
   isChosen: 0
-  mUsedCloud: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   mSitChairIndex: 2
   isUsing: 0
+  mUsedCloud: 00000000000000000000000000000000000000000000000000000000000000000000000000000000

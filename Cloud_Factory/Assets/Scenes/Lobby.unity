@@ -5366,8 +5366,15 @@ MonoBehaviour:
         Value: 10
       - Key: 13
         Value: 20
+      mPartsList: []
       mdate: 0
-      mTexImage: {fileID: 0}
+      mBase: {fileID: 0}
+      mVBase:
+        mPosition: {x: 0, y: 0, z: 0}
+        mRotation: {x: 0, y: 0, z: 0, w: 0}
+        mScale: {x: 0, y: 0, z: 0}
+        mImage: {fileID: 0}
+      mVPartsList: []
   mType: []
   mCnt: 
   minvenLevel: 1

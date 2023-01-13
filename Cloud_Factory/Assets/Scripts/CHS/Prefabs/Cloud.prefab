@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -936132090943820374}
   m_Layer: 0
   m_Name: Cloud
-  m_TagString: Untagged
+  m_TagString: Cloud
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,6 +121,9 @@ MonoBehaviour:
   mGuestNum: 0
   cloudSpeed: 0
   mFinalEmotions: []
+  isAlive: 0
+  Target: {fileID: 0}
+  DelayToUse: 0
 --- !u!70 &7442812040196957923
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -44,14 +44,14 @@ public class SOWManager : MonoBehaviour
 
 
     private float[][][] ChairPosList = new float[][][]{ 
-        new float[][]{ new float[]{ 1.75f, -2.97f }, new float[] { -3.54f, -0.38f }, new float[] { -0.48f, -0.37f }, new float[] { 1.55f, 0.53f } } ,
+        new float[][]{ new float[]{ 1.75f, -2.97f }, new float[] { -3.54f, -0.38f }, new float[] { -0.48f, 0.31f }, new float[] { 1.55f, 0.53f } } ,
         new float[][]{ new float[]{ 1.39f, -2.18f }, new float[] { -3.46f, -0.17f }, new float[] { -0.12f, -2.8f }, new float[] { -1.64f, -2.07f } } ,
         new float[][]{ new float[]{ 3.11f, -2.76f }, new float[] { 0.02f, -2.44f }, new float[] { 0.98f, 0.22f }, new float[] { 1.97f, 0.23f } } ,
         new float[][]{ new float[]{ 1.9f, -3.21f }, new float[] { -1.11f, 0.19f }, new float[] { 2.06f, 0.15f }, new float[] { -0.16f, 0.17f } }
     };
 
     private float[][][] WayPosList = new float[][][]{
-        new float[][]{ new float[]{ -6.71f, -1.34f }, new float[] { -3.93f, -0.5f }, new float[] { -0.71f, 0.15f }, new float[] { 1.97f, -1.1f }, new float[] { 4.68f, -2.25f }, new float[] { -0.91f, 0.13f }, new float[] { -4.14f, -0.64f } } ,
+        new float[][]{ new float[]{ -6.71f, -1.34f }, new float[] { -3.93f, -0.63f }, new float[] { -0.71f, 0.08f }, new float[] { 1.97f, -1.14f }, new float[] { 4.68f, -2.24f }, new float[] { -0.91f, 0.08f }, new float[] { -4.14f, -0.69f } } ,
         new float[][]{ new float[]{ -6.84f, -1.56f }, new float[] { -3.51f, -0.69f }, new float[] { -0.65f, -1.27f }, new float[] { 1.36f, -0.52f }, new float[] { 2.47f, 0.09f}, new float[] { -0.64f, -1.27f }, new float[] { -3.25f, -0.76f } } ,
         new float[][]{ new float[]{ -6.73f, -1.22f }, new float[] { 0.49f, 0.58f }, new float[] { 5.64f, -2.16f }, new float[] { 1.57f, -4.22f}, new float[] { -2.11f, -2.13f }, new float[] { 1.97f, -0.36f }, new float[] { 0.36f, 0.53f } } ,
         new float[][]{ new float[]{ -6.26f, -1.58f }, new float[] { -2.6f, -0.87f }, new float[] { 2.04f, -2.49f }, new float[] { 4.25f, -1.96f}, new float[] { 2.19f, -2.47f }, new float[] { -2.53f, -0.79f }, new float[] { -5.08f, -1.38f} } 
@@ -118,8 +118,7 @@ public class SOWManager : MonoBehaviour
             tempObject.GetComponent<GuestObject>().setGuestNum(mTempGuestNum);
             tempObject.GetComponent<GuestObject>().initAnimator();
 
-            // 산책로를 설정한다. <- 계절별로 달라지게 만들어야 한다.
-            // 계절별로 만들어서 봄 여름 가을 겨울의 배열값을 받게끔 하는것을 고려중.
+            // 산책로를 설정한다. 
             tempObject.GetComponent<WayPoint>().WayPos = mWayPoint;
 
             // 기본 위치값을 선언한다. <- 산책로의 첫번째 값으로 설정
@@ -186,6 +185,9 @@ public class SOWManager : MonoBehaviour
             // 모든 의자는 비어있는 상태로 초기화
             mCheckChairEmpty.Add(i, true);
         }
+
+        int Season = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>().mSeason;
+        ChangeWeatherObject(Season-1);
     }
 
     // 대기 리스트에 손님을 추가시켜주는 함수
@@ -230,6 +232,17 @@ public class SOWManager : MonoBehaviour
             mGuestManager.mGuestInfo[guestNum].isDisSat = true;
             mGuestManager.mGuestInfo[guestNum].mSitChairIndex = -1;
         }
+
+        // 존재하는 모든 구름을 삭제한다.
+        GameObject[] Clouds = GameObject.FindGameObjectsWithTag("Cloud");
+        if (Clouds != null)
+        {
+            foreach(GameObject i in Clouds)
+            {
+                i.SendMessage("StopToUse");
+            }
+        }
+
     }
 
     // 빈 의자에 대한 개수를 검색한다.

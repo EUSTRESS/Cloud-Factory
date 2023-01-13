@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using Pathfinding;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 public class GuestObject : MonoBehaviour
 {
     // 오브젝트 내에서 필요한 변수
@@ -20,7 +21,7 @@ public class GuestObject : MonoBehaviour
     public bool isUsing;                    // 구름 치료를 받는중인가?
     public bool isMove;                     // 이동중인가?   
     public bool isGotoEntrance;             // 출구로 나가는 중인가?
-
+    public bool isEndUsingCloud;            // 구름 사용을 끝마쳤는가?
 
     [Header("[기타]")]
     public Animator     mGuestAnim;         // 손님의 애니메이션 변수
@@ -58,6 +59,7 @@ public class GuestObject : MonoBehaviour
         isUsing = false;
         isMove = false;
         isGotoEntrance = false;
+        isEndUsingCloud = false;
         mTransform = this.transform;
         mTargetChiarIndex = -1;
         mTargetChair = null;
@@ -91,21 +93,29 @@ public class GuestObject : MonoBehaviour
             {
                 this.GetComponent<AIPath>().enabled = false;
             }
+
+            mGuestAnim.SetBool("isStand", false);
         }
 
         // 구름을 제공받는 상태가 아니라면 대기시간을 갱신시킨다.
         if (isUsing != true)
         {
-            mLimitTime += Time.deltaTime;
+            if (SceneManager.GetActiveScene().name != "Lobby"
+                && SceneManager.GetActiveScene().name != "Cloud Storage"
+                && SceneManager.GetActiveScene().name != "Give Cloud")
+            {
+                mLimitTime += Time.deltaTime;
+            }
         }
 
-        // 대기시간이 지나거나 불만뭉티가 된 경우에
-        if ((mLimitTime > mMaxLimitTime || mGuestManager.mGuestInfo[mGuestNum].isDisSat == true))
+        // 대기시간이 지나거나 불만뭉티가 된 경우에 (치료를 마치고 가능 경우는 제외)
+        if ((mLimitTime > mMaxLimitTime || mGuestManager.mGuestInfo[mGuestNum].isDisSat == true) && !isGotoEntrance)
         {
             // 사용자 리스트에서 없애고, 해당 의자를 다시 true로 바꿔주어야 한다.
             mSOWManager.mCheckChairEmpty[mTargetChiarIndex] = true;
             mTargetChair = null;
             isSit = false;
+
 
             // 구름 사용가능 리스트에서 삭제
             int count = mSOWManager.mUsingGuestList.Count;
@@ -167,27 +177,12 @@ public class GuestObject : MonoBehaviour
                 // 테스트를 위해 일단은 웃는 모습으로 진행한다.
                 mGuestAnim.SetBool("isUsing", true);
 
-                // 5초 후에 Invoke 함수를 이용해서 사용중인 상태를 종료하고, 귀가하는 모션을 집어넣는다.
-                Invoke("TakeCloud", 5.0f);
-            }
-        }
-        else
-        {
-            // 산책로를 걸으며 대기중이기 때문에 걷는 모션을 제공한다.
-            // 오브젝트의 위치값이 변하지 않았다면 서있는 애니메이션을 출력해준다.
-            if (mTransform == transform)
-            {
-                mGuestAnim.SetBool("isStand", true);
-            }
-            // 다시 변하는 경우에는 걷는 애니메이션을 출력한다.
-            else
-            {
-                mGuestAnim.SetBool("isStand", false);
+                // 사용시간이 지나면 구름 오브젝트에서 실행된 코루틴을 통해 isEndUsingCloud가 true가 되어 귀가한다.
+                if (isEndUsingCloud)
+                    MoveToEntrance();
             }
         }
 
-
-        
         // 걷는 방향에 따라 애니메이션의 방향을 다르게 지정한다.
         if (GetComponent<AIPath>().desiredVelocity.x >= 0.01f)
         {
@@ -202,25 +197,16 @@ public class GuestObject : MonoBehaviour
         mTransform = transform;
 
     }
-    
-    private void TakeCloud()
-    {
-        isUsing = false;
-        mGuestAnim.SetBool("isUsing", false);
-        // 상하한선 값 및 만족도 갱신
-
-        MoveToEntrance();
-    }
 
     public void SpeakEmotion()
     {
         Debug.Log("감정 모션을 출력합니다");
 
-        // 서있는 경우에만 클릭 시 상호작용을 통해 감정을 표현한다.
-        if (mGuestAnim.GetBool("isSit")) return;
+        // 앉아있는 경우에만 클릭 시 상호작용을 통해 감정을 표현한다.
+        if (!mGuestAnim.GetBool("isSit")) return;
 
         // 감정 상한, 하한 범위에 가장 가까운 감정에 대한 힌트(이펙트)
-
+        
 
         // 만족도 반영 범위에서 가장 먼 감정을 알려주는 말풍선  -> 손님의 위치값에 따라 좌/우 측에 생성
     
@@ -237,6 +223,10 @@ public class GuestObject : MonoBehaviour
     // 입구로 퇴장하는 함수이다.
     private void MoveToEntrance()
     {
+        isSit = false;
+        isUsing = false;
+        mGuestAnim.SetBool("isUsing", false);
+
         isGotoEntrance = true;
         mGuestAnim.SetBool("isSit", false);
         ChangeLayerToDefault();

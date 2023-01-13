@@ -13,6 +13,8 @@ public class WayPoint : MonoBehaviour
 
     public bool isMove = true;
 
+    private Animator Anim;
+
     // 이전 위치값을 가지는 변수값
     [SerializeField]
     private float temp_X;
@@ -22,22 +24,26 @@ public class WayPoint : MonoBehaviour
         transform.position = WayPos[WayNum].transform.position;
         temp_X = this.transform.position.x;
         randomTime = Random.Range(0.5f, 1.0f);
+        Anim = this.GetComponent<Animator>();
     }
 
     void Update()
     {
         standTime += Time.deltaTime;
-
-        if (standTime > 5.0f)
-        {
-            standTime = 0.0f;
-            randomTime = Random.Range(0.5f, 1.0f);
-        }
-        if (standTime > 5.0f - randomTime)
-            return;
-
         if (isMove)
         {
+            if (standTime > 5.0f)
+            {
+                Anim.SetBool("isStand", false);
+                standTime = 0.0f;
+                randomTime = Random.Range(0.5f, 1.0f);
+            }
+            if (standTime > 5.0f - randomTime)
+            {
+                Anim.SetBool("isStand", true);
+                return;
+            }
+
             MovePath();
 
             if(this.transform.position.x > temp_X)

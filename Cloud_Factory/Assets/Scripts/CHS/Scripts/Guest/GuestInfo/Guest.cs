@@ -649,7 +649,6 @@ public class Guest : MonoBehaviour
     {
         // 날씨의 공간에 아직 남아있는 뭉티들을 불만 뭉티로 만든다.
 
-
         // 새로운 방문 뭉티 리스트를 뽑는다.
         mGuestIndex = 0;
         mGuestCount = -1;

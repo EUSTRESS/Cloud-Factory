@@ -1800,6 +1800,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1269960229}
+        m_TargetAssemblyTypeName: ProfileManager, Assembly-CSharp
+        m_MethodName: UpdatePrevProfile
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &674091288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2947,7 +2959,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1840482449}
   m_HandleRect: {fileID: 1840482448}
   m_Direction: 2
-  m_Value: 0.9999999
+  m_Value: 1
   m_Size: 0.44421175
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3157,7 +3169,7 @@ GameObject:
   - component: {fileID: 1069647858}
   - component: {fileID: 1069647857}
   m_Layer: 5
-  m_Name: I_StampF
+  m_Name: I_StampF2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3833,6 +3845,7 @@ GameObject:
   - component: {fileID: 1269960227}
   - component: {fileID: 1269960228}
   - component: {fileID: 1269960226}
+  - component: {fileID: 1269960229}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -3920,6 +3933,76 @@ MonoBehaviour:
   btPrevBtn: {fileID: 674091287}
   mIsNext: 0
   mIsPrev: 0
+  mGetCloudContainer: {fileID: 0}
+--- !u!114 &1269960229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269960225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dfed7cfc71f4494ea074b4818b97fcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iProfileBG:
+  - {fileID: 758903054}
+  - {fileID: 905211595}
+  - {fileID: 777332546}
+  tDialogText: {fileID: 756623013}
+  sProfileBG: {fileID: 21300000, guid: 4301f09cc0d6dcc41b66b991adb4b7d8, type: 3}
+  sDialogBG: {fileID: 21300000, guid: a917fd0213656f4428a87598a87dab6d, type: 3}
+  sUpsetBG: {fileID: 21300000, guid: f084471832d352b4baa12fb6f0da5444, type: 3}
+  sUpsetDialogBG: {fileID: 21300000, guid: 794941e354f484d4fac163fa29a89b7a, type: 3}
+  dialogBGImage: {fileID: 1140955495}
+  sBasicProfile:
+  - {fileID: 21300000, guid: 2aa5949ca47740943ab8593635cd6dfc, type: 3}
+  - {fileID: 21300000, guid: 10278fa2c2446ef4cb85376661ef0b78, type: 3}
+  - {fileID: 21300000, guid: b93c57013026b8c4696d8751546d9bee, type: 3}
+  - {fileID: 21300000, guid: 32af1fc6feb03d544b960c867aa0801d, type: 3}
+  - {fileID: 21300000, guid: 6106b9dcacda5ac4b9446315e4ef1bb7, type: 3}
+  - {fileID: 21300000, guid: fa359527a363b724d94040a193fc3af0, type: 3}
+  - {fileID: 21300000, guid: 896bd9198343e4c4e9c4b674a16b8182, type: 3}
+  - {fileID: 21300000, guid: 70007181540035746969d55fe285011b, type: 3}
+  - {fileID: 21300000, guid: eba8a242713981f41abd55bc9d6585ca, type: 3}
+  - {fileID: 21300000, guid: d2dd0b1d025410c4190ce861063fccdd, type: 3}
+  - {fileID: 21300000, guid: 2a5ac0746cb5e4c4abc2b8d53dba8402, type: 3}
+  - {fileID: 21300000, guid: b45893138e2e6c744a6ca28103dd3142, type: 3}
+  - {fileID: 21300000, guid: 9bff5f8fd1f3a9c4aba7dfb7145a7619, type: 3}
+  - {fileID: 21300000, guid: bba92f785a22b054f964a1282f0091ba, type: 3}
+  - {fileID: 21300000, guid: b15ccc08fe6f2c04ab259b58062bc389, type: 3}
+  - {fileID: 21300000, guid: 5a88e40e6ea5d184dbd5c0b51eb4b936, type: 3}
+  - {fileID: 21300000, guid: 72743ad4f777d65468487c1306693483, type: 3}
+  - {fileID: 21300000, guid: bcad5e3251fdc524ba775846a8fb42fa, type: 3}
+  - {fileID: 21300000, guid: 17f64626fef5d8f4caccd00c1037447c, type: 3}
+  - {fileID: 21300000, guid: 32589847bfb17ec47a10ccb2455b92ed, type: 3}
+  sUpsetProfile:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  iCloudStamp:
+  - {fileID: 1489154992}
+  - {fileID: 1069647855}
+  - {fileID: 1725565234}
+  iDialogStamp: {fileID: 1737436911}
 --- !u!1 &1294062424
 GameObject:
   m_ObjectHideFlags: 0
@@ -4511,7 +4594,7 @@ GameObject:
   - component: {fileID: 1489154995}
   - component: {fileID: 1489154994}
   m_Layer: 5
-  m_Name: I_StampF
+  m_Name: I_StampF1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4609,7 +4692,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000091552734}
+  m_AnchoredPosition: {x: 0, y: -0.000091552734}
   m_SizeDelta: {x: 938, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1489251355
@@ -5427,6 +5510,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1269960229}
+        m_TargetAssemblyTypeName: ProfileManager, Assembly-CSharp
+        m_MethodName: InitProfile
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1709503682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5633,7 +5728,7 @@ GameObject:
   - component: {fileID: 1725565237}
   - component: {fileID: 1725565236}
   m_Layer: 5
-  m_Name: I_StampF
+  m_Name: I_StampF3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6325,6 +6420,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1269960229}
+        m_TargetAssemblyTypeName: ProfileManager, Assembly-CSharp
+        m_MethodName: InitUpsetProfile
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1931775069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6732,6 +6839,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1269960228}
         m_TargetAssemblyTypeName: RecordUIManager, Assembly-CSharp
         m_MethodName: ShowNextProfile
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1269960229}
+        m_TargetAssemblyTypeName: ProfileManager, Assembly-CSharp
+        m_MethodName: UpdateNextProfile
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -41,9 +41,7 @@ public class GuestObject : MonoBehaviour
     // 손님 번호를 저장해준다.
     public void setGuestNum(int guestNum = 0)
     {
-        mGuestNum = guestNum;
-
-        
+        mGuestNum = guestNum;      
     }
 
 
@@ -127,13 +125,18 @@ public class GuestObject : MonoBehaviour
 
             // 불만 손님으로 변환 후, 귀가
             mGuestManager.mGuestInfo[mGuestNum].isDisSat = true;
+
+            Debug.Log("Time");
+
             MoveToEntrance();
         }
 
         // 입구에 도달한 경우
         if (isGotoEntrance == true && transform.position.x - mSOWManager.mWayPoint[0].transform.position.x <= 0.2f)
         {
+            Debug.Log("Destroy");
             Destroy(this.gameObject);
+           
         }
 
         // 의자에 도달한 경우
@@ -206,12 +209,20 @@ public class GuestObject : MonoBehaviour
         if (!mGuestAnim.GetBool("isSit")) return;
 
         // 감정 상한, 하한 범위에 가장 가까운 감정에 대한 힌트(이펙트)
-        
+
 
         // 만족도 반영 범위에서 가장 먼 감정을 알려주는 말풍선  -> 손님의 위치값에 따라 좌/우 측에 생성
-    
-  
+
+        // 테스트를 위해 임의적으로 힌트 애니메이션을 출력하도록 한다.
+        mGuestAnim.SetTrigger("Hint");
+        Invoke("EndHint", 5.0f);
     }
+
+    void EndHint()
+    {
+        mGuestAnim.SetTrigger("EndHint");
+    }
+
 
     // 애니메이션 클립들을 손님에 맞게 초기화한다.
     public void initAnimator()
@@ -229,6 +240,21 @@ public class GuestObject : MonoBehaviour
 
         isGotoEntrance = true;
         mGuestAnim.SetBool("isSit", false);
+
+        if (mGuestManager.mGuestInfo[mGuestNum].isDisSat == true)
+        {
+            mGuestAnim.SetBool("isDisSat", true);
+            Invoke("ChangeTarget", 3.0f);
+        }
+        else if(mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction >= 5)
+        {
+            mGuestAnim.SetBool("isFullSat", true);
+            Invoke("ChangeTarget", 4.0f);
+        }
+        else
+        {
+            Invoke("ChangeTarget", 3.0f);
+        }
         ChangeLayerToDefault();
 
         // TODO : 콜라이더 변경 Sitting -> Walking
@@ -237,8 +263,6 @@ public class GuestObject : MonoBehaviour
 
         // 부여받은 의자 인덱스값 초기화
         mGuestManager.mGuestInfo[mGuestNum].mSitChairIndex = -1;
-
-        Invoke("ChangeTarget", 3.0f);
     }
 
     private void ChangeTarget()

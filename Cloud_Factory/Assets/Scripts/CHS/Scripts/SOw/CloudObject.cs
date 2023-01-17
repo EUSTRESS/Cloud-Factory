@@ -25,9 +25,6 @@ public class CloudObject : MonoBehaviour
     public GameObject Target;                   // 목표 손님
     public float DelayToUse;                    // 구름 사용시간
 
-
-
-
     // 처음 받아와야 하는 값
     // 1) Cloud Spawner로부터 정보값을 받아온다.
 
@@ -95,6 +92,28 @@ public class CloudObject : MonoBehaviour
 
             // 구름을 사용중인 상태로만든다.
             StartCoroutine("WaitForSetEmotion");
+
+            // 구름의 감정값을 적용된 경우의 결과값의 만족도 변화량에 따라서 손님 애니메이션 변경
+
+            int prevSat = GuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
+
+            // 임의 적용
+            for (int i = 0; i < mFinalEmotions.Count; ++i)
+            {
+                GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value);               
+            }
+            GuestManager.RenewakSat(mGuestNum);
+
+            int currSat = GuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
+            
+            // 임의 적용 해제
+            for (int i = 0; i < mFinalEmotions.Count; ++i)
+            {
+                GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value * -1);
+            }
+            GuestManager.RenewakSat(mGuestNum);
+
+            collision.gameObject.transform.root.gameObject.GetComponent<GuestObject>().mGuestAnim.SetInteger("increase", currSat - prevSat);
 
             // 더이상 구름에 대한 충돌체크가 필요 없으므로 비활성화
             this.GetComponent<CapsuleCollider2D>().enabled = false;

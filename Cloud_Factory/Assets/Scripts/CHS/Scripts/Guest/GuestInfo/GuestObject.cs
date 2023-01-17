@@ -30,20 +30,21 @@ public class GuestObject : MonoBehaviour
 
     const int MAX_GUEST_NUM = 20;
 
-
     // 손님과 상호작용을 위해 필요한 콜라이더 
     private Collider2D sitCollider;
     private Collider2D walkCollider;
 
-    // 각 손님의 번호에 따라 애니메이터를 만들어서 저장한다.
-    public RuntimeAnimatorController[] animators = new RuntimeAnimatorController[MAX_GUEST_NUM];
+	// 입장과 퇴장시의 만족도 저장
+	private int enterSat;
+	private int outSat;
+
+	// 각 손님의 번호에 따라 애니메이터를 만들어서 저장한다.
+	public RuntimeAnimatorController[] animators = new RuntimeAnimatorController[MAX_GUEST_NUM];
 
     // 손님 번호를 저장해준다.
     public void setGuestNum(int guestNum = 0)
     {
         mGuestNum = guestNum;
-
-        
     }
 
 
@@ -69,7 +70,9 @@ public class GuestObject : MonoBehaviour
 
         sitCollider = this.transform.GetChild(0).transform.GetChild(0).gameObject.GetComponent<CircleCollider2D>();
         walkCollider = this.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<CircleCollider2D>();
-    }
+
+        enterSat = mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
+	}
 
     // 걷는 애니메이션 출력
     // 걷는 애니메이션을 디폴트 애니메이션으로 설정
@@ -223,7 +226,11 @@ public class GuestObject : MonoBehaviour
     // 입구로 퇴장하는 함수이다.
     private void MoveToEntrance()
     {
-        isSit = false;
+        //대기 시간이 지났거나, 구름을 제공받았을 때, 만족도 증감도 계산
+        outSat = mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
+        CalcSatVariation(enterSat, outSat);
+
+		isSit = false;
         isUsing = false;
         mGuestAnim.SetBool("isUsing", false);
 
@@ -254,5 +261,12 @@ public class GuestObject : MonoBehaviour
     public void ChangeLayerToDefault()
     {
         this.GetComponent<SortingGroup>().sortingLayerName = "Guest";
+    }
+
+    private void CalcSatVariation(int enterSat, int outSat)
+    {
+        if(enterSat > outSat) { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = -1; }           // 만족도 감소
+        else if (enterSat == outSat) { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = 0; }     // 만족도 유지
+        else { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = 1; }                             // 만족도 증가
     }
 }

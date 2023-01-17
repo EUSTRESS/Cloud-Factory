@@ -623,7 +623,15 @@ public class Guest : MonoBehaviour
                     if (mGuestInfo[num].isDisSat == false && mGuestInfo[num].mNotVisitCount <= 0) { listSize++; }
                 }
 
-                mixList = AddToGuestList(mixList, guestList, listSize);
+                //guestList에 있는 손님 번호를 방문 경험이 있는지 없는지에 상관없이 섞어준다.
+                List<int> tempList = new List<int>();
+                tempList = AddToGuestList(tempList, guestList, guestList.Count);
+
+                //섞인 guestList의 정보를 저장한 tempList의 손님 번호 중, 불만 뭉티가 아니고, 방문 불가 상태가 아닌 뭉티만 mixList에 추가해준다.
+                foreach(var num in tempList)
+                {
+					if (mGuestInfo[num].isDisSat == false && mGuestInfo[num].mNotVisitCount <= 0) { mixList.Add(num); }
+				}
 
                 returnValueList = new int[listSize];
                 foreach (var num in mixList)
@@ -665,7 +673,8 @@ public class Guest : MonoBehaviour
         temp.mAge               = mGuestInitInfos[guestNum].mAge;
         temp.mJob               = mGuestInitInfos[guestNum].mJob;
         temp.mSatatisfaction    = mGuestInitInfos[guestNum].mSatatisfaction;
-        temp.mSatEmotions       = mGuestInitInfos[guestNum].mSatEmotions;
+		temp.mSatVariation      = mGuestInitInfos[guestNum].mSatVariation;
+		temp.mSatEmotions       = mGuestInitInfos[guestNum].mSatEmotions;
         temp.mLimitEmotions     = mGuestInitInfos[guestNum].mLimitEmotions;
         temp.isDisSat           = mGuestInitInfos[guestNum].isDisSat;
         temp.isCure             = mGuestInitInfos[guestNum].isCure;

@@ -14,6 +14,7 @@ public class DialogManager : MonoBehaviour
     public int mGuestNum;                       // 손님의 번호를 넘겨받는다.
     private int mGuestSat;                      // 손님의 현재 만족도
     private int mGuestVisitCount;               // 손님의 현재 방문 횟수
+    private int mGuestSatVariation;             // 손님의 현재 만족도 증감도
     string mTestName;                           // 테스트를 위한 임시 이름 ( 손님의 이름을 가져왔다고 가정)
 
     [SerializeField]
@@ -102,6 +103,7 @@ public class DialogManager : MonoBehaviour
         mGuestNum = mGuestManager.mGuestIndex;
         mGuestSat = mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
         mGuestVisitCount = mGuestManager.mGuestInfo[mGuestNum].mVisitCount;
+        mGuestSatVariation = mGuestManager.mGuestInfo[mGuestNum].mSatVariation;
         tGuestName.text = mGuestManager.mGuestInfo[mGuestNum].mName;
 
         mGuestImageList = new int[20];
@@ -137,6 +139,7 @@ public class DialogManager : MonoBehaviour
 
         List<DialogDBEntity> Dialog;
         Dialog = mDialogDB.SetDialogByGuestNum(mGuestNum);
+        int[] speakEmotionEffect = mGuestManager.SpeakEmotionEffect(mGuestNum);
 
         // Dialog Null 반환시 오류 출력
         if (Dialog == null)
@@ -145,18 +148,38 @@ public class DialogManager : MonoBehaviour
         // 손님 번호 -> 방문 횟수 -> 만족도 순으로 엑셀 텍스트 파일을 체크한다.
         for (i = 0; i < Dialog.Count; ++i)
         {
-            if (Dialog[i].GuestID == mGuestNum + 1)
+            if (Dialog[i].GuestID == mGuestNum + 1                  // 게스트 번호
+                && Dialog[i].VisitCount == mGuestVisitCount         // 방문 횟수
+                && Dialog[i].Sat == mGuestSat                       // 만족도
+                && Dialog[i].SatVariation == mGuestSatVariation)    // 만족도 증감도
             {
-                if (Dialog[i].VisitCount == mGuestVisitCount)
+                //Text가 Hint이면 xls에서 상하한선에 가장 가까운 감정의 대사 동적으로 할당
+                if (Dialog[i].Text == "Hint")
                 {
-                    if (Dialog[i].Sat == mGuestSat)
+                    for (int count = 0; count < speakEmotionEffect.Length; count++)
                     {
-                        mTextList[j] = Dialog[i].Text;
-                        mGuestImageList[j] = Dialog[i].DialogImageNumber;
-                        mIsGuset[j] = Dialog[i].isGuest;
-                        Debug.Log(j + " " + mIsGuset[j]);
-                        j++;
+                        for (int num = 0; num < Dialog.Count; num++)
+                        {
+                            if (Dialog[num].GuestID == mGuestNum + 1 
+                                && Dialog[num].VisitCount == 0                          // 대사 파일 받고 수정할 가능성 O
+                                && Dialog[num].Emotion == speakEmotionEffect[count])    // TODO: 추후 텍스트 엑셀 파일 보고 조건 수정 필요
+                            {
+                                mTextList[j] += Dialog[num].Text;
+                                mGuestImageList[j] = Dialog[num].DialogImageNumber;
+                                mIsGuset[j] = Dialog[num].isGuest;
+                                j++;
+                                continue;
+                            }
+                        }
                     }
+                }
+                else
+                {
+                    mTextList[j] = Dialog[i].Text;
+                    mGuestImageList[j] = Dialog[i].DialogImageNumber;
+                    mIsGuset[j] = Dialog[i].isGuest;
+                    Debug.Log(j + " " + mIsGuset[j]);
+                    j++;
                 }
             }
         }
@@ -263,16 +286,17 @@ public class DialogManager : MonoBehaviour
     // 손님 수락하기
     public void AcceptGuest()
     {
-        Debug.Log("손님을 받습니다.");
-        mSOWManager.InsertGuest(mGuestNum);
-        mSOWManager.isNewGuest = true;
+        gTakeGuestPanel.SetActive(false);
 
-        mGuestManager.InitGuestTime();
+		mSOWManager.InsertGuest(mGuestNum);
+		mSOWManager.isNewGuest = true;
 
-        // 손님이 이동했으므로 응접실에 있는 것들을 초기화 시켜준다.
-        ClearGuest();
-        MoveSceneToWeatherSpace();
-    }
+		mGuestManager.InitGuestTime();
+
+		// 손님이 이동했으므로 응접실에 있는 것들을 초기화 시켜준다.
+		ClearGuest();
+		MoveSceneToWeatherSpace();
+	}
 
     // 손님 거절하기
     public void RejectGuest()

@@ -14,45 +14,205 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DialogText1:
   - GuestID: 1
+    Sat: 0
+    SatVariation: 0
+    DialogIndex: 0
+    DialogImageNumber: 1
+    Text: "\uD3C9\uC18C\uC5D0 \uD56D\uC0C1 \uAE30\uBD84\uC774 \uC88B\uC544\uC11C
+      \uADF8\uB7F0\uAC00\u2026"
+    isGuest: 1
+    VisitCount: 0
+    Emotion: 0
+  - GuestID: 1
+    Sat: 0
+    SatVariation: 0
+    DialogIndex: 0
+    DialogImageNumber: 1
+    Text: "\uC544\uC9C1\uC740 \uC77C\uC774 \uC798 \uD480\uB9B4 \uAC83 \uAC19\uB2E4\uB294
+      \uB290\uB08C\uC774"
+    isGuest: 1
+    VisitCount: 0
+    Emotion: 1
+  - GuestID: 1
+    Sat: 0
+    SatVariation: 0
+    DialogIndex: 0
+    DialogImageNumber: 1
+    Text: "\uAC11\uC791\uC2A4\uB808 \uB204\uAD70\uAC00\uB97C \uC783\uB294\uB2E4\uBA74"
+    isGuest: 1
+    VisitCount: 0
+    Emotion: 2
+  - GuestID: 1
+    Sat: 0
+    SatVariation: 0
+    DialogIndex: 0
+    DialogImageNumber: 1
+    Text: "\uC544\uBB34\uB798\uB3C4 \uBE44\uD1B5\uD568\uC758 \uAC00\uC7A5 \uD070
+      \uBE44\uC911"
+    isGuest: 1
+    VisitCount: 0
+    Emotion: 3
+  - GuestID: 1
     Sat: 1
+    SatVariation: -2
     DialogIndex: 1
     DialogImageNumber: 1
-    Text: "\uD14C\uC2A4\uD2B8"
+    Text: "\uCC98\uC74C\uBD59\uACA0\uC2B5\uB2C8\uB2E4! \uC5EC\uAE30\uC11C \uB2E4\uB978
+      \uAC10\uC815\uC744 \uB290\uB084 \uC218 \uC788\uB2E4\uACE0 \uD574\uC11C \uC654\uB294\uB370,
+      \uB9DE\uB098\uC694?"
     isGuest: 1
     VisitCount: 1
+    Emotion: 0
   - GuestID: 1
     Sat: 1
+    SatVariation: -2
     DialogIndex: 2
     DialogImageNumber: 1
-    Text: "\uD14C\uC2A4\uD2B8"
+    Text: "\uB9DE\uC2B5\uB2C8\uB2E4. \uC131\uD568\uC774 \uC5B4\uB5BB\uAC8C \uB418\uC2DC\uB098\uC694?"
     isGuest: 0
     VisitCount: 1
+    Emotion: 0
   - GuestID: 1
     Sat: 1
+    SatVariation: -2
     DialogIndex: 3
     DialogImageNumber: 1
-    Text: "\uD14C\uC2A4\uD2B8"
+    Text: "\uC870\uAE08\uC740 \uC0DD\uC18C\uD558\uACA0\uC9C0\uB9CC, \uBE44\uD1B5\uD568\uC744
+      \uB290\uAEF4\uBCF4\uACE0 \uC2F6\uC5B4\uC694."
     isGuest: 1
     VisitCount: 1
+    Emotion: 0
+  - GuestID: 1
+    Sat: 1
+    SatVariation: -2
+    DialogIndex: 4
+    DialogImageNumber: 1
+    Text: "\uADF9\uC2EC\uD55C \uC2AC\uD514 \uB9D0\uC500\uD558\uC2DC\uB294 \uAC70
+      \uB9DE\uC73C\uC2E0\uAC00\uC694?"
+    isGuest: 0
+    VisitCount: 1
+    Emotion: 0
+  - GuestID: 1
+    Sat: 1
+    SatVariation: -2
+    DialogIndex: 5
+    DialogImageNumber: 1
+    Text: "\uB124, \uC18C\uC911\uD55C \uC0AC\uB78C\uC744 \uC783\uC740 \uD6C4\uC5D0
+      \uB290\uB07C\uB294 \uAD34\uB85C\uC6C0\uC774\uC694."
+    isGuest: 1
+    VisitCount: 1
+    Emotion: 0
+  - GuestID: 1
+    Sat: 1
+    SatVariation: -2
+    DialogIndex: 6
+    DialogImageNumber: 1
+    Text: "\uB3C4\uC640\uB4DC\uB9B4 \uC218 \uC788\uC2B5\uB2C8\uB2E4\uB9CC, \uC0AC\uC720\uB294
+      \uB9D0\uC500\uD574\uC8FC\uC2DC\uAE30 \uC5B4\uB824\uC6B0\uC2E0\uAC00\uC694?"
+    isGuest: 0
+    VisitCount: 1
+    Emotion: 0
+  - GuestID: 1
+    Sat: 1
+    SatVariation: -2
+    DialogIndex: 7
+    DialogImageNumber: 1
+    Text: "\uC74C\u2026 \uC800\uB294 \uC18C\uC911\uD55C \uC0AC\uB78C\uC744 \uC783\uC5B4\uBCF8
+      \uC801\uC774 \uC5C6\uC5B4\uC11C\uC694. \uB354 \uC790\uC138\uD558\uAC8C\uB294
+      \uACC4\uC18D \uBC29\uBB38\uD558\uBA74\uC11C \uCC28\uCC28 \uB9D0\uC500\uB4DC\uB9B4\uAC8C\uC694!"
+    isGuest: 1
+    VisitCount: 1
+    Emotion: 0
+  - GuestID: 1
+    Sat: 1
+    SatVariation: -2
+    DialogIndex: 8
+    DialogImageNumber: 1
+    Text: "\uB124, \uADF8\uB7FC \uB9D0\uC500\uD574\uC8FC\uC2E0 \uAC78 \uD1A0\uB300\uB85C
+      \uAD6C\uB984\uC744 \uB9CC\uB4E4\uC5B4\uB4DC\uB9AC\uACA0\uC2B5\uB2C8\uB2E4."
+    isGuest: 0
+    VisitCount: 1
+    Emotion: 0
+  - GuestID: 1
+    Sat: 1
+    SatVariation: -2
+    DialogIndex: 9
+    DialogImageNumber: 1
+    Text: "\uD639\uC2DC \uC9C0\uAE08 \uAE30\uBD84\uC740 \uC5B4\uB5A0\uC2E0\uAC00\uC694?"
+    isGuest: 0
+    VisitCount: 1
+    Emotion: 0
+  - GuestID: 1
+    Sat: 1
+    SatVariation: -2
+    DialogIndex: 10
+    DialogImageNumber: 1
+    Text: Hint
+    isGuest: 1
+    VisitCount: 1
+    Emotion: 0
+  - GuestID: 1
+    Sat: 1
+    SatVariation: -2
+    DialogIndex: 11
+    DialogImageNumber: 1
+    Text: "\uC54C\uACA0\uC2B5\uB2C8\uB2E4. \uB0A0\uC528\uC758 \uACF5\uAC04\uC5D0\uC11C
+      \uAE30\uB2E4\uB9AC\uC2DC\uBA74 \uAD6C\uB984\uC744 \uC804\uB2EC\uD574\uB4DC\uB9B4\uAC8C\uC694"
+    isGuest: 0
+    VisitCount: 1
+    Emotion: 0
+  - GuestID: 1
+    Sat: 1
+    SatVariation: -2
+    DialogIndex: 12
+    DialogImageNumber: 1
+    Text: "\uB135, \uAC10\uC0AC\uD569\uB2C8\uB2E4!"
+    isGuest: 1
+    VisitCount: 1
+    Emotion: 0
   DialogText2:
   - GuestID: 2
     Sat: 1
+    SatVariation: -2
     DialogIndex: 1
     DialogImageNumber: 1
     Text: "\uD14C\uC2A4\uD2B8"
     isGuest: 1
     VisitCount: 1
+    Emotion: 0
   - GuestID: 2
     Sat: 1
+    SatVariation: -2
     DialogIndex: 2
     DialogImageNumber: 1
     Text: "\uD14C\uC2A4\uD2B8"
     isGuest: 0
     VisitCount: 1
+    Emotion: 0
   - GuestID: 2
     Sat: 1
+    SatVariation: -2
     DialogIndex: 3
     DialogImageNumber: 1
-    Text: "\uD14C\uC2A4\uD2B8"
+    Text: "\uD14C\uC2A4\uD2B8?"
     isGuest: 1
     VisitCount: 1
+    Emotion: 0
+  DialogText3: []
+  DialogText4: []
+  DialogText5: []
+  DialogText6: []
+  DialogText7: []
+  DialogText8: []
+  DialogText9: []
+  DialogText10: []
+  DialogText11: []
+  DialogText12: []
+  DialogText13: []
+  DialogText14: []
+  DialogText15: []
+  DialogText16: []
+  DialogText17: []
+  DialogText18: []
+  DialogText19: []
+  DialogText20: []

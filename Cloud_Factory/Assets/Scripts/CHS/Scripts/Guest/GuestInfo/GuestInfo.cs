@@ -36,6 +36,7 @@ public class GuestInfo : ScriptableObject
 
     [Header("[만족도 관련]")]
     public int mSatatisfaction;                                     // 손님의 만족도
+    public int mSatVariation;                                       // 손님의 만족도 증감 정도
     public bool isDisSat;                                           // 불만 뭉티인지 확인
     public bool isCure;                                             // 손님이 만족도 5를 채워 모두 치유하였는지 확인 
 
@@ -70,7 +71,8 @@ public class GuestInfos
 
     [Header("[만족도 관련]")]
     public int mSatatisfaction;                                     // 손님의 만족도
-    public bool isDisSat;                                           // 불만 뭉티인지 확인
+	public int mSatVariation;                                       // 손님의 만족도 증감 정도
+	public bool isDisSat;                                           // 불만 뭉티인지 확인
     public bool isCure;                                             // 손님이 만족도 5를 채워 모두 치유하였는지 확인 
 
     [Header("[방문 횟수 관련]")]

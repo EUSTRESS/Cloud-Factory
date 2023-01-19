@@ -162,6 +162,10 @@ public class CloudMakeSystem : MonoBehaviour
     //count
     private int total;
 
+    //bool
+    [HideInInspector]
+    public bool isMakingCloud;   // 구름 제작 중, InventoryContainer.cs에서 선택된 재료들을 클릭할 수 없게 제한하기 위한 변수 
+
     private void d_selectMtrl(string name)
     {
         if (total >= 5) return; //최대 5개까지 선택 가능
@@ -169,8 +173,18 @@ public class CloudMakeSystem : MonoBehaviour
         total++; //update total count
 
         slct_mtrl.add(mtrlDATA, total, name);
+    }
 
+    public bool d_selectMtrlListFull()
+    {
+        if(total >= 5) { return true; }
+        else { return false; }
+    }
 
+    public bool d_selectMtrlListEmpty()
+    {
+        if(total <= 0) { return true; }
+        else { return false; }
     }
 
     private void d_deselectMtrl(string name)
@@ -384,6 +398,8 @@ public class CloudMakeSystem : MonoBehaviour
         //코루틴
         UI_btn_txt.text = "만드는 중";
 
+        isMakingCloud = true;
+
         //making UI 처리
         StartCoroutine(isMaking(time));        
     }
@@ -407,6 +423,7 @@ public class CloudMakeSystem : MonoBehaviour
         total = 0;
         UI_btn_txt.text = "제작하기";
 
+        isMakingCloud = false;
 
         int emotionCnt = mEmotions.Count;
 
@@ -465,6 +482,8 @@ public class CloudMakeSystem : MonoBehaviour
 
         UI_btn_txt = this.transform.Find("B_CloudGIve").GetComponentInChildren<Text>();
         UI_btn_txt.text = "제작하기";
+
+        isMakingCloud = false;
 
         
         //구름 인벤토리 리스트도 레퍼런스로 가지고 오는게 좋을 것 같다.

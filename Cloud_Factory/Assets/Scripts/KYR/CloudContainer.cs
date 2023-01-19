@@ -15,6 +15,7 @@ public class CloudContainer : MonoBehaviour
 
     public StoragedCloudData mSelecedCloud;
 
+    public VirtualObjectManager Virtualobjectmanager;
     [SerializeField]
     InventoryManager inventoryManager;
 
@@ -134,11 +135,21 @@ public class CloudContainer : MonoBehaviour
                 Button btn = invenUI.AddComponent<Button>();
                 btn.onClick.AddListener(clicked);
             }
-            // Sprite tmp = invenUI.transform.GetComponent<Image>().sprite.width;
-            // Rect rect = new Rect(0, 0, invenUI.transform.GetComponent<Image>().sprite.width, stock.mTexImage.height);
 
-            Instantiate(stock.mBase, stock.mBase.transform.position, stock.mBase.transform.rotation);
-            
+            //가상 데이터 들을 게임 오브젝트로 Convert 하여 Instantiate 하는 과정.
+            GameObject obejct;
+            obejct = Instantiate(Virtualobjectmanager.convertVirtualToGameObject(stock.mVBase));
+
+            obejct.transform.SetParent(invenUI.transform);
+            obejct.transform.localPosition = Vector3.zero;
+
+            foreach (VirtualGameObject Vpart in stock.mVPartsList)
+            {
+                GameObject obejctP;
+                obejctP = Instantiate(Virtualobjectmanager.convertVirtualToGameObject(Vpart));
+
+                obejctP.transform.SetParent(obejct.transform);
+            }
 
 
             //Name Upadate

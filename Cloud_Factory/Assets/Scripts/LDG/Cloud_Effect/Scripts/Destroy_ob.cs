@@ -6,19 +6,16 @@ public class Destroy_ob : MonoBehaviour
 {
 
     public GameObject part_prefab;
-    //public float prefab_x = 
     public Vector2 limitMax = new Vector2(8.9f, 5.0f);
     public Vector2 limitMin = new Vector2(-8.9f, -5.0f);
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (part_prefab.transform.position.y < -1.5f)
+        if (part_prefab.transform.position.y < -1.5f)   // ¸Ç Áß¾Ó±âÁØ yÁÂÇ¥°¡ -1.5¹ØÀ¸·Î ³»·Á°¡¸é ¿ÀºêÁ§Æ®ÆÄ±«
         {
             Destroy(part_prefab);
         }

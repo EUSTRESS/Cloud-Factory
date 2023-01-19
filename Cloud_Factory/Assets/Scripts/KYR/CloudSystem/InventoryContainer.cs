@@ -50,7 +50,14 @@ public class InventoryContainer : MonoBehaviour
     ////////////////////
     public void clicked() //matarial in inventory selected
     {
-        if (inventoryManager == null)
+		bool isMakingCloud = GameObject.Find("I_CloudeGen").GetComponent<CloudMakeSystem>().isMakingCloud;              // 구름이 제작 중인지 확인
+        bool isMtrlListFull = GameObject.Find("I_CloudeGen").GetComponent<CloudMakeSystem>().d_selectMtrlListFull();    // 조합되는 재료 칸이 가득찼는지 확인
+        int createdCloudData = inventoryManager.createdCloudData.mEmotions.Count;                                       // 구름이 제작되어 데코 대기중인 상태를 제작된 구름의 감정의 개수로 관리(제작 전이면 0, 이후로는 1이상)
+
+        // 조합되는 재료 칸이 모두 찼거나, 구름 제작 중, 후에 재료를 더 넣을 수 없도록 한다.
+		if (isMakingCloud || isMtrlListFull || createdCloudData > 0) { return; }
+
+		if (inventoryManager == null)
             inventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
 
         string name = EventSystem.current.currentSelectedGameObject.name;
@@ -64,6 +71,11 @@ public class InventoryContainer : MonoBehaviour
         GameObject target = EventSystem.current.currentSelectedGameObject;
         Sprite sprite = target.GetComponent<Image>().sprite;
 
+        bool isMakingCloud = GameObject.Find("I_CloudeGen").GetComponent<CloudMakeSystem>().isMakingCloud;  // 구름이 제작 중인지 확인
+		int createdCloudData = inventoryManager.createdCloudData.mEmotions.Count;
+
+		//클릭한 재료의 칸이 비었거나, 구름 제작 중, 후에 재료를 뺄 수 없도록 한다.
+		if (sprite.name == "M_default" || isMakingCloud || createdCloudData > 0) { return; }  
         if (sprite.name == "Circle") return; //예외처리
 
         updateStockCnt(getDataWithSprite(sprite.name).dataName, false);

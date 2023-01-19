@@ -8,12 +8,21 @@ public class CloudMakerAnimController : MonoBehaviour
     public GameObject[] factoryObject;
     // Start is called before the first frame update
     private int mResultColorIdx;
-    private GameObject mFinalCloud;
-    void Start()
+
+    private bool[] isAnimProgressed = new bool[3];
+
+	private GameObject mFinalCloud;
+
+    InventoryManager inventoryManager;
+
+	void Start()
     {
 
-        InventoryManager inventoryManager = GameObject.FindWithTag("InventoryManager").transform.GetComponent<InventoryManager>();
+        inventoryManager = GameObject.FindWithTag("InventoryManager").transform.GetComponent<InventoryManager>();
         if (inventoryManager.createdCloudData.mEmotions.Count == 0) return;
+        //애니메이션이 얼마나 진행되었는지 InventoryManager.cs의 CloudData에서 받아옴
+        for(int idx = 0; idx < 3; idx++) { isAnimProgressed[idx] = inventoryManager.createdCloudData.getAnimProgressed(idx); }
+
         mResultColorIdx = inventoryManager.createdCloudData.getBaseCloudColorIdx();
         Debug.Log(mResultColorIdx);//Assets/Resources/Sprite/CloudOnMachine
 
@@ -22,24 +31,31 @@ public class CloudMakerAnimController : MonoBehaviour
         factoryObject[2] = transform.GetChild(3).gameObject;//I_Colored
         mFinalCloud = transform.GetChild(4).gameObject;
         mFinalCloud.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprite/CloudOnMachine/" + "OC_Maker_" + mResultColorIdx);
-
         
         StartCoroutine(makingAnimHandler());
     }
 
     IEnumerator makingAnimHandler()
     {
-        factoryObject[0].SetActive(true);
-        yield return new WaitForSeconds(2.0f);
-        factoryObject[0].SetActive(false);
-        factoryObject[1].SetActive(true);
-        yield return new WaitForSeconds(4.5f);
-        factoryObject[1].SetActive(false);
-        
-        factoryObject[2].SetActive(true);
-        factoryObject[2].GetComponent<Animator>().SetInteger("CloudBaseIndex", mResultColorIdx);
-        yield return new WaitForSeconds(1.35f);
-        factoryObject[2].SetActive(false);
+        if (!isAnimProgressed[0]) {
+            factoryObject[0].SetActive(true);
+            yield return new WaitForSeconds(2.0f);
+            factoryObject[0].SetActive(false);
+            inventoryManager.createdCloudData.setAnimProgressed(0, true);
+        }
+        if (!isAnimProgressed[1]) {
+            factoryObject[1].SetActive(true);
+            yield return new WaitForSeconds(4.5f);
+            factoryObject[1].SetActive(false);
+			inventoryManager.createdCloudData.setAnimProgressed(1, true);
+		}
+        if (!isAnimProgressed[2]) {
+            factoryObject[2].SetActive(true);
+            factoryObject[2].GetComponent<Animator>().SetInteger("CloudBaseIndex", mResultColorIdx);
+            yield return new WaitForSeconds(1.35f);
+            factoryObject[2].SetActive(false);
+			inventoryManager.createdCloudData.setAnimProgressed(2, true);
+		}
         mFinalCloud.SetActive(true);
         yield break;
     }

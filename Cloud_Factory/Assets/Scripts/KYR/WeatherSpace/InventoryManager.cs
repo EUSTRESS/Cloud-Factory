@@ -82,6 +82,7 @@ public class CloudData
     public int mShelfLife;
     public List<EmotionInfo> mEmotions;
 
+    private bool[] isCloudAnimProgressed;
     private bool mState; //0 = 폐기 1 = 가능
     private Sprite mcloudBaseImage;
     private Sprite mcloudDecoBaseImage;
@@ -94,11 +95,20 @@ public class CloudData
     {
         mEmotions = Emotions;
         mFinalEmotions = new List<EmotionInfo>();
+        isCloudAnimProgressed = new bool[3];
+        setAnimProgressed();
         //계산식함수로 자동으로 데이터 세팅
         setShelfLife(mEmotions);
         setCloudImage(mEmotions);
         setDecoImage(mEmotions);
     }
+
+    public CloudData()
+    {
+        mEmotions = new List<EmotionInfo>();
+		isCloudAnimProgressed = new bool[3];
+		setAnimProgressed();
+	}
 
     public int getDecoPartsCount()
     {
@@ -134,6 +144,12 @@ public class CloudData
         return (int)mEmotions[0].Key;
     }
 
+    public bool getAnimProgressed(int anim_num)
+    {
+        if(anim_num > 2) { return false; }
+        return isCloudAnimProgressed[anim_num];
+    }
+
     public List<int> getMaxDecoPartsCount()
     {
         List<int> Lresult = new List<int>();
@@ -157,7 +173,18 @@ public class CloudData
         }
        
     }
+    private void setAnimProgressed()
+    {
+        for(int idx = 0; idx < 3; idx++)
+        {
+            isCloudAnimProgressed[idx] = false;
+        }
+	}
 
+    public void setAnimProgressed(int anim_num, bool anim_bool)
+    {
+        isCloudAnimProgressed[anim_num] = anim_bool;
+    }
 
     //Private method
     private void setShelfLife(List<EmotionInfo> Emotions)
@@ -209,13 +236,14 @@ public class InventoryManager : MonoBehaviour
     public GameObject mInventoryContainer;
 
     //구름 데코 관련
+    private CloudData beginningCloudData;    // 구름이 데코가 끝나면 돌아가야 할 초기값 설정
     public CloudData createdCloudData = null;
 
     
 
     public void setDataList(List<IngredientList> Ltotal)
     {
-        mIngredientDatas = new IngredientList[3];
+        mIngredientDatas = new IngredientList[4];
         int idx = 0;
         foreach (IngredientList rarity in Ltotal)
         {
@@ -223,6 +251,7 @@ public class InventoryManager : MonoBehaviour
             idx++;
         }
     }
+
     //Debug를 위한 임시 Button 함수. 나중에 삭제할 예정
     public void go2CloudFacBtn()
     {
@@ -257,6 +286,7 @@ public class InventoryManager : MonoBehaviour
         mCnt = new List<int>(); //리스트 초기화
 
         mCloudStorageData = new CloudStorageData();
+        beginningCloudData = new CloudData();
     }
 
     /////////////////
@@ -267,7 +297,7 @@ public class InventoryManager : MonoBehaviour
     public List<IngredientData>  mType;
     public List<int>  mCnt;
 
-    public int minvenLevel=1;
+    public int minvenLevel=3;
 
     public int mMaxStockCnt = 10; //우선은 10개이하까지 가능
     public int mMaxInvenCnt; //우선은 10개이하까지 가능
@@ -348,5 +378,6 @@ public class InventoryManager : MonoBehaviour
             parts.Add(cloudBase.transform.GetChild(i).gameObject);
         }
         mCloudStorageData.mDatas.Add(new StoragedCloudData(createdCloudData.getFinalEmotion(), cloudBase, parts));
+        createdCloudData = beginningCloudData;
     }
 }

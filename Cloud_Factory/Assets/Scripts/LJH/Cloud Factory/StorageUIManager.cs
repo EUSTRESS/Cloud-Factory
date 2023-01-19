@@ -64,7 +64,14 @@ public class StorageUIManager : MonoBehaviour
     }
     public void MakeCloud()
     {
-        Debug.Log("구름 제작 메소드 호출");
-        cloudMakeSystem.E_createCloud(EventSystem.current.currentSelectedGameObject.name);
+		Debug.Log("구름 제작 메소드 호출");
+
+		bool isMakingCloud = GameObject.Find("I_CloudeGen").GetComponent<CloudMakeSystem>().isMakingCloud;
+		bool isMtrlListEmpty = GameObject.Find("I_CloudeGen").GetComponent<CloudMakeSystem>().d_selectMtrlListEmpty();
+
+		// 이미 구름을 조합 중이거나, 조합칸에 재료가 없을 때 버튼을 눌러도 아무 일도 일어나지 않도록 한다.
+        // 구름이 이미 만들어진 상태는 애초에 더이상 재료를 조합칸에 넣을 수 없기 때문에 따라 return 처리 하지 않음
+		if (isMakingCloud || isMtrlListEmpty) { Debug.Log("조합이 불가능합니다."); return; }     
+		cloudMakeSystem.E_createCloud(EventSystem.current.currentSelectedGameObject.name);
     }
 }

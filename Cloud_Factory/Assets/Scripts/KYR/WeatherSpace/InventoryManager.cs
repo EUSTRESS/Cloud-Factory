@@ -30,24 +30,7 @@ public class CloudStorageData
 }
 
 
-[System.Serializable]
-public class VirtualGameObject
-{
-    //Transform
-    public Vector3 mPosition;
-    public Quaternion mRotation;
-    public Vector3 mScale;
 
-    public Sprite mImage;
-
-    public VirtualGameObject(Vector3 position, Quaternion rotation, Vector3 scale, Sprite image)
-    {
-        mPosition = position;
-        mRotation = rotation;
-        mScale = scale;
-        mImage = image;
-    }
-}
 
 [System.Serializable]
 public class StoragedCloudData
@@ -75,7 +58,9 @@ public class StoragedCloudData
             mVPartsList.Add(new VirtualGameObject(_mPartsList[i].transform.GetComponent<RectTransform>().anchoredPosition, _mPartsList[i].transform.rotation, _mPartsList[i].transform.localScale, _mPartsList[i].GetComponent<Image>().sprite));
         }
     }
+    
 }
+
 [System.Serializable]
 public class CloudData
 {

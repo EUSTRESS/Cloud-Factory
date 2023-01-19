@@ -131,22 +131,45 @@ public class YardHandleSystem : MonoBehaviour
    
    private int getRndRarityType(int _invenLv) //매개변수: 인벤토리 lv, 인벤토리 lv에 따라서 어떤 희귀도의 재료가 나올지 return
     {
-        int randomValue= Random.Range(0,100);
+        int randomValue= Random.Range(0,1000);
+
+        // 희귀도가 4인 재료를 채집 가능한지 체크 후 bool 변수로 저장
+        bool checkRarity4 = false;
+        if (inventoryManager.mIngredientDatas[3].mItemList.Count > 0) { checkRarity4 = true; }
        
         int rarity = 1;
         switch(_invenLv)
         {
-            case 1: //100%의 확률로 rarity = 1;
-                rarity = 1;
+            case 1:
+                if (checkRarity4){                              // 희귀도 4 존재 시
+                    if (randomValue < 970) { rarity = 1; }      // (97%, 0%, 0%, 3%) : rarity 1, 2, 3, 4순
+                    else { rarity = 4; }
+                }
+                else { rarity = 1; }                            // (100%, 0%, 0%, 0%)
                 break;
             case 2:
-                if (randomValue < 80) rarity = 1;
-                else rarity = 2;
+                if (checkRarity4){                              // (77.6%, 19.4%, 0%, 3%)
+                    if(randomValue < 776) { rarity = 1; }
+                    else if(randomValue >= 776 && randomValue < 970) { rarity = 2; }
+                    else { rarity = 4; }
+                }
+                else {                                          // (80%, 20%, 0%, 0%)
+                    if (randomValue < 800) { rarity = 1; }
+                    else { rarity = 2; }
+                }
                 break;
             case 3:
-                if (randomValue < 60) rarity = 1;
-                else if (60 <= randomValue && randomValue < 90) rarity = 2;
-                else rarity = 3;
+                if (checkRarity4) {                             // (58.2%, 29.1%, 9.7%, 3%)
+                    if (randomValue < 582) { rarity = 1; }
+                    else if (randomValue >= 582 && randomValue < 873) { rarity = 2; }
+                    else if (randomValue >= 873 && randomValue < 970) { rarity = 3; }
+                    else { rarity = 4; }
+                }
+                else {                                          // (60%, 30%, 10%, 0%)
+                    if (randomValue < 600) { rarity = 1; }
+                    else if (600 <= randomValue && randomValue < 900) { rarity = 2; }
+                    else { rarity = 3; }
+                }
                 break;
             default:
                 break;

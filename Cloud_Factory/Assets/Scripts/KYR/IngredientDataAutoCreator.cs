@@ -8,6 +8,7 @@ public class IngredientDataAutoCreator : MonoBehaviour
     private IngredientList LRarity1;
     private IngredientList LRarity2;
     private IngredientList LRarity3;
+    private IngredientList LRarity4;
 
     private List<IngredientList> Ltotal;
     void Start()
@@ -27,7 +28,10 @@ public class IngredientDataAutoCreator : MonoBehaviour
 
         LRarity3 = ScriptableObject.CreateInstance<IngredientList>(); ;
         LRarity3.mItemList = new List<IngredientData>();
-    }
+
+		LRarity4 = ScriptableObject.CreateInstance<IngredientList>(); ;
+		LRarity4.mItemList = new List<IngredientData>();
+	}
 
     void CreateData()
     {
@@ -97,6 +101,7 @@ public class IngredientDataAutoCreator : MonoBehaviour
         Ltotal.Add(LRarity1);
         Ltotal.Add(LRarity2);
         Ltotal.Add(LRarity3);
+        Ltotal.Add(LRarity4);
     }
 
     void SendData()

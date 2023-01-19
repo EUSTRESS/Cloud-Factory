@@ -97,7 +97,7 @@ public class CloudObject : MonoBehaviour
 
             int prevSat = GuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
 
-            // 임의 적용
+            // 임의 적용 -> 구름의 감정값을 더한 후, 만족도와 상하한선 근접값을 구하여 업데이트한다.
             for (int i = 0; i < mFinalEmotions.Count; ++i)
             {
                 GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value);               
@@ -105,8 +105,12 @@ public class CloudObject : MonoBehaviour
             GuestManager.RenewakSat(mGuestNum);
 
             int currSat = GuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
-            
-            // 임의 적용 해제
+
+            // 감정표현에 사용될 변수들을 갱신한다.
+            collision.gameObject.transform.root.gameObject.GetComponent<GuestObject>().faceValue = GuestManager.SpeakEmotionEffect(mGuestNum);
+            collision.gameObject.transform.root.gameObject.GetComponent<GuestObject>().dialogEmotion = GuestManager.SpeakEmotionDialog(mGuestNum);
+
+            // 임의 적용 해제 -> 실제 적용되는 시간에 적용하여야 하기 때문에 다시 더해준 값을 빼준다.
             for (int i = 0; i < mFinalEmotions.Count; ++i)
             {
                 GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value * -1);

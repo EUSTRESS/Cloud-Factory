@@ -202,26 +202,124 @@ public class CloudDecoManager : MonoBehaviour
 
     public void clickedAutoSettingBtn() //자동 배치
     {
-        float width_max_range = I_targetCloud.GetComponent<RectTransform>().rect.width/2;
-        float Height_max_range = I_targetCloud.GetComponent<RectTransform>().rect.height/2;
+        float width_max_range = I_targetCloud.GetComponent<RectTransform>().rect.width/2;                                  // 파츠가 구름 밖으로 벗어나지 않도록 범위 조정
+        float Height_max_range = I_targetCloud.GetComponent<RectTransform>().rect.height/2;                                
+        Vector2 I_targetCloudPosition = new Vector2(I_targetCloud.transform.position.x, I_targetCloud.transform.position.y);    // 구름 이미지의 중심 벡터를 받아온다.
+
+        GameObject[] cloudParts = new GameObject[mBaseCloudDt.getDecoPartsCount()];      // 구름 파츠들의 위치와 크기 비교를 위해 지역 변수로 선언
+        int partsIdx = 0;
+
         // Vector2 top_right_corner = I_targetCloud.Rect
         for (int i = 0; i < mBaseCloudDt.getDecoPartsCount(); i++)
         {
-            for (int j = 0; j < int.Parse(T_CountInfo[i].GetComponent<TMP_Text>().text); j++)
+			for (int j = 0; j < int.Parse(T_CountInfo[i].GetComponent<TMP_Text>().text); j++)
             {
                 GameObject partsObj = B_decoParts.transform.GetChild(i + 1).GetChild(Random.Range(0,3)).GetChild(0).gameObject; //Image GameObject
                 float x = Random.Range(-width_max_range, width_max_range);
-                float y = Random.Range(-Height_max_range, Height_max_range);
-                GameObject instance  = Instantiate(partsObj, new Vector2(0, 0), transform.rotation);
-                instance.transform.SetParent(transform);
-                instance.transform.localPosition = new Vector2(x, y);
+				float y = Random.Range(-Height_max_range, Height_max_range);
+
+                // 범위를 줄여도 구름 밖으로 파츠가 튀어나오는 부분이 존재. 그 부분에 파츠가 부착되면, 위치를 다시 설정하도록
+                while (!IsDecoPartInCloud(x, y))
+                {
+					x = Random.Range(-width_max_range, width_max_range);
+					y = Random.Range(-Height_max_range, Height_max_range);
+				}
+
+                cloudParts[partsIdx] = Instantiate(partsObj, new Vector2(0, 0), transform.rotation);
+				cloudParts[partsIdx].transform.SetParent(transform);
+				cloudParts[partsIdx].transform.position = new Vector2(x, y) + I_targetCloudPosition;        // 랜덤으로 생성한 좌표를 기준점(구름 이미지의 중심 벡터) 기준으로 위치를 선정해준다.
+
+                //  파츠 범위에 다른 파츠가 없는지 검색 필요 transform.localScale비교 
+                if (partsIdx > 0) {   // 두 번째 파츠를 부착 할 때부터 겹쳤는지 확인
+                    for(int num = 0; num < partsIdx;)
+                    {
+                        if(IsObjectOverlapped(cloudParts[num], cloudParts[partsIdx]))   // 파츠가 겹쳤으면, 새로운 파츠 위치 재선정
+                        {
+							x = Random.Range(-width_max_range, width_max_range);
+							y = Random.Range(-Height_max_range, Height_max_range);
+							cloudParts[partsIdx].transform.position = new Vector2(x, y) + I_targetCloudPosition;
+						}
+                        else if(!IsDecoPartInCloud(x, y))
+                        {
+							x = Random.Range(-width_max_range, width_max_range);
+							y = Random.Range(-Height_max_range, Height_max_range);
+							cloudParts[partsIdx].transform.position = new Vector2(x, y) + I_targetCloudPosition;
+						}
+                        else { num++; }
+                    }
+                }
             }
 
             T_CountInfo[i].GetComponent<TMP_Text>().text = "0";
         }
     }
 
-    public void clickedPosNegButton()
+    private bool IsObjectOverlapped(GameObject existing_object, GameObject new_object)
+    {
+        float existing_width_range = existing_object.GetComponent<RectTransform>().rect.width / 2;                                  // 기존 오브젝트의 가로 길이 / 2
+        float existing_height_range = existing_object.GetComponent<RectTransform>().rect.height / 2;                                // 기존 오브젝트의 세로 길이 / 2
+        Vector2 existing_position = new Vector2(existing_object.transform.position.x, existing_object.transform.position.y);        // 기존 오브젝트의 위치
+
+        float new_width_range = new_object.GetComponent<RectTransform>().rect.width / 2;                                            // 비교할 오브젝트의 가로 길이 / 2
+        float new_height_range = new_object.GetComponent<RectTransform>().rect.height / 2;                                         // 비교할 오브젝트의 세로 길이 / 2
+        Vector2 new_position = new Vector2(new_object.transform.position.x, new_object.transform.position.y);                       // 비교할 오브젝트의 위치
+
+        // 비교할 오브젝트가 기존 오브젝트보다 우측에 위치한 경우
+        if ((new_position.x >= existing_position.x)
+            && (new_position.x - existing_position.x >= new_width_range + existing_width_range))                                    // 두 오브젝트의 x축 차이가 크므로 겹칠 수 없다
+        { return false; }
+        else if((new_position.x >= existing_position.x)
+			&& (new_position.x - existing_position.x < new_width_range + existing_width_range))                                     // 두 오브젝트의 x축 차이가 충분히 크지 않으므로 y축 비교 시작
+        {
+            if((new_position.y >= existing_position.y)                                                                              // 비교할 오브젝트가 기존 오브젝트보다 상단일 때,
+                && (new_position.y - existing_position.y >= new_height_range + existing_height_range))                              // y축의 차이가 크므로 겹치지 않는다
+            { return false; }
+            else if((new_position.y < existing_position.y)
+                && (existing_position.y - new_position.y >= new_height_range + existing_height_range))
+            { return false; }
+            else { return true; }                                                                                                   // x축과 y축 둘 다 차이가 충분히 크지 않으므로 겹친다고 판단
+        }
+
+        //비교할 오브젝트가 기존 오브젝트보다 좌측에 위치한 경우
+        if ((new_position.x < existing_position.x)
+            && (existing_position.x - new_position.x >= new_width_range + existing_width_range))
+        { return false; }
+        else if ((new_position.x < existing_position.x)
+            && (existing_position.x - new_position.x >= new_width_range + existing_width_range))
+        {
+            if ((new_position.y >= existing_position.y)
+                && (new_position.y - existing_position.y >= new_height_range + existing_height_range))
+            { return false; }
+            else if ((new_position.y < existing_position.y)
+                && (existing_position.y - new_position.y >= new_height_range + existing_height_range))
+            { return false; }
+            else { return true; }
+        }
+        return true;
+	}
+
+    private bool IsDecoPartInCloud(float width_range, float height_range)
+    {
+		//□□□□□□■□□□
+		//□□□■■■■■□□
+		//□□■■■■■■□□
+		//■■■■■■■■■■
+		//□□■■■■■■■□
+		//□□□□■■■□□□
+        if((width_range <= 100 && height_range >= 200)
+            || (width_range <= -200 && height_range >= 100)
+            || (width_range <= -300 && height_range >= 0)
+            || (width_range <= -300 && height_range <= -100)
+            || (width_range <= -100 && height_range <= -200)
+            || (width_range >= 200 && height_range >= 200)
+            || (width_range >= 300 && height_range >= 0)
+            || (width_range >= 400 && height_range <= -100)
+            || (width_range >= 200 && height_range <= -200))
+        { Debug.Log("Out of Range"); return false; }
+		return true;
+	}
+
+	public void clickedPosNegButton()
     {
         GameObject target = EventSystem.current.currentSelectedGameObject.transform.gameObject;
         int idx = target.transform.parent.GetSiblingIndex();// 부모가 몇번째 sibling인지.

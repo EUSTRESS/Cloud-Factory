@@ -99,10 +99,14 @@ public class SeasonDateCalc : MonoBehaviour
                 Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
                 SOWManager SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
+                //날이 바뀔 때, 치유 뭉티에 따른 희귀도 4 재료 등장여부 체크
+                IngredientDataAutoAdder ingredientDataAutoAdder = GameObject.Find("InventoryManager").GetComponent<IngredientDataAutoAdder>();
+
                 if (GuestManager != null && SOWManager != null)
                 {
                     GuestManager.InitDay();
                     SOWManager.InitSOW();
+                    ingredientDataAutoAdder.CheckIsCured();
                 }
 
                 temp += 1;

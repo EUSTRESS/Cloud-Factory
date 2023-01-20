@@ -5,6 +5,7 @@ using UnityEngine.Animations;
 using Pathfinding;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+
 public class GuestObject : MonoBehaviour
 {
     // 오브젝트 내에서 필요한 변수
@@ -23,6 +24,10 @@ public class GuestObject : MonoBehaviour
     public bool isGotoEntrance;             // 출구로 나가는 중인가?
     public bool isEndUsingCloud;            // 구름 사용을 끝마쳤는가?
 
+    [Header("[감정표현 관련]")]
+    public int   dialogEmotion;             // 감정 표현시, 말풍선으로 나오는 감정의 번호 
+    public int[] faceValue;                 // 감정 표현시, 이펙트로 나오는 감정의 번호       
+
     [Header("[기타]")]
     public Animator     mGuestAnim;         // 손님의 애니메이션 변수
     private Guest       mGuestManager;
@@ -30,13 +35,54 @@ public class GuestObject : MonoBehaviour
 
     const int MAX_GUEST_NUM = 20;
 
+    List<List<int>> EmotionList = new List<List<int>>
+    {
+        new List<int> {0,8,15,7}, // JOY
+        new List<int> {1,2,16,13}, // SAD
+        new List<int> {4,9}, // CALM
+        new List<int> {3,6,14,12,11}, // ANGRY
+        new List<int> {18,19,5,17,10}  // SURPRISE
+    };
+
+    // 감정표현 시, 감정에 대해 표현할 말풍선 내용 리스트 -> 감정 번호를 이용하여 내용을 가져와서 채운다.
+    string[] EmotionDialogList = new string[]
+    {
+        "기쁨",
+        "불안",
+        "슬픔",
+        "짜증",
+        "수용",
+        "놀람&혼란",
+        "혐오",
+        "관심&기대",
+        "사랑",
+        "순종",
+        "경외심",
+        "반대",
+        "자책",
+        "경멸",
+        "공격성",
+        "낙천",
+        "씁쓸함",
+        "애증",
+        "얼어붙음",
+        "혼란스러움",
+    };
 
     // 손님과 상호작용을 위해 필요한 콜라이더 
     private Collider2D sitCollider;
     private Collider2D walkCollider;
 
+    // 입장과 퇴장시의 만족도 저장
+    private int enterSat;
+    private int outSat;
+
     // 각 손님의 번호에 따라 애니메이터를 만들어서 저장한다.
     public RuntimeAnimatorController[] animators = new RuntimeAnimatorController[MAX_GUEST_NUM];
+
+    // 감정표현 이펙트를 Front/Back으로 나누어서 관리한다.
+    public Animator FrontEffect;
+    public Animator BackEffect;
 
     // 손님 번호를 저장해준다.
     public void setGuestNum(int guestNum = 0)
@@ -47,12 +93,15 @@ public class GuestObject : MonoBehaviour
 
     private void Awake()
     {
-
         DontDestroyOnLoad(this.gameObject);
+    }
 
+    public void init()
+    {
         // 대기시간 초기화
         mLimitTime = 0.0f;
         //mMaxLimitTime = 50.0f;
+
         isSit = false;
         isUsing = false;
         isMove = false;
@@ -67,6 +116,11 @@ public class GuestObject : MonoBehaviour
 
         sitCollider = this.transform.GetChild(0).transform.GetChild(0).gameObject.GetComponent<CircleCollider2D>();
         walkCollider = this.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<CircleCollider2D>();
+
+        enterSat = mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
+
+        faceValue = mGuestManager.SpeakEmotionEffect(mGuestNum);
+        dialogEmotion = mGuestManager.SpeakEmotionDialog(mGuestNum);
     }
 
     // 걷는 애니메이션 출력
@@ -177,7 +231,6 @@ public class GuestObject : MonoBehaviour
             if (isUsing)
             {
                 // 제공 받은 구름의 영향에 따라서 앉아있는 모습이 긍정적/부정적 중 하나가 나온다.
-                // 테스트를 위해 일단은 웃는 모습으로 진행한다.
                 mGuestAnim.SetBool("isUsing", true);
 
                 // 사용시간이 지나면 구름 오브젝트에서 실행된 코루틴을 통해 isEndUsingCloud가 true가 되어 귀가한다.
@@ -209,13 +262,74 @@ public class GuestObject : MonoBehaviour
         if (!mGuestAnim.GetBool("isSit")) return;
 
         // 감정 상한, 하한 범위에 가장 가까운 감정에 대한 힌트(이펙트)
-
+        for(int i = 0; i< faceValue.Length; i++)
+        {
+            StartCoroutine(Emotion(3.0f * (i), faceValue[i]));
+        }
 
         // 만족도 반영 범위에서 가장 먼 감정을 알려주는 말풍선  -> 손님의 위치값에 따라 좌/우 측에 생성
+        StartCoroutine("DialogEmotion");
 
         // 테스트를 위해 임의적으로 힌트 애니메이션을 출력하도록 한다.
-        mGuestAnim.SetTrigger("Hint");
-        Invoke("EndHint", 5.0f);
+        //mGuestAnim.SetTrigger("Hint");
+        //Invoke("EndHint", 5.0f);
+    }
+
+    IEnumerator DialogEmotion()
+    {
+        // 말풍선 띄우기
+        Debug.Log("말풍선 띄우기");
+
+        // 말풍선 텍스트 채우기
+        // SetActive -> True
+
+
+        yield return new WaitForSeconds(5.0f);
+
+        // 말풍선 지우기
+        Debug.Log("말풍선 지우기");
+
+        // SetActive -> false
+        
+    }
+    IEnumerator Emotion(float delay, int emotionNum)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Debug.Log(emotionNum + "Emotion 출력");
+
+        // Interaction 트리거 발동 -> emotionNum에 따라서 FaceValue값을 변동시킨다.
+        mGuestAnim.SetInteger("FaceValue", ChangeFaceValue(emotionNum));
+
+        // 해당 emotionNum에 해당하는 이펙트를 재생시킨다.
+        FrontEffect.SetInteger("EmotionNum", emotionNum);
+        BackEffect.SetInteger("EmotionNum", emotionNum);
+
+        mGuestAnim.SetTrigger("Interaction");
+        Invoke("EndInteraction", 2.9f);
+    }
+
+    int ChangeFaceValue(int emotionNum)
+    {
+        for(int i = 0; i< EmotionList.Count; i++)
+        {
+            foreach(int index in EmotionList[i])
+            {
+                if (index == emotionNum)
+                    return i;
+            }
+        }
+
+        return -1;
+    }
+
+    void EndInteraction()
+    {
+        FrontEffect.SetInteger("EmotionNum", -1);
+        BackEffect.SetInteger("EmotionNum", -1);
+
+        mGuestAnim.SetTrigger("InteractionEnd");
+        Debug.Log("Emotion 출력 마무리");
     }
 
     void EndHint()
@@ -234,6 +348,10 @@ public class GuestObject : MonoBehaviour
     // 입구로 퇴장하는 함수이다.
     private void MoveToEntrance()
     {
+        //대기 시간이 지났거나, 구름을 제공받았을 때, 만족도 증감도 계산
+        outSat = mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
+        CalcSatVariation(enterSat, outSat);
+
         isSit = false;
         isUsing = false;
         mGuestAnim.SetBool("isUsing", false);
@@ -264,6 +382,13 @@ public class GuestObject : MonoBehaviour
         // 부여받은 의자 인덱스값 초기화
         mGuestManager.mGuestInfo[mGuestNum].mSitChairIndex = -1;
     }
+    private void CalcSatVariation(int enterSat, int outSat)
+    {
+        if (enterSat > outSat) { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = -1; }           // 만족도 감소
+        else if (enterSat == outSat) { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = 0; }     // 만족도 유지
+        else { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = 1; }                             // 만족도 증가
+    }
+
 
     private void ChangeTarget()
     {

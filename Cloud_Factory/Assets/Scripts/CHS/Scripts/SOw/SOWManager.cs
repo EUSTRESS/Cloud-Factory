@@ -86,6 +86,8 @@ public class SOWManager : MonoBehaviour
             mMaxChairNum = 3;
             InitSOW();
 
+            // 이어하기를 하는 경우 날씨의 공간에 있던 손님들의 정보를 불러온다.
+
         }
         else
         {

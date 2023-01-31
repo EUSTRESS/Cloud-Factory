@@ -25,7 +25,7 @@ public class GuestInfo : ScriptableObject
 {
     [Header(" [손님 정보] ")]
     public string mName;                                            // 손님의 이름
-    public int mSeed;                                             // 손님이 심고 갈 수 있는 재료의 인덱스 값
+    public int mSeed;                                               // 손님이 심고 갈 수 있는 재료의 인덱스 값
     public int  mAge;                                               // 손님의 나이
     public string  mJob;                                            // 손님의 직업
 

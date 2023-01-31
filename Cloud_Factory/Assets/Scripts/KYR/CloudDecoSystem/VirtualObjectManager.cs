@@ -41,13 +41,12 @@ public class VirtualObjectManager : MonoBehaviour
     }
 
     //씬에 버츄얼 오브젝트를 Instantiate 하는 함수
-    public void InstantiateVirtualObjectToScene(StoragedCloudData stock,Vector3 InstancePosition)
+    public GameObject InstantiateVirtualObjectToScene(StoragedCloudData stock,Vector3 InstancePosition)
     {
         //가상 데이터 들을 게임 오브젝트로 Convert 하여 Instantiate 하는 과정.
         GameObject obejct;
         obejct = convertVirtualToGameObject(stock.mVBase);
 
-        //obejct.transform.SetParent(invenUI.transform); Hirtachy에서 어디 밑에다가 정리해두고 싶으면 SetParnet 해주세용.
         RectTransform rectTran = obejct.GetComponent<RectTransform>();
         rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, stock.mVBase.mHeight);
         rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, stock.mVBase.mWidth);
@@ -66,5 +65,7 @@ public class VirtualObjectManager : MonoBehaviour
 
         obejct.transform.localPosition = Vector3.zero;
         obejct.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+
+        return obejct;
     }
 }

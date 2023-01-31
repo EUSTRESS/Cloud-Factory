@@ -8,22 +8,25 @@ public class RLHReader : MonoBehaviour
 {
 	// 불러올 값들 선언
 	private Guest mGuestManager;
-	private int mGuestNum;                       // 손님의 번호를 넘겨받는다.
+	private int mGuestNum;                      // 손님의 번호를 넘겨받는다.
 
 	[SerializeField]
-	private RLHDB mRLHDB;                 // 대화 내용을 저장해 놓은 DB
+	private RLHDB mRLHDB;						// 대화 내용을 저장해 놓은 DB
 
 	private string mDialogText;                 // 실제로 화면에 출력시킬 내용
 
-	public Text tText;                          // 대화가 진행 될 텍스트
+	private string tText;						// 대화가 저장 될 텍스트
 
-	void SetGuestNum(int guest_num = 0) { mGuestNum = guest_num; }
+	public void SetGuestNum(int guest_num = 0) { mGuestNum = guest_num; }
 
 	// Start is called before the first frame update
 	void Awake()
     {
-		tText.text = "";
+		tText = "";
 		mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
+
+		LoadHintInfo();
+		Debug.Log(tText);
 	}
 
     void LoadHintInfo()
@@ -48,19 +51,19 @@ public class RLHReader : MonoBehaviour
 
 		for(int num = 0; num < Hint.Count; num++)
 		{
-			if (Hint[num].GuestID == mGuestNum								// 손님의 번호가 일치
-				&& Hint[num].Type == "Hint")								// RHL항목이 Hint일 경우
-			{ 
+			if (Hint[num].GuestID == mGuestNum + 1							// 손님의 번호가 일치
+				&& Hint[num].Type == "hint")								// RHL항목이 hint일 경우
+			{
 				foreach(int emotion in satEmotions)
 				{
-					if (Hint[num].Emotion == emotion) { tText.text += Hint[num].KOR; }
+					if (Hint[num].Emotion == emotion) { tText += Hint[num].KOR; }
 				} 
 			}
 		}
 	}
-}
 
-/*
- * 추가 할 것들
- * SOWManager.cs 119:0 tempObject.GetComponent<RLHReader>().SetGuestNum(guest_num);
- * */
+	public string PrintHintText()
+	{
+		return tText;
+	}
+}

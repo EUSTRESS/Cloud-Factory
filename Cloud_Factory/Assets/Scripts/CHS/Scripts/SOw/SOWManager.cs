@@ -86,6 +86,8 @@ public class SOWManager : MonoBehaviour
             mMaxChairNum = 3;
             InitSOW();
 
+            // 이어하기를 하는 경우 날씨의 공간에 있던 손님들의 정보를 불러온다.
+
         }
         else
         {
@@ -116,7 +118,8 @@ public class SOWManager : MonoBehaviour
 
             // 손님 오브젝트에 해당하는 번호를 넣어준다.
             tempObject.GetComponent<GuestObject>().setGuestNum(mTempGuestNum);
-            tempObject.GetComponent<GuestObject>().initAnimator();
+			tempObject.GetComponent<RLHReader>().SetGuestNum(mTempGuestNum);
+			tempObject.GetComponent<GuestObject>().initAnimator();
             tempObject.GetComponent<GuestObject>().init();
 
             // 산책로를 설정한다. 

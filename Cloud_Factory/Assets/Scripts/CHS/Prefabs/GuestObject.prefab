@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 231252886473214711}
   - component: {fileID: 3751659152264030011}
   - component: {fileID: 6745436528756415238}
-  - component: {fileID: 6778633302064851613}
   m_Layer: 0
   m_Name: Bubble
   m_TagString: Untagged
@@ -103,18 +102,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6778633302064851613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 134559230105719105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8303db1c07bbb0f40b4d4feb928e1f8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &453588173287781384
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,6 +611,7 @@ GameObject:
   - component: {fileID: 5712268908780832859}
   - component: {fileID: 4218080184777723134}
   - component: {fileID: -2148519100487382919}
+  - component: {fileID: 8888721300061520729}
   m_Layer: 0
   m_Name: GuestObject
   m_TagString: Guest
@@ -738,8 +726,8 @@ MonoBehaviour:
   - {fileID: 9100000, guid: 062a24837b4bce64980f0c84f0f6f79f, type: 2}
   - {fileID: 9100000, guid: a03e842cc4891ab48b02c92e8304f6a1, type: 2}
   - {fileID: 9100000, guid: 896863e987b3b4149bf7df6cb9b11564, type: 2}
-  - {fileID: 9100000, guid: f61704913ed799948b47daaed4edc11a, type: 2}
-  - {fileID: 9100000, guid: e1449d6ad4d02704c86f488e511e9942, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 9100000, guid: ce792651e7b54e8469869248486ed11d, type: 2}
   - {fileID: 9100000, guid: a18048e398dc1834ebdd3032d3f5c5c7, type: 2}
   - {fileID: 9100000, guid: a306564838eec2e4aac8f22d5bd4f278, type: 2}
@@ -939,6 +927,19 @@ SortingGroup:
   m_SortingLayerID: 1364312587
   m_SortingLayer: 3
   m_SortingOrder: 0
+--- !u!114 &8888721300061520729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5879352038581427232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 596fa3e4d7ca1544795aac1561ede3cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mRLHDB: {fileID: 11400000, guid: 09218581d63822b4e99525122a64e173, type: 2}
 --- !u!1 &6345532713300255412
 GameObject:
   m_ObjectHideFlags: 0

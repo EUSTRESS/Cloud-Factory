@@ -22,6 +22,7 @@ public class ProfileManager : MonoBehaviour
     public Image dialogBGImage;
 
     [Header("Profile Image")]
+    public Sprite[] sCuredProfile = new Sprite[20]; // 치유된 프로필
 	public Sprite[] sBasicProfile = new Sprite[20]; // 기본 프로필
 	public Sprite[] sUpsetProfile = new Sprite[20]; // 화난 프로필
 
@@ -199,15 +200,21 @@ public class ProfileManager : MonoBehaviour
         // 프로필 정보 변경
 		if (iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.activeSelf == false)
 		        { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.SetActive(true); }
-		iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = sBasicProfile[profile_index];
+
+        // 뭉티의 상태(치유, 불만, 기본)에 따른 이미지 변경
+        if (mGuestInfo[profile_index].isDisSat) { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = sUpsetProfile[profile_index]; }
+        else if (mGuestInfo[profile_index].isCure) { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = sCuredProfile[profile_index]; }
+        else { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = sBasicProfile[profile_index]; }
+
 		iProfileBG[profile_num].transform.Find("T_Name(INPUT)").gameObject.GetComponent<Text>().text = mGuestInfo[profile_index].mName;
 		iProfileBG[profile_num].transform.Find("T_Age(INPUT)").gameObject.GetComponent<Text>().text = mGuestInfo[profile_index].mAge.ToString();
 		iProfileBG[profile_num].transform.Find("T_Job(INPUT)").gameObject.GetComponent<Text>().text = mGuestInfo[profile_index].mJob;
 
         // 뭉티의 상태에 따른 프로필 종이 종류, 색깔 변경
         // 불만 뭉티일 경우
-        if (mGuestInfo[profile_index].isDisSat) { 
-            iProfileBG[profile_num].GetComponent<Image>().sprite = sUpsetBG; 
+        if (mGuestInfo[profile_index].isDisSat) {
+			iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = sUpsetProfile[profile_index];
+			iProfileBG[profile_num].GetComponent<Image>().sprite = sUpsetBG; 
             iProfileBG[profile_num].GetComponent<Image>().color = new Color(255f / 255f, 255f / 255f, 255f / 255f); 
         }
         // 정상적인 뭉티일 경우

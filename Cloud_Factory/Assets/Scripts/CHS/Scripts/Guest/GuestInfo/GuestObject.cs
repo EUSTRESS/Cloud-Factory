@@ -5,6 +5,8 @@ using UnityEngine.Animations;
 using Pathfinding;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class GuestObject : MonoBehaviour
 {
@@ -27,13 +29,19 @@ public class GuestObject : MonoBehaviour
     [Header("[감정표현 관련]")]
     public int   dialogEmotion;             // 감정 표현시, 말풍선으로 나오는 감정의 번호 
     public int[] faceValue;                 // 감정 표현시, 이펙트로 나오는 감정의 번호       
+    public GameObject SpeechBubble;         // 감정 표현시, 말풍선 내용을 채우는 텍스트 칸
+    public bool isSpeakEmotion;             // 손님이 감정표현 중인지를 나타내는 변수값      
 
     [Header("[기타]")]
     public Animator     mGuestAnim;         // 손님의 애니메이션 변수
     private Guest       mGuestManager;
     public SOWManager   mSOWManager;
 
+    // 상수값 저장
     const int MAX_GUEST_NUM = 20;
+    const int MAX_EMOTION_NUM = 20;
+    const float DELAY_OF_SPEECH_BUBBLE = 5.0f;
+
 
     List<List<int>> EmotionList = new List<List<int>>
     {
@@ -80,6 +88,9 @@ public class GuestObject : MonoBehaviour
     // 각 손님의 번호에 따라 애니메이터를 만들어서 저장한다.
     public RuntimeAnimatorController[] animators = new RuntimeAnimatorController[MAX_GUEST_NUM];
 
+    // 각 감정별 이펙트를 저장해두고 해당 상황에 따라 변경해주어 출력한다.
+    public Animation[] EffectAnimations = new Animation[MAX_EMOTION_NUM];
+
     // 감정표현 이펙트를 Front/Back으로 나누어서 관리한다.
     public Animator FrontEffect;
     public Animator BackEffect;
@@ -121,6 +132,10 @@ public class GuestObject : MonoBehaviour
 
         faceValue = mGuestManager.SpeakEmotionEffect(mGuestNum);
         dialogEmotion = mGuestManager.SpeakEmotionDialog(mGuestNum);
+        SpeechBubble = this.transform.GetChild(1).gameObject;
+        isSpeakEmotion = false;
+
+        BackEffect = this.transform.GetChild(3).transform.GetChild(1).gameObject.GetComponent<Animator>();
     }
 
     // 걷는 애니메이션 출력
@@ -214,10 +229,8 @@ public class GuestObject : MonoBehaviour
 
                 this.transform.position = mTargetChair.transform.position;
                 isSit = true;
-
             }
         }
-
         // 상태에 따라서 애니메이션 제공
         if (isSit)
         {
@@ -238,7 +251,6 @@ public class GuestObject : MonoBehaviour
                     MoveToEntrance();
             }
         }
-
         // 걷는 방향에 따라 애니메이션의 방향을 다르게 지정한다.
         if (GetComponent<AIPath>().desiredVelocity.x >= 0.01f)
         {
@@ -248,50 +260,111 @@ public class GuestObject : MonoBehaviour
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
-
         // 현재 위치를 저장한다.
         mTransform = transform;
-
     }
 
     public void SpeakEmotion()
-    {
-        Debug.Log("감정 모션을 출력합니다");
-
+    { 
         // 앉아있는 경우에만 클릭 시 상호작용을 통해 감정을 표현한다.
         if (!mGuestAnim.GetBool("isSit")) return;
 
+        // 이미 상호작용 중인 경우에는 클릭할 수 없게 제한한다.
+        if (isSpeakEmotion)
+        {
+            Debug.Log("Already Speaking");
+            return;         
+        }
+
+
+        // 힌트를 출력중인 경우에도 감정표현을 할 수 없다.
+        // TODO : 힌트를 출력중인 경우 return하게끔 구현
+
+        Debug.Log("감정 모션을 출력합니다");
+        isSpeakEmotion = true;
+
         // 감정 상한, 하한 범위에 가장 가까운 감정에 대한 힌트(이펙트)
-        for(int i = 0; i< faceValue.Length; i++)
+        for (int i = 0; i< faceValue.Length; i++)
         {
             StartCoroutine(Emotion(3.0f * (i), faceValue[i]));
         }
-
         // 만족도 반영 범위에서 가장 먼 감정을 알려주는 말풍선  -> 손님의 위치값에 따라 좌/우 측에 생성
         StartCoroutine("DialogEmotion");
 
-        // 테스트를 위해 임의적으로 힌트 애니메이션을 출력하도록 한다.
-        //mGuestAnim.SetTrigger("Hint");
-        //Invoke("EndHint", 5.0f);
+        // 상호작용 중임을 나타내는 bool값을 상호작용이 끝난 이후에 false로 갱신한다.
+        if (faceValue.Length > 1) Invoke("EndSpeakEmotion", faceValue.Length * 3.0f + 1.0f);
+        else Invoke("EndSpeakEmotion", 6.0f);
+    }
+
+    // Hint를 출력해야 하는 경우 
+    public void Hint()
+    {
+        // 앉아있는 경우에만 클릭 시 상호작용을 통해 감정을 표현한다.
+        if (!mGuestAnim.GetBool("isSit")) return;
+
+        // 이미 상호작용 중인 경우에는 클릭할 수 없게 제한한다.
+        if (isSpeakEmotion)
+        {
+            Debug.Log("Already Speaking");
+            return;
+        }
+   
+        isSpeakEmotion = true;
+
+        // 말풍선에 사용할 내용 불러오기 -> 리스트에서 감정값에 따라서 불러오기
+        string temp = "힌트 말풍선 입니다.";
+        TextMeshPro Text = SpeechBubble.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>();
+        Animator Anim = SpeechBubble.transform.GetChild(0).gameObject.GetComponent<Animator>();
+        Text.text = temp;
+
+        SpeechBubble.transform.GetChild(1).gameObject.transform.localScale = this.transform.localScale;
+
+        // 말풍선 띄우기
+        SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);
+        Anim.SetTrigger("Start");
+
+        // 일정시간 이후 말풍선 제거
+        Invoke("EndBubble", 5.0f);
+    }
+    private void EndBubble()
+    {
+        Animator Anim = SpeechBubble.transform.GetChild(0).gameObject.GetComponent<Animator>();
+        Anim.SetTrigger("EndBubble");
+        EndSpeakEmotion();
+    }
+
+
+    private void EndSpeakEmotion()
+    {
+        isSpeakEmotion = false;
     }
 
     IEnumerator DialogEmotion()
     {
+        // 말풍선 내용 채우기
+        string temp = EmotionDialogList[dialogEmotion];
+        TextMeshPro Text = SpeechBubble.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>();
+        Animator Anim = SpeechBubble.transform.GetChild(0).gameObject.GetComponent<Animator>();
+
+        Debug.Log("DialogEmotion : " + dialogEmotion);
+
+        // Text가 NULL이 아닌경우 내용 채워넣기
+        if (Text != null)
+            Text.text = temp;
+
+        SpeechBubble.transform.GetChild(1).gameObject.transform.localScale = this.transform.localScale;
+
         // 말풍선 띄우기
-        Debug.Log("말풍선 띄우기");
+        SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);
+        Anim.SetTrigger("Start");
 
-        // 말풍선 텍스트 채우기
-        // SetActive -> True
-
-
-        yield return new WaitForSeconds(5.0f);
+        // 딜레이
+        yield return new WaitForSeconds(DELAY_OF_SPEECH_BUBBLE);
 
         // 말풍선 지우기
-        Debug.Log("말풍선 지우기");
-
-        // SetActive -> false
-        
+        Anim.SetTrigger("EndBubble");
     }
+
     IEnumerator Emotion(float delay, int emotionNum)
     {
         yield return new WaitForSeconds(delay);
@@ -302,8 +375,8 @@ public class GuestObject : MonoBehaviour
         mGuestAnim.SetInteger("FaceValue", ChangeFaceValue(emotionNum));
 
         // 해당 emotionNum에 해당하는 이펙트를 재생시킨다.
-        FrontEffect.SetInteger("EmotionNum", emotionNum);
-        BackEffect.SetInteger("EmotionNum", emotionNum);
+        BackEffect.SetInteger("EmotionValue", emotionNum);
+        Debug.Log("Emotion Value : " + emotionNum);
 
         mGuestAnim.SetTrigger("Interaction");
         Invoke("EndInteraction", 2.9f);
@@ -319,15 +392,12 @@ public class GuestObject : MonoBehaviour
                     return i;
             }
         }
-
         return -1;
     }
 
     void EndInteraction()
     {
-        FrontEffect.SetInteger("EmotionNum", -1);
-        BackEffect.SetInteger("EmotionNum", -1);
-
+        BackEffect.SetInteger("EmotionValue", -1);
         mGuestAnim.SetTrigger("InteractionEnd");
         Debug.Log("Emotion 출력 마무리");
     }

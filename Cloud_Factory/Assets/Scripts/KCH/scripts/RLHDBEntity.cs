@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class RLHDBEntity : MonoBehaviour
+public class RLHDBEntity
 {
-    public int GuestID;
-    public string Type;
-    public int Emotion;
-    public int strUD;
-    public string KOR;
-    public string ENG;
+    public int      GuestID;
+    public string   Type;
+    public int      Emotion;
+    public string   strUD;
+    public string   KOR;
+    public string   ENG;
 }

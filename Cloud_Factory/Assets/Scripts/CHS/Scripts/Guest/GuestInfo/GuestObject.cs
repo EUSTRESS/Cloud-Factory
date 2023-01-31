@@ -32,6 +32,10 @@ public class GuestObject : MonoBehaviour
     public GameObject SpeechBubble;         // 감정 표현시, 말풍선 내용을 채우는 텍스트 칸
     public bool isSpeakEmotion;             // 손님이 감정표현 중인지를 나타내는 변수값      
 
+    [Header("[희귀도 4 재료 제공 대사 관련]")]
+    private RLHReader   textReader;
+    private bool        isHintTextPrinted;
+
     [Header("[기타]")]
     public Animator     mGuestAnim;         // 손님의 애니메이션 변수
     private Guest       mGuestManager;
@@ -136,7 +140,11 @@ public class GuestObject : MonoBehaviour
         isSpeakEmotion = false;
 
         BackEffect = this.transform.GetChild(3).transform.GetChild(1).gameObject.GetComponent<Animator>();
-    }
+
+        textReader = this.gameObject.GetComponent<RLHReader>();
+        isHintTextPrinted = false;
+
+	}
 
     // 걷는 애니메이션 출력
     // 걷는 애니메이션을 디폴트 애니메이션으로 설정
@@ -248,9 +256,20 @@ public class GuestObject : MonoBehaviour
 
                 // 사용시간이 지나면 구름 오브젝트에서 실행된 코루틴을 통해 isEndUsingCloud가 true가 되어 귀가한다.
                 if (isEndUsingCloud)
-                    MoveToEntrance();
+					    MoveToEntrance();
             }
         }
+        // 구름 이용이 끝났을 때         TODO: 희귀도 4재료가 들어갔는지 체크해야 함
+        if (isEndUsingCloud && !isHintTextPrinted)
+        {
+            isHintTextPrinted = true;
+			TextMeshPro Text = SpeechBubble.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>();
+			Text.text = textReader.PrintHintText();
+			SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);                                  // 말풍선 활성화
+			SpeechBubble.transform.GetChild(1).gameObject.SetActive(true);                                  // 텍스트 활성화
+			Invoke("EndBubble", 5.0f);
+		}
+
         // 걷는 방향에 따라 애니메이션의 방향을 다르게 지정한다.
         if (GetComponent<AIPath>().desiredVelocity.x >= 0.01f)
         {

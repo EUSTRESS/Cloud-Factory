@@ -106,9 +106,9 @@ public class DialogManager : MonoBehaviour
         mGuestSatVariation = mGuestManager.mGuestInfo[mGuestNum].mSatVariation;
         tGuestName.text = mGuestManager.mGuestInfo[mGuestNum].mName;
 
-        mGuestImageList = new int[20];
-        mTextList = new string[20];
-        mIsGuset = new int[20];
+        mGuestImageList = new int[30];
+        mTextList = new string[30];
+        mIsGuset = new int[30];
         isReading = false;
     }
 
@@ -140,46 +140,53 @@ public class DialogManager : MonoBehaviour
         List<DialogDBEntity> Dialog;
         Dialog = mDialogDB.SetDialogByGuestNum(mGuestNum);
         int[] speakEmotionEffect = mGuestManager.SpeakEmotionEffect(mGuestNum);
+        int tempVisitCount = 0;                                     // 시트에 방문 횟수가 정수가 아닌 범위로 되어있는 관계로 설정하는 임시 정수
+                                                                    // 해당 정수가 2일 때, 1<x<10 범위로 판단
 
         // Dialog Null 반환시 오류 출력
         if (Dialog == null)
             Debug.Log("대화를 불러오는데에 오류가 발생하였습니다.");
 
-        // 손님 번호 -> 방문 횟수 -> 만족도 순으로 엑셀 텍스트 파일을 체크한다.
-        for (i = 0; i < Dialog.Count; ++i)
+		if (mGuestVisitCount <= 1 || mGuestVisitCount >= 10) { tempVisitCount = mGuestVisitCount; }
+		else { tempVisitCount = 2; }
+
+		// 손님 번호 -> 방문 횟수 -> 만족도 순으로 엑셀 텍스트 파일을 체크한다.
+		for (i = 0; i < Dialog.Count; ++i)
         {
             if (Dialog[i].GuestID == mGuestNum + 1                  // 게스트 번호
-                && Dialog[i].VisitCount == mGuestVisitCount         // 방문 횟수
-                && Dialog[i].Sat == mGuestSat                       // 만족도
-                && Dialog[i].SatVariation == mGuestSatVariation)    // 만족도 증감도
+                && Dialog[i].VisitCount == tempVisitCount           // 방문 횟수
+                && Dialog[i].Sat == mGuestSat)                      // 만족도
             {
-                //Text가 Hint이면 xls에서 상하한선에 가장 가까운 감정의 대사 동적으로 할당
-                if (Dialog[i].Text == "Hint")
+                if (tempVisitCount >= 10 || (tempVisitCount < 10 && Dialog[i].SatVariation == mGuestSatVariation)) // 방문 횟수가 10일 때, 만족도 증감도에 관계없이
                 {
-                    for (int count = 0; count < speakEmotionEffect.Length; count++)
+                    //Text가 Hint이면 xls에서 상하한선에 가장 가까운 감정의 대사 동적으로 할당
+                    if (Dialog[i].Text == "Hint")
                     {
-                        for (int num = 0; num < Dialog.Count; num++)
+                        for (int count = 0; count < speakEmotionEffect.Length; count++)
                         {
-                            if (Dialog[num].GuestID == mGuestNum + 1 
-                                && Dialog[num].VisitCount == 0                          // 대사 파일 받고 수정할 가능성 O
-                                && Dialog[num].Emotion == speakEmotionEffect[count])    // TODO: 추후 텍스트 엑셀 파일 보고 조건 수정 필요
+                            for (int num = 0; num < Dialog.Count; num++)
                             {
-                                mTextList[j] += Dialog[num].Text;
-                                mGuestImageList[j] = Dialog[num].DialogImageNumber;
-                                mIsGuset[j] = Dialog[num].isGuest;
-                                j++;
-                                continue;
+                                if (Dialog[num].GuestID == mGuestNum + 1
+                                    && Dialog[num].VisitCount == 0                          // 대사 파일 받고 수정할 가능성 O
+                                    && Dialog[num].Emotion == speakEmotionEffect[count])    // TODO: 추후 텍스트 엑셀 파일 보고 조건 수정 필요
+                                {
+                                    mTextList[j] += Dialog[num].Text;
+                                    mGuestImageList[j] = Dialog[num].DialogImageNumber;
+                                    mIsGuset[j] = Dialog[num].isGuest;
+                                    j++;
+                                    continue;
+                                }
                             }
                         }
                     }
-                }
-                else
-                {
-                    mTextList[j] = Dialog[i].Text;
-                    mGuestImageList[j] = Dialog[i].DialogImageNumber;
-                    mIsGuset[j] = Dialog[i].isGuest;
-                    Debug.Log(j + " " + mIsGuset[j]);
-                    j++;
+                    else
+                    {
+                        mTextList[j] = Dialog[i].Text;
+                        mGuestImageList[j] = Dialog[i].DialogImageNumber;
+                        mIsGuset[j] = Dialog[i].isGuest;
+                        Debug.Log(j + " " + mIsGuset[j]);
+                        j++;
+                    }
                 }
             }
         }

@@ -1209,7 +1209,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 30, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &408751449
@@ -3956,6 +3956,27 @@ MonoBehaviour:
   sUpsetBG: {fileID: 21300000, guid: f084471832d352b4baa12fb6f0da5444, type: 3}
   sUpsetDialogBG: {fileID: 21300000, guid: 794941e354f484d4fac163fa29a89b7a, type: 3}
   dialogBGImage: {fileID: 1140955495}
+  sCuredProfile:
+  - {fileID: 21300000, guid: 0c0181896fe5e6d47b5ee847ac5e7a1b, type: 3}
+  - {fileID: 21300000, guid: 84eafc41672ceec43a2870eff2f95daa, type: 3}
+  - {fileID: 21300000, guid: ff441f8a3450dc74aac042a3d8251c62, type: 3}
+  - {fileID: 21300000, guid: a58ea32c6469a5143a8283dccef7063c, type: 3}
+  - {fileID: 21300000, guid: e5c25949154d7f048a16871321b9abf9, type: 3}
+  - {fileID: 21300000, guid: 878f6157eaa2198428423eeaf6214867, type: 3}
+  - {fileID: 21300000, guid: faba0966a16ff9d468d1361e3f90072a, type: 3}
+  - {fileID: 21300000, guid: 866b758398b88e54e97b3f5dfa4a4875, type: 3}
+  - {fileID: 21300000, guid: 26d5bd6f9775a5f4b9b957c9f7d50643, type: 3}
+  - {fileID: 21300000, guid: 328334b549c11b24bac578e933969716, type: 3}
+  - {fileID: 21300000, guid: 2d041545208ccf1418c812a394a0ba0d, type: 3}
+  - {fileID: 21300000, guid: 20a50b0756db4e44481a970f19e06ee8, type: 3}
+  - {fileID: 21300000, guid: c5d2b17cae5e7034bb6c9874467dc422, type: 3}
+  - {fileID: 21300000, guid: 037c86f0b1c5e484fa7d81da99d90bd3, type: 3}
+  - {fileID: 21300000, guid: 92623ca548139a6498c83c289715d202, type: 3}
+  - {fileID: 21300000, guid: c103c8b156994564c81bf546c17410b2, type: 3}
+  - {fileID: 21300000, guid: 96e42b3a2c8528c4cb8e3c30a6cd7d60, type: 3}
+  - {fileID: 21300000, guid: 1d62d884d036e5d47ab1843b3f1cd085, type: 3}
+  - {fileID: 21300000, guid: 9ebfd766a7b2d1045a381edeb602f1db, type: 3}
+  - {fileID: 21300000, guid: 935aa8bd0b6cb9144967a60eb15be7b9, type: 3}
   sBasicProfile:
   - {fileID: 21300000, guid: 2aa5949ca47740943ab8593635cd6dfc, type: 3}
   - {fileID: 21300000, guid: 10278fa2c2446ef4cb85376661ef0b78, type: 3}
@@ -3978,26 +3999,26 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 17f64626fef5d8f4caccd00c1037447c, type: 3}
   - {fileID: 21300000, guid: 32589847bfb17ec47a10ccb2455b92ed, type: 3}
   sUpsetProfile:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 2fe416dcbd049ae48abf2ea3e2399ca6, type: 3}
+  - {fileID: 21300000, guid: 914b8b6870bc24e4883533c5ec9b1c2b, type: 3}
+  - {fileID: 21300000, guid: 89c8a4f0dbbaa7247993bf9ca91e5857, type: 3}
+  - {fileID: 21300000, guid: ac037a352ea46994199397411bc16380, type: 3}
+  - {fileID: 21300000, guid: 9599b408d17859142b92d6557d421ad1, type: 3}
+  - {fileID: 21300000, guid: 7bb2eecbb480b324aa2f734433a574dd, type: 3}
+  - {fileID: 21300000, guid: 63b9feaf664dec04e8234ce846982a3e, type: 3}
+  - {fileID: 21300000, guid: 12d4015d63152644b94f51565190a345, type: 3}
+  - {fileID: 21300000, guid: 534346896a1d44a439c2a44391b30928, type: 3}
+  - {fileID: 21300000, guid: ded3eb6ab13e0e84b858b023be37f7c8, type: 3}
+  - {fileID: 21300000, guid: e8ccf5ec0a2807a4c95edbb2b229f626, type: 3}
+  - {fileID: 21300000, guid: 780116764d69da44c803bbf7122d8ea7, type: 3}
+  - {fileID: 21300000, guid: d6cc86635d868e34395dc88f0cd54f69, type: 3}
+  - {fileID: 21300000, guid: 9713344410e8fe54799e11dfeb598be1, type: 3}
+  - {fileID: 21300000, guid: cf6aa4aa218fdb14dba7f04fd7ce73b0, type: 3}
+  - {fileID: 21300000, guid: e6d8a09604be05f44bce6597ac765484, type: 3}
+  - {fileID: 21300000, guid: 4432b02b7b09d974b84223df0dcdc83c, type: 3}
+  - {fileID: 21300000, guid: 16c94a82ff2b6264e8391c729660116f, type: 3}
+  - {fileID: 21300000, guid: 22aa38194c09af340b64e0ec643fd633, type: 3}
+  - {fileID: 21300000, guid: 44fb6615884b6514580e8ad0e53ada3a, type: 3}
   iCloudStamp:
   - {fileID: 1489154992}
   - {fileID: 1069647855}

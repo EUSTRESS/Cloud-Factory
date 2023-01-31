@@ -860,6 +860,41 @@ public class Guest : MonoBehaviour
 		return returnEmotionNum;
 	}
 
+    public int SpeakLeastDiffEmotion(int guestNum)
+    {
+		int returnEmotionNum = -1;      // 반환할 감정 번호
+		int diffValue = 100;             // 임시로 저장할 만족도 범위와의 차이값
+		int minDiffValue = 100;         // 차이값 중에서 가장 큰 값을 저장하는 것
+
+		GuestInfos targetGuest = mGuestInfo[guestNum];
+
+		for (int i = 0; i < 5; i++)
+		{
+			// 만족도 범위보다 현재 값이 높다면
+			if (targetGuest.mEmotion[targetGuest.mSatEmotions[i].emotionNum]
+				> targetGuest.mSatEmotions[i].up)
+			{
+				diffValue = targetGuest.mEmotion[targetGuest.mSatEmotions[i].emotionNum]
+					- targetGuest.mSatEmotions[i].up;
+			}
+			// 만족도 범위보다 현재 값이 낮다면
+			else if (targetGuest.mEmotion[targetGuest.mSatEmotions[i].emotionNum]
+				< targetGuest.mSatEmotions[i].down)
+			{
+				diffValue = targetGuest.mSatEmotions[i].down
+					- targetGuest.mEmotion[targetGuest.mSatEmotions[i].emotionNum];
+			}
+			// 이외의 경우는 만족범위안에 있는 것이므로 무시한다.
+			// temp값이 기존 저장된 값보다 만족도 범위와 멀다면 갱신한다.
+			if (minDiffValue > diffValue)
+			{
+				minDiffValue = diffValue;
+				returnEmotionNum = targetGuest.mSatEmotions[i].emotionNum;
+			}
+		}
+		return returnEmotionNum;
+	}
+
     // 불만 뭉티 정보를 넘겨주는 List
     public int[] DisSatGuestList() {
         int[] temp_list;

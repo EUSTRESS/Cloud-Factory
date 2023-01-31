@@ -352,7 +352,7 @@ public class InventoryManager : MonoBehaviour
     //////////////////////////////
     ///
     //데코 되어진 구름 오브젝트 저장
-    public void addStock(GameObject _cloudObject,Texture2D _image)
+    public void addStock(GameObject _cloudObject)
     {
         List<GameObject> parts = new List<GameObject>();
         GameObject cloudBase = Instantiate(_cloudObject.gameObject, _cloudObject.transform.position, _cloudObject.transform.rotation);

@@ -159,7 +159,9 @@ public class CloudContainer : MonoBehaviour
 
             obejct.transform.localPosition = Vector3.zero;
             obejct.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
-            //Name Upadate
+
+
+            //유통기한 업데이트.
             invenUI.name = stock.mdate.ToString();
 
             tmp++;

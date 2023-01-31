@@ -161,8 +161,27 @@ public class SOWManager : MonoBehaviour
                 }
             }
         }
+        // Test. 희귀도4 재료를 이용한 구름을 제공받은 경우 클리어 힌트를 제공하는 것을 우클릭으로 테스트한다.
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector2 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(vec, Vector2.zero);
+            if (hit.collider != null)
+            {
+                GameObject hitObject = hit.transform.root.gameObject;
+                if (hit.transform.gameObject.tag == "Guest")
+                {
+                    Debug.Log(hitObject.GetComponent<GuestObject>().mGuestNum + "번 손님을 클릭하였습니다.");
+                    hit.transform.gameObject.GetComponent<GuestObject>().Hint();
+                }
+                else
+                {
+                    Debug.Log(hit.transform.gameObject);
+                }
+            }
+        }
 
-        if(isCloudGet)
+        if (isCloudGet)
         {
             if (SceneManager.GetActiveScene().name == "Space Of Weather")
             {

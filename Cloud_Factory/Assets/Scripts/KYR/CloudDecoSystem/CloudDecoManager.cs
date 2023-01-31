@@ -82,7 +82,6 @@ public class CloudDecoManager : MonoBehaviour
     private int mCloudPieceDecoMax;
     private InventoryManager inventoryManager;
     private List<GameObject> LDecoParts;
-    private Texture2D newCloudImg;
     //스케치북 기즈모
     public Vector2 top_right_corner;
     public Vector2 bottom_left_corner;
@@ -179,8 +178,7 @@ public class CloudDecoManager : MonoBehaviour
         }
         mBaseCloudDt.addFinalEmotion(mEmoValues);
 
-        inventoryManager.addStock(I_targetCloud, newCloudImg);
-        Debug.Log(Resources.Load("newCloudImgPath", typeof(Texture2D)) as Texture2D);
+        inventoryManager.addStock(I_targetCloud);
         //LoadScene
         SceneManager.LoadScene("Cloud Storage");
     }
@@ -382,6 +380,9 @@ public class CloudDecoManager : MonoBehaviour
 
     public void EPartsClickedInArea()
     {
+        //꾸미기가 완료된 상태라면 사용자 조작에 반응하지 않는다.
+        if (isDecoDone)
+            return;
         //클릭된 객체로 변경해줘야함
         if(LDecoParts.Count>1 && EventSystem.current.currentSelectedGameObject.transform.parent != selectedParts.transform.parent)
                 return;
@@ -497,7 +498,6 @@ public class CloudDecoManager : MonoBehaviour
         P_FinSBook.SetActive(true);
 
 
-        newCloudImg = spriteMerger.SaveTextureToPNGFile(spriteMerger.Merge(FinCloud), mBaseCloudDt);
 
        
 

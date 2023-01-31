@@ -59,6 +59,10 @@ public class Guest : MonoBehaviour
 
             isTimeToTakeGuest = false;
             isGuestInLivingRoom = false;
+
+            // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다.
+
+
         }
         else
         {

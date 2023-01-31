@@ -147,6 +147,7 @@ public class GuestObject : MonoBehaviour
         if (mTargetChiarIndex != -1 && isGotoEntrance == false)
         {
             mTargetChair = mSOWManager.mChairPos[mTargetChiarIndex];
+            mSOWManager.mCheckChairEmpty[mTargetChiarIndex] = false;
             this.GetComponent<AIDestinationSetter>().enabled = true;
             this.GetComponent<AIDestinationSetter>().target = mTargetChair.transform;
 
@@ -165,7 +166,7 @@ public class GuestObject : MonoBehaviour
         }
 
         // 구름을 제공받는 상태가 아니라면 대기시간을 갱신시킨다.
-        if (isUsing != true)
+        if (isUsing == false)
         {
             if (SceneManager.GetActiveScene().name != "Lobby"
                 && SceneManager.GetActiveScene().name != "Cloud Storage"

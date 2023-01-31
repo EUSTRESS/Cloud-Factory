@@ -52,13 +52,14 @@ public class StoragedCloudData
 
         //VirtualSetting
         mVPartsList = new List<VirtualGameObject>();
-        mVBase = new VirtualGameObject(mBase.transform.position, mBase.transform.rotation, mBase.transform.localScale, mBase.GetComponent<Image>().sprite);
-        for(int i = 0; i < mPartsList.Count; i++)
+        mVBase = new VirtualGameObject(mBase.transform.position, mBase.transform.rotation, mBase.transform.GetComponent<RectTransform>().rect.width, mBase.transform.GetComponent<RectTransform>().rect.height, mBase.GetComponent<Image>().sprite);
+        for (int i = 0; i < mPartsList.Count; i++)
         {
-            mVPartsList.Add(new VirtualGameObject(_mPartsList[i].transform.GetComponent<RectTransform>().anchoredPosition, _mPartsList[i].transform.rotation, _mPartsList[i].transform.localScale, _mPartsList[i].GetComponent<Image>().sprite));
+            mVPartsList.Add(new VirtualGameObject(_mPartsList[i].transform.localPosition, _mPartsList[i].transform.rotation, _mPartsList[i].transform.GetComponent<RectTransform>().rect.width, _mPartsList[i].transform.GetComponent<RectTransform>().rect.height, _mPartsList[i].GetComponent<Image>().sprite));
         }
     }
-    
+
+
 }
 
 [System.Serializable]

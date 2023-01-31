@@ -138,20 +138,27 @@ public class CloudContainer : MonoBehaviour
 
             //가상 데이터 들을 게임 오브젝트로 Convert 하여 Instantiate 하는 과정.
             GameObject obejct;
-            obejct = Instantiate(Virtualobjectmanager.convertVirtualToGameObject(stock.mVBase));
+            obejct = Virtualobjectmanager.convertVirtualToGameObject(stock.mVBase);
 
             obejct.transform.SetParent(invenUI.transform);
-            obejct.transform.localPosition = Vector3.zero;
-
+            RectTransform rectTran = obejct.GetComponent<RectTransform>();
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, stock.mVBase.mHeight);
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, stock.mVBase.mWidth);
             foreach (VirtualGameObject Vpart in stock.mVPartsList)
             {
                 GameObject obejctP;
-                obejctP = Instantiate(Virtualobjectmanager.convertVirtualToGameObject(Vpart));
+                obejctP = Virtualobjectmanager.convertVirtualToGameObject(Vpart);
 
                 obejctP.transform.SetParent(obejct.transform);
+
+                obejctP.transform.localPosition = obejctP.transform.position;
+                rectTran = obejctP.GetComponent<RectTransform>();
+                rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Vpart.mHeight);
+                rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Vpart.mWidth);
             }
 
-
+            obejct.transform.localPosition = Vector3.zero;
+            obejct.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
             //Name Upadate
             invenUI.name = stock.mdate.ToString();
 

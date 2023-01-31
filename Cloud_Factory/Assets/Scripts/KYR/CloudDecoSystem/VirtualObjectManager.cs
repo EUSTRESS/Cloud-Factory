@@ -10,14 +10,17 @@ public class VirtualGameObject
     public Vector3 mPosition;
     public Quaternion mRotation;
     public Vector3 mScale;
+    public float mWidth;
+    public float mHeight;
 
     public Sprite mImage;
 
-    public VirtualGameObject(Vector3 position, Quaternion rotation, Vector3 scale, Sprite image)
+    public VirtualGameObject(Vector3 position, Quaternion rotation, float Width, float Height, Sprite image)
     {
         mPosition = position;
         mRotation = rotation;
-        mScale = scale;
+        mWidth = Width;
+        mHeight = Height;
         mImage = image;
     }
 }
@@ -34,8 +37,34 @@ public class VirtualObjectManager : MonoBehaviour
 
         result.GetComponent<Image>().sprite = VObject.mImage;
 
-        
-
         return result;
+    }
+
+    //씬에 버츄얼 오브젝트를 Instantiate 하는 함수
+    public void InstantiateVirtualObjectToScene(StoragedCloudData stock,Vector3 InstancePosition)
+    {
+        //가상 데이터 들을 게임 오브젝트로 Convert 하여 Instantiate 하는 과정.
+        GameObject obejct;
+        obejct = convertVirtualToGameObject(stock.mVBase);
+
+        //obejct.transform.SetParent(invenUI.transform); Hirtachy에서 어디 밑에다가 정리해두고 싶으면 SetParnet 해주세용.
+        RectTransform rectTran = obejct.GetComponent<RectTransform>();
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, stock.mVBase.mHeight);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, stock.mVBase.mWidth);
+        foreach (VirtualGameObject Vpart in stock.mVPartsList)
+        {
+            GameObject obejctP;
+            obejctP = convertVirtualToGameObject(Vpart);
+
+            obejctP.transform.SetParent(obejct.transform);
+
+            obejctP.transform.localPosition = obejctP.transform.position;
+            rectTran = obejctP.GetComponent<RectTransform>();
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Vpart.mHeight);
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Vpart.mWidth);
+        }
+
+        obejct.transform.localPosition = Vector3.zero;
+        obejct.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
     }
 }

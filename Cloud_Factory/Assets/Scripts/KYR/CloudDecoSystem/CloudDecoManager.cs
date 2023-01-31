@@ -382,6 +382,9 @@ public class CloudDecoManager : MonoBehaviour
 
     public void EPartsClickedInArea()
     {
+        //꾸미기가 완료된 상태라면 사용자 조작에 반응하지 않는다.
+        if (isDecoDone)
+            return;
         //클릭된 객체로 변경해줘야함
         if(LDecoParts.Count>1 && EventSystem.current.currentSelectedGameObject.transform.parent != selectedParts.transform.parent)
                 return;

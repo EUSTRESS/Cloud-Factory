@@ -19,8 +19,6 @@ public class Destroy_ob : MonoBehaviour
         {
             Destroy(part_prefab);
         }
-
-
         //else if(part_prefab.transform.position.x <  - 3 || part_prefab.transform.position.x > 3 )
         //{
         //    Destroy(part_prefab);

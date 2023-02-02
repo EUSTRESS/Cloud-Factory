@@ -16,7 +16,7 @@ public class GuestObject : MonoBehaviour
     public float        mMaxLimitTime;      // 손님이 대기하는 시간의 최대값
     public int          mGuestNum;          // 해당 오브젝트의 손님번호
     private Transform   mTransform;         // 위치값이 변하는지 확인하기 위한 변수
-    public GameObject   mTargetChair;       // 목표로 하는 의자의 위치
+    public Transform    mTargetChair;       // 목표로 하는 의자의 위치
     public int          mTargetChiarIndex;
 
     [Header("[FSM 관련]")]
@@ -143,7 +143,6 @@ public class GuestObject : MonoBehaviour
 
         textReader = this.gameObject.GetComponent<RLHReader>();
         isHintTextPrinted = false;
-
 	}
 
     // 걷는 애니메이션 출력
@@ -154,7 +153,7 @@ public class GuestObject : MonoBehaviour
         // 할당받는 의자 설정
         if (mTargetChiarIndex != -1 && isGotoEntrance == false)
         {
-            mTargetChair = mSOWManager.mChairPos[mTargetChiarIndex];
+            mTargetChair = mSOWManager.mChairPos[mTargetChiarIndex].transform;
             mSOWManager.mCheckChairEmpty[mTargetChiarIndex] = false;
             this.GetComponent<AIDestinationSetter>().enabled = true;
             this.GetComponent<AIDestinationSetter>().target = mTargetChair.transform;
@@ -198,7 +197,10 @@ public class GuestObject : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 if (mSOWManager.mUsingGuestList[i] == mGuestNum)
+                {
                     mSOWManager.mUsingGuestList.RemoveAt(i);
+                    mSOWManager.mUsingGuestObjectList.RemoveAt(i);
+                }
             }
 
             // 불만 손님으로 변환 후, 귀가
@@ -332,7 +334,7 @@ public class GuestObject : MonoBehaviour
         isSpeakEmotion = true;
 
         // 말풍선에 사용할 내용 불러오기 -> 리스트에서 감정값에 따라서 불러오기
-        string temp = "힌트 말풍선 입니다.";
+        string temp = textReader.PrintHintText();
         TextMeshPro Text = SpeechBubble.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>();
         Animator Anim = SpeechBubble.transform.GetChild(0).gameObject.GetComponent<Animator>();
         Text.text = temp;
@@ -342,6 +344,7 @@ public class GuestObject : MonoBehaviour
         // 말풍선 띄우기
         SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);
         Anim.SetTrigger("Start");
+        mGuestAnim.SetTrigger("Hint");
 
         // 일정시간 이후 말풍선 제거
         Invoke("EndBubble", 5.0f);
@@ -350,6 +353,7 @@ public class GuestObject : MonoBehaviour
     {
         Animator Anim = SpeechBubble.transform.GetChild(0).gameObject.GetComponent<Animator>();
         Anim.SetTrigger("EndBubble");
+        mGuestAnim.SetTrigger("EndHint");
         EndSpeakEmotion();
     }
 

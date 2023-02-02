@@ -48,7 +48,6 @@ public class LobbyUIManager : MonoBehaviour
     public Sprite sHoveringCon;
     public Sprite sUnHoveringCon;
 
-
     void Awake()
     {
         mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
@@ -197,6 +196,60 @@ public class LobbyUIManager : MonoBehaviour
 
         // 문자열을 int형으로 파싱해서 빌드 인덱스로 활용한다
         LoadingSceneController.Instance.LoadScene(int.Parse(sSceneData));
+
+        /////////////////////////////////////////////////
+        // Test : 손님의 정보값들을 불러오는 테스트 진행
+        //////////////////////////////////////////////////
+        
+        // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
+        Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
+        GuestManager.isContinue = true;
+
+        GuestManagerSaveData Info = new GuestManagerSaveData();
+        Info.mGuestCount = 0;
+
+        SOWSaveData sowInfo = new SOWSaveData();
+
+        {
+            List<GuestObjectSaveData> GuestList = new List<GuestObjectSaveData>();
+
+            // 임의로 저장할 오브젝트 정보값들을 대입한다.
+            GuestObjectSaveData temp = new GuestObjectSaveData();
+            temp.xPos = 1.75f;
+            temp.yPos = -2.97f;
+            temp.xScale = 1f;
+
+            temp.mGuestNum = 0;
+
+            temp.mTargetChairXpos = 1.75f;
+            temp.mTargetChairYpos = -2.97f;
+
+            temp.mTargetChairIndex = -1;
+            temp.isSit = false;
+            temp.isUsing = false;
+            temp.isMove = false;
+            temp.isGotoEntrance = false;
+            temp.isEndUsingCloud = false;
+
+            temp.WayNum = 3;
+
+            GuestList.Add(temp);
+
+            sowInfo.WaitObjectsData = GuestList;
+            sowInfo.mMaxChairNum = 3;
+
+            // 의자 정보도 임시로 채워넣는다.
+            for (int i = 0; i < sowInfo.mMaxChairNum; i++)
+            {
+                // 모든 의자는 비어있는 상태로 초기화
+                sowInfo.mCheckChairEmpty.Add(i, true);
+            }
+           
+        }
+        GuestManager.SaveSOWdatas = sowInfo;
+        GuestManager.isLoad = true;
+
+        GuestManager.LoadSaveInfo(Info);
     }
 
     public void ActiveOption()

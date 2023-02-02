@@ -51,6 +51,8 @@ namespace CloudSystem
         public List<EmotionInfo> mGetTotalEmoList(IngredientList mtrlDATA)
         {
             List<IngredientData> raw = mGetingredientDatas(mtrlDATA);
+            //재료들종류의 수를 데이터로 저장한다.
+
             List<EmotionInfo> results = new List<EmotionInfo>();
 
             //재료들의 감정들을 차례로 리스트에 추가한다.
@@ -447,29 +449,8 @@ public class CloudMakeSystem : MonoBehaviour
 
         GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>().createdCloudData = new CloudData(mEmotions);
 
-        ////////////////////아래는 변경될 예정. 
-        //구름 인벤토리 리스트 가져와서
-        int cnt = 0;
-
-        //빈 인벤토리 추척해서 구름 넣기.
-        //while(true)
-        //{
-        //    if (cnt >= 5) break; //인벤토리 크기 초과하면 실행X
-        //    if (L_cloudsInven[cnt].GetComponent<Image>().sprite != default_sprite)
-        //    {
-        //        cnt++;
-        //        continue;
-        //    }
-        //    L_cloudsInven[cnt].GetComponent<Image>().sprite = cloud_sprite;
-        //    L_cloudsInven[cnt].GetComponent<Button>().onClick.AddListener(DEMOcreateCloud);
-        //    break;
-        //}
     }
 
-    public void DEMOcreateCloud()
-    {
-        Debug.Log("구름이 저장되었습니다.");
-    }
    
     //초기화 함수
     private void init()

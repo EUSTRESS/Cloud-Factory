@@ -21,8 +21,7 @@ public class Guest : MonoBehaviour
     [Space(10f)]
     public int mGuestIndex;                                             // 이번에 방문할 뭉티의 번호
     public int[] mTodayGuestList = new int[NUM_OF_TODAY_GUEST_LIST];    // 오늘 방문 예정인 뭉티 목록
-    [SerializeField]
-    private int mGuestCount;                                            // 이번에 방문할 뭉티의 순서
+    public int mGuestCount;                                             // 방문한 뭉티의 숫자
 
     [Space (10f)]
     public float mGuestTime;                                            // 뭉티의 방문 주기의 현재 값
@@ -32,6 +31,11 @@ public class Guest : MonoBehaviour
     [SerializeField]
     private int mGuestMax;                                              // 오늘 방문하는 뭉티의 최대 숫자
 
+    public bool isContinue = false;
+
+    // SOWManger와 연동하여 값을 저장
+    public SOWSaveData SaveSOWdatas;                                 // 이어하기를 위한 데이터들을 저장해놓는 리스트
+    public bool isLoad = false;
 
     private static Guest instance = null;                               // 싱글톤 기법을 위함 instance 생성
     private void Awake()
@@ -59,10 +63,6 @@ public class Guest : MonoBehaviour
 
             isTimeToTakeGuest = false;
             isGuestInLivingRoom = false;
-
-            // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다.
-
-
         }
         else
         {
@@ -135,7 +135,79 @@ public class Guest : MonoBehaviour
             mGuestInfo[0].isDisSat = CheckIsDisSat(0);
             Debug.Log(mGuestInfo[0].isDisSat);
         }
+
+
+        // 이어하기인 경우 Load해서 받아온 데이터를 SOWManager로 넘겨준다.
+        if(isLoad && SceneManager.GetActiveScene().name == "Space Of Weather")
+        {
+            SOWManager sowManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+
+            if(sowManager != null)
+            {
+                isLoad = false;
+
+                // 의자가 비어있는지에 대한 정보를 넘겨준다.
+                sowManager.mCheckChairEmpty = SaveSOWdatas.mCheckChairEmpty;
+                sowManager.mMaxChairNum = 3;
+
+                // 대기상태 오브젝트에 대하여 넘겨준다.
+                foreach (GuestObjectSaveData data in SaveSOWdatas.WaitObjectsData)
+                {
+                    sowManager.mWaitGuestList.Enqueue(data.mGuestNum);
+                    sowManager.mWaitGuestObjectQueue.Enqueue(SetLoadGuest(data, sowManager));
+                }
+
+                // 착석상태 오브젝트에 대하여 넘겨준다.
+                foreach (GuestObjectSaveData data in SaveSOWdatas.UsingObjectsData)
+                {
+                    sowManager.mUsingGuestList.Add(data.mGuestNum);
+                    sowManager.mUsingGuestObjectList.Add(SetLoadGuest(data,sowManager));
+                }
+            }
+        }
+
     }
+
+    public GameObject SetLoadGuest(GuestObjectSaveData data, SOWManager sow)
+    {
+        GameObject tempObject;
+
+        // Instance 생성
+        tempObject = Instantiate(sow.mGuestObject);
+
+        // etc.
+        tempObject.GetComponent<RLHReader>().SetGuestNum(data.mGuestNum);
+        tempObject.GetComponent<WayPoint>().WayPos = sow.mWayPoint;
+        tempObject.GetComponent<WayPoint>().WayNum = data.WayNum;
+
+        // GuestObject.cs
+        GuestObject Info = tempObject.GetComponent<GuestObject>();
+        Info.setGuestNum(data.mGuestNum);
+        Info.initAnimator();
+        Info.init();
+        
+        Info.mTargetChiarIndex = data.mTargetChairIndex;
+        Info.isSit = data.isSit;
+        Info.isUsing = data.isUsing;
+        Info.isMove = data.isMove;
+        Info.isGotoEntrance = data.isGotoEntrance;
+        Info.isEndUsingCloud = data.isEndUsingCloud;
+
+        //Info.mTargetChair.position = new Vector3(data.mTargetChairXpos, data.mTargetChairYpos, 0.0f);
+
+        // transform
+        tempObject.transform.position = new Vector3(data.xPos,data.yPos,0.0f);
+        tempObject.transform.localScale = new Vector3(data.xScale, 1.0f, 1.0f);
+
+        if(Info.mTargetChiarIndex != -1 && Info.isSit == true)
+        {
+            Info.mGuestAnim.SetTrigger("AlreadySit");
+            Debug.Log("AlreadySit");
+        }
+
+        return tempObject;
+    }
+
 
     public void TakeGuest()
     {
@@ -585,5 +657,14 @@ public int[] DisSatGuestList() {
         for(int num = 0; num < 20; num++) { if (mGuestInfo[num].isDisSat == true) temp_list[temp_idx++] = num; }
 
         return temp_list;
+    }
+
+    public void LoadSaveInfo(GuestManagerSaveData Info)
+    {
+        Debug.Log("Load SaveInfo in GuestManager");
+
+
+        mGuestCount = Info.mGuestCount;
+
     }
 }

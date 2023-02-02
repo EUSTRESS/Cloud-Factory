@@ -6,7 +6,7 @@ public class WayPoint : MonoBehaviour
 {
     [SerializeField] public GameObject[] WayPos;
     [SerializeField] private float speed = 1.0f;
-    int WayNum = 0;
+    public int WayNum = 0;
     
     float standTime = 0.0f;
     float randomTime = 0.0f;
@@ -21,7 +21,6 @@ public class WayPoint : MonoBehaviour
 
     void Start()
     {
-        transform.position = WayPos[WayNum].transform.position;
         temp_X = this.transform.position.x;
         randomTime = Random.Range(0.5f, 1.0f);
         Anim = this.GetComponent<Animator>();

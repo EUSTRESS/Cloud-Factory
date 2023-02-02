@@ -87,3 +87,4 @@ public class GuestInfos
     [Header("[기타]")]
     public int[] mUsedCloud = new int[10];                          // 사용한 구름 리스트를 저장한다. 최대 10개
 }
+

@@ -41,7 +41,14 @@ public class CloudStorageProfile : MonoBehaviour
         GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
         UIManager = GameObject.Find("UIManager").GetComponent<RecordUIManager>();
 
-        UsingGuestNumList = SOWManager.mUsingGuestList.ToArray();
+        // 착석중인 손님 중, 구름을 제공받지 못한 손님만 제공 가능 리스트에 넣는다.
+        List<int> temp = new List<int>();
+        foreach(int i in SOWManager.mUsingGuestList)
+        {
+            if (GuestManager.mGuestInfo[i].isUsing == false) temp.Add(i);
+        }
+        UsingGuestNumList = temp.ToArray();
+
         numOfUsingGuestList = SOWManager.mUsingGuestList.Count;
 
         frontProfileInfo = 0;
@@ -162,14 +169,7 @@ public class CloudStorageProfile : MonoBehaviour
 
         // 리스트에서 사용받은 손님 제거하기
         SOWManager sow = GameObject.Find("SOWManager").GetComponent<SOWManager>();
-        int count = sow.mUsingGuestList.Count;
-        
-        for(int i = 0; i< count; i++)
-        {
-            if (sow.mUsingGuestList[i] == guestNum)
-                sow.mUsingGuestList.RemoveAt(i);
-        }
-       
+        int count = sow.mUsingGuestList.Count;       
 
         SOWManager.SetCloudData(guestNum, storagedCloudData);
 

@@ -12,12 +12,12 @@ public class SOWManager : MonoBehaviour
     [HideInInspector]
     public Queue<GameObject> mWaitGuestObjectQueue;     // 대기 손님 오브젝트들을 관리할 리스트
     [HideInInspector]
-    public Queue<GameObject> mUsingGuestObjectList;     // 사용 손님 오브젝트들을 관리할 리스트
+    public List<GameObject> mUsingGuestObjectList;     // 사용 손님 오브젝트들을 관리할 리스트
     
     [Header("[의자 & 웨이포인트 관련]")]
     public GameObject[] mChairPos;                      // 손님이 앉아서 구름을 사용할 의자(구름)
     public GameObject[] mWayPoint;                      // 손님이 걸어다니며 산책하는 경로들
-    public int[]mSitDir = {1,1,1,1};                                // 손님이 의자에 앉는 방향 ( 좌 : 0 , 우 : 1로 표시)
+    public int[]mSitDir = {1,1,1,1};                    // 손님이 의자에 앉는 방향 ( 좌 : 0 , 우 : 1로 표시)
 
     [HideInInspector]
     public Dictionary<int, bool> mCheckChairEmpty;      // 의자마다 의자가 비어있는지를 확인하는 딕셔너리 변수
@@ -28,7 +28,7 @@ public class SOWManager : MonoBehaviour
 
     [Header("[프리팹]")]
     [SerializeField]
-    private GameObject mGuestObject;                    // 인스턴스하여 생성할 손님 오브젝트 프리팹
+    public GameObject mGuestObject;                    // 인스턴스하여 생성할 손님 오브젝트 프리팹
 
     private Guest mGuestManager;                        // GuestManager를 가져온다.
     private static SOWManager instance = null;
@@ -77,7 +77,7 @@ public class SOWManager : MonoBehaviour
             mWaitGuestList          = new Queue<int>();
             mUsingGuestList         = new List<int>();
             mWaitGuestObjectQueue   = new Queue<GameObject>();
-            mUsingGuestObjectList   = new Queue<GameObject>();
+            mUsingGuestObjectList   = new List<GameObject>();
             mCheckChairEmpty        = new Dictionary<int, bool>();
             isNewGuest              = false;
             isCloudGet              = false;
@@ -87,7 +87,10 @@ public class SOWManager : MonoBehaviour
             InitSOW();
 
             // 이어하기를 하는 경우 날씨의 공간에 있던 손님들의 정보를 불러온다.
+            if(mGuestManager.isContinue)
+            {
 
+            }
         }
         else
         {
@@ -236,7 +239,7 @@ public class SOWManager : MonoBehaviour
         tempObject.GetComponent<GuestObject>().mTargetChiarIndex = chairNum;
 
         // 오브젝트를 사용자 오브젝트 목록으로 넣는다.
-        mUsingGuestObjectList.Enqueue(tempObject);
+        mUsingGuestObjectList.Add(tempObject);
 
         // Guest의 부여받은 의자 인덱스를 갱신
         mGuestManager.mGuestInfo[guestNum].mSitChairIndex = chairNum;
@@ -327,6 +330,17 @@ public class SOWManager : MonoBehaviour
         {
             mWayPoint[i].transform.position = new Vector3(WayPosList[weather][i][0], WayPosList[weather][i][1], 0f);
         }
+    }
+
+    void LoadSaveData()
+    {
+        // 계절에 맞는 UI불러오기
+
+        // 손님 오브젝트 리스트가 존재했는지 체크
+        // -> 있었다면 오브젝트를 생성하여 정보값을 넣는다.
+
+       
+
     }
 
 }

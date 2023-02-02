@@ -158,6 +158,9 @@ public class SaveUnitManager : MonoBehaviour
                 // 스트림 닫기
                 stream.Close();                
             }
+
+
+
         }
         // 종료될 때
         void OnDisable()

@@ -5,34 +5,33 @@ using System;
 
 public class Parts_fly : MonoBehaviour
 {
-    Rigidbody2D rigidbody;
+    Rigidbody2D Rigidbody;
     public static float fly_speed; // 파츠의 날라가는 속도
 
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
-        rigidbody.velocity = transform.position * fly_speed;
+        Rigidbody = GetComponent<Rigidbody2D>();
+        Rigidbody.velocity = transform.position * fly_speed;
     }
 
-    //void fly()
-    //{
-    //    rigidbody = GetComponent<Rigidbody2D>();
-    //    rigidbody.velocity = transform.position * fly_speed;
-    //}
-
-    public void change_speed_1_2()  // 왼쪽위와 오른쪽위에서 생성되는 파츠가날라가는속도
+    public void Change_speed_1()  // 왼쪽위에서 생성되는 파츠가날라가는속도
     {
-        fly_speed = 10.0f;
+        fly_speed = -1.0f;
     }
 
-    public void change_speed_3()    // 왼쪽밑에서 생성되는 파츠가 날라가는 속도
+    public void Change_speed_2()  // 오른쪽위에서 생성되는 파츠가날라가는속도
     {
-        fly_speed = 25.0f;
+        fly_speed = 1.0f;
     }
 
-    public void change_speed_4()    // 오른쪽밑에서 생성되는 파츠가 날라가는 속도
+    public void Change_speed_3()    // 왼쪽밑에서 생성되는 파츠가 날라가는 속도
     {
-        fly_speed = 15.0f;
+        fly_speed = -2.5f;
+    }
+
+    public void Change_speed_4()    // 오른쪽밑에서 생성되는 파츠가 날라가는 속도
+    {
+        fly_speed = 1.5f;
     }
 
 }

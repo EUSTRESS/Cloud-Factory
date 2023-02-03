@@ -54,7 +54,7 @@ public class CloudSpawner : MonoBehaviour
         // 임시로 인벤토리에 들어있는 구름 중, 맨 앞에 있는 구름의 값을 가져온다.
         CloudData = storagedCloudData;
 
-        tempCLoud.GetComponent<CloudObject>().SetValue(CloudData.mFinalEmotions);
+        tempCLoud.GetComponent<CloudObject>().SetValue(CloudData);
         tempCLoud.GetComponent<CloudObject>().SetGuestNum(guestNum);
         //tempCLoud.GetComponent<CloudObject>().SetSprite(ConvertTextureWithAlpha(CloudData.mTexImage));
 

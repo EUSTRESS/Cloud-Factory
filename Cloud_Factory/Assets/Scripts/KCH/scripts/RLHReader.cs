@@ -26,10 +26,27 @@ public class RLHReader : MonoBehaviour
 		mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
 
 		LoadHintInfo();
-		Debug.Log(tText);
 	}
 
-    void LoadHintInfo()
+	//ProfileManager.cs
+	public string LoadRecordInfo(int guest_num)
+	{
+		List<RLHDBEntity> Record;
+		Record = mRLHDB.SetHintByGuestNum(guest_num);
+
+		if(Record == null) { return ""; }
+
+		for(int num = 0; num < Record.Count; num++)
+		{
+			if (Record[num].GuestID == guest_num + 1
+				&& Record[num].Type == "record")
+			{ tText = "";  tText = Record[num].KOR; }
+		}
+		return tText;
+	}
+
+	//GuestObject.cs
+    private void LoadHintInfo()
 	{
 		List<RLHDBEntity> Hint;
 		Hint = mRLHDB.SetHintByGuestNum(mGuestNum);

@@ -19,6 +19,7 @@ public class CloudObject : MonoBehaviour
     public int mGuestNum;                       // 타겟 손님 번호
     public int cloudSpeed;                      // 구름 속도
     public List<EmotionInfo> mFinalEmotions;    // 변환할 감정값 리스트
+    private StoragedCloudData virtualCloudData;
 
     [Header("구름 이동 및 사용 정보")]
     public bool isAlive = false;                //
@@ -178,6 +179,9 @@ public class CloudObject : MonoBehaviour
         // 만족도 값 갱신
         GuestManager.RenewakSat(mGuestNum);
 
+        //사용한 구름 정보 업데이트
+        GuestManager.mGuestInfo[mGuestNum].mUsedCloud.Add(virtualCloudData);
+
         return true;
     }
 
@@ -188,9 +192,10 @@ public class CloudObject : MonoBehaviour
         targetChairPos = SOWManager.mChairPos[GuestManager.mGuestInfo[guestNum].mSitChairIndex].transform;
     }
 
-    public void SetValue(List<EmotionInfo> CloudData)
+    public void SetValue(StoragedCloudData CloudData)
     {
-        mFinalEmotions = CloudData;
+        virtualCloudData = CloudData;
+        mFinalEmotions = CloudData.mFinalEmotions;
     }
 
     public void SetGuestNum(int _guestNum)

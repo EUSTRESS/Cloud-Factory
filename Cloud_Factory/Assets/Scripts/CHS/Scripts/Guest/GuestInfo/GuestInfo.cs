@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [System.Serializable]
 public struct SSatEmotion
@@ -50,7 +51,7 @@ public class GuestInfo : ScriptableObject
     public bool isUsing = false;                                    // 구름을 제공받았는지
 
     [Header("[기타]")]
-    public int[] mUsedCloud = new int[10];                          // 사용한 구름 리스트를 저장한다. 최대 10개
+	public List<StoragedCloudData> mUsedCloud = new List<StoragedCloudData>();                          // 사용한 구름 리스트를 저장한다. 최대 10개
 }
 
 
@@ -85,6 +86,6 @@ public class GuestInfos
     public bool isUsing = false;                                    // 구름을 제공받았는지
 
     [Header("[기타]")]
-    public int[] mUsedCloud = new int[10];                          // 사용한 구름 리스트를 저장한다. 최대 10개
+    public List<StoragedCloudData> mUsedCloud = new List<StoragedCloudData>();                          // 사용한 구름 리스트를 저장한다. 최대 10개
 }
 

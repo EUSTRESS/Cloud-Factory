@@ -66,6 +66,7 @@ public class CloudDecoManager : MonoBehaviour
 
     //Image
     public GameObject I_targetCloud; //스케치북 위에 올리는 구름 이미지 게임오브젝트
+    private GameObject I_BasicDecoCloud;
     public GameObject I_PartsMenu; //증감소 파츠 메뉴
 
     public Sprite[] I_SelectedSticker; //선택됨을 알려주는 테이프 이미지
@@ -186,6 +187,7 @@ public class CloudDecoManager : MonoBehaviour
     public void cloudDecoBackBtn() // 스케치북 결과 | Reset 버튼
     {
         Destroy(P_FinSBook.transform.GetChild(0).GetChild(0).gameObject); //삭제
+        I_targetCloud = I_BasicDecoCloud;
         initParam();
         init();
 
@@ -478,28 +480,25 @@ public class CloudDecoManager : MonoBehaviour
     IEnumerator popUpFinSBook()
     {
         isDecoDone = true;
-        GameObject FinCloud = Instantiate(I_targetCloud, I_targetCloud.transform.position, I_targetCloud.transform.rotation);
-        //스케치북에 붙여진 파츠들은 <CloudDecoManager>아래에 저장되는데, 이를 저장할때는 구름베이스 하위로 바꾼다.
-        while (transform.childCount != 0)
-        {
-            transform.GetChild(0).SetParent(FinCloud.transform);
-        }
-        GameObject Capture = Instantiate(FinCloud, FinCloud.transform.position, FinCloud.transform.rotation);
-        Capture.transform.SetParent(CaptureZone.transform);
+        GameObject FinCloud = Instantiate(I_targetCloud, I_targetCloud.transform.position, I_targetCloud.transform.rotation);    
 
         yield return new WaitForSeconds(1.0f);
 
+		//스케치북에 붙여진 파츠들은 <CloudDecoManager>아래에 저장되는데, 이를 저장할때는 구름베이스 하위로 바꾼다.
+		while (transform.childCount != 0)
+		{
+			transform.GetChild(0).SetParent(FinCloud.transform);
+		}
+		GameObject Capture = Instantiate(FinCloud, FinCloud.transform.position, FinCloud.transform.rotation);
+		Capture.transform.SetParent(CaptureZone.transform);
 
-        FinCloud.transform.SetParent(P_FinSBook.transform.GetChild(0).transform);
+		FinCloud.transform.SetParent(P_FinSBook.transform.GetChild(0).transform);
         FinCloud.transform.localPosition = new Vector3(0, 0, 0);
 
+        I_BasicDecoCloud = I_targetCloud;
         I_targetCloud = FinCloud;
 
         P_FinSBook.SetActive(true);
-
-
-
-       
 
         yield break;
 

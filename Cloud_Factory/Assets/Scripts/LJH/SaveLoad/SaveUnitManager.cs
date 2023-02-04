@@ -16,6 +16,8 @@ public class SaveUnitManager : MonoBehaviour
     private static SaveUnitManager instance = null;
 
     private InventoryManager mInvenManager;
+    private Guest mGuestManager;
+
 
     // 모든 씬에 넣어 놓을 것이기 때문에 중복은 파괴처리
     // 어느 씬에서 저장되고 로드될 것인지 모르기 때문에
@@ -32,6 +34,7 @@ public class SaveUnitManager : MonoBehaviour
         }
 
         mInvenManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+        mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
     }
 
 
@@ -58,115 +61,199 @@ public class SaveUnitManager : MonoBehaviour
         {
             String key = "key";
 
-            //================================================================================//
-            //==================================현재 씬 저장==================================//
-            //================================================================================//
+            // 현재 씬 저장
+            Save_SceneIdx(scene, mode, key);
+            // 날짜 계절 저장
+            Save_SeasonDate();
+            // 인벤토리 저장
+            Save_Inventory();
 
-            // 새롭게 로딩된 씬의 데이터를 저장한다
-            SceneData.Instance.currentSceneIndex = scene.buildIndex;
+            // GuestManager 저장
+            Save_GuestInfo();
+            Save_SOWSaveData();
+        }
 
-            // 저장하는 함수 호출
-            // 일단은 하나니까 이렇게 넣고 많아지면 클래스 만들어서 정리하기
-            FileStream fSceneBuildIndexStream
-                // 파일 경로 + 내가 만든 폴더 경로에 json 저장 / 모드는 SAVE
-                = new FileStream(Application.dataPath + "/Data/SceneBuildIndex.json", FileMode.OpenOrCreate);
+    }
 
-            // sData로 변수를 직렬화한다        
-            // 현재 씬 인덱스 저장
-            string sSceneData = JsonConvert.SerializeObject(SceneData.Instance.currentSceneIndex);
-            // 암호화
-            sSceneData = AESWithJava.Con.Program.Encrypt(sSceneData, key);
+    void Save_SceneIdx(Scene scene, LoadSceneMode mode, String Key)
+    {
+        // 새롭게 로딩된 씬의 데이터를 저장한다
+        SceneData.Instance.currentSceneIndex = scene.buildIndex;
 
-            // text 데이터로 인코딩한다
-            byte[] bSceneData = Encoding.UTF8.GetBytes(sSceneData);
+        // 저장하는 함수 호출
+        // 일단은 하나니까 이렇게 넣고 많아지면 클래스 만들어서 정리하기
+        FileStream fSceneBuildIndexStream
+            // 파일 경로 + 내가 만든 폴더 경로에 json 저장 / 모드는 SAVE
+            = new FileStream(Application.dataPath + "/Data/SceneBuildIndex.json", FileMode.OpenOrCreate);
 
-            // text 데이터를 작성한다
-            fSceneBuildIndexStream.Write(bSceneData, 0, bSceneData.Length);
-            fSceneBuildIndexStream.Close();
+        // sData로 변수를 직렬화한다        
+        // 현재 씬 인덱스 저장
+        string sSceneData = JsonConvert.SerializeObject(SceneData.Instance.currentSceneIndex);
+        // 암호화
+        sSceneData = AESWithJava.Con.Program.Encrypt(sSceneData, Key);
 
-            //================================================================================//
-            //=================================날짜 계절 저장=================================//
-            //================================================================================//
+        // text 데이터로 인코딩한다
+        byte[] bSceneData = Encoding.UTF8.GetBytes(sSceneData);
 
-            // jsonUtility
-            string mSeasonDatePath = Path.Combine(Application.dataPath + "/Data/", "SeasonDate.json");
+        // text 데이터를 작성한다
+        fSceneBuildIndexStream.Write(bSceneData, 0, bSceneData.Length);
+        fSceneBuildIndexStream.Close();
+    }
 
-            // 저장하는 공간 클래스 선언
-            // Class를 Json으로 넘기면 self 참조 반복이 일어나기 때문에
-            // 외부라이브러리를 제외하고 유니티 Utility를 활용한다.
+    void Save_SeasonDate()
+    {
+        // jsonUtility
+        string mSeasonDatePath = Path.Combine(Application.dataPath + "/Data/", "SeasonDate.json");
 
-            // 하나의 json파일에 저장하기 위해서 클래스 새롭게 생성 후 클래스 단위로 저장
-            // 새로운 오브젝트에 클래스 선언 후 업데이트
-            GameObject gSeasonDate = new GameObject();
-            SeasonDateCalc seasonDate = gSeasonDate.AddComponent<SeasonDateCalc>();
+        // 저장하는 공간 클래스 선언
+        // Class를 Json으로 넘기면 self 참조 반복이 일어나기 때문에
+        // 외부라이브러리를 제외하고 유니티 Utility를 활용한다.
 
-            // 업데이트
-            seasonDate.mSecond = SeasonDateCalc.Instance.mSecond;
-            seasonDate.mDay = SeasonDateCalc.Instance.mDay;
-            seasonDate.mSeason = SeasonDateCalc.Instance.mSeason;
-            seasonDate.mYear = SeasonDateCalc.Instance.mYear;
+        // 하나의 json파일에 저장하기 위해서 클래스 새롭게 생성 후 클래스 단위로 저장
+        // 새로운 오브젝트에 클래스 선언 후 업데이트
+        GameObject gSeasonDate = new GameObject();
+        SeasonDateCalc seasonDate = gSeasonDate.AddComponent<SeasonDateCalc>();
 
-            // 클래스의 맴버변수들을 json파일로 변환한다 (class, prettyPrint) true면 읽기 좋은 형태로 저장해줌
-            // seasonDataSaveBox 클래스 단위로 json 변환
-            string sSeasonData = JsonUtility.ToJson(gSeasonDate.GetComponent<SeasonDateCalc>(), true);
-            Debug.Log(sSeasonData);
-            // 암호화
-            // sSeasonData = AESWithJava.Con.Program.Encrypt(sSeasonData, key);
+        // 업데이트
+        seasonDate.mSecond = SeasonDateCalc.Instance.mSecond;
+        seasonDate.mDay = SeasonDateCalc.Instance.mDay;
+        seasonDate.mSeason = SeasonDateCalc.Instance.mSeason;
+        seasonDate.mYear = SeasonDateCalc.Instance.mYear;
 
-            Debug.Log(sSeasonData);
+        // 클래스의 맴버변수들을 json파일로 변환한다 (class, prettyPrint) true면 읽기 좋은 형태로 저장해줌
+        // seasonDataSaveBox 클래스 단위로 json 변환
+        string sSeasonData = JsonUtility.ToJson(gSeasonDate.GetComponent<SeasonDateCalc>(), true);
+        Debug.Log(sSeasonData);
+        // 암호화
+        // sSeasonData = AESWithJava.Con.Program.Encrypt(sSeasonData, key);
 
-            File.WriteAllText(mSeasonDatePath, sSeasonData);
+        //Debug.Log(sSeasonData);
 
-            //******************************************//
-            // 예람이꺼 저장(인벤토리)
-            if (mInvenManager) // null check
+        File.WriteAllText(mSeasonDatePath, sSeasonData);
+    }
+
+    void Save_Inventory()
+    {
+        if (mInvenManager) // null check
+        {
+            // 암호화는 나중에 한번에 하기
+
+            // 파일이 있다면
+            if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "InventoryData.json")))
             {
-                // 암호화는 나중에 한번에 하기
+                // 삭제
+                System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "InventoryData.json"));
 
-                // 파일이 있다면
-                if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "InventoryData.json")))
-                {
-                    // 삭제
-                    System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "InventoryData.json"));
+            }
+            // 삭제 후 다시 개방
+            // 이유는, 동적으로 생성 될 경우에 json을 초기화 하지 않고 덮어 씌우기 때문에 전에 있던 데이터보다 적을 경우
+            // 뒤에 남는 쓰레기 값들로 인하여 역직렬화 오류 발생함
+            // 동적으로 생성하는 경우가 아닌 경우 (ex, 현재 씬 인덱스 등)은 상관 없음
+            // 파일 스트림 개방
+            FileStream stream = new FileStream(Application.dataPath + "/Data/InventoryData.json", FileMode.OpenOrCreate);
 
-                }
-                // 삭제 후 다시 개방
-                // 이유는, 동적으로 생성 될 경우에 json을 초기화 하지 않고 덮어 씌우기 때문에 전에 있던 데이터보다 적을 경우
-                // 뒤에 남는 쓰레기 값들로 인하여 역직렬화 오류 발생함
-                // 동적으로 생성하는 경우가 아닌 경우 (ex, 현재 씬 인덱스 등)은 상관 없음
-                // 파일 스트림 개방
-                FileStream stream = new FileStream(Application.dataPath + "/Data/InventoryData.json", FileMode.OpenOrCreate);
+            // 저장할 변수가 담긴 클래스 생성
+            InventoryData mInventoryData = new InventoryData();
 
-                // 저장할 변수가 담긴 클래스 생성
-                InventoryData mInventoryData = new InventoryData();
+            // 데이터 업데이트
+            mInventoryData.mType = mInvenManager.mType.ToList();
+            mInventoryData.mCnt = mInvenManager.mCnt.ToList();
+            mInventoryData.minvenLevel = mInvenManager.minvenLevel;
+            mInventoryData.mMaxInvenCnt = mInvenManager.mMaxInvenCnt;
+            mInventoryData.mMaxStockCnt = mInvenManager.mMaxStockCnt;
 
-                // 데이터 업데이트
-                mInventoryData.mType = mInvenManager.mType.ToList();
-                mInventoryData.mCnt = mInvenManager.mCnt.ToList();
-                mInventoryData.minvenLevel = mInvenManager.minvenLevel;
-                mInventoryData.mMaxInvenCnt = mInvenManager.mMaxInvenCnt;
-                mInventoryData.mMaxStockCnt = mInvenManager.mMaxStockCnt;
+            // 데이터 직렬화
+            string jInventoryData = JsonConvert.SerializeObject(mInventoryData);
 
-                // 데이터 직렬화
-                string jInventoryData = JsonConvert.SerializeObject(mInventoryData);
-                
-                // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
-                byte[] bInventoryData = Encoding.UTF8.GetBytes(jInventoryData);
-                Debug.Log(jInventoryData);
-                // 해당 파일 스트림에 적는다.                
-                stream.Write(bInventoryData, 0, bInventoryData.Length);
-                // 스트림 닫기
-                stream.Close();                
+            // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+            byte[] bInventoryData = Encoding.UTF8.GetBytes(jInventoryData);
+            Debug.Log(jInventoryData);
+            // 해당 파일 스트림에 적는다.                
+            stream.Write(bInventoryData, 0, bInventoryData.Length);
+            // 스트림 닫기
+            stream.Close();
+        }
+    }
+
+    void Save_GuestInfo()
+    {
+        if (mGuestManager) // null check
+        {
+            // 파일이 있다면
+            if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "GuestManagerData.json")))
+            {
+                // 삭제
+                System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "GuestManagerData.json"));
             }
 
+            FileStream stream = new FileStream(Application.dataPath + "/Data/GuestManagerData.json", FileMode.OpenOrCreate);
 
+            // 저장할 변수가 담긴 클래스 생성
+            GuestManagerSaveData mGuestManagerData = new GuestManagerSaveData();
 
+            // 데이터 업데이트
+            // 변수 리스트가 동일하면 발 ㅗ될듯
+            // mGuestManagerData.GuestInfos = mGuestManager.mGuestInfo.Clone() as GuestInfoSaveData[];
+                        
+            mGuestManagerData.isGuestLivingRoom = /*여기만 넣고싶은거 넣으면 댐*/ mGuestManager.isGuestInLivingRoom;
+            mGuestManagerData.isTimeToTakeGuest = mGuestManager.isTimeToTakeGuest;
+            mGuestManagerData.mGuestIndex = mGuestManager.mGuestIndex;
+            mGuestManagerData.mTodayGuestList = mGuestManager.mTodayGuestList.Clone() as int[];
+            mGuestManagerData.mGuestCount = mGuestManager.mGuestCount;
+            mGuestManagerData.mGuestTime = mGuestManager.mGuestTime;
+
+            // 데이터 직렬화
+            string jInventoryData = JsonConvert.SerializeObject(mGuestManagerData);
+
+            // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+            byte[] bInventoryData = Encoding.UTF8.GetBytes(jInventoryData);
+            Debug.Log(jInventoryData);
+            // 해당 파일 스트림에 적는다.                
+            stream.Write(bInventoryData, 0, bInventoryData.Length);
+            // 스트림 닫기
+            stream.Close();
         }
-        // 종료될 때
-        void OnDisable()
+    }
+
+    void Save_SOWSaveData()
+    {
+        if (mGuestManager) // null check
         {
-            // 제거
-            SceneManager.sceneLoaded -= OnSceneLoaded;
+            // 파일이 있다면
+            if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "SOWSaveData.json")))
+            {
+                // 삭제
+                System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "SOWSaveData.json"));
+            }
+
+            FileStream stream = new FileStream(Application.dataPath + "/Data/SOWSaveData.json", FileMode.OpenOrCreate);
+
+            // 저장할 변수가 담긴 클래스 생성
+            SOWSaveData mGuestManagerData = new SOWSaveData();
+
+            // 데이터 업데이트            
+            mGuestManagerData.UsingObjectsData = mGuestManager.SaveSOWdatas.UsingObjectsData.ToList();
+            mGuestManagerData.WaitObjectsData = mGuestManager.SaveSOWdatas.WaitObjectsData.ToList();
+            mGuestManagerData.mMaxChairNum = mGuestManager.SaveSOWdatas.mMaxChairNum;
+            mGuestManagerData.mCheckChairEmpty = new Dictionary<int, bool>(mGuestManager.SaveSOWdatas.mCheckChairEmpty);
+
+            // 데이터 직렬화
+            string jInventoryData = JsonConvert.SerializeObject(mGuestManagerData);
+
+            // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+            byte[] bInventoryData = Encoding.UTF8.GetBytes(jInventoryData);
+            Debug.Log(jInventoryData);
+            // 해당 파일 스트림에 적는다.                
+            stream.Write(bInventoryData, 0, bInventoryData.Length);
+            // 스트림 닫기
+            stream.Close();
         }
+    }
+
+    // 종료될 때
+    void OnDisable()
+    {
+        // 제거
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

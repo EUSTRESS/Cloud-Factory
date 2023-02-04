@@ -135,11 +135,20 @@ public class LobbyUIManager : MonoBehaviour
         // 복호화
         sSceneData = AESWithJava.Con.Program.Decrypt(sSceneData, key);
 
-        /*
-         저장된 날짜 시간 계절 로딩         
-         */
+       
+        // Load_Data
+        Load_SeasonDate();
+        Load_Inventory();
+        Load_Guest();
+        Load_SOW();
 
-        // jsonUitlity (모노비헤이비어 상속된 클래스 사용 가능, 딕셔너리 사용 불가능)
+        // 문자열을 int형으로 파싱해서 빌드 인덱스로 활용한다
+        LoadingSceneController.Instance.LoadScene(int.Parse(sSceneData));        
+
+    }
+
+    void Load_SeasonDate()
+    {
         string mSeasonDatePath = Path.Combine(Application.dataPath + "/Data/", "SeasonDate.json");
 
         if (File.Exists(mSeasonDatePath)) // null check
@@ -162,9 +171,10 @@ public class LobbyUIManager : MonoBehaviour
             SeasonDateCalc.Instance.mYear = gSeasonDate.GetComponent<SeasonDateCalc>().mYear;
         }
 
-        //******************************************//
-        // 예람이꺼 저장(인벤토리)
-        // 파일 경로로 파일이 있는 지 체크
+    }
+
+    void Load_Inventory()
+    {
         string mInvenDataPath = Path.Combine(Application.dataPath + "/Data/", "InventoryData.json");
         // 파일 스트림 개방
         FileStream stream = new FileStream(Application.dataPath + "/Data/InventoryData.json", FileMode.Open);
@@ -192,65 +202,95 @@ public class LobbyUIManager : MonoBehaviour
             mInvenManager.mMaxInvenCnt = dInventoryData.mMaxInvenCnt;
             mInvenManager.mMaxStockCnt = dInventoryData.mMaxStockCnt;
         }
-        //******************************************//
-
-        // 문자열을 int형으로 파싱해서 빌드 인덱스로 활용한다
-        LoadingSceneController.Instance.LoadScene(int.Parse(sSceneData));
-
-        /////////////////////////////////////////////////
-        // Test : 손님의 정보값들을 불러오는 테스트 진행
-        //////////////////////////////////////////////////
-        
-        // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
-        Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
-        GuestManager.isContinue = true;
-
-        GuestManagerSaveData Info = new GuestManagerSaveData();
-        Info.mGuestCount = 0;
-
-        SOWSaveData sowInfo = new SOWSaveData();
-
-        {
-            List<GuestObjectSaveData> GuestList = new List<GuestObjectSaveData>();
-
-            // 임의로 저장할 오브젝트 정보값들을 대입한다.
-            GuestObjectSaveData temp = new GuestObjectSaveData();
-            temp.xPos = 1.75f;
-            temp.yPos = -2.97f;
-            temp.xScale = 1f;
-
-            temp.mGuestNum = 0;
-
-            temp.mTargetChairXpos = 1.75f;
-            temp.mTargetChairYpos = -2.97f;
-
-            temp.mTargetChairIndex = -1;
-            temp.isSit = false;
-            temp.isUsing = false;
-            temp.isMove = false;
-            temp.isGotoEntrance = false;
-            temp.isEndUsingCloud = false;
-
-            temp.WayNum = 3;
-
-            GuestList.Add(temp);
-
-            sowInfo.WaitObjectsData = GuestList;
-            sowInfo.mMaxChairNum = 3;
-
-            // 의자 정보도 임시로 채워넣는다.
-            for (int i = 0; i < sowInfo.mMaxChairNum; i++)
-            {
-                // 모든 의자는 비어있는 상태로 초기화
-                sowInfo.mCheckChairEmpty.Add(i, true);
-            }
-           
-        }
-        GuestManager.SaveSOWdatas = sowInfo;
-        GuestManager.isLoad = true;
-
-        GuestManager.LoadSaveInfo(Info);
     }
+    void Load_Guest()
+    {
+        string mGuestManagerDataPath = Path.Combine(Application.dataPath + "/Data/", "GuestManagerData.json");
+        // 파일 스트림 개방
+        FileStream ManagerStream = new FileStream(Application.dataPath + "/Data/GuestManagerData.json", FileMode.Open);
+
+        if (File.Exists(mGuestManagerDataPath)) // 해당 파일이 생성되었으면 불러오기
+        {
+            // 복호화는 나중에 한번에 하기
+            // 스트림 배열만큼 바이트 배열 생성
+            byte[] bGuestInfoData = new byte[ManagerStream.Length];
+            // 읽어오기
+            ManagerStream.Read(bGuestInfoData, 0, bGuestInfoData.Length);
+            ManagerStream.Close();
+
+            // jsondata를 스트링 타입으로 가져오기
+            string jGuestInfoData = Encoding.UTF8.GetString(bGuestInfoData);
+            Debug.Log(jGuestInfoData);
+
+            // 역직렬화
+            GuestManagerSaveData dGuestInfoData = JsonConvert.DeserializeObject<GuestManagerSaveData>(jGuestInfoData);
+
+
+            // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
+            Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
+            GuestManager.isContinue = true;
+
+            // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
+
+            // guest manager 로딩
+            /*저장할 데이터 값*/
+            GuestManager.isGuestInLivingRoom =  /*불러오는 데이터 값*/dGuestInfoData.isGuestLivingRoom;
+            GuestManager.isTimeToTakeGuest = dGuestInfoData.isTimeToTakeGuest;
+            GuestManager.mGuestIndex = dGuestInfoData.mGuestIndex;
+            GuestManager.mTodayGuestList = dGuestInfoData.mTodayGuestList.Clone() as int[];
+            GuestManager.mGuestCount = dGuestInfoData.mGuestCount;
+            GuestManager.mGuestTime = dGuestInfoData.mGuestTime;
+        }
+
+    }
+    void Load_SOW()
+    {
+        string mSOWSaveDataPath = Path.Combine(Application.dataPath + "/Data/", "SOWSaveData.json");
+        // 파일 스트림 개방
+        FileStream SOWSaveStream = new FileStream(Application.dataPath + "/Data/SOWSaveData.json", FileMode.Open);
+
+        if (File.Exists(mSOWSaveDataPath)) // 해당 파일이 생성되었으면 불러오기
+        {
+            // 복호화는 나중에 한번에 하기
+            // 스트림 배열만큼 바이트 배열 생성
+            byte[] bSOWSaveData = new byte[SOWSaveStream.Length];
+            // 읽어오기
+            SOWSaveStream.Read(bSOWSaveData, 0, bSOWSaveData.Length);
+            SOWSaveStream.Close();
+
+            // jsondata를 스트링 타입으로 가져오기
+            string jSOWSaveData = Encoding.UTF8.GetString(bSOWSaveData);
+            Debug.Log(jSOWSaveData);
+
+            // 역직렬화
+            SOWSaveData dSOWSaveData = JsonConvert.DeserializeObject<SOWSaveData>(jSOWSaveData);
+
+
+            // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
+            Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
+            GuestManager.isContinue = true;
+
+            // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
+
+            // data 로딩
+            GuestManagerSaveData Info = new GuestManagerSaveData();
+            Info.mGuestCount = 0;
+
+            SOWSaveData sowInfo = new SOWSaveData();
+            {
+                sowInfo.UsingObjectsData = dSOWSaveData.UsingObjectsData.ToList();
+                sowInfo.WaitObjectsData = dSOWSaveData.WaitObjectsData.ToList();
+                sowInfo.mMaxChairNum = dSOWSaveData.mMaxChairNum;
+                sowInfo.mCheckChairEmpty = new Dictionary<int, bool>(dSOWSaveData.mCheckChairEmpty);
+            }
+
+            GuestManager.SaveSOWdatas = sowInfo;
+            GuestManager.isLoad = true;
+
+            GuestManager.LoadSaveInfo(Info);
+        }
+    }
+
 
     public void ActiveOption()
     {

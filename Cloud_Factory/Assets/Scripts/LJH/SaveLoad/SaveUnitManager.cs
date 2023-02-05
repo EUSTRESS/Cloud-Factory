@@ -18,7 +18,6 @@ public class SaveUnitManager : MonoBehaviour
     private InventoryManager mInvenManager;
     private Guest mGuestManager;
 
-
     // 모든 씬에 넣어 놓을 것이기 때문에 중복은 파괴처리
     // 어느 씬에서 저장되고 로드될 것인지 모르기 때문에
     void Awake()
@@ -193,8 +192,32 @@ public class SaveUnitManager : MonoBehaviour
 
             // 데이터 업데이트
             // 변수 리스트가 동일하면 발 ㅗ될듯
-            // mGuestManagerData.GuestInfos = mGuestManager.mGuestInfo.Clone() as GuestInfoSaveData[];
-                        
+            {
+                const int NUM_OF_GUEST = 20;
+                GuestInfoSaveData[] GuestInfos = new GuestInfoSaveData[NUM_OF_GUEST];
+
+                for(int i = 0; i < NUM_OF_GUEST; i++)
+                {
+                    GuestInfos info = mGuestManager.mGuestInfo[i];
+                    GuestInfoSaveData data = new GuestInfoSaveData();
+
+                    data.mEmotion = info.mEmotion;
+                    data.mSatatisfaction = info.mSatatisfaction;
+                    data.mSatVariation = info.mSatVariation;
+                    data.isChosen = info.isChosen;
+                    data.isDisSat = info.isDisSat;
+                    data.isCure = info.isCure;
+                    data.mVisitCount = info.mVisitCount;
+                    data.mNotVisitCount = info.mNotVisitCount;
+                    data.mSitChairIndex = info.mSitChairIndex;
+                    data.isUsing = info.isUsing;
+
+                    GuestInfos[i] = data;
+                }
+
+                mGuestManagerData.GuestInfos = GuestInfos.Clone() as GuestInfoSaveData[];
+                //mGuestManagerData.GuestInfos = mGuestManager.mGuestInfo.Clone() as GuestInfoSaveData[];
+            }
             mGuestManagerData.isGuestLivingRoom = /*여기만 넣고싶은거 넣으면 댐*/ mGuestManager.isGuestInLivingRoom;
             mGuestManagerData.isTimeToTakeGuest = mGuestManager.isTimeToTakeGuest;
             mGuestManagerData.mGuestIndex = mGuestManager.mGuestIndex;
@@ -231,11 +254,72 @@ public class SaveUnitManager : MonoBehaviour
             // 저장할 변수가 담긴 클래스 생성
             SOWSaveData mGuestManagerData = new SOWSaveData();
 
-            // 데이터 업데이트            
-            mGuestManagerData.UsingObjectsData = mGuestManager.SaveSOWdatas.UsingObjectsData.ToList();
-            mGuestManagerData.WaitObjectsData = mGuestManager.SaveSOWdatas.WaitObjectsData.ToList();
-            mGuestManagerData.mMaxChairNum = mGuestManager.SaveSOWdatas.mMaxChairNum;
-            mGuestManagerData.mCheckChairEmpty = new Dictionary<int, bool>(mGuestManager.SaveSOWdatas.mCheckChairEmpty);
+            // UsingObjectsData와 WaitObjectsData의 정보들을 채운다.
+            SOWManager mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+
+            if (mSOWManager == null) return;
+
+            List<GuestObjectSaveData> UsingObjectsData = new List<GuestObjectSaveData>();
+            List<GuestObjectSaveData> WaitObjectsData = new List<GuestObjectSaveData>();
+
+            foreach(GameObject obj in mSOWManager.mWaitGuestObjectQueue)
+            {
+                GuestObjectSaveData temp = new GuestObjectSaveData();
+                temp.xPos = obj.transform.position.x;
+                temp.yPos = obj.transform.position.y;
+                temp.xScale = obj.transform.localScale.x;
+
+                GuestObject Info = obj.GetComponent<GuestObject>();
+
+                temp.mGuestNum = Info.mGuestNum;
+                temp.mTargetChairXpos = Info.mTargetChair.transform.position.x;
+                temp.mTargetChairYpos = Info.mTargetChair.transform.position.y;
+                temp.mTargetChairIndex = Info.mTargetChiarIndex;
+                temp.isSit = Info.isSit;
+                temp.isUsing = Info.isMove;
+                temp.isGotoEntrance = Info.isGotoEntrance;
+                temp.isEndUsingCloud = Info.isEndUsingCloud;
+
+                WayPoint wayPoint = obj.GetComponent<WayPoint>();
+
+                temp.WayNum = wayPoint.WayNum;
+
+                WaitObjectsData.Add(temp);
+            }
+
+            foreach (GameObject obj in mSOWManager.mUsingGuestObjectList)
+            {
+                GuestObjectSaveData temp = new GuestObjectSaveData();
+                temp.xPos = obj.transform.position.x;
+                temp.yPos = obj.transform.position.y;
+                temp.xScale = obj.transform.localScale.x;
+
+                GuestObject Info = obj.GetComponent<GuestObject>();
+
+                temp.mGuestNum = Info.mGuestNum;
+                temp.mTargetChairIndex = Info.mTargetChiarIndex;
+                temp.isSit = Info.isSit;
+                temp.isUsing = Info.isMove;
+                temp.isGotoEntrance = Info.isGotoEntrance;
+                temp.isEndUsingCloud = Info.isEndUsingCloud;
+
+                WayPoint wayPoint = obj.GetComponent<WayPoint>();
+
+                temp.WayNum = wayPoint.WayNum;
+
+                UsingObjectsData.Add(temp);
+            }
+
+            mGuestManager.SaveSOWdatas.mCheckChairEmpty     = mSOWManager.mCheckChairEmpty;
+            mGuestManager.SaveSOWdatas.WaitObjectsData      = WaitObjectsData.ToList<GuestObjectSaveData>();
+            mGuestManager.SaveSOWdatas.UsingObjectsData     = UsingObjectsData.ToList<GuestObjectSaveData>();
+            mGuestManager.SaveSOWdatas.mMaxChairNum         = mSOWManager.mMaxChairNum;
+
+            // 데이터 업데이트    
+            mGuestManagerData.UsingObjectsData  = mGuestManager.SaveSOWdatas.UsingObjectsData.ToList();
+            mGuestManagerData.WaitObjectsData   = mGuestManager.SaveSOWdatas.WaitObjectsData.ToList();
+            mGuestManagerData.mMaxChairNum      = mGuestManager.SaveSOWdatas.mMaxChairNum;
+            mGuestManagerData.mCheckChairEmpty  = new Dictionary<int, bool>(mGuestManager.SaveSOWdatas.mCheckChairEmpty);
 
             // 데이터 직렬화
             string jInventoryData = JsonConvert.SerializeObject(mGuestManagerData);

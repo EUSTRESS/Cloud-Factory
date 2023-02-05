@@ -85,12 +85,6 @@ public class SOWManager : MonoBehaviour
             // 현재 단계에 맞는 의자 개수 설정
             mMaxChairNum = 3;
             InitSOW();
-
-            // 이어하기를 하는 경우 날씨의 공간에 있던 손님들의 정보를 불러온다.
-            if(mGuestManager.isContinue)
-            {
-
-            }
         }
         else
         {

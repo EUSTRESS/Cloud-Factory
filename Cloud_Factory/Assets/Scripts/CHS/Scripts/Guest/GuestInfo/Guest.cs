@@ -78,7 +78,7 @@ public class SOWSaveData
 public class Guest : MonoBehaviour
 {
     // 상수 선언
-    private const int NUM_OF_GUEST = 20;                                // 손님의 총 인원 수
+    public const int NUM_OF_GUEST = 20;                                 // 손님의 총 인원 수
     private const int NUM_OF_TODAY_GUEST_LIST = 6;                      // 하루에 방문하는 손님의 총 인원 수
 
     [Header ("[손님 정보값 리스트]")]
@@ -102,8 +102,6 @@ public class Guest : MonoBehaviour
 
     [SerializeField]
     private int mGuestMax;                                              // 오늘 방문하는 뭉티의 최대 숫자
-
-    public bool isContinue = false;
 
     // SOWManger와 연동하여 값을 저장
     public SOWSaveData SaveSOWdatas;                                 // 이어하기를 위한 데이터들을 저장해놓는 리스트
@@ -168,11 +166,7 @@ public class Guest : MonoBehaviour
         //Guest 방문 리스트 확인을 위한 테스트 코드
         if (Input.GetKeyDown(KeyCode.P))
         {
-            int[] tempList = NewChoiceGuest();
-            for(int i = 0; i < tempList.Length; i++)
-            {
-                Debug.Log("Guest" + (i + 1) + " : " + tempList[i]);
-            }
+            mGuestInfo[0].mEmotion[0] += 5;
 		}
 
         //
@@ -220,6 +214,9 @@ public class Guest : MonoBehaviour
 
                 // 의자가 비어있는지에 대한 정보를 넘겨준다.
                 sowManager.mCheckChairEmpty = SaveSOWdatas.mCheckChairEmpty;
+
+                Debug.Log(sowManager.mCheckChairEmpty);
+
                 sowManager.mMaxChairNum = 3;
 
                 // 대기상태 오브젝트에 대하여 넘겨준다.
@@ -521,32 +518,30 @@ public class Guest : MonoBehaviour
 
 
     // 해당 뭉티를 초기화 시켜주는 함수
-    public void InitGuestData(int guestNum) // 추후에 개발
+    public void InitGuestData(int guestNum) 
     {
         // 스크립터블 오브젝트로 만들어 놓은 초기 데이터값을 받아와서 초기화를 시킨다.
 
         GuestInfos temp         = new GuestInfos();
-        temp.mName              = mGuestInitInfos[guestNum].mName;
+        temp.mName              = mGuestInitInfos[guestNum].mName.Clone() as string;
         temp.mSeed              = mGuestInitInfos[guestNum].mSeed;
-        temp.mEmotion           = mGuestInitInfos[guestNum].mEmotion;
+        temp.mEmotion           = mGuestInitInfos[guestNum].mEmotion.Clone() as int[];
         temp.mAge               = mGuestInitInfos[guestNum].mAge;
         temp.mJob               = mGuestInitInfos[guestNum].mJob;
         temp.mSatatisfaction    = mGuestInitInfos[guestNum].mSatatisfaction;
-		temp.mSatVariation      = mGuestInitInfos[guestNum].mSatVariation;
-		temp.mSatEmotions       = mGuestInitInfos[guestNum].mSatEmotions;
+        temp.mSatVariation      = mGuestInitInfos[guestNum].mSatVariation;
+        temp.mSatEmotions       = mGuestInitInfos[guestNum].mSatEmotions;
         temp.mLimitEmotions     = mGuestInitInfos[guestNum].mLimitEmotions;
-        temp.isDisSat           = mGuestInitInfos[guestNum].isDisSat;
-        temp.isCure             = mGuestInitInfos[guestNum].isCure;
-        temp.mVisitCount        = mGuestInitInfos[guestNum].mVisitCount;
-        temp.mNotVisitCount     = mGuestInitInfos[guestNum].mNotVisitCount;
-        temp.isChosen           = mGuestInitInfos[guestNum].isChosen;
-        temp.mUsedCloud         = mGuestInitInfos[guestNum].mUsedCloud;
-        temp.mSitChairIndex     = mGuestInitInfos[guestNum].mSitChairIndex;
-        temp.isUsing            = mGuestInitInfos[guestNum].isUsing;
+        temp.isDisSat           = false;
+        temp.isCure             = false;
+        temp.mVisitCount        = 0;
+        temp.mNotVisitCount     = 0;
+        temp.isChosen           = false;
+        temp.mUsedCloud         = new List<StoragedCloudData>();
+        temp.mSitChairIndex     = -1;
+        temp.isUsing            = false;
 
-        mGuestInfo[guestNum]    = temp;
-
-        Debug.Log(mGuestInitInfos[guestNum].mName);
+        mGuestInfo[guestNum] = temp;
     }
 
     // TODO : 함수 개편
@@ -555,7 +550,6 @@ public class Guest : MonoBehaviour
     {
         mGuestTime = 0.0f;
         isTimeToTakeGuest = false;
-        Debug.Log("방문주기 초기화");
     }
 
     // 하루가 지나면서 초기화가 필요한 정보들을 변환해준다.
@@ -729,14 +723,5 @@ public int[] DisSatGuestList() {
         for(int num = 0; num < 20; num++) { if (mGuestInfo[num].isDisSat == true) temp_list[temp_idx++] = num; }
 
         return temp_list;
-    }
-
-    public void LoadSaveInfo(GuestManagerSaveData Info)
-    {
-        Debug.Log("Load SaveInfo in GuestManager");
-
-
-        mGuestCount = Info.mGuestCount;
-
     }
 }

@@ -290,6 +290,14 @@ public class LobbyUIManager : MonoBehaviour
             // 역직렬화
             SOWSaveData dSOWSaveData = JsonConvert.DeserializeObject<SOWSaveData>(jSOWSaveData);
 
+            // 데이터 직렬화
+            string jData = JsonConvert.SerializeObject(dSOWSaveData);
+
+            // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+            //Debug.Log("=======Load : dSOWSaveData =========");
+            //Debug.Log(jData);
+            //Debug.Log("=======Load=========");
+
             // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
             Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
 
@@ -303,8 +311,19 @@ public class LobbyUIManager : MonoBehaviour
                 sowInfo.mCheckChairEmpty = new Dictionary<int, bool>(dSOWSaveData.mCheckChairEmpty);
             }
 
+            //string jAData = JsonConvert.SerializeObject(sowInfo);
+            //Debug.Log("=======Load : sowInfo =========");
+            //Debug.Log(jAData);
+            //Debug.Log("=======Load=========");
+
             GuestManager.SaveSOWdatas = sowInfo;
             GuestManager.isLoad = true;
+
+            //string jBData = JsonConvert.SerializeObject(GuestManager.SaveSOWdatas);
+            //Debug.Log("=======Load :  GuestManager.SaveSOWdatas  =========");
+            //Debug.Log(jBData);
+            //Debug.Log("=======Load=========");
+
         }
     }
 

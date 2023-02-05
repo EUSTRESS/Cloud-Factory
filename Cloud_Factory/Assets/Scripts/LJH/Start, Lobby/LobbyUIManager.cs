@@ -228,12 +228,37 @@ public class LobbyUIManager : MonoBehaviour
 
             // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
             Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
-            GuestManager.isContinue = true;
 
             // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
 
             // guest manager 로딩
             /*저장할 데이터 값*/
+
+            {
+                const int NUM_OF_GUEST = 20;
+                GuestInfos GuestInfos = new GuestInfos();
+
+                for (int i = 0; i < NUM_OF_GUEST; i++)
+                {
+                    GuestInfoSaveData info = dGuestInfoData.GuestInfos[i];
+
+                    if (info == null) Debug.Log("Info Null");
+
+                    GuestManager.mGuestInfo[i].mEmotion = info.mEmotion.Clone() as int[]; ;
+                    GuestManager.mGuestInfo[i].mSatatisfaction = info.mSatatisfaction;
+                    GuestManager.mGuestInfo[i].mSatVariation = info.mSatVariation;
+                    GuestManager.mGuestInfo[i].isChosen = info.isChosen;
+                    GuestManager.mGuestInfo[i].isDisSat = info.isDisSat;
+                    GuestManager.mGuestInfo[i].isCure = info.isCure;
+                    GuestManager.mGuestInfo[i].mVisitCount = info.mVisitCount;
+                    GuestManager.mGuestInfo[i].mNotVisitCount = info.mNotVisitCount;
+                    GuestManager.mGuestInfo[i].mSitChairIndex = info.mSitChairIndex;
+                    GuestManager.mGuestInfo[i].isUsing = info.isUsing;
+                }
+                //mGuestManagerData.GuestInfos = mGuestManager.mGuestInfo.Clone() as GuestInfoSaveData[];
+            }
+
+
             GuestManager.isGuestInLivingRoom =  /*불러오는 데이터 값*/dGuestInfoData.isGuestLivingRoom;
             GuestManager.isTimeToTakeGuest = dGuestInfoData.isTimeToTakeGuest;
             GuestManager.mGuestIndex = dGuestInfoData.mGuestIndex;
@@ -265,16 +290,10 @@ public class LobbyUIManager : MonoBehaviour
             // 역직렬화
             SOWSaveData dSOWSaveData = JsonConvert.DeserializeObject<SOWSaveData>(jSOWSaveData);
 
-
             // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
             Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
-            GuestManager.isContinue = true;
 
             // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
-
-            // data 로딩
-            GuestManagerSaveData Info = new GuestManagerSaveData();
-            Info.mGuestCount = 0;
 
             SOWSaveData sowInfo = new SOWSaveData();
             {
@@ -286,8 +305,6 @@ public class LobbyUIManager : MonoBehaviour
 
             GuestManager.SaveSOWdatas = sowInfo;
             GuestManager.isLoad = true;
-
-            GuestManager.LoadSaveInfo(Info);
         }
     }
 

@@ -133,6 +133,10 @@ public class Guest : MonoBehaviour
 
             isTimeToTakeGuest = false;
             isGuestInLivingRoom = false;
+
+            
+
+
         }
         else
         {
@@ -202,13 +206,12 @@ public class Guest : MonoBehaviour
             Debug.Log(mGuestInfo[0].isDisSat);
         }
 
-
         // 이어하기인 경우 Load해서 받아온 데이터를 SOWManager로 넘겨준다.
-        if(isLoad && SceneManager.GetActiveScene().name == "Space Of Weather")
+        if (isLoad && SceneManager.GetActiveScene().name == "Space Of Weather")
         {
             SOWManager sowManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
-            if(sowManager != null)
+            if (sowManager != null)
             {
                 isLoad = false;
 
@@ -230,11 +233,11 @@ public class Guest : MonoBehaviour
                 foreach (GuestObjectSaveData data in SaveSOWdatas.UsingObjectsData)
                 {
                     sowManager.mUsingGuestList.Add(data.mGuestNum);
-                    sowManager.mUsingGuestObjectList.Add(SetLoadGuest(data,sowManager));
+                    sowManager.mUsingGuestObjectList.Add(SetLoadGuest(data, sowManager));
                 }
+
             }
         }
-
     }
 
     public GameObject SetLoadGuest(GuestObjectSaveData data, SOWManager sow)

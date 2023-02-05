@@ -56,7 +56,7 @@ public class SaveUnitManager : MonoBehaviour
         }
 
         // 로비에서는 저장할 필요가 없음
-        if (scene.name != "Lobby" && SceneData.Instance) // null check && lobby 제한
+        if (scene.name != "Lobby" && SceneData.Instance && !mGuestManager.isLoad) // null check && lobby 제한
         {
             String key = "key";
 
@@ -191,7 +191,6 @@ public class SaveUnitManager : MonoBehaviour
             GuestManagerSaveData mGuestManagerData = new GuestManagerSaveData();
 
             // 데이터 업데이트
-            // 변수 리스트가 동일하면 발 ㅗ될듯
             {
                 const int NUM_OF_GUEST = 20;
                 GuestInfoSaveData[] GuestInfos = new GuestInfoSaveData[NUM_OF_GUEST];
@@ -226,13 +225,13 @@ public class SaveUnitManager : MonoBehaviour
             mGuestManagerData.mGuestTime = mGuestManager.mGuestTime;
 
             // 데이터 직렬화
-            string jInventoryData = JsonConvert.SerializeObject(mGuestManagerData);
+            string jData = JsonConvert.SerializeObject(mGuestManagerData);
 
             // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
-            byte[] bInventoryData = Encoding.UTF8.GetBytes(jInventoryData);
-            Debug.Log(jInventoryData);
+            byte[] bData = Encoding.UTF8.GetBytes(jData);
+            Debug.Log(jData);
             // 해당 파일 스트림에 적는다.                
-            stream.Write(bInventoryData, 0, bInventoryData.Length);
+            stream.Write(bData, 0, bData.Length);
             // 스트림 닫기
             stream.Close();
         }
@@ -310,6 +309,16 @@ public class SaveUnitManager : MonoBehaviour
                 UsingObjectsData.Add(temp);
             }
 
+            //string jBData = JsonConvert.SerializeObject(WaitObjectsData);
+            //Debug.Log("=======Save :  WaitObjectsData  =========");
+            //Debug.Log(jBData);
+            //Debug.Log("=======Save=========");
+
+            //string jCData = JsonConvert.SerializeObject(UsingObjectsData);
+            //Debug.Log("=======Save :  UsingObjectsData  =========");
+            //Debug.Log(jCData);
+            //Debug.Log("=======Save=========");
+
             mGuestManager.SaveSOWdatas.mCheckChairEmpty     = mSOWManager.mCheckChairEmpty;
             mGuestManager.SaveSOWdatas.WaitObjectsData      = WaitObjectsData.ToList<GuestObjectSaveData>();
             mGuestManager.SaveSOWdatas.UsingObjectsData     = UsingObjectsData.ToList<GuestObjectSaveData>();
@@ -322,13 +331,13 @@ public class SaveUnitManager : MonoBehaviour
             mGuestManagerData.mCheckChairEmpty  = new Dictionary<int, bool>(mGuestManager.SaveSOWdatas.mCheckChairEmpty);
 
             // 데이터 직렬화
-            string jInventoryData = JsonConvert.SerializeObject(mGuestManagerData);
+            string jData = JsonConvert.SerializeObject(mGuestManagerData);
 
             // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
-            byte[] bInventoryData = Encoding.UTF8.GetBytes(jInventoryData);
-            Debug.Log(jInventoryData);
+            byte[] bData = Encoding.UTF8.GetBytes(jData);
+            Debug.Log(jData);
             // 해당 파일 스트림에 적는다.                
-            stream.Write(bInventoryData, 0, bInventoryData.Length);
+            stream.Write(bData, 0, bData.Length);
             // 스트림 닫기
             stream.Close();
         }

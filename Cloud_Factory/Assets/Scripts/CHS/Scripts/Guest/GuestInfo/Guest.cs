@@ -47,10 +47,8 @@ public class GuestObjectSaveData
     public float xScale;
 
     // GuestObject.cs
-    public int mGuestNum;
-
-    public float mTargetChairXpos;
-    public float mTargetChairYpos;
+    public int   mGuestNum;
+    public float mLimitTime;
 
     public int mTargetChairIndex;
     public bool isSit;
@@ -257,7 +255,8 @@ public class Guest : MonoBehaviour
         Info.setGuestNum(data.mGuestNum);
         Info.initAnimator();
         Info.init();
-        
+
+        Info.mLimitTime = data.mLimitTime;
         Info.mTargetChiarIndex = data.mTargetChairIndex;
         Info.isSit = data.isSit;
         Info.isUsing = data.isUsing;

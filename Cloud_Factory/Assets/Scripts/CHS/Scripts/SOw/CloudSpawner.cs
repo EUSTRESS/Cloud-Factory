@@ -17,6 +17,19 @@ public class CloudSpawner : MonoBehaviour
 
     private GameObject  tempCLoud;          // 구름 제공 전 정보값을 채우기 위한 Temp 오브젝트
 
+    public static Sprite Cloud_sprite;
+
+    public static Sprite Part_sprite;
+
+    public static bool Cloud_Spawn;
+
+    public static int Target_guest_Num;
+
+    public static Vector3 Cloud_scale;
+
+    public static Vector3 Part_scale;
+
+
 
     // 처음 받아와야 하는 값
     // 1) 날아갈 의자의 인덱스
@@ -45,20 +58,33 @@ public class CloudSpawner : MonoBehaviour
     public void SpawnCloud(int guestNum, StoragedCloudData storagedCloudData)
     {
         // 구름 인스턴스 생성
-        tempCLoud = Instantiate(CloudObject);
-        tempCLoud.transform.position = this.transform.position;
+        //tempCLoud = Instantiate(CloudObject);
+        //tempCLoud.transform.position = this.transform.position;
 
         // 목표 의자 위치 설정
-        tempCLoud.GetComponent<CloudObject>().SetTargetChair(guestNum);
+        //tempCLoud.GetComponent<CloudObject>().SetTargetChair(guestNum);
 
         // 임시로 인벤토리에 들어있는 구름 중, 맨 앞에 있는 구름의 값을 가져온다.
-        CloudData = storagedCloudData;
+        //CloudData = storagedCloudData;
 
-        tempCLoud.GetComponent<CloudObject>().SetValue(CloudData);
-        tempCLoud.GetComponent<CloudObject>().SetGuestNum(guestNum);
+        //tempCLoud.GetComponent<CloudObject>().SetValue(CloudData);
+        //tempCLoud.GetComponent<CloudObject>().SetGuestNum(guestNum);
+
+        Cloud_sprite = storagedCloudData.mVBase.mImage;             // 구름이미지 스프라이트로 저장
+        Cloud_scale = new Vector3(0.11f, 0.12f, 0.5f);                      // 가져온 구름이미지 스케일 변경
+        for (int i = 0; i < storagedCloudData.mVPartsList.Count; i++)   // 파츠이미지 스프라이트로 저장
+        {
+            Part_sprite = storagedCloudData.mVPartsList[i].mImage;
+        }
+        Part_scale = new Vector3(0.09f, 0.09f, 0.5f);                       // 가져온 파츠이미지 스케일변경
+        Cloud_Spawn = true;                                                     // 구름과파츠이미지 가져온후 구름에 넣기전 확인하는 bool변수 true로 변경
+
+        Target_guest_Num = guestNum;
+        //tempCLoud.GetComponent<SpriteRenderer>().sprite = storagedCloudData.mVBase.mImage;
+
         //tempCLoud.GetComponent<CloudObject>().SetSprite(ConvertTextureWithAlpha(CloudData.mTexImage));
 
-        tempCLoud.transform.localScale = new Vector3(0.11f, 0.12f, 0.5f);
+        //tempCLoud.transform.localScale = new Vector3(0.11f, 0.12f, 0.5f);
     }
 
     private Sprite ConvertTextureWithAlpha(Texture2D target)

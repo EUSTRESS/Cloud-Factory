@@ -68,6 +68,7 @@ public class CloudData
     public int mShelfLife;
     public List<EmotionInfo> mEmotions;
 
+    
     private bool[] isCloudAnimProgressed;
     private bool mState; //0 = Æó±â 1 = °¡´É
     private Sprite mcloudBaseImage;

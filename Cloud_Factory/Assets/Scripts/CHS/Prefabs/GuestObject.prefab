@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 134559230105719105}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_LocalScale: {x: 1, y: 0.9, z: 1}
   m_Children: []
   m_Father: {fileID: 2779473273403081310}
   m_RootOrder: 0
@@ -641,7 +641,7 @@ Transform:
   m_GameObject: {fileID: 5879352038581427232}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3148823345915690110}
   - {fileID: 2779473273403081310}
@@ -787,6 +787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WayPos: []
   speed: 1
+  WayNum: 0
   isMove: 1
   temp_X: 0
 --- !u!114 &1747554680
@@ -980,15 +981,15 @@ RectTransform:
   m_GameObject: {fileID: 6345532713300255412}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2779473273403081310}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.034, y: 0.1747}
-  m_SizeDelta: {x: 1.7823, y: 1.0595}
+  m_AnchoredPosition: {x: 0.051, y: 0.1773}
+  m_SizeDelta: {x: 1.8068, y: 0.7846}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3798422383002064232
 MeshRenderer:
@@ -1051,9 +1052,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB098 \uC870\uAE08 \uB354 \uBD88\uC548\uD574\uC57C \uD560 \uAC83 \uAC19\uC544.
-    \uADF8\uB9AC\uACE0 \uB354 \uC774\uC0C1\uC758 \uC0AC\uB791\uC740 \uB290\uB07C\uACE0
-    \uC2F6\uC9C0 \uC54A\uC544."
+  m_text: "\uC8FC\uC778\uACF5\uC740 \uC790\uC2E0\uC774 \uC5C4\uCCAD\uB098\uAC8C \uC791\uC544\uC9C4
+    \uAC83 \uAC19\uC740 \uB290\uB08C\uC774 \uB4E4 \uAC70\uC57C\u2026 \uC9C0\uAE08\uC740
+    \uACBD\uC678\uAC00 \uBD80\uC871\uD574!\uBAA8\uB4E0 \uC77C\uC774 \uC798 \uD480\uB9B4
+    \uAC83 \uAC19\uC544\u2026 \uB099\uCC9C\uC801\uC778 \uAC74 \uC2EB\uC740\uB370."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a28d11cba5a28b441857effe89245b6d, type: 2}
   m_sharedMaterial: {fileID: -6506522519756165077, guid: a28d11cba5a28b441857effe89245b6d, type: 2}
@@ -1080,8 +1082,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2
-  m_fontSizeBase: 2
+  m_fontSize: 1.7
+  m_fontSizeBase: 1.7
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1097,7 +1099,7 @@ MonoBehaviour:
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
+  m_wordWrappingRatios: 0.5
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
@@ -1116,7 +1118,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0.07751036, w: 0.021185637}
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

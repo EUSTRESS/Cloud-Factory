@@ -270,9 +270,8 @@ public class SaveUnitManager : MonoBehaviour
 
                 GuestObject Info = obj.GetComponent<GuestObject>();
 
+                temp.mLimitTime = Info.mLimitTime;
                 temp.mGuestNum = Info.mGuestNum;
-                temp.mTargetChairXpos = Info.mTargetChair.transform.position.x;
-                temp.mTargetChairYpos = Info.mTargetChair.transform.position.y;
                 temp.mTargetChairIndex = Info.mTargetChiarIndex;
                 temp.isSit = Info.isSit;
                 temp.isUsing = Info.isMove;
@@ -296,6 +295,7 @@ public class SaveUnitManager : MonoBehaviour
                 GuestObject Info = obj.GetComponent<GuestObject>();
 
                 temp.mGuestNum = Info.mGuestNum;
+                temp.mLimitTime = Info.mLimitTime;
                 temp.mTargetChairIndex = Info.mTargetChiarIndex;
                 temp.isSit = Info.isSit;
                 temp.isUsing = Info.isMove;

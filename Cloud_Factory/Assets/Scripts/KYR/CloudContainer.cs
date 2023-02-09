@@ -20,16 +20,16 @@ public class CloudContainer : MonoBehaviour
     InventoryManager inventoryManager;
 
     [SerializeField]
-    private List<StoragedCloudData> mUiStocksData; //UI»ó¿¡ º¸¿©Áö´Â StocksData
+    private List<StoragedCloudData> mUiStocksData; //UIìƒì— ë³´ì—¬ì§€ëŠ” StocksData
 
     /////////////////////
-    //ÀÎº¥Åä¸® Á¤·Ä UI//
+    //ì¸ë²¤í† ë¦¬ ì •ë ¬ UI//
     ////////////////////
     [SerializeField]
     private Dropdown mDropDown;
 
-    private int mSortedCnt; //¼±ÅÃÁ¤·ÄµÈ°³¼ö
-    private List<StoragedCloudData> mSortedData; //UI»ó¿¡ º¸¿©Áö´Â StocksData
+    private int mSortedCnt; //ì„ íƒì •ë ¬ëœê°œìˆ˜
+    private List<StoragedCloudData> mSortedData; //UIìƒì— ë³´ì—¬ì§€ëŠ” StocksData
 
 
     // Start is called before the first frame update
@@ -54,10 +54,10 @@ public class CloudContainer : MonoBehaviour
         if (inventoryManager == null)
             inventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
 
-        //ÇØ´ç ±¸¸§ ¼±ÅÃ UI Ç¥½Ã
+        //í•´ë‹¹ êµ¬ë¦„ ì„ íƒ UI í‘œì‹œ
         Transform selected = EventSystem.current.currentSelectedGameObject.transform;
         mSelecedCloud = mUiStocksData[selected.GetSiblingIndex()];
-        Debug.Log("±¸¸§ ¼±ÅÃ:" + mUiStocksData[selected.GetSiblingIndex()]);
+        Debug.Log("êµ¬ë¦„ ì„ íƒ:" + mUiStocksData[selected.GetSiblingIndex()]);
     }
 
     public void unclicked() //matarial in cloudmaker deselected
@@ -65,9 +65,9 @@ public class CloudContainer : MonoBehaviour
         GameObject target = EventSystem.current.currentSelectedGameObject;
         Sprite sprite = target.GetComponent<Image>().sprite;
 
-        if (sprite.name == "Circle") return; //¿¹¿ÜÃ³¸®
+        if (sprite.name == "Circle") return; //ì˜ˆì™¸ì²˜ë¦¬
 
-        //ÇØ´ç ±¸¸§ ¼±ÅÃ UI Ç¥½Ã Ãë¼Ò
+        //í•´ë‹¹ êµ¬ë¦„ ì„ íƒ UI í‘œì‹œ ì·¨ì†Œ
     }
 
     public void cancelDropdownEvent()
@@ -98,13 +98,13 @@ public class CloudContainer : MonoBehaviour
         if (order == "public")
         {
             mUiStocksData = new List<StoragedCloudData>();
-            mUiStocksData = invenData; //UI¸ñ·Ï¿¡ º¹ºÙ!
+            mUiStocksData = invenData; //UIëª©ë¡ì— ë³µë¶™!
 
             int tmp = 0;
             foreach (StoragedCloudData stock in mUiStocksData)
             {
                 GameObject invenUI = transform.GetChild(tmp).gameObject;
-                mUiInvenStocks.Add(invenUI); //UIInvenGameObject List Ãß°¡.
+                mUiInvenStocks.Add(invenUI); //UIInvenGameObject List ì¶”ê°€.
                 tmp++;
             }
         }
@@ -116,7 +116,7 @@ public class CloudContainer : MonoBehaviour
     private void setInven(List<StoragedCloudData> _mData)
     {
 
-        //invenData¸¦ invenContainer(UI)List¿¡ ³Ö¾îÁØ´Ù.
+        //invenDataë¥¼ invenContainer(UI)Listì— ë„£ì–´ì¤€ë‹¤.
         int tmp = 0;
         foreach (StoragedCloudData stock in _mData)
         {
@@ -129,14 +129,14 @@ public class CloudContainer : MonoBehaviour
                 cntTxt.transform.GetComponent<TMP_Text>().text = stock.mdate.ToString();
             }
 
-            //¹öÆ° ÄÄÆ÷³ÍÆ®°¡ ¾øÀ¸¸é ¸¸µé¾îÁØ´Ù.
+            //ë²„íŠ¼ ì»´í¬ë„ŒíŠ¸ê°€ ì—†ìœ¼ë©´ ë§Œë“¤ì–´ì¤€ë‹¤.
             if (invenUI.transform.GetComponent<Button>() == null)
             {
                 Button btn = invenUI.AddComponent<Button>();
                 btn.onClick.AddListener(clicked);
             }
 
-            //°¡»ó µ¥ÀÌÅÍ µéÀ» °ÔÀÓ ¿ÀºêÁ§Æ®·Î Convert ÇÏ¿© Instantiate ÇÏ´Â °úÁ¤.
+            //ê°€ìƒ ë°ì´í„° ë“¤ì„ ê²Œì„ ì˜¤ë¸Œì íŠ¸ë¡œ Convert í•˜ì—¬ Instantiate í•˜ëŠ” ê³¼ì •.
             GameObject obejct;
             obejct = Virtualobjectmanager.convertVirtualToGameObject(stock.mVBase);
 
@@ -161,7 +161,7 @@ public class CloudContainer : MonoBehaviour
             obejct.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
 
 
-            //À¯Åë±âÇÑ ¾÷µ¥ÀÌÆ®.
+            //ìœ í†µê¸°í•œ ì—…ë°ì´íŠ¸.
             invenUI.name = stock.mdate.ToString();
 
             tmp++;
@@ -169,10 +169,10 @@ public class CloudContainer : MonoBehaviour
     }
     private void clearInven(List<StoragedCloudData> _mData)
     {
-        //ÇöÀç ÀÖ´Â °ÔÀÓ ¿ÀºêÁ§Æ®¿Í »õ·Î µé¾î¿À´Â °³¼ö ºñ±³ÇÑ´Ù.
+        //í˜„ì¬ ìˆëŠ” ê²Œì„ ì˜¤ë¸Œì íŠ¸ì™€ ìƒˆë¡œ ë“¤ì–´ì˜¤ëŠ” ê°œìˆ˜ ë¹„êµí•œë‹¤.
         int difference = _mData.Count - mUiInvenStocks.Count;
-        //ÇöÀç ÀÖ´Â°Ô ´õ ¸¹À» °æ¿ì : Â÷¾×À» ÃÊ±âÈ­
-        if (difference < 0) //difference°¡ 2ÀÌ¸é 
+        //í˜„ì¬ ìˆëŠ”ê²Œ ë” ë§ì„ ê²½ìš° : ì°¨ì•¡ì„ ì´ˆê¸°í™”
+        if (difference < 0) //differenceê°€ 2ì´ë©´ 
         {
             for (int i = _mData.Count; i < mUiInvenStocks.Count; i++)
             {
@@ -194,7 +194,7 @@ public class CloudContainer : MonoBehaviour
         }
         else
         {
-            //ÇöÀç ÀÖ´Â°Ô ´õ ÀûÀ» °æ¿ì : Â÷¾×¸¸Å­ ÄÄÆ÷³ÍÆ® »ı¼º
+            //í˜„ì¬ ìˆëŠ”ê²Œ ë” ì ì„ ê²½ìš° : ì°¨ì•¡ë§Œí¼ ì»´í¬ë„ŒíŠ¸ ìƒì„±
             for (int i = mUiInvenStocks.Count; i < _mData.Count; i++)
             {
                 GameObject invenUI = mUiInvenStocks[i];
@@ -210,7 +210,7 @@ public class CloudContainer : MonoBehaviour
                     nameTxt.transform.GetComponent<TMP_Text>().text = "000";
                 }
 
-                //¹öÆ° ÄÄÆ÷³ÍÆ®°¡ ¾øÀ¸¸é ¸¸µé¾îÁØ´Ù.
+                //ë²„íŠ¼ ì»´í¬ë„ŒíŠ¸ê°€ ì—†ìœ¼ë©´ ë§Œë“¤ì–´ì¤€ë‹¤.
                 if (invenUI.transform.GetComponent<Button>() == null)
                 {
                     Button btn = invenUI.AddComponent<Button>();
@@ -226,29 +226,29 @@ public class CloudContainer : MonoBehaviour
         }
     }
 
-    //ÀÎº¥Åä¸® ¸ñ·ÏÀÌ ¼öÁ¤µÈ ÈÄ¿¡´Â ¹«Á¶°Ç ÀçÁ¤·ÄÇÏ¿©¼­ UI¿¡ º¸¿©ÁÖ´Â ¸ñ·Ïµµ UpdateÇØÁÖ¾î¾ß ÇÑ´Ù.
+    //ì¸ë²¤í† ë¦¬ ëª©ë¡ì´ ìˆ˜ì •ëœ í›„ì—ëŠ” ë¬´ì¡°ê±´ ì¬ì •ë ¬í•˜ì—¬ì„œ UIì— ë³´ì—¬ì£¼ëŠ” ëª©ë¡ë„ Updateí•´ì£¼ì–´ì•¼ í•œë‹¤.
 
     /////////////////////
-    //ÀÎº¥Åä¸® Á¤·Ä ÇÔ¼ö//
+    //ì¸ë²¤í† ë¦¬ ì •ë ¬ í•¨ìˆ˜//
     ////////////////////
 
 
-    //¸®½ºÆ® ÀÚÃ¼¸¦ Á¤·ÄÇÑ´Ù. Á¤·Ä ÇÒ ¶§´Â »õ ¸®½ºÆ®¸¦ ¸¸µé¾î¼­ UI¿¡ ¹İ¿µÇÑ´Ù.
-    public List<StoragedCloudData> sortStock(int _emotion) //°¨Á¤º°·Î ºĞ·ù
+    //ë¦¬ìŠ¤íŠ¸ ìì²´ë¥¼ ì •ë ¬í•œë‹¤. ì •ë ¬ í•  ë•ŒëŠ” ìƒˆ ë¦¬ìŠ¤íŠ¸ë¥¼ ë§Œë“¤ì–´ì„œ UIì— ë°˜ì˜í•œë‹¤.
+    public List<StoragedCloudData> sortStock(int _emotion) //ê°ì •ë³„ë¡œ ë¶„ë¥˜
     {
          List<StoragedCloudData> results = new List<StoragedCloudData>();
 
-        //°¨Á¤º°·Î ºĞ·ù: ÀÔ·Âµé¾î¿Â °¨Á¤ÀÌ ¼ÓÇØÀÖ´Â °Í¸¸ »Ì¾Æ¼­ tmpList¿¡ Ãß°¡ÇÑ´Ù.
+        //ê°ì •ë³„ë¡œ ë¶„ë¥˜: ì…ë ¥ë“¤ì–´ì˜¨ ê°ì •ì´ ì†í•´ìˆëŠ” ê²ƒë§Œ ë½‘ì•„ì„œ tmpListì— ì¶”ê°€í•œë‹¤.
         foreach (StoragedCloudData stock in mUiStocksData)
         {
-            //ÇØ´ç °¨Á¤ÀÌ stockÀÇ iEmotion¸®½ºÆ®¿¡ Á¸ÀçÇÏ´ÂÁö È®ÀÎ
+            //í•´ë‹¹ ê°ì •ì´ stockì˜ iEmotionë¦¬ìŠ¤íŠ¸ì— ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸
            // if (!stock.Key.mFinalEmotions.ContainsKey(_emotion)) continue;
-            //°¨Á¤°ªÀ¸·Î Á¤·Ä
+            //ê°ì •ê°’ìœ¼ë¡œ ì •ë ¬
 
-            //³»¸²Â÷¼øÀ¸·Î Á¤·Ä
+            //ë‚´ë¦¼ì°¨ìˆœìœ¼ë¡œ ì •ë ¬
            // var queryAsc = stock.Key.iEmotion.OrderByDescending(x => x.Value);// int, int
 
-            //Ã¹¹øÂ° °ªÀÌ Á¦ÀÏ Å©¹Ç·Î Á¦ÀÏ Å« °ªÀÌ ¸Å°³ÀÎÀÚ¿Í °°Àº °¨Á¤ÀÌ¶ó¸é Ãß°¡ÇØÁØ´Ù.
+            //ì²«ë²ˆì§¸ ê°’ì´ ì œì¼ í¬ë¯€ë¡œ ì œì¼ í° ê°’ì´ ë§¤ê°œì¸ìì™€ ê°™ì€ ê°ì •ì´ë¼ë©´ ì¶”ê°€í•´ì¤€ë‹¤.
           //  if (_emotion != queryAsc.First().Key) continue;
          //   results.Add(stock.Key, stock.Value);
         }
@@ -257,15 +257,5 @@ public class CloudContainer : MonoBehaviour
         return results;
     }
 
-    private Dictionary<IngredientData, int> sortStock(Dictionary<IngredientData, int> _target) // °³¼öº°·Î ºĞ·ù:
-    {
-        Dictionary<IngredientData, int> results = new Dictionary<IngredientData, int>();
-
-        var queryAsc = _target.OrderBy(x => x.Value);
-
-        foreach (var dictionary in queryAsc)
-            results.Add(dictionary.Key, dictionary.Value);
-
-        return results;
-    }
+  
 }

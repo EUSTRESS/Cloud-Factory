@@ -49,7 +49,7 @@ public class CloudStorageProfile : MonoBehaviour
         }
         UsingGuestNumList = temp.ToArray();
 
-        numOfUsingGuestList = SOWManager.mUsingGuestList.Count;
+        numOfUsingGuestList = UsingGuestNumList.Length;
 
         frontProfileInfo = 0;
         UsingGuestIndex = 0;
@@ -71,14 +71,11 @@ public class CloudStorageProfile : MonoBehaviour
     public void GetNextProfile()
     {
         // 이전 프로필을 불러온다.
-        frontProfileInfo++;
+        frontProfileInfo = (frontProfileInfo + 1 ) % 3;
         UsingGuestIndex++;
 
-        if (frontProfileInfo >= 3)
-        {
-            frontProfileInfo = 0;
-        }
-        if (frontGuestIndex >= numOfUsingGuestList)
+        // 맨앞에 나온 손님의 인덱스가 
+        if (UsingGuestIndex >= numOfUsingGuestList)
         {
             UsingGuestIndex = 0;
         }
@@ -90,17 +87,14 @@ public class CloudStorageProfile : MonoBehaviour
     public void GetPrevProfile()
     {
         // 다음 프로필을 불러온다.
-        frontProfileInfo--;
+        frontProfileInfo = (frontProfileInfo - 1 + 3) % 3;
         UsingGuestIndex--;
-
-        if (frontProfileInfo < 0)
-        {
-            frontProfileInfo = 2;
-        }
-        if (frontGuestIndex < 0)
+        
+        if (UsingGuestIndex < 0)
         {
             UsingGuestIndex = numOfUsingGuestList - 1;
         }
+
         frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
         updateProfileList();
     }

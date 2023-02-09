@@ -6,6 +6,7 @@ public class Destroy_ob : MonoBehaviour
 {
 
     public GameObject part_prefab;
+    public GameObject part_prefab_2;
     public Vector2 limitMax = new Vector2(8.9f, 5.0f);
     public Vector2 limitMin = new Vector2(-8.9f, -5.0f);
     void Start()
@@ -18,6 +19,10 @@ public class Destroy_ob : MonoBehaviour
         if (part_prefab.transform.position.y < -1.5f)   // ¸Ç Áß¾Ó±âÁØ yÁÂÇ¥°¡ -1.5¹ØÀ¸·Î ³»·Á°¡¸é ¿ÀºêÁ§Æ®ÆÄ±«
         {
             Destroy(part_prefab);
+        }
+        else if (part_prefab_2.transform.position.y < -1.5f)
+        {
+            Destroy(part_prefab_2);
         }
         //else if(part_prefab.transform.position.x <  - 3 || part_prefab.transform.position.x > 3 )
         //{

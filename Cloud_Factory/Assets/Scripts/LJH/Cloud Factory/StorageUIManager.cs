@@ -60,7 +60,9 @@ public class StorageUIManager : MonoBehaviour
     // 돌아가기 버튼
     public void GoToCloudFactory()
     {
-        LoadingSceneController.Instance.LoadScene("Cloud Factory");
+		bool isMakingCloud = GameObject.Find("I_CloudeGen").GetComponent<CloudMakeSystem>().isMakingCloud;
+        if (isMakingCloud) { return; }
+		LoadingSceneController.Instance.LoadScene("Cloud Factory");
     }
     public void MakeCloud()
     {

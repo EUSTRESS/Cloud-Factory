@@ -63,8 +63,8 @@ public class YardHandleSystem : MonoBehaviour
         private void updateSprite()
         {
             //gatherCnt에 따라 yardSprite 바뀜
-            if (gatherCnt == 0) self.GetComponent<SpriteRenderer>().sprite = sprites[0];
-            else if (gatherCnt >= 0 && self.GetComponent<SpriteRenderer>().sprite != sprites[1])
+            if (gatherCnt <= 0) self.GetComponent<SpriteRenderer>().sprite = sprites[0];
+            else if (gatherCnt >= 1 && self.GetComponent<SpriteRenderer>().sprite != sprites[1])
                 self.GetComponent<SpriteRenderer>().sprite = sprites[1];
         }
     };
@@ -81,11 +81,17 @@ public class YardHandleSystem : MonoBehaviour
             //이 딕셔너리의 int는 채집 횟수 0이 되면 채집 불가능하다!
     }
 
+    // WeatherUIManager에서 YardHandleSystem에 접근할 때, 채집 가능한 상태인지 알려주기 위한 함수
+    public bool CanBeGathered(GameObject iClickedYard)
+    {
+        if (mYards[iClickedYard] <= 0) return false;
+        else return true;
+    }
     
 
     public Dictionary<IngredientData, int>Gathered(GameObject iClickedYard,int totalCnt) //클릭함수
     {
-        if (mYards[iClickedYard] == 0) return null;
+        if (mYards[iClickedYard] <= 0) return null;
 
         Dictionary<IngredientData, int> results = getRndGatheredResult(totalCnt);
         Dictionary<IngredientData, int> complete = new Dictionary<IngredientData, int>();

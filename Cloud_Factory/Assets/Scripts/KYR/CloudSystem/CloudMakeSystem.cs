@@ -34,7 +34,7 @@ namespace CloudSystem
             UI_slct_mtrl[total - 1].GetComponent<Image>().sprite = data.image;
         }
 
-        private List<IngredientData> mGetingredientDatas(IngredientList mtrlDATA) //확정된 리스트를 IngredientData를 갖고있는 리스트로 변환하여 제공.
+        public List<IngredientData> mGetingredientDatas(IngredientList mtrlDATA) //확정된 리스트를 IngredientData를 갖고있는 리스트로 변환하여 제공.
         {
             List<IngredientData> results = new List<IngredientData>();
             foreach(GameObject stock in UI_slct_mtrl)
@@ -214,7 +214,6 @@ public class CloudMakeSystem : MonoBehaviour
     private void d_readCSV(string name)//구름 조합법 알고리즘
     {
         Debug.Log("조합재료를 확인합니다.");
-
         //1.계산 들어갈 감정 리스트 추출. => Base Emotion List
         List<EmotionInfo> emotionList = slct_mtrl.mGetTotalEmoList(mtrlDATA);
 
@@ -408,9 +407,8 @@ public class CloudMakeSystem : MonoBehaviour
 
     IEnumerator isMaking(float time) //UI 처리
     {
-
-        //색 어둡게
-        slct_mtrl.u_setUIbright(total, false);
+		//색 어둡게
+		slct_mtrl.u_setUIbright(total, false);
 
         yield return new WaitForSeconds(time);
 
@@ -419,8 +417,12 @@ public class CloudMakeSystem : MonoBehaviour
         //색 밝게
         slct_mtrl.u_setUIbright(total);
 
-        //UI 초기화
-        slct_mtrl.u_init(total);
+
+        //재료의 수 차감
+        DiscardIngredients(mtrlDATA);
+
+		//UI 초기화
+		slct_mtrl.u_init(total);
 
         total = 0;
         UI_btn_txt.text = "제작하기";
@@ -429,12 +431,12 @@ public class CloudMakeSystem : MonoBehaviour
 
         int emotionCnt = mEmotions.Count;
 
-        InventoryManager inventoryManager = GameObject.FindWithTag("InventoryManager").transform.GetComponent<InventoryManager>();
-        inventoryManager.createdCloudData = new CloudData(mEmotions); //createdCloudData 갱신.
-        //큰 수치 = 구름색
-        //다음 수치 = 구름의 장식
-        
-        transform.Find("I_Result").gameObject.GetComponent<Image>().sprite = inventoryManager.createdCloudData.getBaseCloudSprite();
+		InventoryManager inventoryManager = GameObject.FindWithTag("InventoryManager").transform.GetComponent<InventoryManager>();
+		inventoryManager.createdCloudData = new CloudData(mEmotions); //createdCloudData 갱신.
+		//큰 수치 = 구름색
+		//다음 수치 = 구름의 장식
+
+		transform.Find("I_Result").gameObject.GetComponent<Image>().sprite = inventoryManager.createdCloudData.getBaseCloudSprite();
         Debug.Log("구름이 만들어졌습니다.");
 
         m_sendCloud();
@@ -450,6 +452,29 @@ public class CloudMakeSystem : MonoBehaviour
         GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>().createdCloudData = new CloudData(mEmotions);
 
     }
+
+    private void DiscardIngredients(IngredientList used_ingredients)
+    {
+		InventoryManager inventoryManager = GameObject.FindWithTag("InventoryManager").transform.GetComponent<InventoryManager>();
+
+		List<IngredientData> slct_ingr = slct_mtrl.mGetingredientDatas(used_ingredients);
+		foreach (IngredientData ingrType in slct_ingr)
+		{
+			for (int num = 0; num < inventoryManager.mType.Count; num++)
+			{
+				if (ingrType == inventoryManager.mType[num])
+				{
+					inventoryManager.mCnt[num]--;
+					if (inventoryManager.mCnt[num] <= 0)
+					{
+						inventoryManager.mType.RemoveAt(num);
+						inventoryManager.mCnt.RemoveAt(num);
+						num--;
+					}
+				}
+			}
+		}
+	}
 
    
     //초기화 함수

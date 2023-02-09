@@ -93,7 +93,16 @@ public class WeatherUIManager : MonoBehaviour
     public void OpenGuideGather()
     {
         selectedYard = EventSystem.current.currentSelectedGameObject;
-        mGuideGather.SetActive(true);
+
+		// 채집 횟수가 모두 차감되었으면 채집하지 않고 창을 띄우지 않는다.
+		YardHandleSystem system = selectedYard.GetComponentInParent<YardHandleSystem>();
+		if (system.CanBeGathered(selectedYard) == false)
+		{
+			Debug.Log("채집 가능 횟수가 모두 차감되었습니다.");
+			return;
+		}
+
+		mGuideGather.SetActive(true);
     }
     // 나가기, 채집하시겠씁니까? 오브젝트 비활성화    
     public void CloseGuideGather()
@@ -103,7 +112,9 @@ public class WeatherUIManager : MonoBehaviour
     // 채집하기
     public void GoingToGather()
     {
-        mGuideGather.SetActive(false);
+        
+
+		mGuideGather.SetActive(false);
         mGathering.SetActive(true);
         mGatheringTextCount = 0; // 초기화
         tGatheringText.text = "재료 채집 중"; // 초기화
@@ -188,6 +199,8 @@ public class WeatherUIManager : MonoBehaviour
 
     private void GatherResultMatchWithUI(Dictionary<IngredientData, int> results)
     {
+        if (results == null) { return; }
+
         int i = 0;
         foreach (KeyValuePair<IngredientData, int> data in results)
         {

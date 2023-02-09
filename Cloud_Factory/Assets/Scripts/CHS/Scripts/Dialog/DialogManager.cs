@@ -153,14 +153,15 @@ public class DialogManager : MonoBehaviour
 		// 손님 번호 -> 방문 횟수 -> 만족도 순으로 엑셀 텍스트 파일을 체크한다.
 		for (i = 0; i < Dialog.Count; ++i)
         {
-            if (Dialog[i].GuestID == mGuestNum + 1                  // 게스트 번호
+            Debug.Log(mGuestNum + " " + mGuestManager.mGuestInfo[mGuestNum].mVisitCount + " " + mGuestVisitCount + " " + mGuestSat);
+			if (Dialog[i].GuestID == mGuestNum + 1                  // 게스트 번호
                 && Dialog[i].VisitCount == tempVisitCount           // 방문 횟수
                 && Dialog[i].Sat == mGuestSat)                      // 만족도
             {
-                if (tempVisitCount >= 10 || (tempVisitCount < 10 && Dialog[i].SatVariation == mGuestSatVariation)) // 방문 횟수가 10일 때, 만족도 증감도에 관계없이
+				if (tempVisitCount >= 10 || (tempVisitCount < 10 && Dialog[i].SatVariation == mGuestSatVariation)) // 방문 횟수가 10일 때, 만족도 증감도에 관계없이
                 {
-                    //Text가 Hint이면 xls에서 상하한선에 가장 가까운 감정의 대사 동적으로 할당
-                    if (Dialog[i].Text == "Hint")
+					//Text가 Hint이면 xls에서 상하한선에 가장 가까운 감정의 대사 동적으로 할당
+					if (Dialog[i].Text == "Hint")
                     {
                         for (int count = 0; count < speakEmotionEffect.Length; count++)
                         {
@@ -174,7 +175,7 @@ public class DialogManager : MonoBehaviour
                                     mGuestImageList[j] = Dialog[num].DialogImageNumber;
                                     mIsGuset[j] = Dialog[num].isGuest;
                                     j++;
-                                    continue;
+									continue;
                                 }
                             }
                         }

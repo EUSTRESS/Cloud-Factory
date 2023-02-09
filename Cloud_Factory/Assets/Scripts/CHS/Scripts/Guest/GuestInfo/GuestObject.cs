@@ -35,6 +35,8 @@ public class GuestObject : MonoBehaviour
     [Header("[희귀도 4 재료 제공 대사 관련]")]
     private RLHReader   textReader;
     private bool        isHintTextPrinted;
+    public bool         isUseRarity4;
+    private bool        isUsingHint;
 
     [Header("[기타]")]
     public Animator     mGuestAnim;         // 손님의 애니메이션 변수
@@ -143,12 +145,14 @@ public class GuestObject : MonoBehaviour
 
         textReader = this.gameObject.GetComponent<RLHReader>();
         isHintTextPrinted = false;
-	}
+        isUseRarity4 = true; // Test를 위해서 true로 임시 변경
+        isUsingHint = false;
+    }
 
-    // 걷는 애니메이션 출력
-    // 걷는 애니메이션을 디폴트 애니메이션으로 설정
+// 걷는 애니메이션 출력
+// 걷는 애니메이션을 디폴트 애니메이션으로 설정
 
-    private void Update()
+private void Update()
     {
         // 할당받는 의자 설정
         if (mTargetChiarIndex != -1 && isGotoEntrance == false)
@@ -259,18 +263,38 @@ public class GuestObject : MonoBehaviour
 
                 // 사용시간이 지나면 구름 오브젝트에서 실행된 코루틴을 통해 isEndUsingCloud가 true가 되어 귀가한다.
                 if (isEndUsingCloud)
-					    MoveToEntrance();
+                {
+                    // 희귀도 4재료를 사용했는지 체크
+                    if (isUseRarity4)
+                    {
+                        // 사용하였고 아직 힌트를 출력하지 않았다면 힌트 출력
+                        if (!isHintTextPrinted && !isUsingHint)
+                        {
+                            Hint();
+                        }
+                        // 힌트 출력을 완료했다면 귀가
+                        else if (isHintTextPrinted)
+                            MoveToEntrance();
+                    }
+                    else
+                    {
+                        // 사용하지 않았다면 바로 귀가
+                        MoveToEntrance();
+                    }
+                }
             }
         }
         // 구름 이용이 끝났을 때         TODO: 희귀도 4재료가 들어갔는지 체크해야 함
         if (isEndUsingCloud && !isHintTextPrinted)
         {
-            isHintTextPrinted = true;
-			TextMeshPro Text = SpeechBubble.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>();
-			Text.text = textReader.PrintHintText();
-			SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);                                  // 말풍선 활성화
-			SpeechBubble.transform.GetChild(1).gameObject.SetActive(true);                                  // 텍스트 활성화
-			Invoke("EndBubble", 5.0f);
+            
+
+            //isHintTextPrinted = true;
+			//TextMeshPro Text = SpeechBubble.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>();
+			//Text.text = textReader.PrintHintText();
+			//SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);                                  // 말풍선 활성화
+			//SpeechBubble.transform.GetChild(1).gameObject.SetActive(true);                                  // 텍스트 활성화
+			//Invoke("EndBubble", 5.0f);
 		}
 
         // 걷는 방향에 따라 애니메이션의 방향을 다르게 지정한다.
@@ -330,7 +354,8 @@ public class GuestObject : MonoBehaviour
             Debug.Log("Already Speaking");
             return;
         }
-   
+
+        isUsingHint = true;
         isSpeakEmotion = true;
 
         // 말풍선에 사용할 내용 불러오기 -> 리스트에서 감정값에 따라서 불러오기
@@ -354,6 +379,7 @@ public class GuestObject : MonoBehaviour
         Animator Anim = SpeechBubble.transform.GetChild(0).gameObject.GetComponent<Animator>();
         Anim.SetTrigger("EndBubble");
         mGuestAnim.SetTrigger("EndHint");
+        isHintTextPrinted = true;
         EndSpeakEmotion();
     }
 

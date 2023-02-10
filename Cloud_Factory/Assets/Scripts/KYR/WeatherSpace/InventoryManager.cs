@@ -68,6 +68,7 @@ public class CloudData
     public int mShelfLife;
     public List<EmotionInfo> mEmotions;
 
+    
     private bool[] isCloudAnimProgressed;
     private bool mState; //0 = 폐기 1 = 가능
     private Sprite mcloudBaseImage;
@@ -77,14 +78,15 @@ public class CloudData
     private List<List<Sprite>> mdecoImages; //2차원 리스트: L M S 사이즈 필요! 최대 2개
 
     private List<EmotionInfo> mFinalEmotions; //구름 꾸미기 이후의 최종 감정.
-    public CloudData(List<EmotionInfo> Emotions)
+    public CloudData(List<EmotionInfo> Emotions,int shelfLife)
     {
         mEmotions = Emotions;
+        mShelfLife = shelfLife;
         mFinalEmotions = new List<EmotionInfo>();
         isCloudAnimProgressed = new bool[3];
         setAnimProgressed();
         //계산식함수로 자동으로 데이터 세팅
-        setShelfLife(mEmotions);
+        setShelfLife();
         setCloudImage(mEmotions);
         setDecoImage(mEmotions);
     }
@@ -173,9 +175,9 @@ public class CloudData
     }
 
     //Private method
-    private void setShelfLife(List<EmotionInfo> Emotions)
+    private void setShelfLife()
     {
-        //감정에 따라 맞는 보관기간
+        //감정에 따라 맞는 보관기간-> 사용한 재료의 개수에 따라서 달라진다.
     }
     private void setCloudImage(List<EmotionInfo> Emotions)
     {

@@ -30,6 +30,9 @@ public class DrawingUIManager : MonoBehaviour
 
     public void ActiveNo()
     {
+        TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        if (!mTutorialManager.isFinishedTutorial[1]) { return; }
+
         gSpeechBubble.SetActive(true);
         gOkNoGroup.SetActive(false);
         mTextEnd = false;

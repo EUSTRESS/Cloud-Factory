@@ -536,7 +536,7 @@ public class Guest : MonoBehaviour
         temp.mLimitEmotions     = mGuestInitInfos[guestNum].mLimitEmotions;
         temp.isDisSat           = false;
         temp.isCure             = false;
-        temp.mVisitCount        = 0;
+        temp.mVisitCount        = 1;
         temp.mNotVisitCount     = 0;
         temp.isChosen           = false;
         temp.mUsedCloud         = new List<StoragedCloudData>();

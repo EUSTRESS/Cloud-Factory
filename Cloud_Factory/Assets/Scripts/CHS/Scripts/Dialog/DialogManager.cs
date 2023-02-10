@@ -10,6 +10,7 @@ public class DialogManager : MonoBehaviour
     // 불러올 값들 선언
     private Guest mGuestManager;
     private SOWManager mSOWManager;
+    private TutorialManager mTutorialManager;
 
     public int mGuestNum;                       // 손님의 번호를 넘겨받는다.
     private int mGuestSat;                      // 손님의 현재 만족도
@@ -60,6 +61,9 @@ public class DialogManager : MonoBehaviour
     [SerializeField]
     private Image iPanelPortrait;               // 방문 손님의 초상화
 
+    // 튜토리얼에서 가이드 말풍선을 출력하는 위치를 저장하는 변수
+    private int hintTextPos;
+
 
     // 테스트 함수
     // 대화창에서 다른 캐릭터 혹은 다른 만족도의 텍스트를 받아오는 경우 오류가 있는지 확인하기 위한 함수
@@ -97,6 +101,7 @@ public class DialogManager : MonoBehaviour
         mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         sGuestSpriteRender = gGuestSprite.GetComponent<SpriteRenderer>();
         mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
+        mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
 
         mGuestAnimator = gGuestSprite.GetComponent<Animator>();
 
@@ -134,10 +139,12 @@ public class DialogManager : MonoBehaviour
         // 게임 내에 GameManager 한개를 생성하고, 그 곳에서 하루마다 6명의 손님을 지정하여 응접실에 플레이어가 없는 시간에 한하여 랜덤하게 한명씩 방문시킨다.
         // GameManager에서 지정한 손님의 번호를 받아오고, 손님의 번호에 맞는 손님의 정보를 가져온다.
 
+
         int i;
         int j = 0;
+		hintTextPos = 0;
 
-        List<DialogDBEntity> Dialog;
+		List<DialogDBEntity> Dialog;
         Dialog = mDialogDB.SetDialogByGuestNum(mGuestNum);
         int[] speakEmotionEffect = mGuestManager.SpeakEmotionEffect(mGuestNum);
         int tempVisitCount = 0;                                     // 시트에 방문 횟수가 정수가 아닌 범위로 되어있는 관계로 설정하는 임시 정수
@@ -171,6 +178,10 @@ public class DialogManager : MonoBehaviour
                                     && Dialog[num].VisitCount == 0                          // 대사 파일 받고 수정할 가능성 O
                                     && Dialog[num].Emotion == speakEmotionEffect[count])    // TODO: 추후 텍스트 엑셀 파일 보고 조건 수정 필요
                                 {
+                                    if (!mTutorialManager.isFinishedTutorial[1] 
+                                        && hintTextPos == 0)                                // 힌트가 처음 등장한 위치만 저장
+                                    { hintTextPos = j; }
+
                                     mTextList[j] += Dialog[num].Text;
                                     mGuestImageList[j] = Dialog[num].DialogImageNumber;
                                     mIsGuset[j] = Dialog[num].isGuest;
@@ -267,6 +278,11 @@ public class DialogManager : MonoBehaviour
 
         mGuestAnimator.SetInteger("index", mGuestImageList[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex]);
 
+        // 가이드 말풍선 출력 후, 다시 출력되지 않도록 hintTextPos를 -1로 설정한다.(말풍선 재생성 방지)
+        if (!mTutorialManager.IsGuideSpeechBubbleExist()
+            && GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex == hintTextPos) 
+        { mTutorialManager.TutorialDrawingRoom(); hintTextPos = 0;  }                                  
+
         // 마지막 End 문자열이 나오는 경우 ( 대화를 모두 불러온 경우)
         if (GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex) == "End")
         {
@@ -294,6 +310,7 @@ public class DialogManager : MonoBehaviour
     // 손님 수락하기
     public void AcceptGuest()
     {
+        if(!mTutorialManager.isFinishedTutorial[1]) { mTutorialManager.isFinishedTutorial[1] = true; }
         gTakeGuestPanel.SetActive(false);
 
 		mSOWManager.InsertGuest(mGuestNum);
@@ -309,6 +326,7 @@ public class DialogManager : MonoBehaviour
     // 손님 거절하기
     public void RejectGuest()
     {
+        if (!mTutorialManager.isFinishedTutorial[1] ) {  return;  }
         Debug.Log("손님을 받지 않습니다.");
 
         // 방문하지 않는 횟수를 3으로 지정한다. (3일간 방문 X)

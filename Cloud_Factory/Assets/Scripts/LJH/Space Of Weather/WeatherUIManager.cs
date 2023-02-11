@@ -32,8 +32,16 @@ public class WeatherUIManager : MonoBehaviour
     public GameObject iMainBG; // 메인 배경 이미지 
     public Sprite[] mBackground = new Sprite[4]; // 계절별로 달라지는 배경
 
-    //예람
-    private GameObject selectedYard;
+    // 영상을 찍기위해 임시로 가져오는 마당 오브젝트들, TODO: 이후 계절에 따라 맞는 오브젝트를 불러오도록 함수 내부에서 설정
+    private GameObject[] mGardens = new GameObject[4];
+    public Sprite[] mSpringGardenSprites = new Sprite[2];
+	public Sprite[] mSummerGardenSprites = new Sprite[2];
+	public Sprite[] mFallGardenSprites = new Sprite[2];
+	public Sprite[] mWinterGardenSprites = new Sprite[2];
+    private Sprite[] mSwitchGardenSprites = new Sprite[2];
+
+	//예람
+	private GameObject selectedYard;
     private void Awake()
     {
         mSeason = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>();
@@ -55,16 +63,20 @@ public class WeatherUIManager : MonoBehaviour
         {
             case 1:
                 UpdateSeasonBg(0);// 봄
+                UpdateSeasonGarden(0);
                 break;
             case 2:
                 UpdateSeasonBg(1);// 여름
-                break;
+				UpdateSeasonGarden(1);
+				break;
             case 3:
                 UpdateSeasonBg(2);// 가을
-                break;
+				UpdateSeasonGarden(2);
+				break;
             case 4:
                 UpdateSeasonBg(3); // 겨울
-                break;
+				UpdateSeasonGarden(3);
+				break;
             default:
                 break;
         }
@@ -88,6 +100,38 @@ public class WeatherUIManager : MonoBehaviour
         // 산책로 오브젝트 추가
 
     }
+
+    void UpdateSeasonGarden(int season)
+    {
+        GameObject seasonObj = mSeasonObj[season];
+        
+        for(int num = 0; num < 4; num++){
+            mGardens[num] = seasonObj.transform.Find("Garden" + (num + 1)).gameObject;
+        }
+    }
+
+    void UpdateSeasonGardenSprites(int season)
+    {
+		mSwitchGardenSprites = new Sprite[2];
+        switch (season - 1)
+        {
+            case 0:
+                mSwitchGardenSprites = mSpringGardenSprites;
+                break;
+            case 1:
+                mSwitchGardenSprites = mSummerGardenSprites;
+                break;
+            case 2:
+                mSwitchGardenSprites = mFallGardenSprites;
+                break;
+            case 3:
+                mSwitchGardenSprites = mWinterGardenSprites;
+                break;
+            default:
+                break;
+        }
+    }
+
 
     // 마당 버튼 클릭 시, 채집하시겠씁니까? 오브젝트 활성화    
     public void OpenGuideGather()
@@ -153,6 +197,10 @@ public class WeatherUIManager : MonoBehaviour
 
         // Result Image match
         GatherResultMatchWithUI(system.Gathered(selectedYard, mRandomGather));
+
+        UpdateSeasonGardenSprites(mSeason.mSeason);
+        if (!system.CanBeGathered(selectedYard)) { mGardens[selectedYard.transform.GetSiblingIndex()].GetComponent<SpriteRenderer>().sprite = mSwitchGardenSprites[0]; }
+        else { mGardens[selectedYard.transform.GetSiblingIndex()].GetComponent<SpriteRenderer>().sprite = mSwitchGardenSprites[1]; }
 
         if (mRandomGather % 2 == 1) // 홀수
         {

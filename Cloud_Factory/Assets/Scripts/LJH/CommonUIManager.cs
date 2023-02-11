@@ -83,6 +83,8 @@ public class CommonUIManager : MonoBehaviour
     }
     public void GoDrawingRoom()
     {
+        TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        if (!mTutorialManager.isFinishedTutorial[0]) { mTutorialManager.isFinishedTutorial[0] = true; }
         LoadingSceneController.Instance.LoadScene("Drawing Room");
     }
     public void GoRecordOfHealing()

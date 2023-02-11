@@ -31,6 +31,7 @@ public class CloudContainer : MonoBehaviour
     private int mSortedCnt; //선택정렬된개수
     private List<StoragedCloudData> mSortedData; //UI상에 보여지는 StocksData
 
+    private bool isCloudSelected = false;
 
     // Start is called before the first frame update
     void Start()
@@ -54,17 +55,28 @@ public class CloudContainer : MonoBehaviour
         if (inventoryManager == null)
             inventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
 
-        //해당 구름 선택 UI 표시
-        Transform selected = EventSystem.current.currentSelectedGameObject.transform;
-        mSelecedCloud = mUiStocksData[selected.GetSiblingIndex()];
-        Debug.Log("구름 선택:" + mUiStocksData[selected.GetSiblingIndex()]);
+        if(!isCloudSelected)
+        {
+            //해당 구름 선택 UI 표시
+            Transform selected = EventSystem.current.currentSelectedGameObject.transform;
+            mSelecedCloud = mUiStocksData[selected.GetSiblingIndex()];
+            selected.GetChild(1).GetComponent<Image>().color = new Color(0.7f, 0.7f, 0.7f, 1.0f); 
+            Debug.Log("구름 선택:" + mUiStocksData[selected.GetSiblingIndex()]);
+            isCloudSelected = true;
+        }
+        else
+        {
+            unclicked();
+            isCloudSelected = false;
+        }
+        
     }
 
     public void unclicked() //matarial in cloudmaker deselected
     {
         GameObject target = EventSystem.current.currentSelectedGameObject;
         Sprite sprite = target.GetComponent<Image>().sprite;
-
+        target.transform.GetChild(1).GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         if (sprite.name == "Circle") return; //예외처리
 
         //해당 구름 선택 UI 표시 취소

@@ -431,14 +431,6 @@ public class CloudMakeSystem : MonoBehaviour
 
         int emotionCnt = mEmotions.Count;
 
-		InventoryManager inventoryManager = GameObject.FindWithTag("InventoryManager").transform.GetComponent<InventoryManager>();
-		inventoryManager.createdCloudData = new CloudData(mEmotions); //createdCloudData 갱신.
-		//큰 수치 = 구름색
-		//다음 수치 = 구름의 장식
-
-		transform.Find("I_Result").gameObject.GetComponent<Image>().sprite = inventoryManager.createdCloudData.getBaseCloudSprite();
-        Debug.Log("구름이 만들어졌습니다.");
-
         m_sendCloud();
 
         yield break;
@@ -448,8 +440,13 @@ public class CloudMakeSystem : MonoBehaviour
     private void m_sendCloud()
     {
         //해당 감정에 맞는 구름 이미지 생성
+        InventoryManager inventoryManager = GameObject.FindWithTag("InventoryManager").transform.GetComponent<InventoryManager>();
+        inventoryManager.createdCloudData = new CloudData(mEmotions, 10); //createdCloudData 갱신.
+                                                                          //큰 수치 = 구름색
+                                                                          //다음 수치 = 구름의 장식
 
-        GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>().createdCloudData = new CloudData(mEmotions);
+        transform.Find("I_Result").gameObject.GetComponent<Image>().sprite = inventoryManager.createdCloudData.getBaseCloudSprite();
+        Debug.Log("구름이 만들어졌습니다.");
 
     }
 

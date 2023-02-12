@@ -112,7 +112,7 @@ public class LobbyUIManager : MonoBehaviour
 
     public void ContinueGame()
     {
-        String key = "key"; // 암호화 복호화 키 값
+        //String key = "key"; // 암호화 복호화 키 값
 
         mSFx.Play();
 
@@ -122,18 +122,18 @@ public class LobbyUIManager : MonoBehaviour
 
         // newtonsoft library (모노비헤이비어 상속된 클래스 사용 불가능, 딕셔너리 사용 가능)
         // 로드하는 함수 호출 후에 그 씬 인덱스로 이동
-        FileStream fSceneBuildIndexStream
-            // 해당 경로에 있는 json 파일을 연다
-            = new FileStream(Application.dataPath + "/Data/SceneBuildIndex.json", FileMode.Open);
-        // 열려있는 json 값들을 byte배열에 넣는다
-        byte[] bSceneData = new byte[fSceneBuildIndexStream.Length];
-        // 끝까지 읽는다
-        fSceneBuildIndexStream.Read(bSceneData, 0, bSceneData.Length);
-        fSceneBuildIndexStream.Close();
-        // 문자열로 변환한다
-        string sSceneData = Encoding.UTF8.GetString(bSceneData);
-        // 복호화
-        sSceneData = AESWithJava.Con.Program.Decrypt(sSceneData, key);
+        //FileStream fSceneBuildIndexStream
+        //    // 해당 경로에 있는 json 파일을 연다
+        //    = new FileStream(Application.dataPath + "/Data/SceneBuildIndex.json", FileMode.Open);
+        //// 열려있는 json 값들을 byte배열에 넣는다
+        //byte[] bSceneData = new byte[fSceneBuildIndexStream.Length];
+        //// 끝까지 읽는다
+        //fSceneBuildIndexStream.Read(bSceneData, 0, bSceneData.Length);
+        //fSceneBuildIndexStream.Close();
+        //// 문자열로 변환한다
+        //string sSceneData = Encoding.UTF8.GetString(bSceneData);
+        //// 복호화
+        //sSceneData = AESWithJava.Con.Program.Decrypt(sSceneData, key);
 
        
         // Load_Data
@@ -143,7 +143,8 @@ public class LobbyUIManager : MonoBehaviour
         Load_SOW();
 
         // 문자열을 int형으로 파싱해서 빌드 인덱스로 활용한다
-        LoadingSceneController.Instance.LoadScene(int.Parse(sSceneData));        
+        // 현재 빌드 인덱스가 날씨의 공간이 6이므로 6인데 이거 빌드 인덱스 바뀌면 안됨...
+        LoadingSceneController.Instance.LoadScene(6); 
 
     }
 

@@ -26,6 +26,8 @@ public class SeasonDateCalc : MonoBehaviour
     public int      mSeason; // 달, 계절 (4주마다 1달, 봄,여름,가을,겨울 순으로 4달)
     public int      mYear;   // 년 (~)    
 
+    private bool    mChangeDay = false;
+
     [Header("테스트 변수")]
     [SerializeField]
     private float   MaxSecond = 60.0f; // 하루 단위(초)를 테스트 목적으로 바꾸기 위한 변수
@@ -66,6 +68,13 @@ public class SeasonDateCalc : MonoBehaviour
             mSeason += CalcSeason(ref mWeek);
             // 년 계산
             mYear += CalcYear(ref mSeason);
+
+            if (mChangeDay)
+            {
+                // 하루가 지날 때 저장함수 불러오기
+                GameObject.Find("SaveUnitManager").GetComponent<SaveUnitManager>().Save_Func();
+                mChangeDay = false;
+            }
         }
 
         // 계절별 테스트를 위한 핫키
@@ -111,6 +120,8 @@ public class SeasonDateCalc : MonoBehaviour
 
                 temp += 1;
                 second = 0;
+
+                mChangeDay = true;                           
             }
             else
             {

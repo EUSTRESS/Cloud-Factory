@@ -49,6 +49,11 @@ public class SaveUnitManager : MonoBehaviour
     // 씬이 변경될 때마다 호출된다.
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        //Save_Func();
+    }
+
+    public void Save_Func()
+    {
         // 데이터 폴더가 없다면 생성하기
         if (!File.Exists(Application.dataPath + "/Data/"))
         {
@@ -56,12 +61,12 @@ public class SaveUnitManager : MonoBehaviour
         }
 
         // 로비에서는 저장할 필요가 없음
-        if (scene.name != "Lobby" && SceneData.Instance && !mGuestManager.isLoad) // null check && lobby 제한
+        if (SceneManager.GetActiveScene().name != "Lobby" && SceneData.Instance && !mGuestManager.isLoad) // null check && lobby 제한
         {
-            String key = "key";
+            //String key = "key";
 
             // 현재 씬 저장
-            Save_SceneIdx(scene, mode, key);
+            // Save_SceneIdx(scene, mode, key); 이제 무조건 날씨의 공간으로 이어하기 때문에 주석처리
             // 날짜 계절 저장
             Save_SeasonDate();
             // 인벤토리 저장
@@ -70,9 +75,11 @@ public class SaveUnitManager : MonoBehaviour
             // GuestManager 저장
             Save_GuestInfo();
             Save_SOWSaveData();
-        }
 
+            Debug.Log("저장한다.");
+        }
     }
+
 
     void Save_SceneIdx(Scene scene, LoadSceneMode mode, String Key)
     {

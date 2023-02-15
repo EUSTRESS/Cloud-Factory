@@ -187,16 +187,17 @@ public class Guest : MonoBehaviour
             Debug.Log("만족도 차이가 가장 큰 감정은 " + maxDiffValue + "입니다.");
         }
 
-        // 싱글톤 기법 확인을 위한 테스트코드
+        // 튜토리얼 스킵 핫키
         if (Input.GetKeyDown(KeyCode.A))
         {
-            TakeGuest();
+            TutorialManager tuto = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+            for(int i = 0; i< tuto.isFinishedTutorial.Length; i++)
+            {
+                tuto.isFinishedTutorial[i] = true;
+            }
+        
         }
-        // 만족도 갱신을 위한 함수 테스트 (성공)
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            RenewakSat(0);
-        }
+
         // 상하한선 침범 확인을 위한 함수 테스트 (성공)
         if (Input.GetKeyDown(KeyCode.D))
         {

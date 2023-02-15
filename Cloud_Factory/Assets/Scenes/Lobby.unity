@@ -5427,11 +5427,17 @@ MonoBehaviour:
       mVBase:
         mPosition: {x: 0, y: 0, z: 0}
         mRotation: {x: 0, y: 0, z: 0, w: 0}
-        mScale: {x: 0, y: 0, z: 0}
+        mScale: {x: 1, y: 1, z: 1}
         mWidth: 0
         mHeight: 0
-        mImage: {fileID: 0}
-      mVPartsList: []
+        mImage: {fileID: 21300000, guid: 80ad69fcf49acff43937a8a40b4ddb25, type: 3}
+      mVPartsList:
+      - mPosition: {x: 0, y: 0, z: 0}
+        mRotation: {x: 0, y: 0, z: 0, w: 0}
+        mScale: {x: 1, y: 1, z: 1}
+        mWidth: 1
+        mHeight: 1
+        mImage: {fileID: 21300000, guid: 37e81e113efe9ac4a9358e62b0786955, type: 3}
   mType: []
   mCnt: 
   minvenLevel: 1

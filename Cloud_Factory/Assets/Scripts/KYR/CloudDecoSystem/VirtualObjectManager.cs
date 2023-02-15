@@ -39,6 +39,16 @@ public class VirtualObjectManager : MonoBehaviour
 
         return result;
     }
+    public GameObject convertVirtualToGameObjectToSprite(VirtualGameObject VObject)
+    {
+        GameObject result;
+
+        result = Instantiate(OBPrefab, VObject.mPosition, VObject.mRotation);
+
+        result.GetComponent<SpriteRenderer>().sprite = VObject.mImage;
+
+        return result;
+    }
 
     //씬에 버츄얼 오브젝트를 Instantiate 하는 함수
     public GameObject InstantiateVirtualObjectToScene(StoragedCloudData stock,Vector3 InstancePosition)
@@ -50,6 +60,8 @@ public class VirtualObjectManager : MonoBehaviour
         RectTransform rectTran = obejct.GetComponent<RectTransform>();
         rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, stock.mVBase.mHeight);
         rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, stock.mVBase.mWidth);
+
+
         foreach (VirtualGameObject Vpart in stock.mVPartsList)
         {
             GameObject obejctP;
@@ -61,9 +73,52 @@ public class VirtualObjectManager : MonoBehaviour
             rectTran = obejctP.GetComponent<RectTransform>();
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Vpart.mHeight);
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Vpart.mWidth);
+
+
+            
         }
 
         obejct.transform.localPosition = Vector3.zero;
+        obejct.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+
+        return obejct;
+    }
+
+    public GameObject InstantiateVirtualObjectToSceneToSprite(StoragedCloudData stock, Vector3 InstancePosition)
+    {
+        //가상 데이터 들을 게임 오브젝트로 Convert 하여 Instantiate 하는 과정.
+        GameObject obejct;
+        obejct = convertVirtualToGameObjectToSprite(stock.mVBase);
+
+        RectTransform rectTran = obejct.GetComponent<RectTransform>();
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, stock.mVBase.mHeight);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, stock.mVBase.mWidth);
+
+        // 구름의 소팅 레이어를 변경
+        obejct.GetComponent<SpriteRenderer>().sortingLayerName = "Cloud";
+
+        foreach (VirtualGameObject Vpart in stock.mVPartsList)
+        {
+            GameObject obejctP;
+            obejctP = convertVirtualToGameObjectToSprite(Vpart);
+
+            obejctP.transform.SetParent(obejct.transform);
+
+            obejctP.transform.localPosition = obejctP.transform.position;
+            rectTran = obejctP.GetComponent<RectTransform>();
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Vpart.mHeight);
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Vpart.mWidth);
+
+            // 파츠의 소팅 레이어를 변경
+            obejctP.GetComponent<SpriteRenderer>().sortingLayerName = "Parts";
+
+            float newX = rectTran.localPosition.x * 1.51f / rectTran.rect.width;
+            float newY = rectTran.localPosition.y * 0.71f / rectTran.rect.height;
+
+            rectTran.localPosition = new Vector3(newX, newY, 1.0f);
+        }
+
+        obejct.transform.localPosition = InstancePosition;
         obejct.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
 
         return obejct;

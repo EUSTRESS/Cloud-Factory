@@ -14,33 +14,18 @@ public class Cloud_movement : MonoBehaviour
     public GameObject Parts_fly;
     public GameObject Parts_fly_2;
 
-    public int Cloud_Speed = 0;
-
     public int Target_guestnum = 0;
 
 
-    public Vector3 Change_Cloud_scale = new Vector3(0f, 0f, 0f);  // ¹Ù²Ü ±¸¸§ÀÇ scale
-
+    public Vector3 Change_Cloud_scale = new Vector3(0f, 0f, 0f);    // ¹Ù²Ü ±¸¸§ÀÇ scale
     public Vector3 Change_Part_scale = new Vector3(0f, 0f, 0f);     // ¹Ù²Ü ÆÄÃ÷ÀÇ scale
 
     public Sprite Change_CloudImage;      // ¹Ù²Ü ±¸¸§ÀÇ ÀÌ¹ÌÁö
 
     public Sprite Change_PartImage;     // ¹Ù²Ü ÆÄÃ÷ÀÇ ÀÌ¹ÌÁö
 
-    //public Sprite CloudImage;
-
-    //void Awake()
-    //{
-    //    Cloud.GetComponent<Image>().sprite = ReceiveCloud.GetComponent<VirtualGameObject>().mImage;
-    //}
-
-
-
-    void Start()
+    void Awake()
     {
-
-
-
         ran_num = Random.Range(1, 5);
         ran_num2 = Get_ran_num();
         GameObject go = Instantiate(Parts_fly);
@@ -109,9 +94,6 @@ public class Cloud_movement : MonoBehaviour
                 break;
 
         }
-
-
-
     }
 
     void Make_copy()
@@ -140,24 +122,6 @@ public class Cloud_movement : MonoBehaviour
     void Update()
     {
         //CloudImage = ReceiveCloud.GetComponent<VirtualGameObject>().mImage;
-
-        if (CloudSpawner.Cloud_Spawn == true)
-        {
-            Change_Cloud_scale = CloudSpawner.Cloud_scale;
-            Cloud.transform.localScale = Change_Cloud_scale;
-            Change_CloudImage = CloudSpawner.Cloud_sprite;
-            Cloud.GetComponent<SpriteRenderer>().sprite = Change_CloudImage;
-
-            Change_Part_scale = CloudSpawner.Part_scale;
-            Parts_fly.transform.localScale = Change_Part_scale;
-            Change_PartImage = CloudSpawner.Part_sprite;
-            Parts_fly.GetComponent<SpriteRenderer>().sprite = Change_PartImage;
-
-            Parts_fly_2.transform.localScale = Change_Part_scale;
-            Parts_fly_2.GetComponent<SpriteRenderer>().sprite = Change_PartImage;
-        }
-
-
         if (Input.GetKeyDown(KeyCode.S))
         {
             GameObject go = Instantiate(Parts_fly);

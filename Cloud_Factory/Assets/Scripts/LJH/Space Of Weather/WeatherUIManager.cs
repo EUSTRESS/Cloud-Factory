@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class WeatherUIManager : MonoBehaviour
 {
     private SeasonDateCalc mSeason; // 계절 계산 스크립트
+    private TutorialManager mTutorialManager;
 
     [Header("Gather")]
     public GameObject mGuideGather; // 채집할건지 안할건지 알려주는 UI
@@ -45,7 +46,8 @@ public class WeatherUIManager : MonoBehaviour
     private void Awake()
     {
         mSeason = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>();
-    }
+		mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+	}
 
     void Update()
     {
@@ -146,6 +148,7 @@ public class WeatherUIManager : MonoBehaviour
 			return;
 		}
 
+        mTutorialManager.SetActiveFadeOutScreen(false);
 		mGuideGather.SetActive(true);
     }
     // 나가기, 채집하시겠씁니까? 오브젝트 비활성화    
@@ -194,6 +197,7 @@ public class WeatherUIManager : MonoBehaviour
         YardHandleSystem system = selectedYard.GetComponentInParent<YardHandleSystem>();
 
         mRandomGather = Random.Range(0, 5); // 0~4
+        if (mTutorialManager.isFinishedTutorial[2] == false) { mRandomGather = 1; }
 
         // Result Image match
         GatherResultMatchWithUI(system.Gathered(selectedYard, mRandomGather));
@@ -293,6 +297,8 @@ public class WeatherUIManager : MonoBehaviour
     // 채집 끝!
     public void CloseResultGather()
     {
-        mGatherResult.SetActive(false);        
+        mTutorialManager.SetActiveGuideSpeechBubble(true);
+
+		mGatherResult.SetActive(false);        
     }
 }

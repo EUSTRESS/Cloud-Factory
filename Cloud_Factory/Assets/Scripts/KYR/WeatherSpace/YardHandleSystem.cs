@@ -9,9 +9,10 @@ using UnityEngine.EventSystems;
 public class YardHandleSystem : MonoBehaviour
 {
     public InventoryManager inventoryManager;
+    TutorialManager mTutorialManager;
 
  //   public IngredientList[] mRarityList;
-    public Sprite[] mImages;
+	public Sprite[] mImages;
 
     private Dictionary<GameObject, int> mYards;
 
@@ -73,8 +74,9 @@ public class YardHandleSystem : MonoBehaviour
     void Start()
     {
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+		mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
 
-        mYards = new Dictionary<GameObject, int>();
+		mYards = new Dictionary<GameObject, int>();
 
         for (int i = 0; i < transform.childCount; i++)      
             mYards.Add(transform.GetChild(i).gameObject,2); //Yard 그룹에 속한 yard들을 리스트에 넣어서 관리.
@@ -109,6 +111,7 @@ public class YardHandleSystem : MonoBehaviour
         }
 
         mYards[iClickedYard]--;
+        if (mTutorialManager.isFinishedTutorial[2] == false) { mYards[iClickedYard]++; }
 
         return complete; //저장에 성공한 리스트만 반환한다.
     }
@@ -122,13 +125,23 @@ public class YardHandleSystem : MonoBehaviour
         //희귀도 랜덤, 그중에서도 종류 랜덤.
         //Random: 희귀도, 희귀도 내 종류, 재료 수, 채집할 재료 종류 수
         Debug.Log("총 채집할 종류:" + totalCnt);
-        while (results.Count <= totalCnt)
+
+        // 튜토리얼 시 채집되는 재료 고정 TODO: 기획서에 맞도록 재료 종류, 수량 조정 필요
+        if (mTutorialManager.isFinishedTutorial[2] == false)
         {
-            IngredientData tmp = inventoryManager.mIngredientDatas[getRndRarityType(inventoryManager.minvenLevel) -1].getRndIngredient();
-            Debug.Log(tmp);
-            if (results.ContainsKey(tmp)) continue; //중복방지
-            results.Add(tmp, Random.Range(1, 6));
-            Debug.Log("추가: " + tmp);
+            results.Add(inventoryManager.mIngredientDatas[0].mItemList[0], 1);
+            results.Add(inventoryManager.mIngredientDatas[0].mItemList[1], 1);
+        }
+        else
+        {
+            while (results.Count <= totalCnt)
+            {
+                IngredientData tmp = inventoryManager.mIngredientDatas[getRndRarityType(inventoryManager.minvenLevel) - 1].getRndIngredient();
+                Debug.Log(tmp);
+                if (results.ContainsKey(tmp)) continue; //중복방지
+                results.Add(tmp, Random.Range(1, 6));
+                Debug.Log("추가: " + tmp);
+            }
         }
 
         return results;

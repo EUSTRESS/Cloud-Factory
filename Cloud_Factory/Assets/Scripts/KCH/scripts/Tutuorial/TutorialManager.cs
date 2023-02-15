@@ -10,6 +10,8 @@ public class TutorialManager : MonoBehaviour
     [HideInInspector]
 	public bool isTutorial;
 
+    // 옵션은 항상 누를 수 있도록 설정이 필요
+
     /*
      #튜토리얼 진행도 체크
      날씨의 공간 1
@@ -17,6 +19,7 @@ public class TutorialManager : MonoBehaviour
 	 날씨의 공간 2 (채집)
 	 구름 공장
 	 구름 데코
+     +구름공장
 	 구름 제공
 	 손님 배웅
     */
@@ -29,7 +32,8 @@ public class TutorialManager : MonoBehaviour
     public GameObject guideSpeechBubble;    // 가이드 말풍선 오브젝트(child로 charImage, Text, button 존재)
     private GameObject guideSpeechBubbleObject;        // 오브젝트를 관리하기 위한 오브젝트
 
-    public GameObject fadeOutScreen;        // 날씨의 공간(1) 튜토리얼에서 사용되는 FadeOutScreen
+    public GameObject commonFadeOutScreen;   // 화면을 모두 가리는 공용 Fade Out 스크린
+    public GameObject fadeOutScreen1;
     private GameObject fadeOutScreenObject;
 
 
@@ -43,7 +47,7 @@ public class TutorialManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
 
             isTutorial = true;
-            isFinishedTutorial = new bool[7];
+            isFinishedTutorial = new bool[8];
 
             for(int num = 0; num < isFinishedTutorial.Length; num++) { isFinishedTutorial[num] = false; }
         }
@@ -55,19 +59,69 @@ public class TutorialManager : MonoBehaviour
 
     void Update()
     {
-        if(SceneManager.GetActiveScene().name == "Space Of Weather"
+		if (Input.GetKeyDown(KeyCode.L))
+		{
+			for(int num = 0; num < 8; num++)
+            {
+                isFinishedTutorial[num] = true;
+            }
+		}
+
+		if (SceneManager.GetActiveScene().name == "Space Of Weather"
             && !isFinishedTutorial[0]
             && guideSpeechBubbleObject == null
             && fadeOutScreenObject == null)
-        { TutorialOfSOW(); }
+        { TutorialOfSOW1(); }
 
-        // 가이드 말풍선이 없어지면 화면 터치를 막는 emptyScreenObject도 없애준다.
-        if(guideSpeechBubbleObject == null
-            && emptyScreenObject != null)
+		if (SceneManager.GetActiveScene().name == "Drawing Room"
+			&& !isFinishedTutorial[1]
+			&& guideSpeechBubbleObject == null
+			&& fadeOutScreenObject == null)
+		{ TutorialDrawingRoom(); }
+
+		if (SceneManager.GetActiveScene().name == "Space Of Weather"
+            && isFinishedTutorial[0]
+            && !isFinishedTutorial[2]
+            && guideSpeechBubbleObject == null
+            && fadeOutScreenObject == null)
+        { TutorialOfSOW2(); }
+
+        if (SceneManager.GetActiveScene().name == "Cloud Factory"
+            && !isFinishedTutorial[3]
+            && guideSpeechBubbleObject == null
+            && fadeOutScreenObject == null)
+        { TutorialCloudFactory1(); }
+
+        if(SceneManager.GetActiveScene().name == "Give Cloud"
+            && !isFinishedTutorial[4]
+            && guideSpeechBubbleObject == null
+            && fadeOutScreenObject == null)
+        { TutorialGiveCloud(); }
+
+		if (SceneManager.GetActiveScene().name == "Cloud Factory"
+			&& !isFinishedTutorial[5]
+            && isFinishedTutorial[4]
+			&& guideSpeechBubbleObject == null
+			&& fadeOutScreenObject == null)
+		{ TutorialCloudFactory2(); }
+
+		// 가이드 말풍선이 없어지면 화면 터치를 막는 emptyScreenObject도 없애준다.
+		if (guideSpeechBubbleObject == null
+			&& emptyScreenObject != null)
+		{ Destroy(emptyScreenObject.gameObject); }
+
+        //가이드 말풍선의 상태에 따라 화면 터치를 막는 emptyScreenObject의 상태도 변경
+        if(guideSpeechBubbleObject != null)
         {
-            Destroy(emptyScreenObject.gameObject);
-        }
-    }
+            if(guideSpeechBubbleObject.activeSelf == false
+			&& emptyScreenObject.activeSelf == true)
+			{ emptyScreenObject.SetActive(false); }
+
+            else if(guideSpeechBubbleObject.activeSelf == true
+			&& emptyScreenObject.activeSelf == false)
+			{ emptyScreenObject.SetActive(true); }
+		}
+	}
 
     public bool IsGuideSpeechBubbleExist()
     {
@@ -75,38 +129,67 @@ public class TutorialManager : MonoBehaviour
         return false;
     }
 
+    public void SetActiveGuideSpeechBubble(bool _bool)  { guideSpeechBubbleObject.SetActive(_bool); }
+    public void SetActiveFadeOutScreen(bool _bool)      { fadeOutScreenObject.SetActive(_bool); }
+
     // 날씨의 공간(1) 튜토리얼
     // 말풍선을 띄운다. 대사 多 대사 넘기는 버튼 有
     // 응접실 버튼과 느낌표 설명
     // 응접실 외 어둡게, 응접실 버튼만 클릭 가능
-    public void TutorialOfSOW()
+    public void TutorialOfSOW1()
     {
         InstantiateBasicObjects(0);
 
     }
 
-    public void FadeOutSpaceOfWeather()
-    {
-        fadeOutScreenObject = Instantiate(fadeOutScreen);
-		fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
-		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
-    }
-
     // 응접실 튜토리얼
-    // 힌트가 나올 때 말풍선을 띄운다
-    // DialogManager.cs 284에서 출력
     public void TutorialDrawingRoom()
     {
         InstantiateBasicObjects(1);
 	}
+
+    // 채집 튜토리얼(감정표현 추가 필요)
+    public void TutorialOfSOW2()
+    {
+        InstantiateBasicObjects(2);
+    }
+
+    public void TutorialCloudFactory1()
+    {
+        InstantiateBasicObjects(3);
+    }
+
+    public void TutorialGiveCloud()
+    {
+        InstantiateBasicObjects(4);
+    }
+
+    public void TutorialCloudFactory2()
+    {
+        InstantiateBasicObjects(5);
+    }
 
     public void FinishTutorial1()
     {
         isFinishedTutorial[0] = true;
     }
 
-    // Tutorial 간 모든 씬에서 출력되는 기본 오브젝트(emptyScreenObject, guideSpeechBubbleObject)를 생성해준다.
-    public void InstantiateBasicObjects(int dialog_index)
+	public void FadeOutScreen()
+	{
+		fadeOutScreenObject = Instantiate(commonFadeOutScreen);
+		fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
+		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
+	}
+
+	public void FadeOutSpaceOfWeather()
+	{
+		fadeOutScreenObject = Instantiate(fadeOutScreen1);
+		fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
+		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
+	}
+
+	// Tutorial 간 모든 씬에서 출력되는 기본 오브젝트(emptyScreenObject, guideSpeechBubbleObject)를 생성해준다.
+	public void InstantiateBasicObjects(int dialog_index)
     {
 		emptyScreenObject = Instantiate(emptyScreen);
 		emptyScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);

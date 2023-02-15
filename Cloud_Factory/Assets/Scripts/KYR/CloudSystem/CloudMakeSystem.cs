@@ -389,6 +389,12 @@ public class CloudMakeSystem : MonoBehaviour
     }
     private void d_createCloud(string name = null)
     {
+        TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        if (mTutorialManager.isFinishedTutorial[4] == false)
+        {
+            if(total != 2) { return; }
+        }
+
         if (total < 1)
         {
             Debug.Log("재료수가 부족합니다.");
@@ -402,8 +408,8 @@ public class CloudMakeSystem : MonoBehaviour
         isMakingCloud = true;
 
         //making UI 처리
-        StartCoroutine(isMaking(time));        
-    }
+        StartCoroutine(isMaking(time));
+	}
 
     IEnumerator isMaking(float time) //UI 처리
     {
@@ -433,7 +439,10 @@ public class CloudMakeSystem : MonoBehaviour
 
         m_sendCloud();
 
-        yield break;
+		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+		mTutorialManager.SetActiveGuideSpeechBubble(true);
+
+		yield break;
     }
 
     //구름 생성 후 인벤토리에 저장

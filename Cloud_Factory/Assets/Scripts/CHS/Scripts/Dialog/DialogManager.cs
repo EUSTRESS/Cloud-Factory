@@ -278,10 +278,10 @@ public class DialogManager : MonoBehaviour
 
         mGuestAnimator.SetInteger("index", mGuestImageList[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex]);
 
-        // 가이드 말풍선 출력 후, 다시 출력되지 않도록 hintTextPos를 -1로 설정한다.(말풍선 재생성 방지)
-        if (!mTutorialManager.IsGuideSpeechBubbleExist()
+        // 가이드 말풍선 출력 후, 다시 출력되지 않도록 hintTextPos를 0으로 설정한다.(말풍선 재생성 방지)
+        if (mTutorialManager.isFinishedTutorial[1] == false
             && GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex == hintTextPos) 
-        { mTutorialManager.TutorialDrawingRoom(); hintTextPos = 0;  }                                  
+        { mTutorialManager.SetActiveGuideSpeechBubble(true); hintTextPos = 0;  }                                  
 
         // 마지막 End 문자열이 나오는 경우 ( 대화를 모두 불러온 경우)
         if (GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex) == "End")
@@ -289,6 +289,7 @@ public class DialogManager : MonoBehaviour
             isLastDialog = true;
             // 대화 내용을 모두 출력하고 나면 손님 응대에 관한 여부를 플레이어에게 묻는다. (받는다/ 받지 않는다)
             TakeGuest();
+            mTutorialManager.SetActiveGuideSpeechBubble(true);
             return;
         }
         // 대화가 출력중인 도중에 클릭한 경우, 문장이 한번에 출력이 된다.

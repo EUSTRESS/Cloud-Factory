@@ -68,4 +68,33 @@ public class VirtualObjectManager : MonoBehaviour
 
         return obejct;
     }
+
+    //씬에 버츄얼 오브젝트를 Instantiate 하는 함수
+    public GameObject InstantiateVirtualObjectToScene(StoragedCloudData stock, GameObject mBase, Vector3 InstancePosition)
+    {
+        //가상 데이터 들을 게임 오브젝트로 Convert 하여 Instantiate 하는 과정.
+        GameObject obejct;
+        obejct = mBase;
+
+        RectTransform rectTran = obejct.GetComponent<RectTransform>();
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, stock.mVBase.mHeight);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, stock.mVBase.mWidth);
+        foreach (VirtualGameObject Vpart in stock.mVPartsList)
+        {
+            GameObject obejctP;
+            obejctP = convertVirtualToGameObject(Vpart);
+
+            obejctP.transform.SetParent(obejct.transform);
+
+            obejctP.transform.localPosition = obejctP.transform.position;
+            rectTran = obejctP.GetComponent<RectTransform>();
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Vpart.mHeight);
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Vpart.mWidth);
+        }
+
+        obejct.transform.localPosition = InstancePosition;
+        obejct.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+
+        return obejct;
+    }
 }

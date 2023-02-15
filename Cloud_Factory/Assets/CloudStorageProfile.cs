@@ -163,7 +163,7 @@ public class CloudStorageProfile : MonoBehaviour
 
         // 리스트에서 사용받은 손님 제거하기
         SOWManager sow = GameObject.Find("SOWManager").GetComponent<SOWManager>();
-        int count = sow.mUsingGuestList.Count;       
+        int count = sow.mUsingGuestList.Count;
 
         SOWManager.SetCloudData(guestNum, storagedCloudData);
 

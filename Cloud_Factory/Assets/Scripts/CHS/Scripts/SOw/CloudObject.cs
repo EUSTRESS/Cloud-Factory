@@ -86,16 +86,24 @@ public class CloudObject : MonoBehaviour
 
             // 구름을 사용하는 손님의 머리 위치로 이동시킨다.
             this.transform.position = collision.gameObject.transform.position;
-            this.transform.Translate(new Vector3(0.0f, 0.8f, 0.0f));
-            
-            // 구름을 사용중인 모션을 띄운다. (애니메이션 변경)
+            this.transform.Translate(new Vector3(0.0f, 1.2f, 0.0f));
 
+            // 구름을 사용중인 모션을 띄운다. (애니메이션 변경)
+            {
+                // moveCloud를 꺼준다..
+                this.transform.GetChild(0).gameObject.SetActive(false);
+
+                // VirtualObjectManager를 통해서 오브젝트를 만들어낸다.
+                VirtualObjectManager vObjectManager = GameObject.Find("VirtualObjectManager").GetComponent<VirtualObjectManager>();
+
+                GameObject tempObject = vObjectManager.InstantiateVirtualObjectToSceneToSprite(virtualCloudData, this.transform.position);
+                tempObject.transform.SetParent(this.transform);
+            }
 
             // 구름을 사용중인 상태로만든다.
             StartCoroutine("WaitForSetEmotion");
 
             // 구름의 감정값을 적용된 경우의 결과값의 만족도 변화량에 따라서 손님 애니메이션 변경
-
             int prevSat = GuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
 
             // 임의 적용 -> 구름의 감정값을 더한 후, 만족도와 상하한선 근접값을 구하여 업데이트한다.

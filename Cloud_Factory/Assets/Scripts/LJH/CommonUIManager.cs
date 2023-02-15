@@ -32,14 +32,18 @@ public class CommonUIManager : MonoBehaviour
     public Image        iSeasons;      // 달력 이미지
 
     private AudioSource mSFx;          // 효과음 오디오 소스 예시
-    void Awake()
+
+    private TutorialManager mTutorialManager;
+	void Awake()
     {
         if (SceneManager.GetActiveScene().name == "Lobby" ||
             SceneManager.GetActiveScene().name == "Space Of Weather" ||
             SceneManager.GetActiveScene().name == "Drawing Room" ||
             SceneManager.GetActiveScene().name == "Cloud Factory")
-            mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();        
-    }
+            mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
+
+		mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+	}
 
     void Update()
     {
@@ -74,16 +78,22 @@ public class CommonUIManager : MonoBehaviour
     
     // 씬 이동 버튼들
     public void GoSpaceOfWeather()
-    {        
-        LoadingSceneController.Instance.LoadScene("Space Of Weather");
+    {
+		// 응접실 튜토리얼 중 구름공장으로 이동하지 못하도록 제한
+		if (!mTutorialManager.isFinishedTutorial[1]) { return; }
+		LoadingSceneController.Instance.LoadScene("Space Of Weather");
     }
     public void GoCloudFactory()
     {
-        LoadingSceneController.Instance.LoadScene("Cloud Factory");
+        // 응접실 튜토리얼 중 구름공장으로 이동하지 못하도록 제한
+        if (!mTutorialManager.isFinishedTutorial[1]) { return; }
+
+        // 재료 채집 튜토리얼 후 구름공장으로 이동할 때, 튜토리얼 진행도를 저장
+		if (!mTutorialManager.isFinishedTutorial[2]) { mTutorialManager.isFinishedTutorial[2] = true; }
+		LoadingSceneController.Instance.LoadScene("Cloud Factory");
     }
     public void GoDrawingRoom()
     {
-        TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
         if (!mTutorialManager.isFinishedTutorial[0]) { mTutorialManager.isFinishedTutorial[0] = true; }
         LoadingSceneController.Instance.LoadScene("Drawing Room");
     }
@@ -101,6 +111,7 @@ public class CommonUIManager : MonoBehaviour
     }
     public void GoGiveCloud()
     {
+        if (!mTutorialManager.isFinishedTutorial[3]) { mTutorialManager.isFinishedTutorial[3] = true; }
         LoadingSceneController.Instance.LoadScene("Give Cloud");
         GameObject.Find("InventoryManager").GetComponent<InventoryManager>().go2CloudFacBtn();
     }

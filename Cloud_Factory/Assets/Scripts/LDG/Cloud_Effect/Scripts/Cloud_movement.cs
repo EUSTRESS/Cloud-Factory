@@ -26,8 +26,8 @@ public class Cloud_movement : MonoBehaviour
 
     void Awake()
     {
-        ran_num = Random.Range(1, 5);
-        ran_num2 = Get_ran_num();
+        ran_num = 1;//Random.Range(1, 5);
+        ran_num2 = 3;//Get_ran_num();
         GameObject go = Instantiate(Parts_fly);
         GameObject go2 = Instantiate(Parts_fly_2);
 
@@ -37,28 +37,28 @@ public class Cloud_movement : MonoBehaviour
                 part.transform.localPosition = new Vector2(-2.3f, 0.8f);
                 go.transform.position = part.transform.position;
                 Parts_fly.GetComponent<Parts_fly>().Change_speed_1();
-                InvokeRepeating("Make_copy", 2f, 2f);
+                InvokeRepeating("Make_copy", 0.2f, 0.1f);
                 break;
 
             case 2:
                 part.transform.localPosition = new Vector2(2.6f, 1.5f);
                 go.transform.position = part.transform.position;
                 Parts_fly.GetComponent<Parts_fly>().Change_speed_2();
-                InvokeRepeating("Make_copy", 2f, 2f);
+                InvokeRepeating("Make_copy", 0.2f, 0.1f);
                 break;
 
             case 3:
                 part.transform.localPosition = new Vector2(-1.4f, -1.5f);
                 go.transform.position = part.transform.position;
                 Parts_fly.GetComponent<Parts_fly>().Change_speed_3();
-                InvokeRepeating("Make_copy", 2f, 2f);
+                InvokeRepeating("Make_copy", 0.2f, 0.1f);
                 break;
 
             case 4:
                 part.transform.localPosition = new Vector2(1.9f, -0.8f);
                 go.transform.position = part.transform.position;
                 Parts_fly.GetComponent<Parts_fly>().Change_speed_4();
-                InvokeRepeating("Make_copy", 2f, 2f);
+                InvokeRepeating("Make_copy", 0.2f, 0.1f);
                 break;
 
         }
@@ -69,28 +69,28 @@ public class Cloud_movement : MonoBehaviour
                 part_2.transform.localPosition = new Vector2(-2.3f, 0.8f);
                 go2.transform.position = part_2.transform.position;
                 Parts_fly_2.GetComponent<Parts_fly>().Change_speed_1();
-                InvokeRepeating("Make_copy_2", 2f, 2f);
+                InvokeRepeating("Make_copy_2", 0.2f, 0.1f);
                 break;
 
             case 2:
                 part_2.transform.localPosition = new Vector2(2.6f, 1.5f);
                 go2.transform.position = part_2.transform.position;
                 Parts_fly_2.GetComponent<Parts_fly>().Change_speed_2();
-                InvokeRepeating("Make_copy_2", 2f, 2f);
+                InvokeRepeating("Make_copy_2", 0.2f, 0.1f);
                 break;
 
             case 3:
                 part_2.transform.localPosition = new Vector2(-1.4f, -1.5f);
                 go2.transform.position = part_2.transform.position;
                 Parts_fly_2.GetComponent<Parts_fly>().Change_speed_3();
-                InvokeRepeating("Make_copy_2", 2f, 2f);
+                InvokeRepeating("Make_copy_2", 0.2f, 0.1f);
                 break;
 
             case 4:
                 part_2.transform.localPosition = new Vector2(1.9f, -0.8f);
                 go2.transform.position = part_2.transform.position;
                 Parts_fly_2.GetComponent<Parts_fly>().Change_speed_4();
-                InvokeRepeating("Make_copy_2", 2f, 2f);
+                InvokeRepeating("Make_copy_2", 0.2f, 0.1f);
                 break;
 
         }
@@ -118,10 +118,14 @@ public class Cloud_movement : MonoBehaviour
         return range.ElementAt(index);
     }
 
+    void Move_part()
+    {
+
+    }
+
 
     void Update()
     {
-        //CloudImage = ReceiveCloud.GetComponent<VirtualGameObject>().mImage;
         if (Input.GetKeyDown(KeyCode.S))
         {
             GameObject go = Instantiate(Parts_fly);

@@ -440,9 +440,9 @@ public class CloudMakeSystem : MonoBehaviour
         m_sendCloud();
 
 		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
-		mTutorialManager.SetActiveGuideSpeechBubble(true);
+        mTutorialManager.SetActiveGuideSpeechBubble(true);
 
-		yield break;
+        yield break;
     }
 
     //구름 생성 후 인벤토리에 저장

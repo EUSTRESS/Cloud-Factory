@@ -149,7 +149,7 @@ public class WeatherUIManager : MonoBehaviour
 		}
 
         mTutorialManager.SetActiveFadeOutScreen(false);
-		mGuideGather.SetActive(true);
+        mGuideGather.SetActive(true);
     }
     // 나가기, 채집하시겠씁니까? 오브젝트 비활성화    
     public void CloseGuideGather()
@@ -299,6 +299,6 @@ public class WeatherUIManager : MonoBehaviour
     {
         mTutorialManager.SetActiveGuideSpeechBubble(true);
 
-		mGatherResult.SetActive(false);        
+        mGatherResult.SetActive(false);        
     }
 }

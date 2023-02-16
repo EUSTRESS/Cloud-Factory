@@ -440,7 +440,7 @@ public class CloudMakeSystem : MonoBehaviour
         m_sendCloud();
 
 		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
-		mTutorialManager.SetActiveGuideSpeechBubble(true);
+        if (mTutorialManager.isFinishedTutorial[4] == false) { mTutorialManager.SetActiveGuideSpeechBubble(true); }
 
 		yield break;
     }

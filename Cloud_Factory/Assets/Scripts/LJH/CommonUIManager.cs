@@ -34,6 +34,7 @@ public class CommonUIManager : MonoBehaviour
     private AudioSource mSFx;          // 효과음 오디오 소스 예시
 
     private TutorialManager mTutorialManager;
+    private Guest mGuestManager;
 	void Awake()
     {
         if (SceneManager.GetActiveScene().name == "Lobby" ||
@@ -43,6 +44,7 @@ public class CommonUIManager : MonoBehaviour
             mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
 
 		mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
 	}
 
     void Update()
@@ -94,7 +96,12 @@ public class CommonUIManager : MonoBehaviour
     }
     public void GoDrawingRoom()
     {
-        if (!mTutorialManager.isFinishedTutorial[0]) { mTutorialManager.isFinishedTutorial[0] = true; }
+        if (mTutorialManager.isFinishedTutorial[0] == false
+            && mGuestManager.isGuestInLivingRoom == false)
+        { return; }
+
+        if (mTutorialManager.isFinishedTutorial[0] == false) { mTutorialManager.isFinishedTutorial[0] = true; }
+
         LoadingSceneController.Instance.LoadScene("Drawing Room");
     }
     public void GoRecordOfHealing()
@@ -111,7 +118,13 @@ public class CommonUIManager : MonoBehaviour
     }
     public void GoGiveCloud()
     {
-        if (!mTutorialManager.isFinishedTutorial[3]) { mTutorialManager.isFinishedTutorial[3] = true; }
+        if (mTutorialManager.isFinishedTutorial[3] == false) { mTutorialManager.isFinishedTutorial[3] = true; }
+
+        // 구름 만들기가 끝난 뒤, 구름 데코 튜토리얼로 이동하기 전, 구름 제작 씬으로의 이동을 막는다.
+        if (mTutorialManager.isFinishedTutorial[4] == true
+            && mTutorialManager.isFinishedTutorial[5] == false) 
+        { return; }
+
         LoadingSceneController.Instance.LoadScene("Give Cloud");
         GameObject.Find("InventoryManager").GetComponent<InventoryManager>().go2CloudFacBtn();
     }
@@ -122,7 +135,9 @@ public class CommonUIManager : MonoBehaviour
 
     public void GoDecoCloud()
     {
-        LoadingSceneController.Instance.LoadScene("DecoCloud");
+        // 구름 공장에서 구름 데코까지 이동하는 튜토리얼
+		if (!mTutorialManager.isFinishedTutorial[5]) { mTutorialManager.isFinishedTutorial[5] = true; }
+		LoadingSceneController.Instance.LoadScene("DecoCloud");
     }
 
     // 옵션창 활성화, 비활성화

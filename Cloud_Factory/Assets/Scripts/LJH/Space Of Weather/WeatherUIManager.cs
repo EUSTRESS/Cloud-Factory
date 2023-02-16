@@ -147,15 +147,15 @@ public class WeatherUIManager : MonoBehaviour
 			Debug.Log("채집 가능 횟수가 모두 차감되었습니다.");
 			return;
 		}
-
         if (mTutorialManager.isFinishedTutorial[2] == false)
         { mTutorialManager.SetActiveFadeOutScreen(false); }
-        mGuideGather.SetActive(true);
-    }
+		mGuideGather.SetActive(true);
+	}
     // 나가기, 채집하시겠씁니까? 오브젝트 비활성화    
     public void CloseGuideGather()
     {
-        mGuideGather.SetActive(false);
+		if (mTutorialManager.isFinishedTutorial[2] == false) { return; }
+		mGuideGather.SetActive(false);
     }
     // 채집하기
     public void GoingToGather()
@@ -298,7 +298,8 @@ public class WeatherUIManager : MonoBehaviour
     // 채집 끝!
     public void CloseResultGather()
     {
-        mTutorialManager.SetActiveGuideSpeechBubble(true);
+        if (mTutorialManager.isFinishedTutorial[2] == false)
+        { mTutorialManager.SetActiveGuideSpeechBubble(true); }
 
 		mGatherResult.SetActive(false);        
     }

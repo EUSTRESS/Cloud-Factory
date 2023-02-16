@@ -285,6 +285,10 @@ public class Guest : MonoBehaviour
     {
         if (isTimeToTakeGuest == true && isGuestInLivingRoom == false)
         {
+            TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+            if(mTutorialManager.isTutorial == true
+                && mGuestCount >= 0)
+            { return; }
             mGuestCount++;
             mGuestIndex = mTodayGuestList[mGuestCount];
             isGuestInLivingRoom = true;

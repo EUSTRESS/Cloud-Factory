@@ -63,6 +63,13 @@ public class CloudContainer : MonoBehaviour
             selected.GetChild(1).GetComponent<Image>().color = new Color(0.7f, 0.7f, 0.7f, 1.0f); 
             Debug.Log("구름 선택:" + mUiStocksData[selected.GetSiblingIndex()]);
             isCloudSelected = true;
+
+            TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+            if (mTutorialManager.isFinishedTutorial[7] == false)
+            {
+                mTutorialManager.SetActiveFadeOutScreen(false);
+                mTutorialManager.SetActiveGuideSpeechBubble(true);
+            }
         }
         else
         {

@@ -32,13 +32,13 @@ public class DecoParts : MonoBehaviour
         if (mouseWorld.x < top_right_corner.x && mouseWorld.y < top_right_corner.y &&
             mouseWorld.x > bottom_left_corner.x && mouseWorld.y > bottom_left_corner.y)
         {
-            Debug.Log("Crash");
+            //Debug.Log("Crash");
             canAttached = true;
         }
         else
             canAttached = false;
 
-        Debug.Log(mouseWorld.x + "   " + mouseWorld.y);
+        //Debug.Log(mouseWorld.x + "   " + mouseWorld.y);
     }
 
     //private void OnTriggerEnter(Collider other)

@@ -26,16 +26,19 @@ public class TutorialManager : MonoBehaviour
     [HideInInspector]
 	public bool[] isFinishedTutorial;
 
-    public GameObject emptyScreen;          // 화면 클릭을 막기위한 오브젝트
-    private GameObject emptyScreenObject;
+    public GameObject emptyScreen;              // 화면 클릭을 막기위한 오브젝트
+    private GameObject emptyScreenObject;       // 말풍선과 함께 생성/제거 되는 오브젝트
+    private GameObject blockScreenTouchObject;  // 말풍선이 없어도 화면의 터치를 막을 때 사용되는 오브젝트
 
     public GameObject guideSpeechBubble;    // 가이드 말풍선 오브젝트(child로 charImage, Text, button 존재)
     private GameObject guideSpeechBubbleObject;        // 오브젝트를 관리하기 위한 오브젝트
 
     public GameObject commonFadeOutScreen;   // 화면을 모두 가리는 공용 Fade Out 스크린
     public GameObject fadeOutScreen1;
+    public GameObject storageFadeOutScreen;
     private GameObject fadeOutScreenObject;
 
+    private SOWManager mSOWManager;
 
 
 	private static TutorialManager instance = null;
@@ -47,9 +50,10 @@ public class TutorialManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
 
             isTutorial = true;
-            isFinishedTutorial = new bool[8];
+            isFinishedTutorial = new bool[9];
 
             for(int num = 0; num < isFinishedTutorial.Length; num++) { isFinishedTutorial[num] = false; }
+
         }
         else
         {
@@ -65,13 +69,23 @@ public class TutorialManager : MonoBehaviour
             {
                 isFinishedTutorial[num] = true;
             }
+            isTutorial = false;
+            if(guideSpeechBubbleObject != null) { Destroy(guideSpeechBubbleObject); }
+            if (fadeOutScreenObject != null) { Destroy(fadeOutScreenObject); }
+            if (emptyScreenObject != null) { Destroy(emptyScreenObject); }
+            if(blockScreenTouchObject != null) { Destroy(blockScreenTouchObject); }
+            
+            
 		}
 
 		if (SceneManager.GetActiveScene().name == "Space Of Weather"
             && !isFinishedTutorial[0]
             && guideSpeechBubbleObject == null
             && fadeOutScreenObject == null)
-        { TutorialOfSOW1(); }
+        {
+			mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+			TutorialOfSOW1(); 
+        }
 
 		if (SceneManager.GetActiveScene().name == "Drawing Room"
 			&& !isFinishedTutorial[1]
@@ -105,6 +119,18 @@ public class TutorialManager : MonoBehaviour
 			&& fadeOutScreenObject == null)
 		{ TutorialCloudFactory2(); }
 
+		if (SceneManager.GetActiveScene().name == "DecoCloud"
+			&& !isFinishedTutorial[6]
+			&& guideSpeechBubbleObject == null
+			&& fadeOutScreenObject == null)
+		{ TutorialCloudDeco(); }
+
+		if (SceneManager.GetActiveScene().name == "Cloud Storage"
+			&& !isFinishedTutorial[7]
+			&& guideSpeechBubbleObject == null
+			&& fadeOutScreenObject == null)
+		{ TutorialCloudStorage(); }
+
 		// 가이드 말풍선이 없어지면 화면 터치를 막는 emptyScreenObject도 없애준다.
 		if (guideSpeechBubbleObject == null
 			&& emptyScreenObject != null)
@@ -121,6 +147,18 @@ public class TutorialManager : MonoBehaviour
 			&& emptyScreenObject.activeSelf == false)
 			{ emptyScreenObject.SetActive(true); }
 		}
+
+        if (isFinishedTutorial[1] == true
+            &&isFinishedTutorial[2] == false
+            && mSOWManager.mUsingGuestObjectList.Count > 0
+			&& mSOWManager.mUsingGuestObjectList[0].GetComponent<GuestObject>().isSpeakEmotion == true
+            && guideSpeechBubbleObject.activeSelf == false
+            && blockScreenTouchObject != null)
+        {
+            guideSpeechBubbleObject.SetActive(true);
+            Destroy(blockScreenTouchObject);
+        }
+
 	}
 
     public bool IsGuideSpeechBubbleExist()
@@ -129,8 +167,8 @@ public class TutorialManager : MonoBehaviour
         return false;
     }
 
-    public void SetActiveGuideSpeechBubble(bool _bool)  { guideSpeechBubbleObject.SetActive(_bool); }
-    public void SetActiveFadeOutScreen(bool _bool)      { fadeOutScreenObject.SetActive(_bool); }
+    public void SetActiveGuideSpeechBubble(bool _bool)  { if (guideSpeechBubbleObject != null) { guideSpeechBubbleObject.SetActive(_bool); } }
+    public void SetActiveFadeOutScreen(bool _bool)      { if (fadeOutScreenObject != null) { fadeOutScreenObject.SetActive(_bool); } }
 
     // 날씨의 공간(1) 튜토리얼
     // 말풍선을 띄운다. 대사 多 대사 넘기는 버튼 有
@@ -169,6 +207,16 @@ public class TutorialManager : MonoBehaviour
         InstantiateBasicObjects(5);
     }
 
+    public void TutorialCloudDeco()
+    {
+        InstantiateBasicObjects(6);
+    }
+
+    public void TutorialCloudStorage()
+    {
+        InstantiateBasicObjects(7);
+    }
+
     public void FinishTutorial1()
     {
         isFinishedTutorial[0] = true;
@@ -188,6 +236,13 @@ public class TutorialManager : MonoBehaviour
 		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
 	}
 
+    public void FadeOutCloudStorage()
+    {
+		fadeOutScreenObject = Instantiate(storageFadeOutScreen);
+		fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
+		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
+	}
+
 	// Tutorial 간 모든 씬에서 출력되는 기본 오브젝트(emptyScreenObject, guideSpeechBubbleObject)를 생성해준다.
 	public void InstantiateBasicObjects(int dialog_index)
     {
@@ -200,5 +255,12 @@ public class TutorialManager : MonoBehaviour
 		guideSpeechBubbleObject.transform.SetParent(GameObject.Find("Canvas").transform);
 		guideSpeechBubbleObject.transform.localPosition = new Vector3(0f, -340f, 0f);
 		guideSpeechBubbleObject.GetComponent<GuideBubbleScript>().SetDialogIndex(dialog_index);
+	}
+
+    public void InstantiateBlockScreenTouchObject()
+    {
+        blockScreenTouchObject = Instantiate(emptyScreen);
+		blockScreenTouchObject.transform.SetParent(GameObject.Find("Canvas").transform);
+		blockScreenTouchObject.transform.localPosition = new Vector3(0f, 0f, 0f);
 	}
 }

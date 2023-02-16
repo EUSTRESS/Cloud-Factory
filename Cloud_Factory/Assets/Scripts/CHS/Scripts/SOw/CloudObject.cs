@@ -17,7 +17,7 @@ public class CloudObject : MonoBehaviour
 
     [Header("구름 정보")]
     public int mGuestNum;                       // 타겟 손님 번호
-    public int cloudSpeed;                      // 구름 속도
+    public float cloudSpeed;                      // 구름 속도
     public List<EmotionInfo> mFinalEmotions;    // 변환할 감정값 리스트
     private StoragedCloudData virtualCloudData;
 
@@ -39,13 +39,8 @@ public class CloudObject : MonoBehaviour
 
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
-
-        // 테스트를 위한 고정값 넣기
-        cloudSpeed = 1;
         DelayToUse = 20.0f;
-
-        // 테스트를 위한 고정 값 넣기
-        targetChairPos = SOWManager.mChairPos[0].transform;
+        cloudSpeed = 0f;
     }
 
 
@@ -151,6 +146,7 @@ public class CloudObject : MonoBehaviour
             Debug.Log("코루틴 종료");
 
             // 모든 과정을 마친 후, 제거
+            // TODO -> 구름 소멸 애니메이션을 재생하는 것으로 변경 (구름 소멸 애니메이션에 구름 오브젝트를 제거하는 기능을 추가)
             Destroy(this.gameObject);
         }
     }
@@ -214,6 +210,21 @@ public class CloudObject : MonoBehaviour
     public void SetSprite(Sprite sprite)
     {
         GetComponent<SpriteRenderer>().sprite = sprite;
+    }
+
+
+    // 생성 -> 이동으로 넘어갈 때 애니메이션 이벤트로 발동된다.
+    public void SetSpeed()
+    {
+        //현재 위치값과 목표 의자의 위치값을 받아와서 값을 계산한다.
+        // distance = 스폰 위치와 의자 위치간 거리
+        float distance = Mathf.Sqrt(Mathf.Pow(this.transform.position.x - targetChairPos.position.x, 2f) 
+            + Mathf.Pow(this.transform.position.y - targetChairPos.position.y, 2f));
+
+        // 거리값을 기본값에 곱하는 형식을 이용하여 가까울수록 느리게 만든다.
+        cloudSpeed = 0.1f * distance;
+
+        Debug.Log(cloudSpeed);
     }
 
 }

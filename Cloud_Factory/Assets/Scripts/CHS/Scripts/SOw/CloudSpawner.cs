@@ -59,6 +59,9 @@ public class CloudSpawner : MonoBehaviour
         tempCLoud.GetComponent<CloudObject>().SetValue(CloudData);
         tempCLoud.GetComponent<CloudObject>().SetGuestNum(guestNum);
 
+        // 구름과 의자의 위치값에 따라서 속도를 조절한다.
+        tempCLoud.GetComponent<CloudObject>().SetSpeed();
+
         // 움직이는 구름의 이펙트를 나타내는 cloudMove에 대한 설정
         cloudMove = tempCLoud.transform.GetChild(0).gameObject;
 
@@ -80,10 +83,6 @@ public class CloudSpawner : MonoBehaviour
             movement.Parts_fly.transform.localScale = new Vector3(0.09f, 0.09f, 0.5f);
             movement.Parts_fly_2.transform.localScale = new Vector3(0.09f, 0.09f, 0.5f);
         }
-
-        //tempCLoud.GetComponent<SpriteRenderer>().sprite = storagedCloudData.mVBase.mImage;
-        //tempCLoud.GetComponent<CloudObject>().SetSprite(ConvertTextureWithAlpha(CloudData.mTexImage));
-        //tempCLoud.transform.localScale = new Vector3(0.11f, 0.12f, 0.5f);
     }
 
     private Sprite ConvertTextureWithAlpha(Texture2D target)

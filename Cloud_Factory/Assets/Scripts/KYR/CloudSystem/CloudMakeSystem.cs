@@ -122,6 +122,38 @@ namespace CloudSystem
                 UI_slct_mtrl[i].GetComponent<Image>().sprite = default_sprite;
             }
         }
+
+        private int getMtrlTypeCount()
+        {
+            List<Sprite> temp = new List<Sprite>();
+            for (int i = 0; i < UI_slct_mtrl.Count; i++)
+            {
+                Sprite stmp = UI_slct_mtrl[i].GetComponent<Image>().sprite;
+                if (!temp.Contains(stmp))
+                    temp.Add(stmp);
+            }
+
+            return temp.Count;
+        }
+
+        public int getCloudShelfLife()//구름의 유통기한을 반환한다.
+        {
+            switch (getMtrlTypeCount())
+            {
+                case 1:
+                    return 4;
+                case 2:
+                    return 3;
+                case 3:
+                    return 2;
+                case 4:
+                case 5:
+                    return 1;
+                default:
+                    return 0;
+            }
+        }
+
     }
 }
 
@@ -450,7 +482,7 @@ public class CloudMakeSystem : MonoBehaviour
     {
         //해당 감정에 맞는 구름 이미지 생성
         InventoryManager inventoryManager = GameObject.FindWithTag("InventoryManager").transform.GetComponent<InventoryManager>();
-        inventoryManager.createdCloudData = new CloudData(mEmotions, 10); //createdCloudData 갱신.
+        inventoryManager.createdCloudData = new CloudData(mEmotions, slct_mtrl.getCloudShelfLife()); //createdCloudData 갱신.
                                                                           //큰 수치 = 구름색
                                                                           //다음 수치 = 구름의 장식
 

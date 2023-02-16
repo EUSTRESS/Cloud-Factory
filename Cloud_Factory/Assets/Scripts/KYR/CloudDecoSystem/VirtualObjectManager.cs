@@ -73,9 +73,6 @@ public class VirtualObjectManager : MonoBehaviour
             rectTran = obejctP.GetComponent<RectTransform>();
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Vpart.mHeight);
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Vpart.mWidth);
-
-
-            
         }
 
         obejct.transform.localPosition = Vector3.zero;
@@ -116,10 +113,13 @@ public class VirtualObjectManager : MonoBehaviour
             float newY = rectTran.localPosition.y * 0.71f / rectTran.rect.height;
 
             rectTran.localPosition = new Vector3(newX, newY, 1.0f);
+
+            // TODO: 파츠의 크기에 따라 LocalScale을 변경해준다.
+            obejctP.transform.localScale = new Vector3(0.6f, 0.6f, 0.12f);
         }
 
         obejct.transform.localPosition = InstancePosition;
-        obejct.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+        obejct.transform.localScale = new Vector3(0.11f, 0.12f, 0.12f);
 
         return obejct;
     }

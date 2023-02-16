@@ -641,7 +641,7 @@ Transform:
   m_GameObject: {fileID: 5879352038581427232}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.85, y: 0.85, z: 1}
   m_Children:
   - {fileID: 3148823345915690110}
   - {fileID: 2779473273403081310}
@@ -727,6 +727,7 @@ MonoBehaviour:
   faceValue: 
   SpeechBubble: {fileID: 0}
   isSpeakEmotion: 0
+  isUseRarity4: 0
   mGuestAnim: {fileID: 0}
   mSOWManager: {fileID: 0}
   animators:

@@ -148,8 +148,9 @@ public class WeatherUIManager : MonoBehaviour
 			return;
 		}
 
-        mTutorialManager.SetActiveFadeOutScreen(false);
-		mGuideGather.SetActive(true);
+        if (mTutorialManager.isFinishedTutorial[2] == false)
+        { mTutorialManager.SetActiveFadeOutScreen(false); }
+        mGuideGather.SetActive(true);
     }
     // 나가기, 채집하시겠씁니까? 오브젝트 비활성화    
     public void CloseGuideGather()

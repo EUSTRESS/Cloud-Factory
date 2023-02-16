@@ -47,7 +47,7 @@ public class GuestObject : MonoBehaviour
     const int MAX_GUEST_NUM = 20;
     const int MAX_EMOTION_NUM = 20;
     const float DELAY_OF_SPEECH_BUBBLE = 5.0f;
-
+    const float CHAR_SIZE = 0.9f;
 
     List<List<int>> EmotionList = new List<List<int>>
     {
@@ -231,9 +231,9 @@ private void Update()
             {
                 // 의자 위치로 이동 , 방향에 따라서 LocalScale 조정
                 if(mSOWManager.mSitDir[mTargetChiarIndex] == 1)
-                    transform.localScale = new Vector3(1f, 1f, 1f);
+                    transform.localScale = new Vector3(CHAR_SIZE, CHAR_SIZE, 1f);
                 else
-                    transform.localScale = new Vector3(-1f, 1f, 1f);
+                    transform.localScale = new Vector3(-CHAR_SIZE, CHAR_SIZE, 1f);
 
                 mGuestAnim.SetBool("isSit", true);
                 ChangeLayerToSit();
@@ -300,11 +300,11 @@ private void Update()
         // 걷는 방향에 따라 애니메이션의 방향을 다르게 지정한다.
         if (GetComponent<AIPath>().desiredVelocity.x >= 0.01f)
         {
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            transform.localScale = new Vector3(CHAR_SIZE, CHAR_SIZE, 1f);
         }
         else if (GetComponent<AIPath>().desiredVelocity.x <= -0.01f)
         {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
+            transform.localScale = new Vector3(-CHAR_SIZE, CHAR_SIZE, 1f);
         }
         // 현재 위치를 저장한다.
         mTransform = transform;

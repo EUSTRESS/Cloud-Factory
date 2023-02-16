@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8424231269228615630}
   - component: {fileID: 8424231269228615616}
   - component: {fileID: 8424231269228615617}
+  - component: {fileID: 2984126969711714504}
   m_Layer: 0
   m_Name: MoveCloud
   m_TagString: Untagged
@@ -110,7 +111,6 @@ MonoBehaviour:
   part_2: {fileID: 8424231269261285982}
   Parts_fly: {fileID: 6463415146193650126, guid: c934e15f110fb82409de257557fa3d82, type: 3}
   Parts_fly_2: {fileID: 2891701104757291661, guid: f77a7a90f83a2354c9d40680c706ed6d, type: 3}
-  Cloud_Speed: 0
   Target_guestnum: 0
   Change_Cloud_scale: {x: 0, y: 0, z: 0}
   Change_Part_scale: {x: 0, y: 0, z: 0}
@@ -124,6 +124,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8424231269228615631}
   m_CullTransparentMesh: 1
+--- !u!95 &2984126969711714504
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8424231269228615631}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dff7b3b8187c47e43becdb55a37d9915, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8424231269261285982
 GameObject:
   m_ObjectHideFlags: 0

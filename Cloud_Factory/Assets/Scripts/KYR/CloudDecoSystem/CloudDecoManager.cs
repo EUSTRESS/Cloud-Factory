@@ -167,8 +167,9 @@ public class CloudDecoManager : MonoBehaviour
     //UI Button Functions
     public void cloudDecoDoneBtn() //마지막 스케치북 결과 ㅣ OK 버튼
     {
-
-        List<int> mEmoValues = new List<int>();
+		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+		if (mTutorialManager.isFinishedTutorial[6] == false) { mTutorialManager.isFinishedTutorial[6] = true; }
+		List<int> mEmoValues = new List<int>();
         //감정계산.
         for (int i = 0; i < mLPartsMenu.Count; i++)
         {
@@ -186,6 +187,8 @@ public class CloudDecoManager : MonoBehaviour
 
     public void cloudDecoBackBtn() // 스케치북 결과 | Reset 버튼
     {
+        TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        if (mTutorialManager.isFinishedTutorial[6] == false) { return; }
         Destroy(P_FinSBook.transform.GetChild(0).GetChild(0).gameObject); //삭제
         I_targetCloud = I_BasicDecoCloud;
         initParam();
@@ -321,7 +324,9 @@ public class CloudDecoManager : MonoBehaviour
 
 	public void clickedPosNegButton()
     {
-        GameObject target = EventSystem.current.currentSelectedGameObject.transform.gameObject;
+		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+
+		GameObject target = EventSystem.current.currentSelectedGameObject.transform.gameObject;
         int idx = target.transform.parent.GetSiblingIndex();// 부모가 몇번째 sibling인지.
 
         if (idx > mBaseCloudDt.getDecoPartsCount()) return;
@@ -329,6 +334,16 @@ public class CloudDecoManager : MonoBehaviour
         Debug.Log("clicked_" + target.name);
         if(mLPartsMenu[idx].isInit) //처음이면 둘다 체크가 안되어있음.
         {
+            
+            if (mTutorialManager.isFinishedTutorial[6] == false && mLPartsMenu[0].isInit == true)
+            {
+                if(idx != 0 || target.transform.GetSiblingIndex() != 0) { return; }
+                else { 
+                    mTutorialManager.SetActiveGuideSpeechBubble(true);
+                    mTutorialManager.SetActiveFadeOutScreen(false);
+                }
+            }
+
             target.transform.GetComponent<Image>().sprite = target.transform.GetSiblingIndex() == 0 ? I_SelectedSticker[0] : I_SelectedSticker[1];
             mLPartsMenu[idx].state = target.transform.GetSiblingIndex() == 0 ? true : false;
 
@@ -336,6 +351,7 @@ public class CloudDecoManager : MonoBehaviour
         }
         else
         {
+            if (mTutorialManager.isFinishedTutorial[6] == false && idx == 0) { return; }
             mLPartsMenu[idx].btnClicked(I_SelectedSticker,I_UnSelectedSticker);
         }
 

@@ -91,12 +91,14 @@ public class GuideBubbleScript : MonoBehaviour
 		mDialog[5, 1] = "FadeOut50";
 
 		// fade out emotion list
-		mDialog[6, 0] = "장식은 클릭하면 선택되고, 원하는 위치에 가져다 놓을 수 있습니다.";
-		// fade out 
-		mDialog[6, 1] = "이곳에서는 각 감정이 손님에게 어떤 영향을 미칠지 선택할 수 있습니다.";
-		mDialog[6, 2] = "손님은 슬픔을 경험하고 싶어 했으니, 슬픔에 '+'가 되도록 해봅시다.";
+		mDialog[6, 0] = "위쪽의 장식은 클릭하면 선택되고, 원하는 위치에 가져다 놓을 수 있습니다.";
+		mDialog[6, 1] = "FadeOut60";
+		mDialog[6, 2] = "이곳에서는 각 감정이 손님에게 어떤 영향을 미칠지 선택할 수 있습니다.";
+		mDialog[6, 3] = "손님은 슬픔을 경험하고 싶어 했으니, 슬픔에 '+'가 되도록 해봅시다.";
+		mDialog[6, 4] = "GuideSpeechOut60";
 		// 화살표 UI
-		mDialog[6, 3] = "다른 감정도 모두 결정하고 꾸미기를 마쳐봅시다.";
+		mDialog[6, 5] = "다른 감정도 모두 결정하고 장식을 배치한 뒤, 꾸미기를 마쳐봅시다.";
+		mDialog[6, 6] = "FadeOut61";
 		// 돌아가기 버튼 막기
 
 		// 화살표 UI
@@ -106,9 +108,15 @@ public class GuideBubbleScript : MonoBehaviour
 		// 우클릭 이벤트 추가 필요
 		mDialog[7, 3] = "구름을 선택 해 제공해봅시다.";
 		// 화살표 UI
-		mDialog[7, 4] = "FadeOut60";
+		mDialog[7, 4] = "FadeOut70";
 		mDialog[7, 5] = "제공하기 버튼을 눌러 뭉티에게 구름을 줍시다.";
-		mDialog[7, 6] = "FadeOut61";
+		mDialog[7, 6] = "FadeOut71";
+
+		mDialog[8, 0] = "FadeOut80";
+		mDialog[8, 1] = "구름을 받고 감정에 변화가 생긴 손님은 집으로 돌아갑니다. 조만간 다시 방문할지도 모르겠네요.";
+		mDialog[8, 2] = "FadeOut81";
+		mDialog[8, 3] = "모든 가이드를 마쳤습니다. 여러 뭉티의 안식처가 될 수 있는 클라우드 팩토리가 되길 바랍니다.";
+		mDialog[8, 4] = "End";
 	}
 
 
@@ -149,6 +157,9 @@ public class GuideBubbleScript : MonoBehaviour
 		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut20")
 		{
 			mTutorialManager.InstantiateBlockScreenTouchObject();
+			GameObject.Find("B_Option").transform.SetAsLastSibling();
+			GameObject option_object = GameObject.Find("UIManager").GetComponent<CommonUIManager>().gOption;
+			option_object.transform.SetAsLastSibling();
 			presentDialogNum++;
 			currentDialogNum++;
 			this.gameObject.SetActive(false);
@@ -195,13 +206,33 @@ public class GuideBubbleScript : MonoBehaviour
 
 		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut60")
 		{
-			mTutorialManager.FadeOutCloudStorage();
+			presentDialogNum++;
+			currentDialogNum++;
+			mTutorialManager.FadeOutDecoCloud();
+			this.gameObject.transform.SetAsLastSibling();
+		}
+
+		if (mDialog[mDialogIndex, currentDialogNum] == "GuideSpeechOut60")
+		{
 			presentDialogNum++;
 			currentDialogNum++;
 			this.gameObject.SetActive(false);
 		}
 
 		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut61")
+		{
+			this.gameObject.SetActive(false);
+		}
+
+		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut70")
+		{
+			mTutorialManager.FadeOutCloudStorage();
+			presentDialogNum++;
+			currentDialogNum++;
+			this.gameObject.SetActive(false);
+		}
+
+		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut71")
 		{
 			mTutorialManager.FadeOutScreen();
 			GameObject tempButton = GameObject.Find("I_ProfileBG1").transform.Find("B_CloudGIve").gameObject;
@@ -211,7 +242,36 @@ public class GuideBubbleScript : MonoBehaviour
 			return;
 		}
 
-		tGuideText.text = mDialog[mDialogIndex, currentDialogNum];
+		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut80")
+		{
+			mTutorialManager.InstantiateBlockScreenTouchObject();
+			GameObject.Find("B_Option").transform.SetAsLastSibling();
+			GameObject option_object = GameObject.Find("UIManager").GetComponent<CommonUIManager>().gOption;
+			option_object.transform.SetAsLastSibling();
+			presentDialogNum++;
+			currentDialogNum++;
+			this.gameObject.SetActive(false);
+		}
+
+		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut81")
+		{
+			mTutorialManager.InstantiateBlockScreenTouchObject();
+			GameObject.Find("B_Option").transform.SetAsLastSibling();
+			GameObject option_object = GameObject.Find("UIManager").GetComponent<CommonUIManager>().gOption;
+			option_object.transform.SetAsLastSibling();
+			presentDialogNum++;
+			currentDialogNum++;
+			this.gameObject.SetActive(false);
+		}
+
+		if (mDialog[mDialogIndex, currentDialogNum] == "End")
+		{
+			mTutorialManager.isFinishedTutorial[8] = true;
+			mTutorialManager.isTutorial = false;
+			mTutorialManager.DestroyAllObject();
+			return;
+		}
+			tGuideText.text = mDialog[mDialogIndex, currentDialogNum];
 	}
 
 	public void UpdateText()

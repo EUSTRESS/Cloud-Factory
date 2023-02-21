@@ -82,13 +82,13 @@ public class CommonUIManager : MonoBehaviour
     public void GoSpaceOfWeather()
     {
 		// 응접실 튜토리얼 중 구름공장으로 이동하지 못하도록 제한
-		if (!mTutorialManager.isFinishedTutorial[1]) { return; }
+		if (mTutorialManager.isFinishedTutorial[1] == false) { return; }
 		LoadingSceneController.Instance.LoadScene("Space Of Weather");
     }
     public void GoCloudFactory()
     {
         // 응접실 튜토리얼 중 구름공장으로 이동하지 못하도록 제한
-        if (!mTutorialManager.isFinishedTutorial[1]) { return; }
+        if (mTutorialManager.isFinishedTutorial[1] == false) { return; }
 
         // 재료 채집 튜토리얼 후 구름공장으로 이동할 때, 튜토리얼 진행도를 저장
 		if (!mTutorialManager.isFinishedTutorial[2]) { mTutorialManager.isFinishedTutorial[2] = true; }
@@ -136,7 +136,7 @@ public class CommonUIManager : MonoBehaviour
     public void GoDecoCloud()
     {
         // 구름 공장에서 구름 데코까지 이동하는 튜토리얼
-		if (!mTutorialManager.isFinishedTutorial[5]) { mTutorialManager.isFinishedTutorial[5] = true; }
+		if (mTutorialManager.isFinishedTutorial[5] == false) { mTutorialManager.isFinishedTutorial[5] = true; }
 		LoadingSceneController.Instance.LoadScene("DecoCloud");
     }
 

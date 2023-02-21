@@ -26,6 +26,7 @@ public class CloudObject : MonoBehaviour
     public GameObject Target;                   // 목표 손님
     public float DelayToUse;                    // 구름 사용시간
 
+
     // 처음 받아와야 하는 값
     // 1) Cloud Spawner로부터 정보값을 받아온다.
 

@@ -123,6 +123,13 @@ public class Cloud_movement : MonoBehaviour
 
     }
 
+    public void DestroyCloud()
+    {
+        GameObject tempObject = this.transform.parent.transform.gameObject;
+
+        Destroy(tempObject);
+    }
+    
 
     void Update()
     {

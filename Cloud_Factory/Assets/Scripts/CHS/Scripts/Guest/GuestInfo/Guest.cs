@@ -155,8 +155,16 @@ public class Guest : MonoBehaviour
             // 모든 인덱스가 다 되지 않는 한 뭉티 방문주기가 다된경우 새로운 뭉티를 들여보낸다.
             if (mGuestCount < mGuestMax - 1) 
             {
-                isTimeToTakeGuest = true;
-                TakeGuest();
+				TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+
+                if (mTutorialManager.isTutorial == true
+                    && mGuestCount >= 0)
+                { }
+                else
+                {
+                    isTimeToTakeGuest = true;
+                    TakeGuest();
+                }
                 // 응접실 이동하는 버튼들에 대한 상호작용
             }
             else
@@ -285,10 +293,6 @@ public class Guest : MonoBehaviour
     {
         if (isTimeToTakeGuest == true && isGuestInLivingRoom == false)
         {
-            TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
-            if(mTutorialManager.isTutorial == true
-                && mGuestCount >= 0)
-            { return; }
             mGuestCount++;
             mGuestIndex = mTodayGuestList[mGuestCount];
             isGuestInLivingRoom = true;
@@ -570,7 +574,7 @@ public class Guest : MonoBehaviour
         mGuestMax = 0;
 
         // 새로운 리스트를 뽑는 함수를 호출 (테스트를 위해서 잠시 주석처리)
-        int[] list = { 0, 1, 0, 1, 0, 1 };
+        int[] list = { 3, 1, 2, 3, 0, 1 };
         mGuestMax = NUM_OF_TODAY_GUEST_LIST;
         mTodayGuestList = list;
 

@@ -311,7 +311,7 @@ public class DialogManager : MonoBehaviour
     // 손님 수락하기
     public void AcceptGuest()
     {
-        if(!mTutorialManager.isFinishedTutorial[1]) { mTutorialManager.isFinishedTutorial[1] = true; }
+        if(mTutorialManager.isFinishedTutorial[1] == false) { mTutorialManager.isFinishedTutorial[1] = true; }
         gTakeGuestPanel.SetActive(false);
 
 		mSOWManager.InsertGuest(mGuestNum);

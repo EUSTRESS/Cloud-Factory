@@ -51,10 +51,12 @@ public class SeasonDateCalc : MonoBehaviour
 
     void Update()
     {
+        TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
         // 로비, 구름제작, 구름제공 화면에서는 제한
         if (SceneManager.GetActiveScene().name != "Lobby"
          && SceneManager.GetActiveScene().name != "Cloud Storage"
-         && SceneManager.GetActiveScene().name != "Give Cloud")
+         && SceneManager.GetActiveScene().name != "Give Cloud"
+         && mTutorialManager.isTutorial == false)
         {
             // 초 계산
             mSecond += Time.deltaTime;

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-
+using UnityEngine.Animations;
 struct GavedGuestInfo
 {
     int mGuestNum;
@@ -26,6 +26,7 @@ public class CloudObject : MonoBehaviour
     public GameObject Target;                   // 목표 손님
     public float DelayToUse;                    // 구름 사용시간
 
+
     // 처음 받아와야 하는 값
     // 1) Cloud Spawner로부터 정보값을 받아온다.
 
@@ -33,14 +34,21 @@ public class CloudObject : MonoBehaviour
     // 1) 손님과의 충돌 처리 (충돌 시 사용한다는 판정)
     // 2) 충돌 시 해당 손님의 감정값이 변화하게끔 설정
 
+    public RuntimeAnimatorController[] animValue2;
+    
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
 
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
+        animValue2 = new RuntimeAnimatorController[8];
         DelayToUse = 20.0f;
         cloudSpeed = 0f;
+
+        // TODO : MoveCloud Animator를 종류에 맞게 변경
+        
     }
 
 
@@ -85,12 +93,12 @@ public class CloudObject : MonoBehaviour
 
             // 구름을 사용중인 모션을 띄운다. (애니메이션 변경)
             {
-                // moveCloud를 꺼준다..
-                this.transform.GetChild(0).gameObject.SetActive(false);
+                // moveCloud를 Using상태로 바꾼다.
+                //this.transform.GetChild(0).gameObject.SetActive(false);
+                this.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Using");
 
-                // VirtualObjectManager를 통해서 오브젝트를 만들어낸다.
+                // VirtualObjectManager를 통해서 오브젝트를 만들어낸다. (파츠를 나타내기 위해 사용)
                 VirtualObjectManager vObjectManager = GameObject.Find("VirtualObjectManager").GetComponent<VirtualObjectManager>();
-
                 GameObject tempObject = vObjectManager.InstantiateVirtualObjectToSceneToSprite(virtualCloudData, this.transform.position);
                 tempObject.transform.SetParent(this.transform);
             }
@@ -147,7 +155,8 @@ public class CloudObject : MonoBehaviour
 
             // 모든 과정을 마친 후, 제거
             // TODO -> 구름 소멸 애니메이션을 재생하는 것으로 변경 (구름 소멸 애니메이션에 구름 오브젝트를 제거하는 기능을 추가)
-            Destroy(this.gameObject);
+            this.transform.GetChild(0).GetComponent<Animator>().SetTrigger("End");
+            GuestManager.mGuestInfo[mGuestNum].isUsing = false;
         }
     }
 
@@ -156,8 +165,8 @@ public class CloudObject : MonoBehaviour
         if(Target != null)
             Target.GetComponent<GuestObject>().isEndUsingCloud = true;
         Debug.Log("코루틴 강제 중단");
-
-        Destroy(this.gameObject);
+        GuestManager.mGuestInfo[mGuestNum].isUsing = false;
+        this.transform.GetChild(0).GetComponent<Animator>().SetTrigger("End");
     }
         
 

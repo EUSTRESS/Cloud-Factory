@@ -19,6 +19,8 @@ public class CloudSpawner : MonoBehaviour
 
     private GameObject  tempCLoud;          // 구름 제공 전 정보값을 채우기 위한 Temp 오브젝트
 
+    public static Vector3 cloud_ps = new Vector3(0.0f, 0.0f, 0.0f);
+
     // 처음 받아와야 하는 값
     // 1) 날아갈 의자의 인덱스
     // 2) 어떤 구름을 생성하는지에 대한 값
@@ -40,7 +42,10 @@ public class CloudSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(tempCLoud != null)
+        {
+            cloud_ps = tempCLoud.transform.position;
+        }
     }
 
     // 구름을 생성하고 초기화한다.
@@ -62,6 +67,8 @@ public class CloudSpawner : MonoBehaviour
         // 구름과 의자의 위치값에 따라서 속도를 조절한다.
         tempCLoud.GetComponent<CloudObject>().SetSpeed();
 
+        
+
         // 움직이는 구름의 이펙트를 나타내는 cloudMove에 대한 설정
         cloudMove = tempCLoud.transform.GetChild(0).gameObject;
 
@@ -79,7 +86,7 @@ public class CloudSpawner : MonoBehaviour
             }
 
             // scale
-            cloudMove.transform.localScale = new Vector3(0.11f, 0.12f, 0.5f);
+            //cloudMove.transform.localScale = new Vector3(0.11f, 0.12f, 0.5f);
             movement.Parts_fly.transform.localScale = new Vector3(0.15f, 0.15f, 0.5f);
             movement.Parts_fly_2.transform.localScale = new Vector3(0.15f, 0.15f, 0.5f);
         }

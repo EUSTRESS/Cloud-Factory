@@ -574,7 +574,7 @@ public class Guest : MonoBehaviour
         mGuestMax = 0;
 
         // 새로운 리스트를 뽑는 함수를 호출 (테스트를 위해서 잠시 주석처리)
-        int[] list = { 0, 1, 0, 1, 0, 1 };
+        int[] list = { 3, 1, 2, 3, 0, 1 };
         mGuestMax = NUM_OF_TODAY_GUEST_LIST;
         mTodayGuestList = list;
 

@@ -52,7 +52,6 @@ public class CloudDecoManager : MonoBehaviour
     }
     public GameObject CaptureZone;
     //Sprite Merger
-    public SpriteMerger spriteMerger;
 
     public List<PartsMenu> mLPartsMenu;
     //데코용 버튼 그룹

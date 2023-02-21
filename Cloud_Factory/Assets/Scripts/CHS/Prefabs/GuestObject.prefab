@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3751659152264030011}
   - component: {fileID: 6745436528756415238}
   - component: {fileID: 2237122213199739848}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Bubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,7 +489,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2779473273403081310}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SpeechBubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -641,7 +641,7 @@ Transform:
   m_GameObject: {fileID: 5879352038581427232}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.85, y: 0.85, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_Children:
   - {fileID: 3148823345915690110}
   - {fileID: 2779473273403081310}
@@ -966,7 +966,7 @@ GameObject:
   - component: {fileID: 7110530047038758898}
   - component: {fileID: 3798422383002064232}
   - component: {fileID: 4787976409421695902}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EmotionDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1011,7 +1011,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6506522519756165077, guid: a28d11cba5a28b441857effe89245b6d, type: 2}
+  - {fileID: 8759638971239299340, guid: 76845595727e56b4db5d770512e1dfb7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1058,8 +1058,8 @@ MonoBehaviour:
     \uACBD\uC678\uAC00 \uBD80\uC871\uD574!\uBAA8\uB4E0 \uC77C\uC774 \uC798 \uD480\uB9B4
     \uAC83 \uAC19\uC544\u2026 \uB099\uCC9C\uC801\uC778 \uAC74 \uC2EB\uC740\uB370."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a28d11cba5a28b441857effe89245b6d, type: 2}
-  m_sharedMaterial: {fileID: -6506522519756165077, guid: a28d11cba5a28b441857effe89245b6d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 76845595727e56b4db5d770512e1dfb7, type: 2}
+  m_sharedMaterial: {fileID: 8759638971239299340, guid: 76845595727e56b4db5d770512e1dfb7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1083,8 +1083,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 1.7
-  m_fontSizeBase: 1.7
+  m_fontSize: 1.3
+  m_fontSizeBase: 1.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

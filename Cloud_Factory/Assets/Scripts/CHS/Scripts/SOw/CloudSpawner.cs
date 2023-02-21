@@ -79,7 +79,7 @@ public class CloudSpawner : MonoBehaviour
             }
 
             // scale
-            cloudMove.transform.localScale = new Vector3(0.11f, 0.12f, 0.5f);
+            //cloudMove.transform.localScale = new Vector3(0.11f, 0.12f, 0.5f);
             movement.Parts_fly.transform.localScale = new Vector3(0.15f, 0.15f, 0.5f);
             movement.Parts_fly_2.transform.localScale = new Vector3(0.15f, 0.15f, 0.5f);
         }

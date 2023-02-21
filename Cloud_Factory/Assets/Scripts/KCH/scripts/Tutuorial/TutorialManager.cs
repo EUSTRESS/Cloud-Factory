@@ -74,8 +74,8 @@ public class TutorialManager : MonoBehaviour
             if (fadeOutScreenObject != null) { Destroy(fadeOutScreenObject); }
             if (emptyScreenObject != null) { Destroy(emptyScreenObject); }
             if(blockScreenTouchObject != null) { Destroy(blockScreenTouchObject); }
-            
-            
+
+            Debug.Log("Skip Tutorial");
 		}
 
 		if (SceneManager.GetActiveScene().name == "Space Of Weather"

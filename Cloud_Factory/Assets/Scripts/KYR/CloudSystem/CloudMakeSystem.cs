@@ -204,10 +204,15 @@ public class CloudMakeSystem : MonoBehaviour
     {
         if (total >= 5) return; //최대 5개까지 선택 가능
 
-        total++; //update total count
+		total++; //update total count
 
         slct_mtrl.add(mtrlDATA, total, name);
-    }
+
+		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+		if (mTutorialManager.isFinishedTutorial[4] == false
+			&& total == 2)
+		{ mTutorialManager.SetActiveArrowUIObject(true); }
+	}
 
     public bool d_selectMtrlListFull()
     {
@@ -225,7 +230,12 @@ public class CloudMakeSystem : MonoBehaviour
     {
         total--; //update total count
         slct_mtrl.m_sort(slct_mtrl.getErsdobj(name),total); //구름공장에서의 이미지 정렬
-    }
+
+		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+		if (mTutorialManager.isFinishedTutorial[4] == false
+			&& total != 2)
+		{ mTutorialManager.SetActiveArrowUIObject(false); }
+	}
 
     private bool isOverlapState(List<EmotionInfo> emotionList)
     {
@@ -472,7 +482,10 @@ public class CloudMakeSystem : MonoBehaviour
         m_sendCloud();
 
 		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
-        if (mTutorialManager.isFinishedTutorial[4] == false) { mTutorialManager.SetActiveGuideSpeechBubble(true); }
+        if (mTutorialManager.isFinishedTutorial[4] == false) {
+            mTutorialManager.SetActiveArrowUIObject(false);
+            mTutorialManager.SetActiveGuideSpeechBubble(true);
+        }
 
 		yield break;
     }

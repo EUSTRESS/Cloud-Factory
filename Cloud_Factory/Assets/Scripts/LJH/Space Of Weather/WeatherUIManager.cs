@@ -299,7 +299,11 @@ public class WeatherUIManager : MonoBehaviour
     public void CloseResultGather()
     {
         if (mTutorialManager.isFinishedTutorial[2] == false)
-        { mTutorialManager.SetActiveGuideSpeechBubble(true); }
+        { 
+            mTutorialManager.SetActiveGuideSpeechBubble(true);
+            GameObject.Find("B_GardenSpring").transform.SetParent(GameObject.Find("Canvas").transform);
+            GameObject.Find("B_GardenSpring").transform.SetSiblingIndex(5);
+		}
 
 		mGatherResult.SetActive(false);        
     }

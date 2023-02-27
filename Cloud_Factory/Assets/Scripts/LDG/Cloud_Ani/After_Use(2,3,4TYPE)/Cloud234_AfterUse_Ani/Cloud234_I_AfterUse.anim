@@ -80,4 +80,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.5
+    functionName: DestroyCloud
+    data: 
+    objectReferenceParameter: {fileID: 2076399108697384002, guid: ce77449bbaa1af940b4a6f109fe917e3, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

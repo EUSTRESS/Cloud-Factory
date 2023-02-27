@@ -88,7 +88,7 @@ public class CloudObject : MonoBehaviour
 
             // 구름을 사용하는 손님의 머리 위치로 이동시킨다.
             this.transform.position = collision.gameObject.transform.position;
-            this.transform.Translate(new Vector3(0.0f, 1.2f, 0.0f));
+            this.transform.Translate(new Vector3(0.0f, 1.05f, 0.0f));
 
             // 구름을 사용중인 모션을 띄운다. (애니메이션 변경)
             {
@@ -156,6 +156,8 @@ public class CloudObject : MonoBehaviour
             // TODO -> 구름 소멸 애니메이션을 재생하는 것으로 변경 (구름 소멸 애니메이션에 구름 오브젝트를 제거하는 기능을 추가)
             this.transform.GetChild(0).GetComponent<Animator>().SetTrigger("End");
             GuestManager.mGuestInfo[mGuestNum].isUsing = false;
+
+            Destroy(this.transform.GetChild(1).gameObject);
         }
     }
 

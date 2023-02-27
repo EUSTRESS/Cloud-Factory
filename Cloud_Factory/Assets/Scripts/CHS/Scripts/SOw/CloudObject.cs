@@ -43,7 +43,7 @@ public class CloudObject : MonoBehaviour
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
         animValue2 = new RuntimeAnimatorController[8];
-        DelayToUse = 20.0f;
+        DelayToUse = 10.0f;
         cloudSpeed = 0f;
 
         // TODO : MoveCloud Animator를 종류에 맞게 변경

@@ -73,7 +73,7 @@ public class RLHReader : MonoBehaviour
 			{
 				foreach(int emotion in satEmotions)
 				{
-					if (Hint[num].Emotion == emotion) { tText += Hint[num].KOR; }
+					if (Hint[num].Emotion == emotion) { tText += Hint[num].KOR; tText += "\n"; }
 				} 
 			}
 		}

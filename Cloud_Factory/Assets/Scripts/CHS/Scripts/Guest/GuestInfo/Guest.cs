@@ -500,12 +500,37 @@ public class Guest : MonoBehaviour
 					if (mGuestInfo[num].isDisSat == false && mGuestInfo[num].mNotVisitCount <= 0) { mixList.Add(num); }
 				}
 
+                // 튜토리얼이 진행 중인 경우, 첫 번째 손님을 0번 손님으로 고정한다.
+				TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+				if (mTutorialManager.isTutorial == true)
+                {
+                    if (mixList.Contains(0))
+                    {
+                        int pos = 0;
+                        foreach(int num in mixList)
+                        {
+                            if(num == 0) { break; }
+                            pos++;
+                        }
+                        if (pos != 0)
+                        {
+                            int temp = mixList[pos];
+                            mixList[pos] = mixList[0];
+                            mixList[0] = temp;
+                        }
+                    }
+                    else
+                    {
+                        mixList[0] = 0;
+                    }
+                }
+
                 returnValueList = new int[listSize];
                 foreach (var num in mixList)
                 {
                     if (mGuestInfo[num].isDisSat == false && mGuestInfo[num].mNotVisitCount <= 0) { returnValueList[tempNum++] = num; }
                 }
-            }
+			}
         }
         return returnValueList;
     }
@@ -574,7 +599,7 @@ public class Guest : MonoBehaviour
         mGuestMax = 0;
 
         // 새로운 리스트를 뽑는 함수를 호출 (테스트를 위해서 잠시 주석처리)
-        int[] list = { 3, 1, 2, 3, 0, 1 };
+        int[] list = { 0, 1, 2, 3, 0, 1 };
         mGuestMax = NUM_OF_TODAY_GUEST_LIST;
         mTodayGuestList = list;
 

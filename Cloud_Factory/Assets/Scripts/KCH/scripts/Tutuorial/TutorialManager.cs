@@ -121,26 +121,9 @@ public class TutorialManager : MonoBehaviour
 			// Guide 말풍선 상태에 따른, 화면 터치를 막는 오브젝트 상태 변경
 			ChangeEmptyScreenObjectStatus();
 
-			
-			if (isFinishedTutorial[1] == true
-				&& isFinishedTutorial[2] == false
-				&& arrowObject == null
-				&& mSOWManager.mUsingGuestObjectList[0].GetComponent<GuestObject>().isSit == true)
-			{ 
-				InstantiateArrowUIObject(mSOWManager.mUsingGuestObjectList[0].transform.localPosition, -1.75f, 1f, false);
-				arrowObject.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
-			}
-			
-
-			if (SceneManager.GetActiveScene().name == "Cloud Factory"
-				&& isFinishedTutorial[4] == true
-				&& isFinishedTutorial[5] == false
-				&& arrowObject != null
-				&& arrowObject.activeSelf == false
-				&& GameObject.Find("B_GoDecoCloud"))
-			{ SetActiveArrowUIObject(true); }
+			// Arrow UI 오브젝트 상태 변경
+			ChangeArrowObjectStatus();
         }
-
 	}
 
     public bool IsGuideSpeechBubbleExist()
@@ -179,7 +162,7 @@ public class TutorialManager : MonoBehaviour
 		{ InstantiateBasicObjects(1); }
 	}
 
-    // 채집 튜토리얼(감정표현 추가 필요)
+    // 채집 튜토리얼
     public void TutorialOfSOW2()
     {
 		if (SceneManager.GetActiveScene().name == "Space Of Weather"
@@ -347,7 +330,28 @@ public class TutorialManager : MonoBehaviour
 		}
 	}
 
-    public void InstantiateBlockScreenTouchObject()
+	public void ChangeArrowObjectStatus()
+	{
+		if (isFinishedTutorial[1] == true
+			&& isFinishedTutorial[2] == false
+			&& arrowObject == null
+			&& mSOWManager.mUsingGuestObjectList[0].GetComponent<GuestObject>().isSit == true)
+		{
+			InstantiateArrowUIObject(mSOWManager.mUsingGuestObjectList[0].transform.localPosition, -1.75f, 1f, false);
+			arrowObject.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+		}
+
+
+		if (SceneManager.GetActiveScene().name == "Cloud Factory"
+			&& isFinishedTutorial[4] == true
+			&& isFinishedTutorial[5] == false
+			&& arrowObject != null
+			&& arrowObject.activeSelf == false
+			&& GameObject.Find("B_GoDecoCloud"))
+		{ SetActiveArrowUIObject(true); }
+	}
+
+	public void InstantiateBlockScreenTouchObject()
     {
         blockScreenTouchObject = Instantiate(emptyScreen);
 		blockScreenTouchObject.transform.SetParent(GameObject.Find("Canvas").transform);
@@ -367,8 +371,9 @@ public class TutorialManager : MonoBehaviour
 	public void DestroyAllObject()
     {
         if(guideSpeechBubbleObject != null) { Destroy(guideSpeechBubbleObject); }
-        if(fadeOutScreenObject != null) { Destroy(fadeOutScreenObject); }
-        if(emptyScreenObject != null) { Destroy(emptyScreenObject); }
-        if(blockScreenTouchObject != null) { Destroy(blockScreenTouchObject); }
+        if(fadeOutScreenObject != null)		{ Destroy(fadeOutScreenObject); }
+        if(emptyScreenObject != null)		{ Destroy(emptyScreenObject); }
+        if(blockScreenTouchObject != null)	{ Destroy(blockScreenTouchObject); }
+		if(arrowObject != null)				{ Destroy(arrowObject); }
     }
 }

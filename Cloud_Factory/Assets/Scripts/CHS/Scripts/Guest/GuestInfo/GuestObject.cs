@@ -179,9 +179,11 @@ private void Update()
         // 구름을 제공받는 상태가 아니라면 대기시간을 갱신시킨다.
         if (isUsing == false)
         {
+            TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
             if (SceneManager.GetActiveScene().name != "Lobby"
                 && SceneManager.GetActiveScene().name != "Cloud Storage"
-                && SceneManager.GetActiveScene().name != "Give Cloud")
+                && SceneManager.GetActiveScene().name != "Give Cloud"
+                && mTutorialManager.isTutorial == false)
             {
                 mLimitTime += Time.deltaTime;
             }

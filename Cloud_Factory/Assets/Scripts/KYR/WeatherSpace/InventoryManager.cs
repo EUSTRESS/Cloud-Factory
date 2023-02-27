@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Newtonsoft.Json; // LJH, Json Namespace
+using System.Text.RegularExpressions;
 
 // LJH, Data 저장할 임시 복사 공간, Monobehaviour 상속 금지
 [System.Serializable]
@@ -42,13 +43,14 @@ public class StoragedCloudData
     public VirtualGameObject mVBase;
     public List<VirtualGameObject> mVPartsList; //구름 꾸미기 이후의 최종 감정.
 
+    [SerializeField]
+    private int mCloudTypeNum;
     public StoragedCloudData(List<EmotionInfo> _FinalEmotions, GameObject _base, List<GameObject> _mPartsList)
     {
         mdate = 10; //일단 기본으로 세팅
         mFinalEmotions = _FinalEmotions;
         mBase = _base;
         mPartsList = _mPartsList;
-
 
         //VirtualSetting
         mVPartsList = new List<VirtualGameObject>();
@@ -57,9 +59,22 @@ public class StoragedCloudData
         {
             mVPartsList.Add(new VirtualGameObject(_mPartsList[i].transform.localPosition, _mPartsList[i].transform.rotation, _mPartsList[i].transform.GetComponent<RectTransform>().rect.width, _mPartsList[i].transform.GetComponent<RectTransform>().rect.height, _mPartsList[i].GetComponent<Image>().sprite));
         }
+
+        SetCloudTypeNumber();
+
     }
 
+    private void SetCloudTypeNumber()
+    {
+        Sprite sprite = mVBase.mImage;
+        string sspriteNum = Regex.Replace(mVBase.mImage.name, @"[^0-9]", ""); //숫자만 추출
+        mCloudTypeNum = int.Parse(sspriteNum);
+    }
 
+    public int GetCloudTypeNum()
+    {
+        return mCloudTypeNum;
+    }
 }
 
 [System.Serializable]

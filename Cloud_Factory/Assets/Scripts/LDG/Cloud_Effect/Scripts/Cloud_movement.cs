@@ -31,6 +31,8 @@ public class Cloud_movement : MonoBehaviour
 
     private bool Part1_out_2 = false;
 
+    public bool IsUsing = false;
+
     
 
     void Awake()
@@ -39,6 +41,8 @@ public class Cloud_movement : MonoBehaviour
         ran_num2 = Get_ran_num();
         GameObject go = Instantiate(Parts_fly);
         GameObject go2 = Instantiate(Parts_fly_2);
+
+
 
         switch (ran_num)
         {
@@ -105,12 +109,13 @@ public class Cloud_movement : MonoBehaviour
         }
     }
 
+
     void Check_position1()
     {
         Part1_out = false;
         Part2_out = false;
         Part1_out_2 = false;
-        real_cloud_ps = CloudSpawner.Cloud_ps;  // 실시간으로 구름의 위치 받아오기
+        real_cloud_ps = this.transform.parent.transform.position;
         // 4사분면 속도함수 호출
         if(real_cloud_ps.x > 0 && real_cloud_ps.y < 0)
         {
@@ -231,9 +236,9 @@ public class Cloud_movement : MonoBehaviour
         Part1_out = false;
         Part2_out = false;
         Part1_out_2 = false;
-        real_cloud_ps = CloudSpawner.Cloud_ps;
+        real_cloud_ps = this.transform.parent.transform.position;
         // 4사분면 속도함수 호출
-        if(real_cloud_ps.x > 0 && real_cloud_ps.y < 0)
+        if (real_cloud_ps.x > 0 && real_cloud_ps.y < 0)
         {
             if (ran_num2 == 1)
             {
@@ -406,13 +411,16 @@ public class Cloud_movement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        SOWManager sowManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+        GuestObject guest_object = sowManager.mUsingGuestObjectList[0].GetComponent<GuestObject>();
+        IsUsing = guest_object.isUsing;
+        if(IsUsing == true)
         {
-            GameObject go = Instantiate(Parts_fly);
-            go.transform.position = part.transform.position;
+            CancelInvoke("Check_position");
+            CancelInvoke("Make_copy");
 
-            GameObject go_2 = Instantiate(Parts_fly_2);
-            go_2.transform.position = part_2.transform.position;
+            CancelInvoke("Check_position2");
+            CancelInvoke("Make_copy_2");
         }
     }
 

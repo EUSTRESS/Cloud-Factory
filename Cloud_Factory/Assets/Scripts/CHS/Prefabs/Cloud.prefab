@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2076399108697384002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 715.25104, y: 504.47867, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.8, z: 1}
   m_Children:
   - {fileID: 1164193766376500190}
   m_Father: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   Target: {fileID: 0}
   DelayToUse: 0
   animValue2:
-  - {fileID: 9100000, guid: b5c5ddbd2c35e5a4c93a32a78513395b, type: 2}
+  - {fileID: 0}
 --- !u!70 &7442812040196957923
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -212,6 +212,14 @@ PrefabInstance:
       value: 1.67
       objectReference: {fileID: 0}
     - target: {fileID: 8424231269228615619, guid: 123ef4b10df1c61488505e7058eabda4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 8424231269228615619, guid: 123ef4b10df1c61488505e7058eabda4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8424231269228615619, guid: 123ef4b10df1c61488505e7058eabda4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -245,7 +253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8424231269228615619, guid: 123ef4b10df1c61488505e7058eabda4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.076
       objectReference: {fileID: 0}
     - target: {fileID: 8424231269228615619, guid: 123ef4b10df1c61488505e7058eabda4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

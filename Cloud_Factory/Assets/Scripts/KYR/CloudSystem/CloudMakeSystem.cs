@@ -185,6 +185,7 @@ public class CloudMakeSystem : MonoBehaviour
     public EmotionsTable emoTableDATA;
 
     //Total Emotion Input List 
+    [SerializeField]
     private List<EmotionInfo> mEmotions;
 
     //UI
@@ -403,7 +404,11 @@ public class CloudMakeSystem : MonoBehaviour
 
         emotionList = LfinalEmo;
         Debug_PrintState("[최종감정리스트]", emotionList);
-        mEmotions = emotionList;
+        //mEmotions = emotionList;
+
+        mEmotions.Add(new EmotionInfo(Emotion.INTEXPEC,10));
+        mEmotions.Add(new EmotionInfo(Emotion.CONTRAY,10));
+
     }
 
     

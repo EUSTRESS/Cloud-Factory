@@ -19,7 +19,7 @@ public class CloudSpawner : MonoBehaviour
 
     private GameObject  tempCLoud;          // 구름 제공 전 정보값을 채우기 위한 Temp 오브젝트
 
-    public static Vector3 Cloud_ps = new Vector3(0f, 0f, 0f);
+    public Vector3 Cloud_ps = new Vector3(0f, 0f, 0f);
 
     // 처음 받아와야 하는 값
     // 1) 날아갈 의자의 인덱스

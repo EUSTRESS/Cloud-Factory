@@ -50,6 +50,7 @@ public class DialogManager : MonoBehaviour
     private int mDialogImageIndex;              // 실제로 화면에 출력시키는 이미지의 인덱스
     private bool isReading;                     // 현재 대화창에서 대화를 출력하는 중인가?
     private bool isLastDialog;                  // 마지막 대화를 불러왔는가?
+    private bool isTagInDialog;                 // 대사 중, 태그(color) 사이에 들어가야 하는 문장인가?
 
     // 수락/거절 패널에 필요한 텍스트 오브젝트 받기
     [SerializeField]
@@ -265,14 +266,56 @@ public class DialogManager : MonoBehaviour
             }
             return;
         }
-        tText.text += GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex];
-        mDialogCharIndex++;
+
+        if(GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex] == '<')
+        {
+            if(GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex + 1] == '/') { isTagInDialog = false; }
+            else { isTagInDialog = true; }
+
+            // 태그가 시작 될 때만, 입력 태그를 텍스트에 추가 후, 뒤에 들어올 태그도 추가
+            while(GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex - 1] != '>')
+            {
+                if(isTagInDialog == true)
+                {
+					tText.text += GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex];
+					mDialogCharIndex++;
+				}
+                else { mDialogCharIndex++; }
+			}
+            if(isTagInDialog == true) { tText.text += "</color>"; }
+		}
+
+        if(isTagInDialog = true) {
+			tText.text = InsertCharInString(tText.text.ToString(), GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex], mDialogCharIndex);
+			mDialogCharIndex++;
+		}
+        else
+        {
+			tText.text += GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex];
+			mDialogCharIndex++;
+		}
 
         Invoke("ReadDialogAtOne", 0.05f);
     }
 
-    // 손님과의 대화를 실행시켜주는 함수
-    public void ReadDialog()
+	private string InsertCharInString(string main_string, char add_char, int _index)
+	{
+        string temp_string = "";
+        for(int idx = 0; idx < _index; idx++)
+        {
+            temp_string += main_string[idx];
+        }
+        temp_string += add_char;
+        for(int idx = _index; idx < main_string.Length; idx++)
+        {
+            temp_string += main_string[idx];
+        }
+
+        return temp_string;
+	}
+
+	// 손님과의 대화를 실행시켜주는 함수
+	public void ReadDialog()
     {
         InitDialog();
 

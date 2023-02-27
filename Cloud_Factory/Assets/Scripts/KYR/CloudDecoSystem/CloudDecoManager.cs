@@ -340,6 +340,7 @@ public class CloudDecoManager : MonoBehaviour
                 else { 
                     mTutorialManager.SetActiveGuideSpeechBubble(true);
                     mTutorialManager.SetActiveFadeOutScreen(false);
+                    mTutorialManager.SetActiveArrowUIObject(false);
                 }
             }
 
@@ -514,6 +515,9 @@ public class CloudDecoManager : MonoBehaviour
         I_targetCloud = FinCloud;
 
         P_FinSBook.SetActive(true);
+
+        TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        if (mTutorialManager.isFinishedTutorial[6] == false) { mTutorialManager.InstantiateArrowUIObject(GameObject.Find("B_Complete").transform.position, 150f); }
 
         yield break;
 

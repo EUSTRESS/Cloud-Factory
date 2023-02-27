@@ -482,6 +482,7 @@ public class CloudDecoManager : MonoBehaviour
             if (mLPartsMenu[i].isInit == true) return false;
             if (int.Parse(T_CountInfo[i].GetComponent<TMP_Text>().text) != 0) return false;
         }
+        if (cursorChasing == true) return false;
 
         return true;
     }

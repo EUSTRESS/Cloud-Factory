@@ -129,8 +129,8 @@ public class YardHandleSystem : MonoBehaviour
         // 튜토리얼 시 채집되는 재료 고정 TODO: 기획서에 맞도록 재료 종류, 수량 조정 필요
         if (mTutorialManager.isFinishedTutorial[2] == false)
         {
-            results.Add(inventoryManager.mIngredientDatas[0].mItemList[0], 1);
-            results.Add(inventoryManager.mIngredientDatas[0].mItemList[1], 1);
+            results.Add(inventoryManager.mIngredientDatas[0].mItemList[6], 1);
+            results.Add(inventoryManager.mIngredientDatas[0].mItemList[7], 1);
         }
         else
         {

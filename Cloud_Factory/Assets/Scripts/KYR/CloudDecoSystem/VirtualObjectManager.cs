@@ -108,6 +108,7 @@ public class VirtualObjectManager : MonoBehaviour
 
             // 파츠의 소팅 레이어를 변경
             obejctP.GetComponent<SpriteRenderer>().sortingLayerName = "Parts";
+            obejctP.GetComponent<SpriteRenderer>().enabled = true;
 
             float newX = rectTran.localPosition.x * 1.51f / rectTran.rect.width;
             float newY = rectTran.localPosition.y * 0.71f / rectTran.rect.height;
@@ -115,7 +116,7 @@ public class VirtualObjectManager : MonoBehaviour
             rectTran.localPosition = new Vector3(newX, newY, 1.0f);
 
             // TODO: 파츠의 크기에 따라 LocalScale을 변경해준다.
-            obejctP.transform.localScale = new Vector3(0.6f, 0.6f, 0.12f);
+            obejctP.transform.localScale = new Vector3(0.9f, 0.9f, 0.12f);
         }
 
         obejct.transform.localPosition = InstancePosition;

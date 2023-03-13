@@ -133,7 +133,7 @@ public class SOWManager : MonoBehaviour
         if (mWaitGuestList.Count != 0)
         {
             // 남은 의자가 있다면 해당 의자에 대한 인덱스를 반환받고, 이외는 -1를 받아온다.
-            int chairNum = 2;//GetRandChiarIndex();
+            int chairNum = GetRandChiarIndex();
 
             if (chairNum != -1)
             {

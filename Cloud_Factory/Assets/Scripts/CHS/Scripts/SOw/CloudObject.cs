@@ -86,6 +86,8 @@ public class CloudObject : MonoBehaviour
 
             Target = collision.gameObject.transform.root.gameObject;
 
+            this.transform.GetChild(0).gameObject.GetComponent<Cloud_movement>().enabled = false;
+
             // 구름을 사용하는 손님의 머리 위치로 이동시킨다.
             this.transform.position = collision.gameObject.transform.position;
             this.transform.Translate(new Vector3(0.0f, 1.05f, 0.0f));

@@ -89,8 +89,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 649879739
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b40d59c6ebaab154d8d94a4d5bd20c61, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -740,8 +740,8 @@ MonoBehaviour:
   - {fileID: 9100000, guid: 062a24837b4bce64980f0c84f0f6f79f, type: 2}
   - {fileID: 9100000, guid: a03e842cc4891ab48b02c92e8304f6a1, type: 2}
   - {fileID: 9100000, guid: 896863e987b3b4149bf7df6cb9b11564, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 9100000, guid: 1d4ff2f48e2fb4949a2adda90ebf5fd7, type: 2}
+  - {fileID: 9100000, guid: 631a0573c97f4354980fb8048db33abf, type: 2}
   - {fileID: 9100000, guid: ce792651e7b54e8469869248486ed11d, type: 2}
   - {fileID: 9100000, guid: a18048e398dc1834ebdd3032d3f5c5c7, type: 2}
   - {fileID: 9100000, guid: a306564838eec2e4aac8f22d5bd4f278, type: 2}
@@ -966,6 +966,7 @@ GameObject:
   - component: {fileID: 7110530047038758898}
   - component: {fileID: 3798422383002064232}
   - component: {fileID: 4787976409421695902}
+  - component: {fileID: 4726976275423194629}
   m_Layer: 12
   m_Name: EmotionDialog
   m_TagString: Untagged
@@ -1128,6 +1129,17 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
+--- !u!210 &4726976275423194629
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6345532713300255412}
+  m_Enabled: 1
+  m_SortingLayerID: 649879739
+  m_SortingLayer: 6
+  m_SortingOrder: 0
 --- !u!1 &8517084649661653854
 GameObject:
   m_ObjectHideFlags: 0

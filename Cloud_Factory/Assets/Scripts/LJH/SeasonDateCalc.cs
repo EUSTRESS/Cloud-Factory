@@ -90,6 +90,7 @@ public class SeasonDateCalc : MonoBehaviour
             mSecond = 600;
             mDay += CalcDay(ref mSecond);
             mWeek = CalcWeek(ref mDay);
+            mSeason += CalcSeason(ref mWeek);
         }
 
     }
@@ -123,18 +124,22 @@ public class SeasonDateCalc : MonoBehaviour
                 temp += 1;
                 second = 0;
 
+                // TODO: 페이드 인 - 페이드 아웃 효과 추가
+
+
                 mChangeDay = true;                           
             }
             else
             {
-                Debug.Log("하루의 시간이 지났지만 모든 손님이 퇴장하지 않아서 다음날이 되지 않습니다.");
-
                 // SOWMangaer를 불러와서 날씨의 공간에 존재하는 손님들을 모두 퇴장시킨다.
                 SOWManager sowManager;
                 sowManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
-                if(sowManager != null)
+                if (sowManager != null)
+                {
                     sowManager.MakeGuestDisSat();
+                    sowManager.InitSOW();
+                }
             }
         }
         return temp;

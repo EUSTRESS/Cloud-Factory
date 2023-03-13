@@ -7,8 +7,9 @@ public class WeatherUIManager : MonoBehaviour
 {
     private SeasonDateCalc mSeason; // 계절 계산 스크립트
     private TutorialManager mTutorialManager;
+    private SOWManager mSOWManager;
 
-    [Header("Gather")]
+	[Header("Gather")]
     public GameObject mGuideGather; // 채집할건지 안할건지 알려주는 UI
     public GameObject mGathering;   // 채집 중 출력하는 UI
     public GameObject mGatherResult;// 채집 결과를 출력하는 UI
@@ -33,7 +34,7 @@ public class WeatherUIManager : MonoBehaviour
     public GameObject iMainBG; // 메인 배경 이미지 
     public Sprite[] mBackground = new Sprite[4]; // 계절별로 달라지는 배경
 
-    // 영상을 찍기위해 임시로 가져오는 마당 오브젝트들, TODO: 이후 계절에 따라 맞는 오브젝트를 불러오도록 함수 내부에서 설정
+    // 영상을 찍기위해 임시로 가져오는 마당 오브젝트들
     private GameObject[] mGardens = new GameObject[4];
     public Sprite[] mSpringGardenSprites = new Sprite[2];
 	public Sprite[] mSummerGardenSprites = new Sprite[2];
@@ -47,6 +48,7 @@ public class WeatherUIManager : MonoBehaviour
     {
         mSeason = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>();
 		mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+		mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 	}
 
     void Update()
@@ -66,18 +68,22 @@ public class WeatherUIManager : MonoBehaviour
             case 1:
                 UpdateSeasonBg(0);// 봄
                 UpdateSeasonGarden(0);
-                break;
+				UpdateSeasonGardenSprites(1);
+				break;
             case 2:
                 UpdateSeasonBg(1);// 여름
 				UpdateSeasonGarden(1);
+				UpdateSeasonGardenSprites(2);
 				break;
             case 3:
                 UpdateSeasonBg(2);// 가을
 				UpdateSeasonGarden(2);
+				UpdateSeasonGardenSprites(3);
 				break;
             case 4:
                 UpdateSeasonBg(3); // 겨울
 				UpdateSeasonGarden(3);
+				UpdateSeasonGardenSprites(4);
 				break;
             default:
                 break;
@@ -109,8 +115,10 @@ public class WeatherUIManager : MonoBehaviour
         
         for(int num = 0; num < 4; num++){
             mGardens[num] = seasonObj.transform.Find("Garden" + (num + 1)).gameObject;
-        }
-    }
+			if (mSOWManager.yardGatherCount[num] <= 0) { mGardens[num].GetComponent<SpriteRenderer>().sprite = mSwitchGardenSprites[0]; }
+			else { mGardens[num].GetComponent<SpriteRenderer>().sprite = mSwitchGardenSprites[1]; }
+		}
+	}
 
     void UpdateSeasonGardenSprites(int season)
     {
@@ -142,6 +150,7 @@ public class WeatherUIManager : MonoBehaviour
 
 		// 채집 횟수가 모두 차감되었으면 채집하지 않고 창을 띄우지 않는다.
 		YardHandleSystem system = selectedYard.GetComponentInParent<YardHandleSystem>();
+        system.UpdateYardGatherCount();
 		if (system.CanBeGathered(selectedYard) == false)
 		{
 			Debug.Log("채집 가능 횟수가 모두 차감되었습니다.");
@@ -160,8 +169,6 @@ public class WeatherUIManager : MonoBehaviour
     // 채집하기
     public void GoingToGather()
     {
-        
-
 		mGuideGather.SetActive(false);
         mGathering.SetActive(true);
         mGatheringTextCount = 0; // 초기화
@@ -181,7 +188,9 @@ public class WeatherUIManager : MonoBehaviour
         }
         // 5초 동안 채집 후 결과 출력
         Invoke("Gathering", 5.0f);
-    }
+
+        mSOWManager.yardGatherCount[selectedYard.transform.GetSiblingIndex()]--;
+	}
     
     void UpdateGatherAnim(int _iX, int _iY, bool _bSpring, bool _bSummer, bool _bFall, bool _bWinter)
     {
@@ -203,7 +212,6 @@ public class WeatherUIManager : MonoBehaviour
         // Result Image match
         GatherResultMatchWithUI(system.Gathered(selectedYard, mRandomGather));
 
-        UpdateSeasonGardenSprites(mSeason.mSeason);
         if (!system.CanBeGathered(selectedYard)) { mGardens[selectedYard.transform.GetSiblingIndex()].GetComponent<SpriteRenderer>().sprite = mSwitchGardenSprites[0]; }
         else { mGardens[selectedYard.transform.GetSiblingIndex()].GetComponent<SpriteRenderer>().sprite = mSwitchGardenSprites[1]; }
 

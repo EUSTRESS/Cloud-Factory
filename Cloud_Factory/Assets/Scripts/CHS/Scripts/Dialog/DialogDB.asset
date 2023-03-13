@@ -19967,9 +19967,7 @@ MonoBehaviour:
     DialogImageNumber: 1
     Text: "\uD558\uC544... \uCD5C\uC545\uC774\uC5D0\uC694. \uC624\uB298\uB85C \uBC8C\uC368
       \uC5F4 \uBC88\uC9F8\uC778\uB370, \uCCAB\uB0A0\uC774\uB791 \uB2E4\uB97C \uAC8C
-      \uD558\uB098\uB3C4 \uC5C6\uC5B4\uC694. \uCE5C\uAD6C\uB4E4\uC774 \uC5B4\uB5A4
-      \uACE1\uC73C\uB85C \uD560\uC9C0 \uC598\uAE30\uD574\uBCF4\uC790\uACE0 \uCE74\uD398\uC5D0\uC11C
-      \uB9CC\uB098\uC7E4\uC694... "
+      \uD558\uB098\uB3C4 \uC5C6\uC5B4\uC694."
     isGuest: 1
     VisitCount: 10
     Emotion: 0
@@ -19978,12 +19976,10 @@ MonoBehaviour:
     SatVariation: 0
     DialogIndex: 4
     DialogImageNumber: 1
-    Text: "\uC9C0\uAE08 \uC0C1\uD0DC\uB85C \uC548 \uD55C\uB2E4\uACE0 \uD558\uBA74
-      \uBD84\uBA85 \uBD84\uC704\uAE30 \uC774\uC0C1\uD574\uC9C0\uB294\uB370... \uC624\uB298
-      \uB0B4\uB85C \uC88B\uC544\uC9C0\uC9C0 \uC54A\uB294\uB2E4\uBA74... \uCE5C\uAD6C\uB4E4\uACFC
-      \uAD00\uACC4\uAC00 \uC5B4\uC0C9\uD574\uC9C0\uB290\uB2C8, \uADF8\uB0E5 \uCDA4
-      \uD55C\uBC88 \uCD94\uACE0 \uB0B4\uB824\uC624\uB294 \uAC8C \uB098\uC744 \uAC83
-      \uAC19\uC544\uC694. \uD751\uC5ED\uC0AC\uB294 \uC0DD\uAE30\uACA0\uC9C0\uB9CC\uC694... "
+    Text: " \uCE5C\uAD6C\uB4E4\uC774 \uC5B4\uB5A4 \uACE1\uC73C\uB85C \uD560\uC9C0
+      \uC598\uAE30\uD574\uBCF4\uC790\uACE0 \uCE74\uD398\uC5D0\uC11C \uB9CC\uB098\uC7E4\uC694...
+      \uC9C0\uAE08 \uC0C1\uD0DC\uB85C \uC548 \uD55C\uB2E4\uACE0 \uD558\uBA74 \uBD84\uBA85
+      \uBD84\uC704\uAE30 \uC774\uC0C1\uD574\uC9C0\uB294\uB370... "
     isGuest: 1
     VisitCount: 10
     Emotion: 0
@@ -19991,6 +19987,18 @@ MonoBehaviour:
     Sat: 1
     SatVariation: 0
     DialogIndex: 5
+    DialogImageNumber: 1
+    Text: "\uC624\uB298 \uB0B4\uB85C \uC88B\uC544\uC9C0\uC9C0 \uC54A\uB294\uB2E4\uBA74...
+      \uCE5C\uAD6C\uB4E4\uACFC \uAD00\uACC4\uAC00 \uC5B4\uC0C9\uD574\uC9C0\uB290\uB2C8,
+      \uADF8\uB0E5 \uCDA4 \uD55C\uBC88 \uCD94\uACE0 \uB0B4\uB824\uC624\uB294 \uAC8C
+      \uB098\uC744 \uAC83 \uAC19\uC544\uC694. \uD751\uC5ED\uC0AC\uB294 \uC0DD\uAE30\uACA0\uC9C0\uB9CC\uC694... "
+    isGuest: 1
+    VisitCount: 10
+    Emotion: 0
+  - GuestID: 12
+    Sat: 1
+    SatVariation: 0
+    DialogIndex: 6
     DialogImageNumber: 0
     Text: "\uB354 \uB098\uC740 \uC11C\uBE44\uC2A4\uB97C \uC81C\uACF5\uD574 \uB4DC\uB9AC\uC9C0
       \uBABB\uD574 \uC8C4\uC1A1\uD569\uB2C8\uB2E4. "
@@ -20000,7 +20008,7 @@ MonoBehaviour:
   - GuestID: 12
     Sat: 1
     SatVariation: 0
-    DialogIndex: 6
+    DialogIndex: 7
     DialogImageNumber: 0
     Text: "\uB9C8\uC9C0\uB9C9\uC778 \uB9CC\uD07C \uC81C\uC77C \uD6A8\uACFC\uAC00
       \uC88B\uC740 \uAD6C\uB984\uC73C\uB85C \uC900\uBE44\uD558\uACA0\uC2B5\uB2C8\uB2E4. "
@@ -20010,7 +20018,7 @@ MonoBehaviour:
   - GuestID: 12
     Sat: 1
     SatVariation: 0
-    DialogIndex: 7
+    DialogIndex: 8
     DialogImageNumber: 0
     Text: "\uD604\uC7AC \uBD88\uD3B8\uC744 \uACAA\uACE0 \uACC4\uC2E0 \uAC10\uC815\uC774
       \uC788\uC73C\uC2ED\uB2C8\uAE4C? "
@@ -20020,7 +20028,7 @@ MonoBehaviour:
   - GuestID: 12
     Sat: 1
     SatVariation: 0
-    DialogIndex: 8
+    DialogIndex: 9
     DialogImageNumber: 0
     Text: "\uBD88\uD3B8\uD55C \uC810\uC774\uB77C\uBA74... "
     isGuest: 1
@@ -20029,7 +20037,7 @@ MonoBehaviour:
   - GuestID: 12
     Sat: 1
     SatVariation: 0
-    DialogIndex: 9
+    DialogIndex: 10
     DialogImageNumber: 1
     Text: Hint
     isGuest: 1
@@ -20038,7 +20046,7 @@ MonoBehaviour:
   - GuestID: 12
     Sat: 1
     SatVariation: 0
-    DialogIndex: 10
+    DialogIndex: 11
     DialogImageNumber: 1
     Text: "...\uC774 \uC815\uB3C4\uC778\uB370, \uAC00\uB2A5\uD560\uAE4C\uC694? "
     isGuest: 1
@@ -20047,7 +20055,7 @@ MonoBehaviour:
   - GuestID: 12
     Sat: 1
     SatVariation: 0
-    DialogIndex: 11
+    DialogIndex: 12
     DialogImageNumber: 1
     Text: "(\uC758\uB8B0\uB97C \uC218\uB77D\uD560\uAE4C?)"
     isGuest: 0
@@ -21202,9 +21210,7 @@ MonoBehaviour:
     Text: "\uC2E4\uB9DD\uB3C4 \uC788\uC5C8\uC9C0\uB9CC, \uC5B8\uB2C8\uC5D0\uAC8C\uB3C4
       \uD654\uAC00 \uB0AC\uB124. \uBD80\uBAA8\uB2D8\uC774 \uB0B4\uAC8C \uC5F0\uB77D\uD558\uB294
       \uC774\uC720\uAC00 \uC624\uB85C\uC9C0 \uC5B8\uB2C8\uC758 \uD589\uBC29\uC744
-      \uBB3B\uAE30 \uC704\uD574\uC11C\uC600\uC73C\uB2C8\uAE4C. \uC560\uCD08\uC5D0
-      \uC790\uAE30\uB294 \uBC1B\uC744 \uAC78 \uB2E4 \uBC1B\uC544\uB193\uACE0 \uC5F0\uC744
-      \uB04A\uB2E4\uB2C8... \uAD18\uC538\uD558\uC9C0 \uC54A\uC740\uAC00. "
+      \uBB3B\uAE30 \uC704\uD574\uC11C\uC600\uC73C\uB2C8\uAE4C. "
     isGuest: 1
     VisitCount: 2
     Emotion: 0
@@ -21212,6 +21218,16 @@ MonoBehaviour:
     Sat: 3
     SatVariation: 1
     DialogIndex: 8
+    DialogImageNumber: 0
+    Text: "\uC560\uCD08\uC5D0 \uC790\uAE30\uB294 \uBC1B\uC744 \uAC78 \uB2E4 \uBC1B\uC544\uB193\uACE0
+      \uC5F0\uC744 \uB04A\uB2E4\uB2C8... \uAD18\uC538\uD558\uC9C0 \uC54A\uC740\uAC00. "
+    isGuest: 1
+    VisitCount: 2
+    Emotion: 0
+  - GuestID: 13
+    Sat: 3
+    SatVariation: 1
+    DialogIndex: 9
     DialogImageNumber: 4
     Text: "\uADF8\uB798\uC11C... \uB2E4\uC74C\uC5D0 \uC5B8\uB2C8\uAC00 \uC654\uC744
       \uB54C\uB294 \uD06C\uAC8C \uD654\uB97C \uB0C8\uB124. \uC9C0\uAE08\uAE4C\uC9C0
@@ -21224,7 +21240,7 @@ MonoBehaviour:
   - GuestID: 13
     Sat: 3
     SatVariation: 1
-    DialogIndex: 9
+    DialogIndex: 10
     DialogImageNumber: 4
     Text: "\uADF8 \uC774\uD6C4\uB85C\uB294... \uB098\uB3C4 \uC5B8\uB2C8\uC5D0\uAC8C
       \uBA3C\uC800 \uC5F0\uB77D\uD558\uAE30\uAC00 \uB450\uB824\uC6E0\uACE0, \uC5B8\uB2C8\uB294
@@ -21237,7 +21253,7 @@ MonoBehaviour:
   - GuestID: 13
     Sat: 3
     SatVariation: 1
-    DialogIndex: 10
+    DialogIndex: 11
     DialogImageNumber: 1
     Text: "\uC5B4\uCC0C\uD574\uC57C \uB2E4\uC2DC \uB9CC\uB0A0 \uC218 \uC788\uC744\uC9C0
       \uBAA8\uB974\uACA0\uB124... \uD6C4... "
@@ -21247,7 +21263,7 @@ MonoBehaviour:
   - GuestID: 13
     Sat: 3
     SatVariation: 1
-    DialogIndex: 11
+    DialogIndex: 12
     DialogImageNumber: 4
     Text: "\uC624\uB298\uC740 \uC774\uB9CC\uD558\uACE0... \uC2AC\uC2AC \uAD6C\uB984\uC744
       \uBC1B\uACE0 \uC2F6\uB124. "
@@ -21257,7 +21273,7 @@ MonoBehaviour:
   - GuestID: 13
     Sat: 3
     SatVariation: 1
-    DialogIndex: 12
+    DialogIndex: 13
     DialogImageNumber: 4
     Text: "\uC54C\uACA0\uC2B5\uB2C8\uB2E4. \uADF8\uB7FC, \uB9D0\uC500\uC744 \uD1A0\uB300\uB85C
       \uAD6C\uB984\uC744 \uB9CC\uB4E4\uC5B4\uBCF4\uACA0\uC2B5\uB2C8\uB2E4. "
@@ -21267,7 +21283,7 @@ MonoBehaviour:
   - GuestID: 13
     Sat: 3
     SatVariation: 1
-    DialogIndex: 13
+    DialogIndex: 14
     DialogImageNumber: 4
     Text: "\uD604\uC7AC \uBD88\uD3B8\uC744 \uACAA\uACE0 \uACC4\uC2E0 \uAC10\uC815\uC774
       \uC788\uC73C\uC2ED\uB2C8\uAE4C? "
@@ -21277,7 +21293,7 @@ MonoBehaviour:
   - GuestID: 13
     Sat: 3
     SatVariation: 1
-    DialogIndex: 14
+    DialogIndex: 15
     DialogImageNumber: 2
     Text: "\uC74C... \uBD88\uD3B8\uC774\uB77C\uBA74. "
     isGuest: 1
@@ -21286,7 +21302,7 @@ MonoBehaviour:
   - GuestID: 13
     Sat: 3
     SatVariation: 1
-    DialogIndex: 15
+    DialogIndex: 16
     DialogImageNumber: 2
     Text: Hint
     isGuest: 1
@@ -21295,7 +21311,7 @@ MonoBehaviour:
   - GuestID: 13
     Sat: 3
     SatVariation: 1
-    DialogIndex: 16
+    DialogIndex: 17
     DialogImageNumber: 4
     Text: "\uADF8\uB7FC, \uC798 \uBD80\uD0C1\uD558\uB124, \uC80A\uC740\uC774. "
     isGuest: 1
@@ -21304,7 +21320,7 @@ MonoBehaviour:
   - GuestID: 13
     Sat: 3
     SatVariation: 1
-    DialogIndex: 17
+    DialogIndex: 18
     DialogImageNumber: 4
     Text: "(\uC758\uB8B0\uB97C \uC218\uB77D\uD560\uAE4C?)"
     isGuest: 0
@@ -30522,9 +30538,7 @@ MonoBehaviour:
     Text: "\uACC4\uD68D...\uC740 \uC5C6\uC5B4\uC694. \uACC4\uD68D\uC744 \uC138\uC6B0\uB354\uB77C\uB3C4
       \uBA70\uCE60 \uC9C0\uB098\uBA74 \uB2E4\uC2DC \uC6D0\uB798\uB300\uB85C \uB3CC\uC544\uC640
       \uBC84\uB838\uC73C\uB2C8, \uADF8\uB0E5 \uC774\uBC88\uC5D0\uB294 \uC544\uBB34\uAC83\uB3C4
-      \uC548 \uD558\uB824\uACE0\uC694. \uC8C4\uC1A1\uD574\uC694, \uC758\uC9C0\uAC00
-      \uC870\uAE08\uC774\uB77C\uB3C4 \uAC15\uD574\uC84C\uC73C\uBA74 \uD588\uB294\uB370.
-      \uC2E4\uD328\uD588\uC5B4\uC694. "
+      \uC548 \uD558\uB824\uACE0\uC694. "
     isGuest: 1
     VisitCount: 10
     Emotion: 0
@@ -30532,6 +30546,16 @@ MonoBehaviour:
     Sat: 2
     SatVariation: 0
     DialogIndex: 4
+    DialogImageNumber: 3
+    Text: "\uC8C4\uC1A1\uD574\uC694, \uC758\uC9C0\uAC00 \uC870\uAE08\uC774\uB77C\uB3C4
+      \uAC15\uD574\uC84C\uC73C\uBA74 \uD588\uB294\uB370. \uC2E4\uD328\uD588\uC5B4\uC694. "
+    isGuest: 1
+    VisitCount: 10
+    Emotion: 0
+  - GuestID: 18
+    Sat: 2
+    SatVariation: 0
+    DialogIndex: 5
     DialogImageNumber: 1
     Text: "\uBC14\uD2B8 \uB2D8\uC758 \uC798\uBABB\uC774 \uC544\uB2D9\uB2C8\uB2E4.
       \uAD6C\uB984\uC774 \uBB38\uC81C\uC778 \uAC83 \uAC19\uC544\uC694. "
@@ -30541,7 +30565,7 @@ MonoBehaviour:
   - GuestID: 18
     Sat: 2
     SatVariation: 0
-    DialogIndex: 5
+    DialogIndex: 6
     DialogImageNumber: 1
     Text: "\uB9C8\uC9C0\uB9C9\uC778 \uB9CC\uD07C \uC81C\uC77C \uD6A8\uACFC\uAC00
       \uC88B\uC740 \uAD6C\uB984\uC73C\uB85C \uC900\uBE44\uD558\uACA0\uC2B5\uB2C8\uB2E4. "
@@ -30551,7 +30575,7 @@ MonoBehaviour:
   - GuestID: 18
     Sat: 2
     SatVariation: 0
-    DialogIndex: 6
+    DialogIndex: 7
     DialogImageNumber: 1
     Text: "\uBB34\uB9AC\uD558\uC9C0 \uC54A\uC73C\uC154\uB3C4 \uB3FC\uC694... "
     isGuest: 1
@@ -30560,7 +30584,7 @@ MonoBehaviour:
   - GuestID: 18
     Sat: 2
     SatVariation: 0
-    DialogIndex: 7
+    DialogIndex: 8
     DialogImageNumber: 1
     Text: "\uD604\uC7AC \uBD88\uD3B8\uC744 \uACAA\uACE0 \uACC4\uC2E0 \uAC10\uC815\uC774
       \uC788\uC73C\uC2ED\uB2C8\uAE4C? "
@@ -30570,7 +30594,7 @@ MonoBehaviour:
   - GuestID: 18
     Sat: 2
     SatVariation: 0
-    DialogIndex: 8
+    DialogIndex: 9
     DialogImageNumber: 1
     Text: "\uB2F9\uC7A5 \uBD88\uD3B8\uC774\uB77C \uD558\uBA74... "
     isGuest: 1
@@ -30579,7 +30603,7 @@ MonoBehaviour:
   - GuestID: 18
     Sat: 2
     SatVariation: 0
-    DialogIndex: 9
+    DialogIndex: 10
     DialogImageNumber: 1
     Text: Hint
     isGuest: 1
@@ -30588,7 +30612,7 @@ MonoBehaviour:
   - GuestID: 18
     Sat: 2
     SatVariation: 0
-    DialogIndex: 10
+    DialogIndex: 11
     DialogImageNumber: 1
     Text: "\uC2DC\uAC04 \uBE7C\uC557\uC544\uC11C \uC815\uB9D0 \uC8C4\uC1A1\uD569\uB2C8\uB2E4... "
     isGuest: 1
@@ -30597,7 +30621,7 @@ MonoBehaviour:
   - GuestID: 18
     Sat: 2
     SatVariation: 0
-    DialogIndex: 11
+    DialogIndex: 12
     DialogImageNumber: 1
     Text: "(\uC758\uB8B0\uB97C \uC218\uB77D\uD560\uAE4C?)"
     isGuest: 0
@@ -31511,9 +31535,7 @@ MonoBehaviour:
     Text: "\uC5B4\uB290 \uB0A0, \uADF8 \uC560\uAC00 \uB098\uC05C \uC560\uB4E4\uC774\uB791
       \uC788\uC744 \uB54C \uC778\uC0AC\uB97C \uD588\uC5B4\uC694. \uB098\uC05C \uC560\uB4E4\uC740
       \uCE5C\uAD6C\uB97C \uBE44\uC6C3\uC5C8\uC5B4\uC694. \uADF8 \uC560\uC758 \uC5BC\uAD74\uC774
-      \uBE68\uAC1C\uC84C\uC5B4\uC694. \uC815\uC2E0\uC744 \uCC28\uB824\uBCF4\uB2C8
-      \uC800\uB294 \uB204\uC6CC\uC788\uC5C8\uACE0, \uC624\uB978\uCABD \uADC0\uC5D0\uC11C\uB294
-      \uC18C\uB9AC\uAC00 \uC6B8\uB9AC\uACE0 \uC788\uC5C8\uC8E0. "
+      \uBE68\uAC1C\uC84C\uC5B4\uC694.  "
     isGuest: 1
     VisitCount: 2
     Emotion: 0
@@ -31522,6 +31544,17 @@ MonoBehaviour:
     SatVariation: 1
     DialogIndex: 13
     DialogImageNumber: 0
+    Text: "\uC815\uC2E0\uC744 \uCC28\uB824\uBCF4\uB2C8 \uC800\uB294 \uB204\uC6CC\uC788\uC5C8\uACE0,
+      \uC624\uB978\uCABD \uADC0\uC5D0\uC11C\uB294 \uC18C\uB9AC\uAC00 \uC6B8\uB9AC\uACE0
+      \uC788\uC5C8\uC8E0."
+    isGuest: 1
+    VisitCount: 2
+    Emotion: 0
+  - GuestID: 19
+    Sat: 3
+    SatVariation: 1
+    DialogIndex: 14
+    DialogImageNumber: 0
     Text: "\uB9CE\uC774 \uB180\uB77C\uC168\uACA0\uC5B4\uC694. "
     isGuest: 0
     VisitCount: 2
@@ -31529,7 +31562,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 14
+    DialogIndex: 15
     DialogImageNumber: 0
     Text: "\uB124... \uC194\uC9C1\uD788 \uC9C0\uAE08\uC774\uC57C \uC774\uD574\uB294
       \uD574\uC694, \uC798 \uB098\uAC00\uB294 \uC560\uB4E4\uC744 \uB3D9\uACBD\uD574\uC11C
@@ -31542,7 +31575,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 15
+    DialogIndex: 16
     DialogImageNumber: 0
     Text: "\uADF8 \uB54C \uC0C1\uCC98\uB97C \uAF64 \uB9CE\uC774 \uBC1B\uC73C\uC168\uACA0\uC5B4\uC694. "
     isGuest: 0
@@ -31551,7 +31584,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 16
+    DialogIndex: 17
     DialogImageNumber: 0
     Text: "\uC824\uB9AC \uB2D8\uC758 \uD589\uB3D9\uC5D0 \uC601\uD5A5\uC744 \uB07C\uCE60
       \uC815\uB3C4\uB85C\uC694. "
@@ -31561,7 +31594,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 17
+    DialogIndex: 18
     DialogImageNumber: 3
     Text: "\uB124...? \uC774 \uC77C\uC774 \uC5B4\uB5BB\uAC8C \uC81C\uAC8C \uC601\uD5A5\uC744
       \uB07C\uCCE4\uB098\uC694?"
@@ -31571,7 +31604,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 18
+    DialogIndex: 19
     DialogImageNumber: 3
     Text: "\uAC00\uC7A5 \uCE5C\uD55C \uCE5C\uAD6C\uB85C\uBD80\uD130 \uC0C1\uCC98\uB97C
       \uBC1B\uC558\uC8E0. \uBAA8\uB974\uC168\uC744 \uC218\uB3C4 \uC788\uC9C0\uB9CC... "
@@ -31581,7 +31614,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 19
+    DialogIndex: 20
     DialogImageNumber: 3
     Text: "\uB2F9\uC2E0\uC740 \uADF8\uC800 \uADF8\uB7F0 \uC77C\uC774 \uB610 \uC0DD\uAE30\uAE30
       \uC804\uC5D0 \uC790\uC2E0\uC744 \uBCF4\uD638\uD558\uB824\uB294 \uAC70\uC608\uC694. "
@@ -31591,7 +31624,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 20
+    DialogIndex: 21
     DialogImageNumber: 1
     Text: "\uC544...! \uB108\uBB34 \uAC00\uAE4C\uC774 \uC9C0\uB0C8\uB2E4\uAC00 \uBC30\uC2E0\uB2F9\uD55C\uB2E4\uBA74
       \uB2E4\uC2DC \uC77C\uC5B4\uC11C\uC9C0 \uBABB\uD558\uAC8C \uB418\uB2C8\uAE4C,
@@ -31603,7 +31636,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 21
+    DialogIndex: 22
     DialogImageNumber: 4
     Text: "\uD558\uC544... \uADF8\uAC04 \uC81C \uD589\uB3D9\uC758 \uC774\uC720\uB97C
       \uC54C\uACE0 \uB098\uB2C8\uAE4C \uD6E8\uC52C \uD6C4\uB828\uD558\uB124\uC694.
@@ -31614,7 +31647,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 22
+    DialogIndex: 23
     DialogImageNumber: 4
     Text: "\uADF8\uB798\uB3C4 \uAFB8\uC900\uD788 \uC640\uC11C \uAD6C\uB984\uC744
       \uBC1B\uC544\uAC00\uC2DC\uB294 \uAC78 \uCD94\uCC9C \uB4DC\uB824\uC694. "
@@ -31624,7 +31657,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 23
+    DialogIndex: 24
     DialogImageNumber: 4
     Text: "\uC801\uC808\uD55C \uCC98\uBC29\uC744 \uBC1B\uC544\uC57C \uC644\uC804\uD788
       \uC0C1\uCC98\uAC00 \uD68C\uBCF5\uB420 \uC218 \uC788\uC2B5\uB2C8\uB2E4. "
@@ -31634,7 +31667,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 24
+    DialogIndex: 25
     DialogImageNumber: 4
     Text: "\uC54C\uACA0\uC5B4\uC694. \uADF8\uB7FC \uC55E\uC73C\uB85C\uB3C4 \uC790\uC8FC
       \uC62C\uAC8C\uC694! "
@@ -31644,7 +31677,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 25
+    DialogIndex: 26
     DialogImageNumber: 1
     Text: "\uD604\uC7AC \uBD88\uD3B8\uC744 \uACAA\uACE0 \uACC4\uC2E0 \uAC10\uC815\uC774
       \uC788\uC73C\uC2ED\uB2C8\uAE4C? "
@@ -31654,7 +31687,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 26
+    DialogIndex: 27
     DialogImageNumber: 1
     Text: Hint
     isGuest: 1
@@ -31663,7 +31696,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 27
+    DialogIndex: 28
     DialogImageNumber: 4
     Text: "\uADF8\uB7FC \uBBFF\uACE0 \uC788\uC744\uAC8C\uC694!"
     isGuest: 1
@@ -31672,7 +31705,7 @@ MonoBehaviour:
   - GuestID: 19
     Sat: 3
     SatVariation: 1
-    DialogIndex: 28
+    DialogIndex: 29
     DialogImageNumber: 4
     Text: "(\uC758\uB8B0\uB97C \uC218\uB77D\uD560\uAE4C?)"
     isGuest: 0

@@ -30,6 +30,8 @@ public class SOWManager : MonoBehaviour
     [SerializeField]
     public GameObject mGuestObject;                    // 인스턴스하여 생성할 손님 오브젝트 프리팹
 
+    public int[] yardGatherCount = new int[4];
+
     private Guest mGuestManager;                        // GuestManager를 가져온다.
     private static SOWManager instance = null;
 
@@ -206,6 +208,8 @@ public class SOWManager : MonoBehaviour
             mCheckChairEmpty.Add(i, true);
         }
 
+        for (int i = 0; i < 4; i++) { yardGatherCount[i] = 2; }
+
         int Season = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>().mSeason;
         ChangeWeatherObject(Season-1);
     }
@@ -333,6 +337,7 @@ public class SOWManager : MonoBehaviour
         // 손님 오브젝트 리스트가 존재했는지 체크
         // -> 있었다면 오브젝트를 생성하여 정보값을 넣는다.
 
+        // yardGatherCount[]의 int값 불러오기
        
 
     }

@@ -281,8 +281,17 @@ private void Update()
                     }
                     else
                     {
+                        // 사용하였고 아직 힌트를 출력하지 않았다면 힌트 출력
+                        if (!isHintTextPrinted && !isUsingHint)
+                        {
+                            Hint();
+                        }
+                        // 힌트 출력을 완료했다면 귀가
+                        else if (isHintTextPrinted)
+                            MoveToEntrance();
+
                         // 사용하지 않았다면 바로 귀가
-                        MoveToEntrance();
+                       // MoveToEntrance();
                     }
                 }
             }
@@ -290,7 +299,6 @@ private void Update()
         // 구름 이용이 끝났을 때         TODO: 희귀도 4재료가 들어갔는지 체크해야 함
         if (isEndUsingCloud && !isHintTextPrinted)
         {
-            
 
             //isHintTextPrinted = true;
 			//TextMeshPro Text = SpeechBubble.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>();
@@ -408,6 +416,7 @@ private void Update()
         SpeechBubble.transform.GetChild(1).gameObject.transform.localScale = this.transform.localScale;
 
         // 말풍선 띄우기
+        SpeechBubble.SetActive(true);
         SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);
         Anim.SetTrigger("Start");
 

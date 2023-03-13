@@ -29,6 +29,7 @@ public class GuestInfo : ScriptableObject
     public int mSeed;                                               // 손님이 심고 갈 수 있는 재료의 인덱스 값
     public int  mAge;                                               // 손님의 나이
     public string  mJob;                                            // 손님의 직업
+    public string mSentence;                                        // 손님 한줄요약
 
     [Header ("[감정 관련]")]
     public int[] mEmotion = new int[20];                            // 손님의 감정 값. 총 20가지
@@ -61,9 +62,10 @@ public class GuestInfos
 {
     [Header(" [손님 정보] ")]
     public string mName;                                            // 손님의 이름
-    public int mSeed;                                             // 손님이 심고 갈 수 있는 재료의 인덱스 값
+    public int mSeed;                                               // 손님이 심고 갈 수 있는 재료의 인덱스 값
     public int mAge;                                                // 손님의 나이
     public string mJob;                                             // 손님의 직업
+    public string mSentence;                                        // 손님 한줄요약
 
     [Header("[감정 관련]")]
     public int[] mEmotion = new int[20];                            // 손님의 감정 값. 총 20가지

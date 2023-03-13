@@ -131,10 +131,6 @@ public class Guest : MonoBehaviour
 
             isTimeToTakeGuest = false;
             isGuestInLivingRoom = false;
-
-            
-
-
         }
         else
         {
@@ -568,6 +564,7 @@ public class Guest : MonoBehaviour
         temp.mSatVariation      = mGuestInitInfos[guestNum].mSatVariation;
         temp.mSatEmotions       = mGuestInitInfos[guestNum].mSatEmotions;
         temp.mLimitEmotions     = mGuestInitInfos[guestNum].mLimitEmotions;
+        temp.mSentence          = mGuestInitInfos[guestNum].mSentence;
         temp.isDisSat           = false;
         temp.isCure             = false;
         temp.mVisitCount        = 1;
@@ -594,21 +591,26 @@ public class Guest : MonoBehaviour
         // 날씨의 공간에 아직 남아있는 뭉티들을 불만 뭉티로 만든다.
 
         // 새로운 방문 뭉티 리스트를 뽑는다.
-        mGuestIndex = 0;
         mGuestCount = -1;
-        mGuestMax = 0;
 
         // 새로운 리스트를 뽑는 함수를 호출 (테스트를 위해서 잠시 주석처리)
-        int[] list = { 0, 1, 2, 3, 0, 1 };
         mGuestMax = NUM_OF_TODAY_GUEST_LIST;
+        int[] list = new int[mGuestMax];
         mTodayGuestList = list;
 
-        //mTodayGuestList = NewChoiceGuest();
+        mTodayGuestList = NewChoiceGuest();
+        mGuestIndex = mTodayGuestList[0];
 
         // 방문 주기를 초기화한다.
         InitGuestTime();
 
+        GameObject DialogIndex = GameObject.Find("DialogIndex");
+        if(DialogIndex != null)
+        {
+            DialogIndex.GetComponent<DialogIndex>().mDialogIndex = 0;
+        }
         // 채집물들이 다시 갱신된다.
+
 
     }
 

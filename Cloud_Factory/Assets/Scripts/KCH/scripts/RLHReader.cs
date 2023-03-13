@@ -79,6 +79,23 @@ public class RLHReader : MonoBehaviour
 		}
 	}
 
+	// UIManager.object (Scene Of Weather)
+	public string LoadLetterInfo(int guest_num)
+	{
+		List<RLHDBEntity> letter;
+		letter= mRLHDB.SetHintByGuestNum(guest_num);
+
+		if (letter == null) { return ""; }
+
+		for (int num = 0; num < letter.Count; num++)
+		{
+			if (letter[num].GuestID == guest_num + 1
+				&& letter[num].Type == "letter")
+			{ tText = ""; tText = letter[num].KOR; }
+		}
+		return tText;
+	}
+
 	public string PrintHintText()
 	{
 		return tText;

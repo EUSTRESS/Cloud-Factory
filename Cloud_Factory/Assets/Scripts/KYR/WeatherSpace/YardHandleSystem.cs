@@ -10,6 +10,7 @@ public class YardHandleSystem : MonoBehaviour
 {
     public InventoryManager inventoryManager;
     TutorialManager mTutorialManager;
+    private SOWManager mSOWManager;
 
  //   public IngredientList[] mRarityList;
 	public Sprite[] mImages;
@@ -33,6 +34,8 @@ public class YardHandleSystem : MonoBehaviour
                 Debug.Log("[Yard Init] Not Right Sprite array input");
             sprites[0] = _sprites[0];
             sprites[1] = _sprites[1];
+
+            updateSprite();
         }
 
         public bool canGather() //채집 가능 상태 
@@ -75,13 +78,19 @@ public class YardHandleSystem : MonoBehaviour
     {
         inventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
 		mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
 		mYards = new Dictionary<GameObject, int>();
 
-        for (int i = 0; i < transform.childCount; i++)      
-            mYards.Add(transform.GetChild(i).gameObject,2); //Yard 그룹에 속한 yard들을 리스트에 넣어서 관리.
+        UpdateYardGatherCount(); //Yard 그룹에 속한 yard들을 리스트에 넣어서 관리.
             //이 딕셔너리의 int는 채집 횟수 0이 되면 채집 불가능하다!
     }
+
+    public void UpdateYardGatherCount()
+    {
+        mYards.Clear();
+        for (int i = 0; i < transform.childCount; i++) { mYards.Add(transform.GetChild(i).gameObject, mSOWManager.yardGatherCount[i]); }
+	}
 
     // WeatherUIManager에서 YardHandleSystem에 접근할 때, 채집 가능한 상태인지 알려주기 위한 함수
     public bool CanBeGathered(GameObject iClickedYard)

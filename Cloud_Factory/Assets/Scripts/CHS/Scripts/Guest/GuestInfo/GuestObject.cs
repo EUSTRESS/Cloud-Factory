@@ -499,6 +499,7 @@ private void Update()
         else if(mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction >= 5)
         {
             mGuestAnim.SetBool("isFullSat", true);
+            GameObject.Find("GuestManager").GetComponent<LetterController>().SetSatGuestList(mGuestNum);
             Invoke("ChangeTarget", 4.0f);
         }
         else

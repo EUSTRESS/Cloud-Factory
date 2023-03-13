@@ -135,8 +135,11 @@ public class SeasonDateCalc : MonoBehaviour
                 SOWManager sowManager;
                 sowManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
-                if(sowManager != null)
+                if (sowManager != null)
+                {
                     sowManager.MakeGuestDisSat();
+                    sowManager.InitSOW();
+                }
             }
         }
         return temp;

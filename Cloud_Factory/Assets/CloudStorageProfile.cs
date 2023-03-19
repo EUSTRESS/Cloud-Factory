@@ -155,13 +155,23 @@ public class CloudStorageProfile : MonoBehaviour
 
     public void GiveCloud()
     {
+      
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
         // 구름 제공하는 메소드 호출
         StoragedCloudData storagedCloudData
             = mGetCloudContainer.GetComponent<CloudContainer>().mSelecedCloud;
 
-        int guestNum = frontGuestIndex;
+        //구름 제공 예외처리
+        if (storagedCloudData == null)
+        {
+            return;
+        }
+
+            int guestNum = frontGuestIndex;
+
+        //구름인벤토리에서 사용된 구름 삭제
+        mGetCloudContainer.GetComponent<CloudContainer>().deleteSelectedCloud();
 
         // 리스트에서 사용받은 손님 제거하기
         SOWManager sow = GameObject.Find("SOWManager").GetComponent<SOWManager>();

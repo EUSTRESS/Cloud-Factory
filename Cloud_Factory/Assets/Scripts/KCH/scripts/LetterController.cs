@@ -8,7 +8,8 @@ public class LetterController : MonoBehaviour
 {
     private int originalDay;
 
-    private int satGuestList;
+    private int[] satGuestList;
+    private int listCount;
 
     public GameObject letterObject;
 
@@ -22,7 +23,8 @@ public class LetterController : MonoBehaviour
         mSeasonDateCalc = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>();
 
         satGuestList = new int[6];
-        InitSatGuestList;
+        listCount = 0;
+        InitSatGuestList();
 
         originalDay = mSeasonDateCalc.mDay;
     }
@@ -30,23 +32,22 @@ public class LetterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(SceneManager.GetActiveScene().name == "Space Of Weather"
+        if (SceneManager.GetActiveScene().name == "Space Of Weather"
             && originalDay != mSeasonDateCalc.mDay)
         {
             originalDay = mSeasonDateCalc.mDay;
-            for(int num = 0; num < 6; num++)
+            for (int num = 0; num < 6; num++)
             {
                 if (satGuestList[num] == -1) { break; }
                 InstantiateLetter(satGuestList[num]);
             }
-
             InitSatGuestList();
         }
     }
 
     public void SetSatGuestList(int guest_num)
     {
-        satGuestList.Add(guest_num);
+        satGuestList[listCount++] = guest_num;
     }
 
     private void InstantiateLetter(int guest_num)
@@ -56,14 +57,15 @@ public class LetterController : MonoBehaviour
         letter.transform.localPosition = new Vector3(-565f, -75f, 0f);
 
         RLHReader rRLHReader = GameObject.Find("UIManager").GetComponent<RLHReader>();
-
         letter.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = rRLHReader.LoadLetterInfo(guest_num);
     }
 
     private void InitSatGuestList()
     {
-        for (int num = 0; num < 6; num++) {
+        for (int num = 0; num < 6; num++)
+        {
             satGuestList[num] = -1;
         }
+        listCount = 0;
     }
 }

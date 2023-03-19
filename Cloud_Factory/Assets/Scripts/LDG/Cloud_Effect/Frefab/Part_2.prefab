@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2891701104757291650}
   - component: {fileID: 2891701104757291651}
-  - component: {fileID: 3144641142965862762}
   - component: {fileID: -2009864068407271966}
   - component: {fileID: -7818944941249063359}
+  - component: {fileID: -5284895882329749496}
   m_Layer: 0
   m_Name: Part_2
   m_TagString: Untagged
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 859370b3dd8202444815769d506db054, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fef426790d353ca4cab29a0f58ed401f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,21 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3144641142965862762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2891701104757291661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99a4fc230be1edf41818f11d1c675c48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fly_speed_x: 1.5
-  fly_speed_y: 5
-  final_fly_speed: {x: 0, y: 0}
 --- !u!114 &-2009864068407271966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,12 +113,26 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 30
+  m_Mass: 15
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 4
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-5284895882329749496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891701104757291661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c25035e331df3640a655811f8fc9df4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fly_gravity: 9.8
+  pos_Num_2: 0

@@ -8,7 +8,6 @@ public class RLHReader : MonoBehaviour
 {
 	// 불러올 값들 선언
 	private Guest mGuestManager;
-	private int mGuestNum;                      // 손님의 번호를 넘겨받는다.
 
 	[SerializeField]
 	private RLHDB mRLHDB;						// 대화 내용을 저장해 놓은 DB
@@ -17,15 +16,11 @@ public class RLHReader : MonoBehaviour
 
 	private string tText;						// 대화가 저장 될 텍스트
 
-	public void SetGuestNum(int guest_num = 0) { mGuestNum = guest_num; }
-
 	// Start is called before the first frame update
 	void Awake()
     {
 		tText = "";
 		mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
-
-		LoadHintInfo();
 	}
 
 	//ProfileManager.cs
@@ -46,17 +41,17 @@ public class RLHReader : MonoBehaviour
 	}
 
 	//GuestObject.cs
-    private void LoadHintInfo()
+    public void LoadHintInfo(int guest_num)
 	{
 		List<RLHDBEntity> Hint;
-		Hint = mRLHDB.SetHintByGuestNum(mGuestNum);
+		Hint = mRLHDB.SetHintByGuestNum(guest_num);
 
 		if(Hint == null) { return; }
 
 		List<int> satEmotions = new List<int>();
 
-		int leastDiffEmotion =	mGuestManager.SpeakLeastDiffEmotion(mGuestNum);
-		int mostDiffEmotion =	mGuestManager.SpeakEmotionDialog(mGuestNum);
+		int leastDiffEmotion =	mGuestManager.SpeakLeastDiffEmotion(guest_num);
+		int mostDiffEmotion =	mGuestManager.SpeakEmotionDialog(guest_num);
 
 		if (mostDiffEmotion != -1) { satEmotions.Add(mostDiffEmotion); }	// 만족도에서 가장 멀리 떨어진 감정을 출력
 		if (leastDiffEmotion != -1											// 해당 감정이 존재할 때,
@@ -68,7 +63,7 @@ public class RLHReader : MonoBehaviour
 
 		for(int num = 0; num < Hint.Count; num++)
 		{
-			if (Hint[num].GuestID == mGuestNum + 1							// 손님의 번호가 일치
+			if (Hint[num].GuestID == guest_num + 1							// 손님의 번호가 일치
 				&& Hint[num].Type == "hint")								// RHL항목이 hint일 경우
 			{
 				foreach(int emotion in satEmotions)

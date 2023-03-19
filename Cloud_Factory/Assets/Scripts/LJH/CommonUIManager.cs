@@ -96,10 +96,7 @@ public class CommonUIManager : MonoBehaviour
     }
     public void GoDrawingRoom()
     {
-        if (mTutorialManager.isFinishedTutorial[0] == false
-            && mGuestManager.isGuestInLivingRoom == false)
-        { return; }
-
+        if(mGuestManager.isGuestInLivingRoom == false) { return; }
         if (mTutorialManager.isFinishedTutorial[0] == false) { mTutorialManager.isFinishedTutorial[0] = true; }
 
         LoadingSceneController.Instance.LoadScene("Drawing Room");

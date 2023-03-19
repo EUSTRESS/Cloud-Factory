@@ -31,6 +31,9 @@ public class CloudContainer : MonoBehaviour
     private int mSortedCnt; //선택정렬된개수
     private List<StoragedCloudData> mSortedData; //UI상에 보여지는 StocksData
 
+    public GameObject speechBubbleObject;
+    private GameObject speechBubble;
+
     private bool isCloudSelected = false;
 
     // Start is called before the first frame update
@@ -61,6 +64,10 @@ public class CloudContainer : MonoBehaviour
             Transform selected = EventSystem.current.currentSelectedGameObject.transform;
             mSelecedCloud = mUiStocksData[selected.GetSiblingIndex()];
             selected.GetChild(1).GetComponent<Image>().color = new Color(0.7f, 0.7f, 0.7f, 1.0f); 
+            for(int num = 0; num < selected.GetChild(1).transform.childCount; num++)
+            {
+                selected.GetChild(1).transform.GetChild(num).GetComponent<Image>().color = new Color(0.7f, 0.7f, 0.7f, 1.0f);
+            }
             Debug.Log("구름 선택:" + mUiStocksData[selected.GetSiblingIndex()]);
             isCloudSelected = true;
 
@@ -79,12 +86,47 @@ public class CloudContainer : MonoBehaviour
         
     }
 
-    public void unclicked() //matarial in cloudmaker deselected
+    public void OnClickedRight(GameObject right_clicked_object)
+    {
+		if (inventoryManager == null)
+			inventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
+
+        Transform selected = right_clicked_object.transform;
+		if (selected.GetSiblingIndex() > mUiStocksData.Count || mUiStocksData.Count == 0) { return; }
+
+        int num = 0;
+        speechBubble = Instantiate(speechBubbleObject);
+        speechBubble.transform.SetParent(GameObject.Find("Canvas").transform);
+        speechBubble.transform.SetSiblingIndex(4);
+        speechBubble.transform.position = selected.position + new Vector3(150f, 0f, 0f);
+        for (num = 0; num < mUiStocksData[selected.GetSiblingIndex()].mIngredientDatas.Count; num++)
+        {
+            speechBubble.transform.GetChild(num).GetComponent<Image>().sprite = mUiStocksData[selected.GetSiblingIndex()].mIngredientDatas[num].image;
+		}
+
+        for(; num < 5; num++)
+        {
+            speechBubble.transform.GetChild(num).transform.gameObject.SetActive(false);
+		}
+	}
+
+    public void UnClickedRight(GameObject right_clicked_object)
+    {
+		if (inventoryManager == null)
+			inventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
+        Destroy(speechBubble.gameObject);
+	}
+
+	public void unclicked() //matarial in cloudmaker deselected
     {
         GameObject target = EventSystem.current.currentSelectedGameObject;
         Sprite sprite = target.GetComponent<Image>().sprite;
         target.transform.GetChild(1).GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-        if (sprite.name == "Circle") return; //예외처리
+		for (int num = 0; num < target.transform.GetChild(1).transform.childCount; num++)
+		{
+			target.transform.GetChild(1).transform.GetChild(num).GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+		}
+		if (sprite.name == "Circle") return; //예외처리
 
         //해당 구름 선택 UI 표시 취소
     }

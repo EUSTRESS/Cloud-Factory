@@ -133,6 +133,7 @@ public class TutorialManager : MonoBehaviour
     }
 
     public void SetActiveGuideSpeechBubble(bool _bool)  { if (guideSpeechBubbleObject != null) { guideSpeechBubbleObject.SetActive(_bool); } }
+	public GameObject GetActiveGuideSpeechBubble()		{ return guideSpeechBubbleObject; }
     public void SetActiveFadeOutScreen(bool _bool)      { if (fadeOutScreenObject != null) { fadeOutScreenObject.SetActive(_bool); } }
 	public void SetActiveArrowUIObject(bool _bool)		{ if (arrowObject != null) { arrowObject.SetActive(_bool); } }
 
@@ -338,7 +339,7 @@ public class TutorialManager : MonoBehaviour
 			&& mSOWManager.mUsingGuestObjectList[0].GetComponent<GuestObject>().isSit == true)
 		{
 			InstantiateArrowUIObject(mSOWManager.mUsingGuestObjectList[0].transform.localPosition, -1.75f, 1f, false);
-			arrowObject.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+			arrowObject.transform.localScale = new Vector3(-0.5f, 0.5f, 1f);
 		}
 
 

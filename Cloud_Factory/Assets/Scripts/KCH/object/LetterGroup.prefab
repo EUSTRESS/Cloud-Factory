@@ -121,7 +121,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7719591316141652394}
+      - m_Target: {fileID: 3990447038391268013}
         m_TargetAssemblyTypeName: DestroyObject, Assembly-CSharp
         m_MethodName: DestroyThisObject
         m_Mode: 1
@@ -142,7 +142,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3664117068688591544}
-  - component: {fileID: 7719591316141652394}
+  - component: {fileID: 3990447038391268013}
   m_Layer: 5
   m_Name: LetterGroup
   m_TagString: Untagged
@@ -171,7 +171,7 @@ RectTransform:
   m_AnchoredPosition: {x: -565, y: -75}
   m_SizeDelta: {x: 710, y: 870}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7719591316141652394
+--- !u!114 &3990447038391268013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3664117068688591543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4902a84c96888a4f8cab1aaddc2e191, type: 3}
+  m_Script: {fileID: 11500000, guid: 9076dd303b9b2084588d3381c48929c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3664117068773511032

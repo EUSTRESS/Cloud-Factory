@@ -50,6 +50,16 @@ public class CloudContainer : MonoBehaviour
         initInven(inventoryManager.mCloudStorageData.mDatas, "public");
     }
 
+    public void deleteSelectedCloud()
+    {
+        foreach(StoragedCloudData data in inventoryManager.mCloudStorageData.mDatas)
+        {
+            if (data != mSelecedCloud) continue;
+
+            inventoryManager.mCloudStorageData.mDatas.Remove(mSelecedCloud);
+            return;
+        }
+    }
     /////////////////////
     //Button Interact///
     ////////////////////
@@ -125,7 +135,9 @@ public class CloudContainer : MonoBehaviour
 		for (int num = 0; num < target.transform.GetChild(1).transform.childCount; num++)
 		{
 			target.transform.GetChild(1).transform.GetChild(num).GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-		}
+            mSelecedCloud = null;
+
+        }
 		if (sprite.name == "Circle") return; //예외처리
 
         //해당 구름 선택 UI 표시 취소

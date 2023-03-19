@@ -120,6 +120,7 @@ public class SeasonDateCalc : MonoBehaviour
                     SOWManager.InitSOW();
                     ingredientDataAutoAdder.CheckIsCured();
                 }
+                if(SceneManager.GetActiveScene().name == "Space Of Weather") { GameObject.Find("UIManager").GetComponent<InstantiateFadeOutScreen>().InstantiateGif(); }
 
                 temp += 1;
                 second = 0;

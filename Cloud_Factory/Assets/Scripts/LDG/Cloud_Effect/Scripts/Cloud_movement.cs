@@ -128,11 +128,6 @@ public class Cloud_movement : MonoBehaviour
 
     void Update()
     {
-        SOWManager sowManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
-        GuestObject guest_object = sowManager.mUsingGuestObjectList[0].GetComponent<GuestObject>();
-
-        //GuestObject guest_Object = GameObject.Find("GuestObject").GetComponent<GuestObject>();
-        IsUsing = guest_object.isUsing;
         if (IsUsing == true)
         {
             CancelInvoke("Make_copy");

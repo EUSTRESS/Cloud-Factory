@@ -13442,6 +13442,7 @@ MonoBehaviour:
       mHeight: 0
       mImage: {fileID: 0}
     mVPartsList: []
+    mIngredientDatas: []
     mCloudTypeNum: 0
   isCloudGet: 0
 --- !u!4 &1011323581
@@ -21474,6 +21475,7 @@ GameObject:
   - component: {fileID: 1667958167}
   - component: {fileID: 1667958168}
   - component: {fileID: 1667958169}
+  - component: {fileID: 1667958170}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -21647,6 +21649,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mRLHDB: {fileID: 11400000, guid: 09218581d63822b4e99525122a64e173, type: 2}
+--- !u!114 &1667958170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667958163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c744312417eb3f24c8c0ab68007040ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iFadeOutGif: {fileID: 8993816531325897028, guid: 391ebb2753ed03443ba1c1b94db8ae18, type: 3}
 --- !u!1 &1682309302
 GameObject:
   m_ObjectHideFlags: 0

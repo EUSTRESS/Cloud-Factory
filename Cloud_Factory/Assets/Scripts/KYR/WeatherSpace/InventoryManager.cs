@@ -43,14 +43,17 @@ public class StoragedCloudData
     public VirtualGameObject mVBase;
     public List<VirtualGameObject> mVPartsList; //구름 꾸미기 이후의 최종 감정.
 
+    public List<IngredientData> mIngredientDatas;
+
     [SerializeField]
     private int mCloudTypeNum;
-    public StoragedCloudData(List<EmotionInfo> _FinalEmotions, GameObject _base, List<GameObject> _mPartsList)
+    public StoragedCloudData(List<EmotionInfo> _FinalEmotions, GameObject _base, List<GameObject> _mPartsList, List<IngredientData> ingr_datas)
     {
         mdate = 10; //일단 기본으로 세팅
         mFinalEmotions = _FinalEmotions;
         mBase = _base;
         mPartsList = _mPartsList;
+        mIngredientDatas= ingr_datas;
 
         //VirtualSetting
         mVPartsList = new List<VirtualGameObject>();
@@ -88,15 +91,17 @@ public class CloudData
     private bool mState; //0 = 폐기 1 = 가능
     private Sprite mcloudBaseImage;
     private Sprite mcloudDecoBaseImage;
+    private List<IngredientData> mIngredientDatas;
 
     private List<Sprite> mcloudParts; //무조건 있음 필수!
     private List<List<Sprite>> mdecoImages; //2차원 리스트: L M S 사이즈 필요! 최대 2개
 
     private List<EmotionInfo> mFinalEmotions; //구름 꾸미기 이후의 최종 감정.
-    public CloudData(List<EmotionInfo> Emotions,int shelfLife)
+    public CloudData(List<EmotionInfo> Emotions,int shelfLife, List<IngredientData> ingr_datas)
     {
         mEmotions = Emotions;
         mShelfLife = shelfLife;
+        mIngredientDatas= ingr_datas;
         mFinalEmotions = new List<EmotionInfo>();
         isCloudAnimProgressed = new bool[3];
         setAnimProgressed();
@@ -225,6 +230,8 @@ public class CloudData
             mdecoImages.Add(decoList);
         }
     }
+
+    public List<IngredientData> GetIngredientDatas() { return mIngredientDatas; }
 }
 
 [System.Serializable]
@@ -380,7 +387,7 @@ public class InventoryManager : MonoBehaviour
             DontDestroyOnLoad(cloudBase.transform.GetChild(i).gameObject);
             parts.Add(cloudBase.transform.GetChild(i).gameObject);
         }
-        mCloudStorageData.mDatas.Add(new StoragedCloudData(createdCloudData.getFinalEmotion(), cloudBase, parts));
+        mCloudStorageData.mDatas.Add(new StoragedCloudData(createdCloudData.getFinalEmotion(), cloudBase, parts, createdCloudData.GetIngredientDatas()));
         createdCloudData = beginningCloudData;
     }
 }

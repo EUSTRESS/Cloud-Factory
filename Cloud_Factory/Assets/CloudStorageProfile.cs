@@ -139,12 +139,14 @@ public class CloudStorageProfile : MonoBehaviour
         tAge.text = "" + info.mAge;
         tJob.text = info.mJob;
 
+
         tSat.text = "" + info.mSatatisfaction;
+		tSentence.text = info.mSentence;
 
-        // Sentence 관련 업데이트도 필요함 -> 추후 수정
+		// Sentence 관련 업데이트도 필요함 -> 추후 수정
 
 
-    }
+	}
 
     void updateButton()
     {

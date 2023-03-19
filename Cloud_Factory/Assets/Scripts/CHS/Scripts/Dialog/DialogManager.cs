@@ -273,7 +273,7 @@ public class DialogManager : MonoBehaviour
             else { isTagInDialog = true; }
 
             // 태그가 시작 될 때만, 입력 태그를 텍스트에 추가 후, 뒤에 들어올 태그도 추가
-            while(GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex - 1] != '>')
+            while (mDialogCharIndex <= 0 || GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex - 1] != '>')
             {
                 if(isTagInDialog == true)
                 {
@@ -318,8 +318,11 @@ public class DialogManager : MonoBehaviour
 	public void ReadDialog()
     {
         InitDialog();
+		if(mTutorialManager.GetActiveGuideSpeechBubble() == null
+            && mTutorialManager.isTutorial == true) { return; }
 
-        mGuestAnimator.SetInteger("index", mGuestImageList[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex]);
+
+		mGuestAnimator.SetInteger("index", mGuestImageList[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex]);
 
         // 가이드 말풍선 출력 후, 다시 출력되지 않도록 hintTextPos를 0으로 설정한다.(말풍선 재생성 방지)
         if (mTutorialManager.isFinishedTutorial[1] == false

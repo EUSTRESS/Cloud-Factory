@@ -173,6 +173,9 @@ public class Guest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             mGuestInfo[0].mEmotion[0] += 5;
+            for (int num = 0; num < mTodayGuestList.Length; num++) {
+                Debug.Log("Guest " + (num + 1) + " : " + mTodayGuestList[num]);
+             }
 		}
 
         //
@@ -251,7 +254,7 @@ public class Guest : MonoBehaviour
         tempObject = Instantiate(sow.mGuestObject);
 
         // etc.
-        tempObject.GetComponent<RLHReader>().SetGuestNum(data.mGuestNum);
+        tempObject.GetComponent<RLHReader>().LoadHintInfo(data.mGuestNum);
         tempObject.GetComponent<WayPoint>().WayPos = sow.mWayPoint;
         tempObject.GetComponent<WayPoint>().WayNum = data.WayNum;
 

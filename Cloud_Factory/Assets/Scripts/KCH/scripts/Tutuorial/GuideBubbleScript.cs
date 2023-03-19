@@ -132,12 +132,13 @@ public class GuideBubbleScript : MonoBehaviour
 		mDialog[7, 0] = "완성된 구름은 구름 보관함에 저장됩니다.";
 		mDialog[7, 1] = "각 구름은 보관 기간이 정해져 있습니다. 보관 기간이 지나면 구름이 사라집니다.";
 		mDialog[7, 2] = "구름을 우클릭 하는 동안 어떤 재료를 사용하였는지 확인할 수 있습니다.";
+		mDialog[7, 3] = "FadeOut70";
 		// 우클릭 이벤트 추가 필요
-		mDialog[7, 3] = "구름을 선택 해 제공해봅시다.";
+		mDialog[7, 4] = "구름을 선택 해 제공해봅시다.";
 		// 화살표 UI
-		mDialog[7, 4] = "FadeOut70";
-		mDialog[7, 5] = "제공하기 버튼을 눌러 뭉티에게 구름을 제공합시다.";
-		mDialog[7, 6] = "FadeOut71";
+		mDialog[7, 5] = "FadeOut71";
+		mDialog[7, 6] = "제공하기 버튼을 눌러 뭉티에게 구름을 제공합시다.";
+		mDialog[7, 7] = "FadeOut72";
 
 		mDialog[8, 0] = "FadeOut80";
 		mDialog[8, 1] = "구름을 받고 감정에 변화가 생긴 손님은 집으로 돌아갑니다. 조만간 다시 방문할지도 모르겠네요.";
@@ -164,13 +165,20 @@ public class GuideBubbleScript : MonoBehaviour
 		{
 			mTutorialManager.FadeOutScreen();
 			GameObject.Find("B_Drawing Room").transform.SetAsLastSibling();
-			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("B_Drawing Room").transform.localPosition, -150f);
+			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("B_Drawing Room").transform.localPosition, -200f);
 			this.gameObject.SetActive(false);
 			return;
 		}
 
-		if (mDialog[mDialogIndex, currentDialogNum] == "DialogSpace1"
-			|| mDialog[mDialogIndex, currentDialogNum] == "DialogSpace2")
+		if (mDialog[mDialogIndex, currentDialogNum] == "DialogSpace1")
+		{
+			GameObject.Find("DialogManager").GetComponent<DialogManager>().ReadDialog();
+			presentDialogNum++;
+			currentDialogNum++;
+			this.gameObject.SetActive(false);
+			return;
+		}
+		if (mDialog[mDialogIndex, currentDialogNum] == "DialogSpace2")
 		{
 			presentDialogNum++;
 			currentDialogNum++;
@@ -180,7 +188,7 @@ public class GuideBubbleScript : MonoBehaviour
 
 		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut10")
 		{
-			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("B_OK").transform.localPosition, 250f);
+			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("B_OK").transform.localPosition, 300f);
 			this.gameObject.SetActive(false);
 			return;
 		}
@@ -228,7 +236,7 @@ public class GuideBubbleScript : MonoBehaviour
 		{
 			presentDialogNum++;
 			currentDialogNum++;
-			mTutorialManager.InstantiateArrowUIObject(new Vector3(470f, -360f, 0f), 0f);
+			mTutorialManager.InstantiateArrowUIObject(new Vector3(410f, -360f, 0f), 0f);
 			mTutorialManager.SetActiveArrowUIObject(false);
 			this.gameObject.SetActive(false);
 			return;
@@ -238,7 +246,7 @@ public class GuideBubbleScript : MonoBehaviour
 		{
 			mTutorialManager.FadeOutScreen();
 			GameObject.Find("B_Back").transform.SetAsLastSibling();
-			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("B_Back").transform.localPosition, -100f);
+			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("B_Back").transform.localPosition, -215f);
 			this.gameObject.SetActive(false);
 			return;
 		}
@@ -247,7 +255,7 @@ public class GuideBubbleScript : MonoBehaviour
 		{
 			mTutorialManager.FadeOutScreen();
 			GameObject.Find("B_GiveCloud").transform.SetAsLastSibling();
-			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("B_GiveCloud").transform.localPosition + new Vector3(180f, 32f, 0f), 100f);
+			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("B_GiveCloud").transform.localPosition + new Vector3(180f, 32f, 0f), 150f);
 			mTutorialManager.SetActiveArrowUIObject(false);
 			this.gameObject.SetActive(false);
 			return;
@@ -264,7 +272,7 @@ public class GuideBubbleScript : MonoBehaviour
 
 		if (mDialog[mDialogIndex, currentDialogNum] == "GuideSpeechOut60")
 		{
-			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("ButtonGroup").transform.Find("PosButton").transform.localPosition, -150f);
+			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("ButtonGroup").transform.Find("PosButton").transform.localPosition, -200f);
 			presentDialogNum++;
 			currentDialogNum++;
 			this.gameObject.SetActive(false);
@@ -288,11 +296,20 @@ public class GuideBubbleScript : MonoBehaviour
 
 		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut71")
 		{
+			mTutorialManager.FadeOutCloudStorage();
+			presentDialogNum++;
+			currentDialogNum++;
+			this.gameObject.SetActive(false);
+			return;
+		}
+
+		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut72")
+		{
 			mTutorialManager.FadeOutScreen();
 			GameObject tempButton = GameObject.Find("I_ProfileBG1").transform.Find("B_CloudGIve").gameObject;
 			tempButton.transform.SetParent(GameObject.Find("Canvas").transform);
 			tempButton.transform.SetAsLastSibling();
-			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("Canvas").transform.Find("B_CloudGIve").gameObject.transform.localPosition, -150f);
+			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("Canvas").transform.Find("B_CloudGIve").gameObject.transform.localPosition, -200f);
 			this.gameObject.SetActive(false);
 			return;
 		}

@@ -470,9 +470,10 @@ public class CloudMakeSystem : MonoBehaviour
         //색 밝게
         slct_mtrl.u_setUIbright(total);
 
+		//재료의 수 차감
+		DiscardIngredients(mtrlDATA);
 
-        //재료의 수 차감
-        DiscardIngredients(mtrlDATA);
+		m_sendCloud();
 
 		//UI 초기화
 		slct_mtrl.u_init(total);
@@ -483,8 +484,6 @@ public class CloudMakeSystem : MonoBehaviour
         isMakingCloud = false;
 
         int emotionCnt = mEmotions.Count;
-
-        m_sendCloud();
 
 		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
         if (mTutorialManager.isFinishedTutorial[4] == false) {
@@ -500,7 +499,7 @@ public class CloudMakeSystem : MonoBehaviour
     {
         //해당 감정에 맞는 구름 이미지 생성
         InventoryManager inventoryManager = GameObject.FindWithTag("InventoryManager").transform.GetComponent<InventoryManager>();
-        inventoryManager.createdCloudData = new CloudData(mEmotions, slct_mtrl.getCloudShelfLife()); //createdCloudData 갱신.
+        inventoryManager.createdCloudData = new CloudData(mEmotions, slct_mtrl.getCloudShelfLife(), slct_mtrl.mGetingredientDatas(mtrlDATA)); //createdCloudData 갱신.
                                                                           //큰 수치 = 구름색
                                                                           //다음 수치 = 구름의 장식
 

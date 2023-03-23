@@ -311,8 +311,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -250}
+  m_AnchoredPosition: {x: 0.8431015, y: 123.503784}
+  m_SizeDelta: {x: -18.314, y: -497.0076}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &35497205
 MonoBehaviour:
@@ -334,7 +334,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2700150551109644512, guid: 289206e94d44a0449a70e3774612744a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 609052e432c5ce54f8d8f1727b8fec9f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2244,7 +2244,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4624ad729103b4c4ab83cee19b1d7da4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 11428b32d92cdbe4bb3932f1aa3bbe43, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2438,6 +2438,7 @@ MonoBehaviour:
   cloud_sprite: {fileID: 21300000, guid: 90ddaec8fa23d104fa77dfa06137dafb, type: 3}
   mtrlDATA: {fileID: 0}
   emoTableDATA: {fileID: 11400000, guid: 4eb2873c32f1b574a9e21b119cd9fdd3, type: 2}
+  mEmotions: []
   UI_btn_txt: {fileID: 1180025142}
   isMakingCloud: 0
 --- !u!1 &745678596

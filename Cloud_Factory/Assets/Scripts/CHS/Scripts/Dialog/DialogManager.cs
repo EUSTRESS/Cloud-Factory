@@ -233,11 +233,15 @@ public class DialogManager : MonoBehaviour
         // 손님의 대사라면
         if (mIsGuset[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex] == 1)
         {
+            tGuestText.transform.parent.gameObject.SetActive(true);
+            tPlayerText.transform.parent.gameObject.SetActive(false);
             tText = tGuestText;
         }
         else
         {
-            tText = tPlayerText;
+			tGuestText.transform.parent.gameObject.SetActive(false);
+			tPlayerText.transform.parent.gameObject.SetActive(true);
+			tText = tPlayerText;
         }
         Debug.Log(mDialogIndex + " " + mIsGuset[mDialogIndex]);
     }

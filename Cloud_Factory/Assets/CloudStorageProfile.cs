@@ -45,7 +45,15 @@ public class CloudStorageProfile : MonoBehaviour
         List<int> temp = new List<int>();
         foreach(int i in SOWManager.mUsingGuestList)
         {
-            if (GuestManager.mGuestInfo[i].isUsing == false) temp.Add(i);
+            if (GuestManager.mGuestInfo[i].isUsing == false)
+            { 
+                temp.Add(i);
+                Debug.Log(i + "번 손님은 구름 제공이 가능합니다.");
+            }
+            else
+            {
+                Debug.Log(i + "번 손님은 구름 제공이 가능하지 않습니다.");
+            }
         }
         UsingGuestNumList = temp.ToArray();
 
@@ -115,6 +123,7 @@ public class CloudStorageProfile : MonoBehaviour
         if (numOfUsingGuestList == 0)
         {
             btGiveBtn.interactable = false;
+            Debug.Log("구름제공이 가능한 손님이 존재하지 않습니다.");
             return;   
         }
 
@@ -168,7 +177,8 @@ public class CloudStorageProfile : MonoBehaviour
             return;
         }
 
-            int guestNum = frontGuestIndex;
+        int guestNum = frontGuestIndex;
+        GuestManager.mGuestInfo[guestNum].isUsing = true;
 
         //구름인벤토리에서 사용된 구름 삭제
         mGetCloudContainer.GetComponent<CloudContainer>().deleteSelectedCloud();

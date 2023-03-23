@@ -68,7 +68,16 @@ public class CloudContainer : MonoBehaviour
         if (inventoryManager == null)
             inventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
 
-        if(!isCloudSelected)
+		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+		if (mTutorialManager.isFinishedTutorial[7] == false)
+		{
+			Transform selected = EventSystem.current.currentSelectedGameObject.transform;
+            if(selected.gameObject.GetComponent<RightClickButton>().GetIsFinishedRightClick() == false) { return; }
+			mTutorialManager.SetActiveFadeOutScreen(false);
+			mTutorialManager.SetActiveGuideSpeechBubble(true);
+		}
+
+		if (!isCloudSelected)
         {
             //해당 구름 선택 UI 표시
             Transform selected = EventSystem.current.currentSelectedGameObject.transform;
@@ -80,13 +89,6 @@ public class CloudContainer : MonoBehaviour
             }
             Debug.Log("구름 선택:" + mUiStocksData[selected.GetSiblingIndex()]);
             isCloudSelected = true;
-
-            TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
-            if (mTutorialManager.isFinishedTutorial[7] == false)
-            {
-                mTutorialManager.SetActiveFadeOutScreen(false);
-                mTutorialManager.SetActiveGuideSpeechBubble(true);
-            }
         }
         else
         {

@@ -40,7 +40,8 @@ public class StorageUIManager : MonoBehaviour
     // 감정으로 정렬
     public void SortEmotion()
     {
-        if (!mGiveCloudCheckBox[(int)ECheckBox.Emotion].activeSelf)
+        if(GameObject.Find("TutorialManager").GetComponent<TutorialManager>().isFinishedTutorial[4] == false) { return; }
+		if (!mGiveCloudCheckBox[(int)ECheckBox.Emotion].activeSelf)
         {
             mSortDropBox.interactable = true;
             mGiveCloudCheckBox[(int)ECheckBox.Emotion].SetActive(true);

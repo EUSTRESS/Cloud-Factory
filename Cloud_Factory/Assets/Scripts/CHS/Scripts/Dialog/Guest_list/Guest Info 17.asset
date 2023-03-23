@@ -17,32 +17,32 @@ MonoBehaviour:
   mAge: 48
   mJob: "\uC8FC\uBC29\uBCF4\uC870"
   mSentence: "\uC0C8\uB85C\uC6B4 \uC0AC\uB791\uC774 \uB450\uB824\uC6B4 \uC5C4\uB9C8. "
-  mEmotion: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  mEmotion: 3c000000000000000000000000000000320000000000000000000000000000000000000000000000000000001e000000280000000000000000000000000000000000000000000000000000003c000000
   mSatEmotions:
   - emotionNum: 0
-    up: 0
-    down: 0
-  - emotionNum: 0
-    up: 0
-    down: 0
-  - emotionNum: 0
-    up: 0
-    down: 0
-  - emotionNum: 0
-    up: 0
-    down: 0
-  - emotionNum: 0
-    up: 0
-    down: 0
+    up: 40
+    down: -2000
+  - emotionNum: 4
+    up: 30
+    down: -2000
+  - emotionNum: 11
+    up: 2000
+    down: 50
+  - emotionNum: 12
+    up: 2000
+    down: 60
+  - emotionNum: 19
+    up: 2000
+    down: 80
   mLimitEmotions:
-  - upLimitEmotion: 0
-    upLimitEmotionValue: 0
+  - upLimitEmotion: 12
+    upLimitEmotionValue: 90
     downLimitEmotion: 0
-    downLimitEmotionValue: 0
-  - upLimitEmotion: 0
-    upLimitEmotionValue: 0
-    downLimitEmotion: 0
-    downLimitEmotionValue: 0
+    downLimitEmotionValue: 10
+  - upLimitEmotion: 12
+    upLimitEmotionValue: 90
+    downLimitEmotion: 4
+    downLimitEmotionValue: 10
   mSatatisfaction: 1
   mSatVariation: -2
   isDisSat: 0

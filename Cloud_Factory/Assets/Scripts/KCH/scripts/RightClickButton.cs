@@ -7,6 +7,7 @@ public class RightClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 {
 	private float clickedTime;
 	private bool isClicked;
+	private bool isFinishedRightClick;
 
 	private TutorialManager mTutorialManager;
 
@@ -14,6 +15,7 @@ public class RightClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 	{
 		clickedTime = 0f;
 		isClicked = false;
+		isFinishedRightClick = false;
 
 		mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
 	}
@@ -22,8 +24,8 @@ public class RightClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 	{
 		if (mTutorialManager.isFinishedTutorial[7] == false)
 		{
-			if (isClicked) { clickedTime += Time.deltaTime; }
-			if(clickedTime >= 1.0f) { mTutorialManager.SetActiveFadeOutScreen(false); mTutorialManager.SetActiveGuideSpeechBubble(true); clickedTime = 0f; }
+			if (isClicked && isFinishedRightClick == false) { clickedTime += Time.deltaTime; }
+			if(clickedTime >= 1.0f) { mTutorialManager.SetActiveFadeOutScreen(false); mTutorialManager.SetActiveGuideSpeechBubble(true); clickedTime = 0f; isFinishedRightClick = true; }
 		}
 	}
 	
@@ -44,5 +46,10 @@ public class RightClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 			clickedTime = 0f;
 			isClicked = false;
 		}
+	}
+
+	public bool GetIsFinishedRightClick()
+	{
+		return isFinishedRightClick;
 	}
 }

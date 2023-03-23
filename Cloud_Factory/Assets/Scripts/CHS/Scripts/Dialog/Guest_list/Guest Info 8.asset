@@ -17,32 +17,32 @@ MonoBehaviour:
   mAge: 8
   mJob: "\uCD08\uB4F1\uD559\uC0DD"
   mSentence: "\uD654\uB0B4\uB294 \uBC95\uC744 \uC54C\uACE0 \uC2F6\uC740 \uCD08\uB4F1\uD559\uC0DD. "
-  mEmotion: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  mEmotion: 000000000000000000000000000000000000000032000000000000000000000000000000280000000000000000000000140000003c000000460000000000000000000000000000000000000000000000
   mSatEmotions:
-  - emotionNum: 0
-    up: 0
-    down: 0
-  - emotionNum: 0
-    up: 0
-    down: 0
-  - emotionNum: 0
-    up: 0
-    down: 0
-  - emotionNum: 0
-    up: 0
-    down: 0
-  - emotionNum: 0
-    up: 0
-    down: 0
+  - emotionNum: 5
+    up: 30
+    down: -2000
+  - emotionNum: 9
+    up: 2000
+    down: 60
+  - emotionNum: 12
+    up: 2000
+    down: 40
+  - emotionNum: 13
+    up: 40
+    down: -2000
+  - emotionNum: 14
+    up: 50
+    down: -2000
   mLimitEmotions:
-  - upLimitEmotion: 0
-    upLimitEmotionValue: 0
-    downLimitEmotion: 0
-    downLimitEmotionValue: 0
-  - upLimitEmotion: 0
-    upLimitEmotionValue: 0
-    downLimitEmotion: 0
-    downLimitEmotionValue: 0
+  - upLimitEmotion: 9
+    upLimitEmotionValue: 90
+    downLimitEmotion: 11
+    downLimitEmotionValue: 10
+  - upLimitEmotion: 12
+    upLimitEmotionValue: 90
+    downLimitEmotion: 14
+    downLimitEmotionValue: 10
   mSatatisfaction: 1
   mSatVariation: -2
   isDisSat: 0

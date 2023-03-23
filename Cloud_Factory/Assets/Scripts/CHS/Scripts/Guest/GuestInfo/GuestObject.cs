@@ -254,9 +254,7 @@ private void Update()
         {
             if(mGuestManager.mGuestInfo[mGuestNum].isUsing == true)
             {
-                isUsing = true;
-                Debug.Log("isUsing : true");
-                mGuestManager.mGuestInfo[mGuestNum].isUsing = false;
+                isUsing = true;      
             }
             // 치료 중인 경우 치료효과에 따라서 주기적으로 애니메이션을 제공
             if (isUsing)
@@ -486,6 +484,7 @@ private void Update()
 
         isSit = false;
         isUsing = false;
+        mGuestManager.mGuestInfo[mGuestNum].isUsing = false;
         mGuestAnim.SetBool("isUsing", false);
 
         isGotoEntrance = true;

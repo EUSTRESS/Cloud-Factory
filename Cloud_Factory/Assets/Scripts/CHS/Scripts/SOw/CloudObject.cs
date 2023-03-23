@@ -47,7 +47,6 @@ public class CloudObject : MonoBehaviour
         cloudSpeed = 0f;
 
         // TODO : MoveCloud Animator를 종류에 맞게 변경
-        
     }
 
 
@@ -82,7 +81,7 @@ public class CloudObject : MonoBehaviour
         if (collision.gameObject.tag == "Guest" && isAlive)
         {
             // 구름을 받은 손님을 사용상태로 변경
-            GuestManager.mGuestInfo[mGuestNum].isUsing = true;
+            //GuestManager.mGuestInfo[mGuestNum].isUsing = true;
 
             Target = collision.gameObject.transform.root.gameObject;
 

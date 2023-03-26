@@ -79,32 +79,39 @@ public class CloudStorageProfile : MonoBehaviour
     public void GetNextProfile()
     {
         // 이전 프로필을 불러온다.
-        frontProfileInfo = (frontProfileInfo + 1 ) % 3;
-        UsingGuestIndex++;
 
         // 맨앞에 나온 손님의 인덱스가 
-        if (UsingGuestIndex >= numOfUsingGuestList)
+        if (UsingGuestIndex >= numOfUsingGuestList - 1)
         {
-            UsingGuestIndex = 0;
+            //UsingGuestIndex = 0;
+            UsingGuestIndex = numOfUsingGuestList - 1;
+            return;
         }
+
+        frontProfileInfo = (frontProfileInfo + 1) % 3;
+        UsingGuestIndex++;
+
         frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
 
         updateProfileList();
+        UIManager.ShowNextProfile();
     }
 
     public void GetPrevProfile()
     {
-        // 다음 프로필을 불러온다.
+        // 다음 프로필을 불러온다.       
+        if (UsingGuestIndex <= 0)
+        {
+            UsingGuestIndex = 0;
+            return;
+        }
+
         frontProfileInfo = (frontProfileInfo - 1 + 3) % 3;
         UsingGuestIndex--;
-        
-        if (UsingGuestIndex < 0)
-        {
-            UsingGuestIndex = numOfUsingGuestList - 1;
-        }
 
         frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
         updateProfileList();
+        UIManager.ShowPrevProfile();
     }
 
     void initProfileList()
@@ -163,8 +170,7 @@ public class CloudStorageProfile : MonoBehaviour
     }
 
     public void GiveCloud()
-    {
-      
+    { 
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
         // 구름 제공하는 메소드 호출
@@ -172,7 +178,7 @@ public class CloudStorageProfile : MonoBehaviour
             = mGetCloudContainer.GetComponent<CloudContainer>().mSelecedCloud;
 
         //구름 제공 예외처리
-        if (storagedCloudData == null)
+        if (storagedCloudData == null || numOfUsingGuestList == 0)
         {
             return;
         }
@@ -186,6 +192,15 @@ public class CloudStorageProfile : MonoBehaviour
         // 리스트에서 사용받은 손님 제거하기
         SOWManager sow = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         int count = sow.mUsingGuestList.Count;
+
+        for (int i = 0; i < count; i++)
+        {
+            if (sow.mUsingGuestList[i] == guestNum)
+            {
+                sow.mUsingGuestList.RemoveAt(i);
+                sow.mUsingGuestObjectList.RemoveAt(i);
+            }
+        }
 
         SOWManager.SetCloudData(guestNum, storagedCloudData);
 

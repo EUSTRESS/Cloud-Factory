@@ -45,8 +45,6 @@ public class CloudObject : MonoBehaviour
         animValue2 = new RuntimeAnimatorController[8];
         DelayToUse = 10.0f;
         cloudSpeed = 0f;
-
-        // TODO : MoveCloud Animator를 종류에 맞게 변경
     }
 
 
@@ -86,7 +84,6 @@ public class CloudObject : MonoBehaviour
             Target = collision.gameObject.transform.root.gameObject;
 
             this.transform.GetChild(0).gameObject.GetComponent<Cloud_movement>().IsUsing = true;
-            //this.transform.GetChild(0).gameObject.GetComponent<Cloud_movement>().enabled = false;
 
             // 구름을 사용하는 손님의 머리 위치로 이동시킨다.
             this.transform.position = collision.gameObject.transform.position;
@@ -95,7 +92,6 @@ public class CloudObject : MonoBehaviour
             // 구름을 사용중인 모션을 띄운다. (애니메이션 변경)
             {
                 // moveCloud를 Using상태로 바꾼다.
-                //this.transform.GetChild(0).gameObject.SetActive(false);
                 this.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Using");
 
                 // VirtualObjectManager를 통해서 오브젝트를 만들어낸다. (파츠를 나타내기 위해 사용)

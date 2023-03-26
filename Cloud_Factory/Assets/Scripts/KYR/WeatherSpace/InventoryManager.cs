@@ -323,7 +323,8 @@ public class InventoryManager : MonoBehaviour
     public bool addStock(KeyValuePair<IngredientData, int> _stock)
     {        
         mMaxInvenCnt = getInvenSize(minvenLevel);
-        if (mType.Count >= mMaxInvenCnt) return false; // 인벤토리 자체가 아예 가득 찬 경우 return false
+        if (mType.Contains(_stock.Key)) { }
+        else if (mType.Count >= mMaxInvenCnt) return false; // 인벤토리 자체가 아예 가득 찬 경우 return false
         //인벤토리에 자리가 있는 경우
         if (!mType.Contains(_stock.Key)) //인벤에 없이 새로 들어오는 경우는 그냥 넣고 return true
         {
@@ -337,7 +338,7 @@ public class InventoryManager : MonoBehaviour
 
         if (mCnt[idx] >= mMaxStockCnt) return false;//인벤토리 재료 당 저장가능 개수 제한
         int interver = mMaxStockCnt - (_stock.Value+ mCnt[idx]); //저장가능 개수 - (새로운게 추가됐을 떄 인벤토리에 저장될개수) = 버려지는 재고
-        if (interver >= 0) mCnt[idx] = mMaxStockCnt; //차이가 0보다 크면 어차피 Max Cnt
+        if (interver <= 0) mCnt[idx] = mMaxStockCnt; //차이가 0보다 크면 어차피 Max Cnt
         else
             mCnt[idx] += _stock.Value; //해당 아이템 카운트 추가.
 

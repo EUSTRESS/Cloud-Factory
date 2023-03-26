@@ -161,7 +161,7 @@ public class DialogManager : MonoBehaviour
 		// 손님 번호 -> 방문 횟수 -> 만족도 순으로 엑셀 텍스트 파일을 체크한다.
 		for (i = 0; i < Dialog.Count; ++i)
         {
-            Debug.Log(mGuestNum + " " + mGuestManager.mGuestInfo[mGuestNum].mVisitCount + " " + mGuestVisitCount + " " + mGuestSat);
+            //Debug.Log(mGuestNum + " " + mGuestManager.mGuestInfo[mGuestNum].mVisitCount + " " + mGuestVisitCount + " " + mGuestSat);
 			if (Dialog[i].GuestID == mGuestNum + 1                  // 게스트 번호
                 && Dialog[i].VisitCount == tempVisitCount           // 방문 횟수
                 && Dialog[i].Sat == mGuestSat)                      // 만족도
@@ -325,8 +325,16 @@ public class DialogManager : MonoBehaviour
 		if(mTutorialManager.GetActiveGuideSpeechBubble() == null
             && mTutorialManager.isTutorial == true) { return; }
 
-
 		mGuestAnimator.SetInteger("index", mGuestImageList[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex]);
+
+        if(mIsGuset[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex] == 1)
+        {
+            mGuestAnimator.SetBool("isGuest", true);
+        }
+        else
+        {
+            mGuestAnimator.SetBool("isGuest", false);
+        }
 
         // 가이드 말풍선 출력 후, 다시 출력되지 않도록 hintTextPos를 0으로 설정한다.(말풍선 재생성 방지)
         if (mTutorialManager.isFinishedTutorial[1] == false

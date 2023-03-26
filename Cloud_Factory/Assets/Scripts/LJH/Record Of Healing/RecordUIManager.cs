@@ -73,6 +73,8 @@ public class RecordUIManager : MonoBehaviour
 
     public void ShowNextProfile()
     {
+
+
         // 다음 페이지
         mIsNext = true;
         mIsPrev = false;
@@ -96,6 +98,8 @@ public class RecordUIManager : MonoBehaviour
     }
     public void ShowPrevProfile()
     {
+
+
         // 이전 페이지
         mIsNext = false;
         mIsPrev = true;

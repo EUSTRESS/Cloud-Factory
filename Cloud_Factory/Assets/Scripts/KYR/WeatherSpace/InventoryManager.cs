@@ -387,7 +387,6 @@ public class InventoryManager : MonoBehaviour
         List<GameObject> parts = new List<GameObject>();
         GameObject cloudBase = Instantiate(_cloudObject.gameObject, _cloudObject.transform.position, _cloudObject.transform.rotation);
 
-        DontDestroyOnLoad(cloudBase);
         for (int i = 0; i < cloudBase.transform.childCount; i++)
         {
             DontDestroyOnLoad(cloudBase.transform.GetChild(i).gameObject);

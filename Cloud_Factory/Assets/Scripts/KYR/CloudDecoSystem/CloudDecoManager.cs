@@ -358,6 +358,7 @@ public class CloudDecoManager : MonoBehaviour
     }
     public void EClickedDecoParts()
     {
+        if (isDecoDone) { return; }
         GameObject target = EventSystem.current.currentSelectedGameObject;
         int partsIdx = target.transform.parent.GetSiblingIndex(); //parent = type(?)
         int cnt = partsIdx >= 1 ? int.Parse(T_CountInfo[partsIdx - 1].GetComponent<TMP_Text>().text) : 0 ;
@@ -515,6 +516,8 @@ public class CloudDecoManager : MonoBehaviour
         I_BasicDecoCloud = I_targetCloud;
         I_targetCloud = FinCloud;
 
+
+        FinCloud.GetComponent<Transform>().localScale = new Vector3(0.8f, 0.8f, 0.8f);
         P_FinSBook.SetActive(true);
 
         TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();

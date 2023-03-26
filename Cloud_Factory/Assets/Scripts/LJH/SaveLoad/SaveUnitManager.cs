@@ -292,6 +292,7 @@ public class SaveUnitManager : MonoBehaviour
                 WaitObjectsData.Add(temp);
             }
 
+            /*
             foreach (GameObject obj in mSOWManager.mUsingGuestObjectList)
             {
                 GuestObjectSaveData temp = new GuestObjectSaveData();
@@ -315,6 +316,7 @@ public class SaveUnitManager : MonoBehaviour
 
                 UsingObjectsData.Add(temp);
             }
+            */
 
             //string jBData = JsonConvert.SerializeObject(WaitObjectsData);
             //Debug.Log("=======Save :  WaitObjectsData  =========");

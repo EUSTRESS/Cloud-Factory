@@ -516,6 +516,8 @@ public class CloudDecoManager : MonoBehaviour
         I_BasicDecoCloud = I_targetCloud;
         I_targetCloud = FinCloud;
 
+
+        FinCloud.GetComponent<Transform>().localScale = new Vector3(0.8f, 0.8f, 0.8f);
         P_FinSBook.SetActive(true);
 
         TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();

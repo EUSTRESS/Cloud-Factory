@@ -117,6 +117,9 @@ public class VirtualObjectManager : MonoBehaviour
 
             // TODO: 파츠의 크기에 따라 LocalScale을 변경해준다.
             obejctP.transform.localScale = new Vector3(0.9f, 0.9f, 0.12f);
+
+            obejctP.GetComponent<SpriteRenderer>().size =
+                 new Vector2(obejctP.GetComponent<SpriteRenderer>().size.x * 0.9f, obejctP.GetComponent<SpriteRenderer>().size.y * 0.9f);
         }
 
         obejct.transform.localPosition = InstancePosition;

@@ -446,7 +446,7 @@ public class CloudMakeSystem : MonoBehaviour
             return;
         }
 
-        float time = 5f;
+        float time = 1f;
         //코루틴
         UI_btn_txt.text = "만드는 중";
 

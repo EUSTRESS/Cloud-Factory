@@ -85,8 +85,8 @@ public class CloudSpawner : MonoBehaviour
 
             // scale
             //cloudMove.transform.localScale = new Vector3(0.11f, 0.12f, 0.5f);
-            movement.Parts_fly.transform.localScale = new Vector3(0.15f, 0.15f, 0.5f);
-            movement.Parts_fly_2.transform.localScale = new Vector3(0.2f, 0.2f, 0.5f);
+            movement.Parts_fly.transform.localScale = new Vector3(0.11f, 0.11f, 0.5f);
+            movement.Parts_fly_2.transform.localScale = new Vector3(0.16f, 0.16f, 0.5f);
 
             // TODO : MoveCloud Animator를 종류에 맞게 변경 -> CloudData값을 이용
             // 1. 구름 색상을 지정 

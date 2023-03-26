@@ -27,8 +27,8 @@ public class Cloud_movement : MonoBehaviour
 
     void Awake()
     {
-        ran_num = 2;// Random.Range(1, 5);
-        ran_num2 = 4;// Get_ran_num();
+        ran_num = 1;//Random.Range(1, 5);
+        ran_num2 = 2;//Get_ran_num();
         GameObject go = Instantiate(Parts_fly);
         GameObject go2 = Instantiate(Parts_fly_2);
 

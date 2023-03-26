@@ -16,11 +16,11 @@ public class Destroy_ob : MonoBehaviour
 
     void Update()
     {
-        if (part_prefab.transform.position.y < -2.5f)
+        if (part_prefab.transform.position.y < -1.0f)
         {
             Destroy(part_prefab);
         }
-        else if (part_prefab_2.transform.position.y < -2.5f)
+        else if (part_prefab_2.transform.position.y < -1.0f)
         {
             Destroy(part_prefab_2);
         }

@@ -42,7 +42,8 @@ public class CloudUIManager : MonoBehaviour
     // 보관 기간 별로 정렬
     public void SortStorageDate()
     {
-        if (!mGiveCloudCheckBox[(int)ECheckBox.Date].activeSelf)
+		if (GameObject.Find("TutorialManager").GetComponent<TutorialManager>().isFinishedTutorial[7] == false) { return; }
+		if (!mGiveCloudCheckBox[(int)ECheckBox.Date].activeSelf)
         {
             mSortDropBox.interactable = false;
             mGiveCloudCheckBox[(int)ECheckBox.Date].SetActive(true);
@@ -60,7 +61,8 @@ public class CloudUIManager : MonoBehaviour
     // 감정으로 정렬
     public void SortEmotion()
     {
-        if (!mGiveCloudCheckBox[(int)ECheckBox.Emotion].activeSelf)
+		if (GameObject.Find("TutorialManager").GetComponent<TutorialManager>().isFinishedTutorial[7] == false) { return; }
+		if (!mGiveCloudCheckBox[(int)ECheckBox.Emotion].activeSelf)
         {
             mSortDropBox.interactable = transform;
             mGiveCloudCheckBox[(int)ECheckBox.Emotion].SetActive(true);

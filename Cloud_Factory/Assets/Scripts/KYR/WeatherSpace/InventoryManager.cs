@@ -97,11 +97,14 @@ public class CloudData
     private List<List<Sprite>> mdecoImages; //2차원 리스트: L M S 사이즈 필요! 최대 2개
 
     private List<EmotionInfo> mFinalEmotions; //구름 꾸미기 이후의 최종 감정.
+
+    private int mIngredientDtCount;
     public CloudData(List<EmotionInfo> Emotions,int shelfLife, List<IngredientData> ingr_datas)
     {
         mEmotions = Emotions;
         mShelfLife = shelfLife;
         mIngredientDatas= ingr_datas;
+        mIngredientDtCount = mIngredientDatas.Count;
         mFinalEmotions = new List<EmotionInfo>();
         isCloudAnimProgressed = new bool[3];
         setAnimProgressed();
@@ -205,8 +208,10 @@ public class CloudData
         string targetImgName = ((int)mEmotions[0].Key).ToString();
         if ((int)mEmotions[0].Key < 8)
             targetImgName = "0";
-        mcloudBaseImage = Resources.Load<Sprite>("Sprite/CloudBase/2union/" + "OC_Cloud2_" + ((int)mEmotions[0].Key).ToString());
-        mcloudDecoBaseImage = Resources.Load<Sprite>("Sprite/CloudBase/DecoSpaceVer/" + "OC_Cloud_" + ((int)mEmotions[0].Key).ToString());
+
+        string targetUnion = mIngredientDtCount >= 3 ? "2" : "3";
+        mcloudBaseImage = Resources.Load<Sprite>("Sprite/Base/"+ targetUnion + "union/" + "OC_Cloud_" + ((int)mEmotions[0].Key).ToString());
+        mcloudDecoBaseImage = Resources.Load<Sprite>("Sprite/Base/" + targetUnion + "union/" + "Deco/"+ "OC_Cloud_" + ((int)mEmotions[0].Key).ToString());
     }
     private void setDecoImage(List<EmotionInfo> Emotions)
     {
@@ -318,7 +323,8 @@ public class InventoryManager : MonoBehaviour
     public bool addStock(KeyValuePair<IngredientData, int> _stock)
     {        
         mMaxInvenCnt = getInvenSize(minvenLevel);
-        if (mType.Count >= mMaxInvenCnt) return false; // 인벤토리 자체가 아예 가득 찬 경우 return false
+        if (mType.Contains(_stock.Key)) { }
+        else if (mType.Count >= mMaxInvenCnt) return false; // 인벤토리 자체가 아예 가득 찬 경우 return false
         //인벤토리에 자리가 있는 경우
         if (!mType.Contains(_stock.Key)) //인벤에 없이 새로 들어오는 경우는 그냥 넣고 return true
         {
@@ -332,7 +338,7 @@ public class InventoryManager : MonoBehaviour
 
         if (mCnt[idx] >= mMaxStockCnt) return false;//인벤토리 재료 당 저장가능 개수 제한
         int interver = mMaxStockCnt - (_stock.Value+ mCnt[idx]); //저장가능 개수 - (새로운게 추가됐을 떄 인벤토리에 저장될개수) = 버려지는 재고
-        if (interver >= 0) mCnt[idx] = mMaxStockCnt; //차이가 0보다 크면 어차피 Max Cnt
+        if (interver <= 0) mCnt[idx] = mMaxStockCnt; //차이가 0보다 크면 어차피 Max Cnt
         else
             mCnt[idx] += _stock.Value; //해당 아이템 카운트 추가.
 

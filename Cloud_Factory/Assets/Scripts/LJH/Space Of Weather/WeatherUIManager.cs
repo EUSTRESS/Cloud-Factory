@@ -260,7 +260,9 @@ public class WeatherUIManager : MonoBehaviour
 
     private void GatherResultMatchWithUI(Dictionary<IngredientData, int> results)
     {
-        if (results == null) { return; }
+        if (results == null) { return; } // 이미 가득찬 재료인 경우, YHS에서 Gathered에서 정보를 안넣어 줘서 default이미지 생성, 및 return 당함. default이미지 나오는 현상
+                                            // YHS 에서 else가 실행되도 데이터는 넘겨줘야 함.
+                                            // SetActive(false)되기 전, 전에 채집된 정보가 남아있어서, 이미지랑 count가 다시 출력되는 현상
 
         int i = 0;
         foreach (KeyValuePair<IngredientData, int> data in results)

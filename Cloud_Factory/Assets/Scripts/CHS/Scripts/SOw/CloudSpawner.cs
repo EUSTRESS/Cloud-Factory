@@ -75,7 +75,7 @@ public class CloudSpawner : MonoBehaviour
             Cloud_movement movement = cloudMove.GetComponent<Cloud_movement>();
 
             // image
-            cloudMove.GetComponent<SpriteRenderer>().sprite = storagedCloudData.mVBase.mImage;
+            // cloudMove.GetComponent<SpriteRenderer>().sprite = storagedCloudData.mVBase.mImage;
 
             for (int i = 0; i < storagedCloudData.mVPartsList.Count; i++)           // 파츠이미지 스프라이트로 저장
             {
@@ -87,6 +87,11 @@ public class CloudSpawner : MonoBehaviour
             //cloudMove.transform.localScale = new Vector3(0.11f, 0.12f, 0.5f);
             movement.Parts_fly.transform.localScale = new Vector3(0.15f, 0.15f, 0.5f);
             movement.Parts_fly_2.transform.localScale = new Vector3(0.2f, 0.2f, 0.5f);
+
+            // TODO : MoveCloud Animator를 종류에 맞게 변경 -> CloudData값을 이용
+            // 1. 구름 색상을 지정 
+            // 2. 구름 재료 등급에 따른 애니메이터 나누기
+
         }
     }
 

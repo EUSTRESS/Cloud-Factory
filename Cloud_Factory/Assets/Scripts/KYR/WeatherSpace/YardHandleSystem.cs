@@ -102,8 +102,6 @@ public class YardHandleSystem : MonoBehaviour
 
     public Dictionary<IngredientData, int>Gathered(GameObject iClickedYard,int totalCnt) //클릭함수
     {
-        if (mYards[iClickedYard] <= 0) return null;
-
         Dictionary<IngredientData, int> results = getRndGatheredResult(totalCnt);
         Dictionary<IngredientData, int> complete = new Dictionary<IngredientData, int>();
         Debug.Log("[System]총" + results.Count + "가 채집되었습니다!");
@@ -114,8 +112,10 @@ public class YardHandleSystem : MonoBehaviour
                 Debug.Log("[System]채집 성공| 종류:" + result.Key + "|개수: " + result.Value);
                 complete.Add(result.Key, result.Value);
             }
-            else
+            else {
                 Debug.Log("[System]채집 실패| 인벤토리가 꽉 찼거나 수집 가능 재료 개수를 초과하였습니다| 종류:." + result.Key + "|개수: " + result.Value);
+                complete.Add(result.Key, result.Value);
+            }
 
         }
 
@@ -133,7 +133,7 @@ public class YardHandleSystem : MonoBehaviour
 
         //희귀도 랜덤, 그중에서도 종류 랜덤.
         //Random: 희귀도, 희귀도 내 종류, 재료 수, 채집할 재료 종류 수
-        Debug.Log("총 채집할 종류:" + totalCnt);
+        Debug.Log("총 채집할 종류:" + (totalCnt+1));
 
         // 튜토리얼 시 채집되는 재료 고정 TODO: 기획서에 맞도록 재료 종류, 수량 조정 필요
         if (mTutorialManager.isFinishedTutorial[2] == false)

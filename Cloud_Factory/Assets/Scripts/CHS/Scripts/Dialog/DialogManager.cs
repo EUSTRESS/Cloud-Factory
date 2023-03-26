@@ -176,7 +176,6 @@ public class DialogManager : MonoBehaviour
                             for (int num = 0; num < Dialog.Count; num++)
                             {
                                 if (Dialog[num].GuestID == mGuestNum + 1
-                                    && Dialog[num].VisitCount == 0                          // 대사 파일 받고 수정할 가능성 O
                                     && Dialog[num].Emotion == speakEmotionEffect[count])    // TODO: 추후 텍스트 엑셀 파일 보고 조건 수정 필요
                                 {
                                     if (!mTutorialManager.isFinishedTutorial[1] 

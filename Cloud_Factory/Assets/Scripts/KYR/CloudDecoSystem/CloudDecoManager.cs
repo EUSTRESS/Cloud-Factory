@@ -358,6 +358,7 @@ public class CloudDecoManager : MonoBehaviour
     }
     public void EClickedDecoParts()
     {
+        if (isDecoDone) { return; }
         GameObject target = EventSystem.current.currentSelectedGameObject;
         int partsIdx = target.transform.parent.GetSiblingIndex(); //parent = type(?)
         int cnt = partsIdx >= 1 ? int.Parse(T_CountInfo[partsIdx - 1].GetComponent<TMP_Text>().text) : 0 ;

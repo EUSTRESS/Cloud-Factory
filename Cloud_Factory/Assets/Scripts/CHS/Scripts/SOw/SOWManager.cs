@@ -324,7 +324,7 @@ public class SOWManager : MonoBehaviour
             mChairPos[i].transform.position = new Vector3(ChairPosList[weather][i][0], ChairPosList[weather][i][1],0f);
             mSitDir[i] = SitDirList[weather][i];
         }
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 8; i++)
         {
             mWayPoint[i].transform.position = new Vector3(WayPosList[weather][i][0], WayPosList[weather][i][1], 0f);
         }

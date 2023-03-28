@@ -51,7 +51,7 @@ public class WayPoint : MonoBehaviour
             }
             else if(this.transform.position.x < temp_X)
             {
-                transform.localScale = new Vector3(0.9f, 0.9f, 1f);
+                transform.localScale = new Vector3(-0.9f, 0.9f, 1f);
             }
 
             temp_X = this.transform.position.x;

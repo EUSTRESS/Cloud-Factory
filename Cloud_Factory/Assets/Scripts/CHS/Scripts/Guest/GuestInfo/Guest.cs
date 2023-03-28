@@ -605,6 +605,8 @@ public class Guest : MonoBehaviour
         mTodayGuestList = NewChoiceGuest();
         mGuestIndex = mTodayGuestList[0];
 
+        mTodayGuestList = new int[] {0,3,6,9,12,13};
+
         // 방문 주기를 초기화한다.
         InitGuestTime();
 

@@ -14,7 +14,7 @@ public class GuestCollider : MonoBehaviour
         {
             if (this.gameObject.transform.position.y < collision.gameObject.transform.position.y)
             {
-                temp.GetComponent<SortingGroup>().sortingLayerName = "Default";
+                temp.GetComponent<SortingGroup>().sortingLayerName = "SittingGuest";
             }
             else
             {
@@ -29,7 +29,7 @@ public class GuestCollider : MonoBehaviour
         GameObject temp = collision.gameObject.transform.root.gameObject;
         if (temp.tag == "Guest")
         {
-            if (temp.GetComponent<SortingGroup>().sortingLayerName == "Default" && !isTriggerWithUI)
+            if (temp.GetComponent<SortingGroup>().sortingLayerName == "SittingGuest" && !isTriggerWithUI)
             {
                 temp.GetComponent<SortingGroup>().sortingLayerName = "Guest";
             }

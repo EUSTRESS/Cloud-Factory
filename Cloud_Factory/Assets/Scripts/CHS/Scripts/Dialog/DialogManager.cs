@@ -112,9 +112,9 @@ public class DialogManager : MonoBehaviour
         mGuestSatVariation = mGuestManager.mGuestInfo[mGuestNum].mSatVariation;
         tGuestName.text = mGuestManager.mGuestInfo[mGuestNum].mName;
 
-        mGuestImageList = new int[30];
-        mTextList = new string[30];
-        mIsGuset = new int[30];
+        mGuestImageList = new int[40];
+        mTextList = new string[40];
+        mIsGuset = new int[40];
         isReading = false;
     }
 
@@ -176,7 +176,8 @@ public class DialogManager : MonoBehaviour
                             for (int num = 0; num < Dialog.Count; num++)
                             {
                                 if (Dialog[num].GuestID == mGuestNum + 1
-                                    && Dialog[num].Emotion == speakEmotionEffect[count])    // TODO: 추후 텍스트 엑셀 파일 보고 조건 수정 필요
+                                    && Dialog[num].Emotion == speakEmotionEffect[count]
+                                    && Dialog[num].Sat == 0)    // TODO: 추후 텍스트 엑셀 파일 보고 조건 수정 필요
                                 {
                                     if (!mTutorialManager.isFinishedTutorial[1] 
                                         && hintTextPos == 0)                                // 힌트가 처음 등장한 위치만 저장

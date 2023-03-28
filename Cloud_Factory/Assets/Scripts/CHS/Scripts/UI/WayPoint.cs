@@ -47,11 +47,11 @@ public class WayPoint : MonoBehaviour
 
             if(this.transform.position.x > temp_X)
             {
-                transform.localScale = new Vector3(1f, 1f, 1f);
+                transform.localScale = new Vector3(0.9f, 0.9f, 1f);
             }
             else if(this.transform.position.x < temp_X)
             {
-                transform.localScale = new Vector3(-1f, 1f, 1f);
+                transform.localScale = new Vector3(-0.9f, 0.9f, 1f);
             }
 
             temp_X = this.transform.position.x;
@@ -67,7 +67,7 @@ public class WayPoint : MonoBehaviour
         }
         if (WayNum == WayPos.Length)
         {
-            WayNum = 0;
+            WayNum = 1;
         }
      }
     

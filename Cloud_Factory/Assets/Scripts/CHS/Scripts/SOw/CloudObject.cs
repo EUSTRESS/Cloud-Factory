@@ -17,7 +17,7 @@ public class CloudObject : MonoBehaviour
 
     [Header("구름 정보")]
     public int mGuestNum;                       // 타겟 손님 번호
-    public float cloudSpeed;                      // 구름 속도
+    public float cloudSpeed;                    // 구름 속도
     public List<EmotionInfo> mFinalEmotions;    // 변환할 감정값 리스트
     private StoragedCloudData virtualCloudData;
 
@@ -83,6 +83,9 @@ public class CloudObject : MonoBehaviour
 
             Target = collision.gameObject.transform.root.gameObject;
 
+            if (Target.GetComponent<GuestObject>().mGuestNum != mGuestNum)
+                return;
+
             this.transform.GetChild(0).gameObject.GetComponent<Cloud_movement>().IsUsing = true;
 
             // 구름을 사용하는 손님의 머리 위치로 이동시킨다.
@@ -127,6 +130,7 @@ public class CloudObject : MonoBehaviour
             GuestManager.RenewakSat(mGuestNum);
 
             collision.gameObject.transform.root.gameObject.GetComponent<GuestObject>().mGuestAnim.SetInteger("increase", currSat - prevSat);
+            collision.gameObject.transform.root.gameObject.GetComponent<GuestObject>().mGuestAnim.SetTrigger("TakeCloud");
 
             // 더이상 구름에 대한 충돌체크가 필요 없으므로 비활성화
             this.GetComponent<CapsuleCollider2D>().enabled = false;

@@ -365,8 +365,9 @@ public class Guest : MonoBehaviour
                 temp++;
             }
         }
+
+        Debug.Log("기존 만족도 : " + mGuestInfo[guestNum].mSatatisfaction + "현재 만족도 : " + temp);
         mGuestInfo[guestNum].mSatatisfaction = temp;
-        Debug.Log(temp);
     }
 
     // TODO : 함수 개편
@@ -604,7 +605,7 @@ public class Guest : MonoBehaviour
         mTodayGuestList = NewChoiceGuest();
         mGuestIndex = mTodayGuestList[0];
 
-        mTodayGuestList = new int[6] {4,2,3,4,5,6};
+        mTodayGuestList = new int[] {0,3,6,9,12,13};
 
         // 방문 주기를 초기화한다.
         InitGuestTime();
@@ -615,7 +616,6 @@ public class Guest : MonoBehaviour
             DialogIndex.GetComponent<DialogIndex>().mDialogIndex = 0;
         }
         // 채집물들이 다시 갱신된다.
-
 
     }
 

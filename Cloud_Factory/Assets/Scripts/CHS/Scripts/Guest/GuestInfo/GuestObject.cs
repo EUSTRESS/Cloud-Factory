@@ -279,17 +279,8 @@ private void Update()
                     }
                     else
                     {
-                        // 사용하였고 아직 힌트를 출력하지 않았다면 힌트 출력
-                        if (!isHintTextPrinted && !isUsingHint)
-                        {
-                            Hint();
-                        }
-                        // 힌트 출력을 완료했다면 귀가
-                        else if (isHintTextPrinted)
-                            MoveToEntrance();
-
                         // 사용하지 않았다면 바로 귀가
-                       // MoveToEntrance();
+                        MoveToEntrance();
                     }
                 }
             }
@@ -482,6 +473,8 @@ private void Update()
         outSat = mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
         CalcSatVariation(enterSat, outSat);
 
+        mSOWManager.mCheckChairEmpty[mTargetChiarIndex] = true;
+        mTargetChair = null;
         isSit = false;
         isUsing = false;
         mGuestManager.mGuestInfo[mGuestNum].isUsing = false;
@@ -493,17 +486,17 @@ private void Update()
         if (mGuestManager.mGuestInfo[mGuestNum].isDisSat == true)
         {
             mGuestAnim.SetBool("isDisSat", true);
-            Invoke("ChangeTarget", 3.0f);
+            Invoke("ChangeTarget", 2.5f);
         }
         else if(mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction >= 5)
         {
             mGuestAnim.SetBool("isFullSat", true);
             GameObject.Find("GuestManager").GetComponent<LetterController>().SetSatGuestList(mGuestNum);
-            Invoke("ChangeTarget", 4.0f);
+            Invoke("ChangeTarget", 3.0f);
         }
         else
         {
-            Invoke("ChangeTarget", 3.0f);
+            Invoke("ChangeTarget", 1.0f);
         }
         ChangeLayerToDefault();
 

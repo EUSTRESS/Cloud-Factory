@@ -113,7 +113,24 @@ public class CloudContainer : MonoBehaviour
         speechBubble.transform.position = selected.position + new Vector3(150f, 0f, 0f);
         for (num = 0; num < mUiStocksData[selected.GetSiblingIndex()].mIngredientDatas.Count; num++)
         {
-            speechBubble.transform.GetChild(num).GetComponent<Image>().sprite = mUiStocksData[selected.GetSiblingIndex()].mIngredientDatas[num].image;
+            switch (mUiStocksData[selected.GetSiblingIndex()].mIngredientDatas[num].rarity)
+            {
+                case 1:
+					speechBubble.transform.GetChild(num).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprite/Ingredient/Rarity1/" + "M1_" + mUiStocksData[selected.GetSiblingIndex()].mIngredientDatas[num].dataName);
+                    break;
+                case 2:
+					speechBubble.transform.GetChild(num).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprite/Ingredient/Rarity1/" + "M2_" + mUiStocksData[selected.GetSiblingIndex()].mIngredientDatas[num].dataName);
+					break;
+                case 3:
+					speechBubble.transform.GetChild(num).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprite/Ingredient/Rarity1/" + "M3_" + mUiStocksData[selected.GetSiblingIndex()].mIngredientDatas[num].dataName);
+					break;
+                case 4:
+					speechBubble.transform.GetChild(num).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprite/Ingredient/Rarity1/" + "M4_" + mUiStocksData[selected.GetSiblingIndex()].mIngredientDatas[num].dataName);
+					break;
+                default:
+                    break;
+			}
+            
 		}
 
         for(; num < 5; num++)

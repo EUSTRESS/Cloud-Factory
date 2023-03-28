@@ -47,16 +47,16 @@ public class SOWManager : MonoBehaviour
 
     private float[][][] ChairPosList = new float[][][]{ 
         new float[][]{ new float[]{ 1.68f, -2.81f }, new float[] { -3.52f, -0.36f }, new float[] { -0.51f, 0.39f }, new float[] { 1.55f, 0.53f } } ,
-        new float[][]{ new float[]{ 1.39f, -2.18f }, new float[] { -3.46f, -0.17f }, new float[] { -0.12f, -2.8f }, new float[] { -1.64f, -2.07f } } ,
-        new float[][]{ new float[]{ 3.11f, -2.76f }, new float[] { 0.02f, -2.44f }, new float[] { 0.98f, 0.22f }, new float[] { 1.97f, 0.23f } } ,
+        new float[][]{ new float[]{ 1.545f, -2.154f }, new float[] { -3.436f, -0.178f }, new float[] { -0.27f, -2.8f }, new float[] { -1.64f, -2.07f } } ,
+        new float[][]{ new float[]{ 3.186f, -2.646f }, new float[] { 0.134f, -2.355f }, new float[] { 1.057f, 0.297f }, new float[] { 1.97f, 0.23f } } ,
         new float[][]{ new float[]{ 1.9f, -3.21f }, new float[] { -1.11f, 0.19f }, new float[] { 2.06f, 0.15f }, new float[] { -0.16f, 0.17f } }
     };
 
     private float[][][] WayPosList = new float[][][]{
-        new float[][]{ new float[]{ -6.71f, -1.34f }, new float[] { -3.93f, -0.63f }, new float[] { -0.71f, 0.08f }, new float[] { 1.97f, -1.14f }, new float[] { 4.68f, -2.24f }, new float[] { -0.91f, 0.08f }, new float[] { -4.14f, -0.69f } } ,
-        new float[][]{ new float[]{ -6.84f, -1.56f }, new float[] { -3.51f, -0.69f }, new float[] { -0.65f, -1.27f }, new float[] { 1.36f, -0.52f }, new float[] { 2.47f, 0.09f}, new float[] { -0.64f, -1.27f }, new float[] { -3.25f, -0.76f } } ,
-        new float[][]{ new float[]{ -6.73f, -1.22f }, new float[] { 0.49f, 0.58f }, new float[] { 5.64f, -2.16f }, new float[] { 1.57f, -4.22f}, new float[] { -2.11f, -2.13f }, new float[] { 1.97f, -0.36f }, new float[] { 0.36f, 0.53f } } ,
-        new float[][]{ new float[]{ -6.26f, -1.58f }, new float[] { -2.6f, -0.87f }, new float[] { 2.04f, -2.49f }, new float[] { 4.25f, -1.96f}, new float[] { 2.19f, -2.47f }, new float[] { -2.53f, -0.79f }, new float[] { -5.08f, -1.38f} } 
+        new float[][]{ new float[] { -8.66f, -2.4f }, new float[]{ -6.82f, -1.43f }, new float[] { -3.91f, -0.63f }, new float[] { -0.95f, 0.13f }, new float[] { 1.97f, -0.97f }, new float[] { 4.64f, -2.1f }, new float[] { -0.91f, 0.08f }, new float[] { -4.14f, -0.51f } } ,
+        new float[][]{ new float[] { -8.8f, -2.33f }, new float[]{ -6.84f, -1.56f }, new float[] { -3.81f, -0.62f }, new float[] { -0.76f, -1.1f }, new float[] { 1.36f, -0.39f }, new float[] { 2.25f, 0.2f}, new float[] { -0.64f, -1.14f }, new float[] { -4.14f, -0.64f } } ,
+        new float[][]{ new float[] { -8.8f, -2.22f }, new float[]{ -6.73f, -1.39f }, new float[] { 0.49f, 0.51f }, new float[] { 5.64f, -2.16f }, new float[] { 1.57f, -4.22f}, new float[] { -2.11f, -2.13f }, new float[] { 1.97f, -0.36f }, new float[] { 0.35f, 0.59f } } ,
+        new float[][]{ new float[] { -8.37f, -2.39f }, new float[]{ -6.26f, -1.58f }, new float[] { -2.6f, -0.87f }, new float[] { 2.04f, -2.49f }, new float[] { 4.25f, -1.96f}, new float[] { 2.19f, -2.47f }, new float[] { -2.53f, -0.79f }, new float[] { -4.08f, -0.92f} } 
     };
 
     private int[][] SitDirList = new int[][] {
@@ -324,7 +324,7 @@ public class SOWManager : MonoBehaviour
             mChairPos[i].transform.position = new Vector3(ChairPosList[weather][i][0], ChairPosList[weather][i][1],0f);
             mSitDir[i] = SitDirList[weather][i];
         }
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 8; i++)
         {
             mWayPoint[i].transform.position = new Vector3(WayPosList[weather][i][0], WayPosList[weather][i][1], 0f);
         }

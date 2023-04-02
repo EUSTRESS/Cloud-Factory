@@ -120,7 +120,6 @@ public class YardHandleSystem : MonoBehaviour
         }
 
         mYards[iClickedYard]--;
-        if (mTutorialManager.isFinishedTutorial[2] == false) { mYards[iClickedYard]++; }
 
         return complete; //저장에 성공한 리스트만 반환한다.
     }

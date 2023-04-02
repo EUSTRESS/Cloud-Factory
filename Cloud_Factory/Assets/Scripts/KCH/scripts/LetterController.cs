@@ -32,6 +32,8 @@ public class LetterController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		// Demo Version
+		/*
 		if (SceneManager.GetActiveScene().name == "Space Of Weather"
 			&& originalDay != mSeasonDateCalc.mDay)
 		{
@@ -43,6 +45,7 @@ public class LetterController : MonoBehaviour
 			}
 			InitSatGuestList();
 		}
+		*/
 	}
 
 	public void SetSatGuestList(int guest_num)

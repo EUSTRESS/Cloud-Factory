@@ -2808,6 +2808,7 @@ MonoBehaviour:
   mWeek: 0
   mSeason: 1
   mYear: 1
+  isSatOrDisSatGuestExist: 0
   MaxSecond: 600
 --- !u!4 &1079865278
 Transform:
@@ -3283,9 +3284,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1176682183}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc8d8e1186b524b4cb634b179ec6bcb8, type: 3}
+  m_Script: {fileID: 11500000, guid: 573a434c1ba30264793f5a9ce94dc281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  letterObject: {fileID: 3664117068688591543, guid: 0d9d0d05e0d2a5449bc7ffa79a2c8345, type: 3}
 --- !u!1 &1176979513
 GameObject:
   m_ObjectHideFlags: 0
@@ -4501,6 +4503,7 @@ MonoBehaviour:
   rightArrow: {fileID: 8648144061704417411, guid: b63e268ba7f9ec24282c0ff6fb6aa801, type: 3}
   commonFadeOutScreen: {fileID: 2276493549760337385, guid: 61d044dec42c8a1449be0ae522e8326b, type: 3}
   fadeOutScreen1: {fileID: 2859837941283298021, guid: a96d9139143c1b548885484279832ead, type: 3}
+  storageFadeOutScreen0: {fileID: 7256708203614886898, guid: 8056565470ed2eb4aa3a040df70bd81d, type: 3}
   storageFadeOutScreen: {fileID: 8103931239445395661, guid: 4ff09c27f57a9174795af06a15eb6e8c, type: 3}
   decoFadeOutScreen: {fileID: 1998084525914599915, guid: fedf676f73575694ea902dd0a530131b, type: 3}
 --- !u!4 &1388719288

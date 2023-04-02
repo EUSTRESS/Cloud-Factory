@@ -213,6 +213,29 @@ public class ProfileManager : MonoBehaviour
     {
         profileGuestNum[profile_num] = guest_index;
 
+        // Demo Version
+        if(mGuestInfo[guest_index].isDisSat == false && mGuestInfo[guest_index].isCure == false)
+        {
+			if (iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.activeSelf == true)
+            { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.SetActive(false); }
+			iProfileBG[profile_num].transform.Find("T_Name(INPUT)").gameObject.GetComponent<Text>().text = "";
+			iProfileBG[profile_num].transform.Find("T_Age(INPUT)").gameObject.GetComponent<Text>().text = "";
+			iProfileBG[profile_num].transform.Find("T_Job(INPUT)").gameObject.GetComponent<Text>().text = "";
+
+			clearUsedCloudList(profile_num);
+
+			iProfileBG[profile_num].GetComponent<Image>().sprite = sProfileBG;
+			for (int num = 0; num < 3; num++)
+			{
+				if (iProfileBG[profile_num].GetComponent<Image>() == sProfileColor[num])
+				{
+					iProfileBG[profile_num].GetComponent<Image>().color = cProfileColor[num];
+					break;
+				}
+			}
+            return;
+		}
+
         // 프로필 정보 변경
 		if (iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.activeSelf == false)
 		        { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.SetActive(true); }
@@ -294,7 +317,9 @@ public class ProfileManager : MonoBehaviour
     // dialog text를 맨 앞 손님의 번호에 맞게 업데이트
     private void UpdateDialogPaper()
     {
-        tDialogText.text = mRLHReader.LoadRecordInfo(profileGuestNum[0]);
+        // Demo Version
+        if (mGuestInfo[profileGuestNum[0]].isDisSat == false && mGuestInfo[profileGuestNum[0]].isCure == false) { tDialogText.text = "아직 충분한 데이터가 모이지 않았습니다."; }
+        else { tDialogText.text = mRLHReader.LoadRecordInfo(profileGuestNum[0]); }
 		if (iCloudStamp[0].activeSelf)
 		{
 			iDialogStamp.SetActive(true);

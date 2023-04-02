@@ -49,6 +49,8 @@ public class SceneData : MonoBehaviour
         set { mSFxValue = value; }
     }
 
+    public bool mContinueGmae = false;
+
     void Awake()
     {
         // 인스턴스 할당
@@ -66,5 +68,10 @@ public class SceneData : MonoBehaviour
         // 초기값 할당
         mBGMValue = 0.5f;
         mSFxValue = 1.0f;
+    }
+
+    void Start()
+    {
+        
     }
 }

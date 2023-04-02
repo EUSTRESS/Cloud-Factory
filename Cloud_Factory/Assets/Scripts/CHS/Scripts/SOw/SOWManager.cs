@@ -216,7 +216,7 @@ public class SOWManager : MonoBehaviour
             mCheckChairEmpty.Add(i, true);
         }
 
-        for (int i = 0; i < 4; i++) { yardGatherCount[i] = 2; }
+        for (int i = 0; i < 4; i++) { yardGatherCount[i] = 1; }
 
         int Season = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>().mSeason;
         ChangeWeatherObject(Season-1);

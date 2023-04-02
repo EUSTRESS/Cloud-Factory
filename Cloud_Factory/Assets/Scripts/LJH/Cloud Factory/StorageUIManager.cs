@@ -75,6 +75,7 @@ public class StorageUIManager : MonoBehaviour
     }
     public void MakeCloud()
     {
+
 		Debug.Log("구름 제작 메소드 호출");
 
 		bool isMakingCloud = GameObject.Find("I_CloudeGen").GetComponent<CloudMakeSystem>().isMakingCloud;

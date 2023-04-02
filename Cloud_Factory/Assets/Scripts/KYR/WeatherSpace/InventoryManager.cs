@@ -180,7 +180,7 @@ public class CloudData
     {
         for(int i = 0; i < mEmotions.Count; i++)
         {
-            mFinalEmotions.Add(new EmotionInfo(mEmotions[i].Key, mEmotions[i].Value * _value[i]));
+            mFinalEmotions.Add(new EmotionInfo(mEmotions[i].Key, mEmotions[i].Value * _value[i]/3));
         }
        
     }
@@ -276,7 +276,7 @@ public class InventoryManager : MonoBehaviour
     /////////////////
     /////Singlton////
     /////////////////
-    static InventoryManager _instance = null; //싱글톤 객체
+    public static InventoryManager _instance = null; //싱글톤 객체
     public static InventoryManager Instance() //static 함수, 공유하고자 하는 외부에서 사용할 것.
     {
         return _instance; //자기자신 리턴
@@ -322,27 +322,36 @@ public class InventoryManager : MonoBehaviour
     //////////////////////////////
     public bool addStock(KeyValuePair<IngredientData, int> _stock)
     {        
-        mMaxInvenCnt = getInvenSize(minvenLevel);
-        if (mType.Contains(_stock.Key)) { }
-        else if (mType.Count >= mMaxInvenCnt) return false; // 인벤토리 자체가 아예 가득 찬 경우 return false
         //인벤토리에 자리가 있는 경우
-        if (!mType.Contains(_stock.Key)) //인벤에 없이 새로 들어오는 경우는 그냥 넣고 return true
+        if (mType.Contains(_stock.Key)) 
         {
+            //인벤토리 안에 들어오는 재료 종류가 이미 있는 경우
+            int idx = mType.IndexOf(_stock.Key); //index 값 저장.
+
+            if (mCnt[idx] >= mMaxStockCnt) return false;//인벤토리 재료 당 저장가능 개수 제한
+            int interver = mMaxStockCnt - (_stock.Value + mCnt[idx]); //저장가능 개수 - (새로운게 추가됐을 떄 인벤토리에 저장될개수) = 버려지는 재고
+            if (interver <= 0) mCnt[idx] = mMaxStockCnt; //차이가 0보다 크면 어차피 Max Cnt
+            else
+                mCnt[idx] += _stock.Value; //해당 아이템 카운트 추가.
+
+
+            return true;
+
+        }
+        else//인벤에 없이 새로 들어오는 경우는 그냥 넣고 return true
+        {
+            mMaxInvenCnt = getInvenSize(minvenLevel);
+           if (mType.Count >= mMaxInvenCnt)
+            {
+                mType.RemoveAt(0);
+                mCnt.RemoveAt(0);
+            } //꽉찬 경우 가장 먼저 들어온 순서로 삭제후 저장
+
             mType.Add(_stock.Key);
             mCnt.Add(_stock.Value);
             return true;
         }
 
-        //인벤토리 안에 들어오는 재료 종류가 이미 있는 경우
-        int idx = mType.IndexOf(_stock.Key); //index 값 저장.
-
-        if (mCnt[idx] >= mMaxStockCnt) return false;//인벤토리 재료 당 저장가능 개수 제한
-        int interver = mMaxStockCnt - (_stock.Value+ mCnt[idx]); //저장가능 개수 - (새로운게 추가됐을 떄 인벤토리에 저장될개수) = 버려지는 재고
-        if (interver <= 0) mCnt[idx] = mMaxStockCnt; //차이가 0보다 크면 어차피 Max Cnt
-        else
-            mCnt[idx] += _stock.Value; //해당 아이템 카운트 추가.
-
-        return true;
     }
 
     private int getInvenSize(int invenLv)
@@ -392,6 +401,8 @@ public class InventoryManager : MonoBehaviour
             DontDestroyOnLoad(cloudBase.transform.GetChild(i).gameObject);
             parts.Add(cloudBase.transform.GetChild(i).gameObject);
         }
+
+
         mCloudStorageData.mDatas.Add(new StoragedCloudData(createdCloudData.getFinalEmotion(), cloudBase, parts, createdCloudData.GetIngredientDatas()));
         createdCloudData = beginningCloudData;
     }

@@ -93,14 +93,17 @@ public class GuideBubbleScript : MonoBehaviour
 		mDialog[1, 6] = "FadeOut10";
 
 		mDialog[2, 0] = "받은 손님은 날씨의 공간에서 구름을 기다립니다.";
-		mDialog[2, 1] = "손님이 자리에 앉아있을 때 클릭하면, 손님의 감정을 한 번 더 확인할 수 있습니다.";
+		// Demo Version
+		/*
+        mDialog[2, 1] = "손님이 자리에 앉아있을 때 클릭하면, 손님의 감정을 한 번 더 확인할 수 있습니다.";
+        // 화살표 UI
+        mDialog[2, 2] = "FadeOut20";
+        */
+		mDialog[2, 1] = "구름을 제작할 때 필요한 재료를 채집해봅시다.";
+		mDialog[2, 2] = "Gathering";
+		mDialog[2, 3] = "이제 구름을 만들러 가볼까요?";
 		// 화살표 UI
-		mDialog[2, 2] = "FadeOut20";
-		mDialog[2, 3] = "구름을 제작할 때 필요한 재료를 채집해봅시다.";
-		mDialog[2, 4] = "Gathering";
-		mDialog[2, 5] = "이제 구름을 만들러 가볼까요?";
-		// 화살표 UI
-		mDialog[2, 6] = "FadeOut21";
+		mDialog[2, 4] = "FadeOut21";
 
 		mDialog[3, 0] = "구름은 구름 제작 기계를 통해 제작할 수 있습니다.";
 		// 화살표 UI로 수정
@@ -343,6 +346,13 @@ public class GuideBubbleScript : MonoBehaviour
 			mTutorialManager.isFinishedTutorial[8] = true;
 			mTutorialManager.isTutorial = false;
 			mTutorialManager.DestroyAllObject();
+
+			// 튜토리얼 데이터 저장함수
+			SaveUnitManager mSaveUnitManager = GameObject.Find("SaveUnitManager").GetComponent<SaveUnitManager>();
+			if (null == mSaveUnitManager)
+				return;
+			mSaveUnitManager.Save_Tutorial();
+
 			return;
 		}
 	}

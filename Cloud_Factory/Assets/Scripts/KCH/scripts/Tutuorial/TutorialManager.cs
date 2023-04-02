@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public class TutorialData
+{
+	public bool isTutorial;	
+}
+
 public class TutorialManager : MonoBehaviour
 {
 	// 튜토리얼이 완전히 종료되었는지 체크

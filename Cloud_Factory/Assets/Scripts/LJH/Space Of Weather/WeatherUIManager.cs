@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
+using UnityEngine.SceneManagement;
+using System.IO;
+using System.Text;
+using Newtonsoft.Json;
+using AESWithJava.Con;
+using System;
+
 public class WeatherUIManager : MonoBehaviour
 {
     private SeasonDateCalc mSeason; // 계절 계산 스크립트
@@ -49,7 +57,13 @@ public class WeatherUIManager : MonoBehaviour
         mSeason = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>();
 		mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
 		mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
-	}
+
+
+        SceneData mSceneData = GameObject.Find("SceneDataManager").GetComponent<SceneData>();
+        if (true == mSceneData.mContinueGmae) // 이어하기 중이라면 로딩.
+            Load_SOWManagerData();
+
+    }
 
     void Update()
     {
@@ -207,7 +221,7 @@ public class WeatherUIManager : MonoBehaviour
     {
         YardHandleSystem system = selectedYard.GetComponentInParent<YardHandleSystem>();
 
-        mRandomGather = Random.Range(0, 5); // 0~4
+        mRandomGather = UnityEngine.Random.Range(0, 5); // 0~4
         if (mTutorialManager.isFinishedTutorial[2] == false) { mRandomGather = 1; }
 
         // Result Image match
@@ -318,4 +332,45 @@ public class WeatherUIManager : MonoBehaviour
 
 		mGatherResult.SetActive(false);        
     }
+
+    void Load_SOWManagerData()
+    {
+        string mSowManagerSaveDataPath = Path.Combine(Application.dataPath + "/Data/", "SOWManagerData.json");
+        // 파일 스트림 개방
+        FileStream SOWmanageSaveStream = new FileStream(Application.dataPath + "/Data/SOWManagerData.json", FileMode.Open);
+
+        if (File.Exists(mSowManagerSaveDataPath)) // 해당 파일이 생성되었으면 불러오기
+        {
+            // 복호화는 나중에 한번에 하기
+            // 스트림 배열만큼 바이트 배열 생성
+            byte[] bSOWManagerSaveData = new byte[SOWmanageSaveStream.Length];
+            // 읽어오기
+            SOWmanageSaveStream.Read(bSOWManagerSaveData, 0, bSOWManagerSaveData.Length);
+            SOWmanageSaveStream.Close();
+
+            // jsondata를 스트링 타입으로 가져오기
+            string jSOWManagerSaveData = Encoding.UTF8.GetString(bSOWManagerSaveData);
+            Debug.Log(jSOWManagerSaveData);
+
+            // 역직렬화
+            SOWManagerSaveData dSOWManagerSaveData = JsonConvert.DeserializeObject<SOWManagerSaveData>(jSOWManagerSaveData);
+
+            // 데이터 직렬화
+            //string jData = JsonConvert.SerializeObject(dSOWManagerSaveData);
+
+            // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+            //Debug.Log("=======Load : dSOWSaveData =========");
+            //Debug.Log(jData);
+            //Debug.Log("=======Load=========");
+
+            // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
+            SOWManager mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+
+            // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
+
+            mSOWManager.yardGatherCount = dSOWManagerSaveData.yardGatherCount.Clone() as int[];
+
+        }
+    }
+
 }

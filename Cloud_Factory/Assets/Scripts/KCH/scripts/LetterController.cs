@@ -4,12 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public class LetterControllerData
+{
+	public int[] satGuestList;
+	public int listCount;
+}
+
+
 public class LetterController : MonoBehaviour
 {
 	private int originalDay;
 
-	private int[] satGuestList;
-	private int listCount;
+	public int[] satGuestList;
+	public int listCount;
 
 	public GameObject letterObject;
 

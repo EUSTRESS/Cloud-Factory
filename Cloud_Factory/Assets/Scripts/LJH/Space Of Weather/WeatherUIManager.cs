@@ -169,7 +169,7 @@ public class WeatherUIManager : MonoBehaviour
     // 채집하기
     public void GoingToGather()
     {
-		mGuideGather.SetActive(false);
+        mGuideGather.SetActive(false);
         mGathering.SetActive(true);
         mGatheringTextCount = 0; // 초기화
         tGatheringText.text = "재료 채집 중"; // 초기화
@@ -190,6 +190,7 @@ public class WeatherUIManager : MonoBehaviour
         Invoke("Gathering", 5.0f);
 
         mSOWManager.yardGatherCount[selectedYard.transform.GetSiblingIndex()]--;
+        if (GameObject.Find("TutorialManager").GetComponent<TutorialManager>().isFinishedTutorial[2] == false) { mSOWManager.yardGatherCount[selectedYard.transform.GetSiblingIndex()]++; }
 	}
     
     void UpdateGatherAnim(int _iX, int _iY, bool _bSpring, bool _bSummer, bool _bFall, bool _bWinter)

@@ -287,7 +287,7 @@ public class GuideBubbleScript : MonoBehaviour
 
 		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut70")
 		{
-			mTutorialManager.FadeOutCloudStorage();
+			mTutorialManager.FadeOutCloudStorage0();
 			presentDialogNum++;
 			currentDialogNum++;
 			this.gameObject.SetActive(false);

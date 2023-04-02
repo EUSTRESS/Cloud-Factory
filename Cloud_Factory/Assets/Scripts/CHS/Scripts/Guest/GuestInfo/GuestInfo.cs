@@ -87,6 +87,8 @@ public class GuestInfos
     public int mSitChairIndex;                                      // 손님이 현재 받은 의자 인덱스
     public bool isUsing = false;                                    // 구름을 제공받았는지
 
+    public int rejectCount;                                         // Demo Version 거절 횟수
+
     [Header("[기타]")]
     public List<StoragedCloudData> mUsedCloud = new List<StoragedCloudData>();                          // 사용한 구름 리스트를 저장한다. 최대 10개
 }

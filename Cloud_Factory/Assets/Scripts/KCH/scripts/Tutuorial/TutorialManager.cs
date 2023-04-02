@@ -44,6 +44,7 @@ public class TutorialManager : MonoBehaviour
 	[Header ("페이드 아웃 프리펩 오브젝트")]
     public GameObject commonFadeOutScreen;		// 화면을 모두 가리는 공용 Fade Out 스크린
     public GameObject fadeOutScreen1;
+	public GameObject storageFadeOutScreen0;
     public GameObject storageFadeOutScreen;
     public GameObject decoFadeOutScreen;
     private GameObject fadeOutScreenObject;
@@ -242,6 +243,13 @@ public class TutorialManager : MonoBehaviour
 	public void FadeOutSpaceOfWeather()
 	{
 		fadeOutScreenObject = Instantiate(fadeOutScreen1);
+		fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
+		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
+	}
+
+	public void FadeOutCloudStorage0()
+	{
+		fadeOutScreenObject = Instantiate(storageFadeOutScreen0);
 		fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
 		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
 	}

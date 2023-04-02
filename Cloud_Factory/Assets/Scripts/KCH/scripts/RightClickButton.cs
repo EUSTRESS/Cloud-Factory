@@ -25,7 +25,7 @@ public class RightClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 		if (mTutorialManager.isFinishedTutorial[7] == false)
 		{
 			if (isClicked && isFinishedRightClick == false) { clickedTime += Time.deltaTime; }
-			if(clickedTime >= 1.0f) { mTutorialManager.SetActiveFadeOutScreen(false); mTutorialManager.SetActiveGuideSpeechBubble(true); clickedTime = 0f; isFinishedRightClick = true; }
+			if(clickedTime >= 0.5f) { mTutorialManager.SetActiveFadeOutScreen(false); mTutorialManager.SetActiveGuideSpeechBubble(true); clickedTime = 0f; isFinishedRightClick = true; }
 		}
 	}
 	

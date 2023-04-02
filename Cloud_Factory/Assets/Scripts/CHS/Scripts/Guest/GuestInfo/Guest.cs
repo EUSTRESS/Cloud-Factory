@@ -93,6 +93,9 @@ public class Guest : MonoBehaviour
     public int[] mTodayGuestList = new int[NUM_OF_TODAY_GUEST_LIST];    // 오늘 방문 예정인 뭉티 목록
     public int mGuestCount;                                             // 방문한 뭉티의 숫자
 
+    // Demo Version
+    private Queue<int> mDemoGuestQueue;                                  // 데모버전 뭉티 리스트
+
     [Space (10f)]
     public float mGuestTime;                                            // 뭉티의 방문 주기의 현재 값
     public float mMaxGuestTime;                                         // 뭉티의 방문 주기
@@ -127,7 +130,10 @@ public class Guest : MonoBehaviour
                 InitGuestData(i);
             }
 
-            InitDay();
+			// Demo Version
+			InitDemoGuestQueue();
+
+			InitDay();
 
             isTimeToTakeGuest = false;
             isGuestInLivingRoom = false;
@@ -370,11 +376,25 @@ public class Guest : MonoBehaviour
         mGuestInfo[guestNum].mSatatisfaction = temp;
     }
 
-    // TODO : 함수 개편
+
     // 뭉티 리스트를 새로 생성하는 함수
     public int[] NewChoiceGuest()
     {
+        // Demo Version
+        int temp = -1;
+        List<int> demoList = new List<int>();
+        for(int i = mDemoGuestQueue.Count; i > 0; i--)
+        {
+            temp = mDemoGuestQueue.Dequeue();
+            if (mGuestInfo[temp].isDisSat == false && mGuestInfo[temp].isCure == false)
+            { demoList.Add(temp); mDemoGuestQueue.Enqueue(temp); Debug.Log(temp); }
+        }
 
+        int demoIdx = 0;
+        int[] demoGuestArray = new int[demoList.Count];
+        foreach(int num in demoList) { demoGuestArray[demoIdx++] = num; }
+        return demoGuestArray;
+        /*
         List<int> guestList = new List<int>();          // 저장할 뭉티의 리스트
         int[] returnValueList = new int[6];             // 반환할 뭉티의 리스트, size는 초기화만
         int possibleToTake = 6;                         // 받을 수 있는 총 뭉티의 수
@@ -550,6 +570,7 @@ public class Guest : MonoBehaviour
 			}
 		}
         return temp_list;
+        */
 	}
 
 
@@ -577,6 +598,8 @@ public class Guest : MonoBehaviour
         temp.mUsedCloud         = new List<StoragedCloudData>();
         temp.mSitChairIndex     = -1;
         temp.isUsing            = false;
+        // Demo Version
+        temp.rejectCount        = 0;
 
         mGuestInfo[guestNum] = temp;
     }
@@ -587,6 +610,7 @@ public class Guest : MonoBehaviour
     {
         mGuestTime = 0.0f;
         isTimeToTakeGuest = false;
+        isGuestInLivingRoom = false;
     }
 
     // 하루가 지나면서 초기화가 필요한 정보들을 변환해준다.
@@ -594,18 +618,31 @@ public class Guest : MonoBehaviour
     {
         // 날씨의 공간에 아직 남아있는 뭉티들을 불만 뭉티로 만든다.
 
-        // 새로운 방문 뭉티 리스트를 뽑는다.
-        mGuestCount = -1;
+        // Demo Version
+        int i = 0;
+        if (mTodayGuestList.Length != 0 && mTodayGuestList.Length != NUM_OF_TODAY_GUEST_LIST)
+        {
+			if(isGuestInLivingRoom == true) { mGuestCount--; }
+            for(int num = 0; num <= mGuestCount; num++)
+            {
+                mDemoGuestQueue.Enqueue(mDemoGuestQueue.Dequeue());
+            }
+		}
+        // End Demo Version
 
-        // 새로운 리스트를 뽑는 함수를 호출 (테스트를 위해서 잠시 주석처리)
-        mGuestMax = NUM_OF_TODAY_GUEST_LIST;
+		// 새로운 방문 뭉티 리스트를 뽑는다.
+		mGuestCount = -1;
+
+		// 새로운 리스트를 뽑는 함수를 호출 (테스트를 위해서 잠시 주석처리)
+
+		mGuestMax = NUM_OF_TODAY_GUEST_LIST;
         int[] list = new int[mGuestMax];
         mTodayGuestList = list;
 
         mTodayGuestList = NewChoiceGuest();
         mGuestIndex = mTodayGuestList[0];
 
-        mTodayGuestList = new int[] {0,3,6,9,12,13};
+        //mTodayGuestList = new int[] {0,3,6,9,12,13};
 
         // 방문 주기를 초기화한다.
         InitGuestTime();
@@ -752,19 +789,48 @@ public class Guest : MonoBehaviour
         return returnEmotionNum;
     }
 
-// 불만 뭉티 정보를 넘겨주는 List
-public int[] DisSatGuestList() {
-        int[] temp_list;
+    // 만족도 5인 뭉티 정보를 넘겨주는 Array
+    public int[] GetSatGuestList()
+    {
+		int[] temp_list;
 		int temp_idx = 0;
 
-        int list_size = 0;
+		int list_size = 0;
 
-		for (int num = 0; num < 20; num++) { if (mGuestInfo[num].isDisSat == true) list_size++; }
+		for (int num = 0; num < 20; num++) { if (mGuestInfo[num].isCure == true) list_size++; }
 
-        temp_list = new int[list_size];
+		temp_list = new int[list_size];
 
-        for(int num = 0; num < 20; num++) { if (mGuestInfo[num].isDisSat == true) temp_list[temp_idx++] = num; }
+		for (int num = 0; num < 20; num++) { if (mGuestInfo[num].isCure == true) temp_list[temp_idx++] = num; }
 
-        return temp_list;
+		return temp_list;
+	}
+
+    // 불만 뭉티 정보를 넘겨주는 List
+    public int[] DisSatGuestList() {
+            int[] temp_list;
+		    int temp_idx = 0;
+
+            int list_size = 0;
+
+		    for (int num = 0; num < 20; num++) { if (mGuestInfo[num].isDisSat == true) list_size++; }
+
+            temp_list = new int[list_size];
+
+            for(int num = 0; num < 20; num++) { if (mGuestInfo[num].isDisSat == true) temp_list[temp_idx++] = num; }
+
+            return temp_list;
     }
+
+    // Demo Version
+    private void InitDemoGuestQueue()
+    {
+        mDemoGuestQueue = new Queue<int>();
+
+        mDemoGuestQueue.Enqueue(3);
+		mDemoGuestQueue.Enqueue(6);
+		mDemoGuestQueue.Enqueue(9);
+		mDemoGuestQueue.Enqueue(12);
+		mDemoGuestQueue.Enqueue(13);
+	}
 }

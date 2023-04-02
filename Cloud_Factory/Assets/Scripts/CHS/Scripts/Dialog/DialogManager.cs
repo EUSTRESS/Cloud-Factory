@@ -389,7 +389,13 @@ public class DialogManager : MonoBehaviour
         Debug.Log("손님을 받지 않습니다.");
 
         // 방문하지 않는 횟수를 3으로 지정한다. (3일간 방문 X)
-        mGuestManager.mGuestInfo[mGuestNum].mNotVisitCount = 3;
+
+        // Demo Version
+        //mGuestManager.mGuestInfo[mGuestNum].mNotVisitCount = 3;
+        mGuestManager.mGuestInfo[mGuestNum].rejectCount++;
+        if (mGuestManager.mGuestInfo[mGuestNum].rejectCount >= 5) { mGuestManager.mGuestInfo[mGuestNum].isDisSat = true; }
+        // End Demo Version
+
         mGuestManager.InitGuestTime();
 
         // 손님이 이동했으므로 응접실에 있는 것들을 초기화 시켜준다.

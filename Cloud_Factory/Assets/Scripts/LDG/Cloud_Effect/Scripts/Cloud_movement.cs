@@ -13,14 +13,6 @@ public class Cloud_movement : MonoBehaviour
     public GameObject part_2;
     public GameObject Parts_fly;
     public GameObject Parts_fly_2;
-
-
-    public Vector3 Change_Cloud_scale = new Vector3(0f, 0f, 0f);    // ¹Ù²Ü ±¸¸§ÀÇ scale
-    public Vector3 Change_Part_scale = new Vector3(0f, 0f, 0f);     // ¹Ù²Ü ÆÄÃ÷ÀÇ scale
-
-
-    public Vector3 real_cloud_ps = new Vector3(0f, 0f, 0f);
-
     public bool IsUsing = false;
 
     

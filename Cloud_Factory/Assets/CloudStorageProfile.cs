@@ -218,6 +218,21 @@ public class CloudStorageProfile : MonoBehaviour
             return;
         }
 
+        List<int> UsingList = SOWManager.mUsingGuestList;
+        bool test = false;
+        for (int i = 0; i < UsingList.Count; i++)
+        {
+            if (UsingList[i] == frontGuestIndex)
+            {
+                test = true;
+                break;
+            }
+        }
+        if (!test)
+        {
+            return;
+        }
+  
         int guestNum = frontGuestIndex;
         GuestManager.mGuestInfo[guestNum].isUsing = true;
 

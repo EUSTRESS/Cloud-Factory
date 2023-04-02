@@ -472,6 +472,8 @@ private void Update()
         //대기 시간이 지났거나, 구름을 제공받았을 때, 만족도 증감도 계산
         outSat = mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
         CalcSatVariation(enterSat, outSat);
+        // Demo Version
+        if(mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction <= 0) { mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction = 1; }
 
         mSOWManager.mCheckChairEmpty[mTargetChiarIndex] = true;
         mTargetChair = null;

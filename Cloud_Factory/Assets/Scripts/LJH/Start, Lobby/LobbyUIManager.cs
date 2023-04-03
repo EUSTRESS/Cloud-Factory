@@ -22,8 +22,10 @@ public class LobbyUIManager : MonoBehaviour
     public GameObject   gOption;     // 옵션 게임 오브젝트
     public GameObject   gWarning;    // 새로운 게임 경고창
 
-    // INDEX -> [0]: C04 [1]: C07 [2]: C10 [3]:C13 [4]:C14
-    public GameObject[] gSpringMoongti = new GameObject[5]; // 봄 타이틀 뭉티 관리
+    // INDEX -> [0]: C04 [1]: C07 [2]: C10 [3]:C13 [4]:C14 // 봄 타이틀 뭉티 관리
+    public GameObject[] gSpringMoongti = new GameObject[20]; // 전체 뭉티 타이틀 스프라이트 관리
+
+
 
     [Header("TEXT")]
     public Text         tBgmValue;   // BGM 볼륨 텍스트
@@ -53,6 +55,8 @@ public class LobbyUIManager : MonoBehaviour
         mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
         mSeason = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>();
         mInvenManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+
+        Load_GuestSatisfaction(); // 만족도 5 뭉티 판별
     }
 
     void Update()
@@ -72,27 +76,29 @@ public class LobbyUIManager : MonoBehaviour
 
         switch (mSeason.mSeason)
         {
-            case 1: // 봄
-                // 봄 뭉티 만족도 5 관리
-                if (bSpringMoongti[0])
-                    gSpringMoongti[0].SetActive(true);
-                if (bSpringMoongti[1])
-                    gSpringMoongti[1].SetActive(true);
-                if (bSpringMoongti[2])
-                    gSpringMoongti[2].SetActive(true);
-                if (bSpringMoongti[3])
-                    gSpringMoongti[3].SetActive(true);
-                if (bSpringMoongti[4])
-                    gSpringMoongti[4].SetActive(true);
-                break;
-            case 2: // 여름
-                break;
-            case 3: // 가을
-                break;
-            case 4: // 겨울
-                break;
-            default:
-                break;
+            // 저장한 값 로딩하는 과정에서 SetActive 바로해버리면 된다.
+
+            //case 1: // 봄
+            //    // 봄 뭉티 만족도 5 관리
+            //    if (bSpringMoongti[0])
+            //        gSpringMoongti[0].SetActive(true);
+            //    if (bSpringMoongti[1])
+            //        gSpringMoongti[1].SetActive(true);
+            //    if (bSpringMoongti[2])
+            //        gSpringMoongti[2].SetActive(true);
+            //    if (bSpringMoongti[3])
+            //        gSpringMoongti[3].SetActive(true);
+            //    if (bSpringMoongti[4])
+            //        gSpringMoongti[4].SetActive(true);
+            //    break;
+            //case 2: // 여름
+            //    break;
+            //case 3: // 가을
+            //    break;
+            //case 4: // 겨울
+            //    break;
+            //default:
+            //    break;
         }
     }
 
@@ -101,7 +107,10 @@ public class LobbyUIManager : MonoBehaviour
      */
 
     public void NewGame()
-    {        
+    {
+        SceneData mSceneData = GameObject.Find("SceneDataManager").GetComponent<SceneData>();
+        mSceneData.mContinueGmae = false;
+
         mSFx.Play();
 
         LoadingSceneController.Instance.LoadScene("Space Of Weather");
@@ -112,6 +121,9 @@ public class LobbyUIManager : MonoBehaviour
 
     public void ContinueGame()
     {
+        SceneData mSceneData = GameObject.Find("SceneDataManager").GetComponent<SceneData>();
+        mSceneData.mContinueGmae = true;
+
         //String key = "key"; // 암호화 복호화 키 값
 
         mSFx.Play();
@@ -141,6 +153,9 @@ public class LobbyUIManager : MonoBehaviour
         Load_Inventory();
         Load_Guest();
         Load_SOW();
+        Load_Tutorial();
+        //Load_SOWManagerData(); // 로비에 매니저가 없어서, 날씨의 공간 들어와서 로딩할것.
+        Load_LetterControllerData();
 
         // 문자열을 int형으로 파싱해서 빌드 인덱스로 활용한다
         // 현재 빌드 인덱스가 날씨의 공간이 6이므로 6인데 이거 빌드 인덱스 바뀌면 안됨...
@@ -267,8 +282,57 @@ public class LobbyUIManager : MonoBehaviour
             GuestManager.mGuestCount = dGuestInfoData.mGuestCount;
             GuestManager.mGuestTime = dGuestInfoData.mGuestTime;
         }
-
     }
+    void Load_GuestSatisfaction()
+    {
+        string mGuestManagerDataPath = Path.Combine(Application.dataPath + "/Data/", "GuestManagerData.json");
+        // 파일 스트림 개방
+        FileStream ManagerStream = new FileStream(Application.dataPath + "/Data/GuestManagerData.json", FileMode.Open);
+
+        if (File.Exists(mGuestManagerDataPath)) // 해당 파일이 생성되었으면 불러오기
+        {
+            // 복호화는 나중에 한번에 하기
+            // 스트림 배열만큼 바이트 배열 생성
+            byte[] bGuestInfoData = new byte[ManagerStream.Length];
+            // 읽어오기
+            ManagerStream.Read(bGuestInfoData, 0, bGuestInfoData.Length);
+            ManagerStream.Close();
+
+            // jsondata를 스트링 타입으로 가져오기
+            string jGuestInfoData = Encoding.UTF8.GetString(bGuestInfoData);
+            Debug.Log(jGuestInfoData);
+
+            // 역직렬화
+            GuestManagerSaveData dGuestInfoData = JsonConvert.DeserializeObject<GuestManagerSaveData>(jGuestInfoData);
+
+            // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
+            
+
+            // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
+
+            // guest manager 로딩
+            /*저장할 데이터 값*/
+
+            {
+                const int NUM_OF_GUEST = 20;
+                GuestInfos GuestInfos = new GuestInfos();
+
+                for (int i = 0; i < NUM_OF_GUEST; i++)
+                {
+                    GuestInfoSaveData info = dGuestInfoData.GuestInfos[i];
+
+                    if (info == null) Debug.Log("Info Null");
+
+                    if (5 == info.mSatatisfaction) // 만족도가 5인 뭉티
+                    {
+                        gSpringMoongti[i].SetActive(true);
+                    }
+                }
+                //mGuestManagerData.GuestInfos = mGuestManager.mGuestInfo.Clone() as GuestInfoSaveData[];
+            }
+        }
+    }
+
     void Load_SOW()
     {
         string mSOWSaveDataPath = Path.Combine(Application.dataPath + "/Data/", "SOWSaveData.json");
@@ -324,6 +388,130 @@ public class LobbyUIManager : MonoBehaviour
             //Debug.Log("=======Load :  GuestManager.SaveSOWdatas  =========");
             //Debug.Log(jBData);
             //Debug.Log("=======Load=========");
+
+        }
+    }
+    void Load_Tutorial()
+    {
+        string mTutorialSaveDataPath = Path.Combine(Application.dataPath + "/Data/", "TutorialData.json");
+        // 파일 스트림 개방
+        FileStream TutorialSaveStream = new FileStream(Application.dataPath + "/Data/TutorialData.json", FileMode.Open);
+
+        if (File.Exists(mTutorialSaveDataPath)) // 해당 파일이 생성되었으면 불러오기
+        {
+            // 복호화는 나중에 한번에 하기
+            // 스트림 배열만큼 바이트 배열 생성
+            byte[] bTutorialSaveData = new byte[TutorialSaveStream.Length];
+            // 읽어오기
+            TutorialSaveStream.Read(bTutorialSaveData, 0, bTutorialSaveData.Length);
+            TutorialSaveStream.Close();
+
+            // jsondata를 스트링 타입으로 가져오기
+            string jTutorialSaveData = Encoding.UTF8.GetString(bTutorialSaveData);
+            Debug.Log(jTutorialSaveData);
+
+            // 역직렬화
+            TutorialData dTutorialSaveData = JsonConvert.DeserializeObject<TutorialData>(jTutorialSaveData);
+
+            // 데이터 직렬화
+            //string jData = JsonConvert.SerializeObject(dTutorialSaveData);
+
+            // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+            //Debug.Log("=======Load : dSOWSaveData =========");
+            //Debug.Log(jData);
+            //Debug.Log("=======Load=========");
+
+            // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
+            TutorialManager tutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+
+            // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
+
+            tutorialManager.isTutorial = dTutorialSaveData.isTutorial;
+
+        }
+    }
+
+    void Load_SOWManagerData()
+    {
+        string mSowManagerSaveDataPath = Path.Combine(Application.dataPath + "/Data/", "SOWManagerData.json");
+        // 파일 스트림 개방
+        FileStream SOWmanageSaveStream = new FileStream(Application.dataPath + "/Data/SOWManagerData.json", FileMode.Open);
+
+        if (File.Exists(mSowManagerSaveDataPath)) // 해당 파일이 생성되었으면 불러오기
+        {
+            // 복호화는 나중에 한번에 하기
+            // 스트림 배열만큼 바이트 배열 생성
+            byte[] bSOWManagerSaveData = new byte[SOWmanageSaveStream.Length];
+            // 읽어오기
+            SOWmanageSaveStream.Read(bSOWManagerSaveData, 0, bSOWManagerSaveData.Length);
+            SOWmanageSaveStream.Close();
+
+            // jsondata를 스트링 타입으로 가져오기
+            string jSOWManagerSaveData = Encoding.UTF8.GetString(bSOWManagerSaveData);
+            Debug.Log(jSOWManagerSaveData);
+
+            // 역직렬화
+            SOWManagerSaveData dSOWManagerSaveData = JsonConvert.DeserializeObject<SOWManagerSaveData>(jSOWManagerSaveData);
+
+            // 데이터 직렬화
+            //string jData = JsonConvert.SerializeObject(dSOWManagerSaveData);
+
+            // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+            //Debug.Log("=======Load : dSOWSaveData =========");
+            //Debug.Log(jData);
+            //Debug.Log("=======Load=========");
+
+            // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
+            SOWManager mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+
+            // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
+
+            mSOWManager.yardGatherCount = dSOWManagerSaveData.yardGatherCount.Clone() as int[];
+
+        }
+    }
+
+
+    void Load_LetterControllerData()
+    {
+        string mLetterControllerDataPath = Path.Combine(Application.dataPath + "/Data/", "LetterControllerData.json");
+        // 파일 스트림 개방
+        FileStream LetterControllerStream = new FileStream(Application.dataPath + "/Data/LetterControllerData.json", FileMode.Open);
+
+        if (File.Exists(mLetterControllerDataPath)) // 해당 파일이 생성되었으면 불러오기
+        {
+            // 복호화는 나중에 한번에 하기
+            // 스트림 배열만큼 바이트 배열 생성
+            byte[] bLetterControllerData = new byte[LetterControllerStream.Length];
+            // 읽어오기
+            LetterControllerStream.Read(bLetterControllerData, 0, bLetterControllerData.Length);
+            LetterControllerStream.Close();
+
+            // jsondata를 스트링 타입으로 가져오기
+            string jLetterControllerData = Encoding.UTF8.GetString(bLetterControllerData);
+            Debug.Log(jLetterControllerData);
+
+            // 역직렬화
+            LetterControllerData dLetterControllerData = JsonConvert.DeserializeObject<LetterControllerData>(jLetterControllerData);
+
+            // 데이터 직렬화
+            string jData = JsonConvert.SerializeObject(dLetterControllerData);
+
+            // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+            //Debug.Log("=======Load : dSOWSaveData =========");
+            //Debug.Log(jData);
+            //Debug.Log("=======Load=========");
+
+            // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
+            LetterController mLetterController = GameObject.Find("GuestManager").GetComponent<LetterController>();
+
+            //if (mLetterController == null)
+            //    return;
+
+            // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
+
+            mLetterController.satGuestList = dLetterControllerData.satGuestList.Clone() as int[];
+            mLetterController.listCount = dLetterControllerData.listCount;
 
         }
     }

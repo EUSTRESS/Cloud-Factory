@@ -17,6 +17,7 @@ public class SaveUnitManager : MonoBehaviour
 
     private InventoryManager mInvenManager;
     private Guest mGuestManager;
+    private TutorialManager mTutorialManager;    
 
     // 모든 씬에 넣어 놓을 것이기 때문에 중복은 파괴처리
     // 어느 씬에서 저장되고 로드될 것인지 모르기 때문에
@@ -34,6 +35,7 @@ public class SaveUnitManager : MonoBehaviour
 
         mInvenManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
+        mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
     }
 
 
@@ -75,6 +77,12 @@ public class SaveUnitManager : MonoBehaviour
             // GuestManager 저장
             Save_GuestInfo();
             Save_SOWSaveData();
+            Save_SOWManagerData();
+            Save_LetterControlData();
+
+            // 튜토리얼 데이터 저장.
+            // 튜토리얼이 끝날 때 저장한다.
+            //Save_Tutorial();
 
             Debug.Log("저장한다.");
         }
@@ -258,7 +266,7 @@ public class SaveUnitManager : MonoBehaviour
             FileStream stream = new FileStream(Application.dataPath + "/Data/SOWSaveData.json", FileMode.OpenOrCreate);
 
             // 저장할 변수가 담긴 클래스 생성
-            SOWSaveData mGuestManagerData = new SOWSaveData();
+            SOWSaveData mGuestManagerData = new SOWSaveData();            
 
             // UsingObjectsData와 WaitObjectsData의 정보들을 채운다.
             SOWManager mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
@@ -350,6 +358,124 @@ public class SaveUnitManager : MonoBehaviour
             // 스트림 닫기
             stream.Close();
         }
+    }
+
+    public void Save_Tutorial()
+    {
+        if (mTutorialManager) // null check
+        {
+            // 암호화는 나중에 한번에 하기
+
+            // 파일이 있다면
+            if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "TutorialData.json")))
+            {
+                // 삭제
+                System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "TutorialData.json"));
+
+            }
+            // 삭제 후 다시 개방
+            // 이유는, 동적으로 생성 될 경우에 json을 초기화 하지 않고 덮어 씌우기 때문에 전에 있던 데이터보다 적을 경우
+            // 뒤에 남는 쓰레기 값들로 인하여 역직렬화 오류 발생함
+            // 동적으로 생성하는 경우가 아닌 경우 (ex, 현재 씬 인덱스 등)은 상관 없음
+            // 파일 스트림 개방
+            FileStream stream = new FileStream(Application.dataPath + "/Data/TutorialData.json", FileMode.OpenOrCreate);
+
+            // 저장할 변수가 담긴 클래스 생성
+            TutorialData mTutorialData = new TutorialData();
+
+            // 데이터 업데이트 
+            mTutorialData.isTutorial = mTutorialManager.isTutorial;
+
+            // 데이터 직렬화
+            string jTutorialData = JsonConvert.SerializeObject(mTutorialData);
+
+            // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+            byte[] bTutorialData = Encoding.UTF8.GetBytes(jTutorialData);
+            Debug.Log(jTutorialData);
+            // 해당 파일 스트림에 적는다.                
+            stream.Write(bTutorialData, 0, bTutorialData.Length);
+            // 스트림 닫기
+            stream.Close();
+        }
+    }
+
+    public void Save_SOWManagerData()
+    {
+        SOWManager mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+
+        if (mSOWManager == null) 
+            return;
+
+        // 파일이 있다면
+        if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "SOWManagerData.json")))
+        {
+            // 삭제
+            System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "SOWManagerData.json"));
+
+        }
+        // 삭제 후 다시 개방
+        // 이유는, 동적으로 생성 될 경우에 json을 초기화 하지 않고 덮어 씌우기 때문에 전에 있던 데이터보다 적을 경우
+        // 뒤에 남는 쓰레기 값들로 인하여 역직렬화 오류 발생함
+        // 동적으로 생성하는 경우가 아닌 경우 (ex, 현재 씬 인덱스 등)은 상관 없음
+        // 파일 스트림 개방
+        FileStream stream = new FileStream(Application.dataPath + "/Data/SOWManagerData.json", FileMode.OpenOrCreate);
+
+        // 저장할 변수가 담긴 클래스 생성
+        SOWManagerSaveData mSOWManagerData = new SOWManagerSaveData();
+
+        // 데이터 업데이트
+        mSOWManagerData.yardGatherCount = mSOWManager.yardGatherCount.Clone() as int[];
+
+        // 데이터 직렬화
+        string jSOWManagerData = JsonConvert.SerializeObject(mSOWManagerData);
+
+        // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+        byte[] bTutorialData = Encoding.UTF8.GetBytes(jSOWManagerData);
+        Debug.Log(jSOWManagerData);
+        // 해당 파일 스트림에 적는다.                
+        stream.Write(bTutorialData, 0, bTutorialData.Length);
+        // 스트림 닫기
+        stream.Close();
+    }
+
+    public void Save_LetterControlData()
+    {
+        LetterController mLetterController = GameObject.Find("GuestManager").GetComponent<LetterController>();
+
+        if (mLetterController == null)
+            return;
+
+        // 파일이 있다면
+        if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "LetterControllerData.json")))
+        {
+            // 삭제
+            System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "LetterControllerData.json"));
+
+        }
+        // 삭제 후 다시 개방
+        // 이유는, 동적으로 생성 될 경우에 json을 초기화 하지 않고 덮어 씌우기 때문에 전에 있던 데이터보다 적을 경우
+        // 뒤에 남는 쓰레기 값들로 인하여 역직렬화 오류 발생함
+        // 동적으로 생성하는 경우가 아닌 경우 (ex, 현재 씬 인덱스 등)은 상관 없음
+        // 파일 스트림 개방
+        FileStream stream = new FileStream(Application.dataPath + "/Data/LetterControllerData.json", FileMode.OpenOrCreate);
+
+        // 저장할 변수가 담긴 클래스 생성
+        LetterControllerData mLetterControllerData = new LetterControllerData();
+
+        // 데이터 업데이트
+        mLetterControllerData.satGuestList = mLetterController.satGuestList.Clone() as int[];
+        mLetterControllerData.listCount = mLetterController.listCount;
+
+        // 데이터 직렬화
+        string jLetterControllerData = JsonConvert.SerializeObject(mLetterControllerData);
+
+        // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+        byte[] bLetterControllerData = Encoding.UTF8.GetBytes(jLetterControllerData);
+        Debug.Log(jLetterControllerData);
+        // 해당 파일 스트림에 적는다.                
+        stream.Write(bLetterControllerData, 0, bLetterControllerData.Length);
+        // 스트림 닫기
+        stream.Close();
     }
 
     // 종료될 때

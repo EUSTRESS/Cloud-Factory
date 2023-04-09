@@ -10,6 +10,22 @@ using Newtonsoft.Json;
 using AESWithJava.Con;
 using System;
 
+[System.Serializable]
+public class SoundData
+{
+    //public bool isFirstPlay;
+    public float mSaveBGM;
+    public float mSaveSFx;
+}
+
+[System.Serializable]
+public class InitData
+{
+    public bool isFirstPlay;    
+}
+
+
+
 // 로비 씬 UI 담당
 // 설정 창, 새로하기, 이어하기
 public class LobbyUIManager : MonoBehaviour
@@ -21,10 +37,10 @@ public class LobbyUIManager : MonoBehaviour
     // 오브젝트 Active 관리
     public GameObject   gOption;     // 옵션 게임 오브젝트
     public GameObject   gWarning;    // 새로운 게임 경고창
+    public GameObject   gContinueWarning;    // 이어하기 경고창
 
     // INDEX -> [0]: C04 [1]: C07 [2]: C10 [3]:C13 [4]:C14 // 봄 타이틀 뭉티 관리
     public GameObject[] gSpringMoongti = new GameObject[20]; // 전체 뭉티 타이틀 스프라이트 관리
-
 
 
     [Header("TEXT")]
@@ -39,6 +55,8 @@ public class LobbyUIManager : MonoBehaviour
 
     [Header("BOOL")]
     public bool[] bSpringMoongti = new bool[5]; // 봄 타이틀 뭉티 Bool로 만족도 5 관리
+    public bool isFirstPlay = true; // 처음하는 지 이어하는 지.
+    public bool isCreateData = false; // 저장한 데이터가 있는 지 없는 지
 
     [Header("IMAGE")]
     public Image iNewGame;
@@ -55,6 +73,13 @@ public class LobbyUIManager : MonoBehaviour
         mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
         mSeason = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>();
         mInvenManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+
+        isFirstPlay = true; // 처음 플레이한다고 넣어두고
+        // 여기서 최초 1회 플레이인지 아닌지 판단.
+        Load_InitData();
+        // 사운드 로드 및 저장한 이력이 있는 지 판단.
+        Load_SoundData();
+        
 
         Load_GuestSatisfaction(); // 만족도 5 뭉티 판별
     }
@@ -108,6 +133,12 @@ public class LobbyUIManager : MonoBehaviour
 
     public void NewGame()
     {
+        if (true == isFirstPlay)
+        {
+            isFirstPlay = false; // 최초 플레이 끝.
+            SaveLobby_InitData(); // 최초 플레이 끝난 것 저장.
+        }      
+
         SceneData mSceneData = GameObject.Find("SceneDataManager").GetComponent<SceneData>();
         mSceneData.mContinueGmae = false;
 
@@ -152,8 +183,7 @@ public class LobbyUIManager : MonoBehaviour
         Load_SeasonDate();
         Load_Inventory();
         Load_Guest();
-        Load_SOW();
-        Load_Tutorial();
+        Load_SOW();      
         //Load_SOWManagerData(); // 로비에 매니저가 없어서, 날씨의 공간 들어와서 로딩할것.
         Load_LetterControllerData();
 
@@ -211,6 +241,9 @@ public class LobbyUIManager : MonoBehaviour
             // 역직렬화
             InventoryData dInventoryData = JsonConvert.DeserializeObject<InventoryData>(jInventoryData);
 
+            if (null == dInventoryData) // 저장된 데이터 없으면 리턴
+                return;
+
             // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
             mInvenManager.mType = dInventoryData.mType.ToList();
             mInvenManager.mCnt = dInventoryData.mCnt.ToList();
@@ -240,7 +273,8 @@ public class LobbyUIManager : MonoBehaviour
 
             // 역직렬화
             GuestManagerSaveData dGuestInfoData = JsonConvert.DeserializeObject<GuestManagerSaveData>(jGuestInfoData);
-
+            if (null == dGuestInfoData) // 저장된 데이터 없으면 리턴
+                return;
 
             // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
             Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
@@ -304,9 +338,10 @@ public class LobbyUIManager : MonoBehaviour
 
             // 역직렬화
             GuestManagerSaveData dGuestInfoData = JsonConvert.DeserializeObject<GuestManagerSaveData>(jGuestInfoData);
-
+            if (null == dGuestInfoData) // 저장된 데이터 없으면 리턴
+                return;
             // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
-            
+
 
             // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
 
@@ -354,7 +389,8 @@ public class LobbyUIManager : MonoBehaviour
 
             // 역직렬화
             SOWSaveData dSOWSaveData = JsonConvert.DeserializeObject<SOWSaveData>(jSOWSaveData);
-
+            if (null == dSOWSaveData) // 저장된 데이터 없으면 리턴
+                return;
             // 데이터 직렬화
             string jData = JsonConvert.SerializeObject(dSOWSaveData);
 
@@ -412,7 +448,8 @@ public class LobbyUIManager : MonoBehaviour
 
             // 역직렬화
             TutorialData dTutorialSaveData = JsonConvert.DeserializeObject<TutorialData>(jTutorialSaveData);
-
+            if (null == dTutorialSaveData) // 저장된 데이터 없으면 리턴
+                return;
             // 데이터 직렬화
             //string jData = JsonConvert.SerializeObject(dTutorialSaveData);
 
@@ -427,7 +464,7 @@ public class LobbyUIManager : MonoBehaviour
             // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
 
             tutorialManager.isTutorial = dTutorialSaveData.isTutorial;
-
+            isCreateData = !tutorialManager.isTutorial; // 튜토리얼 유무로 저장했는 지 판별.
         }
     }
 
@@ -452,7 +489,8 @@ public class LobbyUIManager : MonoBehaviour
 
             // 역직렬화
             SOWManagerSaveData dSOWManagerSaveData = JsonConvert.DeserializeObject<SOWManagerSaveData>(jSOWManagerSaveData);
-
+            if (null == dSOWManagerSaveData) // 저장된 데이터 없으면 리턴
+                return;
             // 데이터 직렬화
             //string jData = JsonConvert.SerializeObject(dSOWManagerSaveData);
 
@@ -493,7 +531,8 @@ public class LobbyUIManager : MonoBehaviour
 
             // 역직렬화
             LetterControllerData dLetterControllerData = JsonConvert.DeserializeObject<LetterControllerData>(jLetterControllerData);
-
+            if (null == dLetterControllerData) // 저장된 데이터 없으면 리턴
+                return;
             // 데이터 직렬화
             string jData = JsonConvert.SerializeObject(dLetterControllerData);
 
@@ -516,6 +555,82 @@ public class LobbyUIManager : MonoBehaviour
         }
     }
 
+    void Load_SoundData() // 이어할 데이터가 있는 지, 새롭게 플레이 하는 지, 이전에 소리를 저장한 데이터가 있는 지
+    {
+        string mSoundDataPath = Path.Combine(Application.dataPath + "/Data/", "SoundData.json");
+        // 파일 스트림 개방
+        FileStream SoundDataStream = new FileStream(Application.dataPath + "/Data/SoundData.json", FileMode.Open);
+
+        if (File.Exists(mSoundDataPath)) // 해당 파일이 생성되었으면 불러오기
+        {
+            // 복호화는 나중에 한번에 하기
+            // 스트림 배열만큼 바이트 배열 생성
+            byte[] bSoundData = new byte[SoundDataStream.Length];
+            // 읽어오기
+            SoundDataStream.Read(bSoundData, 0, bSoundData.Length);
+            SoundDataStream.Close();
+
+            // jsondata를 스트링 타입으로 가져오기
+            string jSoundData = Encoding.UTF8.GetString(bSoundData);
+            Debug.Log(jSoundData);
+
+            // 역직렬화
+            SoundData dSoundData = JsonConvert.DeserializeObject<SoundData>(jSoundData);
+            if (null == dSoundData) // 저장된 데이터 없으면 리턴
+                return;
+            // 데이터 직렬화
+            string jData = JsonConvert.SerializeObject(dSoundData);
+
+            // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+            //Debug.Log("=======Load : dSOWSaveData =========");
+            //Debug.Log(jData);
+            //Debug.Log("=======Load=========");
+
+
+            // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
+            SceneData.Instance.BGMValue = dSoundData.mSaveBGM;
+            SceneData.Instance.SFxValue = dSoundData.mSaveSFx;
+            //isFirstPlay = dInitData.isFirstPlay;
+        }
+    }
+
+    void Load_InitData() // 이어할 데이터가 있는 지, 새롭게 플레이 하는 지, 이전에 소리를 저장한 데이터가 있는 지
+    {
+        string mInitDataPath = Path.Combine(Application.dataPath + "/Data/", "InitData.json");
+        // 파일 스트림 개방
+        FileStream InitDataStream = new FileStream(Application.dataPath + "/Data/InitData.json", FileMode.Open);
+
+        if (File.Exists(mInitDataPath)) // 해당 파일이 생성되었으면 불러오기
+        {
+            // 복호화는 나중에 한번에 하기
+            // 스트림 배열만큼 바이트 배열 생성
+            byte[] bInitData = new byte[InitDataStream.Length];
+            // 읽어오기
+            InitDataStream.Read(bInitData, 0, bInitData.Length);
+            InitDataStream.Close();
+
+            // jsondata를 스트링 타입으로 가져오기
+            string jInitData = Encoding.UTF8.GetString(bInitData);
+            Debug.Log(jInitData);
+
+            // 역직렬화
+            InitData dInitData = JsonConvert.DeserializeObject<InitData>(jInitData);
+            if (null == dInitData) // 저장된 데이터 없으면 리턴
+                return;
+            // 데이터 직렬화
+            string jData = JsonConvert.SerializeObject(dInitData);
+
+            // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+            //Debug.Log("=======Load : dSOWSaveData =========");
+            //Debug.Log(jData);
+            //Debug.Log("=======Load=========");
+
+
+            // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
+            isFirstPlay = dInitData.isFirstPlay;
+            //isFirstPlay = dInitData.isFirstPlay;
+        }
+    }
 
     public void ActiveOption()
     {
@@ -526,6 +641,89 @@ public class LobbyUIManager : MonoBehaviour
     {
         mSFx.Play();
         gOption.SetActive(false);
+        SaveLobby_SoundData();
+    }
+
+    // 로비에 저장 매니저 없으니까 임시로 함수 생성.
+    public void SaveLobby_SoundData()
+    {
+        //SoundManager mSoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+
+        //if (mSoundManager == null)
+        //    return;
+
+        // 파일이 있다면
+        if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "SoundData.json")))
+        {
+            // 삭제
+            System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "SoundData.json"));
+
+        }
+        // 삭제 후 다시 개방
+        // 이유는, 동적으로 생성 될 경우에 json을 초기화 하지 않고 덮어 씌우기 때문에 전에 있던 데이터보다 적을 경우
+        // 뒤에 남는 쓰레기 값들로 인하여 역직렬화 오류 발생함
+        // 동적으로 생성하는 경우가 아닌 경우 (ex, 현재 씬 인덱스 등)은 상관 없음
+        // 파일 스트림 개방
+        FileStream stream = new FileStream(Application.dataPath + "/Data/SoundData.json", FileMode.OpenOrCreate);
+
+        // 저장할 변수가 담긴 클래스 생성
+        SoundData mSoundData = new SoundData();
+
+        // 데이터 업데이트
+        mSoundData.mSaveBGM = SceneData.Instance.BGMValue;
+        mSoundData.mSaveSFx = SceneData.Instance.SFxValue;
+        //mInitData.isFirstPlay = false; // 저장했으니까 처음 플레이가 아님.
+
+        // 데이터 직렬화
+        string jSoundData = JsonConvert.SerializeObject(mSoundData);
+
+        // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+        byte[] bSoundData = Encoding.UTF8.GetBytes(jSoundData);
+        Debug.Log(jSoundData);
+        // 해당 파일 스트림에 적는다.                
+        stream.Write(bSoundData, 0, bSoundData.Length);
+        // 스트림 닫기
+        stream.Close();
+    }
+
+    public void SaveLobby_InitData()
+    {
+        //SoundManager mSoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+
+        //if (mSoundManager == null)
+        //    return;
+
+        // 파일이 있다면
+        if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "InitData.json")))
+        {
+            // 삭제
+            System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "InitData.json"));
+
+        }
+        // 삭제 후 다시 개방
+        // 이유는, 동적으로 생성 될 경우에 json을 초기화 하지 않고 덮어 씌우기 때문에 전에 있던 데이터보다 적을 경우
+        // 뒤에 남는 쓰레기 값들로 인하여 역직렬화 오류 발생함
+        // 동적으로 생성하는 경우가 아닌 경우 (ex, 현재 씬 인덱스 등)은 상관 없음
+        // 파일 스트림 개방
+        FileStream stream = new FileStream(Application.dataPath + "/Data/InitData.json", FileMode.OpenOrCreate);
+
+        // 저장할 변수가 담긴 클래스 생성
+        InitData mInitData = new InitData();
+
+        // 데이터 업데이트
+        mInitData.isFirstPlay = isFirstPlay;
+        //mInitData.isFirstPlay = false; // 저장했으니까 처음 플레이가 아님.
+
+        // 데이터 직렬화
+        string jInitData = JsonConvert.SerializeObject(mInitData);
+
+        // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+        byte[] bInitData = Encoding.UTF8.GetBytes(jInitData);
+        Debug.Log(jInitData);
+        // 해당 파일 스트림에 적는다.                
+        stream.Write(bInitData, 0, bInitData.Length);
+        // 스트림 닫기
+        stream.Close();
     }
 
     // 게임 종료
@@ -543,11 +741,29 @@ public class LobbyUIManager : MonoBehaviour
     // 새로하기 경고창
     public void ActiveWarning()
     {
-        gWarning.SetActive(true);
+        if (isFirstPlay)  // 바로 새로운 게임 스타트         
+            NewGame();
+        else
+            gWarning.SetActive(true);
     }
+    public void ActiveContinueWarning()
+    {
+        Load_Tutorial(); // 여기서 튜토리얼이 끝났다면 최초 1회 저장을 한 것이니까 여기서 이어하기 경고창 판별하면 된다.
+
+        if (isCreateData)  // 저장한 데이터 있으면 그냥 로드
+            ContinueGame();
+        else
+            gContinueWarning.SetActive(true);
+    }
+
     public void UnAcitveWarning()
     {
         gWarning.SetActive(false);
+    }
+
+    public void UnAcitveContinueWarning()
+    {
+        gContinueWarning.SetActive(false);
     }
     public void HoveringNewGame()
     {

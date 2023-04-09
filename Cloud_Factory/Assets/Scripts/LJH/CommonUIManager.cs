@@ -147,6 +147,12 @@ public class CommonUIManager : MonoBehaviour
     {
         mSFx.Play();
         gOption.SetActive(false);
+
+        // 옵션창 끌 때 소리 변경내역 저장함.
+        SaveUnitManager mSaveUnitData = GameObject.Find("SaveUnitManager").GetComponent<SaveUnitManager>();
+        if (null == mSaveUnitData)
+            return;
+        mSaveUnitData.Save_SoundData();
     }
     public void ActiveGuideBook()
     {

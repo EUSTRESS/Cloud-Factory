@@ -53,7 +53,7 @@ public class SOWManager : MonoBehaviour
 
 
     private float[][][] ChairPosList = new float[][][]{ 
-        new float[][]{ new float[]{ 1.68f, -2.81f }, new float[] { -3.52f, -0.36f }, new float[] { -0.51f, 0.39f }, new float[] { 1.55f, 0.53f } } ,
+        new float[][]{ new float[]{ 1.71f, -2.91f }, new float[] { -3.52f, -0.36f }, new float[] { -0.51f, 0.39f }, new float[] { 1.55f, 0.53f } } ,
         new float[][]{ new float[]{ 1.545f, -2.154f }, new float[] { -3.436f, -0.178f }, new float[] { -0.27f, -2.8f }, new float[] { -1.64f, -2.07f } } ,
         new float[][]{ new float[]{ 3.186f, -2.646f }, new float[] { 0.134f, -2.355f }, new float[] { 1.057f, 0.297f }, new float[] { 1.97f, 0.23f } } ,
         new float[][]{ new float[]{ 1.9f, -3.21f }, new float[] { -1.11f, 0.19f }, new float[] { 2.06f, 0.15f }, new float[] { -0.16f, 0.17f } }

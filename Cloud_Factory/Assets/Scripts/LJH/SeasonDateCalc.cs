@@ -66,6 +66,11 @@ public class SeasonDateCalc : MonoBehaviour
             mSecond += Time.deltaTime;
             // 일 계산
             // 20일 제한
+
+            // Demo Version
+            if(mDay >= 29 && SceneManager.GetActiveScene().name != "Demo Thank You") { SceneManager.LoadScene("Demo Thank you"); }
+            mDay += CalcDay(ref mSecond);
+            /*
             if (mDay > 20) mDay = 1;
             else mDay += CalcDay(ref mSecond);
             // 주 계산        
@@ -74,6 +79,7 @@ public class SeasonDateCalc : MonoBehaviour
             mSeason += CalcSeason(ref mWeek);
             // 년 계산
             mYear += CalcYear(ref mSeason);
+            */
 
             if (mChangeDay)
             {
@@ -93,8 +99,9 @@ public class SeasonDateCalc : MonoBehaviour
         {
             mSecond = 600;
             mDay += CalcDay(ref mSecond);
-            mWeek = CalcWeek(ref mDay);
-            mSeason += CalcSeason(ref mWeek);
+            // Demo Version
+            //mWeek = CalcWeek(ref mDay);
+            //mSeason += CalcSeason(ref mWeek);
         }
 
     }

@@ -152,6 +152,8 @@ public class GuideBubbleScript : MonoBehaviour
 
 	public void UpdateText()
 	{
+		// Demo Version
+		/*
 		// 응접실 튜토리얼 후, 날씨의 공간에서 뭉티가 자리에 앉기 전까지 텍스트 넘김을 막는다.
 		if (mTutorialManager.isFinishedTutorial[1] == true
 			&& mTutorialManager.isFinishedTutorial[2] == false
@@ -159,6 +161,7 @@ public class GuideBubbleScript : MonoBehaviour
 			&& mSOWManager.mUsingGuestObjectList[0].GetComponent<GuestObject>().isSit == false
 			&& presentDialogNum >= 2)
 		{ return; }
+		*/
 		presentDialogNum++;
 	}
 
@@ -200,6 +203,7 @@ public class GuideBubbleScript : MonoBehaviour
 		{
 			mTutorialManager.FadeOutSpaceOfWeather();
 			GameObject.Find("B_GardenSpring").transform.SetAsLastSibling();
+			GameObject.Find("GatherGroup").transform.SetAsLastSibling();
 			presentDialogNum++;
 			currentDialogNum++;
 			this.gameObject.SetActive(false);
@@ -275,7 +279,8 @@ public class GuideBubbleScript : MonoBehaviour
 
 		if (mDialog[mDialogIndex, currentDialogNum] == "GuideSpeechOut60")
 		{
-			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("ButtonGroup").transform.Find("PosButton").transform.localPosition, -200f);
+			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("ButtonGroup(1)").transform.Find("PosButton").transform.localPosition, -200f, -260f);
+			Debug.Log(GameObject.Find("ButtonGroup(1)").transform.Find("PosButton").transform.localPosition);
 			presentDialogNum++;
 			currentDialogNum++;
 			this.gameObject.SetActive(false);

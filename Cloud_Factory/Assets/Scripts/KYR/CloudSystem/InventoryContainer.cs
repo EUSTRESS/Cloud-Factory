@@ -156,7 +156,7 @@ public class InventoryContainer : MonoBehaviour
 
                 GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
                 nameTxt.transform.SetParent(invenUI.transform, false);
-                nameTxt.transform.GetComponent<TMP_Text>().text = stock.Key.dataName.ToString();
+                nameTxt.transform.GetComponent<TMP_Text>().text = ""; // stock.Key.dataName.ToString();
             }
 
             //버튼 컴포넌트가 없으면 만들어준다.

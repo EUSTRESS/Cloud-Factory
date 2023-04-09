@@ -13,11 +13,20 @@ public class RightClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
 	void Awake()
 	{
-		clickedTime = 0f;
-		isClicked = false;
-		isFinishedRightClick = false;
-
 		mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+
+		if (mTutorialManager.isTutorial == true)
+		{
+			clickedTime = 0f;
+			isClicked = false;
+			isFinishedRightClick = false;
+		}
+		else
+		{
+			isFinishedRightClick = true;
+		}
+
+
 	}
 
 	void Update()

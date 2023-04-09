@@ -334,9 +334,9 @@ public class CloudDecoManager : MonoBehaviour
         if(mLPartsMenu[idx].isInit) //처음이면 둘다 체크가 안되어있음.
         {
             
-            if (mTutorialManager.isFinishedTutorial[6] == false && mLPartsMenu[0].isInit == true)
+            if (mTutorialManager.isFinishedTutorial[6] == false && mLPartsMenu[1].isInit == true)
             {
-                if(idx != 0 || target.transform.GetSiblingIndex() != 0) { return; }
+                if(idx != 1 || target.transform.GetSiblingIndex() != 0) { return; }
                 else { 
                     mTutorialManager.SetActiveGuideSpeechBubble(true);
                     mTutorialManager.SetActiveFadeOutScreen(false);
@@ -351,7 +351,7 @@ public class CloudDecoManager : MonoBehaviour
         }
         else
         {
-            if (mTutorialManager.isFinishedTutorial[6] == false && idx == 0) { return; }
+            if (mTutorialManager.isFinishedTutorial[6] == false && idx == 1) { return; }
             mLPartsMenu[idx].btnClicked(I_SelectedSticker,I_UnSelectedSticker);
         }
 

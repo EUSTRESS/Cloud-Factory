@@ -21,6 +21,8 @@ public class CloudSpawner : MonoBehaviour
 
     public Vector3 Cloud_ps = new Vector3(0f, 0f, 0f);
 
+    public RuntimeAnimatorController[] animValue2;
+
     // 처음 받아와야 하는 값
     // 1) 날아갈 의자의 인덱스
     // 2) 어떤 구름을 생성하는지에 대한 값
@@ -36,7 +38,6 @@ public class CloudSpawner : MonoBehaviour
         cloudSpeed = 3;
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         InventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
-        
     }
 
     // Update is called once per frame
@@ -89,9 +90,27 @@ public class CloudSpawner : MonoBehaviour
             movement.Parts_fly_2.transform.localScale = new Vector3(0.16f, 0.16f, 0.5f);
 
             // TODO : MoveCloud Animator를 종류에 맞게 변경 -> CloudData값을 이용
-            // 1. 구름 색상을 지정 
+            // 1. 구름 색상을 지정 (적용 완료)
             // 2. 구름 재료 등급에 따른 애니메이터 나누기
 
+            int cloudColorNumber = storagedCloudData.GetCloudTypeNum();
+            Debug.Log(cloudColorNumber);
+
+            cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue2[cloudColorNumber];
+            
+            if(cloudMove.GetComponent<Animator>().runtimeAnimatorController)
+            {
+
+            }
+            else
+            {
+                Debug.Log("구름 애니메이터 적용 실패 오류발생! ");
+
+                if(animValue2[cloudColorNumber])
+                {
+                    Debug.Log("구름 애니메이터가 존재하지 않습니다.");
+                }
+            }
         }
     }
 

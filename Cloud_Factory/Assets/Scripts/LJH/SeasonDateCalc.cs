@@ -20,6 +20,7 @@ public class SeasonDateCalc : MonoBehaviour
         }
     }
 
+    // 일단 데모는 하루길이를 3분으로한다. 180초.
     public float    mSecond; // 초, 시간, 600초=10분=하루
     public int      mDay;    // 일 (1~20일)
     public int      mWeek;   // 주 (5일마다 1주, 4주가 최대)
@@ -33,7 +34,7 @@ public class SeasonDateCalc : MonoBehaviour
 
     [Header("테스트 변수")]
     [SerializeField]
-    private float   MaxSecond = 60.0f; // 하루 단위(초)를 테스트 목적으로 바꾸기 위한 변수
+    private float   MaxSecond = 180.0f; // 하루 단위(초)를 테스트 목적으로 바꾸기 위한 변수
 
     void Awake()
     {

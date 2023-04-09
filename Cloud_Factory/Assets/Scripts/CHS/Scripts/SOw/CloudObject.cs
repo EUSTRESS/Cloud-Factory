@@ -32,8 +32,6 @@ public class CloudObject : MonoBehaviour
     // 내부에서 수행해야 할 기능
     // 1) 손님과의 충돌 처리 (충돌 시 사용한다는 판정)
     // 2) 충돌 시 해당 손님의 감정값이 변화하게끔 설정
-
-    public RuntimeAnimatorController[] animValue2;
     
 
     private void Awake()
@@ -42,7 +40,6 @@ public class CloudObject : MonoBehaviour
 
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
-        animValue2 = new RuntimeAnimatorController[8];
         DelayToUse = 10.0f;
         cloudSpeed = 0f;
     }

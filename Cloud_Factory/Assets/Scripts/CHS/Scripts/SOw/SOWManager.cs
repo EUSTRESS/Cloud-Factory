@@ -107,6 +107,7 @@ public class SOWManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.T))
         {
             Debug.Log(mUsingGuestList.Count);
+            Debug.Log(mUsingGuestObjectList.Count);
         }
 
         // 새로운 손님이 날씨의 공간으로 넘어온 경우

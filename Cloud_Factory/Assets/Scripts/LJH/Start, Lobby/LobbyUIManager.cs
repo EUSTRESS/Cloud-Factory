@@ -210,8 +210,7 @@ public class LobbyUIManager : MonoBehaviour
 
             // 역직렬화
             InventoryData dInventoryData = JsonConvert.DeserializeObject<InventoryData>(jInventoryData);
-            if (null == dInventoryData) // 저장한게 없으면 바로 함수 리턴
-                return;
+
             // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
             mInvenManager.mType = dInventoryData.mType.ToList();
             mInvenManager.mCnt = dInventoryData.mCnt.ToList();
@@ -241,8 +240,7 @@ public class LobbyUIManager : MonoBehaviour
 
             // 역직렬화
             GuestManagerSaveData dGuestInfoData = JsonConvert.DeserializeObject<GuestManagerSaveData>(jGuestInfoData);
-            if (null == dGuestInfoData) // 저장한게 없으면 바로 함수 리턴
-                return;
+
 
             // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
             Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
@@ -306,10 +304,9 @@ public class LobbyUIManager : MonoBehaviour
 
             // 역직렬화
             GuestManagerSaveData dGuestInfoData = JsonConvert.DeserializeObject<GuestManagerSaveData>(jGuestInfoData);
-            if (null == dGuestInfoData) // 저장한게 없으면 바로 함수 리턴
-                return;
-            // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
 
+            // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
+            
 
             // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
 
@@ -357,8 +354,6 @@ public class LobbyUIManager : MonoBehaviour
 
             // 역직렬화
             SOWSaveData dSOWSaveData = JsonConvert.DeserializeObject<SOWSaveData>(jSOWSaveData);
-            if (null == dSOWSaveData) // 저장한게 없으면 바로 함수 리턴
-                return;
 
             // 데이터 직렬화
             string jData = JsonConvert.SerializeObject(dSOWSaveData);
@@ -417,8 +412,7 @@ public class LobbyUIManager : MonoBehaviour
 
             // 역직렬화
             TutorialData dTutorialSaveData = JsonConvert.DeserializeObject<TutorialData>(jTutorialSaveData);
-            if (null == dTutorialSaveData) // 저장한게 없으면 바로 함수 리턴
-                return;
+
             // 데이터 직렬화
             //string jData = JsonConvert.SerializeObject(dTutorialSaveData);
 
@@ -458,8 +452,7 @@ public class LobbyUIManager : MonoBehaviour
 
             // 역직렬화
             SOWManagerSaveData dSOWManagerSaveData = JsonConvert.DeserializeObject<SOWManagerSaveData>(jSOWManagerSaveData);
-            if (null == dSOWManagerSaveData) // 저장한게 없으면 바로 함수 리턴
-                return;
+
             // 데이터 직렬화
             //string jData = JsonConvert.SerializeObject(dSOWManagerSaveData);
 
@@ -500,8 +493,7 @@ public class LobbyUIManager : MonoBehaviour
 
             // 역직렬화
             LetterControllerData dLetterControllerData = JsonConvert.DeserializeObject<LetterControllerData>(jLetterControllerData);
-            if (null == dLetterControllerData) // 저장한게 없으면 바로 함수 리턴
-                return;
+
             // 데이터 직렬화
             string jData = JsonConvert.SerializeObject(dLetterControllerData);
 

@@ -157,6 +157,7 @@ public class InventoryContainer : MonoBehaviour
                 GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
                 nameTxt.transform.SetParent(invenUI.transform, false);
                 nameTxt.transform.GetComponent<TMP_Text>().text = ""; // stock.Key.dataName.ToString();
+                nameTxt.SetActive(false);
             }
 
             //버튼 컴포넌트가 없으면 만들어준다.
@@ -215,7 +216,8 @@ public class InventoryContainer : MonoBehaviour
 
                     GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
                     nameTxt.transform.SetParent(invenUI.transform, false);
-                    nameTxt.transform.GetComponent<TMP_Text>().text = "000";
+                    nameTxt.transform.GetComponent<TMP_Text>().text = "";
+                    nameTxt.SetActive(false);
                 }
 
                 //버튼 컴포넌트가 없으면 만들어준다.
@@ -393,9 +395,10 @@ public class InventoryContainer : MonoBehaviour
 
         GameObject nameTxt = Instantiate(mTxtInfoPrefab[1]);
         nameTxt.transform.SetParent(lastStockInInven.transform, false);
-        nameTxt.transform.GetComponent<TMP_Text>().text = stockDt.dataName.ToString();
+        //nameTxt.transform.GetComponent<TMP_Text>().text = stockDt.dataName.ToString();
+		nameTxt.transform.GetComponent<TMP_Text>().text = "";
 
-        Button btn = lastStockInInven.AddComponent<Button>();
+		Button btn = lastStockInInven.AddComponent<Button>();
         btn.onClick.AddListener(clicked);
 
         //Image Update

@@ -45,17 +45,21 @@ public class CloudMakerAnimController : MonoBehaviour
         }
         if (!isAnimProgressed[1]) {
             factoryObject[1].SetActive(true);
-            yield return new WaitForSeconds(4.5f);
+            yield return new WaitForSeconds(5.5f);
             factoryObject[1].SetActive(false);
-			inventoryManager.createdCloudData.setAnimProgressed(1, true);
+
+            inventoryManager.createdCloudData.setAnimProgressed(1, true);
 		}
         if (!isAnimProgressed[2]) {
             factoryObject[2].SetActive(true);
+
             factoryObject[2].GetComponent<Animator>().SetInteger("CloudBaseIndex", mResultColorIdx);
             yield return new WaitForSeconds(1.35f);
             factoryObject[2].SetActive(false);
-			inventoryManager.createdCloudData.setAnimProgressed(2, true);
+
+            inventoryManager.createdCloudData.setAnimProgressed(2, true);
 		}
+
         mFinalCloud.SetActive(true);
         yield break;
     }

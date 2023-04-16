@@ -641,7 +641,7 @@ public class Guest : MonoBehaviour
 
         mTodayGuestList = NewChoiceGuest();
         mGuestMax = mTodayGuestList.Length;
-        mGuestIndex = mTodayGuestList[0];
+        //mGuestIndex = mTodayGuestList[0];
 
         //mTodayGuestList = new int[] {0,3,6,9,12,13};
 

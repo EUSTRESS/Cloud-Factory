@@ -262,9 +262,12 @@ public class SOWManager : MonoBehaviour
     // 하루가 끝날 때 Queue에 남아있는 뭉티들을 불만 뭉티로 만들어준다.
     public void MakeGuestDisSat()
     {
-        for (int i = 0; i < mWaitGuestList.Count; i++)
+        int waitCount = mWaitGuestList.Count;
+        for (int i = 0; i < waitCount; i++)
         {
-            mGuestManager.mGuestInfo[mWaitGuestList.Dequeue()].isDisSat = true;
+            int guestNum = mWaitGuestList.Dequeue();
+            mGuestManager.mGuestInfo[guestNum].isDisSat = true;
+            Debug.Log(guestNum + "번 손님이 대기중 집으로 돌아갑니다"); 
         }
         for (int i = 0; i < mUsingGuestList.Count; i++)
         {

@@ -522,6 +522,10 @@ private void Update()
 
     private void ChangeTarget()
     {
+        this.GetComponent<WayPoint>().isMove = false;
+        this.GetComponent<AIPath>().enabled = true;
+        this.GetComponent<AIDestinationSetter>().enabled = true;
+
         this.GetComponent<AIDestinationSetter>().target = mSOWManager.mWayPoint[0].transform;
     }
 

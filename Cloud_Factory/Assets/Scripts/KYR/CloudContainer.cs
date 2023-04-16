@@ -48,6 +48,8 @@ public class CloudContainer : MonoBehaviour
 
         inventoryManager.mInventoryContainer = this.gameObject;
         initInven(inventoryManager.mCloudStorageData.mDatas, "public");
+
+        mSelecedCloud = null;
     }
 
     public void deleteSelectedCloud()

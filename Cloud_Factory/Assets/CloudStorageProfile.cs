@@ -40,7 +40,7 @@ public class CloudStorageProfile : MonoBehaviour
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
         UIManager = GameObject.Find("UIManager").GetComponent<RecordUIManager>();
-
+        
         // 기존 기능 주석처리
         /*
         // 착석중인 손님 중, 구름을 제공받지 못한 손님만 제공 가능 리스트에 넣는다.
@@ -77,6 +77,7 @@ public class CloudStorageProfile : MonoBehaviour
         Profiles[2] = GameObject.Find("I_ProfileBG3");
 
         btGiveBtn = GameObject.Find("B_CloudGIve").GetComponent<Button>();
+        
 
         initProfileList();
     }

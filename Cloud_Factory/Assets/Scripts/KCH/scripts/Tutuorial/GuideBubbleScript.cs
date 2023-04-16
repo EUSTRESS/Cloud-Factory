@@ -87,10 +87,12 @@ public class GuideBubbleScript : MonoBehaviour
 		mDialog[1, 1] = "마침 클라우드 팩토리의 첫 손님이 오셨네요. 손님의 이야기를 귀담아 들어볼까요?";
 		mDialog[1, 2] = "DialogSpace1";
 		mDialog[1, 3] = "색이 있는 단어들은 손님이 필요로 하는 감정입니다.";
-		mDialog[1, 4] = "DialogSpace2";
-		mDialog[1, 5] = "클라우드 팩토리의 첫번째 손님을 받아봅시다.";
+		mDialog[1, 4] = "<color=\"red\">붉은색</color> 글씨는 현재 손님에게 불필요하게 과다한 감정을 나타냅니다.";
+		mDialog[1, 5] = "<color=\"green\">초록색</color> 글씨는 현재 손님이 부족하다고 느끼는 감정을 나타냅니다.";
+		mDialog[1, 6] = "DialogSpace2";
+		mDialog[1, 7] = "클라우드 팩토리의 첫번째 손님을 받아봅시다.";
 		// 화살표 UI
-		mDialog[1, 6] = "FadeOut10";
+		mDialog[1, 8] = "FadeOut10";
 
 		mDialog[2, 0] = "받은 손님은 날씨의 공간에서 구름을 기다립니다.";
 		// Demo Version
@@ -123,12 +125,13 @@ public class GuideBubbleScript : MonoBehaviour
 		// fade out emotion list
 		mDialog[6, 0] = "위쪽의 장식은 클릭하면 선택되고, 원하는 위치에 가져다 놓을 수 있습니다.";
 		mDialog[6, 1] = "FadeOut60";
-		mDialog[6, 2] = "이곳에서는 각 감정이 손님에게 어떤 영향을 미칠지 선택할 수 있습니다.";
-		mDialog[6, 3] = "손님은 슬픔을 경험하고 싶어 했으니, 슬픔에 '+'가 되도록 해봅시다.";
-		mDialog[6, 4] = "GuideSpeechOut60";
+		mDialog[6, 2] = "구름과 장식으로 표현된 각 감정은 손님에게 긍정적인 영향을 미칠 수도, 부정적인 영향을 미칠 수도 있습니다.";
+		mDialog[6, 3] = "이곳에서는 각 감정이 손님에게 어떤 영향을 미칠지 선택할 수 있습니다.";
+		mDialog[6, 4] = "손님은 슬픔을 경험하고 싶어 했으니, 슬픔에 '+'가 되도록 해봅시다.";
+		mDialog[6, 5] = "GuideSpeechOut60";
 		// 화살표 UI
-		mDialog[6, 5] = "다른 감정도 모두 결정하고 장식을 배치한 뒤, 꾸미기를 마쳐봅시다.";
-		mDialog[6, 6] = "FadeOut61";
+		mDialog[6, 6] = "다른 감정도 모두 결정하고 장식을 배치한 뒤, 꾸미기를 마쳐봅시다.";
+		mDialog[6, 7] = "FadeOut61";
 		// 돌아가기 버튼 막기
 
 		// 화살표 UI

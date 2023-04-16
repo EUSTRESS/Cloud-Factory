@@ -400,8 +400,9 @@ public class DialogManager : MonoBehaviour
 
         mGuestManager.InitGuestTime();
 
-        // 손님이 이동했으므로 응접실에 있는 것들을 초기화 시켜준다.
-        ClearGuest();
+		// 손님이 이동했으므로 응접실에 있는 것들을 초기화 시켜준다.
+		if (mGuestManager.mGuestInfo[mGuestNum].mVisitCount == 1) { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = 0; }
+		ClearGuest();
         MoveSceneToWeatherSpace();
     }
 

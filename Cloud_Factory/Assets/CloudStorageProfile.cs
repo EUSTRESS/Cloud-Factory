@@ -40,7 +40,7 @@ public class CloudStorageProfile : MonoBehaviour
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
         UIManager = GameObject.Find("UIManager").GetComponent<RecordUIManager>();
-
+        
         // 기존 기능 주석처리
         /*
         // 착석중인 손님 중, 구름을 제공받지 못한 손님만 제공 가능 리스트에 넣는다.
@@ -77,6 +77,7 @@ public class CloudStorageProfile : MonoBehaviour
         Profiles[2] = GameObject.Find("I_ProfileBG3");
 
         btGiveBtn = GameObject.Find("B_CloudGIve").GetComponent<Button>();
+        
 
         initProfileList();
     }
@@ -239,22 +240,19 @@ public class CloudStorageProfile : MonoBehaviour
         //구름인벤토리에서 사용된 구름 삭제
         mGetCloudContainer.GetComponent<CloudContainer>().deleteSelectedCloud();
 
-        // 리스트에서 사용받은 손님 제거하기
-        SOWManager sow = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+		// 리스트에서 사용받은 손님 제거하기
+		SOWManager sow = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         int count = sow.mUsingGuestList.Count;
-
-        for (int i = 0; i < count; i++)
+		for (int i = count - 1; i >= 0; i--)
         {
             if (sow.mUsingGuestList[i] == guestNum)
             {
                 sow.mUsingGuestList.RemoveAt(i);
-                sow.mUsingGuestObjectList.RemoveAt(i);
-            }
+				sow.mUsingGuestObjectList.RemoveAt(i);
+			}
         }
-
-        SOWManager.SetCloudData(guestNum, storagedCloudData);
-
-        SceneManager.LoadScene("Space Of Weather");
+		SOWManager.SetCloudData(guestNum, storagedCloudData);
+		SceneManager.LoadScene("Space Of Weather");
 
         Debug.Log("구름제공 메소드 호출");
     }

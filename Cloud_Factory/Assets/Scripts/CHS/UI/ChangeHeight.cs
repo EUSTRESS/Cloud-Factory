@@ -15,7 +15,7 @@ public class ChangeHeight : MonoBehaviour
         Rect = GetComponent<RectTransform>();
         height = 400.0f;
         minHeight = 370.0f;
-        ChangeSpeed = 0.05f;
+        ChangeSpeed = 0.04f;
         isUp = false;
     }
     // Update is called once per frame

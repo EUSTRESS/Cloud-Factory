@@ -23,20 +23,20 @@ public class Destroy_ob : MonoBehaviour
 
         if (part_prefab.transform.position.y < Cloud_position.y - 0.5f)
         {
-            Destroy(part_prefab);
+            Destroy(gameObject);
         }
         if (part_prefab_2.transform.position.y < Cloud_position.y - 0.5f)
         {
-            Destroy(part_prefab_2);
+            Destroy(gameObject);
         }
 
         if (part_prefab.transform.position.x < limitMin.x || part_prefab.transform.position.x > limitMax.x || part_prefab.transform.position.y < limitMin.y || part_prefab.transform.position.y > limitMax.y)
         {
-            Destroy(part_prefab);
+            Destroy(gameObject);
         }
         else if (part_prefab_2.transform.position.x < limitMin.x || part_prefab_2.transform.position.x > limitMax.x || part_prefab_2.transform.position.y < limitMin.y || part_prefab_2.transform.position.y > limitMax.y)
         {
-            Destroy(part_prefab_2);
+            Destroy(gameObject);
         }
     }
 }

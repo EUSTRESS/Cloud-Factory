@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// ³¯Â¥ ¹× °èÀı °è»ê ½ºÅ©¸³Æ®
+// ë‚ ì§œ ë° ê³„ì ˆ ê³„ì‚° ìŠ¤í¬ë¦½íŠ¸
 [System.Serializable]
 public class SeasonDateCalc : MonoBehaviour
 {
-    // SeasonDateCalcÀÇ ÀÎ½ºÅÏ½º¸¦ ´ã´Â Àü¿ª º¯¼ö
+    // SeasonDateCalcì˜ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ë‹´ëŠ” ì „ì—­ ë³€ìˆ˜
     private static SeasonDateCalc instance = null;    
-    // SeasonDateCalc Instance¿¡ Á¢±ÙÇÒ ¼ö ÀÖ´Â ÇÁ·ÎÆÛÆ¼, ´Ù¸¥ Å¬·¡½º¿¡¼­ »ç¿ë°¡´É
+    // SeasonDateCalc Instanceì— ì ‘ê·¼í•  ìˆ˜ ìˆëŠ” í”„ë¡œí¼í‹°, ë‹¤ë¥¸ í´ë˜ìŠ¤ì—ì„œ ì‚¬ìš©ê°€ëŠ¥
     public  static SeasonDateCalc Instance
     {
         get
@@ -20,35 +20,35 @@ public class SeasonDateCalc : MonoBehaviour
         }
     }
 
-    // ÀÏ´Ü µ¥¸ğ´Â ÇÏ·ç±æÀÌ¸¦ 3ºĞÀ¸·ÎÇÑ´Ù. 180ÃÊ.
-    public float    mSecond; // ÃÊ, ½Ã°£, 600ÃÊ=10ºĞ=ÇÏ·ç
-    public int      mDay;    // ÀÏ (1~20ÀÏ)
-    public int      mWeek;   // ÁÖ (5ÀÏ¸¶´Ù 1ÁÖ, 4ÁÖ°¡ ÃÖ´ë)
-    public int      mSeason; // ´Ş, °èÀı (4ÁÖ¸¶´Ù 1´Ş, º½,¿©¸§,°¡À»,°Ü¿ï ¼øÀ¸·Î 4´Ş)
-    public int      mYear;   // ³â (~)    
+    // ì¼ë‹¨ ë°ëª¨ëŠ” í•˜ë£¨ê¸¸ì´ë¥¼ 3ë¶„ìœ¼ë¡œí•œë‹¤. 180ì´ˆ.
+    public float    mSecond; // ì´ˆ, ì‹œê°„, 600ì´ˆ=10ë¶„=í•˜ë£¨
+    public int      mDay;    // ì¼ (1~20ì¼)
+    public int      mWeek;   // ì£¼ (5ì¼ë§ˆë‹¤ 1ì£¼, 4ì£¼ê°€ ìµœëŒ€)
+    public int      mSeason; // ë‹¬, ê³„ì ˆ (4ì£¼ë§ˆë‹¤ 1ë‹¬, ë´„,ì—¬ë¦„,ê°€ì„,ê²¨ìš¸ ìˆœìœ¼ë¡œ 4ë‹¬)
+    public int      mYear;   // ë…„ (~)    
 
     private bool    mChangeDay = false;
 
     // Demo Version
     public bool isSatOrDisSatGuestExist; 
 
-    [Header("Å×½ºÆ® º¯¼ö")]
+    [Header("í…ŒìŠ¤íŠ¸ ë³€ìˆ˜")]
     [SerializeField]
-    private float   MaxSecond = 180.0f; // ÇÏ·ç ´ÜÀ§(ÃÊ)¸¦ Å×½ºÆ® ¸ñÀûÀ¸·Î ¹Ù²Ù±â À§ÇÑ º¯¼ö
+    private float   MaxSecond = 180.0f; // í•˜ë£¨ ë‹¨ìœ„(ì´ˆ)ë¥¼ í…ŒìŠ¤íŠ¸ ëª©ì ìœ¼ë¡œ ë°”ê¾¸ê¸° ìœ„í•œ ë³€ìˆ˜
 
     void Awake()
     {
-        // ÀÎ½ºÅÏ½º ÇÒ´ç
+        // ì¸ìŠ¤í„´ìŠ¤ í• ë‹¹
         if (null == instance)
         {
             instance = this;
-            // ¸ğµç ¾À¿¡¼­ ³¯Â¥ °è»êÇØ¾ßÇÏ¹Ç·Î
-            // ´Ü, title¾À¿¡¼­´Â Á¦¿ÜÇÑ´Ù.
+            // ëª¨ë“  ì”¬ì—ì„œ ë‚ ì§œ ê³„ì‚°í•´ì•¼í•˜ë¯€ë¡œ
+            // ë‹¨, titleì”¬ì—ì„œëŠ” ì œì™¸í•œë‹¤.
             DontDestroyOnLoad(this.gameObject);
         }
         else
         {
-            // ÀÌ¹Ì Á¸ÀçÇÏ¸é ÀÌÀüºÎÅÍ »ç¿ëÇÏ´ø °ÍÀ» »ç¿ëÇÔ
+            // ì´ë¯¸ ì¡´ì¬í•˜ë©´ ì´ì „ë¶€í„° ì‚¬ìš©í•˜ë˜ ê²ƒì„ ì‚¬ìš©í•¨
             Destroy(this.gameObject);
         }
         isSatOrDisSatGuestExist = false;
@@ -57,16 +57,16 @@ public class SeasonDateCalc : MonoBehaviour
     void Update()
     {
         TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
-        // ·Îºñ, ±¸¸§Á¦ÀÛ, ±¸¸§Á¦°ø È­¸é¿¡¼­´Â Á¦ÇÑ
+        // ë¡œë¹„, êµ¬ë¦„ì œì‘, êµ¬ë¦„ì œê³µ í™”ë©´ì—ì„œëŠ” ì œí•œ
         if (SceneManager.GetActiveScene().name != "Lobby"
          && SceneManager.GetActiveScene().name != "Cloud Storage"
          && SceneManager.GetActiveScene().name != "Give Cloud"
          && mTutorialManager.isTutorial == false)
         {
-            // ÃÊ °è»ê
+            // ì´ˆ ê³„ì‚°
             mSecond += Time.deltaTime;
-            // ÀÏ °è»ê
-            // 20ÀÏ Á¦ÇÑ
+            // ì¼ ê³„ì‚°
+            // 20ì¼ ì œí•œ
 
             // Demo Version
             if(mDay >= 29 && SceneManager.GetActiveScene().name != "Demo Thank You") { SceneManager.LoadScene("Demo Thank you"); }
@@ -74,23 +74,23 @@ public class SeasonDateCalc : MonoBehaviour
             /*
             if (mDay > 20) mDay = 1;
             else mDay += CalcDay(ref mSecond);
-            // ÁÖ °è»ê        
+            // ì£¼ ê³„ì‚°        
             mWeek = CalcWeek(ref mDay);
-            // ´Ş, °èÀı °è»ê
+            // ë‹¬, ê³„ì ˆ ê³„ì‚°
             mSeason += CalcSeason(ref mWeek);
-            // ³â °è»ê
+            // ë…„ ê³„ì‚°
             mYear += CalcYear(ref mSeason);
             */
 
             if (mChangeDay)
             {
-                // ÇÏ·ç°¡ Áö³¯ ¶§ ÀúÀåÇÔ¼ö ºÒ·¯¿À±â
+                // í•˜ë£¨ê°€ ì§€ë‚  ë•Œ ì €ì¥í•¨ìˆ˜ ë¶ˆëŸ¬ì˜¤ê¸°
                 GameObject.Find("SaveUnitManager").GetComponent<SaveUnitManager>().Save_Func();
                 mChangeDay = false;
             }
         }
 
-        // °èÀıº° Å×½ºÆ®¸¦ À§ÇÑ ÇÖÅ°
+        // ê³„ì ˆë³„ í…ŒìŠ¤íŠ¸ë¥¼ ìœ„í•œ í•«í‚¤
         if(Input.GetKeyDown(KeyCode.Q))
         {
             mWeek = 5;
@@ -107,23 +107,23 @@ public class SeasonDateCalc : MonoBehaviour
 
     }
 
-    // ref¸¦ ¼±¾ğÇØ¼­ º¯¼öÀÇ ÁÖ¼Ò °ª Á¢±Ù
+    // refë¥¼ ì„ ì–¸í•´ì„œ ë³€ìˆ˜ì˜ ì£¼ì†Œ ê°’ ì ‘ê·¼
     int CalcDay(ref float second)
     {
         int temp = 0;
-        // 10ºĞ´ç 1ÀÏ, 600ÃÊ´ç 1ÀÏ Ãß°¡
+        // 10ë¶„ë‹¹ 1ì¼, 600ì´ˆë‹¹ 1ì¼ ì¶”ê°€
         if (second >= MaxSecond)
         {
-            // ³¯Â¥ º¯ÇÏ´Â ºÎºĞ -> ³¯Â¥´ÜÀ§ º¯È¯³»¿ëÀº ¿©±â¿¡ ÀÛ¼º
+            // ë‚ ì§œ ë³€í•˜ëŠ” ë¶€ë¶„ -> ë‚ ì§œë‹¨ìœ„ ë³€í™˜ë‚´ìš©ì€ ì—¬ê¸°ì— ì‘ì„±
             if(!GameObject.FindWithTag("Guest"))
             {
-                Debug.Log("¸ğµç ¼Õ´ÔÀÌ ÅğÀåÇÏ¿´±â ¶§¹®¿¡ ÇÏ·ç°¡ ³Ñ¾î°©´Ï´Ù");
+                Debug.Log("ëª¨ë“  ì†ë‹˜ì´ í‡´ì¥í•˜ì˜€ê¸° ë•Œë¬¸ì— í•˜ë£¨ê°€ ë„˜ì–´ê°‘ë‹ˆë‹¤");
 
-                // ¹æ¹®ÇÒ ¼Õ´Ô ¸®½ºÆ® ÃÊ±âÈ­
+                // ë°©ë¬¸í•  ì†ë‹˜ ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
                 Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
                 SOWManager SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
-                //³¯ÀÌ ¹Ù²ğ ¶§, Ä¡À¯ ¹¶Æ¼¿¡ µû¸¥ Èñ±Íµµ 4 Àç·á µîÀå¿©ºÎ Ã¼Å©
+                //ë‚ ì´ ë°”ë€” ë•Œ, ì¹˜ìœ  ë­‰í‹°ì— ë”°ë¥¸ í¬ê·€ë„ 4 ì¬ë£Œ ë“±ì¥ì—¬ë¶€ ì²´í¬
                 IngredientDataAutoAdder ingredientDataAutoAdder = GameObject.Find("InventoryManager").GetComponent<IngredientDataAutoAdder>();
 
                 if (GuestManager != null && SOWManager != null)
@@ -134,11 +134,6 @@ public class SeasonDateCalc : MonoBehaviour
                     //ingredientDataAutoAdder.CheckIsCured();
                     if(GuestManager.GetSatGuestList().Length > 0 || GuestManager.DisSatGuestList().Length > 0) { 
                         isSatOrDisSatGuestExist = true;
-                        if(SceneManager.GetActiveScene().name == "Space Of Weather")
-                        {
-                            GameObject.Find("UIManager").GetComponent<DemoUIManager>().SetInactiveFadeROH();
-						}
-                    
                     }
                     // End Demo Version
                 }
@@ -147,14 +142,14 @@ public class SeasonDateCalc : MonoBehaviour
                 temp += 1;
                 second = 0;
 
-                // TODO: ÆäÀÌµå ÀÎ - ÆäÀÌµå ¾Æ¿ô È¿°ú Ãß°¡
+                // TODO: í˜ì´ë“œ ì¸ - í˜ì´ë“œ ì•„ì›ƒ íš¨ê³¼ ì¶”ê°€
 
 
                 mChangeDay = true;                           
             }
             else
             {
-                // SOWMangaer¸¦ ºÒ·¯¿Í¼­ ³¯¾¾ÀÇ °ø°£¿¡ Á¸ÀçÇÏ´Â ¼Õ´ÔµéÀ» ¸ğµÎ ÅğÀå½ÃÅ²´Ù.
+                // SOWMangaerë¥¼ ë¶ˆëŸ¬ì™€ì„œ ë‚ ì”¨ì˜ ê³µê°„ì— ì¡´ì¬í•˜ëŠ” ì†ë‹˜ë“¤ì„ ëª¨ë‘ í‡´ì¥ì‹œí‚¨ë‹¤.
                 SOWManager sowManager;
                 sowManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
@@ -169,20 +164,20 @@ public class SeasonDateCalc : MonoBehaviour
     }
     int CalcWeek(ref int day)
     {        
-        // 0~4±îÁö 1ÁÖ°¡ ³ª¿À·Á¸é
-        // ex) day´Â 1ºÎÅÍ ½ÃÀÛ, 5ÀÏÀÌ¶ó¸é, 5-1 / 5 = 0 >> +1 >> 1ÁÖÂ÷
-        // 6-1 / 5 = 1 >> +1 >> 2ÁÖÂ÷
+        // 0~4ê¹Œì§€ 1ì£¼ê°€ ë‚˜ì˜¤ë ¤ë©´
+        // ex) dayëŠ” 1ë¶€í„° ì‹œì‘, 5ì¼ì´ë¼ë©´, 5-1 / 5 = 0 >> +1 >> 1ì£¼ì°¨
+        // 6-1 / 5 = 1 >> +1 >> 2ì£¼ì°¨
         return ((day - 1) / 5) + 1;
     }
     int CalcSeason(ref int week)
     {
         int temp = 0;
-        // 4ÁÖ°¡ ÃÖ´ë, 5ÁÖÂ÷ºÎÅÍ´Â ¾øÀ½
+        // 4ì£¼ê°€ ìµœëŒ€, 5ì£¼ì°¨ë¶€í„°ëŠ” ì—†ìŒ
         if (week > 4)
         {
-            // ´Ş º¯ÇÏ´Â ºÎºĞ -> ´Ş ´ÜÀ§ º¯È¯³»¿ëÀº ¿©±â¿¡ ÀÛ¼º
-            // °èÀı¸¶´Ù º¯ÇØ¾ß ÇÏ´Â »çÇ× : (LIST : ÀÇÀÚ À§Ä¡, ±¸¸§ ½ºÆ÷³Ê, »êÃ¥ WayPoint, ¹¶Æ¼ ÀÌµ¿ °¡´É °æ·Î)
-            // TODO : °èÀı º° ÀÌµ¿ÇØ¾ß ÇÒ ¿ÀºêÁ§Æ®µé ¿Å±â°Å³ª È°¼ºÈ­
+            // ë‹¬ ë³€í•˜ëŠ” ë¶€ë¶„ -> ë‹¬ ë‹¨ìœ„ ë³€í™˜ë‚´ìš©ì€ ì—¬ê¸°ì— ì‘ì„±
+            // ê³„ì ˆë§ˆë‹¤ ë³€í•´ì•¼ í•˜ëŠ” ì‚¬í•­ : (LIST : ì˜ì ìœ„ì¹˜, êµ¬ë¦„ ìŠ¤í¬ë„ˆ, ì‚°ì±… WayPoint, ë­‰í‹° ì´ë™ ê°€ëŠ¥ ê²½ë¡œ)
+            // TODO : ê³„ì ˆ ë³„ ì´ë™í•´ì•¼ í•  ì˜¤ë¸Œì íŠ¸ë“¤ ì˜®ê¸°ê±°ë‚˜ í™œì„±í™”
 
             temp += 1;
             week = 1;
@@ -200,7 +195,7 @@ public class SeasonDateCalc : MonoBehaviour
         int temp = 0;
         if (month > 4)
         { 
-            // ³â º¯ÇÏ´Â ºÎºĞ -> ³â ´ÜÀ§ º¯È¯³»¿ëÀº ¿©±â¿¡ ÀÛ¼º
+            // ë…„ ë³€í•˜ëŠ” ë¶€ë¶„ -> ë…„ ë‹¨ìœ„ ë³€í™˜ë‚´ìš©ì€ ì—¬ê¸°ì— ì‘ì„±
 
             temp += 1;
             month = 1;

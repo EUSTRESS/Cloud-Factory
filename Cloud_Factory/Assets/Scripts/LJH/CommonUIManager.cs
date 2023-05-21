@@ -4,34 +4,34 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-// °øÅë UI ´ã´ç
-// °èÀı, ³¯Â¥ ¾÷µ¥ÀÌÆ®
-// ¾À ÀÌµ¿
+// ê³µí†µ UI ë‹´ë‹¹
+// ê³„ì ˆ, ë‚ ì§œ ì—…ë°ì´íŠ¸
+// ì”¬ ì´ë™
 public class CommonUIManager : MonoBehaviour
 {
     [Header("GAME OBJECT")]
-    // ¿ÀºêÁ§Æ® Active °ü¸®
-    public GameObject   gOption;       // ¿É¼Ç °ÔÀÓ ¿ÀºêÁ§Æ®
+    // ì˜¤ë¸Œì íŠ¸ Active ê´€ë¦¬
+    public GameObject   gOption;       // ì˜µì…˜ ê²Œì„ ì˜¤ë¸Œì íŠ¸
     public GameObject   gGuideBook;
 
     [Header("TEXT")]
-    public Text         tDate;         // ³¯Â¥ ÅØ½ºÆ®
-    public Text         tYear;         // ³¯Â¥ ÅØ½ºÆ®
+    public Text         tDate;         // ë‚ ì§œ í…ìŠ¤íŠ¸
+    public Text         tYear;         // ë‚ ì§œ í…ìŠ¤íŠ¸
     [Space (3f)]
-    public Text         tBgmValue;     // BGM º¼·ı ÅØ½ºÆ®
-    public Text         tSfxValue;     // SFx º¼·ı ÅØ½ºÆ®
+    public Text         tBgmValue;     // BGM ë³¼ë¥¨ í…ìŠ¤íŠ¸
+    public Text         tSfxValue;     // SFx ë³¼ë¥¨ í…ìŠ¤íŠ¸
 
     [Header("SLIDER")]
-    public Slider       sBGM;          // BGM ½½¶óÀÌ´õ
-    public Slider       sSFx;          // SFx ½½¶óÀÌ´õ
+    public Slider       sBGM;          // BGM ìŠ¬ë¼ì´ë”
+    public Slider       sSFx;          // SFx ìŠ¬ë¼ì´ë”
 
     [Header("SPRITES")]
-    public Sprite[]     sSeasons = new Sprite[4]; // º½ ¿©¸§ °¡À» °Ü¿ï ´Ş·Â
+    public Sprite[]     sSeasons = new Sprite[4]; // ë´„ ì—¬ë¦„ ê°€ì„ ê²¨ìš¸ ë‹¬ë ¥
 
     [Header("IMAGES")]
-    public Image        iSeasons;      // ´Ş·Â ÀÌ¹ÌÁö
+    public Image        iSeasons;      // ë‹¬ë ¥ ì´ë¯¸ì§€
 
-    private AudioSource mSFx;          // È¿°úÀ½ ¿Àµğ¿À ¼Ò½º ¿¹½Ã
+    private AudioSource mSFx;          // íš¨ê³¼ìŒ ì˜¤ë””ì˜¤ ì†ŒìŠ¤ ì˜ˆì‹œ
 
     private TutorialManager mTutorialManager;
     private Guest mGuestManager;
@@ -51,20 +51,30 @@ public class CommonUIManager : MonoBehaviour
     {
         if (tDate && tYear && iSeasons && SeasonDateCalc.Instance) // null check
         {
-            tDate.text = SeasonDateCalc.Instance.mDay.ToString() + "ÀÏ";
-            tYear.text = SeasonDateCalc.Instance.mYear.ToString() + "³âÂ÷";
+            if (LanguageManager.GetInstance() != null 
+                && LanguageManager.GetInstance().GetCurrentLanguage() == "English")
+            {
+                tDate.text = "Day" + SeasonDateCalc.Instance.mDay.ToString();
+                tYear.text = "Year" + SeasonDateCalc.Instance.mYear.ToString();
+
+            }
+            else
+            {
+                tDate.text = SeasonDateCalc.Instance.mDay.ToString() + "ì¼";
+                tYear.text = SeasonDateCalc.Instance.mYear.ToString() + "ë…„ì°¨";
+            }
 
             if (SeasonDateCalc.Instance.mSeason == 1)
-                iSeasons.sprite = sSeasons[0]; // º½
+                iSeasons.sprite = sSeasons[0]; // ë´„
             else if (SeasonDateCalc.Instance.mSeason == 2)
-                iSeasons.sprite = sSeasons[1]; // ¿©¸§
+                iSeasons.sprite = sSeasons[1]; // ì—¬ë¦„
             else if (SeasonDateCalc.Instance.mSeason == 3)
-                iSeasons.sprite = sSeasons[2]; // °¡À»
+                iSeasons.sprite = sSeasons[2]; // ê°€ì„
             else if (SeasonDateCalc.Instance.mSeason == 4)
-                iSeasons.sprite = sSeasons[3]; // °Ü¿ï
+                iSeasons.sprite = sSeasons[3]; // ê²¨ìš¸
         }
 
-        // ÇöÀç À½·®À¸·Î ¾÷µ¥ÀÌÆ®
+        // í˜„ì¬ ìŒëŸ‰ìœ¼ë¡œ ì—…ë°ì´íŠ¸
         if (sBGM && sSFx && SceneData.Instance)           // null check
         {
             sBGM.value = SceneData.Instance.BGMValue;
@@ -72,25 +82,25 @@ public class CommonUIManager : MonoBehaviour
         }
         if (tBgmValue && tSfxValue) // null check
         {
-            // ¼Ò¼öÁ¡ -2 ÀÚ¸®ºÎÅÍ ¹İ¿Ã¸²
+            // ì†Œìˆ˜ì  -2 ìë¦¬ë¶€í„° ë°˜ì˜¬ë¦¼
             tBgmValue.text = Mathf.Ceil(sBGM.value * 100).ToString();
             tSfxValue.text = Mathf.Ceil(sSFx.value * 100).ToString();
         }
     }
     
-    // ¾À ÀÌµ¿ ¹öÆ°µé
+    // ì”¬ ì´ë™ ë²„íŠ¼ë“¤
     public void GoSpaceOfWeather()
     {
-		// ÀÀÁ¢½Ç Æ©Åä¸®¾ó Áß ±¸¸§°øÀåÀ¸·Î ÀÌµ¿ÇÏÁö ¸øÇÏµµ·Ï Á¦ÇÑ
+		// ì‘ì ‘ì‹¤ íŠœí† ë¦¬ì–¼ ì¤‘ êµ¬ë¦„ê³µì¥ìœ¼ë¡œ ì´ë™í•˜ì§€ ëª»í•˜ë„ë¡ ì œí•œ
 		if (mTutorialManager.isFinishedTutorial[1] == false) { return; }
 		LoadingSceneController.Instance.LoadScene("Space Of Weather");
     }
     public void GoCloudFactory()
     {
-        // ÀÀÁ¢½Ç Æ©Åä¸®¾ó Áß ±¸¸§°øÀåÀ¸·Î ÀÌµ¿ÇÏÁö ¸øÇÏµµ·Ï Á¦ÇÑ
+        // ì‘ì ‘ì‹¤ íŠœí† ë¦¬ì–¼ ì¤‘ êµ¬ë¦„ê³µì¥ìœ¼ë¡œ ì´ë™í•˜ì§€ ëª»í•˜ë„ë¡ ì œí•œ
         if (mTutorialManager.isFinishedTutorial[1] == false) { return; }
 
-        // Àç·á Ã¤Áı Æ©Åä¸®¾ó ÈÄ ±¸¸§°øÀåÀ¸·Î ÀÌµ¿ÇÒ ¶§, Æ©Åä¸®¾ó ÁøÇàµµ¸¦ ÀúÀå
+        // ì¬ë£Œ ì±„ì§‘ íŠœí† ë¦¬ì–¼ í›„ êµ¬ë¦„ê³µì¥ìœ¼ë¡œ ì´ë™í•  ë•Œ, íŠœí† ë¦¬ì–¼ ì§„í–‰ë„ë¥¼ ì €ì¥
 		if (!mTutorialManager.isFinishedTutorial[2]) { mTutorialManager.isFinishedTutorial[2] = true; }
 		LoadingSceneController.Instance.LoadScene("Cloud Factory");
     }
@@ -103,21 +113,21 @@ public class CommonUIManager : MonoBehaviour
     }
     public void GoRecordOfHealing()
     {
-        // Ä¡À¯ÀÇ ±â·Ï ÀÌÀü ¾À ÀÎµ¦½º ÀúÀå
+        // ì¹˜ìœ ì˜ ê¸°ë¡ ì´ì „ ì”¬ ì¸ë±ìŠ¤ ì €ì¥
         SceneData.Instance.prevSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
         LoadingSceneController.Instance.LoadScene("Record Of Healing");
     }
     public void GoPrevScene()
     {
-        // Ä¡À¯ÀÇ ±â·ÏÀ» µé¾î°¡±âÀü ¾ÀÀ¸·Î ÀÌµ¿   
+        // ì¹˜ìœ ì˜ ê¸°ë¡ì„ ë“¤ì–´ê°€ê¸°ì „ ì”¬ìœ¼ë¡œ ì´ë™   
         LoadingSceneController.Instance.LoadScene(SceneData.Instance.prevSceneIndex);
     }
     public void GoGiveCloud()
     {
         if (mTutorialManager.isFinishedTutorial[3] == false) { mTutorialManager.isFinishedTutorial[3] = true; }
 
-        // ±¸¸§ ¸¸µé±â°¡ ³¡³­ µÚ, ±¸¸§ µ¥ÄÚ Æ©Åä¸®¾ó·Î ÀÌµ¿ÇÏ±â Àü, ±¸¸§ Á¦ÀÛ ¾ÀÀ¸·ÎÀÇ ÀÌµ¿À» ¸·´Â´Ù.
+        // êµ¬ë¦„ ë§Œë“¤ê¸°ê°€ ëë‚œ ë’¤, êµ¬ë¦„ ë°ì½” íŠœí† ë¦¬ì–¼ë¡œ ì´ë™í•˜ê¸° ì „, êµ¬ë¦„ ì œì‘ ì”¬ìœ¼ë¡œì˜ ì´ë™ì„ ë§‰ëŠ”ë‹¤.
         if (mTutorialManager.isFinishedTutorial[4] == true
             && mTutorialManager.isFinishedTutorial[5] == false) 
         { return; }
@@ -132,12 +142,12 @@ public class CommonUIManager : MonoBehaviour
 
     public void GoDecoCloud()
     {
-        // ±¸¸§ °øÀå¿¡¼­ ±¸¸§ µ¥ÄÚ±îÁö ÀÌµ¿ÇÏ´Â Æ©Åä¸®¾ó
+        // êµ¬ë¦„ ê³µì¥ì—ì„œ êµ¬ë¦„ ë°ì½”ê¹Œì§€ ì´ë™í•˜ëŠ” íŠœí† ë¦¬ì–¼
 		if (mTutorialManager.isFinishedTutorial[5] == false) { mTutorialManager.isFinishedTutorial[5] = true; }
 		LoadingSceneController.Instance.LoadScene("DecoCloud");
     }
 
-    // ¿É¼ÇÃ¢ È°¼ºÈ­, ºñÈ°¼ºÈ­
+    // ì˜µì…˜ì°½ í™œì„±í™”, ë¹„í™œì„±í™”
     public void ActiveOption()
     {
         mSFx.Play();
@@ -148,7 +158,7 @@ public class CommonUIManager : MonoBehaviour
         mSFx.Play();
         gOption.SetActive(false);
 
-        // ¿É¼ÇÃ¢ ²ø ¶§ ¼Ò¸® º¯°æ³»¿ª ÀúÀåÇÔ.
+        // ì˜µì…˜ì°½ ëŒ ë•Œ ì†Œë¦¬ ë³€ê²½ë‚´ì—­ ì €ì¥í•¨.
         SaveUnitManager mSaveUnitData = GameObject.Find("SaveUnitManager").GetComponent<SaveUnitManager>();
         if (null == mSaveUnitData)
             return;
@@ -163,7 +173,7 @@ public class CommonUIManager : MonoBehaviour
         gGuideBook.SetActive(false);
     }
 
-    // °ÔÀÓ Á¾·á
+    // ê²Œì„ ì¢…ë£Œ
     public void QuitGame()
     {
         mSFx.Play();

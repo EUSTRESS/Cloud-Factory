@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Newtonsoft.Json; // LJH, Json Namespace
 using System.Text.RegularExpressions;
 
-// LJH, Data ÀúÀåÇÒ ÀÓ½Ã º¹»ç °ø°£, Monobehaviour »ó¼Ó ±İÁö
+// LJH, Data ì €ì¥í•  ì„ì‹œ ë³µì‚¬ ê³µê°„, Monobehaviour ìƒì† ê¸ˆì§€
 [System.Serializable]
 public class InventoryData
 {
@@ -15,8 +15,8 @@ public class InventoryData
 
     public int minvenLevel = 1;
 
-    public int mMaxStockCnt = 10; //¿ì¼±Àº 10°³ÀÌÇÏ±îÁö °¡´É
-    public int mMaxInvenCnt; //¿ì¼±Àº 10°³ÀÌÇÏ±îÁö °¡´É
+    public int mMaxStockCnt = 10; //ìš°ì„ ì€ 10ê°œì´í•˜ê¹Œì§€ ê°€ëŠ¥
+    public int mMaxInvenCnt; //ìš°ì„ ì€ 10ê°œì´í•˜ê¹Œì§€ ê°€ëŠ¥
 }
 
 [System.Serializable]
@@ -36,12 +36,12 @@ public class CloudStorageData
 [System.Serializable]
 public class StoragedCloudData
 {
-    public List<EmotionInfo> mFinalEmotions; //±¸¸§ ²Ù¹Ì±â ÀÌÈÄÀÇ ÃÖÁ¾ °¨Á¤.
-    public List<GameObject> mPartsList; //±¸¸§ ²Ù¹Ì±â ÀÌÈÄÀÇ ÃÖÁ¾ °¨Á¤.
+    public List<EmotionInfo> mFinalEmotions; //êµ¬ë¦„ ê¾¸ë¯¸ê¸° ì´í›„ì˜ ìµœì¢… ê°ì •.
+    public List<GameObject> mPartsList; //êµ¬ë¦„ ê¾¸ë¯¸ê¸° ì´í›„ì˜ ìµœì¢… ê°ì •.
     public int mdate;
     public GameObject mBase;
     public VirtualGameObject mVBase;
-    public List<VirtualGameObject> mVPartsList; //±¸¸§ ²Ù¹Ì±â ÀÌÈÄÀÇ ÃÖÁ¾ °¨Á¤.
+    public List<VirtualGameObject> mVPartsList; //êµ¬ë¦„ ê¾¸ë¯¸ê¸° ì´í›„ì˜ ìµœì¢… ê°ì •.
 
     public List<IngredientData> mIngredientDatas;
 
@@ -49,7 +49,7 @@ public class StoragedCloudData
     private int mCloudTypeNum;
     public StoragedCloudData(List<EmotionInfo> _FinalEmotions, GameObject _base, List<GameObject> _mPartsList, List<IngredientData> ingr_datas)
     {
-        mdate = 10; //ÀÏ´Ü ±âº»À¸·Î ¼¼ÆÃ
+        mdate = 10; //ì¼ë‹¨ ê¸°ë³¸ìœ¼ë¡œ ì„¸íŒ…
         mFinalEmotions = _FinalEmotions;
         mBase = _base;
         mPartsList = _mPartsList;
@@ -70,7 +70,7 @@ public class StoragedCloudData
     private void SetCloudTypeNumber()
     {
         Sprite sprite = mVBase.mImage;
-        string sspriteNum = Regex.Replace(mVBase.mImage.name, @"[^0-9]", ""); //¼ıÀÚ¸¸ ÃßÃâ
+        string sspriteNum = Regex.Replace(mVBase.mImage.name, @"[^0-9]", ""); //ìˆ«ìë§Œ ì¶”ì¶œ
         mCloudTypeNum = int.Parse(sspriteNum);
     }
 
@@ -88,15 +88,15 @@ public class CloudData
 
     
     private bool[] isCloudAnimProgressed;
-    private bool mState; //0 = Æó±â 1 = °¡´É
+    private bool mState; //0 = íê¸° 1 = ê°€ëŠ¥
     private Sprite mcloudBaseImage;
     private Sprite mcloudDecoBaseImage;
     private List<IngredientData> mIngredientDatas;
 
-    private List<Sprite> mcloudParts; //¹«Á¶°Ç ÀÖÀ½ ÇÊ¼ö!
-    private List<List<Sprite>> mdecoImages; //2Â÷¿ø ¸®½ºÆ®: L M S »çÀÌÁî ÇÊ¿ä! ÃÖ´ë 2°³
+    private List<Sprite> mcloudParts; //ë¬´ì¡°ê±´ ìˆìŒ í•„ìˆ˜!
+    private List<List<Sprite>> mdecoImages; //2ì°¨ì› ë¦¬ìŠ¤íŠ¸: L M S ì‚¬ì´ì¦ˆ í•„ìš”! ìµœëŒ€ 2ê°œ
 
-    private List<EmotionInfo> mFinalEmotions; //±¸¸§ ²Ù¹Ì±â ÀÌÈÄÀÇ ÃÖÁ¾ °¨Á¤.
+    private List<EmotionInfo> mFinalEmotions; //êµ¬ë¦„ ê¾¸ë¯¸ê¸° ì´í›„ì˜ ìµœì¢… ê°ì •.
 
     private int mIngredientDtCount;
     public CloudData(List<EmotionInfo> Emotions,int shelfLife, List<IngredientData> ingr_datas)
@@ -108,7 +108,7 @@ public class CloudData
         mFinalEmotions = new List<EmotionInfo>();
         isCloudAnimProgressed = new bool[3];
         setAnimProgressed();
-        //°è»ê½ÄÇÔ¼ö·Î ÀÚµ¿À¸·Î µ¥ÀÌÅÍ ¼¼ÆÃ
+        //ê³„ì‚°ì‹í•¨ìˆ˜ë¡œ ìë™ìœ¼ë¡œ ë°ì´í„° ì„¸íŒ…
         setShelfLife();
         setCloudImage(mEmotions);
         setDecoImage(mEmotions);
@@ -200,11 +200,11 @@ public class CloudData
     //Private method
     private void setShelfLife()
     {
-        //°¨Á¤¿¡ µû¶ó ¸Â´Â º¸°ü±â°£-> »ç¿ëÇÑ Àç·áÀÇ °³¼ö¿¡ µû¶ó¼­ ´Ş¶óÁø´Ù.
+        //ê°ì •ì— ë”°ë¼ ë§ëŠ” ë³´ê´€ê¸°ê°„-> ì‚¬ìš©í•œ ì¬ë£Œì˜ ê°œìˆ˜ì— ë”°ë¼ì„œ ë‹¬ë¼ì§„ë‹¤.
     }
     private void setCloudImage(List<EmotionInfo> Emotions)
     {
-        //°¨Á¤¿¡ µû¶ó ¸Â´Â base ±¸¸§ÀÌ¹ÌÁö
+        //ê°ì •ì— ë”°ë¼ ë§ëŠ” base êµ¬ë¦„ì´ë¯¸ì§€
         string targetImgName = ((int)mEmotions[0].Key).ToString();
         if ((int)mEmotions[0].Key < 8)
             targetImgName = "0";
@@ -215,7 +215,7 @@ public class CloudData
     }
     private void setDecoImage(List<EmotionInfo> Emotions)
     {
-        //±¸¸§ Á¶°¢ ÆÄÃ÷
+        //êµ¬ë¦„ ì¡°ê° íŒŒì¸ 
         mcloudParts = new List<Sprite>();
         mcloudParts.Add(Resources.Load<Sprite>("Sprite/CloudDeco/CloudParts/OC_" + ((int)mEmotions[0].Key).ToString() + "_piece_" + "1"));
         mcloudParts.Add(Resources.Load<Sprite>("Sprite/CloudDeco/CloudParts/OC_" + ((int)mEmotions[0].Key).ToString() + "_piece_" + "2"));
@@ -223,9 +223,9 @@ public class CloudData
 
         //Assets/Resources/Sprite/CloudDeco/CloudParts/OC_0_piece_3.png
 
-        //°¨Á¤ ÆÄÃ÷
+        //ê°ì • íŒŒì¸ 
         mdecoImages = new List<List<Sprite>>();
-        //°¨Á¤¿¡ µû¶ó ¸Â´Â µ¥ÄÚ ÀÌ¹ÌÁö
+        //ê°ì •ì— ë”°ë¼ ë§ëŠ” ë°ì½” ì´ë¯¸ì§€
         for (int i = 1; i < Emotions.Count;i++)
         {
             List<Sprite> decoList = new List<Sprite>();
@@ -240,18 +240,18 @@ public class CloudData
 }
 
 [System.Serializable]
-//±¸¸§ ¹× Àç·á ÀÎº¥Åä¸® °ü·Ã ¸Å´ÏÀú
+//êµ¬ë¦„ ë° ì¬ë£Œ ì¸ë²¤í† ë¦¬ ê´€ë ¨ ë§¤ë‹ˆì €
 public class InventoryManager : MonoBehaviour
 {
-    public IngredientList[] mIngredientDatas; // ¸ğµç Àç·á Á¤º¸¸¦ °®°í ÀÖ´Â ¸®½ºÆ® scriptable data
+    public IngredientList[] mIngredientDatas; // ëª¨ë“  ì¬ë£Œ ì •ë³´ë¥¼ ê°–ê³  ìˆëŠ” ë¦¬ìŠ¤íŠ¸ scriptable data
 
     private bool mIsSceneChange = false;
 
     [SerializeField]
     public GameObject mInventoryContainer;
 
-    //±¸¸§ µ¥ÄÚ °ü·Ã
-    private CloudData beginningCloudData;    // ±¸¸§ÀÌ µ¥ÄÚ°¡ ³¡³ª¸é µ¹¾Æ°¡¾ß ÇÒ ÃÊ±â°ª ¼³Á¤
+    //êµ¬ë¦„ ë°ì½” ê´€ë ¨
+    private CloudData beginningCloudData;    // êµ¬ë¦„ì´ ë°ì½”ê°€ ëë‚˜ë©´ ëŒì•„ê°€ì•¼ í•  ì´ˆê¸°ê°’ ì„¤ì •
     public CloudData createdCloudData = null;
 
     
@@ -267,7 +267,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    //Debug¸¦ À§ÇÑ ÀÓ½Ã Button ÇÔ¼ö. ³ªÁß¿¡ »èÁ¦ÇÒ ¿¹Á¤
+    //Debugë¥¼ ìœ„í•œ ì„ì‹œ Button í•¨ìˆ˜. ë‚˜ì¤‘ì— ì‚­ì œí•  ì˜ˆì •
     public void go2CloudFacBtn()
     {
         mIsSceneChange = true;
@@ -276,20 +276,20 @@ public class InventoryManager : MonoBehaviour
     /////////////////
     /////Singlton////
     /////////////////
-    public static InventoryManager _instance = null; //½Ì±ÛÅæ °´Ã¼
-    public static InventoryManager Instance() //static ÇÔ¼ö, °øÀ¯ÇÏ°íÀÚ ÇÏ´Â ¿ÜºÎ¿¡¼­ »ç¿ëÇÒ °Í.
+    public static InventoryManager _instance = null; //ì‹±ê¸€í†¤ ê°ì²´
+    public static InventoryManager Instance() //static í•¨ìˆ˜, ê³µìœ í•˜ê³ ì í•˜ëŠ” ì™¸ë¶€ì—ì„œ ì‚¬ìš©í•  ê²ƒ.
     {
-        return _instance; //ÀÚ±âÀÚ½Å ¸®ÅÏ
+        return _instance; //ìê¸°ìì‹  ë¦¬í„´
     }
 
     void Start()
     {
-        if (_instance == null) // °ÔÀÓ ½ÃÀÛµÇ¸é ÀÚ±âÀÚ½ÅÀ» ³Ö´Â´Ù.
+        if (_instance == null) // ê²Œì„ ì‹œì‘ë˜ë©´ ìê¸°ìì‹ ì„ ë„£ëŠ”ë‹¤.
         {
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
-        else  //´Ù¸¥ ¾ÀÀ¸·Î ³Ñ¾î°¬´Ù°¡ back ÇßÀ» ¶§ »õ·Î¿î º¹Á¦ ¿ÀºêÁ§Æ®¸¦ ¹æÁöÇÏ±â À§ÇÑ Á¶°Ç¹®.
+        else  //ë‹¤ë¥¸ ì”¬ìœ¼ë¡œ ë„˜ì–´ê°”ë‹¤ê°€ back í–ˆì„ ë•Œ ìƒˆë¡œìš´ ë³µì œ ì˜¤ë¸Œì íŠ¸ë¥¼ ë°©ì§€í•˜ê¸° ìœ„í•œ ì¡°ê±´ë¬¸.
         {
             if(this != _instance)
             {
@@ -297,55 +297,55 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        mType = new List<IngredientData>(); //¸®½ºÆ® ÃÊ±âÈ­
-        mCnt = new List<int>(); //¸®½ºÆ® ÃÊ±âÈ­
+        mType = new List<IngredientData>(); //ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
+        mCnt = new List<int>(); //ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
 
         mCloudStorageData = new CloudStorageData();
         beginningCloudData = new CloudData();
     }
 
     /////////////////
-    //¼­¹ö ÀúÀå º¯¼ö//
+    //ì„œë²„ ì €ì¥ ë³€ìˆ˜//
     /////////////////
-    public CloudStorageData mCloudStorageData; //±¸¸§ ÀÎº¥Åä¸® µ¥ÀÌÅÍ ¸®½ºÆ® Å¬·¡½º.
+    public CloudStorageData mCloudStorageData; //êµ¬ë¦„ ì¸ë²¤í† ë¦¬ ë°ì´í„° ë¦¬ìŠ¤íŠ¸ í´ë˜ìŠ¤.
 
     public List<IngredientData>  mType;
     public List<int>  mCnt;
 
     public int minvenLevel=3;
 
-    public int mMaxStockCnt = 10; //¿ì¼±Àº 10°³ÀÌÇÏ±îÁö °¡´É
-    public int mMaxInvenCnt; //¿ì¼±Àº 10°³ÀÌÇÏ±îÁö °¡´É
+    public int mMaxStockCnt = 10; //ìš°ì„ ì€ 10ê°œì´í•˜ê¹Œì§€ ê°€ëŠ¥
+    public int mMaxInvenCnt; //ìš°ì„ ì€ 10ê°œì´í•˜ê¹Œì§€ ê°€ëŠ¥
 
     //////////////////////////////
-    //Ã¤Áı °ü·Ã ÀÎº¥Åä¸® ¿¬µ¿ ÇÔ¼ö//
+    //ì±„ì§‘ ê´€ë ¨ ì¸ë²¤í† ë¦¬ ì—°ë™ í•¨ìˆ˜//
     //////////////////////////////
     public bool addStock(KeyValuePair<IngredientData, int> _stock)
     {        
-        //ÀÎº¥Åä¸®¿¡ ÀÚ¸®°¡ ÀÖ´Â °æ¿ì
+        //ì¸ë²¤í† ë¦¬ì— ìë¦¬ê°€ ìˆëŠ” ê²½ìš°
         if (mType.Contains(_stock.Key)) 
         {
-            //ÀÎº¥Åä¸® ¾È¿¡ µé¾î¿À´Â Àç·á Á¾·ù°¡ ÀÌ¹Ì ÀÖ´Â °æ¿ì
-            int idx = mType.IndexOf(_stock.Key); //index °ª ÀúÀå.
+            //ì¸ë²¤í† ë¦¬ ì•ˆì— ë“¤ì–´ì˜¤ëŠ” ì¬ë£Œ ì¢…ë¥˜ê°€ ì´ë¯¸ ìˆëŠ” ê²½ìš°
+            int idx = mType.IndexOf(_stock.Key); //index ê°’ ì €ì¥.
 
-            if (mCnt[idx] >= mMaxStockCnt) return false;//ÀÎº¥Åä¸® Àç·á ´ç ÀúÀå°¡´É °³¼ö Á¦ÇÑ
-            int interver = mMaxStockCnt - (_stock.Value + mCnt[idx]); //ÀúÀå°¡´É °³¼ö - (»õ·Î¿î°Ô Ãß°¡µÆÀ» ‹š ÀÎº¥Åä¸®¿¡ ÀúÀåµÉ°³¼ö) = ¹ö·ÁÁö´Â Àç°í
-            if (interver <= 0) mCnt[idx] = mMaxStockCnt; //Â÷ÀÌ°¡ 0º¸´Ù Å©¸é ¾îÂ÷ÇÇ Max Cnt
+            if (mCnt[idx] >= mMaxStockCnt) return false;//ì¸ë²¤í† ë¦¬ ì¬ë£Œ ë‹¹ ì €ì¥ê°€ëŠ¥ ê°œìˆ˜ ì œí•œ
+            int interver = mMaxStockCnt - (_stock.Value + mCnt[idx]); //ì €ì¥ê°€ëŠ¥ ê°œìˆ˜ - (ìƒˆë¡œìš´ê²Œ ì¶”ê°€ëì„ ë–„ ì¸ë²¤í† ë¦¬ì— ì €ì¥ë ê°œìˆ˜) = ë²„ë ¤ì§€ëŠ” ì¬ê³ 
+            if (interver <= 0) mCnt[idx] = mMaxStockCnt; //ì°¨ì´ê°€ 0ë³´ë‹¤ í¬ë©´ ì–´ì°¨í”¼ Max Cnt
             else
-                mCnt[idx] += _stock.Value; //ÇØ´ç ¾ÆÀÌÅÛ Ä«¿îÆ® Ãß°¡.
+                mCnt[idx] += _stock.Value; //í•´ë‹¹ ì•„ì´í…œ ì¹´ìš´íŠ¸ ì¶”ê°€.
 
 
             return true;
 
         }
-        else//ÀÎº¥¿¡ ¾øÀÌ »õ·Î µé¾î¿À´Â °æ¿ì´Â ±×³É ³Ö°í return true
+        else//ì¸ë²¤ì— ì—†ì´ ìƒˆë¡œ ë“¤ì–´ì˜¤ëŠ” ê²½ìš°ëŠ” ê·¸ëƒ¥ ë„£ê³  return true
         {
             mMaxInvenCnt = getInvenSize(minvenLevel);
            if (mType.Count >= mMaxInvenCnt)
             {
                 mType.RemoveAt(0);
                 mCnt.RemoveAt(0);
-            } //²ËÂù °æ¿ì °¡Àå ¸ÕÀú µé¾î¿Â ¼ø¼­·Î »èÁ¦ÈÄ ÀúÀå
+            } //ê½‰ì°¬ ê²½ìš° ê°€ì¥ ë¨¼ì € ë“¤ì–´ì˜¨ ìˆœì„œë¡œ ì‚­ì œí›„ ì €ì¥
 
             mType.Add(_stock.Key);
             mCnt.Add(_stock.Value);
@@ -375,7 +375,7 @@ public class InventoryManager : MonoBehaviour
         return invensize;
     }
 
-    //³ª´²Á®ÀÖ´Â 2°³ÀÇ ¸®½ºÆ®¸¦ µñ¼Å³Ê¸® Çü½ÄÀ¸·Î ¸®ÅÏ: ¿øÈ°ÇÑ Á¤·ÄÀ» À§ÇØ¼­!
+    //ë‚˜ëˆ ì ¸ìˆëŠ” 2ê°œì˜ ë¦¬ìŠ¤íŠ¸ë¥¼ ë”•ì…”ë„ˆë¦¬ í˜•ì‹ìœ¼ë¡œ ë¦¬í„´: ì›í™œí•œ ì •ë ¬ì„ ìœ„í•´ì„œ!
     public Dictionary<IngredientData, int> mergeList2Dic()
     {
         Dictionary<IngredientData, int> results = new Dictionary<IngredientData, int>();
@@ -387,10 +387,10 @@ public class InventoryManager : MonoBehaviour
 
 
     //////////////////////////////
-    //±¸¸§ÀÎº¥Åä¸® °ü·Ã ÇÔ¼ö//
+    //êµ¬ë¦„ì¸ë²¤í† ë¦¬ ê´€ë ¨ í•¨ìˆ˜//
     //////////////////////////////
     ///
-    //µ¥ÄÚ µÇ¾îÁø ±¸¸§ ¿ÀºêÁ§Æ® ÀúÀå
+    //ë°ì½” ë˜ì–´ì§„ êµ¬ë¦„ ì˜¤ë¸Œì íŠ¸ ì €ì¥
     public void addStock(GameObject _cloudObject)
     {
         List<GameObject> parts = new List<GameObject>();

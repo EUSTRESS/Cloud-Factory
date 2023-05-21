@@ -26,37 +26,37 @@ public class InitData
 
 
 
-// ·Îºñ ¾À UI ´ã´ç
-// ¼³Á¤ Ã¢, »õ·ÎÇÏ±â, ÀÌ¾îÇÏ±â
+// ë¡œë¹„ ì”¬ UI ë‹´ë‹¹
+// ì„¤ì • ì°½, ìƒˆë¡œí•˜ê¸°, ì´ì–´í•˜ê¸°
 public class LobbyUIManager : MonoBehaviour
 {
-    private SeasonDateCalc mSeason; // °èÀı ½ºÅ©¸³Æ®
+    private SeasonDateCalc mSeason; // ê³„ì ˆ ìŠ¤í¬ë¦½íŠ¸
     private InventoryManager mInvenManager;
 
     [Header("GAME OBJECT")]
-    // ¿ÀºêÁ§Æ® Active °ü¸®
-    public GameObject   gOption;     // ¿É¼Ç °ÔÀÓ ¿ÀºêÁ§Æ®
-    public GameObject   gWarning;    // »õ·Î¿î °ÔÀÓ °æ°íÃ¢
-    public GameObject   gContinueWarning;    // ÀÌ¾îÇÏ±â °æ°íÃ¢
+    // ì˜¤ë¸Œì íŠ¸ Active ê´€ë¦¬
+    public GameObject   gOption;     // ì˜µì…˜ ê²Œì„ ì˜¤ë¸Œì íŠ¸
+    public GameObject   gWarning;    // ìƒˆë¡œìš´ ê²Œì„ ê²½ê³ ì°½
+    public GameObject   gContinueWarning;    // ì´ì–´í•˜ê¸° ê²½ê³ ì°½
 
-    // INDEX -> [0]: C04 [1]: C07 [2]: C10 [3]:C13 [4]:C14 // º½ Å¸ÀÌÆ² ¹¶Æ¼ °ü¸®
-    public GameObject[] gSpringMoongti = new GameObject[20]; // ÀüÃ¼ ¹¶Æ¼ Å¸ÀÌÆ² ½ºÇÁ¶óÀÌÆ® °ü¸®
+    // INDEX -> [0]: C04 [1]: C07 [2]: C10 [3]:C13 [4]:C14 // ë´„ íƒ€ì´í‹€ ë­‰í‹° ê´€ë¦¬
+    public GameObject[] gSpringMoongti = new GameObject[20]; // ì „ì²´ ë­‰í‹° íƒ€ì´í‹€ ìŠ¤í”„ë¼ì´íŠ¸ ê´€ë¦¬
 
 
     [Header("TEXT")]
-    public Text         tBgmValue;   // BGM º¼·ı ÅØ½ºÆ®
-    public Text         tSfxValue;   // SFx º¼·ı ÅØ½ºÆ®
+    public Text         tBgmValue;   // BGM ë³¼ë¥¨ í…ìŠ¤íŠ¸
+    public Text         tSfxValue;   // SFx ë³¼ë¥¨ í…ìŠ¤íŠ¸
 
     [Header("SLIDER")]
-    public Slider       sBGM;        // BGM ½½¶óÀÌ´õ
-    public Slider       sSFx;        // SFx ½½¶óÀÌ´õ
+    public Slider       sBGM;        // BGM ìŠ¬ë¼ì´ë”
+    public Slider       sSFx;        // SFx ìŠ¬ë¼ì´ë”
 
-    private AudioSource mSFx;        // È¿°úÀ½ ¿Àµğ¿À ¼Ò½º
+    private AudioSource mSFx;        // íš¨ê³¼ìŒ ì˜¤ë””ì˜¤ ì†ŒìŠ¤
 
     [Header("BOOL")]
-    public bool[] bSpringMoongti = new bool[5]; // º½ Å¸ÀÌÆ² ¹¶Æ¼ Bool·Î ¸¸Á·µµ 5 °ü¸®
-    public bool isFirstPlay = true; // Ã³À½ÇÏ´Â Áö ÀÌ¾îÇÏ´Â Áö.
-    public bool isCreateData = false; // ÀúÀåÇÑ µ¥ÀÌÅÍ°¡ ÀÖ´Â Áö ¾ø´Â Áö
+    public bool[] bSpringMoongti = new bool[5]; // ë´„ íƒ€ì´í‹€ ë­‰í‹° Boolë¡œ ë§Œì¡±ë„ 5 ê´€ë¦¬
+    public bool isFirstPlay = true; // ì²˜ìŒí•˜ëŠ” ì§€ ì´ì–´í•˜ëŠ” ì§€.
+    public bool isCreateData = false; // ì €ì¥í•œ ë°ì´í„°ê°€ ìˆëŠ” ì§€ ì—†ëŠ” ì§€
 
     [Header("IMAGE")]
     public Image iNewGame;
@@ -74,19 +74,19 @@ public class LobbyUIManager : MonoBehaviour
         mSeason = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>();
         mInvenManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
 
-        isFirstPlay = true; // Ã³À½ ÇÃ·¹ÀÌÇÑ´Ù°í ³Ö¾îµÎ°í
-        // ¿©±â¼­ ÃÖÃÊ 1È¸ ÇÃ·¹ÀÌÀÎÁö ¾Æ´ÑÁö ÆÇ´Ü.
+        isFirstPlay = true; // ì²˜ìŒ í”Œë ˆì´í•œë‹¤ê³  ë„£ì–´ë‘ê³ 
+        // ì—¬ê¸°ì„œ ìµœì´ˆ 1íšŒ í”Œë ˆì´ì¸ì§€ ì•„ë‹Œì§€ íŒë‹¨.
         Load_InitData();
-        // »ç¿îµå ·Îµå ¹× ÀúÀåÇÑ ÀÌ·ÂÀÌ ÀÖ´Â Áö ÆÇ´Ü.
+        // ì‚¬ìš´ë“œ ë¡œë“œ ë° ì €ì¥í•œ ì´ë ¥ì´ ìˆëŠ” ì§€ íŒë‹¨.
         Load_SoundData();
         
 
-        Load_GuestSatisfaction(); // ¸¸Á·µµ 5 ¹¶Æ¼ ÆÇº°
+        Load_GuestSatisfaction(); // ë§Œì¡±ë„ 5 ë­‰í‹° íŒë³„
     }
 
     void Update()
     {
-        // ÇöÀç À½·®À¸·Î ¾÷µ¥ÀÌÆ®
+        // í˜„ì¬ ìŒëŸ‰ìœ¼ë¡œ ì—…ë°ì´íŠ¸
         if (sBGM && sSFx) // null check
         {
             sBGM.value = SceneData.Instance.BGMValue;
@@ -94,17 +94,17 @@ public class LobbyUIManager : MonoBehaviour
         }
         if (tBgmValue && tSfxValue) // null check
         {
-            // ¼Ò¼öÁ¡ -2 ÀÚ¸®ºÎÅÍ ¹İ¿Ã¸²
+            // ì†Œìˆ˜ì  -2 ìë¦¬ë¶€í„° ë°˜ì˜¬ë¦¼
             tBgmValue.text = Mathf.Ceil(sBGM.value * 100).ToString();
             tSfxValue.text = Mathf.Ceil(sSFx.value * 100).ToString();
         }
 
         switch (mSeason.mSeason)
         {
-            // ÀúÀåÇÑ °ª ·ÎµùÇÏ´Â °úÁ¤¿¡¼­ SetActive ¹Ù·ÎÇØ¹ö¸®¸é µÈ´Ù.
+            // ì €ì¥í•œ ê°’ ë¡œë”©í•˜ëŠ” ê³¼ì •ì—ì„œ SetActive ë°”ë¡œí•´ë²„ë¦¬ë©´ ëœë‹¤.
 
-            //case 1: // º½
-            //    // º½ ¹¶Æ¼ ¸¸Á·µµ 5 °ü¸®
+            //case 1: // ë´„
+            //    // ë´„ ë­‰í‹° ë§Œì¡±ë„ 5 ê´€ë¦¬
             //    if (bSpringMoongti[0])
             //        gSpringMoongti[0].SetActive(true);
             //    if (bSpringMoongti[1])
@@ -116,11 +116,11 @@ public class LobbyUIManager : MonoBehaviour
             //    if (bSpringMoongti[4])
             //        gSpringMoongti[4].SetActive(true);
             //    break;
-            //case 2: // ¿©¸§
+            //case 2: // ì—¬ë¦„
             //    break;
-            //case 3: // °¡À»
+            //case 3: // ê°€ì„
             //    break;
-            //case 4: // °Ü¿ï
+            //case 4: // ê²¨ìš¸
             //    break;
             //default:
             //    break;
@@ -128,15 +128,15 @@ public class LobbyUIManager : MonoBehaviour
     }
 
     /*
-     * BUTTON¿¡ ÇÒ´çÇÒ ¸Ş¼Òµå
+     * BUTTONì— í• ë‹¹í•  ë©”ì†Œë“œ
      */
 
     public void NewGame()
     {
         if (true == isFirstPlay)
         {
-            isFirstPlay = false; // ÃÖÃÊ ÇÃ·¹ÀÌ ³¡.
-            SaveLobby_InitData(); // ÃÖÃÊ ÇÃ·¹ÀÌ ³¡³­ °Í ÀúÀå.
+            isFirstPlay = false; // ìµœì´ˆ í”Œë ˆì´ ë.
+            SaveLobby_InitData(); // ìµœì´ˆ í”Œë ˆì´ ëë‚œ ê²ƒ ì €ì¥.
         }      
 
         SceneData mSceneData = GameObject.Find("SceneDataManager").GetComponent<SceneData>();
@@ -146,8 +146,8 @@ public class LobbyUIManager : MonoBehaviour
 
         LoadingSceneController.Instance.LoadScene("Space Of Weather");
 
-        // µ¥ÀÌÅÍ¸¦ ÃÊ±âÈ­ ½ÃÅ°´Â ÇÔ¼ö È£ÃâÇÒ ÇÊ¿ä ¾øÀÌ
-        // °¢ Å¬·¡½º »ı¼ºÀÚ¿¡¼­ ÀÚµ¿ ÃÊ±âÈ­µÈ´Ù.
+        // ë°ì´í„°ë¥¼ ì´ˆê¸°í™” ì‹œí‚¤ëŠ” í•¨ìˆ˜ í˜¸ì¶œí•  í•„ìš” ì—†ì´
+        // ê° í´ë˜ìŠ¤ ìƒì„±ìì—ì„œ ìë™ ì´ˆê¸°í™”ëœë‹¤.
     }
 
     public void ContinueGame()
@@ -155,27 +155,27 @@ public class LobbyUIManager : MonoBehaviour
         SceneData mSceneData = GameObject.Find("SceneDataManager").GetComponent<SceneData>();
         mSceneData.mContinueGmae = true;
 
-        //String key = "key"; // ¾ÏÈ£È­ º¹È£È­ Å° °ª
+        //String key = "key"; // ì•”í˜¸í™” ë³µí˜¸í™” í‚¤ ê°’
 
         mSFx.Play();
 
         /*
-         ÀúÀåµÈ ¾À ³Ñ¹ö ·Îµù         
+         ì €ì¥ëœ ì”¬ ë„˜ë²„ ë¡œë”©         
          */
 
-        // newtonsoft library (¸ğ³ëºñÇìÀÌºñ¾î »ó¼ÓµÈ Å¬·¡½º »ç¿ë ºÒ°¡´É, µñ¼Å³Ê¸® »ç¿ë °¡´É)
-        // ·ÎµåÇÏ´Â ÇÔ¼ö È£Ãâ ÈÄ¿¡ ±× ¾À ÀÎµ¦½º·Î ÀÌµ¿
+        // newtonsoft library (ëª¨ë…¸ë¹„í—¤ì´ë¹„ì–´ ìƒì†ëœ í´ë˜ìŠ¤ ì‚¬ìš© ë¶ˆê°€ëŠ¥, ë”•ì…”ë„ˆë¦¬ ì‚¬ìš© ê°€ëŠ¥)
+        // ë¡œë“œí•˜ëŠ” í•¨ìˆ˜ í˜¸ì¶œ í›„ì— ê·¸ ì”¬ ì¸ë±ìŠ¤ë¡œ ì´ë™
         //FileStream fSceneBuildIndexStream
-        //    // ÇØ´ç °æ·Î¿¡ ÀÖ´Â json ÆÄÀÏÀ» ¿¬´Ù
+        //    // í•´ë‹¹ ê²½ë¡œì— ìˆëŠ” json íŒŒì¼ì„ ì—°ë‹¤
         //    = new FileStream(Application.dataPath + "/Data/SceneBuildIndex.json", FileMode.Open);
-        //// ¿­·ÁÀÖ´Â json °ªµéÀ» byte¹è¿­¿¡ ³Ö´Â´Ù
+        //// ì—´ë ¤ìˆëŠ” json ê°’ë“¤ì„ byteë°°ì—´ì— ë„£ëŠ”ë‹¤
         //byte[] bSceneData = new byte[fSceneBuildIndexStream.Length];
-        //// ³¡±îÁö ÀĞ´Â´Ù
+        //// ëê¹Œì§€ ì½ëŠ”ë‹¤
         //fSceneBuildIndexStream.Read(bSceneData, 0, bSceneData.Length);
         //fSceneBuildIndexStream.Close();
-        //// ¹®ÀÚ¿­·Î º¯È¯ÇÑ´Ù
+        //// ë¬¸ìì—´ë¡œ ë³€í™˜í•œë‹¤
         //string sSceneData = Encoding.UTF8.GetString(bSceneData);
-        //// º¹È£È­
+        //// ë³µí˜¸í™”
         //sSceneData = AESWithJava.Con.Program.Decrypt(sSceneData, key);
 
        
@@ -184,11 +184,11 @@ public class LobbyUIManager : MonoBehaviour
         Load_Inventory();
         Load_Guest();
         Load_SOW();      
-        //Load_SOWManagerData(); // ·Îºñ¿¡ ¸Å´ÏÀú°¡ ¾ø¾î¼­, ³¯¾¾ÀÇ °ø°£ µé¾î¿Í¼­ ·ÎµùÇÒ°Í.
+        //Load_SOWManagerData(); // ë¡œë¹„ì— ë§¤ë‹ˆì €ê°€ ì—†ì–´ì„œ, ë‚ ì”¨ì˜ ê³µê°„ ë“¤ì–´ì™€ì„œ ë¡œë”©í• ê²ƒ.
         Load_LetterControllerData();
 
-        // ¹®ÀÚ¿­À» intÇüÀ¸·Î ÆÄ½ÌÇØ¼­ ºôµå ÀÎµ¦½º·Î È°¿ëÇÑ´Ù
-        // ÇöÀç ºôµå ÀÎµ¦½º°¡ ³¯¾¾ÀÇ °ø°£ÀÌ 6ÀÌ¹Ç·Î 6ÀÎµ¥ ÀÌ°Å ºôµå ÀÎµ¦½º ¹Ù²î¸é ¾ÈµÊ...
+        // ë¬¸ìì—´ì„ intí˜•ìœ¼ë¡œ íŒŒì‹±í•´ì„œ ë¹Œë“œ ì¸ë±ìŠ¤ë¡œ í™œìš©í•œë‹¤
+        // í˜„ì¬ ë¹Œë“œ ì¸ë±ìŠ¤ê°€ ë‚ ì”¨ì˜ ê³µê°„ì´ 6ì´ë¯€ë¡œ 6ì¸ë° ì´ê±° ë¹Œë“œ ì¸ë±ìŠ¤ ë°”ë€Œë©´ ì•ˆë¨...
         LoadingSceneController.Instance.LoadScene(6); 
 
     }
@@ -199,18 +199,18 @@ public class LobbyUIManager : MonoBehaviour
 
         if (File.Exists(mSeasonDatePath)) // null check
         {
-            // »õ·Î¿î ¿ÀºêÁ§Æ®¸¦ »ı¼ºÇÏ°í
+            // ìƒˆë¡œìš´ ì˜¤ë¸Œì íŠ¸ë¥¼ ìƒì„±í•˜ê³ 
             GameObject gSeasonDate = new GameObject();
             string sDateData = File.ReadAllText(mSeasonDatePath);
-            // º¹È£È­
+            // ë³µí˜¸í™”
             //sDateData = AESWithJava.Con.Program.Decrypt(sDateData, key);
 
             Debug.Log(sDateData);
 
-            // µ¥ÀÌÅÍ¸¦ »õ·Î¿î ¿ÀºêÁ§Æ®¿¡ µ¤¾î¾º¿î´Ù
+            // ë°ì´í„°ë¥¼ ìƒˆë¡œìš´ ì˜¤ë¸Œì íŠ¸ì— ë®ì–´ì”Œìš´ë‹¤
             JsonUtility.FromJsonOverwrite(sDateData, gSeasonDate.AddComponent<SeasonDateCalc>());
 
-            // µ¤¾î¾º¿öÁø(ÀúÀåµÈ) µ¥ÀÌÅÍ¸¦ ÇöÀç »ç¿ëµÇ´Â µ¥ÀÌÅÍ¿¡ °»½ÅÇÏ¸é ·Îµù ³¡!
+            // ë®ì–´ì”Œì›Œì§„(ì €ì¥ëœ) ë°ì´í„°ë¥¼ í˜„ì¬ ì‚¬ìš©ë˜ëŠ” ë°ì´í„°ì— ê°±ì‹ í•˜ë©´ ë¡œë”© ë!
             SeasonDateCalc.Instance.mSecond = gSeasonDate.GetComponent<SeasonDateCalc>().mSecond;
             SeasonDateCalc.Instance.mDay = gSeasonDate.GetComponent<SeasonDateCalc>().mDay;
             SeasonDateCalc.Instance.mSeason = gSeasonDate.GetComponent<SeasonDateCalc>().mSeason;
@@ -222,29 +222,29 @@ public class LobbyUIManager : MonoBehaviour
     void Load_Inventory()
     {
         string mInvenDataPath = Path.Combine(Application.dataPath + "/Data/", "InventoryData.json");
-        // ÆÄÀÏ ½ºÆ®¸² °³¹æ
+        // íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ê°œë°©
         FileStream stream = new FileStream(Application.dataPath + "/Data/InventoryData.json", FileMode.Open);
 
-        if (File.Exists(mInvenDataPath)) // ÇØ´ç ÆÄÀÏÀÌ »ı¼ºµÇ¾úÀ¸¸é ºÒ·¯¿À±â
+        if (File.Exists(mInvenDataPath)) // í•´ë‹¹ íŒŒì¼ì´ ìƒì„±ë˜ì—ˆìœ¼ë©´ ë¶ˆëŸ¬ì˜¤ê¸°
         {
-            // º¹È£È­´Â ³ªÁß¿¡ ÇÑ¹ø¿¡ ÇÏ±â
-            // ½ºÆ®¸² ¹è¿­¸¸Å­ ¹ÙÀÌÆ® ¹è¿­ »ı¼º
+            // ë³µí˜¸í™”ëŠ” ë‚˜ì¤‘ì— í•œë²ˆì— í•˜ê¸°
+            // ìŠ¤íŠ¸ë¦¼ ë°°ì—´ë§Œí¼ ë°”ì´íŠ¸ ë°°ì—´ ìƒì„±
             byte[] bInventoryData = new byte[stream.Length];
-            // ÀĞ¾î¿À±â
+            // ì½ì–´ì˜¤ê¸°
             stream.Read(bInventoryData, 0, bInventoryData.Length);
             stream.Close();
 
-            // jsondata¸¦ ½ºÆ®¸µ Å¸ÀÔÀ¸·Î °¡Á®¿À±â
+            // jsondataë¥¼ ìŠ¤íŠ¸ë§ íƒ€ì…ìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°
             string jInventoryData = Encoding.UTF8.GetString(bInventoryData);
             Debug.Log(jInventoryData);
 
-            // ¿ªÁ÷·ÄÈ­
+            // ì—­ì§ë ¬í™”
             InventoryData dInventoryData = JsonConvert.DeserializeObject<InventoryData>(jInventoryData);
 
-            if (null == dInventoryData) // ÀúÀåµÈ µ¥ÀÌÅÍ ¾øÀ¸¸é ¸®ÅÏ
+            if (null == dInventoryData) // ì €ì¥ëœ ë°ì´í„° ì—†ìœ¼ë©´ ë¦¬í„´
                 return;
 
-            // µ¤¾î¾º¿öÁø(ÀúÀåµÈ) µ¥ÀÌÅÍ¸¦ ÇöÀç »ç¿ëµÇ´Â µ¥ÀÌÅÍ¿¡ °»½ÅÇÏ¸é ·Îµù ³¡!
+            // ë®ì–´ì”Œì›Œì§„(ì €ì¥ëœ) ë°ì´í„°ë¥¼ í˜„ì¬ ì‚¬ìš©ë˜ëŠ” ë°ì´í„°ì— ê°±ì‹ í•˜ë©´ ë¡œë”© ë!
             mInvenManager.mType = dInventoryData.mType.ToList();
             mInvenManager.mCnt = dInventoryData.mCnt.ToList();
             mInvenManager.minvenLevel = dInventoryData.minvenLevel;
@@ -255,34 +255,34 @@ public class LobbyUIManager : MonoBehaviour
     void Load_Guest()
     {
         string mGuestManagerDataPath = Path.Combine(Application.dataPath + "/Data/", "GuestManagerData.json");
-        // ÆÄÀÏ ½ºÆ®¸² °³¹æ
+        // íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ê°œë°©
         FileStream ManagerStream = new FileStream(Application.dataPath + "/Data/GuestManagerData.json", FileMode.Open);
 
-        if (File.Exists(mGuestManagerDataPath)) // ÇØ´ç ÆÄÀÏÀÌ »ı¼ºµÇ¾úÀ¸¸é ºÒ·¯¿À±â
+        if (File.Exists(mGuestManagerDataPath)) // í•´ë‹¹ íŒŒì¼ì´ ìƒì„±ë˜ì—ˆìœ¼ë©´ ë¶ˆëŸ¬ì˜¤ê¸°
         {
-            // º¹È£È­´Â ³ªÁß¿¡ ÇÑ¹ø¿¡ ÇÏ±â
-            // ½ºÆ®¸² ¹è¿­¸¸Å­ ¹ÙÀÌÆ® ¹è¿­ »ı¼º
+            // ë³µí˜¸í™”ëŠ” ë‚˜ì¤‘ì— í•œë²ˆì— í•˜ê¸°
+            // ìŠ¤íŠ¸ë¦¼ ë°°ì—´ë§Œí¼ ë°”ì´íŠ¸ ë°°ì—´ ìƒì„±
             byte[] bGuestInfoData = new byte[ManagerStream.Length];
-            // ÀĞ¾î¿À±â
+            // ì½ì–´ì˜¤ê¸°
             ManagerStream.Read(bGuestInfoData, 0, bGuestInfoData.Length);
             ManagerStream.Close();
 
-            // jsondata¸¦ ½ºÆ®¸µ Å¸ÀÔÀ¸·Î °¡Á®¿À±â
+            // jsondataë¥¼ ìŠ¤íŠ¸ë§ íƒ€ì…ìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°
             string jGuestInfoData = Encoding.UTF8.GetString(bGuestInfoData);
             Debug.Log(jGuestInfoData);
 
-            // ¿ªÁ÷·ÄÈ­
+            // ì—­ì§ë ¬í™”
             GuestManagerSaveData dGuestInfoData = JsonConvert.DeserializeObject<GuestManagerSaveData>(jGuestInfoData);
-            if (null == dGuestInfoData) // ÀúÀåµÈ µ¥ÀÌÅÍ ¾øÀ¸¸é ¸®ÅÏ
+            if (null == dGuestInfoData) // ì €ì¥ëœ ë°ì´í„° ì—†ìœ¼ë©´ ë¦¬í„´
                 return;
 
-            // ÀÌ¾îÇÏ±â ½Ã, ÇÊ¿äÇÑ Á¤º¸°ªµéÀ» ºÒ·¯¿Í¼­ °»½ÅÇÑ´Ù. (GuestManager)
+            // ì´ì–´í•˜ê¸° ì‹œ, í•„ìš”í•œ ì •ë³´ê°’ë“¤ì„ ë¶ˆëŸ¬ì™€ì„œ ê°±ì‹ í•œë‹¤. (GuestManager)
             Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
 
-            // µ¤¾î¾º¿öÁø(ÀúÀåµÈ) µ¥ÀÌÅÍ¸¦ ÇöÀç »ç¿ëµÇ´Â µ¥ÀÌÅÍ¿¡ °»½ÅÇÏ¸é ·Îµù ³¡!
+            // ë®ì–´ì”Œì›Œì§„(ì €ì¥ëœ) ë°ì´í„°ë¥¼ í˜„ì¬ ì‚¬ìš©ë˜ëŠ” ë°ì´í„°ì— ê°±ì‹ í•˜ë©´ ë¡œë”© ë!
 
-            // guest manager ·Îµù
-            /*ÀúÀåÇÒ µ¥ÀÌÅÍ °ª*/
+            // guest manager ë¡œë”©
+            /*ì €ì¥í•  ë°ì´í„° ê°’*/
 
             {
                 const int NUM_OF_GUEST = 20;
@@ -309,7 +309,7 @@ public class LobbyUIManager : MonoBehaviour
             }
 
 
-            GuestManager.isGuestInLivingRoom =  /*ºÒ·¯¿À´Â µ¥ÀÌÅÍ °ª*/dGuestInfoData.isGuestLivingRoom;
+            GuestManager.isGuestInLivingRoom =  /*ë¶ˆëŸ¬ì˜¤ëŠ” ë°ì´í„° ê°’*/dGuestInfoData.isGuestLivingRoom;
             GuestManager.isTimeToTakeGuest = dGuestInfoData.isTimeToTakeGuest;
             GuestManager.mGuestIndex = dGuestInfoData.mGuestIndex;
             GuestManager.mTodayGuestList = dGuestInfoData.mTodayGuestList.Clone() as int[];
@@ -320,33 +320,33 @@ public class LobbyUIManager : MonoBehaviour
     void Load_GuestSatisfaction()
     {
         string mGuestManagerDataPath = Path.Combine(Application.dataPath + "/Data/", "GuestManagerData.json");
-        // ÆÄÀÏ ½ºÆ®¸² °³¹æ
+        // íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ê°œë°©
         FileStream ManagerStream = new FileStream(Application.dataPath + "/Data/GuestManagerData.json", FileMode.Open);
 
-        if (File.Exists(mGuestManagerDataPath)) // ÇØ´ç ÆÄÀÏÀÌ »ı¼ºµÇ¾úÀ¸¸é ºÒ·¯¿À±â
+        if (File.Exists(mGuestManagerDataPath)) // í•´ë‹¹ íŒŒì¼ì´ ìƒì„±ë˜ì—ˆìœ¼ë©´ ë¶ˆëŸ¬ì˜¤ê¸°
         {
-            // º¹È£È­´Â ³ªÁß¿¡ ÇÑ¹ø¿¡ ÇÏ±â
-            // ½ºÆ®¸² ¹è¿­¸¸Å­ ¹ÙÀÌÆ® ¹è¿­ »ı¼º
+            // ë³µí˜¸í™”ëŠ” ë‚˜ì¤‘ì— í•œë²ˆì— í•˜ê¸°
+            // ìŠ¤íŠ¸ë¦¼ ë°°ì—´ë§Œí¼ ë°”ì´íŠ¸ ë°°ì—´ ìƒì„±
             byte[] bGuestInfoData = new byte[ManagerStream.Length];
-            // ÀĞ¾î¿À±â
+            // ì½ì–´ì˜¤ê¸°
             ManagerStream.Read(bGuestInfoData, 0, bGuestInfoData.Length);
             ManagerStream.Close();
 
-            // jsondata¸¦ ½ºÆ®¸µ Å¸ÀÔÀ¸·Î °¡Á®¿À±â
+            // jsondataë¥¼ ìŠ¤íŠ¸ë§ íƒ€ì…ìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°
             string jGuestInfoData = Encoding.UTF8.GetString(bGuestInfoData);
             Debug.Log(jGuestInfoData);
 
-            // ¿ªÁ÷·ÄÈ­
+            // ì—­ì§ë ¬í™”
             GuestManagerSaveData dGuestInfoData = JsonConvert.DeserializeObject<GuestManagerSaveData>(jGuestInfoData);
-            if (null == dGuestInfoData) // ÀúÀåµÈ µ¥ÀÌÅÍ ¾øÀ¸¸é ¸®ÅÏ
+            if (null == dGuestInfoData) // ì €ì¥ëœ ë°ì´í„° ì—†ìœ¼ë©´ ë¦¬í„´
                 return;
-            // ÀÌ¾îÇÏ±â ½Ã, ÇÊ¿äÇÑ Á¤º¸°ªµéÀ» ºÒ·¯¿Í¼­ °»½ÅÇÑ´Ù. (GuestManager)
+            // ì´ì–´í•˜ê¸° ì‹œ, í•„ìš”í•œ ì •ë³´ê°’ë“¤ì„ ë¶ˆëŸ¬ì™€ì„œ ê°±ì‹ í•œë‹¤. (GuestManager)
 
 
-            // µ¤¾î¾º¿öÁø(ÀúÀåµÈ) µ¥ÀÌÅÍ¸¦ ÇöÀç »ç¿ëµÇ´Â µ¥ÀÌÅÍ¿¡ °»½ÅÇÏ¸é ·Îµù ³¡!
+            // ë®ì–´ì”Œì›Œì§„(ì €ì¥ëœ) ë°ì´í„°ë¥¼ í˜„ì¬ ì‚¬ìš©ë˜ëŠ” ë°ì´í„°ì— ê°±ì‹ í•˜ë©´ ë¡œë”© ë!
 
-            // guest manager ·Îµù
-            /*ÀúÀåÇÒ µ¥ÀÌÅÍ °ª*/
+            // guest manager ë¡œë”©
+            /*ì €ì¥í•  ë°ì´í„° ê°’*/
 
             {
                 const int NUM_OF_GUEST = 20;
@@ -358,7 +358,7 @@ public class LobbyUIManager : MonoBehaviour
 
                     if (info == null) Debug.Log("Info Null");
 
-                    if (5 == info.mSatatisfaction) // ¸¸Á·µµ°¡ 5ÀÎ ¹¶Æ¼
+                    if (5 == info.mSatatisfaction) // ë§Œì¡±ë„ê°€ 5ì¸ ë­‰í‹°
                     {
                         gSpringMoongti[i].SetActive(true);
                     }
@@ -371,38 +371,38 @@ public class LobbyUIManager : MonoBehaviour
     void Load_SOW()
     {
         string mSOWSaveDataPath = Path.Combine(Application.dataPath + "/Data/", "SOWSaveData.json");
-        // ÆÄÀÏ ½ºÆ®¸² °³¹æ
+        // íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ê°œë°©
         FileStream SOWSaveStream = new FileStream(Application.dataPath + "/Data/SOWSaveData.json", FileMode.Open);
 
-        if (File.Exists(mSOWSaveDataPath)) // ÇØ´ç ÆÄÀÏÀÌ »ı¼ºµÇ¾úÀ¸¸é ºÒ·¯¿À±â
+        if (File.Exists(mSOWSaveDataPath)) // í•´ë‹¹ íŒŒì¼ì´ ìƒì„±ë˜ì—ˆìœ¼ë©´ ë¶ˆëŸ¬ì˜¤ê¸°
         {
-            // º¹È£È­´Â ³ªÁß¿¡ ÇÑ¹ø¿¡ ÇÏ±â
-            // ½ºÆ®¸² ¹è¿­¸¸Å­ ¹ÙÀÌÆ® ¹è¿­ »ı¼º
+            // ë³µí˜¸í™”ëŠ” ë‚˜ì¤‘ì— í•œë²ˆì— í•˜ê¸°
+            // ìŠ¤íŠ¸ë¦¼ ë°°ì—´ë§Œí¼ ë°”ì´íŠ¸ ë°°ì—´ ìƒì„±
             byte[] bSOWSaveData = new byte[SOWSaveStream.Length];
-            // ÀĞ¾î¿À±â
+            // ì½ì–´ì˜¤ê¸°
             SOWSaveStream.Read(bSOWSaveData, 0, bSOWSaveData.Length);
             SOWSaveStream.Close();
 
-            // jsondata¸¦ ½ºÆ®¸µ Å¸ÀÔÀ¸·Î °¡Á®¿À±â
+            // jsondataë¥¼ ìŠ¤íŠ¸ë§ íƒ€ì…ìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°
             string jSOWSaveData = Encoding.UTF8.GetString(bSOWSaveData);
             Debug.Log(jSOWSaveData);
 
-            // ¿ªÁ÷·ÄÈ­
+            // ì—­ì§ë ¬í™”
             SOWSaveData dSOWSaveData = JsonConvert.DeserializeObject<SOWSaveData>(jSOWSaveData);
-            if (null == dSOWSaveData) // ÀúÀåµÈ µ¥ÀÌÅÍ ¾øÀ¸¸é ¸®ÅÏ
+            if (null == dSOWSaveData) // ì €ì¥ëœ ë°ì´í„° ì—†ìœ¼ë©´ ë¦¬í„´
                 return;
-            // µ¥ÀÌÅÍ Á÷·ÄÈ­
+            // ë°ì´í„° ì§ë ¬í™”
             string jData = JsonConvert.SerializeObject(dSOWSaveData);
 
-            // json µ¥ÀÌÅÍ¸¦ Encoding.UTF8ÀÇ ÇÔ¼ö·Î ¹ÙÀÌÆ® ¹è¿­·Î ¸¸µé°í
+            // json ë°ì´í„°ë¥¼ Encoding.UTF8ì˜ í•¨ìˆ˜ë¡œ ë°”ì´íŠ¸ ë°°ì—´ë¡œ ë§Œë“¤ê³ 
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
 
-            // ÀÌ¾îÇÏ±â ½Ã, ÇÊ¿äÇÑ Á¤º¸°ªµéÀ» ºÒ·¯¿Í¼­ °»½ÅÇÑ´Ù. (GuestManager)
+            // ì´ì–´í•˜ê¸° ì‹œ, í•„ìš”í•œ ì •ë³´ê°’ë“¤ì„ ë¶ˆëŸ¬ì™€ì„œ ê°±ì‹ í•œë‹¤. (GuestManager)
             Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
 
-            // µ¤¾î¾º¿öÁø(ÀúÀåµÈ) µ¥ÀÌÅÍ¸¦ ÇöÀç »ç¿ëµÇ´Â µ¥ÀÌÅÍ¿¡ °»½ÅÇÏ¸é ·Îµù ³¡!
+            // ë®ì–´ì”Œì›Œì§„(ì €ì¥ëœ) ë°ì´í„°ë¥¼ í˜„ì¬ ì‚¬ìš©ë˜ëŠ” ë°ì´í„°ì— ê°±ì‹ í•˜ë©´ ë¡œë”© ë!
 
             SOWSaveData sowInfo = new SOWSaveData();
             {
@@ -430,79 +430,79 @@ public class LobbyUIManager : MonoBehaviour
     void Load_Tutorial()
     {
         string mTutorialSaveDataPath = Path.Combine(Application.dataPath + "/Data/", "TutorialData.json");
-        // ÆÄÀÏ ½ºÆ®¸² °³¹æ
+        // íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ê°œë°©
         FileStream TutorialSaveStream = new FileStream(Application.dataPath + "/Data/TutorialData.json", FileMode.Open);
 
-        if (File.Exists(mTutorialSaveDataPath)) // ÇØ´ç ÆÄÀÏÀÌ »ı¼ºµÇ¾úÀ¸¸é ºÒ·¯¿À±â
+        if (File.Exists(mTutorialSaveDataPath)) // í•´ë‹¹ íŒŒì¼ì´ ìƒì„±ë˜ì—ˆìœ¼ë©´ ë¶ˆëŸ¬ì˜¤ê¸°
         {
-            // º¹È£È­´Â ³ªÁß¿¡ ÇÑ¹ø¿¡ ÇÏ±â
-            // ½ºÆ®¸² ¹è¿­¸¸Å­ ¹ÙÀÌÆ® ¹è¿­ »ı¼º
+            // ë³µí˜¸í™”ëŠ” ë‚˜ì¤‘ì— í•œë²ˆì— í•˜ê¸°
+            // ìŠ¤íŠ¸ë¦¼ ë°°ì—´ë§Œí¼ ë°”ì´íŠ¸ ë°°ì—´ ìƒì„±
             byte[] bTutorialSaveData = new byte[TutorialSaveStream.Length];
-            // ÀĞ¾î¿À±â
+            // ì½ì–´ì˜¤ê¸°
             TutorialSaveStream.Read(bTutorialSaveData, 0, bTutorialSaveData.Length);
             TutorialSaveStream.Close();
 
-            // jsondata¸¦ ½ºÆ®¸µ Å¸ÀÔÀ¸·Î °¡Á®¿À±â
+            // jsondataë¥¼ ìŠ¤íŠ¸ë§ íƒ€ì…ìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°
             string jTutorialSaveData = Encoding.UTF8.GetString(bTutorialSaveData);
             Debug.Log(jTutorialSaveData);
 
-            // ¿ªÁ÷·ÄÈ­
+            // ì—­ì§ë ¬í™”
             TutorialData dTutorialSaveData = JsonConvert.DeserializeObject<TutorialData>(jTutorialSaveData);
-            if (null == dTutorialSaveData) // ÀúÀåµÈ µ¥ÀÌÅÍ ¾øÀ¸¸é ¸®ÅÏ
+            if (null == dTutorialSaveData) // ì €ì¥ëœ ë°ì´í„° ì—†ìœ¼ë©´ ë¦¬í„´
                 return;
-            // µ¥ÀÌÅÍ Á÷·ÄÈ­
+            // ë°ì´í„° ì§ë ¬í™”
             //string jData = JsonConvert.SerializeObject(dTutorialSaveData);
 
-            // json µ¥ÀÌÅÍ¸¦ Encoding.UTF8ÀÇ ÇÔ¼ö·Î ¹ÙÀÌÆ® ¹è¿­·Î ¸¸µé°í
+            // json ë°ì´í„°ë¥¼ Encoding.UTF8ì˜ í•¨ìˆ˜ë¡œ ë°”ì´íŠ¸ ë°°ì—´ë¡œ ë§Œë“¤ê³ 
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
 
-            // ÀÌ¾îÇÏ±â ½Ã, ÇÊ¿äÇÑ Á¤º¸°ªµéÀ» ºÒ·¯¿Í¼­ °»½ÅÇÑ´Ù. (GuestManager)
+            // ì´ì–´í•˜ê¸° ì‹œ, í•„ìš”í•œ ì •ë³´ê°’ë“¤ì„ ë¶ˆëŸ¬ì™€ì„œ ê°±ì‹ í•œë‹¤. (GuestManager)
             TutorialManager tutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
 
-            // µ¤¾î¾º¿öÁø(ÀúÀåµÈ) µ¥ÀÌÅÍ¸¦ ÇöÀç »ç¿ëµÇ´Â µ¥ÀÌÅÍ¿¡ °»½ÅÇÏ¸é ·Îµù ³¡!
+            // ë®ì–´ì”Œì›Œì§„(ì €ì¥ëœ) ë°ì´í„°ë¥¼ í˜„ì¬ ì‚¬ìš©ë˜ëŠ” ë°ì´í„°ì— ê°±ì‹ í•˜ë©´ ë¡œë”© ë!
 
             tutorialManager.isTutorial = dTutorialSaveData.isTutorial;
-            isCreateData = !tutorialManager.isTutorial; // Æ©Åä¸®¾ó À¯¹«·Î ÀúÀåÇß´Â Áö ÆÇº°.
+            isCreateData = !tutorialManager.isTutorial; // íŠœí† ë¦¬ì–¼ ìœ ë¬´ë¡œ ì €ì¥í–ˆëŠ” ì§€ íŒë³„.
         }
     }
 
     void Load_SOWManagerData()
     {
         string mSowManagerSaveDataPath = Path.Combine(Application.dataPath + "/Data/", "SOWManagerData.json");
-        // ÆÄÀÏ ½ºÆ®¸² °³¹æ
+        // íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ê°œë°©
         FileStream SOWmanageSaveStream = new FileStream(Application.dataPath + "/Data/SOWManagerData.json", FileMode.Open);
 
-        if (File.Exists(mSowManagerSaveDataPath)) // ÇØ´ç ÆÄÀÏÀÌ »ı¼ºµÇ¾úÀ¸¸é ºÒ·¯¿À±â
+        if (File.Exists(mSowManagerSaveDataPath)) // í•´ë‹¹ íŒŒì¼ì´ ìƒì„±ë˜ì—ˆìœ¼ë©´ ë¶ˆëŸ¬ì˜¤ê¸°
         {
-            // º¹È£È­´Â ³ªÁß¿¡ ÇÑ¹ø¿¡ ÇÏ±â
-            // ½ºÆ®¸² ¹è¿­¸¸Å­ ¹ÙÀÌÆ® ¹è¿­ »ı¼º
+            // ë³µí˜¸í™”ëŠ” ë‚˜ì¤‘ì— í•œë²ˆì— í•˜ê¸°
+            // ìŠ¤íŠ¸ë¦¼ ë°°ì—´ë§Œí¼ ë°”ì´íŠ¸ ë°°ì—´ ìƒì„±
             byte[] bSOWManagerSaveData = new byte[SOWmanageSaveStream.Length];
-            // ÀĞ¾î¿À±â
+            // ì½ì–´ì˜¤ê¸°
             SOWmanageSaveStream.Read(bSOWManagerSaveData, 0, bSOWManagerSaveData.Length);
             SOWmanageSaveStream.Close();
 
-            // jsondata¸¦ ½ºÆ®¸µ Å¸ÀÔÀ¸·Î °¡Á®¿À±â
+            // jsondataë¥¼ ìŠ¤íŠ¸ë§ íƒ€ì…ìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°
             string jSOWManagerSaveData = Encoding.UTF8.GetString(bSOWManagerSaveData);
             Debug.Log(jSOWManagerSaveData);
 
-            // ¿ªÁ÷·ÄÈ­
+            // ì—­ì§ë ¬í™”
             SOWManagerSaveData dSOWManagerSaveData = JsonConvert.DeserializeObject<SOWManagerSaveData>(jSOWManagerSaveData);
-            if (null == dSOWManagerSaveData) // ÀúÀåµÈ µ¥ÀÌÅÍ ¾øÀ¸¸é ¸®ÅÏ
+            if (null == dSOWManagerSaveData) // ì €ì¥ëœ ë°ì´í„° ì—†ìœ¼ë©´ ë¦¬í„´
                 return;
-            // µ¥ÀÌÅÍ Á÷·ÄÈ­
+            // ë°ì´í„° ì§ë ¬í™”
             //string jData = JsonConvert.SerializeObject(dSOWManagerSaveData);
 
-            // json µ¥ÀÌÅÍ¸¦ Encoding.UTF8ÀÇ ÇÔ¼ö·Î ¹ÙÀÌÆ® ¹è¿­·Î ¸¸µé°í
+            // json ë°ì´í„°ë¥¼ Encoding.UTF8ì˜ í•¨ìˆ˜ë¡œ ë°”ì´íŠ¸ ë°°ì—´ë¡œ ë§Œë“¤ê³ 
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
 
-            // ÀÌ¾îÇÏ±â ½Ã, ÇÊ¿äÇÑ Á¤º¸°ªµéÀ» ºÒ·¯¿Í¼­ °»½ÅÇÑ´Ù. (GuestManager)
+            // ì´ì–´í•˜ê¸° ì‹œ, í•„ìš”í•œ ì •ë³´ê°’ë“¤ì„ ë¶ˆëŸ¬ì™€ì„œ ê°±ì‹ í•œë‹¤. (GuestManager)
             SOWManager mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
-            // µ¤¾î¾º¿öÁø(ÀúÀåµÈ) µ¥ÀÌÅÍ¸¦ ÇöÀç »ç¿ëµÇ´Â µ¥ÀÌÅÍ¿¡ °»½ÅÇÏ¸é ·Îµù ³¡!
+            // ë®ì–´ì”Œì›Œì§„(ì €ì¥ëœ) ë°ì´í„°ë¥¼ í˜„ì¬ ì‚¬ìš©ë˜ëŠ” ë°ì´í„°ì— ê°±ì‹ í•˜ë©´ ë¡œë”© ë!
 
             mSOWManager.yardGatherCount = dSOWManagerSaveData.yardGatherCount.Clone() as int[];
 
@@ -513,41 +513,41 @@ public class LobbyUIManager : MonoBehaviour
     void Load_LetterControllerData()
     {
         string mLetterControllerDataPath = Path.Combine(Application.dataPath + "/Data/", "LetterControllerData.json");
-        // ÆÄÀÏ ½ºÆ®¸² °³¹æ
+        // íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ê°œë°©
         FileStream LetterControllerStream = new FileStream(Application.dataPath + "/Data/LetterControllerData.json", FileMode.Open);
 
-        if (File.Exists(mLetterControllerDataPath)) // ÇØ´ç ÆÄÀÏÀÌ »ı¼ºµÇ¾úÀ¸¸é ºÒ·¯¿À±â
+        if (File.Exists(mLetterControllerDataPath)) // í•´ë‹¹ íŒŒì¼ì´ ìƒì„±ë˜ì—ˆìœ¼ë©´ ë¶ˆëŸ¬ì˜¤ê¸°
         {
-            // º¹È£È­´Â ³ªÁß¿¡ ÇÑ¹ø¿¡ ÇÏ±â
-            // ½ºÆ®¸² ¹è¿­¸¸Å­ ¹ÙÀÌÆ® ¹è¿­ »ı¼º
+            // ë³µí˜¸í™”ëŠ” ë‚˜ì¤‘ì— í•œë²ˆì— í•˜ê¸°
+            // ìŠ¤íŠ¸ë¦¼ ë°°ì—´ë§Œí¼ ë°”ì´íŠ¸ ë°°ì—´ ìƒì„±
             byte[] bLetterControllerData = new byte[LetterControllerStream.Length];
-            // ÀĞ¾î¿À±â
+            // ì½ì–´ì˜¤ê¸°
             LetterControllerStream.Read(bLetterControllerData, 0, bLetterControllerData.Length);
             LetterControllerStream.Close();
 
-            // jsondata¸¦ ½ºÆ®¸µ Å¸ÀÔÀ¸·Î °¡Á®¿À±â
+            // jsondataë¥¼ ìŠ¤íŠ¸ë§ íƒ€ì…ìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°
             string jLetterControllerData = Encoding.UTF8.GetString(bLetterControllerData);
             Debug.Log(jLetterControllerData);
 
-            // ¿ªÁ÷·ÄÈ­
+            // ì—­ì§ë ¬í™”
             LetterControllerData dLetterControllerData = JsonConvert.DeserializeObject<LetterControllerData>(jLetterControllerData);
-            if (null == dLetterControllerData) // ÀúÀåµÈ µ¥ÀÌÅÍ ¾øÀ¸¸é ¸®ÅÏ
+            if (null == dLetterControllerData) // ì €ì¥ëœ ë°ì´í„° ì—†ìœ¼ë©´ ë¦¬í„´
                 return;
-            // µ¥ÀÌÅÍ Á÷·ÄÈ­
+            // ë°ì´í„° ì§ë ¬í™”
             string jData = JsonConvert.SerializeObject(dLetterControllerData);
 
-            // json µ¥ÀÌÅÍ¸¦ Encoding.UTF8ÀÇ ÇÔ¼ö·Î ¹ÙÀÌÆ® ¹è¿­·Î ¸¸µé°í
+            // json ë°ì´í„°ë¥¼ Encoding.UTF8ì˜ í•¨ìˆ˜ë¡œ ë°”ì´íŠ¸ ë°°ì—´ë¡œ ë§Œë“¤ê³ 
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
 
-            // ÀÌ¾îÇÏ±â ½Ã, ÇÊ¿äÇÑ Á¤º¸°ªµéÀ» ºÒ·¯¿Í¼­ °»½ÅÇÑ´Ù. (GuestManager)
+            // ì´ì–´í•˜ê¸° ì‹œ, í•„ìš”í•œ ì •ë³´ê°’ë“¤ì„ ë¶ˆëŸ¬ì™€ì„œ ê°±ì‹ í•œë‹¤. (GuestManager)
             LetterController mLetterController = GameObject.Find("GuestManager").GetComponent<LetterController>();
 
             //if (mLetterController == null)
             //    return;
 
-            // µ¤¾î¾º¿öÁø(ÀúÀåµÈ) µ¥ÀÌÅÍ¸¦ ÇöÀç »ç¿ëµÇ´Â µ¥ÀÌÅÍ¿¡ °»½ÅÇÏ¸é ·Îµù ³¡!
+            // ë®ì–´ì”Œì›Œì§„(ì €ì¥ëœ) ë°ì´í„°ë¥¼ í˜„ì¬ ì‚¬ìš©ë˜ëŠ” ë°ì´í„°ì— ê°±ì‹ í•˜ë©´ ë¡œë”© ë!
 
             mLetterController.satGuestList = dLetterControllerData.satGuestList.Clone() as int[];
             mLetterController.listCount = dLetterControllerData.listCount;
@@ -555,78 +555,78 @@ public class LobbyUIManager : MonoBehaviour
         }
     }
 
-    void Load_SoundData() // ÀÌ¾îÇÒ µ¥ÀÌÅÍ°¡ ÀÖ´Â Áö, »õ·Ó°Ô ÇÃ·¹ÀÌ ÇÏ´Â Áö, ÀÌÀü¿¡ ¼Ò¸®¸¦ ÀúÀåÇÑ µ¥ÀÌÅÍ°¡ ÀÖ´Â Áö
+    void Load_SoundData() // ì´ì–´í•  ë°ì´í„°ê°€ ìˆëŠ” ì§€, ìƒˆë¡­ê²Œ í”Œë ˆì´ í•˜ëŠ” ì§€, ì´ì „ì— ì†Œë¦¬ë¥¼ ì €ì¥í•œ ë°ì´í„°ê°€ ìˆëŠ” ì§€
     {
         string mSoundDataPath = Path.Combine(Application.dataPath + "/Data/", "SoundData.json");
-        // ÆÄÀÏ ½ºÆ®¸² °³¹æ
+        // íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ê°œë°©
         FileStream SoundDataStream = new FileStream(Application.dataPath + "/Data/SoundData.json", FileMode.Open);
 
-        if (File.Exists(mSoundDataPath)) // ÇØ´ç ÆÄÀÏÀÌ »ı¼ºµÇ¾úÀ¸¸é ºÒ·¯¿À±â
+        if (File.Exists(mSoundDataPath)) // í•´ë‹¹ íŒŒì¼ì´ ìƒì„±ë˜ì—ˆìœ¼ë©´ ë¶ˆëŸ¬ì˜¤ê¸°
         {
-            // º¹È£È­´Â ³ªÁß¿¡ ÇÑ¹ø¿¡ ÇÏ±â
-            // ½ºÆ®¸² ¹è¿­¸¸Å­ ¹ÙÀÌÆ® ¹è¿­ »ı¼º
+            // ë³µí˜¸í™”ëŠ” ë‚˜ì¤‘ì— í•œë²ˆì— í•˜ê¸°
+            // ìŠ¤íŠ¸ë¦¼ ë°°ì—´ë§Œí¼ ë°”ì´íŠ¸ ë°°ì—´ ìƒì„±
             byte[] bSoundData = new byte[SoundDataStream.Length];
-            // ÀĞ¾î¿À±â
+            // ì½ì–´ì˜¤ê¸°
             SoundDataStream.Read(bSoundData, 0, bSoundData.Length);
             SoundDataStream.Close();
 
-            // jsondata¸¦ ½ºÆ®¸µ Å¸ÀÔÀ¸·Î °¡Á®¿À±â
+            // jsondataë¥¼ ìŠ¤íŠ¸ë§ íƒ€ì…ìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°
             string jSoundData = Encoding.UTF8.GetString(bSoundData);
             Debug.Log(jSoundData);
 
-            // ¿ªÁ÷·ÄÈ­
+            // ì—­ì§ë ¬í™”
             SoundData dSoundData = JsonConvert.DeserializeObject<SoundData>(jSoundData);
-            if (null == dSoundData) // ÀúÀåµÈ µ¥ÀÌÅÍ ¾øÀ¸¸é ¸®ÅÏ
+            if (null == dSoundData) // ì €ì¥ëœ ë°ì´í„° ì—†ìœ¼ë©´ ë¦¬í„´
                 return;
-            // µ¥ÀÌÅÍ Á÷·ÄÈ­
+            // ë°ì´í„° ì§ë ¬í™”
             string jData = JsonConvert.SerializeObject(dSoundData);
 
-            // json µ¥ÀÌÅÍ¸¦ Encoding.UTF8ÀÇ ÇÔ¼ö·Î ¹ÙÀÌÆ® ¹è¿­·Î ¸¸µé°í
+            // json ë°ì´í„°ë¥¼ Encoding.UTF8ì˜ í•¨ìˆ˜ë¡œ ë°”ì´íŠ¸ ë°°ì—´ë¡œ ë§Œë“¤ê³ 
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
 
 
-            // µ¤¾î¾º¿öÁø(ÀúÀåµÈ) µ¥ÀÌÅÍ¸¦ ÇöÀç »ç¿ëµÇ´Â µ¥ÀÌÅÍ¿¡ °»½ÅÇÏ¸é ·Îµù ³¡!
+            // ë®ì–´ì”Œì›Œì§„(ì €ì¥ëœ) ë°ì´í„°ë¥¼ í˜„ì¬ ì‚¬ìš©ë˜ëŠ” ë°ì´í„°ì— ê°±ì‹ í•˜ë©´ ë¡œë”© ë!
             SceneData.Instance.BGMValue = dSoundData.mSaveBGM;
             SceneData.Instance.SFxValue = dSoundData.mSaveSFx;
             //isFirstPlay = dInitData.isFirstPlay;
         }
     }
 
-    void Load_InitData() // ÀÌ¾îÇÒ µ¥ÀÌÅÍ°¡ ÀÖ´Â Áö, »õ·Ó°Ô ÇÃ·¹ÀÌ ÇÏ´Â Áö, ÀÌÀü¿¡ ¼Ò¸®¸¦ ÀúÀåÇÑ µ¥ÀÌÅÍ°¡ ÀÖ´Â Áö
+    void Load_InitData() // ì´ì–´í•  ë°ì´í„°ê°€ ìˆëŠ” ì§€, ìƒˆë¡­ê²Œ í”Œë ˆì´ í•˜ëŠ” ì§€, ì´ì „ì— ì†Œë¦¬ë¥¼ ì €ì¥í•œ ë°ì´í„°ê°€ ìˆëŠ” ì§€
     {
         string mInitDataPath = Path.Combine(Application.dataPath + "/Data/", "InitData.json");
-        // ÆÄÀÏ ½ºÆ®¸² °³¹æ
+        // íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ê°œë°©
         FileStream InitDataStream = new FileStream(Application.dataPath + "/Data/InitData.json", FileMode.Open);
 
-        if (File.Exists(mInitDataPath)) // ÇØ´ç ÆÄÀÏÀÌ »ı¼ºµÇ¾úÀ¸¸é ºÒ·¯¿À±â
+        if (File.Exists(mInitDataPath)) // í•´ë‹¹ íŒŒì¼ì´ ìƒì„±ë˜ì—ˆìœ¼ë©´ ë¶ˆëŸ¬ì˜¤ê¸°
         {
-            // º¹È£È­´Â ³ªÁß¿¡ ÇÑ¹ø¿¡ ÇÏ±â
-            // ½ºÆ®¸² ¹è¿­¸¸Å­ ¹ÙÀÌÆ® ¹è¿­ »ı¼º
+            // ë³µí˜¸í™”ëŠ” ë‚˜ì¤‘ì— í•œë²ˆì— í•˜ê¸°
+            // ìŠ¤íŠ¸ë¦¼ ë°°ì—´ë§Œí¼ ë°”ì´íŠ¸ ë°°ì—´ ìƒì„±
             byte[] bInitData = new byte[InitDataStream.Length];
-            // ÀĞ¾î¿À±â
+            // ì½ì–´ì˜¤ê¸°
             InitDataStream.Read(bInitData, 0, bInitData.Length);
             InitDataStream.Close();
 
-            // jsondata¸¦ ½ºÆ®¸µ Å¸ÀÔÀ¸·Î °¡Á®¿À±â
+            // jsondataë¥¼ ìŠ¤íŠ¸ë§ íƒ€ì…ìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°
             string jInitData = Encoding.UTF8.GetString(bInitData);
             Debug.Log(jInitData);
 
-            // ¿ªÁ÷·ÄÈ­
+            // ì—­ì§ë ¬í™”
             InitData dInitData = JsonConvert.DeserializeObject<InitData>(jInitData);
-            if (null == dInitData) // ÀúÀåµÈ µ¥ÀÌÅÍ ¾øÀ¸¸é ¸®ÅÏ
+            if (null == dInitData) // ì €ì¥ëœ ë°ì´í„° ì—†ìœ¼ë©´ ë¦¬í„´
                 return;
-            // µ¥ÀÌÅÍ Á÷·ÄÈ­
+            // ë°ì´í„° ì§ë ¬í™”
             string jData = JsonConvert.SerializeObject(dInitData);
 
-            // json µ¥ÀÌÅÍ¸¦ Encoding.UTF8ÀÇ ÇÔ¼ö·Î ¹ÙÀÌÆ® ¹è¿­·Î ¸¸µé°í
+            // json ë°ì´í„°ë¥¼ Encoding.UTF8ì˜ í•¨ìˆ˜ë¡œ ë°”ì´íŠ¸ ë°°ì—´ë¡œ ë§Œë“¤ê³ 
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
 
 
-            // µ¤¾î¾º¿öÁø(ÀúÀåµÈ) µ¥ÀÌÅÍ¸¦ ÇöÀç »ç¿ëµÇ´Â µ¥ÀÌÅÍ¿¡ °»½ÅÇÏ¸é ·Îµù ³¡!
+            // ë®ì–´ì”Œì›Œì§„(ì €ì¥ëœ) ë°ì´í„°ë¥¼ í˜„ì¬ ì‚¬ìš©ë˜ëŠ” ë°ì´í„°ì— ê°±ì‹ í•˜ë©´ ë¡œë”© ë!
             isFirstPlay = dInitData.isFirstPlay;
             //isFirstPlay = dInitData.isFirstPlay;
         }
@@ -644,7 +644,7 @@ public class LobbyUIManager : MonoBehaviour
         SaveLobby_SoundData();
     }
 
-    // ·Îºñ¿¡ ÀúÀå ¸Å´ÏÀú ¾øÀ¸´Ï±î ÀÓ½Ã·Î ÇÔ¼ö »ı¼º.
+    // ë¡œë¹„ì— ì €ì¥ ë§¤ë‹ˆì € ì—†ìœ¼ë‹ˆê¹Œ ì„ì‹œë¡œ í•¨ìˆ˜ ìƒì„±.
     public void SaveLobby_SoundData()
     {
         //SoundManager mSoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
@@ -652,37 +652,37 @@ public class LobbyUIManager : MonoBehaviour
         //if (mSoundManager == null)
         //    return;
 
-        // ÆÄÀÏÀÌ ÀÖ´Ù¸é
+        // íŒŒì¼ì´ ìˆë‹¤ë©´
         if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "SoundData.json")))
         {
-            // »èÁ¦
+            // ì‚­ì œ
             System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "SoundData.json"));
 
         }
-        // »èÁ¦ ÈÄ ´Ù½Ã °³¹æ
-        // ÀÌÀ¯´Â, µ¿ÀûÀ¸·Î »ı¼º µÉ °æ¿ì¿¡ jsonÀ» ÃÊ±âÈ­ ÇÏÁö ¾Ê°í µ¤¾î ¾º¿ì±â ¶§¹®¿¡ Àü¿¡ ÀÖ´ø µ¥ÀÌÅÍº¸´Ù ÀûÀ» °æ¿ì
-        // µÚ¿¡ ³²´Â ¾²·¹±â °ªµé·Î ÀÎÇÏ¿© ¿ªÁ÷·ÄÈ­ ¿À·ù ¹ß»ıÇÔ
-        // µ¿ÀûÀ¸·Î »ı¼ºÇÏ´Â °æ¿ì°¡ ¾Æ´Ñ °æ¿ì (ex, ÇöÀç ¾À ÀÎµ¦½º µî)Àº »ó°ü ¾øÀ½
-        // ÆÄÀÏ ½ºÆ®¸² °³¹æ
+        // ì‚­ì œ í›„ ë‹¤ì‹œ ê°œë°©
+        // ì´ìœ ëŠ”, ë™ì ìœ¼ë¡œ ìƒì„± ë  ê²½ìš°ì— jsonì„ ì´ˆê¸°í™” í•˜ì§€ ì•Šê³  ë®ì–´ ì”Œìš°ê¸° ë•Œë¬¸ì— ì „ì— ìˆë˜ ë°ì´í„°ë³´ë‹¤ ì ì„ ê²½ìš°
+        // ë’¤ì— ë‚¨ëŠ” ì“°ë ˆê¸° ê°’ë“¤ë¡œ ì¸í•˜ì—¬ ì—­ì§ë ¬í™” ì˜¤ë¥˜ ë°œìƒí•¨
+        // ë™ì ìœ¼ë¡œ ìƒì„±í•˜ëŠ” ê²½ìš°ê°€ ì•„ë‹Œ ê²½ìš° (ex, í˜„ì¬ ì”¬ ì¸ë±ìŠ¤ ë“±)ì€ ìƒê´€ ì—†ìŒ
+        // íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ê°œë°©
         FileStream stream = new FileStream(Application.dataPath + "/Data/SoundData.json", FileMode.OpenOrCreate);
 
-        // ÀúÀåÇÒ º¯¼ö°¡ ´ã±ä Å¬·¡½º »ı¼º
+        // ì €ì¥í•  ë³€ìˆ˜ê°€ ë‹´ê¸´ í´ë˜ìŠ¤ ìƒì„±
         SoundData mSoundData = new SoundData();
 
-        // µ¥ÀÌÅÍ ¾÷µ¥ÀÌÆ®
+        // ë°ì´í„° ì—…ë°ì´íŠ¸
         mSoundData.mSaveBGM = SceneData.Instance.BGMValue;
         mSoundData.mSaveSFx = SceneData.Instance.SFxValue;
-        //mInitData.isFirstPlay = false; // ÀúÀåÇßÀ¸´Ï±î Ã³À½ ÇÃ·¹ÀÌ°¡ ¾Æ´Ô.
+        //mInitData.isFirstPlay = false; // ì €ì¥í–ˆìœ¼ë‹ˆê¹Œ ì²˜ìŒ í”Œë ˆì´ê°€ ì•„ë‹˜.
 
-        // µ¥ÀÌÅÍ Á÷·ÄÈ­
+        // ë°ì´í„° ì§ë ¬í™”
         string jSoundData = JsonConvert.SerializeObject(mSoundData);
 
-        // json µ¥ÀÌÅÍ¸¦ Encoding.UTF8ÀÇ ÇÔ¼ö·Î ¹ÙÀÌÆ® ¹è¿­·Î ¸¸µé°í
+        // json ë°ì´í„°ë¥¼ Encoding.UTF8ì˜ í•¨ìˆ˜ë¡œ ë°”ì´íŠ¸ ë°°ì—´ë¡œ ë§Œë“¤ê³ 
         byte[] bSoundData = Encoding.UTF8.GetBytes(jSoundData);
         Debug.Log(jSoundData);
-        // ÇØ´ç ÆÄÀÏ ½ºÆ®¸²¿¡ Àû´Â´Ù.                
+        // í•´ë‹¹ íŒŒì¼ ìŠ¤íŠ¸ë¦¼ì— ì ëŠ”ë‹¤.                
         stream.Write(bSoundData, 0, bSoundData.Length);
-        // ½ºÆ®¸² ´İ±â
+        // ìŠ¤íŠ¸ë¦¼ ë‹«ê¸°
         stream.Close();
     }
 
@@ -693,40 +693,40 @@ public class LobbyUIManager : MonoBehaviour
         //if (mSoundManager == null)
         //    return;
 
-        // ÆÄÀÏÀÌ ÀÖ´Ù¸é
+        // íŒŒì¼ì´ ìˆë‹¤ë©´
         if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "InitData.json")))
         {
-            // »èÁ¦
+            // ì‚­ì œ
             System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "InitData.json"));
 
         }
-        // »èÁ¦ ÈÄ ´Ù½Ã °³¹æ
-        // ÀÌÀ¯´Â, µ¿ÀûÀ¸·Î »ı¼º µÉ °æ¿ì¿¡ jsonÀ» ÃÊ±âÈ­ ÇÏÁö ¾Ê°í µ¤¾î ¾º¿ì±â ¶§¹®¿¡ Àü¿¡ ÀÖ´ø µ¥ÀÌÅÍº¸´Ù ÀûÀ» °æ¿ì
-        // µÚ¿¡ ³²´Â ¾²·¹±â °ªµé·Î ÀÎÇÏ¿© ¿ªÁ÷·ÄÈ­ ¿À·ù ¹ß»ıÇÔ
-        // µ¿ÀûÀ¸·Î »ı¼ºÇÏ´Â °æ¿ì°¡ ¾Æ´Ñ °æ¿ì (ex, ÇöÀç ¾À ÀÎµ¦½º µî)Àº »ó°ü ¾øÀ½
-        // ÆÄÀÏ ½ºÆ®¸² °³¹æ
+        // ì‚­ì œ í›„ ë‹¤ì‹œ ê°œë°©
+        // ì´ìœ ëŠ”, ë™ì ìœ¼ë¡œ ìƒì„± ë  ê²½ìš°ì— jsonì„ ì´ˆê¸°í™” í•˜ì§€ ì•Šê³  ë®ì–´ ì”Œìš°ê¸° ë•Œë¬¸ì— ì „ì— ìˆë˜ ë°ì´í„°ë³´ë‹¤ ì ì„ ê²½ìš°
+        // ë’¤ì— ë‚¨ëŠ” ì“°ë ˆê¸° ê°’ë“¤ë¡œ ì¸í•˜ì—¬ ì—­ì§ë ¬í™” ì˜¤ë¥˜ ë°œìƒí•¨
+        // ë™ì ìœ¼ë¡œ ìƒì„±í•˜ëŠ” ê²½ìš°ê°€ ì•„ë‹Œ ê²½ìš° (ex, í˜„ì¬ ì”¬ ì¸ë±ìŠ¤ ë“±)ì€ ìƒê´€ ì—†ìŒ
+        // íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ê°œë°©
         FileStream stream = new FileStream(Application.dataPath + "/Data/InitData.json", FileMode.OpenOrCreate);
 
-        // ÀúÀåÇÒ º¯¼ö°¡ ´ã±ä Å¬·¡½º »ı¼º
+        // ì €ì¥í•  ë³€ìˆ˜ê°€ ë‹´ê¸´ í´ë˜ìŠ¤ ìƒì„±
         InitData mInitData = new InitData();
 
-        // µ¥ÀÌÅÍ ¾÷µ¥ÀÌÆ®
+        // ë°ì´í„° ì—…ë°ì´íŠ¸
         mInitData.isFirstPlay = isFirstPlay;
-        //mInitData.isFirstPlay = false; // ÀúÀåÇßÀ¸´Ï±î Ã³À½ ÇÃ·¹ÀÌ°¡ ¾Æ´Ô.
+        //mInitData.isFirstPlay = false; // ì €ì¥í–ˆìœ¼ë‹ˆê¹Œ ì²˜ìŒ í”Œë ˆì´ê°€ ì•„ë‹˜.
 
-        // µ¥ÀÌÅÍ Á÷·ÄÈ­
+        // ë°ì´í„° ì§ë ¬í™”
         string jInitData = JsonConvert.SerializeObject(mInitData);
 
-        // json µ¥ÀÌÅÍ¸¦ Encoding.UTF8ÀÇ ÇÔ¼ö·Î ¹ÙÀÌÆ® ¹è¿­·Î ¸¸µé°í
+        // json ë°ì´í„°ë¥¼ Encoding.UTF8ì˜ í•¨ìˆ˜ë¡œ ë°”ì´íŠ¸ ë°°ì—´ë¡œ ë§Œë“¤ê³ 
         byte[] bInitData = Encoding.UTF8.GetBytes(jInitData);
         Debug.Log(jInitData);
-        // ÇØ´ç ÆÄÀÏ ½ºÆ®¸²¿¡ Àû´Â´Ù.                
+        // í•´ë‹¹ íŒŒì¼ ìŠ¤íŠ¸ë¦¼ì— ì ëŠ”ë‹¤.                
         stream.Write(bInitData, 0, bInitData.Length);
-        // ½ºÆ®¸² ´İ±â
+        // ìŠ¤íŠ¸ë¦¼ ë‹«ê¸°
         stream.Close();
     }
 
-    // °ÔÀÓ Á¾·á
+    // ê²Œì„ ì¢…ë£Œ
     public void QuitGame()
     {
         mSFx.Play();
@@ -735,22 +735,22 @@ public class LobbyUIManager : MonoBehaviour
 
     public void GoCredit()
     {
-        // Å©·¹µ÷ È­¸éÀ¸·Î ÀüÈ¯
-        Debug.Log("Å©·¹µ÷È­¸éÀ¸·Î ÀüÈ¯");
+        // í¬ë ˆë”§ í™”ë©´ìœ¼ë¡œ ì „í™˜
+        Debug.Log("í¬ë ˆë”§í™”ë©´ìœ¼ë¡œ ì „í™˜");
     }
-    // »õ·ÎÇÏ±â °æ°íÃ¢
+    // ìƒˆë¡œí•˜ê¸° ê²½ê³ ì°½
     public void ActiveWarning()
     {
-        if (isFirstPlay)  // ¹Ù·Î »õ·Î¿î °ÔÀÓ ½ºÅ¸Æ®         
+        if (isFirstPlay)  // ë°”ë¡œ ìƒˆë¡œìš´ ê²Œì„ ìŠ¤íƒ€íŠ¸         
             NewGame();
         else
             gWarning.SetActive(true);
     }
     public void ActiveContinueWarning()
     {
-        Load_Tutorial(); // ¿©±â¼­ Æ©Åä¸®¾óÀÌ ³¡³µ´Ù¸é ÃÖÃÊ 1È¸ ÀúÀåÀ» ÇÑ °ÍÀÌ´Ï±î ¿©±â¼­ ÀÌ¾îÇÏ±â °æ°íÃ¢ ÆÇº°ÇÏ¸é µÈ´Ù.
+        Load_Tutorial(); // ì—¬ê¸°ì„œ íŠœí† ë¦¬ì–¼ì´ ëë‚¬ë‹¤ë©´ ìµœì´ˆ 1íšŒ ì €ì¥ì„ í•œ ê²ƒì´ë‹ˆê¹Œ ì—¬ê¸°ì„œ ì´ì–´í•˜ê¸° ê²½ê³ ì°½ íŒë³„í•˜ë©´ ëœë‹¤.
 
-        if (isCreateData)  // ÀúÀåÇÑ µ¥ÀÌÅÍ ÀÖÀ¸¸é ±×³É ·Îµå
+        if (isCreateData)  // ì €ì¥í•œ ë°ì´í„° ìˆìœ¼ë©´ ê·¸ëƒ¥ ë¡œë“œ
             ContinueGame();
         else
             gContinueWarning.SetActive(true);
@@ -782,11 +782,11 @@ public class LobbyUIManager : MonoBehaviour
         iContiueGame.sprite = sUnHoveringCon;
     }
 
-    // ÇÑ¿µ ¹öÀüÀÇ ¾ÀÀ¸·Î ÀüÈ¯ ÀüÈ¯ÇÒ ¶§ ÇØ´ç ¾À ÀÎµ¦½ºµéÀ» È°¿ëÇØ¼­ ÀüÈ¯
-    // ÀüÈ¯µÇ¸é boolµîÀ» È°¤·¿ëÇØ¼­ ¿µ¾î->¿µ¾î, ÇÑ±Û->ÇÑ±Û·Î ÀÌ¿ë
+    // í•œì˜ ë²„ì „ì˜ ì”¬ìœ¼ë¡œ ì „í™˜ ì „í™˜í•  ë•Œ í•´ë‹¹ ì”¬ ì¸ë±ìŠ¤ë“¤ì„ í™œìš©í•´ì„œ ì „í™˜
+    // ì „í™˜ë˜ë©´ boolë“±ì„ í™œã…‡ìš©í•´ì„œ ì˜ì–´->ì˜ì–´, í•œê¸€->í•œê¸€ë¡œ ì´ìš©
     public void ChangeKor()
     {
-        // ÀÏ´ÜÀº ·Îºñ¸¸ µÇ´Ï±î 
+        // ì¼ë‹¨ì€ ë¡œë¹„ë§Œ ë˜ë‹ˆê¹Œ 
         if (SceneManager.GetActiveScene().name == "Eng_Lobby")
             SceneManager.LoadScene("Lobby");
     }

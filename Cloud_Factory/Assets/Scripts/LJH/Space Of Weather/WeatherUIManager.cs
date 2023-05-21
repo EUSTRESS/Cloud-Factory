@@ -13,36 +13,36 @@ using System;
 
 public class WeatherUIManager : MonoBehaviour
 {
-    private SeasonDateCalc mSeason; // °èÀı °è»ê ½ºÅ©¸³Æ®
+    private SeasonDateCalc mSeason; // ê³„ì ˆ ê³„ì‚° ìŠ¤í¬ë¦½íŠ¸
     private TutorialManager mTutorialManager;
     private SOWManager mSOWManager;
 
 	[Header("Gather")]
-    public GameObject mGuideGather; // Ã¤ÁıÇÒ°ÇÁö ¾ÈÇÒ°ÇÁö ¾Ë·ÁÁÖ´Â UI
-    public GameObject mGathering;   // Ã¤Áı Áß Ãâ·ÂÇÏ´Â UI
-    public GameObject mGatherResult;// Ã¤Áı °á°ú¸¦ Ãâ·ÂÇÏ´Â UI
+    public GameObject mGuideGather; // ì±„ì§‘í• ê±´ì§€ ì•ˆí• ê±´ì§€ ì•Œë ¤ì£¼ëŠ” UI
+    public GameObject mGathering;   // ì±„ì§‘ ì¤‘ ì¶œë ¥í•˜ëŠ” UI
+    public GameObject mGatherResult;// ì±„ì§‘ ê²°ê³¼ë¥¼ ì¶œë ¥í•˜ëŠ” UI
 
-    public GameObject[] mSeasonObj = new GameObject[4]; // 4°èÀı ¿ÀºêÁ§Æ®
-    public GameObject[] mSeasonUIObj = new GameObject[4]; // 4°èÀı UI¿ÀºêÁ§Æ®
+    public GameObject[] mSeasonObj = new GameObject[4]; // 4ê³„ì ˆ ì˜¤ë¸Œì íŠ¸
+    public GameObject[] mSeasonUIObj = new GameObject[4]; // 4ê³„ì ˆ UIì˜¤ë¸Œì íŠ¸
 
-    public Animator mGatheringAnim; // Ã¤Áı ¾Ö´Ï¸ŞÀÌ¼Ç
+    public Animator mGatheringAnim; // ì±„ì§‘ ì• ë‹ˆë©”ì´ì…˜
 
-    public Text tGatheringText;      // Ã¤Áı Áß... ÅØ½ºÆ®
-    private int mGatheringTextCount; // Ã¤Áı Áß '.' Àç±Í Á¦ÇÑ
+    public Text tGatheringText;      // ì±„ì§‘ ì¤‘... í…ìŠ¤íŠ¸
+    private int mGatheringTextCount; // ì±„ì§‘ ì¤‘ '.' ì¬ê·€ ì œí•œ
 
-    public RectTransform mGatherImageRect; // Ã¤Áı ÀÌ¹ÌÁö Rect Transform
+    public RectTransform mGatherImageRect; // ì±„ì§‘ ì´ë¯¸ì§€ Rect Transform
 
-    public RectTransform[] mFxShine = new RectTransform[5]; // 5°³ÀÇ Ã¤Áı °á°ú È¸Àü È¿°ú
-    public RectTransform[] mGatherRect = new RectTransform[5]; // 5°³ÀÇ Ã¤Áı °á°ú UI ÀÌµ¿
-    public GameObject[] mGatherObj = new GameObject[5]; // 5°³ÀÇ Ã¤Áı °ÔÀÓ ¿ÀºêÁ§Æ®
+    public RectTransform[] mFxShine = new RectTransform[5]; // 5ê°œì˜ ì±„ì§‘ ê²°ê³¼ íšŒì „ íš¨ê³¼
+    public RectTransform[] mGatherRect = new RectTransform[5]; // 5ê°œì˜ ì±„ì§‘ ê²°ê³¼ UI ì´ë™
+    public GameObject[] mGatherObj = new GameObject[5]; // 5ê°œì˜ ì±„ì§‘ ê²Œì„ ì˜¤ë¸Œì íŠ¸
 
-    public int mRandomGather; // Àç·á Ã¤Áı ·£´ı °³¼ö
+    public int mRandomGather; // ì¬ë£Œ ì±„ì§‘ ëœë¤ ê°œìˆ˜
 
     [Header("BackGround")]
-    public GameObject iMainBG; // ¸ŞÀÎ ¹è°æ ÀÌ¹ÌÁö 
-    public Sprite[] mBackground = new Sprite[4]; // °èÀıº°·Î ´Ş¶óÁö´Â ¹è°æ
+    public GameObject iMainBG; // ë©”ì¸ ë°°ê²½ ì´ë¯¸ì§€ 
+    public Sprite[] mBackground = new Sprite[4]; // ê³„ì ˆë³„ë¡œ ë‹¬ë¼ì§€ëŠ” ë°°ê²½
 
-    // ¿µ»óÀ» Âï±âÀ§ÇØ ÀÓ½Ã·Î °¡Á®¿À´Â ¸¶´ç ¿ÀºêÁ§Æ®µé
+    // ì˜ìƒì„ ì°ê¸°ìœ„í•´ ì„ì‹œë¡œ ê°€ì ¸ì˜¤ëŠ” ë§ˆë‹¹ ì˜¤ë¸Œì íŠ¸ë“¤
     private GameObject[] mGardens = new GameObject[4];
     public Sprite[] mSpringGardenSprites = new Sprite[2];
 	public Sprite[] mSummerGardenSprites = new Sprite[2];
@@ -50,7 +50,7 @@ public class WeatherUIManager : MonoBehaviour
 	public Sprite[] mWinterGardenSprites = new Sprite[2];
     private Sprite[] mSwitchGardenSprites = new Sprite[2];
 
-	//¿¹¶÷
+	//ì˜ˆëŒ
 	private GameObject selectedYard;
     private void Awake()
     {
@@ -60,7 +60,7 @@ public class WeatherUIManager : MonoBehaviour
 
 
         SceneData mSceneData = GameObject.Find("SceneDataManager").GetComponent<SceneData>();
-        if (true == mSceneData.mContinueGmae) // ÀÌ¾îÇÏ±â ÁßÀÌ¶ó¸é ·Îµù.
+        if (true == mSceneData.mContinueGmae) // ì´ì–´í•˜ê¸° ì¤‘ì´ë¼ë©´ ë¡œë”©.
             Load_SOWManagerData();
 
     }
@@ -69,7 +69,7 @@ public class WeatherUIManager : MonoBehaviour
     {
         if (mGatherResult.activeSelf)
         {
-            // Ã¤Áı °á°ú È¿°ú
+            // ì±„ì§‘ ê²°ê³¼ íš¨ê³¼
             mFxShine[0].Rotate(0, 0, 25.0f * Time.deltaTime, 0);
             mFxShine[1].Rotate(0, 0, 25.0f * Time.deltaTime, 0);
             mFxShine[2].Rotate(0, 0, 25.0f * Time.deltaTime, 0);
@@ -80,22 +80,22 @@ public class WeatherUIManager : MonoBehaviour
         switch (mSeason.mSeason)
         {
             case 1:
-                UpdateSeasonBg(0);// º½
+                UpdateSeasonBg(0);// ë´„
                 UpdateSeasonGarden(0);
 				UpdateSeasonGardenSprites(1);
 				break;
             case 2:
-                UpdateSeasonBg(1);// ¿©¸§
+                UpdateSeasonBg(1);// ì—¬ë¦„
 				UpdateSeasonGarden(1);
 				UpdateSeasonGardenSprites(2);
 				break;
             case 3:
-                UpdateSeasonBg(2);// °¡À»
+                UpdateSeasonBg(2);// ê°€ì„
 				UpdateSeasonGarden(2);
 				UpdateSeasonGardenSprites(3);
 				break;
             case 4:
-                UpdateSeasonBg(3); // °Ü¿ï
+                UpdateSeasonBg(3); // ê²¨ìš¸
 				UpdateSeasonGarden(3);
 				UpdateSeasonGardenSprites(4);
 				break;
@@ -113,13 +113,13 @@ public class WeatherUIManager : MonoBehaviour
 
             mSeasonObj[i].SetActive(false);
             mSeasonUIObj[i].SetActive(false);
-            // »êÃ¥·Î ¿ÀºêÁ§Æ® Ãß°¡
+            // ì‚°ì±…ë¡œ ì˜¤ë¸Œì íŠ¸ ì¶”ê°€
 
         }
 
         mSeasonObj[_iCurrent].SetActive(true);
         mSeasonUIObj[_iCurrent].SetActive(true);
-        // »êÃ¥·Î ¿ÀºêÁ§Æ® Ãß°¡
+        // ì‚°ì±…ë¡œ ì˜¤ë¸Œì íŠ¸ ì¶”ê°€
 
     }
 
@@ -157,50 +157,53 @@ public class WeatherUIManager : MonoBehaviour
     }
 
 
-    // ¸¶´ç ¹öÆ° Å¬¸¯ ½Ã, Ã¤ÁıÇÏ½Ã°Ú¾¹´Ï±î? ¿ÀºêÁ§Æ® È°¼ºÈ­    
+    // ë§ˆë‹¹ ë²„íŠ¼ í´ë¦­ ì‹œ, ì±„ì§‘í•˜ì‹œê² ì”ë‹ˆê¹Œ? ì˜¤ë¸Œì íŠ¸ í™œì„±í™”    
     public void OpenGuideGather()
     {
         selectedYard = EventSystem.current.currentSelectedGameObject;
 
-		// Ã¤Áı È½¼ö°¡ ¸ğµÎ Â÷°¨µÇ¾úÀ¸¸é Ã¤ÁıÇÏÁö ¾Ê°í Ã¢À» ¶ç¿ìÁö ¾Ê´Â´Ù.
+		// ì±„ì§‘ íšŸìˆ˜ê°€ ëª¨ë‘ ì°¨ê°ë˜ì—ˆìœ¼ë©´ ì±„ì§‘í•˜ì§€ ì•Šê³  ì°½ì„ ë„ìš°ì§€ ì•ŠëŠ”ë‹¤.
 		YardHandleSystem system = selectedYard.GetComponentInParent<YardHandleSystem>();
         system.UpdateYardGatherCount();
 		if (system.CanBeGathered(selectedYard) == false)
 		{
-			Debug.Log("Ã¤Áı °¡´É È½¼ö°¡ ¸ğµÎ Â÷°¨µÇ¾ú½À´Ï´Ù.");
+			Debug.Log("ì±„ì§‘ ê°€ëŠ¥ íšŸìˆ˜ê°€ ëª¨ë‘ ì°¨ê°ë˜ì—ˆìŠµë‹ˆë‹¤.");
 			return;
 		}
         if (mTutorialManager.isFinishedTutorial[2] == false)
         { mTutorialManager.SetActiveFadeOutScreen(false); }
 		mGuideGather.SetActive(true);
 	}
-    // ³ª°¡±â, Ã¤ÁıÇÏ½Ã°Ú¾¹´Ï±î? ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­    
+    // ë‚˜ê°€ê¸°, ì±„ì§‘í•˜ì‹œê² ì”ë‹ˆê¹Œ? ì˜¤ë¸Œì íŠ¸ ë¹„í™œì„±í™”    
     public void CloseGuideGather()
     {
 		if (mTutorialManager.isFinishedTutorial[2] == false) { return; }
 		mGuideGather.SetActive(false);
     }
-    // Ã¤ÁıÇÏ±â
+    // ì±„ì§‘í•˜ê¸°
     public void GoingToGather()
     {
         mGuideGather.SetActive(false);
         mGathering.SetActive(true);
-        mGatheringTextCount = 0; // ÃÊ±âÈ­
-        tGatheringText.text = "Àç·á Ã¤Áı Áß"; // ÃÊ±âÈ­
+        mGatheringTextCount = 0; // ì´ˆê¸°í™”
+        if (LanguageManager.GetInstance() != null 
+            && LanguageManager.GetInstance().GetCurrentLanguage() == "English")
+            { tGatheringText.text = "Gathering"; }
+        else { tGatheringText.text = "ì¬ë£Œ ì±„ì§‘ ì¤‘"; } // ì´ˆê¸°í™”
 
-        if (SeasonDateCalc.Instance) // null check
-        {                            // °¢ ÇØ´çÇÏ´Â ¾Ö´Ï¸ŞÀÌ¼Ç Ãâ·Â
-            Invoke("PrintGatheringText", 0.5f); // 0.5ÃÊ µô·¹ÀÌ¸¶´Ù . Ãß°¡
-            if (SeasonDateCalc.Instance.mSeason == 1) // º½ÀÌ¶ó¸é
+            if (SeasonDateCalc.Instance) // null check
+        {                            // ê° í•´ë‹¹í•˜ëŠ” ì• ë‹ˆë©”ì´ì…˜ ì¶œë ¥
+            Invoke("PrintGatheringText", 0.5f); // 0.5ì´ˆ ë”œë ˆì´ë§ˆë‹¤ . ì¶”ê°€
+            if (SeasonDateCalc.Instance.mSeason == 1) // ë´„ì´ë¼ë©´
                 UpdateGatherAnim(1090, 590, true, false, false, false);
-            else if (SeasonDateCalc.Instance.mSeason == 2) // ¿©¸§ÀÌ¶ó¸é
+            else if (SeasonDateCalc.Instance.mSeason == 2) // ì—¬ë¦„ì´ë¼ë©´
                 UpdateGatherAnim(1090, 590, false, true, false, false);
-            else if (SeasonDateCalc.Instance.mSeason == 3) // °¡À»ÀÌ¶ó¸é
+            else if (SeasonDateCalc.Instance.mSeason == 3) // ê°€ì„ì´ë¼ë©´
                 UpdateGatherAnim(735, 420, false, false, true, false);
-            else if (SeasonDateCalc.Instance.mSeason == 4) // °Ü¿ïÀÌ¶ó¸é
+            else if (SeasonDateCalc.Instance.mSeason == 4) // ê²¨ìš¸ì´ë¼ë©´
                 UpdateGatherAnim(560, 570, false, false, false, true);
         }
-        // 5ÃÊ µ¿¾È Ã¤Áı ÈÄ °á°ú Ãâ·Â
+        // 5ì´ˆ ë™ì•ˆ ì±„ì§‘ í›„ ê²°ê³¼ ì¶œë ¥
         Invoke("Gathering", 5.0f);
 
         mSOWManager.yardGatherCount[selectedYard.transform.GetSiblingIndex()]--;
@@ -209,7 +212,7 @@ public class WeatherUIManager : MonoBehaviour
     
     void UpdateGatherAnim(int _iX, int _iY, bool _bSpring, bool _bSummer, bool _bFall, bool _bWinter)
     {
-        mGatherImageRect.sizeDelta = new Vector2(_iX, _iY); // ÀÌ¹ÌÁö »çÀÌÁî ¸ÂÃß±â
+        mGatherImageRect.sizeDelta = new Vector2(_iX, _iY); // ì´ë¯¸ì§€ ì‚¬ì´ì¦ˆ ë§ì¶”ê¸°
         mGatheringAnim.SetBool("Spring", _bSpring);
         mGatheringAnim.SetBool("Summer", _bSummer);
         mGatheringAnim.SetBool("Fall", _bFall);
@@ -230,7 +233,7 @@ public class WeatherUIManager : MonoBehaviour
         if (!system.CanBeGathered(selectedYard)) { mGardens[selectedYard.transform.GetSiblingIndex()].GetComponent<SpriteRenderer>().sprite = mSwitchGardenSprites[0]; }
         else { mGardens[selectedYard.transform.GetSiblingIndex()].GetComponent<SpriteRenderer>().sprite = mSwitchGardenSprites[1]; }
 
-        if (mRandomGather % 2 == 1) // È¦¼ö
+        if (mRandomGather % 2 == 1) // í™€ìˆ˜
         {
             mGatherRect[0].anchoredPosition = new Vector3(125.0f, 0.0f, 0.0f);
             mGatherRect[1].anchoredPosition = new Vector3(-125.0f, 0.0f, 0.0f);
@@ -245,7 +248,7 @@ public class WeatherUIManager : MonoBehaviour
             mGatherRect[3].anchoredPosition = new Vector3(-450.0f, 0.0f, 0.0f);
         }
 
-        switch (mRandomGather) // active °ü¸®
+        switch (mRandomGather) // active ê´€ë¦¬
         {
             case 0:
                 ActiveRandGather(true, false, false, false, false);
@@ -270,14 +273,14 @@ public class WeatherUIManager : MonoBehaviour
         mGathering.SetActive(false);
         mGatherResult.SetActive(true);
 
-        CancelInvoke(); // ÀÎº¸Å© Ãæµ¹ ¹æÁö¸¦ À§ÇØ¼­ Ãâ·Â °á°ú°¡ ³ª¿À¸é ¸ğµç ÀÎº¸Å© ²¨¹ö¸²
+        CancelInvoke(); // ì¸ë³´í¬ ì¶©ëŒ ë°©ì§€ë¥¼ ìœ„í•´ì„œ ì¶œë ¥ ê²°ê³¼ê°€ ë‚˜ì˜¤ë©´ ëª¨ë“  ì¸ë³´í¬ êº¼ë²„ë¦¼
     }
 
     private void GatherResultMatchWithUI(Dictionary<IngredientData, int> results)
     {
-        if (results == null) { return; } // ÀÌ¹Ì °¡µæÂù Àç·áÀÎ °æ¿ì, YHS¿¡¼­ Gathered¿¡¼­ Á¤º¸¸¦ ¾È³Ö¾î Áà¼­ defaultÀÌ¹ÌÁö »ı¼º, ¹× return ´çÇÔ. defaultÀÌ¹ÌÁö ³ª¿À´Â Çö»ó
-                                            // YHS ¿¡¼­ else°¡ ½ÇÇàµÇµµ µ¥ÀÌÅÍ´Â ³Ñ°ÜÁà¾ß ÇÔ.
-                                            // SetActive(false)µÇ±â Àü, Àü¿¡ Ã¤ÁıµÈ Á¤º¸°¡ ³²¾ÆÀÖ¾î¼­, ÀÌ¹ÌÁö¶û count°¡ ´Ù½Ã Ãâ·ÂµÇ´Â Çö»ó
+        if (results == null) { return; } // ì´ë¯¸ ê°€ë“ì°¬ ì¬ë£Œì¸ ê²½ìš°, YHSì—ì„œ Gatheredì—ì„œ ì •ë³´ë¥¼ ì•ˆë„£ì–´ ì¤˜ì„œ defaultì´ë¯¸ì§€ ìƒì„±, ë° return ë‹¹í•¨. defaultì´ë¯¸ì§€ ë‚˜ì˜¤ëŠ” í˜„ìƒ
+                                            // YHS ì—ì„œ elseê°€ ì‹¤í–‰ë˜ë„ ë°ì´í„°ëŠ” ë„˜ê²¨ì¤˜ì•¼ í•¨.
+                                            // SetActive(false)ë˜ê¸° ì „, ì „ì— ì±„ì§‘ëœ ì •ë³´ê°€ ë‚¨ì•„ìˆì–´ì„œ, ì´ë¯¸ì§€ë‘ countê°€ ë‹¤ì‹œ ì¶œë ¥ë˜ëŠ” í˜„ìƒ
 
         int i = 0;
         foreach (KeyValuePair<IngredientData, int> data in results)
@@ -303,7 +306,7 @@ public class WeatherUIManager : MonoBehaviour
         mGatherObj[4].SetActive(_bFive);
     }
 
-    // Àç±ÍÇÔ¼ö·Î ¸¶Ä§Ç¥¸¦ Àç±ÍÀûÀ¸·Î Ãâ·ÂÇÑ´Ù
+    // ì¬ê·€í•¨ìˆ˜ë¡œ ë§ˆì¹¨í‘œë¥¼ ì¬ê·€ì ìœ¼ë¡œ ì¶œë ¥í•œë‹¤
     void PrintGatheringText()
     {
         mGatheringTextCount++;
@@ -311,16 +314,21 @@ public class WeatherUIManager : MonoBehaviour
 
         if (mGatheringTextCount <= 3)
         {
-            Invoke("PrintGatheringText", 0.25f); // 0.25ÃÊ µô·¹ÀÌ¸¶´Ù . Ãß°¡
+            Invoke("PrintGatheringText", 0.25f); // 0.25ì´ˆ ë”œë ˆì´ë§ˆë‹¤ . ì¶”ê°€
         }
-        else // ÃÊ±âÈ­
+        else // ì´ˆê¸°í™”
         {
             mGatheringTextCount = 0;
-            tGatheringText.text = "Àç·á Ã¤Áı Áß";
-            Invoke("PrintGatheringText", 0.25f); // 0.25ÃÊ µô·¹ÀÌ¸¶´Ù . Ãß°¡
+            
+            if (LanguageManager.GetInstance() != null 
+                && LanguageManager.GetInstance().GetCurrentLanguage() == "English")
+            { tGatheringText.text = "Gathering"; }
+            else { tGatheringText.text = "ì¬ë£Œ ì±„ì§‘ ì¤‘"; } // ì´ˆê¸°í™”
+            
+            Invoke("PrintGatheringText", 0.25f); // 0.25ì´ˆ ë”œë ˆì´ë§ˆë‹¤ . ì¶”ê°€
         }
     }
-    // Ã¤Áı ³¡!
+    // ì±„ì§‘ ë!
     public void CloseResultGather()
     {
         if (mTutorialManager.isFinishedTutorial[2] == false)
@@ -336,37 +344,37 @@ public class WeatherUIManager : MonoBehaviour
     void Load_SOWManagerData()
     {
         string mSowManagerSaveDataPath = Path.Combine(Application.dataPath + "/Data/", "SOWManagerData.json");
-        // ÆÄÀÏ ½ºÆ®¸² °³¹æ
+        // íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ê°œë°©
         FileStream SOWmanageSaveStream = new FileStream(Application.dataPath + "/Data/SOWManagerData.json", FileMode.Open);
 
-        if (File.Exists(mSowManagerSaveDataPath)) // ÇØ´ç ÆÄÀÏÀÌ »ı¼ºµÇ¾úÀ¸¸é ºÒ·¯¿À±â
+        if (File.Exists(mSowManagerSaveDataPath)) // í•´ë‹¹ íŒŒì¼ì´ ìƒì„±ë˜ì—ˆìœ¼ë©´ ë¶ˆëŸ¬ì˜¤ê¸°
         {
-            // º¹È£È­´Â ³ªÁß¿¡ ÇÑ¹ø¿¡ ÇÏ±â
-            // ½ºÆ®¸² ¹è¿­¸¸Å­ ¹ÙÀÌÆ® ¹è¿­ »ı¼º
+            // ë³µí˜¸í™”ëŠ” ë‚˜ì¤‘ì— í•œë²ˆì— í•˜ê¸°
+            // ìŠ¤íŠ¸ë¦¼ ë°°ì—´ë§Œí¼ ë°”ì´íŠ¸ ë°°ì—´ ìƒì„±
             byte[] bSOWManagerSaveData = new byte[SOWmanageSaveStream.Length];
-            // ÀĞ¾î¿À±â
+            // ì½ì–´ì˜¤ê¸°
             SOWmanageSaveStream.Read(bSOWManagerSaveData, 0, bSOWManagerSaveData.Length);
             SOWmanageSaveStream.Close();
 
-            // jsondata¸¦ ½ºÆ®¸µ Å¸ÀÔÀ¸·Î °¡Á®¿À±â
+            // jsondataë¥¼ ìŠ¤íŠ¸ë§ íƒ€ì…ìœ¼ë¡œ ê°€ì ¸ì˜¤ê¸°
             string jSOWManagerSaveData = Encoding.UTF8.GetString(bSOWManagerSaveData);
             Debug.Log(jSOWManagerSaveData);
 
-            // ¿ªÁ÷·ÄÈ­
+            // ì—­ì§ë ¬í™”
             SOWManagerSaveData dSOWManagerSaveData = JsonConvert.DeserializeObject<SOWManagerSaveData>(jSOWManagerSaveData);
 
-            // µ¥ÀÌÅÍ Á÷·ÄÈ­
+            // ë°ì´í„° ì§ë ¬í™”
             //string jData = JsonConvert.SerializeObject(dSOWManagerSaveData);
 
-            // json µ¥ÀÌÅÍ¸¦ Encoding.UTF8ÀÇ ÇÔ¼ö·Î ¹ÙÀÌÆ® ¹è¿­·Î ¸¸µé°í
+            // json ë°ì´í„°ë¥¼ Encoding.UTF8ì˜ í•¨ìˆ˜ë¡œ ë°”ì´íŠ¸ ë°°ì—´ë¡œ ë§Œë“¤ê³ 
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
 
-            // ÀÌ¾îÇÏ±â ½Ã, ÇÊ¿äÇÑ Á¤º¸°ªµéÀ» ºÒ·¯¿Í¼­ °»½ÅÇÑ´Ù. (GuestManager)
+            // ì´ì–´í•˜ê¸° ì‹œ, í•„ìš”í•œ ì •ë³´ê°’ë“¤ì„ ë¶ˆëŸ¬ì™€ì„œ ê°±ì‹ í•œë‹¤. (GuestManager)
             SOWManager mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
-            // µ¤¾î¾º¿öÁø(ÀúÀåµÈ) µ¥ÀÌÅÍ¸¦ ÇöÀç »ç¿ëµÇ´Â µ¥ÀÌÅÍ¿¡ °»½ÅÇÏ¸é ·Îµù ³¡!
+            // ë®ì–´ì”Œì›Œì§„(ì €ì¥ëœ) ë°ì´í„°ë¥¼ í˜„ì¬ ì‚¬ìš©ë˜ëŠ” ë°ì´í„°ì— ê°±ì‹ í•˜ë©´ ë¡œë”© ë!
 
             mSOWManager.yardGatherCount = dSOWManagerSaveData.yardGatherCount.Clone() as int[];
 

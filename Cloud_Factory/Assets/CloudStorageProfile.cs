@@ -15,24 +15,24 @@ public class CloudStorageProfile : MonoBehaviour
     [SerializeField]
     Image[] iPortrait = new Image[20];
 
-    public Button btNextBtn;           // ´ÙÀ½ÆäÀÌÁö ¹öÆ°
-    public Button btPrevBtn;           // ÀÌÀüÆäÀÌÁö ¹öÆ°
-    public Button btGiveBtn;           // ±¸¸§ Á¦°ø ¹öÆ°
+    public Button btNextBtn;           // ë‹¤ìŒí˜ì´ì§€ ë²„íŠ¼
+    public Button btPrevBtn;           // ì´ì „í˜ì´ì§€ ë²„íŠ¼
+    public Button btGiveBtn;           // êµ¬ë¦„ ì œê³µ ë²„íŠ¼
 
-    // °¡Àå ¾Õ¿¡ ÀÖ´Â ÇÁ·ÎÇÊ ¿ÀºêÁ§Æ®ÀÇ ÀÎµ¦½º Á¤º¸
+    // ê°€ì¥ ì•ì— ìˆëŠ” í”„ë¡œí•„ ì˜¤ë¸Œì íŠ¸ì˜ ì¸ë±ìŠ¤ ì •ë³´
     [SerializeField]
     int frontProfileInfo;
     public GameObject mGetCloudContainer;
 
-    // È­¸é»ó¿¡ ³ª¿À°í ÀÖ´Â ¼Õ´ÔÀÇ ¼Õ´Ô¹øÈ£
+    // í™”ë©´ìƒì— ë‚˜ì˜¤ê³  ìˆëŠ” ì†ë‹˜ì˜ ì†ë‹˜ë²ˆí˜¸
     int frontGuestIndex;
 
-    // ±¸¸§À» Á¦°ø¹ŞÀ» ¼ö ÀÖ´Â ¼Õ´ÔµéÀÇ ¼Õ´Ô¹øÈ£ ¸®½ºÆ®
+    // êµ¬ë¦„ì„ ì œê³µë°›ì„ ìˆ˜ ìˆëŠ” ì†ë‹˜ë“¤ì˜ ì†ë‹˜ë²ˆí˜¸ ë¦¬ìŠ¤íŠ¸
     [SerializeField]
     int[]   UsingGuestNumList;
     int     UsingGuestIndex;
 
-    // ±¸¸§À» Á¦°ø¹ŞÀ» ¼ö ÀÖ´Â ¼Õ´ÔµéÀÇ ¸®½ºÆ®ÀÇ ±æÀÌ
+    // êµ¬ë¦„ì„ ì œê³µë°›ì„ ìˆ˜ ìˆëŠ” ì†ë‹˜ë“¤ì˜ ë¦¬ìŠ¤íŠ¸ì˜ ê¸¸ì´
     int numOfUsingGuestList;
 
     void Awake()
@@ -41,25 +41,25 @@ public class CloudStorageProfile : MonoBehaviour
         GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
         UIManager = GameObject.Find("UIManager").GetComponent<RecordUIManager>();
         
-        // ±âÁ¸ ±â´É ÁÖ¼®Ã³¸®
+        // ê¸°ì¡´ ê¸°ëŠ¥ ì£¼ì„ì²˜ë¦¬
         /*
-        // Âø¼®ÁßÀÎ ¼Õ´Ô Áß, ±¸¸§À» Á¦°ø¹ŞÁö ¸øÇÑ ¼Õ´Ô¸¸ Á¦°ø °¡´É ¸®½ºÆ®¿¡ ³Ö´Â´Ù.
+        // ì°©ì„ì¤‘ì¸ ì†ë‹˜ ì¤‘, êµ¬ë¦„ì„ ì œê³µë°›ì§€ ëª»í•œ ì†ë‹˜ë§Œ ì œê³µ ê°€ëŠ¥ ë¦¬ìŠ¤íŠ¸ì— ë„£ëŠ”ë‹¤.
         List<int> temp = new List<int>();
         foreach(int i in SOWManager.mUsingGuestList)
         {
             if (GuestManager.mGuestInfo[i].isUsing == false)
             { 
                 temp.Add(i);
-                Debug.Log(i + "¹ø ¼Õ´ÔÀº ±¸¸§ Á¦°øÀÌ °¡´ÉÇÕ´Ï´Ù.");
+                Debug.Log(i + "ë²ˆ ì†ë‹˜ì€ êµ¬ë¦„ ì œê³µì´ ê°€ëŠ¥í•©ë‹ˆë‹¤.");
             }
             else
             {
-                Debug.Log(i + "¹ø ¼Õ´ÔÀº ±¸¸§ Á¦°øÀÌ °¡´ÉÇÏÁö ¾Ê½À´Ï´Ù.");
+                Debug.Log(i + "ë²ˆ ì†ë‹˜ì€ êµ¬ë¦„ ì œê³µì´ ê°€ëŠ¥í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
             }
         }
         UsingGuestNumList = temp.ToArray();
         */
-        // TODO :  ±¸¸§ º¸°üÇÔ¿¡¼­ Á¦°ø¹ŞÀ» ¼ö ÀÖ´Â ¹¶Æ¼¸¦ °íÁ¤ÇÑ´Ù.
+        // TODO :  êµ¬ë¦„ ë³´ê´€í•¨ì—ì„œ ì œê³µë°›ì„ ìˆ˜ ìˆëŠ” ë­‰í‹°ë¥¼ ê³ ì •í•œë‹¤.
         UsingGuestNumList = new int[] { 3, 6, 9, 12,13 };
 
         numOfUsingGuestList = UsingGuestNumList.Length;
@@ -84,9 +84,9 @@ public class CloudStorageProfile : MonoBehaviour
 
     public void GetNextProfile()
     {
-        // ÀÌÀü ÇÁ·ÎÇÊÀ» ºÒ·¯¿Â´Ù.
+        // ì´ì „ í”„ë¡œí•„ì„ ë¶ˆëŸ¬ì˜¨ë‹¤.
 
-        // ¸Ç¾Õ¿¡ ³ª¿Â ¼Õ´ÔÀÇ ÀÎµ¦½º°¡ 
+        // ë§¨ì•ì— ë‚˜ì˜¨ ì†ë‹˜ì˜ ì¸ë±ìŠ¤ê°€ 
         if (UsingGuestIndex >= numOfUsingGuestList - 1)
         {
             //UsingGuestIndex = 0;
@@ -105,7 +105,7 @@ public class CloudStorageProfile : MonoBehaviour
 
     public void GetPrevProfile()
     {
-        // ´ÙÀ½ ÇÁ·ÎÇÊÀ» ºÒ·¯¿Â´Ù.       
+        // ë‹¤ìŒ í”„ë¡œí•„ì„ ë¶ˆëŸ¬ì˜¨ë‹¤.       
         if (UsingGuestIndex <= 0)
         {
             UsingGuestIndex = 0;
@@ -132,16 +132,16 @@ public class CloudStorageProfile : MonoBehaviour
         // Button
         btGiveBtn = Profile.transform.GetChild(1).GetComponent<Button>();
 
-        // ¼Õ´ÔÀÌ ¾ø´Â °æ¿ì¿¡´Â Á¤º¸ ¾÷µ¥ÀÌÆ®¸¦ ÇÏÁö ¾Ê´Â´Ù.
+        // ì†ë‹˜ì´ ì—†ëŠ” ê²½ìš°ì—ëŠ” ì •ë³´ ì—…ë°ì´íŠ¸ë¥¼ í•˜ì§€ ì•ŠëŠ”ë‹¤.
         if (numOfUsingGuestList == 0)
         {
             btGiveBtn.interactable = false;
-            Debug.Log("±¸¸§Á¦°øÀÌ °¡´ÉÇÑ ¼Õ´ÔÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+            Debug.Log("êµ¬ë¦„ì œê³µì´ ê°€ëŠ¥í•œ ì†ë‹˜ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
             return;   
         }
 
-        // DEMO ¹öÀü Ãß°¡»çÇ×
-        // ÇØ´ç ¼Õ´ÔÀÌ ³¯¾¾ÀÇ °ø°£¿¡ Á¸ÀçÇÏÁö ¾Ê´Â´Ù¸é Á¦°ø¹öÆ°ÀÌ ºñÈ°¼ºÈ­ µÈ´Ù.
+        // DEMO ë²„ì „ ì¶”ê°€ì‚¬í•­
+        // í•´ë‹¹ ì†ë‹˜ì´ ë‚ ì”¨ì˜ ê³µê°„ì— ì¡´ì¬í•˜ì§€ ì•ŠëŠ”ë‹¤ë©´ ì œê³µë²„íŠ¼ì´ ë¹„í™œì„±í™” ëœë‹¤.
         {
             List<int> UsingList = SOWManager.mUsingGuestList;
             bool test = false;
@@ -165,30 +165,32 @@ public class CloudStorageProfile : MonoBehaviour
         // Image
         Image iProfile = Profile.transform.GetChild(0).GetComponent<Image>();
 
-        // ³ªÀÌ ÀÌ¸§ Á÷¾÷
+        // ë‚˜ì´ ì´ë¦„ ì§ì—…
         Text tName = Profile.transform.GetChild(7).GetComponent<Text>();
         Text tAge = Profile.transform.GetChild(8).GetComponent<Text>();
         Text tJob = Profile.transform.GetChild(9).GetComponent<Text>();
 
-        // ¸¸Á·µµ, ÇÑ ÁÙ ¿ä¾à
+        // ë§Œì¡±ë„, í•œ ì¤„ ìš”ì•½
         Text tSat = Profile.transform.GetChild(10).GetComponent<Text>();
         Text tSentence = Profile.transform.GetChild(11).GetComponent<Text>();
 
-        // ¹¶Æ¼ Á¤º¸¸¦ °¡Á®¿Â´Ù.
+        // ë­‰í‹° ì •ë³´ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
         GuestInfos info = GuestManager.GetComponent<Guest>().mGuestInfo[frontGuestIndex];
 
-        // °¡Á®¿Â Á¤º¸°ªÀ» ÀÌ¿ëÇÏ¿© Ã¤¿î´Ù.
+        // ê°€ì ¸ì˜¨ ì •ë³´ê°’ì„ ì´ìš©í•˜ì—¬ ì±„ìš´ë‹¤.
         iProfile.sprite = UIManager.sBasicProfile[frontGuestIndex];
 
-        // DEMO ±â´É
-        // TODO : ¹¶Æ¼ Á¤º¸¸¦ ºÒ·¯¿Í¼­ ¹æ¹®ÇÑ ÀûÀÌ ÀÖ´Â °æ¿ì¿¡¸¸ Á¤º¸¸¦ ¶ç¿î´Ù.
+        // DEMO ê¸°ëŠ¥
+        // TODO : ë­‰í‹° ì •ë³´ë¥¼ ë¶ˆëŸ¬ì™€ì„œ ë°©ë¬¸í•œ ì ì´ ìˆëŠ” ê²½ìš°ì—ë§Œ ì •ë³´ë¥¼ ë„ìš´ë‹¤.
         if (info.mVisitCount < 2)
         {
             tName.text = "???";
             tAge.text = "???";
             tJob.text = "???";
             tSat.text = "???";
-            tSentence.text = "Á¤º¸¸¦ ¾Ë ¼ö ¾ø½À´Ï´Ù.";
+            tSentence.text = "ì •ë³´ë¥¼ ì•Œ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.";
+            if (LanguageManager.GetInstance().GetCurrentLanguage() == "English")
+                tSentence.text = "No information has been released.";
 
             return;
         }
@@ -209,11 +211,11 @@ public class CloudStorageProfile : MonoBehaviour
     { 
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
-        // ±¸¸§ Á¦°øÇÏ´Â ¸Ş¼Òµå È£Ãâ
+        // êµ¬ë¦„ ì œê³µí•˜ëŠ” ë©”ì†Œë“œ í˜¸ì¶œ
         StoragedCloudData storagedCloudData
             = mGetCloudContainer.GetComponent<CloudContainer>().mSelecedCloud;
 
-        //±¸¸§ Á¦°ø ¿¹¿ÜÃ³¸®
+        //êµ¬ë¦„ ì œê³µ ì˜ˆì™¸ì²˜ë¦¬
         if (storagedCloudData == null || numOfUsingGuestList == 0)
         {
             return;
@@ -237,10 +239,10 @@ public class CloudStorageProfile : MonoBehaviour
         int guestNum = frontGuestIndex;
         GuestManager.mGuestInfo[guestNum].isUsing = true;
 
-        //±¸¸§ÀÎº¥Åä¸®¿¡¼­ »ç¿ëµÈ ±¸¸§ »èÁ¦
+        //êµ¬ë¦„ì¸ë²¤í† ë¦¬ì—ì„œ ì‚¬ìš©ëœ êµ¬ë¦„ ì‚­ì œ
         mGetCloudContainer.GetComponent<CloudContainer>().deleteSelectedCloud();
 
-		// ¸®½ºÆ®¿¡¼­ »ç¿ë¹ŞÀº ¼Õ´Ô Á¦°ÅÇÏ±â
+		// ë¦¬ìŠ¤íŠ¸ì—ì„œ ì‚¬ìš©ë°›ì€ ì†ë‹˜ ì œê±°í•˜ê¸°
 		SOWManager sow = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         int count = sow.mUsingGuestList.Count;
 		for (int i = count - 1; i >= 0; i--)
@@ -254,6 +256,6 @@ public class CloudStorageProfile : MonoBehaviour
 		SOWManager.SetCloudData(guestNum, storagedCloudData);
 		SceneManager.LoadScene("Space Of Weather");
 
-        Debug.Log("±¸¸§Á¦°ø ¸Ş¼Òµå È£Ãâ");
+        Debug.Log("êµ¬ë¦„ì œê³µ ë©”ì†Œë“œ í˜¸ì¶œ");
     }
 }

@@ -28,9 +28,7 @@ public class SeasonDateCalc : MonoBehaviour
     public int      mYear;   // 년 (~)    
 
     private bool    mChangeDay = false;
-
-    // Demo Version
-    public bool isSatOrDisSatGuestExist; 
+    
 
     [Header("테스트 변수")]
     [SerializeField]
@@ -51,7 +49,6 @@ public class SeasonDateCalc : MonoBehaviour
             // 이미 존재하면 이전부터 사용하던 것을 사용함
             Destroy(this.gameObject);
         }
-        isSatOrDisSatGuestExist = false;
     }
 
     void Update()
@@ -68,10 +65,6 @@ public class SeasonDateCalc : MonoBehaviour
             // 일 계산
             // 20일 제한
 
-            // Demo Version
-            if(mDay >= 29 && SceneManager.GetActiveScene().name != "Demo Thank You") { SceneManager.LoadScene("Demo Thank you"); }
-            mDay += CalcDay(ref mSecond);
-            /*
             if (mDay > 20) mDay = 1;
             else mDay += CalcDay(ref mSecond);
             // 주 계산        
@@ -80,7 +73,7 @@ public class SeasonDateCalc : MonoBehaviour
             mSeason += CalcSeason(ref mWeek);
             // 년 계산
             mYear += CalcYear(ref mSeason);
-            */
+            
 
             if (mChangeDay)
             {
@@ -130,11 +123,7 @@ public class SeasonDateCalc : MonoBehaviour
                 {
                     GuestManager.InitDay();
                     SOWManager.InitSOW();
-                    // Demo Version
-                    //ingredientDataAutoAdder.CheckIsCured();
-                    if(GuestManager.GetSatGuestList().Length > 0 || GuestManager.DisSatGuestList().Length > 0) { 
-                        isSatOrDisSatGuestExist = true;
-                    }
+
                     // End Demo Version
                 }
                 if(SceneManager.GetActiveScene().name == "Space Of Weather") { GameObject.Find("UIManager").GetComponent<InstantiateFadeOutScreen>().InstantiateGif(); }

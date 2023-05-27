@@ -1738,7 +1738,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 337721221}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ea2c6d45cc0d1842884fdb1ae19347c, type: 3}
+  m_Script: {fileID: 11500000, guid: 400ad5c2c1e3e204f9d1ccac3ced4194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &363397985
@@ -6679,6 +6679,70 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!1 &2127432572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2127432574}
+  - component: {fileID: 2127432573}
+  m_Layer: 0
+  m_Name: LanguageChanger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2127432573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2127432572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e64ecc3c3fc93419967bf3ae4becf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tOK1: {fileID: 0}
+  tOK2: {fileID: 0}
+  tBack: {fileID: 0}
+  tRecordOfHealing: {fileID: 0}
+  tGuideBook: {fileID: 0}
+  tDrawingRoom: {fileID: 0}
+  tCloudFactory: {fileID: 1676110630}
+  tSpaceOfWeather: {fileID: 1869335159}
+  tGameOver: {fileID: 40333185}
+  tAccept: {fileID: 1108407611}
+  tReject: {fileID: 279699374}
+  tSetting: {fileID: 589161449}
+  tBackGroundSound: {fileID: 816259932}
+  tEffectSound: {fileID: 601313263}
+  tGather: {fileID: 0}
+  tGatherWarning: {fileID: 0}
+  tResult: {fileID: 0}
+  tName: {fileID: 2029835022}
+  tAge: {fileID: 363397987}
+  tJob: {fileID: 2135288556}
+  tReason: {fileID: 935596239}
+--- !u!4 &2127432574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2127432572}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2135288554
 GameObject:
   m_ObjectHideFlags: 0

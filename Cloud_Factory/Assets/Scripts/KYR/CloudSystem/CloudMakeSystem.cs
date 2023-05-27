@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace CloudSystem
 {
-    public delegate void EventHandler(string name);//Àç·áÀÌ¸§ È¤Àº Å°¸¦ ÀÎÀÚ·Î ¹Ş¾Æ ³Ñ±è.
+    public delegate void EventHandler(string name);//ì¬ë£Œì´ë¦„ í˜¹ì€ í‚¤ë¥¼ ì¸ìë¡œ ë°›ì•„ ë„˜ê¹€.
 
     //selected ingredients list
     class S_list
@@ -14,8 +14,8 @@ namespace CloudSystem
         private List<GameObject> UI_slct_mtrl;
         private int UI_mtrl_count;
 
-        public Sprite default_sprite;//privateÀ¸·Î ¹Ù²Ü ¿¹Á¤.
-        public Sprite cloud_sprite;//Data structure·Î ¹Ù²Ü ¿¹Á¤.
+        public Sprite default_sprite;//privateìœ¼ë¡œ ë°”ê¿€ ì˜ˆì •.
+        public Sprite cloud_sprite;//Data structureë¡œ ë°”ê¿€ ì˜ˆì •.
 
         public void init(Transform T_mtrl)
         {
@@ -34,7 +34,7 @@ namespace CloudSystem
             UI_slct_mtrl[total - 1].GetComponent<Image>().sprite = data.image;
         }
 
-        public List<IngredientData> mGetingredientDatas(IngredientList mtrlDATA) //È®Á¤µÈ ¸®½ºÆ®¸¦ IngredientData¸¦ °®°íÀÖ´Â ¸®½ºÆ®·Î º¯È¯ÇÏ¿© Á¦°ø.
+        public List<IngredientData> mGetingredientDatas(IngredientList mtrlDATA) //í™•ì •ëœ ë¦¬ìŠ¤íŠ¸ë¥¼ IngredientDataë¥¼ ê°–ê³ ìˆëŠ” ë¦¬ìŠ¤íŠ¸ë¡œ ë³€í™˜í•˜ì—¬ ì œê³µ.
         {
             List<IngredientData> results = new List<IngredientData>();
             foreach(GameObject stock in UI_slct_mtrl)
@@ -51,11 +51,11 @@ namespace CloudSystem
         public List<EmotionInfo> mGetTotalEmoList(IngredientList mtrlDATA)
         {
             List<IngredientData> raw = mGetingredientDatas(mtrlDATA);
-            //Àç·áµéÁ¾·ùÀÇ ¼ö¸¦ µ¥ÀÌÅÍ·Î ÀúÀåÇÑ´Ù.
+            //ì¬ë£Œë“¤ì¢…ë¥˜ì˜ ìˆ˜ë¥¼ ë°ì´í„°ë¡œ ì €ì¥í•œë‹¤.
 
             List<EmotionInfo> results = new List<EmotionInfo>();
 
-            //Àç·áµéÀÇ °¨Á¤µéÀ» Â÷·Ê·Î ¸®½ºÆ®¿¡ Ãß°¡ÇÑ´Ù.
+            //ì¬ë£Œë“¤ì˜ ê°ì •ë“¤ì„ ì°¨ë¡€ë¡œ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€í•œë‹¤.
             foreach(IngredientData data in raw)
             {
                 foreach (KeyValuePair<int, int> emo in data.iEmotion)
@@ -72,13 +72,13 @@ namespace CloudSystem
 
         public GameObject getErsdobj(string name)
         {
-            GameObject ERSD = UI_slct_mtrl.Find(item => name == item.name); //»èÁ¦µÈ ºóÄ­ Ã£±â.
+            GameObject ERSD = UI_slct_mtrl.Find(item => name == item.name); //ì‚­ì œëœ ë¹ˆì¹¸ ì°¾ê¸°.
             ERSD.GetComponent<Image>().sprite = default_sprite;
 
             return ERSD;
         }
 
-        public void m_sort(GameObject ERSD,int total) //¸®½ºÆ®UI Á¤·Ä
+        public void m_sort(GameObject ERSD,int total) //ë¦¬ìŠ¤íŠ¸UI ì •ë ¬
         {
             int idx = UI_slct_mtrl.FindIndex(item => ERSD == item);
             if (total <= 0) return;
@@ -99,7 +99,7 @@ namespace CloudSystem
         {
             if(isBright)
             {
-                //»ö ¹à°Ô
+                //ìƒ‰ ë°ê²Œ
                 for (int i = 0; i < total; i++)
                 {
                     UI_slct_mtrl[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
@@ -107,7 +107,7 @@ namespace CloudSystem
             }
             else
             {
-                //»ö ¾îµÓ°Ô
+                //ìƒ‰ ì–´ë‘¡ê²Œ
                 for (int i = 0; i < total; i++)
                 {
                     UI_slct_mtrl[i].GetComponent<Image>().color = new Color(0.5f, 0.5f, 0.5f, 1f);
@@ -118,7 +118,7 @@ namespace CloudSystem
         {
             for (int i = 0; i < _total; i++)
             {
-                Debug.Log("ÀÌ¹ÌÁö ÃÊ±âÈ­");
+                Debug.Log("ì´ë¯¸ì§€ ì´ˆê¸°í™”");
                 UI_slct_mtrl[i].GetComponent<Image>().sprite = default_sprite;
             }
         }
@@ -136,7 +136,7 @@ namespace CloudSystem
             return temp.Count;
         }
 
-        public int getCloudShelfLife()//±¸¸§ÀÇ À¯Åë±âÇÑÀ» ¹İÈ¯ÇÑ´Ù.
+        public int getCloudShelfLife()//êµ¬ë¦„ì˜ ìœ í†µê¸°í•œì„ ë°˜í™˜í•œë‹¤.
         {
             switch (getMtrlTypeCount())
             {
@@ -162,16 +162,16 @@ public class CloudMakeSystem : MonoBehaviour
     ////////////////////////////////////////////////////////
     ///////            Interface Value               ///////
     ////////////////////////////////////////////////////////
-    public CloudSystem.EventHandler E_Selected;  //ÀÎº¥Åä¸®¿¡¼­ Àç·á¼±ÅÃ½Ã ÀÌº¥Æ® È£Ãâ_ ÇÔ¼ö ¸í º¯°æÇÏ°í ½ÃÇÄ...
-    public CloudSystem.EventHandler E_UnSelected;  // ¼±ÅÃµÈ Àç·á Ãë¼Ò 
-    public CloudSystem.EventHandler E_createCloud; //±¸¸§Á¦ÀÛ ¹öÆ°
+    public CloudSystem.EventHandler E_Selected;  //ì¸ë²¤í† ë¦¬ì—ì„œ ì¬ë£Œì„ íƒì‹œ ì´ë²¤íŠ¸ í˜¸ì¶œ_ í•¨ìˆ˜ ëª… ë³€ê²½í•˜ê³  ì‹œí””...
+    public CloudSystem.EventHandler E_UnSelected;  // ì„ íƒëœ ì¬ë£Œ ì·¨ì†Œ 
+    public CloudSystem.EventHandler E_createCloud; //êµ¬ë¦„ì œì‘ ë²„íŠ¼
 
 
-    //±¸¸§ÀÎº¥Åä¸® ¸®½ºÆ®_ÀÓ½Ã
-    public List<GameObject> L_cloudsInven;//¿ÜºÎ¿¡¼­ 5°³·Î ÁöÁ¤ÇØ³õÀ½
-    //ÀÓ½Ã
-    public Sprite default_sprite;//privateÀ¸·Î ¹Ù²Ü ¿¹Á¤.
-    public Sprite cloud_sprite;//Data structure·Î ¹Ù²Ü ¿¹Á¤.
+    //êµ¬ë¦„ì¸ë²¤í† ë¦¬ ë¦¬ìŠ¤íŠ¸_ì„ì‹œ
+    public List<GameObject> L_cloudsInven;//ì™¸ë¶€ì—ì„œ 5ê°œë¡œ ì§€ì •í•´ë†“ìŒ
+    //ì„ì‹œ
+    public Sprite default_sprite;//privateìœ¼ë¡œ ë°”ê¿€ ì˜ˆì •.
+    public Sprite cloud_sprite;//Data structureë¡œ ë°”ê¿€ ì˜ˆì •.
 
     ////////////////////////////////////////////////////////
     ///////            private Value                 ///////
@@ -180,7 +180,7 @@ public class CloudMakeSystem : MonoBehaviour
 
     //Data
     [SerializeField]
-    public IngredientList mtrlDATA; // ¸ğµç Àç·á Á¤º¸¸¦ °®°í ÀÖ´Â ¸®½ºÆ® scriptable data
+    public IngredientList mtrlDATA; // ëª¨ë“  ì¬ë£Œ ì •ë³´ë¥¼ ê°–ê³  ìˆëŠ” ë¦¬ìŠ¤íŠ¸ scriptable data
 
     public EmotionsTable emoTableDATA;
 
@@ -199,11 +199,11 @@ public class CloudMakeSystem : MonoBehaviour
 
     //bool
     [HideInInspector]
-    public bool isMakingCloud;   // ±¸¸§ Á¦ÀÛ Áß, InventoryContainer.cs¿¡¼­ ¼±ÅÃµÈ Àç·áµéÀ» Å¬¸¯ÇÒ ¼ö ¾ø°Ô Á¦ÇÑÇÏ±â À§ÇÑ º¯¼ö 
+    public bool isMakingCloud;   // êµ¬ë¦„ ì œì‘ ì¤‘, InventoryContainer.csì—ì„œ ì„ íƒëœ ì¬ë£Œë“¤ì„ í´ë¦­í•  ìˆ˜ ì—†ê²Œ ì œí•œí•˜ê¸° ìœ„í•œ ë³€ìˆ˜ 
 
     private void d_selectMtrl(string name)
     {
-        if (total >= 5) return; //ÃÖ´ë 5°³±îÁö ¼±ÅÃ °¡´É
+        if (total >= 5) return; //ìµœëŒ€ 5ê°œê¹Œì§€ ì„ íƒ ê°€ëŠ¥
 
 		total++; //update total count
 
@@ -230,7 +230,7 @@ public class CloudMakeSystem : MonoBehaviour
     private void d_deselectMtrl(string name)
     {
         total--; //update total count
-        slct_mtrl.m_sort(slct_mtrl.getErsdobj(name),total); //±¸¸§°øÀå¿¡¼­ÀÇ ÀÌ¹ÌÁö Á¤·Ä
+        slct_mtrl.m_sort(slct_mtrl.getErsdobj(name),total); //êµ¬ë¦„ê³µì¥ì—ì„œì˜ ì´ë¯¸ì§€ ì •ë ¬
 
 		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
 		if (mTutorialManager.isFinishedTutorial[4] == false
@@ -254,15 +254,15 @@ public class CloudMakeSystem : MonoBehaviour
 
         return false;
     }
-    private void d_readCSV(string name)//±¸¸§ Á¶ÇÕ¹ı ¾Ë°í¸®Áò
+    private void d_readCSV(string name)//êµ¬ë¦„ ì¡°í•©ë²• ì•Œê³ ë¦¬ì¦˜
     {
-        Debug.Log("Á¶ÇÕÀç·á¸¦ È®ÀÎÇÕ´Ï´Ù.");
-        //1.°è»ê µé¾î°¥ °¨Á¤ ¸®½ºÆ® ÃßÃâ. => Base Emotion List
+        Debug.Log("ì¡°í•©ì¬ë£Œë¥¼ í™•ì¸í•©ë‹ˆë‹¤.");
+        //1.ê³„ì‚° ë“¤ì–´ê°ˆ ê°ì • ë¦¬ìŠ¤íŠ¸ ì¶”ì¶œ. => Base Emotion List
         List<EmotionInfo> emotionList = slct_mtrl.mGetTotalEmoList(mtrlDATA);
 
-        //2.Áßº¹°¨Á¤ ¸®½ºÆ® ÃßÃâ
-        //(1) Áßº¹°¨Á¤ÀÌ 3°³ ÀÌ»óÀÏ °æ¿ì ¾ÕÂÊ¿¡ À§Ä¡ÇÑ 2°³ÀÇ Á¾·ù¸¸ Áßº¹¸®½ºÆ®¿¡ ³Ö´Â´Ù.
-        Dictionary<Emotion, KeyValuePair<int, int>> overlapsEmosList = new Dictionary<Emotion, KeyValuePair<int, int>>(); //Áßº¹°¨Á¤ Key : {percent, percent}
+        //2.ì¤‘ë³µê°ì • ë¦¬ìŠ¤íŠ¸ ì¶”ì¶œ
+        //(1) ì¤‘ë³µê°ì •ì´ 3ê°œ ì´ìƒì¼ ê²½ìš° ì•ìª½ì— ìœ„ì¹˜í•œ 2ê°œì˜ ì¢…ë¥˜ë§Œ ì¤‘ë³µë¦¬ìŠ¤íŠ¸ì— ë„£ëŠ”ë‹¤.
+        Dictionary<Emotion, KeyValuePair<int, int>> overlapsEmosList = new Dictionary<Emotion, KeyValuePair<int, int>>(); //ì¤‘ë³µê°ì • Key : {percent, percent}
 
         Dictionary<Emotion, int> tmpList = new Dictionary<Emotion, int>();
 
@@ -273,59 +273,59 @@ public class CloudMakeSystem : MonoBehaviour
             {
                 EmotionInfo content = emotionList[i];
 
-                if (tmpList.ContainsKey(content.Key))//-1- content°¡ Áßº¹¸®½ºÆ®¿¡ Æ÷ÇÔµÇ¾îÀÖÀ¸¸é
+                if (tmpList.ContainsKey(content.Key))//-1- contentê°€ ì¤‘ë³µë¦¬ìŠ¤íŠ¸ì— í¬í•¨ë˜ì–´ìˆìœ¼ë©´
                 {
                     //overlapsEmosList.Add(content.Key, new KeyValuePair<int, int>(tmpList.Value, content.Value));
-                    //-2- Áßº¹ °¨Á¤ Áß ³·Àº ¼öÄ¡¸¦ °¡Áø °¨Á¤ÀÌ Á¶ÇÕ¿¡ »ç¿ëµÈ´Ù.
-                    int mergedV = tmpList[content.Key] <= content.Value ? tmpList[content.Key] : content.Value;//»ïÇ×¿¬»êÀÚ¸¦ ÀÌ¿ëÇÏ¿© ´õ ÀÛÀº °ª Â÷¿ë.
-                    Debug.Log("[(1)³·Àº¼öÄ¡»ç¿ë]" + tmpList[content.Key] + "|" + content.Value + "¿¡¼­" + mergedV + "Â÷¿ë!");
-                    tmpList.Remove(content.Key);//-2-1 Á¶ÇÕ¿¡ »ç¿ëµÉ °¨Á¤À» Ã³¸®ÇßÀ¸¸é Áßº¹°¨Á¤ ¸®½ºÆ®¿¡¼­ Á¦¿ÜÇÑ´Ù.
+                    //-2- ì¤‘ë³µ ê°ì • ì¤‘ ë‚®ì€ ìˆ˜ì¹˜ë¥¼ ê°€ì§„ ê°ì •ì´ ì¡°í•©ì— ì‚¬ìš©ëœë‹¤.
+                    int mergedV = tmpList[content.Key] <= content.Value ? tmpList[content.Key] : content.Value;//ì‚¼í•­ì—°ì‚°ìë¥¼ ì´ìš©í•˜ì—¬ ë” ì‘ì€ ê°’ ì°¨ìš©.
+                    Debug.Log("[(1)ë‚®ì€ìˆ˜ì¹˜ì‚¬ìš©]" + tmpList[content.Key] + "|" + content.Value + "ì—ì„œ" + mergedV + "ì°¨ìš©!");
+                    tmpList.Remove(content.Key);//-2-1 ì¡°í•©ì— ì‚¬ìš©ë  ê°ì •ì„ ì²˜ë¦¬í–ˆìœ¼ë©´ ì¤‘ë³µê°ì • ë¦¬ìŠ¤íŠ¸ì—ì„œ ì œì™¸í•œë‹¤.
 
-                    Debug.Log("[(2)Áßº¹¹ß°ß]Áßº¹¾ÆÀÌÅÛ ¸®½ºÆ®¿¡¼­ »èÁ¦");
-                    Debug_PrintState("[ÇöÀçÁßº¹¸®½ºÆ® »èÁ¦ °á°ú]", tmpList);
-                    //-3- "emotionList" ¿¡¼­ ÀÛÀº °ªÀ» °¡Áø °¨Á¤°ú ÀÎÁ¢ÇÑ °¨Á¤°ú °¨Á¤ Á¶ÇÕÀÌ ÀÏ¾î³­´Ù.
-                    //-3-1 Á¶ÇÕÇÒ ÀÎÁ¢ °¨Á¤À» ¿ì¼±¼øÀ§¿¡ µû¶ó ¼±Á¤ÇÑ´Ù.
+                    Debug.Log("[(2)ì¤‘ë³µë°œê²¬]ì¤‘ë³µì•„ì´í…œ ë¦¬ìŠ¤íŠ¸ì—ì„œ ì‚­ì œ");
+                    Debug_PrintState("[í˜„ì¬ì¤‘ë³µë¦¬ìŠ¤íŠ¸ ì‚­ì œ ê²°ê³¼]", tmpList);
+                    //-3- "emotionList" ì—ì„œ ì‘ì€ ê°’ì„ ê°€ì§„ ê°ì •ê³¼ ì¸ì ‘í•œ ê°ì •ê³¼ ê°ì • ì¡°í•©ì´ ì¼ì–´ë‚œë‹¤.
+                    //-3-1 ì¡°í•©í•  ì¸ì ‘ ê°ì •ì„ ìš°ì„ ìˆœìœ„ì— ë”°ë¼ ì„ ì •í•œë‹¤.
                     EmotionInfo fndItm = new EmotionInfo(content.Key, mergedV);
-                    int targetIdx = emotionList.FindIndex(a => (a.Key == content.Key && a.Value == mergedV)); //ÃßÃâµÈ °¨Á¤¸®½ºÆ®¿¡¼­ÀÇ Á¶ÇÕ´ë»ó °¨Á¤ÀÇ idx
+                    int targetIdx = emotionList.FindIndex(a => (a.Key == content.Key && a.Value == mergedV)); //ì¶”ì¶œëœ ê°ì •ë¦¬ìŠ¤íŠ¸ì—ì„œì˜ ì¡°í•©ëŒ€ìƒ ê°ì •ì˜ idx
                     int subTargetIdx = targetIdx - 1;
-                    Debug.Log("[(3)Á¶ÇÕ´ë»ó]" + "{" + targetIdx + "}");
-                    Debug.Log("[(3)Á¶ÇÕ´ë»ó]" + "{" + targetIdx + "}" + emotionList[targetIdx].Key);
-                    Debug.Log("[(3)Á¶ÇÕ´ë»ó]" + "{" + subTargetIdx + "}");
+                    Debug.Log("[(3)ì¡°í•©ëŒ€ìƒ]" + "{" + targetIdx + "}");
+                    Debug.Log("[(3)ì¡°í•©ëŒ€ìƒ]" + "{" + targetIdx + "}" + emotionList[targetIdx].Key);
+                    Debug.Log("[(3)ì¡°í•©ëŒ€ìƒ]" + "{" + subTargetIdx + "}");
 
 
                     bool commend;
-                    //¾Õ¿¡ Ã¤ÅÃ °æ¿ì: outOfBound
-                    //µÚ¿¡ Ã¤ÅÃ °æ¿ì: outOfBound, ¾Õ¿¡¼­ none °á°ú °ªÀÌ ³ª¿Ô±â ‹š¹®.
-                    if (subTargetIdx >= 0 ? true : false)//¿ì¼±¼øÀ§(1): ´ë»óÀÇ ¾ÕÀÇ °¨Á¤°ú Á¶ÇÕÇÑ´Ù.
-                        commend = emoTableDATA.getCombineResult(emotionList[targetIdx].Key, emotionList[subTargetIdx].Key) != Emotion.NONE ? false : true;//index°¡ OutOfBound°¡ ¾Æ´Ï°í Á¶ÇÕÀÇ °á°ú°¡ ÀÖ´Ù¸é! command = false
+                    //ì•ì— ì±„íƒ ê²½ìš°: outOfBound
+                    //ë’¤ì— ì±„íƒ ê²½ìš°: outOfBound, ì•ì—ì„œ none ê²°ê³¼ ê°’ì´ ë‚˜ì™”ê¸° ë–„ë¬¸.
+                    if (subTargetIdx >= 0 ? true : false)//ìš°ì„ ìˆœìœ„(1): ëŒ€ìƒì˜ ì•ì˜ ê°ì •ê³¼ ì¡°í•©í•œë‹¤.
+                        commend = emoTableDATA.getCombineResult(emotionList[targetIdx].Key, emotionList[subTargetIdx].Key) != Emotion.NONE ? false : true;//indexê°€ OutOfBoundê°€ ì•„ë‹ˆê³  ì¡°í•©ì˜ ê²°ê³¼ê°€ ìˆë‹¤ë©´! command = false
                     else
                     {
                         commend = false;
                         subTargetIdx = targetIdx + 1;
-                        Debug.Log("[¿ì¼±¼øÀ§2]Ã¤ÅÃ");
+                        Debug.Log("[ìš°ì„ ìˆœìœ„2]ì±„íƒ");
                     }
 
 
-                    //¿ì¼±¼øÀ§(2): À§¿¡¼­ command°¡ true°¡ ³ª¸é ¿ì¼±¼øÀ§ (2)·Î ³Ñ¾î°£´Ù.   subTargetIdx = targetIdx + 1
+                    //ìš°ì„ ìˆœìœ„(2): ìœ„ì—ì„œ commandê°€ trueê°€ ë‚˜ë©´ ìš°ì„ ìˆœìœ„ (2)ë¡œ ë„˜ì–´ê°„ë‹¤.   subTargetIdx = targetIdx + 1
                     if (!commend && subTargetIdx < emotionList.Count ? true : false)
                         commend = emoTableDATA.getCombineResult(emotionList[targetIdx].Key, emotionList[subTargetIdx].Key) != Emotion.NONE ? true : false;
 
-                    //¿ì¼±¼øÀ§(1)¶Ç´Â (2)¿¡¼­ °¨Á¤Á¶ÇÕÀÇ °á°ú°¡ Á¤»óÀûÀ¸·Î ³ª¿Â °æ¿ì.
+                    //ìš°ì„ ìˆœìœ„(1)ë˜ëŠ” (2)ì—ì„œ ê°ì •ì¡°í•©ì˜ ê²°ê³¼ê°€ ì •ìƒì ìœ¼ë¡œ ë‚˜ì˜¨ ê²½ìš°.
                     if (commend)
                     {
-                        //(1) Á¶ÇÕ¿¡ »ç¿ëµÈ µÎ °¨Á¤ Áß ³·Àº ¼öÄ¡¸¦ °¡Á®¿Â´Ù.
+                        //(1) ì¡°í•©ì— ì‚¬ìš©ëœ ë‘ ê°ì • ì¤‘ ë‚®ì€ ìˆ˜ì¹˜ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
                         int CEmoV = emotionList[targetIdx].Value <= emotionList[subTargetIdx].Value ? emotionList[targetIdx].Value : emotionList[subTargetIdx].Value;
                         EmotionInfo finalEmo = new EmotionInfo(emoTableDATA.getCombineResult(emotionList[targetIdx].Key, emotionList[subTargetIdx].Key), CEmoV);
 
-                        emotionList[targetIdx] = finalEmo;//(2)targetEmotionÀ» Á¶ÇÕµÈ »õ °¨Á¤À¸·Î ¹Ù²Û´Ù.
-                        Debug.Log("[Á¶ÇÕ°á°ú]" + finalEmo.Key);
-                        //(2)Á¶ÇÕ¿¡ »ç¿ë µÈ °¨Á¤Àº ¸®½ºÆ®¿¡¼­ Á¦¿ÜÇÑ´Ù.(for¹® ¾ÈÀÌ±â ‹š¹®¿¡ index °ü¸® ÇØÁà¾ß ÇÑ´Ù.)
+                        emotionList[targetIdx] = finalEmo;//(2)targetEmotionì„ ì¡°í•©ëœ ìƒˆ ê°ì •ìœ¼ë¡œ ë°”ê¾¼ë‹¤.
+                        Debug.Log("[ì¡°í•©ê²°ê³¼]" + finalEmo.Key);
+                        //(2)ì¡°í•©ì— ì‚¬ìš© ëœ ê°ì •ì€ ë¦¬ìŠ¤íŠ¸ì—ì„œ ì œì™¸í•œë‹¤.(forë¬¸ ì•ˆì´ê¸° ë–„ë¬¸ì— index ê´€ë¦¬ í•´ì¤˜ì•¼ í•œë‹¤.)
                         if (finalEmo.Key == Emotion.NONE) continue;
 
                         emotionList.RemoveAt(subTargetIdx);
-                        // »èÁ¦ÇÒ °ªÀÇ index°¡ ÇöÀç Å¸°Ù ÁßÀÎ  indexº¸´Ù ÀÛÀº °æ¿ì(»ó°ü ÀÖÀ½. ÇöÀç Å¸°ÙÁßÀÎ °ªÀÌ ¾ÕÀ¸·Î ¹Ğ¸®±â ¶§¹®¿¡, index¸¦ -1 ÇØÁÖ¾î¾ß ÇÑ´Ù.
+                        // ì‚­ì œí•  ê°’ì˜ indexê°€ í˜„ì¬ íƒ€ê²Ÿ ì¤‘ì¸  indexë³´ë‹¤ ì‘ì€ ê²½ìš°(ìƒê´€ ìˆìŒ. í˜„ì¬ íƒ€ê²Ÿì¤‘ì¸ ê°’ì´ ì•ìœ¼ë¡œ ë°€ë¦¬ê¸° ë•Œë¬¸ì—, indexë¥¼ -1 í•´ì£¼ì–´ì•¼ í•œë‹¤.
                         if (subTargetIdx < i) i--;
-                        // »èÁ¦ÇÒ °ªÀÇ index°¡ ÇöÀç Å¸°Ù ÁßÀÎ indexº¸´Ù Å¬ °æ¿ì.(»ó°ü ¾øÀ½: ¸®½ºÆ®ÀÇ ±æÀÌ¸¸ ´Ş¶óÁø´Ù.)
+                        // ì‚­ì œí•  ê°’ì˜ indexê°€ í˜„ì¬ íƒ€ê²Ÿ ì¤‘ì¸ indexë³´ë‹¤ í´ ê²½ìš°.(ìƒê´€ ì—†ìŒ: ë¦¬ìŠ¤íŠ¸ì˜ ê¸¸ì´ë§Œ ë‹¬ë¼ì§„ë‹¤.)
 
                         possibility = true;
                     }
@@ -336,8 +336,8 @@ public class CloudMakeSystem : MonoBehaviour
                     if (Emotion.PLEASURE <= content.Key && content.Key <= Emotion.INTEXPEC)
                         tmpList.Add(content.Key, content.Value);
                 }
-                Debug_PrintState("[ÇöÀç°¨Á¤¸®½ºÆ®]", emotionList);
-                Debug_PrintState("[ÇöÀçÁßº¹¸®½ºÆ®]", tmpList);
+                Debug_PrintState("[í˜„ì¬ê°ì •ë¦¬ìŠ¤íŠ¸]", emotionList);
+                Debug_PrintState("[í˜„ì¬ì¤‘ë³µë¦¬ìŠ¤íŠ¸]", tmpList);
             }
 
             if (!possibility)
@@ -345,8 +345,8 @@ public class CloudMakeSystem : MonoBehaviour
 
         }
 
-        //ÃÖÁ¾ °¨Á¤ ¸®½ºÆ® ÀúÀå.
-        //Áßº¹ÀÌ ÀÖ´Ù¸é ±×Áß °¡Àå Å« °¨Á¤ Ã¤¿ë
+        //ìµœì¢… ê°ì • ë¦¬ìŠ¤íŠ¸ ì €ì¥.
+        //ì¤‘ë³µì´ ìˆë‹¤ë©´ ê·¸ì¤‘ ê°€ì¥ í° ê°ì • ì±„ìš©
         Dictionary<Emotion, int> LoverlapsEmo = new Dictionary<Emotion, int>();
         
         foreach (EmotionInfo emotion in emotionList)
@@ -366,7 +366,7 @@ public class CloudMakeSystem : MonoBehaviour
                 LoverlapsEmo.Add(emotion.Key, emotion.Value);
 
         }
-        Debug_PrintState("[Áßº¹ °¨Á¤ Áß Å«°¨Á¤ Ã¤¿ë]", LoverlapsEmo);
+        Debug_PrintState("[ì¤‘ë³µ ê°ì • ì¤‘ í°ê°ì • ì±„ìš©]", LoverlapsEmo);
 
         List<EmotionInfo> LfinalEmo = new List<EmotionInfo>();
         foreach (KeyValuePair<Emotion,int> overlap in LoverlapsEmo)
@@ -376,11 +376,11 @@ public class CloudMakeSystem : MonoBehaviour
         }
 
         emotionList = LfinalEmo;
-        Debug_PrintState("[ÃÖÁ¾°¨Á¤¸®½ºÆ®(1)]", emotionList);
+        Debug_PrintState("[ìµœì¢…ê°ì •ë¦¬ìŠ¤íŠ¸(1)]", emotionList);
 
         LfinalEmo = new List<EmotionInfo>();
 
-        //2°¡Áö °¨Á¤ ¼±ÅÃ(Á¦ÀÏ Å« °¨Á¤ + µÎ¹øÂ°·Î Å« °¨Á¤)
+        //2ê°€ì§€ ê°ì • ì„ íƒ(ì œì¼ í° ê°ì • + ë‘ë²ˆì§¸ë¡œ í° ê°ì •)
         int roopCnt = 2;
         while(roopCnt!=0)
         {
@@ -389,7 +389,7 @@ public class CloudMakeSystem : MonoBehaviour
             {
                 if (maxValue.Value < emotion.Value)
                     maxValue = emotion;
-                else if(maxValue.Value == emotion.Value) //°°´Ù¸é µÑ Áß ·£´ıÀ¸·Î ¼±ÅÃ.
+                else if(maxValue.Value == emotion.Value) //ê°™ë‹¤ë©´ ë‘˜ ì¤‘ ëœë¤ìœ¼ë¡œ ì„ íƒ.
                 {
                     int i = Random.Range(0, 2);
                     maxValue = (i == 0 ? maxValue : emotion);
@@ -403,7 +403,7 @@ public class CloudMakeSystem : MonoBehaviour
         }
 
         emotionList = LfinalEmo;
-        Debug_PrintState("[ÃÖÁ¾°¨Á¤¸®½ºÆ®]", emotionList);
+        Debug_PrintState("[ìµœì¢…ê°ì •ë¦¬ìŠ¤íŠ¸]", emotionList);
         mEmotions = emotionList;
 
 
@@ -442,42 +442,44 @@ public class CloudMakeSystem : MonoBehaviour
 
         if (total < 1)
         {
-            Debug.Log("Àç·á¼ö°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ì¬ë£Œìˆ˜ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
             return;
         }
 
         float time = 1f;
-        //ÄÚ·çÆ¾
-        UI_btn_txt.text = "¸¸µå´Â Áß";
+        //ì½”ë£¨í‹´
+        if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean"){ UI_btn_txt.text = "ë§Œë“œëŠ” ì¤‘"; }
+        else { UI_btn_txt.text = "Making..."; }
 
         isMakingCloud = true;
 
-        //making UI Ã³¸®
+        //making UI ì²˜ë¦¬
         StartCoroutine(isMaking(time));
 	}
 
-    IEnumerator isMaking(float time) //UI Ã³¸®
+    IEnumerator isMaking(float time) //UI ì²˜ë¦¬
     {
-		//»ö ¾îµÓ°Ô
+		//ìƒ‰ ì–´ë‘¡ê²Œ
 		slct_mtrl.u_setUIbright(total, false);
 
         yield return new WaitForSeconds(time);
 
 
         yield return new WaitForSeconds(1);
-        //»ö ¹à°Ô
+        //ìƒ‰ ë°ê²Œ
         slct_mtrl.u_setUIbright(total);
 
-		//Àç·áÀÇ ¼ö Â÷°¨
+		//ì¬ë£Œì˜ ìˆ˜ ì°¨ê°
 		DiscardIngredients(mtrlDATA);
 
 		m_sendCloud();
 
-		//UI ÃÊ±âÈ­
+		//UI ì´ˆê¸°í™”
 		slct_mtrl.u_init(total);
 
         total = 0;
-        UI_btn_txt.text = "Á¦ÀÛÇÏ±â";
+        if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean"){ UI_btn_txt.text = "ì œì‘í•˜ê¸°"; }
+        else { UI_btn_txt.text = "Go making"; }
 
         isMakingCloud = false;
 
@@ -492,17 +494,17 @@ public class CloudMakeSystem : MonoBehaviour
 		yield break;
     }
 
-    //±¸¸§ »ı¼º ÈÄ ÀÎº¥Åä¸®¿¡ ÀúÀå
+    //êµ¬ë¦„ ìƒì„± í›„ ì¸ë²¤í† ë¦¬ì— ì €ì¥
     private void m_sendCloud()
     {
-        //ÇØ´ç °¨Á¤¿¡ ¸Â´Â ±¸¸§ ÀÌ¹ÌÁö »ı¼º
+        //í•´ë‹¹ ê°ì •ì— ë§ëŠ” êµ¬ë¦„ ì´ë¯¸ì§€ ìƒì„±
         InventoryManager inventoryManager = GameObject.FindWithTag("InventoryManager").transform.GetComponent<InventoryManager>();
-        inventoryManager.createdCloudData = new CloudData(mEmotions, slct_mtrl.getCloudShelfLife(), slct_mtrl.mGetingredientDatas(mtrlDATA)); //createdCloudData °»½Å.
-                                                                          //Å« ¼öÄ¡ = ±¸¸§»ö
-                                                                          //´ÙÀ½ ¼öÄ¡ = ±¸¸§ÀÇ Àå½Ä
+        inventoryManager.createdCloudData = new CloudData(mEmotions, slct_mtrl.getCloudShelfLife(), slct_mtrl.mGetingredientDatas(mtrlDATA)); //createdCloudData ê°±ì‹ .
+                                                                          //í° ìˆ˜ì¹˜ = êµ¬ë¦„ìƒ‰
+                                                                          //ë‹¤ìŒ ìˆ˜ì¹˜ = êµ¬ë¦„ì˜ ì¥ì‹
 
         transform.Find("I_Result").gameObject.GetComponent<Image>().sprite = inventoryManager.createdCloudData.getBaseCloudSprite();
-        Debug.Log("±¸¸§ÀÌ ¸¸µé¾îÁ³½À´Ï´Ù.");
+        Debug.Log("êµ¬ë¦„ì´ ë§Œë“¤ì–´ì¡ŒìŠµë‹ˆë‹¤.");
 
     }
 
@@ -530,7 +532,7 @@ public class CloudMakeSystem : MonoBehaviour
 	}
 
    
-    //ÃÊ±âÈ­ ÇÔ¼ö
+    //ì´ˆê¸°í™” í•¨ìˆ˜
     private void init()
     {     
         total = 0;
@@ -540,18 +542,19 @@ public class CloudMakeSystem : MonoBehaviour
         slct_mtrl.default_sprite = default_sprite;
 
         UI_btn_txt = this.transform.Find("B_CloudGIve").GetComponentInChildren<Text>();
-        UI_btn_txt.text = "Á¦ÀÛÇÏ±â";
+        if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean"){ UI_btn_txt.text = "ì œì‘í•˜ê¸°"; }
+        else { UI_btn_txt.text = "Go making"; }
 
         isMakingCloud = false;
 
         
-        //±¸¸§ ÀÎº¥Åä¸® ¸®½ºÆ®µµ ·¹ÆÛ·±½º·Î °¡Áö°í ¿À´Â°Ô ÁÁÀ» °Í °°´Ù.
+        //êµ¬ë¦„ ì¸ë²¤í† ë¦¬ ë¦¬ìŠ¤íŠ¸ë„ ë ˆí¼ëŸ°ìŠ¤ë¡œ ê°€ì§€ê³  ì˜¤ëŠ”ê²Œ ì¢‹ì„ ê²ƒ ê°™ë‹¤.
 
         //event
         m_setEvent();
     }
 
-    //eventmethod ·ÎÁ÷ ÇÔ¼ö
+    //eventmethod ë¡œì§ í•¨ìˆ˜
     private void m_setEvent()
     {
         E_Selected = d_selectMtrl;
@@ -568,7 +571,7 @@ public class CloudMakeSystem : MonoBehaviour
     ////////////////////////////////////////////////////////
     void Start()
     {
-        mEmotions = new List<EmotionInfo>(); //°¨Á¤°è»êÇÒ ‹š ¾²ÀÌ´Â Emotion List
+        mEmotions = new List<EmotionInfo>(); //ê°ì •ê³„ì‚°í•  ë–„ ì“°ì´ëŠ” Emotion List
         mtrlDATA = new IngredientList();
 
         InventoryManager inventoryManager = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>();

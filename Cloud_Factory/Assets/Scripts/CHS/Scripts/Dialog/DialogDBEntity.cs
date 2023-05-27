@@ -5,14 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public class DialogDBEntity
 {
-    // ÇØ´ç Æ²¿¡ ¸ÂÃç¼­ ¿¢¼¿ÆÄÀÏÀ» Ã¤¿î´Ù.
-    public int      GuestID;            // ¼Õ´Ô ¹øÈ£
-    public int      Sat;                // ¼Õ´Ô ¸¸Á·µµ
-    public int      SatVariation;       // ¼Õ´Ô ¸¸Á·µµ Áõ°¨µµ
-    public int      DialogIndex;        // ´ëÈ­ ¼ø¼­
-    public int      DialogImageNumber;  // ÇØ´ç ´ëÈ­¿¡ ¸Â´Â Ç¥Á¤ 
-    public string   Text;               // ´ëÈ­ ³»¿ë
-    public int      isGuest;            // ¼Õ´Ô/ÇÃ·¹ÀÌ¾î Áß ´©°¡ ¸»ÇÏ´ÂÁö (0/1 ·Î ±¸ºĞ)
-    public int      VisitCount;         // ¼Õ´ÔÀÇ ÇöÀç ¹æ¹® È½¼ö
-    public int      Emotion;            // ¼Õ´ÔÀÌ Ç¥ÇöÇÏ°í ½ÍÀº °¨Á¤         
+    // í•´ë‹¹ í‹€ì— ë§ì¶°ì„œ ì—‘ì…€íŒŒì¼ì„ ì±„ìš´ë‹¤.
+    public int      GuestID;            // ì†ë‹˜ ë²ˆí˜¸
+    public int      Sat;                // ì†ë‹˜ ë§Œì¡±ë„
+    public int      SatVariation;       // ì†ë‹˜ ë§Œì¡±ë„ ì¦ê°ë„
+    public int      DialogIndex;        // ëŒ€í™” ìˆœì„œ
+    public int      DialogImageNumber;  // í•´ë‹¹ ëŒ€í™”ì— ë§ëŠ” í‘œì • 
+    public string   Text;               // ëŒ€í™” ë‚´ìš©
+    public string   Text_Eng;
+    public int      isGuest;            // ì†ë‹˜/í”Œë ˆì´ì–´ ì¤‘ ëˆ„ê°€ ë§í•˜ëŠ”ì§€ (0/1 ë¡œ êµ¬ë¶„)
+    public int      VisitCount;         // ì†ë‹˜ì˜ í˜„ì¬ ë°©ë¬¸ íšŸìˆ˜
+    public int      Emotion;            // ì†ë‹˜ì´ í‘œí˜„í•˜ê³  ì‹¶ì€ ê°ì •         
 }

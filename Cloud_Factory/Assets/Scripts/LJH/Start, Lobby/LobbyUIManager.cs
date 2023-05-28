@@ -32,6 +32,7 @@ public class LobbyUIManager : MonoBehaviour
 {
     private SeasonDateCalc mSeason; // 계절 스크립트
     private InventoryManager mInvenManager;
+	private LanguageChanger mLanguageChanger;
 
     [Header("GAME OBJECT")]
     // 오브젝트 Active 관리
@@ -63,10 +64,17 @@ public class LobbyUIManager : MonoBehaviour
     public Image iContiueGame;
 
     [Header("SPRITES")]
-    public Sprite sHoveringNew;
-    public Sprite sUnHoveringNew;
-    public Sprite sHoveringCon;
-    public Sprite sUnHoveringCon;
+    private Sprite sHoveringNew;
+    private Sprite sUnHoveringNew;
+    private Sprite sHoveringCon;
+    private Sprite sUnHoveringCon;
+
+    public Sprite[] sHoverNewLan = new Sprite[2];
+    public Sprite[] sUnHoverNewLan = new Sprite[2];
+    public Sprite[] sHoverConLan = new Sprite[2];
+    public Sprite[] sUnHoverConLan = new Sprite[2];
+    
+    public GameObject[] sLanguageCheckSprites = new GameObject[2];
 
     void Awake()
     {
@@ -82,6 +90,13 @@ public class LobbyUIManager : MonoBehaviour
         
 
         Load_GuestSatisfaction(); // 만족도 5 뭉티 판별
+    }
+
+    void Start()
+    {
+		mLanguageChanger = FindObjectOfType<LanguageChanger>();
+
+        ChangeLobbyLanguage();
     }
 
     void Update()
@@ -464,6 +479,7 @@ public class LobbyUIManager : MonoBehaviour
             // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
 
             tutorialManager.isTutorial = dTutorialSaveData.isTutorial;
+            tutorialManager.ChangeAllTutorialStatus();
             isCreateData = !tutorialManager.isTutorial; // 튜토리얼 유무로 저장했는 지 판별.
         }
     }
@@ -787,13 +803,48 @@ public class LobbyUIManager : MonoBehaviour
     public void ChangeKor()
     {
         // 일단은 로비만 되니까 
-        if (SceneManager.GetActiveScene().name == "Eng_Lobby")
-            SceneManager.LoadScene("Lobby");
+        if (SceneManager.GetActiveScene().name != "Lobby") return;
+
+        LanguageManager.GetInstance().SetKorean();
+        ChangeLobbyLanguage();
+
     }
+
     public void ChangeEng()
     {
-        if (SceneManager.GetActiveScene().name == "Lobby")
-            SceneManager.LoadScene("Eng_Lobby");
+        if (SceneManager.GetActiveScene().name != "Lobby") return;
+
+        LanguageManager.GetInstance().SetEnglish();
+        ChangeLobbyLanguage();
+
+    }
+
+
+    private void ChangeLobbyLanguage()
+    {
+        if (LanguageManager.GetInstance().GetCurrentLanguage() == "Korean")
+        {
+            sLanguageCheckSprites[0].SetActive(true);
+            sLanguageCheckSprites[1].SetActive(false);
+            sHoveringNew = sHoverNewLan[0];
+            sUnHoveringNew = sUnHoverNewLan[0];
+            sHoveringCon = sHoverConLan[0];
+            sUnHoveringCon = sUnHoverConLan[0];
+        }
+        else
+        {
+            
+            sLanguageCheckSprites[0].SetActive(false);
+            sLanguageCheckSprites[1].SetActive(true);
+            sHoveringNew = sHoverNewLan[1];
+            sUnHoveringNew = sUnHoverNewLan[1];
+            sHoveringCon = sHoverConLan[1];
+            sUnHoveringCon = sUnHoverConLan[1];
+        }
+
+        mLanguageChanger.ChangeLanguageInLobby();
+        iNewGame.sprite = sUnHoveringNew;
+        iContiueGame.sprite = sUnHoveringCon;
     }
 }
 

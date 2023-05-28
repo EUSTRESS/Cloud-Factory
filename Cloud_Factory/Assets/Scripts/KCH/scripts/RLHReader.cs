@@ -3,24 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//GuestObject.prefab¿¡ Ãß°¡ ¿¹Á¤
+//GuestObject.prefabì— ì¶”ê°€ ì˜ˆì •
 public class RLHReader : MonoBehaviour
 {
-	// ºÒ·¯¿Ã °ªµé ¼±¾ğ
+	// ë¶ˆëŸ¬ì˜¬ ê°’ë“¤ ì„ ì–¸
 	private Guest mGuestManager;
 
 	[SerializeField]
-	private RLHDB mRLHDB;						// ´ëÈ­ ³»¿ëÀ» ÀúÀåÇØ ³õÀº DB
+	private RLHDB mRLHDB;						// ëŒ€í™” ë‚´ìš©ì„ ì €ì¥í•´ ë†“ì€ DB
 
-	private string mDialogText;                 // ½ÇÁ¦·Î È­¸é¿¡ Ãâ·Â½ÃÅ³ ³»¿ë
+	private string mDialogText;                 // ì‹¤ì œë¡œ í™”ë©´ì— ì¶œë ¥ì‹œí‚¬ ë‚´ìš©
 
-	private string tText;						// ´ëÈ­°¡ ÀúÀå µÉ ÅØ½ºÆ®
+	private string tText;						// ëŒ€í™”ê°€ ì €ì¥ ë  í…ìŠ¤íŠ¸
+
+	private bool isKorean;
 
 	// Start is called before the first frame update
 	void Awake()
     {
 		tText = "";
 		mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
+		
+		if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean") { isKorean = true; }
+		else { isKorean = false; }
 	}
 
 	//ProfileManager.cs
@@ -34,8 +39,12 @@ public class RLHReader : MonoBehaviour
 		for(int num = 0; num < Record.Count; num++)
 		{
 			if (Record[num].GuestID == guest_num + 1
-				&& Record[num].Type == "record")
-			{ tText = "";  tText = Record[num].KOR; }
+			    && Record[num].Type == "record")
+			{
+				tText = "";  
+				if(isKorean) { tText = Record[num].KOR; }
+				else{ tText = Record[num].ENG; }
+			}
 		}
 		return tText;
 	}
@@ -53,22 +62,27 @@ public class RLHReader : MonoBehaviour
 		int leastDiffEmotion =	mGuestManager.SpeakLeastDiffEmotion(guest_num);
 		int mostDiffEmotion =	mGuestManager.SpeakEmotionDialog(guest_num);
 
-		if (mostDiffEmotion != -1) { satEmotions.Add(mostDiffEmotion); }	// ¸¸Á·µµ¿¡¼­ °¡Àå ¸Ö¸® ¶³¾îÁø °¨Á¤À» Ãâ·Â
-		if (leastDiffEmotion != -1											// ÇØ´ç °¨Á¤ÀÌ Á¸ÀçÇÒ ¶§,
-			&& satEmotions.Count > 0										// ¸¸Á·µµ Â÷°¡ °¡Àå Å« °¨Á¤ÀÌ Á¸ÀçÇÒ ¶§(Á¸ÀçÇÏÁö ¾ÊÀ¸¸é, Â÷ÀÌ°¡ °¡Àå ÀûÀº °¨Á¤µµ Á¸ÀçX)
-			&& !satEmotions.Contains(leastDiffEmotion))						// ¸¸Á·µµ Â÷°¡ °¡Àå Å« °¨Á¤°ú °¡Àå ÀÛÀº °¨Á¤ÀÌ °°Àº °¨Á¤ÀÌ ¾Æ´Ò ¶§(¸¸Á·µµ ¹üÀ§¿¡ ¾ø´Â °¨Á¤ÀÌ ÇÏ³ªÀÏ °æ¿ì¸¦ È®ÀÎ)
+		if (mostDiffEmotion != -1) { satEmotions.Add(mostDiffEmotion); }	// ë§Œì¡±ë„ì—ì„œ ê°€ì¥ ë©€ë¦¬ ë–¨ì–´ì§„ ê°ì •ì„ ì¶œë ¥
+		if (leastDiffEmotion != -1											// í•´ë‹¹ ê°ì •ì´ ì¡´ì¬í•  ë•Œ,
+			&& satEmotions.Count > 0										// ë§Œì¡±ë„ ì°¨ê°€ ê°€ì¥ í° ê°ì •ì´ ì¡´ì¬í•  ë•Œ(ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë©´, ì°¨ì´ê°€ ê°€ì¥ ì ì€ ê°ì •ë„ ì¡´ì¬X)
+			&& !satEmotions.Contains(leastDiffEmotion))						// ë§Œì¡±ë„ ì°¨ê°€ ê°€ì¥ í° ê°ì •ê³¼ ê°€ì¥ ì‘ì€ ê°ì •ì´ ê°™ì€ ê°ì •ì´ ì•„ë‹ ë•Œ(ë§Œì¡±ë„ ë²”ìœ„ì— ì—†ëŠ” ê°ì •ì´ í•˜ë‚˜ì¼ ê²½ìš°ë¥¼ í™•ì¸)
 		{ satEmotions.Add(leastDiffEmotion); }
 
-		if (satEmotions.Count <= 0) { return; }								// ¸¸Á·µµ ¹üÀ§¿¡ ¸ğµç °¨Á¤ÀÌ ÀÖÀ¸¸é return;
+		if (satEmotions.Count <= 0) { return; }								// ë§Œì¡±ë„ ë²”ìœ„ì— ëª¨ë“  ê°ì •ì´ ìˆìœ¼ë©´ return;
 
 		for(int num = 0; num < Hint.Count; num++)
 		{
-			if (Hint[num].GuestID == guest_num + 1							// ¼Õ´ÔÀÇ ¹øÈ£°¡ ÀÏÄ¡
-				&& Hint[num].Type == "hint")								// RHLÇ×¸ñÀÌ hintÀÏ °æ¿ì
+			if (Hint[num].GuestID == guest_num + 1							// ì†ë‹˜ì˜ ë²ˆí˜¸ê°€ ì¼ì¹˜
+				&& Hint[num].Type == "hint")								// RHLí•­ëª©ì´ hintì¼ ê²½ìš°
 			{
 				foreach(int emotion in satEmotions)
 				{
-					if (Hint[num].Emotion == emotion) { tText += Hint[num].KOR; tText += "\n"; }
+					if (Hint[num].Emotion == emotion)
+					{
+						if(isKorean) { tText += Hint[num].KOR; }
+						else{ tText += Hint[num].ENG; } 
+						tText += "\n";
+					}
 				} 
 			}
 		}
@@ -86,7 +100,11 @@ public class RLHReader : MonoBehaviour
 		{
 			if (letter[num].GuestID == guest_num + 1
 				&& letter[num].Type == "letter")
-			{ tText = ""; tText = letter[num].KOR; }
+			{ 
+				tText = ""; 
+				if(isKorean) { tText =letter[num].KOR; }
+				else{ tText = letter[num].ENG; } 
+			}
 		}
 		return tText;
 	}

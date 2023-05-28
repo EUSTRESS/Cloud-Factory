@@ -207,7 +207,9 @@ public class WeatherUIManager : MonoBehaviour
         Invoke("Gathering", 5.0f);
 
         mSOWManager.yardGatherCount[selectedYard.transform.GetSiblingIndex()]--;
-        if (GameObject.Find("TutorialManager").GetComponent<TutorialManager>().isFinishedTutorial[2] == false) { mSOWManager.yardGatherCount[selectedYard.transform.GetSiblingIndex()]++; }
+        if (GameObject.Find("TutorialManager").GetComponent<TutorialManager>().isFinishedTutorial[2] == false
+            && GameObject.Find("TutorialManager").GetComponent<TutorialManager>().isTutorial == true) 
+        { mSOWManager.yardGatherCount[selectedYard.transform.GetSiblingIndex()]++; }
 	}
     
     void UpdateGatherAnim(int _iX, int _iY, bool _bSpring, bool _bSummer, bool _bFall, bool _bWinter)

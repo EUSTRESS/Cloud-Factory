@@ -17,19 +17,19 @@ public class YardHandleSystem : MonoBehaviour
 
     private Dictionary<GameObject, int> mYards;
 
-    struct Yard //¸¶´ç ±¸Á¶Ã¼ Á¤ÀÇ
+    struct Yard //ë§ˆë‹¹ êµ¬ì¡°ì²´ ì •ì˜
     {
         private GameObject self;
 
-        private int gatherCnt;//unsigned int ·Î °íÄ¥ ¼ö ÀÖÀ»±î? °íÄ£´Ù¸é ¹Ø¿¡ Á¶°Ç¹®Àº ¤·¶»°Ô ¹Ù²ÙÁö
+        private int gatherCnt;//unsigned int ë¡œ ê³ ì¹  ìˆ˜ ìˆì„ê¹Œ? ê³ ì¹œë‹¤ë©´ ë°‘ì— ì¡°ê±´ë¬¸ì€ ã…‡ë–»ê²Œ ë°”ê¾¸ì§€
         private Sprite[] sprites;
 
-        public void init(GameObject gameObj,Sprite[] _sprites) //ÃÊ±âÈ­ ÇÔ¼ö
+        public void init(GameObject gameObj,Sprite[] _sprites) //ì´ˆê¸°í™” í•¨ìˆ˜
         {
             self = gameObj;
             sprites = new Sprite[2];
 
-            if (_sprites.Length != 2) return; //Overflow ¹æÁö
+            if (_sprites.Length != 2) return; //Overflow ë°©ì§€
             else
                 Debug.Log("[Yard Init] Not Right Sprite array input");
             sprites[0] = _sprites[0];
@@ -38,15 +38,15 @@ public class YardHandleSystem : MonoBehaviour
             updateSprite();
         }
 
-        public bool canGather() //Ã¤Áı °¡´É »óÅÂ 
+        public bool canGather() //ì±„ì§‘ ê°€ëŠ¥ ìƒíƒœ 
         {
-            if (gatherCnt <= 0) return false; //Ã¤Áı °¡´É È½¼ö°¡ 0 ÀÌÇÏ ÀÌ¸é °¡´É È½¼ö ¸ğµÎ ¼ÒÁø.
+            if (gatherCnt <= 0) return false; //ì±„ì§‘ ê°€ëŠ¥ íšŸìˆ˜ê°€ 0 ì´í•˜ ì´ë©´ ê°€ëŠ¥ íšŸìˆ˜ ëª¨ë‘ ì†Œì§„.
             else return true;
         }
 
-        public void gather() //Ã¤Áı ÇÏ´Â ÇàÀ§
+        public void gather() //ì±„ì§‘ í•˜ëŠ” í–‰ìœ„
         {
-            if (gatherCnt == 0) return; //ÀÌ¹Ì °¡´É È½¼ö°¡ ¸ğµÎ ¼ÒÁø µÇ¸é Ã¤ÁıÀÌ ÁøÇàµÇÁö ¾Ê´Â´Ù.
+            if (gatherCnt == 0) return; //ì´ë¯¸ ê°€ëŠ¥ íšŸìˆ˜ê°€ ëª¨ë‘ ì†Œì§„ ë˜ë©´ ì±„ì§‘ì´ ì§„í–‰ë˜ì§€ ì•ŠëŠ”ë‹¤.
 
             gatherCnt--;
             updateSprite();
@@ -55,18 +55,18 @@ public class YardHandleSystem : MonoBehaviour
 
         private void rndGatSys(GameObject GInventory) //random gather System
         {
-            int invenLev = 1; //³ªÁß¿¡ GetComponent·Î °¡Á®¿Ã ¿¹Á¤
+            int invenLev = 1; //ë‚˜ì¤‘ì— GetComponentë¡œ ê°€ì ¸ì˜¬ ì˜ˆì •
 
         }
 
-        private void activeBoard() //Ã¤Áı ÆË¾÷ Ã¢ È°¼ºÈ­
+        private void activeBoard() //ì±„ì§‘ íŒì—… ì°½ í™œì„±í™”
         {
 
         }
 
         private void updateSprite()
         {
-            //gatherCnt¿¡ µû¶ó yardSprite ¹Ù²ñ
+            //gatherCntì— ë”°ë¼ yardSprite ë°”ë€œ
             if (gatherCnt <= 0) self.GetComponent<SpriteRenderer>().sprite = sprites[0];
             else if (gatherCnt >= 1 && self.GetComponent<SpriteRenderer>().sprite != sprites[1])
                 self.GetComponent<SpriteRenderer>().sprite = sprites[1];
@@ -82,8 +82,8 @@ public class YardHandleSystem : MonoBehaviour
 
 		mYards = new Dictionary<GameObject, int>();
 
-        UpdateYardGatherCount(); //Yard ±×·ì¿¡ ¼ÓÇÑ yardµéÀ» ¸®½ºÆ®¿¡ ³Ö¾î¼­ °ü¸®.
-            //ÀÌ µñ¼Å³Ê¸®ÀÇ int´Â Ã¤Áı È½¼ö 0ÀÌ µÇ¸é Ã¤Áı ºÒ°¡´ÉÇÏ´Ù!
+        UpdateYardGatherCount(); //Yard ê·¸ë£¹ì— ì†í•œ yardë“¤ì„ ë¦¬ìŠ¤íŠ¸ì— ë„£ì–´ì„œ ê´€ë¦¬.
+            //ì´ ë”•ì…”ë„ˆë¦¬ì˜ intëŠ” ì±„ì§‘ íšŸìˆ˜ 0ì´ ë˜ë©´ ì±„ì§‘ ë¶ˆê°€ëŠ¥í•˜ë‹¤!
     }
 
     public void UpdateYardGatherCount()
@@ -92,7 +92,7 @@ public class YardHandleSystem : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++) { mYards.Add(transform.GetChild(i).gameObject, mSOWManager.yardGatherCount[i]); }
 	}
 
-    // WeatherUIManager¿¡¼­ YardHandleSystem¿¡ Á¢±ÙÇÒ ¶§, Ã¤Áı °¡´ÉÇÑ »óÅÂÀÎÁö ¾Ë·ÁÁÖ±â À§ÇÑ ÇÔ¼ö
+    // WeatherUIManagerì—ì„œ YardHandleSystemì— ì ‘ê·¼í•  ë•Œ, ì±„ì§‘ ê°€ëŠ¥í•œ ìƒíƒœì¸ì§€ ì•Œë ¤ì£¼ê¸° ìœ„í•œ í•¨ìˆ˜
     public bool CanBeGathered(GameObject iClickedYard)
     {
         if (mYards[iClickedYard] <= 0) return false;
@@ -100,20 +100,20 @@ public class YardHandleSystem : MonoBehaviour
     }
     
 
-    public Dictionary<IngredientData, int>Gathered(GameObject iClickedYard,int totalCnt) //Å¬¸¯ÇÔ¼ö
+    public Dictionary<IngredientData, int>Gathered(GameObject iClickedYard,int totalCnt) //í´ë¦­í•¨ìˆ˜
     {
         Dictionary<IngredientData, int> results = getRndGatheredResult(totalCnt);
         Dictionary<IngredientData, int> complete = new Dictionary<IngredientData, int>();
-        Debug.Log("[System]ÃÑ" + results.Count + "°¡ Ã¤ÁıµÇ¾ú½À´Ï´Ù!");
+        Debug.Log("[System]ì´" + results.Count + "ê°€ ì±„ì§‘ë˜ì—ˆìŠµë‹ˆë‹¤!");
         foreach(KeyValuePair<IngredientData, int> result in results)
         {
             if (inventoryManager.addStock(result))
             {
-                Debug.Log("[System]Ã¤Áı ¼º°ø| Á¾·ù:" + result.Key + "|°³¼ö: " + result.Value);
+                Debug.Log("[System]ì±„ì§‘ ì„±ê³µ| ì¢…ë¥˜:" + result.Key + "|ê°œìˆ˜: " + result.Value);
                 complete.Add(result.Key, result.Value);
             }
             else {
-                Debug.Log("[System]Ã¤Áı ½ÇÆĞ| ÀÎº¥Åä¸®°¡ ²Ë Ã¡°Å³ª ¼öÁı °¡´É Àç·á °³¼ö¸¦ ÃÊ°úÇÏ¿´½À´Ï´Ù| Á¾·ù:." + result.Key + "|°³¼ö: " + result.Value);
+                Debug.Log("[System]ì±„ì§‘ ì‹¤íŒ¨| ì¸ë²¤í† ë¦¬ê°€ ê½‰ ì°¼ê±°ë‚˜ ìˆ˜ì§‘ ê°€ëŠ¥ ì¬ë£Œ ê°œìˆ˜ë¥¼ ì´ˆê³¼í•˜ì˜€ìŠµë‹ˆë‹¤| ì¢…ë¥˜:." + result.Key + "|ê°œìˆ˜: " + result.Value);
                 complete.Add(result.Key, result.Value);
             }
 
@@ -121,21 +121,22 @@ public class YardHandleSystem : MonoBehaviour
 
         mYards[iClickedYard]--;
 
-        return complete; //ÀúÀå¿¡ ¼º°øÇÑ ¸®½ºÆ®¸¸ ¹İÈ¯ÇÑ´Ù.
+        return complete; //ì €ì¥ì— ì„±ê³µí•œ ë¦¬ìŠ¤íŠ¸ë§Œ ë°˜í™˜í•œë‹¤.
     }
 
 
-    private Dictionary<IngredientData, int> getRndGatheredResult(int totalCnt) //·£´ıÀ¸·Î Ã¤ÁıÇÑ ¸®½ºÆ® ¸®ÅÏ.
+    private Dictionary<IngredientData, int> getRndGatheredResult(int totalCnt) //ëœë¤ìœ¼ë¡œ ì±„ì§‘í•œ ë¦¬ìŠ¤íŠ¸ ë¦¬í„´.
     {
-        //Key: Àç·á Á¾·ù  Value: È¹µæÇÒ Àç·á °³¼ö
+        //Key: ì¬ë£Œ ì¢…ë¥˜  Value: íšë“í•  ì¬ë£Œ ê°œìˆ˜
         Dictionary<IngredientData, int> results= new Dictionary<IngredientData, int>();
 
-        //Èñ±Íµµ ·£´ı, ±×Áß¿¡¼­µµ Á¾·ù ·£´ı.
-        //Random: Èñ±Íµµ, Èñ±Íµµ ³» Á¾·ù, Àç·á ¼ö, Ã¤ÁıÇÒ Àç·á Á¾·ù ¼ö
-        Debug.Log("ÃÑ Ã¤ÁıÇÒ Á¾·ù:" + (totalCnt+1));
+        //í¬ê·€ë„ ëœë¤, ê·¸ì¤‘ì—ì„œë„ ì¢…ë¥˜ ëœë¤.
+        //Random: í¬ê·€ë„, í¬ê·€ë„ ë‚´ ì¢…ë¥˜, ì¬ë£Œ ìˆ˜, ì±„ì§‘í•  ì¬ë£Œ ì¢…ë¥˜ ìˆ˜
+        Debug.Log("ì´ ì±„ì§‘í•  ì¢…ë¥˜:" + (totalCnt+1));
 
-        // Æ©Åä¸®¾ó ½Ã Ã¤ÁıµÇ´Â Àç·á °íÁ¤ TODO: ±âÈ¹¼­¿¡ ¸Âµµ·Ï Àç·á Á¾·ù, ¼ö·® Á¶Á¤ ÇÊ¿ä
-        if (mTutorialManager.isFinishedTutorial[2] == false)
+        // íŠœí† ë¦¬ì–¼ ì‹œ ì±„ì§‘ë˜ëŠ” ì¬ë£Œ ê³ ì • TODO: ê¸°íšì„œì— ë§ë„ë¡ ì¬ë£Œ ì¢…ë¥˜, ìˆ˜ëŸ‰ ì¡°ì • í•„ìš”
+        if (mTutorialManager.isFinishedTutorial[2] == false
+            && mTutorialManager.isTutorial == true)
         {
             results.Add(inventoryManager.mIngredientDatas[0].mItemList[6], 1);
             results.Add(inventoryManager.mIngredientDatas[0].mItemList[7], 1);
@@ -146,9 +147,9 @@ public class YardHandleSystem : MonoBehaviour
             {
                 IngredientData tmp = inventoryManager.mIngredientDatas[getRndRarityType(inventoryManager.minvenLevel) - 1].getRndIngredient();
                 Debug.Log(tmp);
-                if (results.ContainsKey(tmp)) continue; //Áßº¹¹æÁö
+                if (results.ContainsKey(tmp)) continue; //ì¤‘ë³µë°©ì§€
                 results.Add(tmp, Random.Range(1, 6));
-                Debug.Log("Ãß°¡: " + tmp);
+                Debug.Log("ì¶”ê°€: " + tmp);
             }
         }
 
@@ -156,11 +157,11 @@ public class YardHandleSystem : MonoBehaviour
     }
 
    
-   private int getRndRarityType(int _invenLv) //¸Å°³º¯¼ö: ÀÎº¥Åä¸® lv, ÀÎº¥Åä¸® lv¿¡ µû¶ó¼­ ¾î¶² Èñ±ÍµµÀÇ Àç·á°¡ ³ª¿ÃÁö return
+   private int getRndRarityType(int _invenLv) //ë§¤ê°œë³€ìˆ˜: ì¸ë²¤í† ë¦¬ lv, ì¸ë²¤í† ë¦¬ lvì— ë”°ë¼ì„œ ì–´ë–¤ í¬ê·€ë„ì˜ ì¬ë£Œê°€ ë‚˜ì˜¬ì§€ return
     {
         int randomValue= Random.Range(0,1000);
 
-        // Èñ±Íµµ°¡ 4ÀÎ Àç·á¸¦ Ã¤Áı °¡´ÉÇÑÁö Ã¼Å© ÈÄ bool º¯¼ö·Î ÀúÀå
+        // í¬ê·€ë„ê°€ 4ì¸ ì¬ë£Œë¥¼ ì±„ì§‘ ê°€ëŠ¥í•œì§€ ì²´í¬ í›„ bool ë³€ìˆ˜ë¡œ ì €ì¥
         bool checkRarity4 = false;
         if (inventoryManager.mIngredientDatas[3].mItemList.Count > 0) { checkRarity4 = true; }
        
@@ -168,8 +169,8 @@ public class YardHandleSystem : MonoBehaviour
         switch(_invenLv)
         {
             case 1:
-                if (checkRarity4){                              // Èñ±Íµµ 4 Á¸Àç ½Ã
-                    if (randomValue < 970) { rarity = 1; }      // (97%, 0%, 0%, 3%) : rarity 1, 2, 3, 4¼ø
+                if (checkRarity4){                              // í¬ê·€ë„ 4 ì¡´ì¬ ì‹œ
+                    if (randomValue < 970) { rarity = 1; }      // (97%, 0%, 0%, 3%) : rarity 1, 2, 3, 4ìˆœ
                     else { rarity = 4; }
                 }
                 else { rarity = 1; }                            // (100%, 0%, 0%, 0%)

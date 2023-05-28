@@ -1399,7 +1399,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 441837591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ea2c6d45cc0d1842884fdb1ae19347c, type: 3}
+  m_Script: {fileID: 11500000, guid: 400ad5c2c1e3e204f9d1ccac3ced4194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &524079487
@@ -6758,6 +6758,90 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &2033372396
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2033372398}
+  - component: {fileID: 2033372397}
+  m_Layer: 0
+  m_Name: LanguageChanger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2033372397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033372396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e64ecc3c3fc93419967bf3ae4becf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tOK1: {fileID: 0}
+  tOK2: {fileID: 0}
+  tBack: {fileID: 2045001721}
+  tRecordOfHealing: {fileID: 0}
+  tGuideBook: {fileID: 0}
+  tDrawingRoom: {fileID: 0}
+  tCloudFactory: {fileID: 0}
+  tSpaceOfWeather: {fileID: 0}
+  tGameOver: {fileID: 0}
+  tAccept: {fileID: 0}
+  tReject: {fileID: 0}
+  tGiveCloud:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tUpsetMoongti: {fileID: 0}
+  tAllMoongti: {fileID: 0}
+  tSetting: {fileID: 0}
+  tBackGroundSound: {fileID: 0}
+  tEffectSound: {fileID: 0}
+  tGather: {fileID: 0}
+  tGatherWarning: {fileID: 0}
+  tResult: {fileID: 0}
+  tName:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tAge:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tJob:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tUsedCloud:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tReason: {fileID: 0}
+  tSort: {fileID: 1496132761}
+--- !u!4 &2033372398
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033372396}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2045001719
 GameObject:
   m_ObjectHideFlags: 0

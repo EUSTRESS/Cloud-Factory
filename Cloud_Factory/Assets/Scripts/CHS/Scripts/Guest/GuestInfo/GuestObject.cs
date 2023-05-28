@@ -10,40 +10,40 @@ using TMPro;
 
 public class GuestObject : MonoBehaviour
 {
-    // ¿ÀºêÁ§Æ® ³»¿¡¼­ ÇÊ¿äÇÑ º¯¼ö
-    [Header("[¼Õ´Ô Á¤º¸]")]
-    public float        mLimitTime;         // ¼Õ´ÔÀÌ ´ë±âÇÑ ½Ã°£
-    public float        mMaxLimitTime;      // ¼Õ´ÔÀÌ ´ë±âÇÏ´Â ½Ã°£ÀÇ ÃÖ´ë°ª
-    public int          mGuestNum;          // ÇØ´ç ¿ÀºêÁ§Æ®ÀÇ ¼Õ´Ô¹øÈ£
-    private Transform   mTransform;         // À§Ä¡°ªÀÌ º¯ÇÏ´ÂÁö È®ÀÎÇÏ±â À§ÇÑ º¯¼ö
-    public Transform    mTargetChair;       // ¸ñÇ¥·Î ÇÏ´Â ÀÇÀÚÀÇ À§Ä¡
+    // ì˜¤ë¸Œì íŠ¸ ë‚´ì—ì„œ í•„ìš”í•œ ë³€ìˆ˜
+    [Header("[ì†ë‹˜ ì •ë³´]")]
+    public float        mLimitTime;         // ì†ë‹˜ì´ ëŒ€ê¸°í•œ ì‹œê°„
+    public float        mMaxLimitTime;      // ì†ë‹˜ì´ ëŒ€ê¸°í•˜ëŠ” ì‹œê°„ì˜ ìµœëŒ€ê°’
+    public int          mGuestNum;          // í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ì˜ ì†ë‹˜ë²ˆí˜¸
+    private Transform   mTransform;         // ìœ„ì¹˜ê°’ì´ ë³€í•˜ëŠ”ì§€ í™•ì¸í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
+    public Transform    mTargetChair;       // ëª©í‘œë¡œ í•˜ëŠ” ì˜ìì˜ ìœ„ì¹˜
     public int          mTargetChiarIndex;
 
-    [Header("[FSM °ü·Ã]")]
-    public bool isSit;                      // ÀÚ¸®¿¡ ¾É¾ÆÀÖ´Â°¡?
-    public bool isUsing;                    // ±¸¸§ Ä¡·á¸¦ ¹Ş´ÂÁßÀÎ°¡?
-    public bool isMove;                     // ÀÌµ¿ÁßÀÎ°¡?   
-    public bool isGotoEntrance;             // Ãâ±¸·Î ³ª°¡´Â ÁßÀÎ°¡?
-    public bool isEndUsingCloud;            // ±¸¸§ »ç¿ëÀ» ³¡¸¶ÃÆ´Â°¡?
+    [Header("[FSM ê´€ë ¨]")]
+    public bool isSit;                      // ìë¦¬ì— ì•‰ì•„ìˆëŠ”ê°€?
+    public bool isUsing;                    // êµ¬ë¦„ ì¹˜ë£Œë¥¼ ë°›ëŠ”ì¤‘ì¸ê°€?
+    public bool isMove;                     // ì´ë™ì¤‘ì¸ê°€?   
+    public bool isGotoEntrance;             // ì¶œêµ¬ë¡œ ë‚˜ê°€ëŠ” ì¤‘ì¸ê°€?
+    public bool isEndUsingCloud;            // êµ¬ë¦„ ì‚¬ìš©ì„ ëë§ˆì³¤ëŠ”ê°€?
 
-    [Header("[°¨Á¤Ç¥Çö °ü·Ã]")]
-    public int   dialogEmotion;             // °¨Á¤ Ç¥Çö½Ã, ¸»Ç³¼±À¸·Î ³ª¿À´Â °¨Á¤ÀÇ ¹øÈ£ 
-    public int[] faceValue;                 // °¨Á¤ Ç¥Çö½Ã, ÀÌÆåÆ®·Î ³ª¿À´Â °¨Á¤ÀÇ ¹øÈ£       
-    public GameObject SpeechBubble;         // °¨Á¤ Ç¥Çö½Ã, ¸»Ç³¼± ³»¿ëÀ» Ã¤¿ì´Â ÅØ½ºÆ® Ä­
-    public bool isSpeakEmotion;             // ¼Õ´ÔÀÌ °¨Á¤Ç¥Çö ÁßÀÎÁö¸¦ ³ªÅ¸³»´Â º¯¼ö°ª      
+    [Header("[ê°ì •í‘œí˜„ ê´€ë ¨]")]
+    public int   dialogEmotion;             // ê°ì • í‘œí˜„ì‹œ, ë§í’ì„ ìœ¼ë¡œ ë‚˜ì˜¤ëŠ” ê°ì •ì˜ ë²ˆí˜¸ 
+    public int[] faceValue;                 // ê°ì • í‘œí˜„ì‹œ, ì´í™íŠ¸ë¡œ ë‚˜ì˜¤ëŠ” ê°ì •ì˜ ë²ˆí˜¸       
+    public GameObject SpeechBubble;         // ê°ì • í‘œí˜„ì‹œ, ë§í’ì„  ë‚´ìš©ì„ ì±„ìš°ëŠ” í…ìŠ¤íŠ¸ ì¹¸
+    public bool isSpeakEmotion;             // ì†ë‹˜ì´ ê°ì •í‘œí˜„ ì¤‘ì¸ì§€ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜ê°’      
 
-    [Header("[Èñ±Íµµ 4 Àç·á Á¦°ø ´ë»ç °ü·Ã]")]
+    [Header("[í¬ê·€ë„ 4 ì¬ë£Œ ì œê³µ ëŒ€ì‚¬ ê´€ë ¨]")]
     private RLHReader   textReader;
     private bool        isHintTextPrinted;
     public bool         isUseRarity4;
     private bool        isUsingHint;
 
-    [Header("[±âÅ¸]")]
-    public Animator     mGuestAnim;         // ¼Õ´ÔÀÇ ¾Ö´Ï¸ŞÀÌ¼Ç º¯¼ö
+    [Header("[ê¸°íƒ€]")]
+    public Animator     mGuestAnim;         // ì†ë‹˜ì˜ ì• ë‹ˆë©”ì´ì…˜ ë³€ìˆ˜
     private Guest       mGuestManager;
     public SOWManager   mSOWManager;
 
-    // »ó¼ö°ª ÀúÀå
+    // ìƒìˆ˜ê°’ ì €ì¥
     const int MAX_GUEST_NUM = 20;
     const int MAX_EMOTION_NUM = 20;
     const float DELAY_OF_SPEECH_BUBBLE = 5.0f;
@@ -58,50 +58,50 @@ public class GuestObject : MonoBehaviour
         new List<int> {18,19,5,17,10}  // SURPRISE
     };
 
-    // °¨Á¤Ç¥Çö ½Ã, °¨Á¤¿¡ ´ëÇØ Ç¥ÇöÇÒ ¸»Ç³¼± ³»¿ë ¸®½ºÆ® -> °¨Á¤ ¹øÈ£¸¦ ÀÌ¿ëÇÏ¿© ³»¿ëÀ» °¡Á®¿Í¼­ Ã¤¿î´Ù.
+    // ê°ì •í‘œí˜„ ì‹œ, ê°ì •ì— ëŒ€í•´ í‘œí˜„í•  ë§í’ì„  ë‚´ìš© ë¦¬ìŠ¤íŠ¸ -> ê°ì • ë²ˆí˜¸ë¥¼ ì´ìš©í•˜ì—¬ ë‚´ìš©ì„ ê°€ì ¸ì™€ì„œ ì±„ìš´ë‹¤.
     string[] EmotionDialogList = new string[]
     {
-        "±â»İ",
-        "ºÒ¾È",
-        "½½ÇÄ",
-        "Â¥Áõ",
-        "¼ö¿ë",
-        "³î¶÷&È¥¶õ",
-        "Çø¿À",
-        "°ü½É&±â´ë",
-        "»ç¶û",
-        "¼øÁ¾",
-        "°æ¿Ü½É",
-        "¹İ´ë",
-        "ÀÚÃ¥",
-        "°æ¸ê",
-        "°ø°İ¼º",
-        "³«Ãµ",
-        "¾¹¾µÇÔ",
-        "¾ÖÁõ",
-        "¾ó¾îºÙÀ½",
-        "È¥¶õ½º·¯¿ò",
+        "ê¸°ì¨",
+        "ë¶ˆì•ˆ",
+        "ìŠ¬í””",
+        "ì§œì¦",
+        "ìˆ˜ìš©",
+        "ë†€ëŒ&í˜¼ë€",
+        "í˜ì˜¤",
+        "ê´€ì‹¬&ê¸°ëŒ€",
+        "ì‚¬ë‘",
+        "ìˆœì¢…",
+        "ê²½ì™¸ì‹¬",
+        "ë°˜ëŒ€",
+        "ìì±…",
+        "ê²½ë©¸",
+        "ê³µê²©ì„±",
+        "ë‚™ì²œ",
+        "ì”ì“¸í•¨",
+        "ì• ì¦",
+        "ì–¼ì–´ë¶™ìŒ",
+        "í˜¼ë€ìŠ¤ëŸ¬ì›€",
     };
 
-    // ¼Õ´Ô°ú »óÈ£ÀÛ¿ëÀ» À§ÇØ ÇÊ¿äÇÑ Äİ¶óÀÌ´õ 
+    // ì†ë‹˜ê³¼ ìƒí˜¸ì‘ìš©ì„ ìœ„í•´ í•„ìš”í•œ ì½œë¼ì´ë” 
     private Collider2D sitCollider;
     private Collider2D walkCollider;
 
-    // ÀÔÀå°ú ÅğÀå½ÃÀÇ ¸¸Á·µµ ÀúÀå
+    // ì…ì¥ê³¼ í‡´ì¥ì‹œì˜ ë§Œì¡±ë„ ì €ì¥
     private int enterSat;
     private int outSat;
 
-    // °¢ ¼Õ´ÔÀÇ ¹øÈ£¿¡ µû¶ó ¾Ö´Ï¸ŞÀÌÅÍ¸¦ ¸¸µé¾î¼­ ÀúÀåÇÑ´Ù.
+    // ê° ì†ë‹˜ì˜ ë²ˆí˜¸ì— ë”°ë¼ ì• ë‹ˆë©”ì´í„°ë¥¼ ë§Œë“¤ì–´ì„œ ì €ì¥í•œë‹¤.
     public RuntimeAnimatorController[] animators = new RuntimeAnimatorController[MAX_GUEST_NUM];
 
-    // °¢ °¨Á¤º° ÀÌÆåÆ®¸¦ ÀúÀåÇØµÎ°í ÇØ´ç »óÈ²¿¡ µû¶ó º¯°æÇØÁÖ¾î Ãâ·ÂÇÑ´Ù.
+    // ê° ê°ì •ë³„ ì´í™íŠ¸ë¥¼ ì €ì¥í•´ë‘ê³  í•´ë‹¹ ìƒí™©ì— ë”°ë¼ ë³€ê²½í•´ì£¼ì–´ ì¶œë ¥í•œë‹¤.
     public Animation[] EffectAnimations = new Animation[MAX_EMOTION_NUM];
 
-    // °¨Á¤Ç¥Çö ÀÌÆåÆ®¸¦ Front/BackÀ¸·Î ³ª´©¾î¼­ °ü¸®ÇÑ´Ù.
+    // ê°ì •í‘œí˜„ ì´í™íŠ¸ë¥¼ Front/Backìœ¼ë¡œ ë‚˜ëˆ„ì–´ì„œ ê´€ë¦¬í•œë‹¤.
     public Animator FrontEffect;
     public Animator BackEffect;
 
-    // ¼Õ´Ô ¹øÈ£¸¦ ÀúÀåÇØÁØ´Ù.
+    // ì†ë‹˜ ë²ˆí˜¸ë¥¼ ì €ì¥í•´ì¤€ë‹¤.
     public void setGuestNum(int guestNum = 0)
     {
         mGuestNum = guestNum;      
@@ -115,7 +115,7 @@ public class GuestObject : MonoBehaviour
 
     public void init()
     {
-        // ´ë±â½Ã°£ ÃÊ±âÈ­
+        // ëŒ€ê¸°ì‹œê°„ ì´ˆê¸°í™”
         mLimitTime = 0.0f;
         //mMaxLimitTime = 50.0f;
 
@@ -145,16 +145,16 @@ public class GuestObject : MonoBehaviour
 
         textReader = this.gameObject.GetComponent<RLHReader>();
         isHintTextPrinted = false;
-        isUseRarity4 = true; // Test¸¦ À§ÇØ¼­ true·Î ÀÓ½Ã º¯°æ
+        isUseRarity4 = true; // Testë¥¼ ìœ„í•´ì„œ trueë¡œ ì„ì‹œ ë³€ê²½
         isUsingHint = false;
     }
 
-// °È´Â ¾Ö´Ï¸ŞÀÌ¼Ç Ãâ·Â
-// °È´Â ¾Ö´Ï¸ŞÀÌ¼ÇÀ» µğÆúÆ® ¾Ö´Ï¸ŞÀÌ¼ÇÀ¸·Î ¼³Á¤
+// ê±·ëŠ” ì• ë‹ˆë©”ì´ì…˜ ì¶œë ¥
+// ê±·ëŠ” ì• ë‹ˆë©”ì´ì…˜ì„ ë””í´íŠ¸ ì• ë‹ˆë©”ì´ì…˜ìœ¼ë¡œ ì„¤ì •
 
 private void Update()
     {
-        // ÇÒ´ç¹Ş´Â ÀÇÀÚ ¼³Á¤
+        // í• ë‹¹ë°›ëŠ” ì˜ì ì„¤ì •
         if (mTargetChiarIndex != -1 && isGotoEntrance == false)
         {
             mTargetChair = mSOWManager.mChairPos[mTargetChiarIndex].transform;
@@ -162,7 +162,7 @@ private void Update()
             this.GetComponent<AIDestinationSetter>().enabled = true;
             this.GetComponent<AIDestinationSetter>().target = mTargetChair.transform;
 
-            // ÀÇÀÚ¿¡ µµÂøÇÏÁö ¾Ê¾Ò´Ù¸é AIPATH¸¦ È°¼ºÈ­ÇÑ´Ù.
+            // ì˜ìì— ë„ì°©í•˜ì§€ ì•Šì•˜ë‹¤ë©´ AIPATHë¥¼ í™œì„±í™”í•œë‹¤.
             if (this.transform != mTargetChair.transform)
             {
                 this.GetComponent<WayPoint>().isMove = false;
@@ -176,7 +176,7 @@ private void Update()
             mGuestAnim.SetBool("isStand", false);
         }
 
-        // ±¸¸§À» Á¦°ø¹Ş´Â »óÅÂ°¡ ¾Æ´Ï¶ó¸é ´ë±â½Ã°£À» °»½Å½ÃÅ²´Ù.
+        // êµ¬ë¦„ì„ ì œê³µë°›ëŠ” ìƒíƒœê°€ ì•„ë‹ˆë¼ë©´ ëŒ€ê¸°ì‹œê°„ì„ ê°±ì‹ ì‹œí‚¨ë‹¤.
         if (isUsing == false)
         {
             TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
@@ -190,16 +190,16 @@ private void Update()
             }
         }
 
-        // ´ë±â½Ã°£ÀÌ Áö³ª°Å³ª ºÒ¸¸¹¶Æ¼°¡ µÈ °æ¿ì¿¡ (Ä¡·á¸¦ ¸¶Ä¡°í °¡´É °æ¿ì´Â Á¦¿Ü)
+        // ëŒ€ê¸°ì‹œê°„ì´ ì§€ë‚˜ê±°ë‚˜ ë¶ˆë§Œë­‰í‹°ê°€ ëœ ê²½ìš°ì— (ì¹˜ë£Œë¥¼ ë§ˆì¹˜ê³  ê°€ëŠ¥ ê²½ìš°ëŠ” ì œì™¸)
         if ((mLimitTime > mMaxLimitTime || mGuestManager.mGuestInfo[mGuestNum].isDisSat == true) && !isGotoEntrance)
         {
-            // »ç¿ëÀÚ ¸®½ºÆ®¿¡¼­ ¾ø¾Ö°í, ÇØ´ç ÀÇÀÚ¸¦ ´Ù½Ã true·Î ¹Ù²ãÁÖ¾î¾ß ÇÑ´Ù.
+            // ì‚¬ìš©ì ë¦¬ìŠ¤íŠ¸ì—ì„œ ì—†ì• ê³ , í•´ë‹¹ ì˜ìë¥¼ ë‹¤ì‹œ trueë¡œ ë°”ê¿”ì£¼ì–´ì•¼ í•œë‹¤.
             mSOWManager.mCheckChairEmpty[mTargetChiarIndex] = true;
             mTargetChair = null;
             isSit = false;
 
 
-            // ±¸¸§ »ç¿ë°¡´É ¸®½ºÆ®¿¡¼­ »èÁ¦
+            // êµ¬ë¦„ ì‚¬ìš©ê°€ëŠ¥ ë¦¬ìŠ¤íŠ¸ì—ì„œ ì‚­ì œ
             int count = mSOWManager.mUsingGuestList.Count;
             for (int i = 0; i < count; i++)
             {
@@ -210,7 +210,7 @@ private void Update()
                 }
             }
 
-            // ºÒ¸¸ ¼Õ´ÔÀ¸·Î º¯È¯ ÈÄ, ±Í°¡
+            // ë¶ˆë§Œ ì†ë‹˜ìœ¼ë¡œ ë³€í™˜ í›„, ê·€ê°€
             mGuestManager.mGuestInfo[mGuestNum].isDisSat = true;
 
             Debug.Log("Time");
@@ -218,7 +218,7 @@ private void Update()
             MoveToEntrance();
         }
 
-        // ÀÔ±¸¿¡ µµ´ŞÇÑ °æ¿ì
+        // ì…êµ¬ì— ë„ë‹¬í•œ ê²½ìš°
         if (isGotoEntrance == true && transform.position.x - mSOWManager.mWayPoint[0].transform.position.x <= 0.2f)
         {
             Debug.Log("Destroy");
@@ -226,13 +226,13 @@ private void Update()
            
         }
 
-        // ÀÇÀÚ¿¡ µµ´ŞÇÑ °æ¿ì
+        // ì˜ìì— ë„ë‹¬í•œ ê²½ìš°
         if (mTargetChiarIndex != -1)
         {
             if (isGotoEntrance == false && Mathf.Abs(transform.position.x - mTargetChair.transform.position.x) 
                 <= 0.1f && Mathf.Abs(transform.position.y - mTargetChair.transform.position.y) <= 0.1f)
             {
-                // ÀÇÀÚ À§Ä¡·Î ÀÌµ¿ , ¹æÇâ¿¡ µû¶ó¼­ LocalScale Á¶Á¤
+                // ì˜ì ìœ„ì¹˜ë¡œ ì´ë™ , ë°©í–¥ì— ë”°ë¼ì„œ LocalScale ì¡°ì •
                 if(mSOWManager.mSitDir[mTargetChiarIndex] == 1)
                     transform.localScale = new Vector3(CHAR_SIZE, CHAR_SIZE, 1f);
                 else
@@ -241,7 +241,7 @@ private void Update()
                 mGuestAnim.SetBool("isSit", true);
                 ChangeLayerToSit();
 
-                // TODO : Äİ¶óÀÌ´õ º¯°æ Walking ->Sitting
+                // TODO : ì½œë¼ì´ë” ë³€ê²½ Walking ->Sitting
                 sitCollider.enabled = true;
                 walkCollider.enabled = false;
 
@@ -249,58 +249,58 @@ private void Update()
                 isSit = true;
             }
         }
-        // »óÅÂ¿¡ µû¶ó¼­ ¾Ö´Ï¸ŞÀÌ¼Ç Á¦°ø
+        // ìƒíƒœì— ë”°ë¼ì„œ ì• ë‹ˆë©”ì´ì…˜ ì œê³µ
         if (isSit)
         {
             if(mGuestManager.mGuestInfo[mGuestNum].isUsing == true)
             {
                 isUsing = true;      
             }
-            // Ä¡·á ÁßÀÎ °æ¿ì Ä¡·áÈ¿°ú¿¡ µû¶ó¼­ ÁÖ±âÀûÀ¸·Î ¾Ö´Ï¸ŞÀÌ¼ÇÀ» Á¦°ø
+            // ì¹˜ë£Œ ì¤‘ì¸ ê²½ìš° ì¹˜ë£Œíš¨ê³¼ì— ë”°ë¼ì„œ ì£¼ê¸°ì ìœ¼ë¡œ ì• ë‹ˆë©”ì´ì…˜ì„ ì œê³µ
             if (isUsing)
             {
-                // Á¦°ø ¹ŞÀº ±¸¸§ÀÇ ¿µÇâ¿¡ µû¶ó¼­ ¾É¾ÆÀÖ´Â ¸ğ½ÀÀÌ ±àÁ¤Àû/ºÎÁ¤Àû Áß ÇÏ³ª°¡ ³ª¿Â´Ù.
+                // ì œê³µ ë°›ì€ êµ¬ë¦„ì˜ ì˜í–¥ì— ë”°ë¼ì„œ ì•‰ì•„ìˆëŠ” ëª¨ìŠµì´ ê¸ì •ì /ë¶€ì •ì  ì¤‘ í•˜ë‚˜ê°€ ë‚˜ì˜¨ë‹¤.
                 mGuestAnim.SetBool("isUsing", true);
 
-                // »ç¿ë½Ã°£ÀÌ Áö³ª¸é ±¸¸§ ¿ÀºêÁ§Æ®¿¡¼­ ½ÇÇàµÈ ÄÚ·çÆ¾À» ÅëÇØ isEndUsingCloud°¡ true°¡ µÇ¾î ±Í°¡ÇÑ´Ù.
+                // ì‚¬ìš©ì‹œê°„ì´ ì§€ë‚˜ë©´ êµ¬ë¦„ ì˜¤ë¸Œì íŠ¸ì—ì„œ ì‹¤í–‰ëœ ì½”ë£¨í‹´ì„ í†µí•´ isEndUsingCloudê°€ trueê°€ ë˜ì–´ ê·€ê°€í•œë‹¤.
                 if (isEndUsingCloud)
                 {
-                    // Èñ±Íµµ 4Àç·á¸¦ »ç¿ëÇß´ÂÁö Ã¼Å©
+                    // í¬ê·€ë„ 4ì¬ë£Œë¥¼ ì‚¬ìš©í–ˆëŠ”ì§€ ì²´í¬
                     if (isUseRarity4)
                     {
-                        // »ç¿ëÇÏ¿´°í ¾ÆÁ÷ ÈùÆ®¸¦ Ãâ·ÂÇÏÁö ¾Ê¾Ò´Ù¸é ÈùÆ® Ãâ·Â
+                        // ì‚¬ìš©í•˜ì˜€ê³  ì•„ì§ íŒíŠ¸ë¥¼ ì¶œë ¥í•˜ì§€ ì•Šì•˜ë‹¤ë©´ íŒíŠ¸ ì¶œë ¥
                         if (!isHintTextPrinted && !isUsingHint)
                         {
-                            //Hint();
+                            Hint();
                         }
-                        // ÈùÆ® Ãâ·ÂÀ» ¿Ï·áÇß´Ù¸é ±Í°¡
+                        // íŒíŠ¸ ì¶œë ¥ì„ ì™„ë£Œí–ˆë‹¤ë©´ ê·€ê°€
                         else if (isHintTextPrinted)
                         {
-                            //MoveToEntrance();
+                            MoveToEntrance();
                         }
                         MoveToEntrance();
                     }
                     else
                     {
-                        // »ç¿ëÇÏÁö ¾Ê¾Ò´Ù¸é ¹Ù·Î ±Í°¡
+                        // ì‚¬ìš©í•˜ì§€ ì•Šì•˜ë‹¤ë©´ ë°”ë¡œ ê·€ê°€
                         MoveToEntrance();
                     }
                 }
             }
         }
-        // ±¸¸§ ÀÌ¿ëÀÌ ³¡³µÀ» ¶§         TODO: Èñ±Íµµ 4Àç·á°¡ µé¾î°¬´ÂÁö Ã¼Å©ÇØ¾ß ÇÔ
+        // êµ¬ë¦„ ì´ìš©ì´ ëë‚¬ì„ ë•Œ         TODO: í¬ê·€ë„ 4ì¬ë£Œê°€ ë“¤ì–´ê°”ëŠ”ì§€ ì²´í¬í•´ì•¼ í•¨
         if (isEndUsingCloud && !isHintTextPrinted)
         {
 
             //isHintTextPrinted = true;
 			//TextMeshPro Text = SpeechBubble.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>();
 			//Text.text = textReader.PrintHintText();
-			//SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);                                  // ¸»Ç³¼± È°¼ºÈ­
-			//SpeechBubble.transform.GetChild(1).gameObject.SetActive(true);                                  // ÅØ½ºÆ® È°¼ºÈ­
+			//SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);                                  // ë§í’ì„  í™œì„±í™”
+			//SpeechBubble.transform.GetChild(1).gameObject.SetActive(true);                                  // í…ìŠ¤íŠ¸ í™œì„±í™”
 			//Invoke("EndBubble", 5.0f);
 		}
 
-        // °È´Â ¹æÇâ¿¡ µû¶ó ¾Ö´Ï¸ŞÀÌ¼ÇÀÇ ¹æÇâÀ» ´Ù¸£°Ô ÁöÁ¤ÇÑ´Ù.
+        // ê±·ëŠ” ë°©í–¥ì— ë”°ë¼ ì• ë‹ˆë©”ì´ì…˜ì˜ ë°©í–¥ì„ ë‹¤ë¥´ê²Œ ì§€ì •í•œë‹¤.
         if (GetComponent<AIPath>().desiredVelocity.x >= 0.01f)
         {
             transform.localScale = new Vector3(CHAR_SIZE, CHAR_SIZE, 1f);
@@ -309,16 +309,16 @@ private void Update()
         {
             transform.localScale = new Vector3(-CHAR_SIZE, CHAR_SIZE, 1f);
         }
-        // ÇöÀç À§Ä¡¸¦ ÀúÀåÇÑ´Ù.
+        // í˜„ì¬ ìœ„ì¹˜ë¥¼ ì €ì¥í•œë‹¤.
         mTransform = transform;
     }
 
     public void SpeakEmotion()
     { 
-        // ¾É¾ÆÀÖ´Â °æ¿ì¿¡¸¸ Å¬¸¯ ½Ã »óÈ£ÀÛ¿ëÀ» ÅëÇØ °¨Á¤À» Ç¥ÇöÇÑ´Ù.
+        // ì•‰ì•„ìˆëŠ” ê²½ìš°ì—ë§Œ í´ë¦­ ì‹œ ìƒí˜¸ì‘ìš©ì„ í†µí•´ ê°ì •ì„ í‘œí˜„í•œë‹¤.
         if (!mGuestAnim.GetBool("isSit")) return;
 
-        // ÀÌ¹Ì »óÈ£ÀÛ¿ë ÁßÀÎ °æ¿ì¿¡´Â Å¬¸¯ÇÒ ¼ö ¾ø°Ô Á¦ÇÑÇÑ´Ù.
+        // ì´ë¯¸ ìƒí˜¸ì‘ìš© ì¤‘ì¸ ê²½ìš°ì—ëŠ” í´ë¦­í•  ìˆ˜ ì—†ê²Œ ì œí•œí•œë‹¤.
         if (isSpeakEmotion)
         {
             Debug.Log("Already Speaking");
@@ -326,32 +326,32 @@ private void Update()
         }
 
 
-        // ÈùÆ®¸¦ Ãâ·ÂÁßÀÎ °æ¿ì¿¡µµ °¨Á¤Ç¥ÇöÀ» ÇÒ ¼ö ¾ø´Ù.
-        // TODO : ÈùÆ®¸¦ Ãâ·ÂÁßÀÎ °æ¿ì returnÇÏ°Ô²û ±¸Çö
+        // íŒíŠ¸ë¥¼ ì¶œë ¥ì¤‘ì¸ ê²½ìš°ì—ë„ ê°ì •í‘œí˜„ì„ í•  ìˆ˜ ì—†ë‹¤.
+        // TODO : íŒíŠ¸ë¥¼ ì¶œë ¥ì¤‘ì¸ ê²½ìš° returní•˜ê²Œë” êµ¬í˜„
 
-        Debug.Log("°¨Á¤ ¸ğ¼ÇÀ» Ãâ·ÂÇÕ´Ï´Ù");
+        Debug.Log("ê°ì • ëª¨ì…˜ì„ ì¶œë ¥í•©ë‹ˆë‹¤");
         isSpeakEmotion = true;
 
-        // °¨Á¤ »óÇÑ, ÇÏÇÑ ¹üÀ§¿¡ °¡Àå °¡±î¿î °¨Á¤¿¡ ´ëÇÑ ÈùÆ®(ÀÌÆåÆ®)
+        // ê°ì • ìƒí•œ, í•˜í•œ ë²”ìœ„ì— ê°€ì¥ ê°€ê¹Œìš´ ê°ì •ì— ëŒ€í•œ íŒíŠ¸(ì´í™íŠ¸)
         for (int i = 0; i< faceValue.Length; i++)
         {
             StartCoroutine(Emotion(3.0f * (i), faceValue[i]));
         }
-        // ¸¸Á·µµ ¹İ¿µ ¹üÀ§¿¡¼­ °¡Àå ¸Õ °¨Á¤À» ¾Ë·ÁÁÖ´Â ¸»Ç³¼±  -> ¼Õ´ÔÀÇ À§Ä¡°ª¿¡ µû¶ó ÁÂ/¿ì Ãø¿¡ »ı¼º
+        // ë§Œì¡±ë„ ë°˜ì˜ ë²”ìœ„ì—ì„œ ê°€ì¥ ë¨¼ ê°ì •ì„ ì•Œë ¤ì£¼ëŠ” ë§í’ì„   -> ì†ë‹˜ì˜ ìœ„ì¹˜ê°’ì— ë”°ë¼ ì¢Œ/ìš° ì¸¡ì— ìƒì„±
         StartCoroutine("DialogEmotion");
 
-        // »óÈ£ÀÛ¿ë ÁßÀÓÀ» ³ªÅ¸³»´Â bool°ªÀ» »óÈ£ÀÛ¿ëÀÌ ³¡³­ ÀÌÈÄ¿¡ false·Î °»½ÅÇÑ´Ù.
+        // ìƒí˜¸ì‘ìš© ì¤‘ì„ì„ ë‚˜íƒ€ë‚´ëŠ” boolê°’ì„ ìƒí˜¸ì‘ìš©ì´ ëë‚œ ì´í›„ì— falseë¡œ ê°±ì‹ í•œë‹¤.
         if (faceValue.Length > 1) Invoke("EndSpeakEmotion", faceValue.Length * 3.0f + 1.0f);
         else Invoke("EndSpeakEmotion", 6.0f);
     }
 
-    // Hint¸¦ Ãâ·ÂÇØ¾ß ÇÏ´Â °æ¿ì 
+    // Hintë¥¼ ì¶œë ¥í•´ì•¼ í•˜ëŠ” ê²½ìš° 
     public void Hint()
     {
-        // ¾É¾ÆÀÖ´Â °æ¿ì¿¡¸¸ Å¬¸¯ ½Ã »óÈ£ÀÛ¿ëÀ» ÅëÇØ °¨Á¤À» Ç¥ÇöÇÑ´Ù.
+        // ì•‰ì•„ìˆëŠ” ê²½ìš°ì—ë§Œ í´ë¦­ ì‹œ ìƒí˜¸ì‘ìš©ì„ í†µí•´ ê°ì •ì„ í‘œí˜„í•œë‹¤.
         if (!mGuestAnim.GetBool("isSit")) return;
 
-        // ÀÌ¹Ì »óÈ£ÀÛ¿ë ÁßÀÎ °æ¿ì¿¡´Â Å¬¸¯ÇÒ ¼ö ¾ø°Ô Á¦ÇÑÇÑ´Ù.
+        // ì´ë¯¸ ìƒí˜¸ì‘ìš© ì¤‘ì¸ ê²½ìš°ì—ëŠ” í´ë¦­í•  ìˆ˜ ì—†ê²Œ ì œí•œí•œë‹¤.
         if (isSpeakEmotion)
         {
             Debug.Log("Already Speaking");
@@ -361,7 +361,8 @@ private void Update()
         isUsingHint = true;
         isSpeakEmotion = true;
 
-        // ¸»Ç³¼±¿¡ »ç¿ëÇÒ ³»¿ë ºÒ·¯¿À±â -> ¸®½ºÆ®¿¡¼­ °¨Á¤°ª¿¡ µû¶ó¼­ ºÒ·¯¿À±â
+        // ë§í’ì„ ì— ì‚¬ìš©í•  ë‚´ìš© ë¶ˆëŸ¬ì˜¤ê¸° -> ë¦¬ìŠ¤íŠ¸ì—ì„œ ê°ì •ê°’ì— ë”°ë¼ì„œ ë¶ˆëŸ¬ì˜¤ê¸°
+        textReader.LoadHintInfo(mGuestNum);
         string temp = textReader.PrintHintText();
         TextMeshPro Text = SpeechBubble.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>();
         Animator Anim = SpeechBubble.transform.GetChild(0).gameObject.GetComponent<Animator>();
@@ -369,12 +370,13 @@ private void Update()
 
         SpeechBubble.transform.GetChild(1).gameObject.transform.localScale = this.transform.localScale;
 
-        // ¸»Ç³¼± ¶ç¿ì±â
+        // ë§í’ì„  ë„ìš°ê¸°
+        SpeechBubble.SetActive(true);
         SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);
         Anim.SetTrigger("Start");
         mGuestAnim.SetTrigger("Hint");
 
-        // ÀÏÁ¤½Ã°£ ÀÌÈÄ ¸»Ç³¼± Á¦°Å
+        // ì¼ì •ì‹œê°„ ì´í›„ ë§í’ì„  ì œê±°
         Invoke("EndBubble", 5.0f);
     }
     private void EndBubble()
@@ -394,28 +396,28 @@ private void Update()
 
     IEnumerator DialogEmotion()
     {
-        // ¸»Ç³¼± ³»¿ë Ã¤¿ì±â
+        // ë§í’ì„  ë‚´ìš© ì±„ìš°ê¸°
         string temp = EmotionDialogList[dialogEmotion];
         TextMeshPro Text = SpeechBubble.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>();
         Animator Anim = SpeechBubble.transform.GetChild(0).gameObject.GetComponent<Animator>();
 
         Debug.Log("DialogEmotion : " + dialogEmotion);
 
-        // Text°¡ NULLÀÌ ¾Æ´Ñ°æ¿ì ³»¿ë Ã¤¿ö³Ö±â
+        // Textê°€ NULLì´ ì•„ë‹Œê²½ìš° ë‚´ìš© ì±„ì›Œë„£ê¸°
         if (Text != null)
             Text.text = temp;
 
         SpeechBubble.transform.GetChild(1).gameObject.transform.localScale = this.transform.localScale;
 
-        // ¸»Ç³¼± ¶ç¿ì±â
+        // ë§í’ì„  ë„ìš°ê¸°
         SpeechBubble.SetActive(true);
         SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);
         Anim.SetTrigger("Start");
 
-        // µô·¹ÀÌ
+        // ë”œë ˆì´
         yield return new WaitForSeconds(DELAY_OF_SPEECH_BUBBLE);
 
-        // ¸»Ç³¼± Áö¿ì±â
+        // ë§í’ì„  ì§€ìš°ê¸°
         Anim.SetTrigger("EndBubble");
     }
 
@@ -423,12 +425,12 @@ private void Update()
     {
         yield return new WaitForSeconds(delay);
 
-        Debug.Log(emotionNum + "Emotion Ãâ·Â");
+        Debug.Log(emotionNum + "Emotion ì¶œë ¥");
 
-        // Interaction Æ®¸®°Å ¹ßµ¿ -> emotionNum¿¡ µû¶ó¼­ FaceValue°ªÀ» º¯µ¿½ÃÅ²´Ù.
+        // Interaction íŠ¸ë¦¬ê±° ë°œë™ -> emotionNumì— ë”°ë¼ì„œ FaceValueê°’ì„ ë³€ë™ì‹œí‚¨ë‹¤.
         mGuestAnim.SetInteger("FaceValue", ChangeFaceValue(emotionNum));
 
-        // ÇØ´ç emotionNum¿¡ ÇØ´çÇÏ´Â ÀÌÆåÆ®¸¦ Àç»ı½ÃÅ²´Ù.
+        // í•´ë‹¹ emotionNumì— í•´ë‹¹í•˜ëŠ” ì´í™íŠ¸ë¥¼ ì¬ìƒì‹œí‚¨ë‹¤.
         BackEffect.SetInteger("EmotionValue", emotionNum);
         Debug.Log("Emotion Value : " + emotionNum);
 
@@ -453,7 +455,7 @@ private void Update()
     {
         BackEffect.SetInteger("EmotionValue", -1);
         mGuestAnim.SetTrigger("InteractionEnd");
-        Debug.Log("Emotion Ãâ·Â ¸¶¹«¸®");
+        Debug.Log("Emotion ì¶œë ¥ ë§ˆë¬´ë¦¬");
     }
 
     void EndHint()
@@ -462,17 +464,17 @@ private void Update()
     }
 
 
-    // ¾Ö´Ï¸ŞÀÌ¼Ç Å¬¸³µéÀ» ¼Õ´Ô¿¡ ¸Â°Ô ÃÊ±âÈ­ÇÑ´Ù.
+    // ì• ë‹ˆë©”ì´ì…˜ í´ë¦½ë“¤ì„ ì†ë‹˜ì— ë§ê²Œ ì´ˆê¸°í™”í•œë‹¤.
     public void initAnimator()
     {
         GetComponent<Animator>().runtimeAnimatorController = animators[mGuestNum];
         Debug.Log("init Guest Anim");
     }
 
-    // ÀÔ±¸·Î ÅğÀåÇÏ´Â ÇÔ¼öÀÌ´Ù.
+    // ì…êµ¬ë¡œ í‡´ì¥í•˜ëŠ” í•¨ìˆ˜ì´ë‹¤.
     private void MoveToEntrance()
     {
-        //´ë±â ½Ã°£ÀÌ Áö³µ°Å³ª, ±¸¸§À» Á¦°ø¹Ş¾ÒÀ» ¶§, ¸¸Á·µµ Áõ°¨µµ °è»ê
+        //ëŒ€ê¸° ì‹œê°„ì´ ì§€ë‚¬ê±°ë‚˜, êµ¬ë¦„ì„ ì œê³µë°›ì•˜ì„ ë•Œ, ë§Œì¡±ë„ ì¦ê°ë„ ê³„ì‚°
         outSat = mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
         CalcSatVariation(enterSat, outSat);
         // Demo Version
@@ -505,18 +507,18 @@ private void Update()
         }
         ChangeLayerToDefault();
 
-        // TODO : Äİ¶óÀÌ´õ º¯°æ Sitting -> Walking
+        // TODO : ì½œë¼ì´ë” ë³€ê²½ Sitting -> Walking
         sitCollider.enabled = false;
         walkCollider.enabled = true;
 
-        // ºÎ¿©¹ŞÀº ÀÇÀÚ ÀÎµ¦½º°ª ÃÊ±âÈ­
+        // ë¶€ì—¬ë°›ì€ ì˜ì ì¸ë±ìŠ¤ê°’ ì´ˆê¸°í™”
         mGuestManager.mGuestInfo[mGuestNum].mSitChairIndex = -1;
     }
     private void CalcSatVariation(int enterSat, int outSat)
     {
-        if (enterSat > outSat) { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = -1; }           // ¸¸Á·µµ °¨¼Ò
-        else if (enterSat == outSat) { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = 0; }     // ¸¸Á·µµ À¯Áö
-        else { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = 1; }                             // ¸¸Á·µµ Áõ°¡
+        if (enterSat > outSat) { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = -1; }           // ë§Œì¡±ë„ ê°ì†Œ
+        else if (enterSat == outSat) { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = 0; }     // ë§Œì¡±ë„ ìœ ì§€
+        else { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = 1; }                             // ë§Œì¡±ë„ ì¦ê°€
     }
 
 

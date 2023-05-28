@@ -100,8 +100,21 @@ public class CloudSpawner : MonoBehaviour
             Debug.Log(cloudColorNumber);
 
             // TODO : 희귀도에 따라 외형을 변화시키는 코드 추가
+            int IngredientDataNum = storagedCloudData.GetIngredientDataNum();
 
-            cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue3[cloudColorNumber];
+            Debug.Log("구름에 사용된 파츠 개수 : " + IngredientDataNum);
+            if (IngredientDataNum <= 2)
+            {
+                cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue3[cloudColorNumber];
+            }
+            else if (IngredientDataNum == 3)
+            {
+                cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue2[cloudColorNumber];
+            }
+            else
+            {
+                cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue4[cloudColorNumber];
+            }
             
             if(cloudMove.GetComponent<Animator>().runtimeAnimatorController)
             {

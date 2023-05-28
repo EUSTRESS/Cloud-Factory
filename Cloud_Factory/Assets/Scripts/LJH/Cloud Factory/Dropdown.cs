@@ -5,37 +5,56 @@ using TMPro;
 public class Dropdown : MonoBehaviour
 {
     [SerializeField]
-    public TMP_Dropdown mDropdown; // µå·Ó´Ù¿î
+    public TMP_Dropdown mDropdown; // ë“œë¡­ë‹¤ìš´
 
     public int mDropdownIndex;
 
-    // 20°¡Áö °¨Á¤ÀÎµ¥ ÀÏ´Ü ¿¹¶÷ÀÌ²¨¶û ±âÈ¹¼­ º¸°í ÇßÀ½ Æ²¸®¸é ¼öÁ¤ÇØÁà..
-    private string[]     mEmotionArray = new string[20] 
+    // 20ê°€ì§€ ê°ì •ì¸ë° ì¼ë‹¨ ì˜ˆëŒì´êº¼ë‘ ê¸°íšì„œ ë³´ê³  í–ˆìŒ í‹€ë¦¬ë©´ ìˆ˜ì •í•´ì¤˜..
+    private string[]     mEmotionArrayKR = new string[20] 
     {
-        "±â»İ",      "ºÒ¾È",   "½½ÇÄ",      "Â¥Áõ",     "¼ö¿ë",
-        "³î¶÷,È¥¶õ", "Çø¿À",   "°ü½É,±â´ë", "»ç¶û",     "¼øÁ¾,¼øÀÀ",
-        "°æ¿Ü½É",    "¹İ´ë",   "ºñ³­",      "°æ¸ê",     "°ø°İ¼º",
-        "³«Ãµ",      "¾¹¾µÇÔ", "¾ÖÁõ",      "¾ó¾îºÙÀ½", "È¥¶õ½º·¯¿ò"
+        "ê¸°ì¨",      "ë¶ˆì•ˆ",   "ìŠ¬í””",      "ì§œì¦",     "ìˆ˜ìš©",
+        "ë†€ëŒ,í˜¼ë€", "í˜ì˜¤",   "ê´€ì‹¬,ê¸°ëŒ€", "ì‚¬ë‘",     "ìˆœì¢…,ìˆœì‘",
+        "ê²½ì™¸ì‹¬",    "ë°˜ëŒ€",   "ë¹„ë‚œ",      "ê²½ë©¸",     "ê³µê²©ì„±",
+        "ë‚™ì²œ",      "ì”ì“¸í•¨", "ì• ì¦",      "ì–¼ì–´ë¶™ìŒ", "í˜¼ë€ìŠ¤ëŸ¬ì›€"
+    };
+
+    private string[] mEmotionArrayEN = new string[20]
+    {
+        "joy", "apprehension", "sadness", "annoyance", "acceptance",
+        "surprise", "disgust", "interest", "love", "submission",
+        "awe", "disapproval", "remorse", "contempt", "aggressiveness",
+        "optimism", "bitter", "love & hate", "freezing", "confusion"
     };
 
     void Awake()
     {
-        // ÃÊ±âÈ­
+        // ì´ˆê¸°í™”
         mDropdown.ClearOptions();
 
-        // »õ·Î¿î ¿É¼Ç ¼³Á¤À» À§ÇÑ OptionData »ı¼º
+        // ìƒˆë¡œìš´ ì˜µì…˜ ì„¤ì •ì„ ìœ„í•œ OptionData ìƒì„±
         List<TMP_Dropdown.OptionData> optionList = new List<TMP_Dropdown.OptionData>();
 
-        // array¿¡ ÀÖ´Â ¹®ÀÚ¿­ µ¥ÀÌÅÍ ÀúÀå
-        foreach (string str in mEmotionArray)
+        // arrayì— ìˆëŠ” ë¬¸ìì—´ ë°ì´í„° ì €ì¥
+        if (LanguageManager.GetInstance().GetCurrentLanguage() == "Korean")
         {
-            optionList.Add(new TMP_Dropdown.OptionData(str));
+            foreach (string str in mEmotionArrayKR)
+            {
+                optionList.Add(new TMP_Dropdown.OptionData(str));
+            }
         }
+        else
+        {
+            foreach (string str in mEmotionArrayEN)
+            {
+                optionList.Add(new TMP_Dropdown.OptionData(str));
+            }
+        }
+        
 
-        // »ı¼ºÇÑ optionlist¸¦ dropdownÀÇ ¿É¼Ç °ª¿¡ Ãß°¡
+        // ìƒì„±í•œ optionlistë¥¼ dropdownì˜ ì˜µì…˜ ê°’ì— ì¶”ê°€
         mDropdown.AddOptions(optionList);
 
-        // ÇöÀç dropdown¿¡ ¼±ÅÃµÈ ¿É¼ÇÀ» 0¹øÀ¸·Î ¼³Á¤
+        // í˜„ì¬ dropdownì— ì„ íƒëœ ì˜µì…˜ì„ 0ë²ˆìœ¼ë¡œ ì„¤ì •
         mDropdown.value = 0;
     }
 

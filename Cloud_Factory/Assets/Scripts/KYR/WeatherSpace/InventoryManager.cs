@@ -78,6 +78,11 @@ public class StoragedCloudData
     {
         return mCloudTypeNum;
     }
+
+    public int GetIngredientDataNum()
+    {
+        return mIngredientDatas.Count;
+    }
 }
 
 [System.Serializable]

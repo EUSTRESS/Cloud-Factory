@@ -12,50 +12,50 @@ public class TutorialData
 
 public class TutorialManager : MonoBehaviour
 {
-	// Æ©Åä¸®¾óÀÌ ¿ÏÀüÈ÷ Á¾·áµÇ¾ú´ÂÁö Ã¼Å©
+	// íŠœí† ë¦¬ì–¼ì´ ì™„ì „íˆ ì¢…ë£Œë˜ì—ˆëŠ”ì§€ ì²´í¬
 	[HideInInspector]
 	public bool isTutorial;
 
-	// ¿É¼ÇÀº Ç×»ó ´©¸¦ ¼ö ÀÖµµ·Ï ¼³Á¤ÀÌ ÇÊ¿ä
+	// ì˜µì…˜ì€ í•­ìƒ ëˆ„ë¥¼ ìˆ˜ ìˆë„ë¡ ì„¤ì •ì´ í•„ìš”
 
 	/*
-     #Æ©Åä¸®¾ó ÁøÇàµµ Ã¼Å©
-     ³¯¾¾ÀÇ °ø°£ 1
-	 ÀÀÁ¢½Ç
-	 ³¯¾¾ÀÇ °ø°£ 2 (Ã¤Áı)
-	 ±¸¸§ °øÀå
-	 ±¸¸§ µ¥ÄÚ
-     +±¸¸§°øÀå
-	 ±¸¸§ Á¦°ø
-	 ¼Õ´Ô ¹è¿õ
+     #íŠœí† ë¦¬ì–¼ ì§„í–‰ë„ ì²´í¬
+     ë‚ ì”¨ì˜ ê³µê°„ 1
+	 ì‘ì ‘ì‹¤
+	 ë‚ ì”¨ì˜ ê³µê°„ 2 (ì±„ì§‘)
+	 êµ¬ë¦„ ê³µì¥
+	 êµ¬ë¦„ ë°ì½”
+     +êµ¬ë¦„ê³µì¥
+	 êµ¬ë¦„ ì œê³µ
+	 ì†ë‹˜ ë°°ì›…
     */
 	[HideInInspector]
 	public bool[] isFinishedTutorial;
 
-	[Header("È­¸é ÅÍÄ¡¸¦ ¸·´Â ¿ÀºêÁ§Æ®")]
-	public GameObject emptyScreen;              // È­¸é Å¬¸¯À» ¸·±âÀ§ÇÑ ¿ÀºêÁ§Æ®
-	private GameObject emptyScreenObject;       // ¸»Ç³¼±°ú ÇÔ²² »ı¼º/Á¦°Å µÇ´Â ¿ÀºêÁ§Æ®
-	private GameObject blockScreenTouchObject;  // ¸»Ç³¼±ÀÌ ¾ø¾îµµ È­¸éÀÇ ÅÍÄ¡¸¦ ¸·À» ¶§ »ç¿ëµÇ´Â ¿ÀºêÁ§Æ®
+	[Header("í™”ë©´ í„°ì¹˜ë¥¼ ë§‰ëŠ” ì˜¤ë¸Œì íŠ¸")]
+	public GameObject emptyScreen;              // í™”ë©´ í´ë¦­ì„ ë§‰ê¸°ìœ„í•œ ì˜¤ë¸Œì íŠ¸
+	private GameObject emptyScreenObject;       // ë§í’ì„ ê³¼ í•¨ê»˜ ìƒì„±/ì œê±° ë˜ëŠ” ì˜¤ë¸Œì íŠ¸
+	private GameObject blockScreenTouchObject;  // ë§í’ì„ ì´ ì—†ì–´ë„ í™”ë©´ì˜ í„°ì¹˜ë¥¼ ë§‰ì„ ë•Œ ì‚¬ìš©ë˜ëŠ” ì˜¤ë¸Œì íŠ¸
 
-	[Header("°¡ÀÌµå ¸»Ç³¼± ¿ÀºêÁ§Æ®")]
-	public GameObject guideSpeechBubble;        // °¡ÀÌµå ¸»Ç³¼± ¿ÀºêÁ§Æ®(child·Î CharImage, TextÁ¸Àç)
-	private GameObject guideSpeechBubbleObject; // ¿ÀºêÁ§Æ®¸¦ °ü¸®ÇÏ±â À§ÇÑ ¿ÀºêÁ§Æ®
+	[Header("ê°€ì´ë“œ ë§í’ì„  ì˜¤ë¸Œì íŠ¸")]
+	public GameObject guideSpeechBubble;        // ê°€ì´ë“œ ë§í’ì„  ì˜¤ë¸Œì íŠ¸(childë¡œ CharImage, Textì¡´ì¬)
+	private GameObject guideSpeechBubbleObject; // ì˜¤ë¸Œì íŠ¸ë¥¼ ê´€ë¦¬í•˜ê¸° ìœ„í•œ ì˜¤ë¸Œì íŠ¸
 
-	[Header("È­»ìÇ¥ UI ¿ÀºêÁ§Æ®")]
+	[Header("í™”ì‚´í‘œ UI ì˜¤ë¸Œì íŠ¸")]
 	public GameObject leftArrowNotInCanvas;
 	public GameObject leftArrow;
 	public GameObject rightArrow;
 	private GameObject arrowObject;
 
-	[Header ("ÆäÀÌµå ¾Æ¿ô ÇÁ¸®Æé ¿ÀºêÁ§Æ®")]
-    public GameObject commonFadeOutScreen;		// È­¸éÀ» ¸ğµÎ °¡¸®´Â °ø¿ë Fade Out ½ºÅ©¸°
+	[Header ("í˜ì´ë“œ ì•„ì›ƒ í”„ë¦¬í© ì˜¤ë¸Œì íŠ¸")]
+    public GameObject commonFadeOutScreen;		// í™”ë©´ì„ ëª¨ë‘ ê°€ë¦¬ëŠ” ê³µìš© Fade Out ìŠ¤í¬ë¦°
     public GameObject fadeOutScreen1;
 	public GameObject storageFadeOutScreen0;
     public GameObject storageFadeOutScreen;
     public GameObject decoFadeOutScreen;
     private GameObject fadeOutScreenObject;
 
-	[Header("Æ©Åä¸®¾ó¿ë ¹¶Æ¼ ¿ÀºêÁ§Æ®")]
+	[Header("íŠœí† ë¦¬ì–¼ìš© ë­‰í‹° ì˜¤ë¸Œì íŠ¸")]
 	private GameObject tutorialGuest;
 
     private Guest mGuestManager;
@@ -84,6 +84,18 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    public void ChangeAllTutorialStatus()
+    {
+	    if (isTutorial == false)
+	    {
+		    for (int num = 0; num < 9; num++)
+		    {
+			    isFinishedTutorial[num] = true;
+		    }
+		    DestroyAllObject();
+	    }
+    }
+
     void Update()
     {
         if (isTutorial)
@@ -98,37 +110,37 @@ public class TutorialManager : MonoBehaviour
                 DestroyAllObject();
             }
 
-            // ½ºÅä¸® ¼Ò°³, ÀÀÁ¢½Ç ¾È³» Æ©Åä¸®¾ó
+            // ìŠ¤í† ë¦¬ ì†Œê°œ, ì‘ì ‘ì‹¤ ì•ˆë‚´ íŠœí† ë¦¬ì–¼
             TutorialOfSOW1();
 
-            // ÀÀÁ¢½Ç Æ©Åä¸®¾ó
+            // ì‘ì ‘ì‹¤ íŠœí† ë¦¬ì–¼
             TutorialDrawingRoom();
 
-            // ¹¶Æ¼ °¨Á¤ È®ÀÎ, Àç·á Ã¤Áı Æ©Åä¸®¾ó
+            // ë­‰í‹° ê°ì • í™•ì¸, ì¬ë£Œ ì±„ì§‘ íŠœí† ë¦¬ì–¼
             TutorialOfSOW2();
 
-            // ±¸¸§ Á¦ÀÛ ±â°è ¼Ò°³ ¹× ¾È³» Æ©Åä¸®¾ó
+            // êµ¬ë¦„ ì œì‘ ê¸°ê³„ ì†Œê°œ ë° ì•ˆë‚´ íŠœí† ë¦¬ì–¼
             TutorialCloudFactory1();
 
-            // ±¸¸§ Á¦ÀÛ Æ©Åä¸®¾ó
+            // êµ¬ë¦„ ì œì‘ íŠœí† ë¦¬ì–¼
             TutorialGiveCloud();
 
-            // ±¸¸§ µ¥ÄÚÇÏ·¯ °¡´Â ¹ı ¾È³» Æ©Åä¸®¾ó
+            // êµ¬ë¦„ ë°ì½”í•˜ëŸ¬ ê°€ëŠ” ë²• ì•ˆë‚´ íŠœí† ë¦¬ì–¼
             TutorialCloudFactory2();
 
-            // ±¸¸§ µ¥ÄÚ Æ©Åä¸®¾ó
+            // êµ¬ë¦„ ë°ì½” íŠœí† ë¦¬ì–¼
             TutorialCloudDeco();
 
-            // ±¸¸§ Á¦°ø Æ©Åä¸®¾ó
+            // êµ¬ë¦„ ì œê³µ íŠœí† ë¦¬ì–¼
             TutorialCloudStorage();
 
-            // ±¸¸§ Á¦°ø ÈÄ Ã³¸® Æ©Åä¸®¾ó
+            // êµ¬ë¦„ ì œê³µ í›„ ì²˜ë¦¬ íŠœí† ë¦¬ì–¼
             TutorialSOW3();
 
-			// Guide ¸»Ç³¼± »óÅÂ¿¡ µû¸¥, È­¸é ÅÍÄ¡¸¦ ¸·´Â ¿ÀºêÁ§Æ® »óÅÂ º¯°æ
+			// Guide ë§í’ì„  ìƒíƒœì— ë”°ë¥¸, í™”ë©´ í„°ì¹˜ë¥¼ ë§‰ëŠ” ì˜¤ë¸Œì íŠ¸ ìƒíƒœ ë³€ê²½
 			ChangeEmptyScreenObjectStatus();
 
-			// Arrow UI ¿ÀºêÁ§Æ® »óÅÂ º¯°æ
+			// Arrow UI ì˜¤ë¸Œì íŠ¸ ìƒíƒœ ë³€ê²½
 			ChangeArrowObjectStatus();
         }
 	}
@@ -144,10 +156,10 @@ public class TutorialManager : MonoBehaviour
     public void SetActiveFadeOutScreen(bool _bool)      { if (fadeOutScreenObject != null) { fadeOutScreenObject.SetActive(_bool); } }
 	public void SetActiveArrowUIObject(bool _bool)		{ if (arrowObject != null) { arrowObject.SetActive(_bool); } }
 
-    // ³¯¾¾ÀÇ °ø°£(1) Æ©Åä¸®¾ó
-    // ¸»Ç³¼±À» ¶ç¿î´Ù. ´ë»ç Òı ´ë»ç ³Ñ±â´Â ¹öÆ° êó
-    // ÀÀÁ¢½Ç ¹öÆ°°ú ´À³¦Ç¥ ¼³¸í
-    // ÀÀÁ¢½Ç ¿Ü ¾îµÓ°Ô, ÀÀÁ¢½Ç ¹öÆ°¸¸ Å¬¸¯ °¡´É
+    // ë‚ ì”¨ì˜ ê³µê°„(1) íŠœí† ë¦¬ì–¼
+    // ë§í’ì„ ì„ ë„ìš´ë‹¤. ëŒ€ì‚¬ å¤š ëŒ€ì‚¬ ë„˜ê¸°ëŠ” ë²„íŠ¼ æœ‰
+    // ì‘ì ‘ì‹¤ ë²„íŠ¼ê³¼ ëŠë‚Œí‘œ ì„¤ëª…
+    // ì‘ì ‘ì‹¤ ì™¸ ì–´ë‘¡ê²Œ, ì‘ì ‘ì‹¤ ë²„íŠ¼ë§Œ í´ë¦­ ê°€ëŠ¥
     public void TutorialOfSOW1()
     {
 		if (SceneManager.GetActiveScene().name == "Space Of Weather"
@@ -160,7 +172,7 @@ public class TutorialManager : MonoBehaviour
 		}
     }
 
-    // ÀÀÁ¢½Ç Æ©Åä¸®¾ó
+    // ì‘ì ‘ì‹¤ íŠœí† ë¦¬ì–¼
     public void TutorialDrawingRoom()
     {
 		if (SceneManager.GetActiveScene().name == "Drawing Room"
@@ -170,7 +182,7 @@ public class TutorialManager : MonoBehaviour
 		{ InstantiateBasicObjects(1); }
 	}
 
-    // Ã¤Áı Æ©Åä¸®¾ó
+    // ì±„ì§‘ íŠœí† ë¦¬ì–¼
     public void TutorialOfSOW2()
     {
 		if (SceneManager.GetActiveScene().name == "Space Of Weather"
@@ -274,14 +286,14 @@ public class TutorialManager : MonoBehaviour
 		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
 	}
 
-	// Tutorial °£ ¸ğµç ¾À¿¡¼­ Ãâ·ÂµÇ´Â ±âº» ¿ÀºêÁ§Æ®(emptyScreenObject, guideSpeechBubbleObject)¸¦ »ı¼ºÇØÁØ´Ù.
+	// Tutorial ê°„ ëª¨ë“  ì”¬ì—ì„œ ì¶œë ¥ë˜ëŠ” ê¸°ë³¸ ì˜¤ë¸Œì íŠ¸(emptyScreenObject, guideSpeechBubbleObject)ë¥¼ ìƒì„±í•´ì¤€ë‹¤.
 	public void InstantiateBasicObjects(int dialog_index)
     {
 		emptyScreenObject = Instantiate(emptyScreen);
 		emptyScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
 		emptyScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
 
-		// ¸»Ç³¼± ¿ÀºêÁ§Æ® »ı¼º
+		// ë§í’ì„  ì˜¤ë¸Œì íŠ¸ ìƒì„±
 		guideSpeechBubbleObject = Instantiate(guideSpeechBubble);
 		guideSpeechBubbleObject.transform.SetParent(GameObject.Find("Canvas").transform);
 		guideSpeechBubbleObject.transform.localPosition = new Vector3(0f, -340f, 0f);
@@ -300,12 +312,12 @@ public class TutorialManager : MonoBehaviour
 
     public void ChangeEmptyScreenObjectStatus()
     {
-		// °¡ÀÌµå ¸»Ç³¼±ÀÌ ¾ø¾îÁö¸é È­¸é ÅÍÄ¡¸¦ ¸·´Â emptyScreenObjectµµ ¾ø¾ÖÁØ´Ù.
+		// ê°€ì´ë“œ ë§í’ì„ ì´ ì—†ì–´ì§€ë©´ í™”ë©´ í„°ì¹˜ë¥¼ ë§‰ëŠ” emptyScreenObjectë„ ì—†ì• ì¤€ë‹¤.
 		if (guideSpeechBubbleObject == null
 			&& emptyScreenObject != null)
 		{ Destroy(emptyScreenObject.gameObject); }
 
-		//°¡ÀÌµå ¸»Ç³¼±ÀÇ »óÅÂ¿¡ µû¶ó È­¸é ÅÍÄ¡¸¦ ¸·´Â emptyScreenObjectÀÇ »óÅÂµµ º¯°æ
+		//ê°€ì´ë“œ ë§í’ì„ ì˜ ìƒíƒœì— ë”°ë¼ í™”ë©´ í„°ì¹˜ë¥¼ ë§‰ëŠ” emptyScreenObjectì˜ ìƒíƒœë„ ë³€ê²½
 		if (guideSpeechBubbleObject != null)
 		{
 			if (guideSpeechBubbleObject.activeSelf == false

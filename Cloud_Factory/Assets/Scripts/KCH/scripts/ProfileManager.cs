@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class ProfileManager : MonoBehaviour
 {
     [Header("Profile")]
-    public  GameObject[] iProfileBG = new GameObject[3];         // ÇÁ·ÎÇÊ Á¾ÀÌ 3Àå ÂüÁ¶
-    private GameObject tempProfile;                             // ÇÁ·ÎÇÊ º¯°æ ½Ã ÀÓ½Ã·Î ÀúÀåÇÒ °ø°£
-    private Image[] sProfileColor = new Image[3];               // ÇÁ·ÎÇÊ Á¾ÀÌÀÇ »ö±òÀ» ÀúÀåÇÒ ÀÌ¹ÌÁö ½ºÅ©¸³Æ® ÂüÁ¶
-    private Color[] cProfileColor = new Color[3];               // °¢ ÇÁ·ÎÇÊ Á¾ÀÌÀÇ »ö±ò ÀúÀå
-    private List<List<GameObject>> usedCloudObject = new List<List<GameObject>>();  //°¢ ÇÁ·ÎÇÊ¿¡¼­ Ç¥½ÃÇÒ »ç¿ëÇÑ ±¸¸§ÀÇ Á¤º¸ ÀúÀå
+    public  GameObject[] iProfileBG = new GameObject[3];         // í”„ë¡œí•„ ì¢…ì´ 3ì¥ ì°¸ì¡°
+    private GameObject tempProfile;                             // í”„ë¡œí•„ ë³€ê²½ ì‹œ ì„ì‹œë¡œ ì €ì¥í•  ê³µê°„
+    private Image[] sProfileColor = new Image[3];               // í”„ë¡œí•„ ì¢…ì´ì˜ ìƒ‰ê¹”ì„ ì €ì¥í•  ì´ë¯¸ì§€ ìŠ¤í¬ë¦½íŠ¸ ì°¸ì¡°
+    private Color[] cProfileColor = new Color[3];               // ê° í”„ë¡œí•„ ì¢…ì´ì˜ ìƒ‰ê¹” ì €ì¥
+    private List<List<GameObject>> usedCloudObject = new List<List<GameObject>>();  //ê° í”„ë¡œí•„ì—ì„œ í‘œì‹œí•  ì‚¬ìš©í•œ êµ¬ë¦„ì˜ ì •ë³´ ì €ì¥
     private int[] profileGuestNum = new int[3];
 
     public GameObject tDialog;
@@ -25,13 +25,13 @@ public class ProfileManager : MonoBehaviour
     public Image dialogBGImage;
 
     [Header("Profile Image")]
-    public Sprite[] sCuredProfile = new Sprite[20]; // Ä¡À¯µÈ ÇÁ·ÎÇÊ
-	public Sprite[] sBasicProfile = new Sprite[20]; // ±âº» ÇÁ·ÎÇÊ
-	public Sprite[] sUpsetProfile = new Sprite[20]; // È­³­ ÇÁ·ÎÇÊ
+    public Sprite[] sCuredProfile = new Sprite[20]; // ì¹˜ìœ ëœ í”„ë¡œí•„
+	public Sprite[] sBasicProfile = new Sprite[20]; // ê¸°ë³¸ í”„ë¡œí•„
+	public Sprite[] sUpsetProfile = new Sprite[20]; // í™”ë‚œ í”„ë¡œí•„
 
 	[Header("Upset Stamp")]
-	public GameObject[] iCloudStamp = new GameObject[3];        // Á¦°ø¹ŞÀº ±¸¸§¿¡ Ç¥½ÃÇÒ ½ºÅÆÇÁ
-	public GameObject iDialogStamp;                             // dialog¿¡ Ç¥½ÃÇÒ ½ºÅÆÇÁ
+	public GameObject[] iCloudStamp = new GameObject[3];        // ì œê³µë°›ì€ êµ¬ë¦„ì— í‘œì‹œí•  ìŠ¤íƒ¬í”„
+	public GameObject iDialogStamp;                             // dialogì— í‘œì‹œí•  ìŠ¤íƒ¬í”„
 	private GameObject tempStamp;
 
     private bool isClickedPrev;
@@ -39,14 +39,14 @@ public class ProfileManager : MonoBehaviour
 
 
 
-	private int[] disSatGuestList;      // ºÒ¸¸ ¹¶Æ¼ÀÇ ¹øÈ£µéÀ» ÀúÀåÇÒ ¹è¿­
+	private int[] disSatGuestList;      // ë¶ˆë§Œ ë­‰í‹°ì˜ ë²ˆí˜¸ë“¤ì„ ì €ì¥í•  ë°°ì—´
 
-    private GuestInfos[] mGuestInfo;    // GuestManager·Î ºÎÅÍ ¹ŞÀº Guest Info
+    private GuestInfos[] mGuestInfo;    // GuestManagerë¡œ ë¶€í„° ë°›ì€ Guest Info
 
-    private int nextProfileIndex;       // next ¹öÆ° Å¬¸¯½Ã Ãß°¡ÇÒ ¼Õ´ÔÀÇ ¹øÈ£
-    private int prevProfileIndex;       // prev ¹öÆ° Å¬¸¯½Ã Ãß°¡ÇÒ ¼Õ´ÔÀÇ ¹øÈ£
+    private int nextProfileIndex;       // next ë²„íŠ¼ í´ë¦­ì‹œ ì¶”ê°€í•  ì†ë‹˜ì˜ ë²ˆí˜¸
+    private int prevProfileIndex;       // prev ë²„íŠ¼ í´ë¦­ì‹œ ì¶”ê°€í•  ì†ë‹˜ì˜ ë²ˆí˜¸
 
-    private bool isUpset;               // 'ºÒ¸¸ ¹¶Æ¼¸¸ º¸±â'°¡ È°¼ºÈ­ µÇ¾ú´ÂÁö È®ÀÎÇÏ´Â ºÒ º¯¼ö
+    private bool isUpset;               // 'ë¶ˆë§Œ ë­‰í‹°ë§Œ ë³´ê¸°'ê°€ í™œì„±í™” ë˜ì—ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” ë¶ˆ ë³€ìˆ˜
 
 	Guest mGuestManager;
     RecordUIManager mUIManager;
@@ -81,7 +81,7 @@ public class ProfileManager : MonoBehaviour
         
     }
 
-    // ÃÊ±â ÇÁ·ÎÇÊ ¼³Á¤
+    // ì´ˆê¸° í”„ë¡œí•„ ì„¤ì •
     public void InitProfile()
     {
 		isUpset = false;
@@ -92,27 +92,27 @@ public class ProfileManager : MonoBehaviour
             prevProfileIndex = 19; 
         }
 
-        // Á¦ÀÏ ¾Õ¿¡ÀÖ´Â ÇÁ·ÎÇÊÀÇ ¹¶Æ¼°¡ ºÒ¸¸ ¹¶Æ¼ÀÏ °æ¿ì, dialog Á¾ÀÌ º¯°æ, ¾Æ´Ò½Ã ¿ø·¡´ë·Î µ¹¸®±â
+        // ì œì¼ ì•ì—ìˆëŠ” í”„ë¡œí•„ì˜ ë­‰í‹°ê°€ ë¶ˆë§Œ ë­‰í‹°ì¼ ê²½ìš°, dialog ì¢…ì´ ë³€ê²½, ì•„ë‹ì‹œ ì›ë˜ëŒ€ë¡œ ëŒë¦¬ê¸°
         UpdateDialogPaper();
 
-		// GuestManager¿¡¼­ ºÒ¸¸ ¹¶Æ¼ÀÇ ¼ö¿Í ¸ñ·ÏÀ» ¹Ş¾Æ ÀúÀåÇÔ
+		// GuestManagerì—ì„œ ë¶ˆë§Œ ë­‰í‹°ì˜ ìˆ˜ì™€ ëª©ë¡ì„ ë°›ì•„ ì €ì¥í•¨
 		disSatGuestList = new int[mGuestManager.DisSatGuestList().Length];
 		disSatGuestList = mGuestManager.DisSatGuestList();
 	}
 
-    // ºÒ¸¸ ¹¶Æ¼¸¸ º¸±â ¹öÆ°À» ´­·¶À» ¶§ ½ÇÇà
+    // ë¶ˆë§Œ ë­‰í‹°ë§Œ ë³´ê¸° ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ ì‹¤í–‰
     public void InitUpsetProfile()
     {
         isUpset = true;
 
-        // ¹öÆ°À» ´©¸£¸é ºÒ¸¸ ¹¶Æ¼ ¸®½ºÆ®¸¦ ÃÖ½ÅÈ­
+        // ë²„íŠ¼ì„ ëˆ„ë¥´ë©´ ë¶ˆë§Œ ë­‰í‹° ë¦¬ìŠ¤íŠ¸ë¥¼ ìµœì‹ í™”
         disSatGuestList = new int[mGuestManager.DisSatGuestList().Length];
         disSatGuestList = mGuestManager.DisSatGuestList();
 
-        // ºÒ¸¸ ¹¶Æ¼°¡ ¾øÀ» ¶§, ÇÁ·ÎÇÊ ºñ¿ö¼­ ³»º¸³»±â
+        // ë¶ˆë§Œ ë­‰í‹°ê°€ ì—†ì„ ë•Œ, í”„ë¡œí•„ ë¹„ì›Œì„œ ë‚´ë³´ë‚´ê¸°
         if (disSatGuestList.Length <= 0) { for (int num = 0; num < 3; num++) { ChangeProfileEmpty(num); } }
         else {
-            // Profile IndexÀÇ ÃÊ±â°ªÀ» Ã£¾Æ°¡´Â °úÁ¤, nextProfileIndexÀÇ °æ¿ì´Â ³ª¿Ã ¼ö ÀÖ´Â ºÒ¸¸ ¹¶Æ¼ÀÇ ¼ö°¡ ´Ù¾çÇÏ±â ¶§¹®¿¡ µ¿ÀûÀ¸·Î ¼³Á¤
+            // Profile Indexì˜ ì´ˆê¸°ê°’ì„ ì°¾ì•„ê°€ëŠ” ê³¼ì •, nextProfileIndexì˜ ê²½ìš°ëŠ” ë‚˜ì˜¬ ìˆ˜ ìˆëŠ” ë¶ˆë§Œ ë­‰í‹°ì˜ ìˆ˜ê°€ ë‹¤ì–‘í•˜ê¸° ë•Œë¬¸ì— ë™ì ìœ¼ë¡œ ì„¤ì •
             prevProfileIndex = disSatGuestList.Length - 1;
             nextProfileIndex = prevProfileIndex;
             for (int num = 0; num < 4; num++)
@@ -139,16 +139,16 @@ public class ProfileManager : MonoBehaviour
         else { Invoke("InvokeUpdateAllPrevProfile", 0.18f); }
     }
 
-    // next buttonÅ¬¸¯½Ã ÇÁ·ÎÇÊ ¾÷µ¥ÀÌÆ®
+    // next buttoní´ë¦­ì‹œ í”„ë¡œí•„ ì—…ë°ì´íŠ¸
     private void InvokeUpdateAllNextProfile()
     {
-        //next, prev ¼Õ´ÔÀÇ ¹øÈ£°¡ ¹üÀ§¸¦ ¹ş¾î³ªÁö ¾Êµµ·Ï Á¶Á¤
+        //next, prev ì†ë‹˜ì˜ ë²ˆí˜¸ê°€ ë²”ìœ„ë¥¼ ë²—ì–´ë‚˜ì§€ ì•Šë„ë¡ ì¡°ì •
 		CheckIndexInRange(mGuestInfo.Length);
 
-        //¸Ç ¾Õ ÇÁ·ÎÇÊ Á¾ÀÌ: iProfileBG[0]À¸·Î °íÁ¤ÀÌ µÇµµ·Ï ±³È¯
+        //ë§¨ ì• í”„ë¡œí•„ ì¢…ì´: iProfileBG[0]ìœ¼ë¡œ ê³ ì •ì´ ë˜ë„ë¡ êµí™˜
         SwapProfile(0, 2);
 
-        //¸Ç µÚ·Î°¡´Â Á¾ÀÌÀÇ Á¤º¸ °»½Å
+        //ë§¨ ë’¤ë¡œê°€ëŠ” ì¢…ì´ì˜ ì •ë³´ ê°±ì‹ 
 		ChangeProfileInfo(2, nextProfileIndex);
 
         UpdateDialogPaper();
@@ -157,7 +157,7 @@ public class ProfileManager : MonoBehaviour
 		prevProfileIndex++;
 	}
 
-    // prev buttonÅ¬¸¯½Ã ÇÁ·ÎÇÊ ¾÷µ¥ÀÌÆ®
+    // prev buttoní´ë¦­ì‹œ í”„ë¡œí•„ ì—…ë°ì´íŠ¸
     private void InvokeUpdateAllPrevProfile()
     {
         CheckIndexInRange(mGuestInfo.Length);
@@ -172,14 +172,14 @@ public class ProfileManager : MonoBehaviour
 		prevProfileIndex--;
 	}
 
-    // ºÒ¸¸ ¹¶Æ¼¸¸ Ç¥½ÃÇÒ °æ¿ì disSatGuestList¸¦ ÂüÁ¶ÇÏ±â ¶§¹®¿¡ ÀüÃ¼ ¹¶Æ¼ Ç¥½Ã¿Í °°ÀÌ »ç¿ëÇÏ±â À§ÇØ¼± ÀÎ¼ö¸¦ ¹Ş¾Æ¾ß ÇÔ >> invoke »ç¿ë ºÒ°¡´ÉÀ¸·Î ÇÔ¼ö ºĞ¸®
+    // ë¶ˆë§Œ ë­‰í‹°ë§Œ í‘œì‹œí•  ê²½ìš° disSatGuestListë¥¼ ì°¸ì¡°í•˜ê¸° ë•Œë¬¸ì— ì „ì²´ ë­‰í‹° í‘œì‹œì™€ ê°™ì´ ì‚¬ìš©í•˜ê¸° ìœ„í•´ì„  ì¸ìˆ˜ë¥¼ ë°›ì•„ì•¼ í•¨ >> invoke ì‚¬ìš© ë¶ˆê°€ëŠ¥ìœ¼ë¡œ í•¨ìˆ˜ ë¶„ë¦¬
     private void InvokeUpdateUpsetNextProfile()
     {
         CheckIndexInRange(disSatGuestList.Length);
 
         SwapProfile(0, 2);
 
-        // ºÒ¸¸ ¹¶Æ¼¸¸ Ç¥½ÃÇÒ °æ¿ì ºó ÇÁ·ÎÇÊÀÌ ¹ß»ıÇÒ ¼ö ÀÖÀ¸¹Ç·Î Ã¼Å© ÇØÁÜ
+        // ë¶ˆë§Œ ë­‰í‹°ë§Œ í‘œì‹œí•  ê²½ìš° ë¹ˆ í”„ë¡œí•„ì´ ë°œìƒí•  ìˆ˜ ìˆìœ¼ë¯€ë¡œ ì²´í¬ í•´ì¤Œ
 		if (disSatGuestList.Length <= 0) { ChangeProfileEmpty(2); }
         else { ChangeProfileInfo(2, disSatGuestList[nextProfileIndex]); }
 
@@ -200,7 +200,7 @@ public class ProfileManager : MonoBehaviour
 		prevProfileIndex--;
 	}
 
-    // ´ÙÀ½À¸·Î Ãß°¡µÇ¾î¾ß ÇÒ ÇÁ·ÎÇÊÀÇ index°¡ ¹è¿­ ³»¿¡ ÀÖ´Â indexÀÎÁö Ã¼Å© ÈÄ, ¹üÀ§¸¦ ³Ñ¾î°¥ °æ¿ì º¯°æÇØÁÜ
+    // ë‹¤ìŒìœ¼ë¡œ ì¶”ê°€ë˜ì–´ì•¼ í•  í”„ë¡œí•„ì˜ indexê°€ ë°°ì—´ ë‚´ì— ìˆëŠ” indexì¸ì§€ ì²´í¬ í›„, ë²”ìœ„ë¥¼ ë„˜ì–´ê°ˆ ê²½ìš° ë³€ê²½í•´ì¤Œ
 	private void CheckIndexInRange(int max_list_index)
     {
 		if (nextProfileIndex >= max_list_index) { nextProfileIndex = 0; }
@@ -236,11 +236,11 @@ public class ProfileManager : MonoBehaviour
             return;
 		}
 
-        // ÇÁ·ÎÇÊ Á¤º¸ º¯°æ
+        // í”„ë¡œí•„ ì •ë³´ ë³€ê²½
 		if (iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.activeSelf == false)
 		        { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.SetActive(true); }
 
-        // ¹¶Æ¼ÀÇ »óÅÂ(Ä¡À¯, ºÒ¸¸, ±âº»)¿¡ µû¸¥ ÀÌ¹ÌÁö º¯°æ
+        // ë­‰í‹°ì˜ ìƒíƒœ(ì¹˜ìœ , ë¶ˆë§Œ, ê¸°ë³¸)ì— ë”°ë¥¸ ì´ë¯¸ì§€ ë³€ê²½
         if (mGuestInfo[guest_index].isDisSat) { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = sUpsetProfile[guest_index]; }
         else if (mGuestInfo[guest_index].isCure) { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = sCuredProfile[guest_index]; }
         else { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = sBasicProfile[guest_index]; }
@@ -249,10 +249,10 @@ public class ProfileManager : MonoBehaviour
 		iProfileBG[profile_num].transform.Find("T_Age(INPUT)").gameObject.GetComponent<Text>().text = mGuestInfo[guest_index].mAge.ToString();
 		iProfileBG[profile_num].transform.Find("T_Job(INPUT)").gameObject.GetComponent<Text>().text = mGuestInfo[guest_index].mJob;
 
-        // ÇØ´ç ÇÁ·ÎÇÊ Á¾ÀÌÀÇ »ç¿ëÇÑ ±¸¸§ÀÇ Á¤º¸ Á¦°Å
+        // í•´ë‹¹ í”„ë¡œí•„ ì¢…ì´ì˜ ì‚¬ìš©í•œ êµ¬ë¦„ì˜ ì •ë³´ ì œê±°
         clearUsedCloudList(profile_num);
         
-        // »ç¿ëÇÑ ±¸¸§ÀÇ Á¤º¸ ¾÷µ¥ÀÌÆ®
+        // ì‚¬ìš©í•œ êµ¬ë¦„ì˜ ì •ë³´ ì—…ë°ì´íŠ¸
         GameObject cloudPos = iProfileBG[profile_num].transform.Find("I_UsedCloud(INPUT)").gameObject.transform.GetChild(0).GetChild(0).gameObject;
 		int posx = 240, posy = -100;
 		for (int count = 0; count < mGuestInfo[guest_index].mUsedCloud.Count; count++)
@@ -268,14 +268,14 @@ public class ProfileManager : MonoBehaviour
 		}
 
 
-        // ¹¶Æ¼ÀÇ »óÅÂ¿¡ µû¸¥ ÇÁ·ÎÇÊ Á¾ÀÌ Á¾·ù, »ö±ò º¯°æ
-        // ºÒ¸¸ ¹¶Æ¼ÀÏ °æ¿ì
+        // ë­‰í‹°ì˜ ìƒíƒœì— ë”°ë¥¸ í”„ë¡œí•„ ì¢…ì´ ì¢…ë¥˜, ìƒ‰ê¹” ë³€ê²½
+        // ë¶ˆë§Œ ë­‰í‹°ì¼ ê²½ìš°
         if (mGuestInfo[guest_index].isDisSat) {
 			iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = sUpsetProfile[guest_index];
 			iProfileBG[profile_num].GetComponent<Image>().sprite = sUpsetBG; 
             iProfileBG[profile_num].GetComponent<Image>().color = new Color(255f / 255f, 255f / 255f, 255f / 255f); 
         }
-        // Á¤»óÀûÀÎ ¹¶Æ¼ÀÏ °æ¿ì
+        // ì •ìƒì ì¸ ë­‰í‹°ì¼ ê²½ìš°
         else { 
             iProfileBG[profile_num].GetComponent<Image>().sprite = sProfileBG; 
             for(int num = 0; num < 3; num++)
@@ -288,7 +288,7 @@ public class ProfileManager : MonoBehaviour
             }
         }
 
-        // ÇØ´ç ¹¶Æ¼°¡ ºÒ¸¸ ¹¶Æ¼ÀÏ °æ¿ì ½ºÅÆÇÁ Ãâ·Â
+        // í•´ë‹¹ ë­‰í‹°ê°€ ë¶ˆë§Œ ë­‰í‹°ì¼ ê²½ìš° ìŠ¤íƒ¬í”„ ì¶œë ¥
 		if (mGuestInfo[guest_index].isDisSat && !iCloudStamp[profile_num].activeSelf) { iCloudStamp[profile_num].SetActive(true); }
         else if (!mGuestInfo[guest_index].isDisSat && iCloudStamp[profile_num].activeSelf) { iCloudStamp[profile_num].SetActive(false); }
 	}
@@ -302,7 +302,7 @@ public class ProfileManager : MonoBehaviour
         usedCloudObject[profile_num].Clear();
     }
 
-	// ¹¶Æ¼ ¸®½ºÆ®°¡ ºñ¾îÀÖ´Â °æ¿ì(ºÒ¸¸ ¹¶Æ¼°¡ ÇÑ ¸íµµ ¾ø´Â °æ¿ì)¿¡ Ãâ·Â: ºÒ¸¸ ¹¶Æ¼¸¸ Ç¥½Ã Àü¿ë
+	// ë­‰í‹° ë¦¬ìŠ¤íŠ¸ê°€ ë¹„ì–´ìˆëŠ” ê²½ìš°(ë¶ˆë§Œ ë­‰í‹°ê°€ í•œ ëª…ë„ ì—†ëŠ” ê²½ìš°)ì— ì¶œë ¥: ë¶ˆë§Œ ë­‰í‹°ë§Œ í‘œì‹œ ì „ìš©
 	private void ChangeProfileEmpty(int profile_num)
     {
         if (iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.activeSelf == true) 
@@ -313,12 +313,16 @@ public class ProfileManager : MonoBehaviour
 		iProfileBG[profile_num].transform.Find("T_Job(INPUT)").gameObject.GetComponent<Text>().text = " ";
 	}
 
-    // dialog text¸¦ ºÒ¸¸ ¹¶Æ¼ÀÎÁö ¾Æ´ÑÁö¿¡ µû¶ó Ãâ·Â ¿©ºÎ °áÁ¤
-    // dialog text¸¦ ¸Ç ¾Õ ¼Õ´ÔÀÇ ¹øÈ£¿¡ ¸Â°Ô ¾÷µ¥ÀÌÆ®
+    // dialog textë¥¼ ë¶ˆë§Œ ë­‰í‹°ì¸ì§€ ì•„ë‹Œì§€ì— ë”°ë¼ ì¶œë ¥ ì—¬ë¶€ ê²°ì •
+    // dialog textë¥¼ ë§¨ ì• ì†ë‹˜ì˜ ë²ˆí˜¸ì— ë§ê²Œ ì—…ë°ì´íŠ¸
     private void UpdateDialogPaper()
     {
         // Demo Version
-        if (mGuestInfo[profileGuestNum[0]].isDisSat == false && mGuestInfo[profileGuestNum[0]].isCure == false) { tDialogText.text = "¾ÆÁ÷ ÃæºĞÇÑ µ¥ÀÌÅÍ°¡ ¸ğÀÌÁö ¾Ê¾Ò½À´Ï´Ù."; }
+        if (mGuestInfo[profileGuestNum[0]].isDisSat == false && mGuestInfo[profileGuestNum[0]].isCure == false)
+        {
+	        if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean") { tDialogText.text = "ì•„ì§ ì¶©ë¶„í•œ ë°ì´í„°ê°€ ëª¨ì´ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤."; } 
+	        else{ tDialogText.text = "Not Enough Information."; }
+        }
         else { tDialogText.text = mRLHReader.LoadRecordInfo(profileGuestNum[0]); }
 		if (iCloudStamp[0].activeSelf)
 		{

@@ -12,34 +12,34 @@ public class SOWManagerSaveData
 
 public class SOWManager : MonoBehaviour
 {
-    [Header("[³¯¾¾ÀÇ °ø°£¿¡ ¹èÄ¡µÈ ¼Õ´Ô Á¤º¸]")]
-    public Queue<int> mWaitGuestList;                   // ÀÀÁ¢½Ç¿¡¼­ ¼ö¶ôÀ» ¹Ş°í ³Ñ¾î¿Â ¼Õ´ÔµéÀÇ ¸®½ºÆ®
-    public List<int> mUsingGuestList;                   // ³¯¾¾ÀÇ °ø°£¿¡¼­ ÀÚ¸®¿¡ ¾É¾Æ ±¸¸§À» Á¦°ø¹ŞÀ» ÁØºñ°¡ µÈ ¼Õ´ÔµéÀÇ ¸®½ºÆ®
+    [Header("[ë‚ ì”¨ì˜ ê³µê°„ì— ë°°ì¹˜ëœ ì†ë‹˜ ì •ë³´]")]
+    public Queue<int> mWaitGuestList;                   // ì‘ì ‘ì‹¤ì—ì„œ ìˆ˜ë½ì„ ë°›ê³  ë„˜ì–´ì˜¨ ì†ë‹˜ë“¤ì˜ ë¦¬ìŠ¤íŠ¸
+    public List<int> mUsingGuestList;                   // ë‚ ì”¨ì˜ ê³µê°„ì—ì„œ ìë¦¬ì— ì•‰ì•„ êµ¬ë¦„ì„ ì œê³µë°›ì„ ì¤€ë¹„ê°€ ëœ ì†ë‹˜ë“¤ì˜ ë¦¬ìŠ¤íŠ¸
 
     [HideInInspector]
-    public Queue<GameObject> mWaitGuestObjectQueue;     // ´ë±â ¼Õ´Ô ¿ÀºêÁ§Æ®µéÀ» °ü¸®ÇÒ ¸®½ºÆ®
+    public Queue<GameObject> mWaitGuestObjectQueue;     // ëŒ€ê¸° ì†ë‹˜ ì˜¤ë¸Œì íŠ¸ë“¤ì„ ê´€ë¦¬í•  ë¦¬ìŠ¤íŠ¸
     [HideInInspector]
-    public List<GameObject> mUsingGuestObjectList;     // »ç¿ë ¼Õ´Ô ¿ÀºêÁ§Æ®µéÀ» °ü¸®ÇÒ ¸®½ºÆ®
+    public List<GameObject> mUsingGuestObjectList;     // ì‚¬ìš© ì†ë‹˜ ì˜¤ë¸Œì íŠ¸ë“¤ì„ ê´€ë¦¬í•  ë¦¬ìŠ¤íŠ¸
     
-    [Header("[ÀÇÀÚ & ¿şÀÌÆ÷ÀÎÆ® °ü·Ã]")]
-    public GameObject[] mChairPos;                      // ¼Õ´ÔÀÌ ¾É¾Æ¼­ ±¸¸§À» »ç¿ëÇÒ ÀÇÀÚ(±¸¸§)
-    public GameObject[] mWayPoint;                      // ¼Õ´ÔÀÌ °É¾î´Ù´Ï¸ç »êÃ¥ÇÏ´Â °æ·Îµé
-    public int[]mSitDir = {1,1,1,1};                    // ¼Õ´ÔÀÌ ÀÇÀÚ¿¡ ¾É´Â ¹æÇâ ( ÁÂ : 0 , ¿ì : 1·Î Ç¥½Ã)
+    [Header("[ì˜ì & ì›¨ì´í¬ì¸íŠ¸ ê´€ë ¨]")]
+    public GameObject[] mChairPos;                      // ì†ë‹˜ì´ ì•‰ì•„ì„œ êµ¬ë¦„ì„ ì‚¬ìš©í•  ì˜ì(êµ¬ë¦„)
+    public GameObject[] mWayPoint;                      // ì†ë‹˜ì´ ê±¸ì–´ë‹¤ë‹ˆë©° ì‚°ì±…í•˜ëŠ” ê²½ë¡œë“¤
+    public int[]mSitDir = {1,1,1,1};                    // ì†ë‹˜ì´ ì˜ìì— ì•‰ëŠ” ë°©í–¥ ( ì¢Œ : 0 , ìš° : 1ë¡œ í‘œì‹œ)
 
     [HideInInspector]
-    public Dictionary<int, bool> mCheckChairEmpty;      // ÀÇÀÚ¸¶´Ù ÀÇÀÚ°¡ ºñ¾îÀÖ´ÂÁö¸¦ È®ÀÎÇÏ´Â µñ¼Å³Ê¸® º¯¼ö
+    public Dictionary<int, bool> mCheckChairEmpty;      // ì˜ìë§ˆë‹¤ ì˜ìê°€ ë¹„ì–´ìˆëŠ”ì§€ë¥¼ í™•ì¸í•˜ëŠ” ë”•ì…”ë„ˆë¦¬ ë³€ìˆ˜
     [HideInInspector]
-    public bool isNewGuest;                             // ÀÀÁ¢½Ç¿¡¼­ ³Ñ¾î¿Ã¶§ »õ·Î¿î ¼Õ´ÔÀÌ ¿À´Â°¡?
+    public bool isNewGuest;                             // ì‘ì ‘ì‹¤ì—ì„œ ë„˜ì–´ì˜¬ë•Œ ìƒˆë¡œìš´ ì†ë‹˜ì´ ì˜¤ëŠ”ê°€?
     [HideInInspector]
-    public int mMaxChairNum;                            // ÇöÀç ´Ü°è¿¡ µû¸¥ ÀÇÀÚÀÇ °³¼ö
+    public int mMaxChairNum;                            // í˜„ì¬ ë‹¨ê³„ì— ë”°ë¥¸ ì˜ìì˜ ê°œìˆ˜
 
-    [Header("[ÇÁ¸®ÆÕ]")]
+    [Header("[í”„ë¦¬íŒ¹]")]
     [SerializeField]
-    public GameObject mGuestObject;                    // ÀÎ½ºÅÏ½ºÇÏ¿© »ı¼ºÇÒ ¼Õ´Ô ¿ÀºêÁ§Æ® ÇÁ¸®ÆÕ
+    public GameObject mGuestObject;                    // ì¸ìŠ¤í„´ìŠ¤í•˜ì—¬ ìƒì„±í•  ì†ë‹˜ ì˜¤ë¸Œì íŠ¸ í”„ë¦¬íŒ¹
 
     public int[] yardGatherCount = new int[4];
 
-    private Guest mGuestManager;                        // GuestManager¸¦ °¡Á®¿Â´Ù.
+    private Guest mGuestManager;                        // GuestManagerë¥¼ ê°€ì ¸ì˜¨ë‹¤.
     private static SOWManager instance = null;
 
     [HideInInspector]
@@ -49,7 +49,7 @@ public class SOWManager : MonoBehaviour
     [HideInInspector]
     public bool isCloudGet;
 
-    private int mTempGuestNum;                          // ÀÓ½Ã ¼Õ´Ô ¹øÈ£°ª
+    private int mTempGuestNum;                          // ì„ì‹œ ì†ë‹˜ ë²ˆí˜¸ê°’
 
 
     private float[][][] ChairPosList = new float[][][]{ 
@@ -91,7 +91,7 @@ public class SOWManager : MonoBehaviour
             isNewGuest              = false;
             isCloudGet              = false;
 
-            // ÇöÀç ´Ü°è¿¡ ¸Â´Â ÀÇÀÚ °³¼ö ¼³Á¤
+            // í˜„ì¬ ë‹¨ê³„ì— ë§ëŠ” ì˜ì ê°œìˆ˜ ì„¤ì •
             mMaxChairNum = 3;
             InitSOW();
         }
@@ -110,49 +110,49 @@ public class SOWManager : MonoBehaviour
             Debug.Log(mUsingGuestObjectList.Count);
         }
 
-        // »õ·Î¿î ¼Õ´ÔÀÌ ³¯¾¾ÀÇ °ø°£À¸·Î ³Ñ¾î¿Â °æ¿ì
+        // ìƒˆë¡œìš´ ì†ë‹˜ì´ ë‚ ì”¨ì˜ ê³µê°„ìœ¼ë¡œ ë„˜ì–´ì˜¨ ê²½ìš°
         if (isNewGuest)
         {
             isNewGuest = false;
 
             GameObject tempObject;
 
-            // ¼Õ´Ô ¿ÀºêÁ§Æ® »ı¼º ¹× ÃÊ±âÈ­
+            // ì†ë‹˜ ì˜¤ë¸Œì íŠ¸ ìƒì„± ë° ì´ˆê¸°í™”
             tempObject = Instantiate(mGuestObject);
 
-            // ¼Õ´Ô »ı¼º È®ÀÎÀ» À§ÇÑ µğ¹ö±ë
-            Debug.Log("¼Õ´Ô »ı¼º");
+            // ì†ë‹˜ ìƒì„± í™•ì¸ì„ ìœ„í•œ ë””ë²„ê¹…
+            Debug.Log("ì†ë‹˜ ìƒì„±");
 
-            // ¼Õ´Ô ¿ÀºêÁ§Æ®¿¡ ÇØ´çÇÏ´Â ¹øÈ£¸¦ ³Ö¾îÁØ´Ù.
+            // ì†ë‹˜ ì˜¤ë¸Œì íŠ¸ì— í•´ë‹¹í•˜ëŠ” ë²ˆí˜¸ë¥¼ ë„£ì–´ì¤€ë‹¤.
             tempObject.GetComponent<GuestObject>().setGuestNum(mTempGuestNum);
 			tempObject.GetComponent<RLHReader>().LoadHintInfo(mTempGuestNum);
 			tempObject.GetComponent<GuestObject>().initAnimator();
             tempObject.GetComponent<GuestObject>().init();
 
-            // »êÃ¥·Î¸¦ ¼³Á¤ÇÑ´Ù. 
+            // ì‚°ì±…ë¡œë¥¼ ì„¤ì •í•œë‹¤. 
             tempObject.GetComponent<WayPoint>().WayPos = mWayPoint;
 
-            // ±âº» À§Ä¡°ªÀ» ¼±¾ğÇÑ´Ù. <- »êÃ¥·ÎÀÇ Ã¹¹øÂ° °ªÀ¸·Î ¼³Á¤
+            // ê¸°ë³¸ ìœ„ì¹˜ê°’ì„ ì„ ì–¸í•œë‹¤. <- ì‚°ì±…ë¡œì˜ ì²«ë²ˆì§¸ ê°’ìœ¼ë¡œ ì„¤ì •
             tempObject.transform.position = mWayPoint[0].transform.position;
 
-            // ´ë±âÁßÀÎ ¼Õ´Ô Å¥¿¡ ÇØ´ç ¼Õ´ÔÀ» Ãß°¡ÇÑ´Ù.
+            // ëŒ€ê¸°ì¤‘ì¸ ì†ë‹˜ íì— í•´ë‹¹ ì†ë‹˜ì„ ì¶”ê°€í•œë‹¤.
             mWaitGuestObjectQueue.Enqueue(tempObject);
         }
 
-        // »êÃ¥·Î¸¦ °È´Â ¼Õ´ÔÀÌ Á¸ÀçÇÏ°í, ÀÌ¿ë °¡´ÉÇÑ ÀÇÀÚ°¡ ºñ¾îÀÖ´Ù¸é ÀÇÀÚ·Î ÀÌµ¿½ÃÅ°±â
+        // ì‚°ì±…ë¡œë¥¼ ê±·ëŠ” ì†ë‹˜ì´ ì¡´ì¬í•˜ê³ , ì´ìš© ê°€ëŠ¥í•œ ì˜ìê°€ ë¹„ì–´ìˆë‹¤ë©´ ì˜ìë¡œ ì´ë™ì‹œí‚¤ê¸°
         if (mWaitGuestList.Count != 0)
         {
-            // ³²Àº ÀÇÀÚ°¡ ÀÖ´Ù¸é ÇØ´ç ÀÇÀÚ¿¡ ´ëÇÑ ÀÎµ¦½º¸¦ ¹İÈ¯¹Ş°í, ÀÌ¿Ü´Â -1¸¦ ¹Ş¾Æ¿Â´Ù.
+            // ë‚¨ì€ ì˜ìê°€ ìˆë‹¤ë©´ í•´ë‹¹ ì˜ìì— ëŒ€í•œ ì¸ë±ìŠ¤ë¥¼ ë°˜í™˜ë°›ê³ , ì´ì™¸ëŠ” -1ë¥¼ ë°›ì•„ì˜¨ë‹¤.
             int chairNum = GetRandChiarIndex();
 
             if (chairNum != -1)
             {
-                // »ç¿ëÀÚ ¸®½ºÆ®·Î ÇØ´ç ¼Õ´ÔÀ» ¿Å±ä´Ù.
+                // ì‚¬ìš©ì ë¦¬ìŠ¤íŠ¸ë¡œ í•´ë‹¹ ì†ë‹˜ì„ ì˜®ê¸´ë‹¤.
                 MoveToUsingList(chairNum);
             }
         }
 
-        // ³¯¾¾ÀÇ °ø°£ »óÀÇ ¼Õ´ÔÀ» ¼±ÅÃÇÏ±â <- »óÈ£ÀÛ¿ë
+        // ë‚ ì”¨ì˜ ê³µê°„ ìƒì˜ ì†ë‹˜ì„ ì„ íƒí•˜ê¸° <- ìƒí˜¸ì‘ìš©
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -162,11 +162,8 @@ public class SOWManager : MonoBehaviour
                 GameObject hitObject = hit.transform.root.gameObject;
                 if (hit.transform.gameObject.tag == "Guest")
                 {
-                    // DEMO Ãß°¡ ±â´É
-                    // »óÈ£ÀÛ¿ë Àá±İ
-                    return;
 
-                    Debug.Log(hitObject.GetComponent<GuestObject>().mGuestNum + "¹ø ¼Õ´ÔÀ» Å¬¸¯ÇÏ¿´½À´Ï´Ù.");
+                    Debug.Log(hitObject.GetComponent<GuestObject>().mGuestNum + "ë²ˆ ì†ë‹˜ì„ í´ë¦­í•˜ì˜€ìŠµë‹ˆë‹¤.");
                     hit.transform.gameObject.GetComponent<GuestObject>().SpeakEmotion();
                 }
                 else
@@ -175,7 +172,7 @@ public class SOWManager : MonoBehaviour
                 }
             }
         }
-        // Test. Èñ±Íµµ4 Àç·á¸¦ ÀÌ¿ëÇÑ ±¸¸§À» Á¦°ø¹ŞÀº °æ¿ì Å¬¸®¾î ÈùÆ®¸¦ Á¦°øÇÏ´Â °ÍÀ» ¿ìÅ¬¸¯À¸·Î Å×½ºÆ®ÇÑ´Ù.
+        // Test. í¬ê·€ë„4 ì¬ë£Œë¥¼ ì´ìš©í•œ êµ¬ë¦„ì„ ì œê³µë°›ì€ ê²½ìš° í´ë¦¬ì–´ íŒíŠ¸ë¥¼ ì œê³µí•˜ëŠ” ê²ƒì„ ìš°í´ë¦­ìœ¼ë¡œ í…ŒìŠ¤íŠ¸í•œë‹¤.
         if (Input.GetMouseButtonDown(1))
         {
             Vector2 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -185,11 +182,10 @@ public class SOWManager : MonoBehaviour
                 GameObject hitObject = hit.transform.root.gameObject;
                 if (hit.transform.gameObject.tag == "Guest")
                 {
-                    // DEMO Ãß°¡ ±â´É
-                    // ÈùÆ® Àá±İ
-                    return;
+                    // DEMO ì¶”ê°€ ê¸°ëŠ¥
+                    // íŒíŠ¸ ì ê¸ˆ
 
-                    Debug.Log(hitObject.GetComponent<GuestObject>().mGuestNum + "¹ø ¼Õ´ÔÀ» Å¬¸¯ÇÏ¿´½À´Ï´Ù.");
+                    Debug.Log(hitObject.GetComponent<GuestObject>().mGuestNum + "ë²ˆ ì†ë‹˜ì„ í´ë¦­í•˜ì˜€ìŠµë‹ˆë‹¤.");
                     hit.transform.gameObject.GetComponent<GuestObject>().Hint();
                 }
                 else
@@ -209,28 +205,28 @@ public class SOWManager : MonoBehaviour
         }
     }
 
-    // ÇÏ·ç°¡ Áö³ª¸é ³¯¾¾ÀÇ °ø°£À» ÃÊ±âÈ­ÇÑ´Ù.
+    // í•˜ë£¨ê°€ ì§€ë‚˜ë©´ ë‚ ì”¨ì˜ ê³µê°„ì„ ì´ˆê¸°í™”í•œë‹¤.
     public void InitSOW()
     {
         mWaitGuestList.Clear();
         mUsingGuestList.Clear();
         mCheckChairEmpty.Clear();
 
-        // ¾÷±×·¹ÀÌµå ´Ü°è¿¡ µû¶ó mCheckChairEmpty¿¡¼­ È®ÀÎÇÏ´Â ÀÇÀÚÀÇ °³¼ö°¡ ÁÙ¾îµç´Ù.
-        // ¾ÆÁ÷ ÇÕÄ¡Áö ¾Ê¾ÒÀ¸¹Ç·Î ÀÏ°ıÀûÀ¸·Î 3°³·Î °¡Á¤ÇÏ°í °³¹ßÇÑ´Ù.
+        // ì—…ê·¸ë ˆì´ë“œ ë‹¨ê³„ì— ë”°ë¼ mCheckChairEmptyì—ì„œ í™•ì¸í•˜ëŠ” ì˜ìì˜ ê°œìˆ˜ê°€ ì¤„ì–´ë“ ë‹¤.
+        // ì•„ì§ í•©ì¹˜ì§€ ì•Šì•˜ìœ¼ë¯€ë¡œ ì¼ê´„ì ìœ¼ë¡œ 3ê°œë¡œ ê°€ì •í•˜ê³  ê°œë°œí•œë‹¤.
         for (int i = 0; i < mMaxChairNum; i++)
         {
-            // ¸ğµç ÀÇÀÚ´Â ºñ¾îÀÖ´Â »óÅÂ·Î ÃÊ±âÈ­
+            // ëª¨ë“  ì˜ìëŠ” ë¹„ì–´ìˆëŠ” ìƒíƒœë¡œ ì´ˆê¸°í™”
             mCheckChairEmpty.Add(i, true);
         }
 
-        for (int i = 0; i < 4; i++) { yardGatherCount[i] = 1; }
+        for (int i = 0; i < 4; i++) { yardGatherCount[i] = 2; }
 
         int Season = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>().mSeason;
         ChangeWeatherObject(Season-1);
     }
 
-    // ´ë±â ¸®½ºÆ®¿¡ ¼Õ´ÔÀ» Ãß°¡½ÃÄÑÁÖ´Â ÇÔ¼ö
+    // ëŒ€ê¸° ë¦¬ìŠ¤íŠ¸ì— ì†ë‹˜ì„ ì¶”ê°€ì‹œì¼œì£¼ëŠ” í•¨ìˆ˜
     public void InsertGuest(int guestNum)
     {
         mWaitGuestList.Enqueue(guestNum);
@@ -238,28 +234,28 @@ public class SOWManager : MonoBehaviour
     }
 
 
-    // ´ë±â ¸®½ºÆ®¿¡¼­ ¼Õ´ÔÀ» Á¦°ø ¹Ş´Â ¸®½ºÆ®·Î Ãß°¡½ÃÄÑÁÖ´Â ÇÔ¼ö
+    // ëŒ€ê¸° ë¦¬ìŠ¤íŠ¸ì—ì„œ ì†ë‹˜ì„ ì œê³µ ë°›ëŠ” ë¦¬ìŠ¤íŠ¸ë¡œ ì¶”ê°€ì‹œì¼œì£¼ëŠ” í•¨ìˆ˜
     private void MoveToUsingList(int chairNum)
     {
-        // »ç¿ëÀÚ ¸ñ·ÏÀ¸·Î ÀÌµ¿ÇÒ ¼Õ´ÔÀÇ ¹øÈ£¸¦ ¹Ş¾Æ¿Â´Ù.
+        // ì‚¬ìš©ì ëª©ë¡ìœ¼ë¡œ ì´ë™í•  ì†ë‹˜ì˜ ë²ˆí˜¸ë¥¼ ë°›ì•„ì˜¨ë‹¤.
         int guestNum = mWaitGuestList.Dequeue();
 
-        // ¹Ş¾Æ¿Â ¼Õ´ÔÀÇ Á¤º¸¸¦ »ç¿ëÀÚ ¸ñ·ÏÀ¸·Î ³Ö´Â´Ù.
+        // ë°›ì•„ì˜¨ ì†ë‹˜ì˜ ì •ë³´ë¥¼ ì‚¬ìš©ì ëª©ë¡ìœ¼ë¡œ ë„£ëŠ”ë‹¤.
         mUsingGuestList.Add(guestNum);
 
-        // tempObject¸¦ ÅëÇØ ÀÇÀÚ¸¦ ¹èÁ¤ÇÑ´Ù.    
+        // tempObjectë¥¼ í†µí•´ ì˜ìë¥¼ ë°°ì •í•œë‹¤.    
         GameObject tempObject = mWaitGuestObjectQueue.Dequeue();
 
         tempObject.GetComponent<GuestObject>().mTargetChiarIndex = chairNum;
 
-        // ¿ÀºêÁ§Æ®¸¦ »ç¿ëÀÚ ¿ÀºêÁ§Æ® ¸ñ·ÏÀ¸·Î ³Ö´Â´Ù.
+        // ì˜¤ë¸Œì íŠ¸ë¥¼ ì‚¬ìš©ì ì˜¤ë¸Œì íŠ¸ ëª©ë¡ìœ¼ë¡œ ë„£ëŠ”ë‹¤.
         mUsingGuestObjectList.Add(tempObject);
 
-        // GuestÀÇ ºÎ¿©¹ŞÀº ÀÇÀÚ ÀÎµ¦½º¸¦ °»½Å
+        // Guestì˜ ë¶€ì—¬ë°›ì€ ì˜ì ì¸ë±ìŠ¤ë¥¼ ê°±ì‹ 
         mGuestManager.mGuestInfo[guestNum].mSitChairIndex = chairNum;
     }
 
-    // ÇÏ·ç°¡ ³¡³¯ ¶§ Queue¿¡ ³²¾ÆÀÖ´Â ¹¶Æ¼µéÀ» ºÒ¸¸ ¹¶Æ¼·Î ¸¸µé¾îÁØ´Ù.
+    // í•˜ë£¨ê°€ ëë‚  ë•Œ Queueì— ë‚¨ì•„ìˆëŠ” ë­‰í‹°ë“¤ì„ ë¶ˆë§Œ ë­‰í‹°ë¡œ ë§Œë“¤ì–´ì¤€ë‹¤.
     public void MakeGuestDisSat()
     {
         int waitCount = mWaitGuestList.Count;
@@ -267,7 +263,7 @@ public class SOWManager : MonoBehaviour
         {
             int guestNum = mWaitGuestList.Dequeue();
             mGuestManager.mGuestInfo[guestNum].isDisSat = true;
-            Debug.Log(guestNum + "¹ø ¼Õ´ÔÀÌ ´ë±âÁß ÁıÀ¸·Î µ¹¾Æ°©´Ï´Ù"); 
+            Debug.Log(guestNum + "ë²ˆ ì†ë‹˜ì´ ëŒ€ê¸°ì¤‘ ì§‘ìœ¼ë¡œ ëŒì•„ê°‘ë‹ˆë‹¤"); 
         }
         for (int i = 0; i < mUsingGuestList.Count; i++)
         {
@@ -276,7 +272,7 @@ public class SOWManager : MonoBehaviour
             mGuestManager.mGuestInfo[guestNum].mSitChairIndex = -1;
         }
 
-        // Á¸ÀçÇÏ´Â ¸ğµç ±¸¸§À» »èÁ¦ÇÑ´Ù.
+        // ì¡´ì¬í•˜ëŠ” ëª¨ë“  êµ¬ë¦„ì„ ì‚­ì œí•œë‹¤.
         GameObject[] Clouds = GameObject.FindGameObjectsWithTag("Cloud");
         if (Clouds != null)
         {
@@ -288,13 +284,13 @@ public class SOWManager : MonoBehaviour
 
     }
 
-    // ºó ÀÇÀÚ¿¡ ´ëÇÑ °³¼ö¸¦ °Ë»öÇÑ´Ù.
+    // ë¹ˆ ì˜ìì— ëŒ€í•œ ê°œìˆ˜ë¥¼ ê²€ìƒ‰í•œë‹¤.
     private int GetRandChiarIndex()
     {
         int result = -1;
         bool isSelect = false;
 
-        // ¸ğµç ÀÇÀÚ°¡ Â÷ ÀÖ´ÂÁö È®ÀÎ
+        // ëª¨ë“  ì˜ìê°€ ì°¨ ìˆëŠ”ì§€ í™•ì¸
         int count = 0;
         for (int i = 0; i < mMaxChairNum; i++)
         {
@@ -308,7 +304,7 @@ public class SOWManager : MonoBehaviour
             return -1;
         }
 
-        // ºó ÀÇÀÚ¸¦ ¼±ÅÃÇÒ ¶§±îÁö ÁøÇà
+        // ë¹ˆ ì˜ìë¥¼ ì„ íƒí•  ë•Œê¹Œì§€ ì§„í–‰
         while (!isSelect)
         {
             result = -1;
@@ -322,7 +318,7 @@ public class SOWManager : MonoBehaviour
         return result;
     }
 
-    // ±¸¸§ ½ºÆ÷³Ê·Î ±¸¸§Á¤º¸¸¦ ³Ñ±ä´Ù.
+    // êµ¬ë¦„ ìŠ¤í¬ë„ˆë¡œ êµ¬ë¦„ì •ë³´ë¥¼ ë„˜ê¸´ë‹¤.
     public void GetCloudToGuest(int guestNum, StoragedCloudData storagedCloudData)
     {
         GameObject.Find("CloudSpawner").GetComponent<CloudSpawner>().SpawnCloud(guestNum, storagedCloudData);
@@ -351,12 +347,12 @@ public class SOWManager : MonoBehaviour
 
     void LoadSaveData()
     {
-        // °èÀı¿¡ ¸Â´Â UIºÒ·¯¿À±â
+        // ê³„ì ˆì— ë§ëŠ” UIë¶ˆëŸ¬ì˜¤ê¸°
 
-        // ¼Õ´Ô ¿ÀºêÁ§Æ® ¸®½ºÆ®°¡ Á¸ÀçÇß´ÂÁö Ã¼Å©
-        // -> ÀÖ¾ú´Ù¸é ¿ÀºêÁ§Æ®¸¦ »ı¼ºÇÏ¿© Á¤º¸°ªÀ» ³Ö´Â´Ù.
+        // ì†ë‹˜ ì˜¤ë¸Œì íŠ¸ ë¦¬ìŠ¤íŠ¸ê°€ ì¡´ì¬í–ˆëŠ”ì§€ ì²´í¬
+        // -> ìˆì—ˆë‹¤ë©´ ì˜¤ë¸Œì íŠ¸ë¥¼ ìƒì„±í•˜ì—¬ ì •ë³´ê°’ì„ ë„£ëŠ”ë‹¤.
 
-        // yardGatherCount[]ÀÇ int°ª ºÒ·¯¿À±â
+        // yardGatherCount[]ì˜ intê°’ ë¶ˆëŸ¬ì˜¤ê¸°
        
 
     }

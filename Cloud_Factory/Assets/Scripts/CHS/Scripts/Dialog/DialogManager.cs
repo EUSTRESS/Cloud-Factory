@@ -7,76 +7,77 @@ using UnityEngine.Animations;
 
 public class DialogManager : MonoBehaviour
 {
-    // ºÒ·¯¿Ã °ªµé ¼±¾ğ
+    // ë¶ˆëŸ¬ì˜¬ ê°’ë“¤ ì„ ì–¸
     private Guest mGuestManager;
     private SOWManager mSOWManager;
     private TutorialManager mTutorialManager;
 
-    public int mGuestNum;                       // ¼Õ´ÔÀÇ ¹øÈ£¸¦ ³Ñ°Ü¹Ş´Â´Ù.
-    private int mGuestSat;                      // ¼Õ´ÔÀÇ ÇöÀç ¸¸Á·µµ
-    private int mGuestVisitCount;               // ¼Õ´ÔÀÇ ÇöÀç ¹æ¹® È½¼ö
-    private int mGuestSatVariation;             // ¼Õ´ÔÀÇ ÇöÀç ¸¸Á·µµ Áõ°¨µµ
-    string mTestName;                           // Å×½ºÆ®¸¦ À§ÇÑ ÀÓ½Ã ÀÌ¸§ ( ¼Õ´ÔÀÇ ÀÌ¸§À» °¡Á®¿Ô´Ù°í °¡Á¤)
+    public int mGuestNum;                       // ì†ë‹˜ì˜ ë²ˆí˜¸ë¥¼ ë„˜ê²¨ë°›ëŠ”ë‹¤.
+    private int mGuestSat;                      // ì†ë‹˜ì˜ í˜„ì¬ ë§Œì¡±ë„
+    private int mGuestVisitCount;               // ì†ë‹˜ì˜ í˜„ì¬ ë°©ë¬¸ íšŸìˆ˜
+    private int mGuestSatVariation;             // ì†ë‹˜ì˜ í˜„ì¬ ë§Œì¡±ë„ ì¦ê°ë„
+    string mTestName;                           // í…ŒìŠ¤íŠ¸ë¥¼ ìœ„í•œ ì„ì‹œ ì´ë¦„ ( ì†ë‹˜ì˜ ì´ë¦„ì„ ê°€ì ¸ì™”ë‹¤ê³  ê°€ì •)
 
     [SerializeField]
-    private DialogDB mDialogDB;                 // ´ëÈ­ ³»¿ëÀ» ÀúÀåÇØ ³õÀº DB
+    private DialogDB mDialogDB;                 // ëŒ€í™” ë‚´ìš©ì„ ì €ì¥í•´ ë†“ì€ DB
     [SerializeField]
-    private string[] mTextList;                 // ´ëÈ­ ³»¿ëÀ» ºÒ·¯¿Í¼­ ÀúÀåÇØµÑ ¸®½ºÆ®
-    private int[] mGuestImageList;              // ´ëÈ­ ³»¿ë¿¡ ¸Â´Â Ç¥Á¤À» ÀúÀåÇØµÑ ¸®½ºÆ®
-    private int[] mIsGuset;                     // ´©°¡ ÀÌ¾ß±âÇÏ´Â ³»¿ëÀÎÁö Ã³¸®ÇÏ±â
+    private string[] mTextList;                 // ëŒ€í™” ë‚´ìš©ì„ ë¶ˆëŸ¬ì™€ì„œ ì €ì¥í•´ë‘˜ ë¦¬ìŠ¤íŠ¸
+    private int[] mGuestImageList;              // ëŒ€í™” ë‚´ìš©ì— ë§ëŠ” í‘œì •ì„ ì €ì¥í•´ë‘˜ ë¦¬ìŠ¤íŠ¸
+    private int[] mIsGuset;                     // ëˆ„ê°€ ì´ì•¼ê¸°í•˜ëŠ” ë‚´ìš©ì¸ì§€ ì²˜ë¦¬í•˜ê¸°
 
-    // ¾À È­¸é¿¡ ³ª¿Ã ÅØ½ºÆ®¿¡ µé¾î°¥ ³»¿ë 
-    private string mDialogGuestName;            // È­¸é¿¡ Ãâ·Â½ÃÅ³ ¼Õ´Ô ÀÌ¸§
-    private string mDialogText;                 // ½ÇÁ¦·Î È­¸é¿¡ Ãâ·Â½ÃÅ³ ³»¿ë
+    // ì”¬ í™”ë©´ì— ë‚˜ì˜¬ í…ìŠ¤íŠ¸ì— ë“¤ì–´ê°ˆ ë‚´ìš© 
+    private string mDialogGuestName;            // í™”ë©´ì— ì¶œë ¥ì‹œí‚¬ ì†ë‹˜ ì´ë¦„
+    private string mDialogText;                 // ì‹¤ì œë¡œ í™”ë©´ì— ì¶œë ¥ì‹œí‚¬ ë‚´ìš©
 
-    // ¾À È­¸é¿¡ µé¾î°¡´Â ÅØ½ºÆ® ¿ÀºêÁ§Æ® ¼±¾ğ
-    public GameObject gTextPanel;               // ´ëÈ­ Ã¢
-    public GameObject gTakeGuestPanel;          // ¼Õ´Ô ¹Ş±â/ °ÅÀı ¹öÆ°
+    // ì”¬ í™”ë©´ì— ë“¤ì–´ê°€ëŠ” í…ìŠ¤íŠ¸ ì˜¤ë¸Œì íŠ¸ ì„ ì–¸
+    public GameObject gTextPanel;               // ëŒ€í™” ì°½
+    public GameObject gTakeGuestPanel;          // ì†ë‹˜ ë°›ê¸°/ ê±°ì ˆ ë²„íŠ¼
 
-    public Text tText;                          // ´ëÈ­°¡ ÁøÇà µÉ ÅØ½ºÆ®
-    public Text tGuestName;                     // ´ëÈ­ÁßÀÌ ¼Õ´ÔÀÇ ÀÌ¸§ÀÌ Ç¥½ÃµÉ ÅØ½ºÆ®
-    public Text tPlayerText;                    // ´ëÈ­Áß¿¡ ÇÃ·¹ÀÌ¾îÀÇ ´ëÈ­°¡ ÁøÇà µÉ ÅØ½ºÆ®
-    public Text tGuestText;                     // ´ëÈ­Áß¿¡ ÇÃ·¹ÀÌ¾îÀÇ ´ëÈ­°¡ ÁøÇà µÉ ÅØ½ºÆ®
+    public Text tText;                          // ëŒ€í™”ê°€ ì§„í–‰ ë  í…ìŠ¤íŠ¸
+    public Text tGuestName;                     // ëŒ€í™”ì¤‘ì´ ì†ë‹˜ì˜ ì´ë¦„ì´ í‘œì‹œë  í…ìŠ¤íŠ¸
+    public Text tPlayerText;                    // ëŒ€í™”ì¤‘ì— í”Œë ˆì´ì–´ì˜ ëŒ€í™”ê°€ ì§„í–‰ ë  í…ìŠ¤íŠ¸
+    public Text tGuestText;                     // ëŒ€í™”ì¤‘ì— í”Œë ˆì´ì–´ì˜ ëŒ€í™”ê°€ ì§„í–‰ ë  í…ìŠ¤íŠ¸
 
-    // ¼Õ´ÔÀÇ ÀÌ¹ÌÁö¸¦ ¶ç¿ì´Âµ¥ ÇÊ¿äÇÑ º¯¼öµé ¼±¾ğ
-    public Sprite[] sGuestImageArr;             // ÀÌ¹ÌÁö ÀÎµ¦½ºµé
-    public GameObject gGuestSprite;             // ½ÇÁ¦ È­¸é¿¡ Ãâ·ÂµÇ´Â ÀÌ¹ÌÁö ¿ÀºêÁ§Æ®
-    private SpriteRenderer sGuestSpriteRender;  // ¿ÀºêÁ§Æ®ÀÇ Sprite ÄÄÆ÷³ÍÆ®¸¦ ÀĞ¾î¿Ã SpriteRenderer
+    // ì†ë‹˜ì˜ ì´ë¯¸ì§€ë¥¼ ë„ìš°ëŠ”ë° í•„ìš”í•œ ë³€ìˆ˜ë“¤ ì„ ì–¸
+    public Sprite[] sGuestImageArr;             // ì´ë¯¸ì§€ ì¸ë±ìŠ¤ë“¤
+    public GameObject gGuestSprite;             // ì‹¤ì œ í™”ë©´ì— ì¶œë ¥ë˜ëŠ” ì´ë¯¸ì§€ ì˜¤ë¸Œì íŠ¸
+    private SpriteRenderer sGuestSpriteRender;  // ì˜¤ë¸Œì íŠ¸ì˜ Sprite ì»´í¬ë„ŒíŠ¸ë¥¼ ì½ì–´ì˜¬ SpriteRenderer
     public Animator mGuestAnimator;
 
-    // ´ëÈ­ ±¸Çö¿¡ ÇÊ¿äÇÑ º¯¼ö°ª ¼±¾ğ
-    private int mDialogIndex;                   // ÇØ´ç ¸¸Á·µµ¿¡ ¼ÓÇÏ´Â Áö¹®ÀÇ ÀÎµ¦½ºs
-    private int mDialogCharIndex;               // ½ÇÁ¦·Î È­¸é¿¡ Ãâ·Â½ÃÅ°´Â ³»¿ëÀÇ ÀÎµ¦½º
-    private int mDialogImageIndex;              // ½ÇÁ¦·Î È­¸é¿¡ Ãâ·Â½ÃÅ°´Â ÀÌ¹ÌÁöÀÇ ÀÎµ¦½º
-    private bool isReading;                     // ÇöÀç ´ëÈ­Ã¢¿¡¼­ ´ëÈ­¸¦ Ãâ·ÂÇÏ´Â ÁßÀÎ°¡?
-    private bool isLastDialog;                  // ¸¶Áö¸· ´ëÈ­¸¦ ºÒ·¯¿Ô´Â°¡?
-    private bool isTagInDialog;                 // ´ë»ç Áß, ÅÂ±×(color) »çÀÌ¿¡ µé¾î°¡¾ß ÇÏ´Â ¹®ÀåÀÎ°¡?
+    // ëŒ€í™” êµ¬í˜„ì— í•„ìš”í•œ ë³€ìˆ˜ê°’ ì„ ì–¸
+    private int mDialogIndex;                   // í•´ë‹¹ ë§Œì¡±ë„ì— ì†í•˜ëŠ” ì§€ë¬¸ì˜ ì¸ë±ìŠ¤s
+    private int mDialogCharIndex;               // ì‹¤ì œë¡œ í™”ë©´ì— ì¶œë ¥ì‹œí‚¤ëŠ” ë‚´ìš©ì˜ ì¸ë±ìŠ¤
+    private int mDialogImageIndex;              // ì‹¤ì œë¡œ í™”ë©´ì— ì¶œë ¥ì‹œí‚¤ëŠ” ì´ë¯¸ì§€ì˜ ì¸ë±ìŠ¤
+    private bool isReading;                     // í˜„ì¬ ëŒ€í™”ì°½ì—ì„œ ëŒ€í™”ë¥¼ ì¶œë ¥í•˜ëŠ” ì¤‘ì¸ê°€?
+    private bool isLastDialog;                  // ë§ˆì§€ë§‰ ëŒ€í™”ë¥¼ ë¶ˆëŸ¬ì™”ëŠ”ê°€?
+    private bool isTagInDialog;                 // ëŒ€ì‚¬ ì¤‘, íƒœê·¸(color) ì‚¬ì´ì— ë“¤ì–´ê°€ì•¼ í•˜ëŠ” ë¬¸ì¥ì¸ê°€?
 
-    // ¼ö¶ô/°ÅÀı ÆĞ³Î¿¡ ÇÊ¿äÇÑ ÅØ½ºÆ® ¿ÀºêÁ§Æ® ¹Ş±â
+    // ìˆ˜ë½/ê±°ì ˆ íŒ¨ë„ì— í•„ìš”í•œ í…ìŠ¤íŠ¸ ì˜¤ë¸Œì íŠ¸ ë°›ê¸°
     [SerializeField]
-    private Text tPanelName;                    // ¹æ¹® ¼Õ´ÔÀÇ ÀÌ¸§
+    private Text tPanelName;                    // ë°©ë¬¸ ì†ë‹˜ì˜ ì´ë¦„
     [SerializeField]
-    private Text tPanelAge;                     // ¹æ¹® ¼Õ´ÔÀÇ ³ªÀÌ
+    private Text tPanelAge;                     // ë°©ë¬¸ ì†ë‹˜ì˜ ë‚˜ì´
     [SerializeField]
-    private Text tPanelJob;                     // ¹æ¹® ¼Õ´ÔÀÇ Á÷¾÷
+    private Text tPanelJob;                     // ë°©ë¬¸ ì†ë‹˜ì˜ ì§ì—…
     [SerializeField]
-    private Image iPanelPortrait;               // ¹æ¹® ¼Õ´ÔÀÇ ÃÊ»óÈ­
+    private Image iPanelPortrait;               // ë°©ë¬¸ ì†ë‹˜ì˜ ì´ˆìƒí™”
     [SerializeField]
     private Text tPanelReasonText;
 
-    // Æ©Åä¸®¾ó¿¡¼­ °¡ÀÌµå ¸»Ç³¼±À» Ãâ·ÂÇÏ´Â À§Ä¡¸¦ ÀúÀåÇÏ´Â º¯¼ö
+    // íŠœí† ë¦¬ì–¼ì—ì„œ ê°€ì´ë“œ ë§í’ì„ ì„ ì¶œë ¥í•˜ëŠ” ìœ„ì¹˜ë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜
     private int hintTextPos;
+    private bool isKorean;
 
 
-    // Å×½ºÆ® ÇÔ¼ö
-    // ´ëÈ­Ã¢¿¡¼­ ´Ù¸¥ Ä³¸¯ÅÍ È¤Àº ´Ù¸¥ ¸¸Á·µµÀÇ ÅØ½ºÆ®¸¦ ¹Ş¾Æ¿À´Â °æ¿ì ¿À·ù°¡ ÀÖ´ÂÁö È®ÀÎÇÏ±â À§ÇÑ ÇÔ¼ö
+    // í…ŒìŠ¤íŠ¸ í•¨ìˆ˜
+    // ëŒ€í™”ì°½ì—ì„œ ë‹¤ë¥¸ ìºë¦­í„° í˜¹ì€ ë‹¤ë¥¸ ë§Œì¡±ë„ì˜ í…ìŠ¤íŠ¸ë¥¼ ë°›ì•„ì˜¤ëŠ” ê²½ìš° ì˜¤ë¥˜ê°€ ìˆëŠ”ì§€ í™•ì¸í•˜ê¸° ìœ„í•œ í•¨ìˆ˜
 
     void Awake()
     {
 
         initDialogManager();
 
-        // ¹æ¹®ÁÖ±â°¡ µÇÁö ¾ÊÀ¸¸é ¼Õ´ÔÀÌ ³ª¿ÀÁö ¾Ê´Â´Ù.
+        // ë°©ë¬¸ì£¼ê¸°ê°€ ë˜ì§€ ì•Šìœ¼ë©´ ì†ë‹˜ì´ ë‚˜ì˜¤ì§€ ì•ŠëŠ”ë‹¤.
         if (mGuestManager.isTimeToTakeGuest)
         {
             LoadDialogInfo();
@@ -85,10 +86,10 @@ public class DialogManager : MonoBehaviour
             initAnimator();
             initTakeGuestPanel();
 
-            // ´ëÈ­ ÆĞ³ÎÀ» È°¼ºÈ­
+            // ëŒ€í™” íŒ¨ë„ì„ í™œì„±í™”
             gTextPanel.SetActive(true);
 
-            // ¼Õ´Ô ÀÌ¹ÌÁö¸¦ È°¼ºÈ­
+            // ì†ë‹˜ ì´ë¯¸ì§€ë¥¼ í™œì„±í™”
             gGuestSprite.SetActive(true);
         }
     }
@@ -118,6 +119,15 @@ public class DialogManager : MonoBehaviour
         mTextList = new string[40];
         mIsGuset = new int[40];
         isReading = false;
+
+        if (LanguageManager.GetInstance().GetCurrentLanguage() == "Korean")
+        {
+            isKorean = true;
+        }
+        else
+        {
+            isKorean = false;
+        }
     }
 
     // Update is called once per frame
@@ -127,7 +137,7 @@ public class DialogManager : MonoBehaviour
     }
     void initAnimator()
     {
-        // ÃÊ»óÈ­ÀÇ ¾Ö´Ï¸ŞÀÌ¼Ç Å¬¸³À» ÃÊ±âÈ­ÇÑ´Ù.
+        // ì´ˆìƒí™”ì˜ ì• ë‹ˆë©”ì´ì…˜ í´ë¦½ì„ ì´ˆê¸°í™”í•œë‹¤.
         mGuestAnimator.runtimeAnimatorController = GetComponent<DrawAniClip>().animators[mGuestNum];
     }
 
@@ -136,11 +146,11 @@ public class DialogManager : MonoBehaviour
         SceneManager.LoadScene("Space Of Weather");
     }
 
-    // ÇØ´ç ¼Õ´Ô¿¡ ´ëÇÑ ´ëÈ­°ª Á¤º¸¸¦ ºÒ·¯¿À´Â ÇÔ¼ö
+    // í•´ë‹¹ ì†ë‹˜ì— ëŒ€í•œ ëŒ€í™”ê°’ ì •ë³´ë¥¼ ë¶ˆëŸ¬ì˜¤ëŠ” í•¨ìˆ˜
     private void LoadDialogInfo()
     {
-        // °ÔÀÓ ³»¿¡ GameManager ÇÑ°³¸¦ »ı¼ºÇÏ°í, ±× °÷¿¡¼­ ÇÏ·ç¸¶´Ù 6¸íÀÇ ¼Õ´ÔÀ» ÁöÁ¤ÇÏ¿© ÀÀÁ¢½Ç¿¡ ÇÃ·¹ÀÌ¾î°¡ ¾ø´Â ½Ã°£¿¡ ÇÑÇÏ¿© ·£´ıÇÏ°Ô ÇÑ¸í¾¿ ¹æ¹®½ÃÅ²´Ù.
-        // GameManager¿¡¼­ ÁöÁ¤ÇÑ ¼Õ´ÔÀÇ ¹øÈ£¸¦ ¹Ş¾Æ¿À°í, ¼Õ´ÔÀÇ ¹øÈ£¿¡ ¸Â´Â ¼Õ´ÔÀÇ Á¤º¸¸¦ °¡Á®¿Â´Ù.
+        // ê²Œì„ ë‚´ì— GameManager í•œê°œë¥¼ ìƒì„±í•˜ê³ , ê·¸ ê³³ì—ì„œ í•˜ë£¨ë§ˆë‹¤ 6ëª…ì˜ ì†ë‹˜ì„ ì§€ì •í•˜ì—¬ ì‘ì ‘ì‹¤ì— í”Œë ˆì´ì–´ê°€ ì—†ëŠ” ì‹œê°„ì— í•œí•˜ì—¬ ëœë¤í•˜ê²Œ í•œëª…ì”© ë°©ë¬¸ì‹œí‚¨ë‹¤.
+        // GameManagerì—ì„œ ì§€ì •í•œ ì†ë‹˜ì˜ ë²ˆí˜¸ë¥¼ ë°›ì•„ì˜¤ê³ , ì†ë‹˜ì˜ ë²ˆí˜¸ì— ë§ëŠ” ì†ë‹˜ì˜ ì •ë³´ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
 
 
         int i;
@@ -150,27 +160,27 @@ public class DialogManager : MonoBehaviour
 		List<DialogDBEntity> Dialog;
         Dialog = mDialogDB.SetDialogByGuestNum(mGuestNum);
         int[] speakEmotionEffect = mGuestManager.SpeakEmotionEffect(mGuestNum);
-        int tempVisitCount = 0;                                     // ½ÃÆ®¿¡ ¹æ¹® È½¼ö°¡ Á¤¼ö°¡ ¾Æ´Ñ ¹üÀ§·Î µÇ¾îÀÖ´Â °ü°è·Î ¼³Á¤ÇÏ´Â ÀÓ½Ã Á¤¼ö
-                                                                    // ÇØ´ç Á¤¼ö°¡ 2ÀÏ ¶§, 1<x<10 ¹üÀ§·Î ÆÇ´Ü
+        int tempVisitCount = 0;                                     // ì‹œíŠ¸ì— ë°©ë¬¸ íšŸìˆ˜ê°€ ì •ìˆ˜ê°€ ì•„ë‹Œ ë²”ìœ„ë¡œ ë˜ì–´ìˆëŠ” ê´€ê³„ë¡œ ì„¤ì •í•˜ëŠ” ì„ì‹œ ì •ìˆ˜
+                                                                    // í•´ë‹¹ ì •ìˆ˜ê°€ 2ì¼ ë•Œ, 1<x<10 ë²”ìœ„ë¡œ íŒë‹¨
 
-        // Dialog Null ¹İÈ¯½Ã ¿À·ù Ãâ·Â
+        // Dialog Null ë°˜í™˜ì‹œ ì˜¤ë¥˜ ì¶œë ¥
         if (Dialog == null)
-            Debug.Log("´ëÈ­¸¦ ºÒ·¯¿À´Âµ¥¿¡ ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.");
+            Debug.Log("ëŒ€í™”ë¥¼ ë¶ˆëŸ¬ì˜¤ëŠ”ë°ì— ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.");
 
 		if (mGuestVisitCount <= 1 || mGuestVisitCount >= 10) { tempVisitCount = mGuestVisitCount; }
 		else { tempVisitCount = 2; }
 
-		// ¼Õ´Ô ¹øÈ£ -> ¹æ¹® È½¼ö -> ¸¸Á·µµ ¼øÀ¸·Î ¿¢¼¿ ÅØ½ºÆ® ÆÄÀÏÀ» Ã¼Å©ÇÑ´Ù.
+		// ì†ë‹˜ ë²ˆí˜¸ -> ë°©ë¬¸ íšŸìˆ˜ -> ë§Œì¡±ë„ ìˆœìœ¼ë¡œ ì—‘ì…€ í…ìŠ¤íŠ¸ íŒŒì¼ì„ ì²´í¬í•œë‹¤.
 		for (i = 0; i < Dialog.Count; ++i)
         {
             //Debug.Log(mGuestNum + " " + mGuestManager.mGuestInfo[mGuestNum].mVisitCount + " " + mGuestVisitCount + " " + mGuestSat);
-			if (Dialog[i].GuestID == mGuestNum + 1                  // °Ô½ºÆ® ¹øÈ£
-                && Dialog[i].VisitCount == tempVisitCount           // ¹æ¹® È½¼ö
-                && Dialog[i].Sat == mGuestSat)                      // ¸¸Á·µµ
+			if (Dialog[i].GuestID == mGuestNum + 1                  // ê²ŒìŠ¤íŠ¸ ë²ˆí˜¸
+                && Dialog[i].VisitCount == tempVisitCount           // ë°©ë¬¸ íšŸìˆ˜
+                && Dialog[i].Sat == mGuestSat)                      // ë§Œì¡±ë„
             {
-				if (tempVisitCount >= 10 || (tempVisitCount < 10 && Dialog[i].SatVariation == mGuestSatVariation)) // ¹æ¹® È½¼ö°¡ 10ÀÏ ¶§, ¸¸Á·µµ Áõ°¨µµ¿¡ °ü°è¾øÀÌ
+				if (tempVisitCount >= 10 || (tempVisitCount < 10 && Dialog[i].SatVariation == mGuestSatVariation)) // ë°©ë¬¸ íšŸìˆ˜ê°€ 10ì¼ ë•Œ, ë§Œì¡±ë„ ì¦ê°ë„ì— ê´€ê³„ì—†ì´
                 {
-					//Text°¡ HintÀÌ¸é xls¿¡¼­ »óÇÏÇÑ¼±¿¡ °¡Àå °¡±î¿î °¨Á¤ÀÇ ´ë»ç µ¿ÀûÀ¸·Î ÇÒ´ç
+					//Textê°€ Hintì´ë©´ xlsì—ì„œ ìƒí•˜í•œì„ ì— ê°€ì¥ ê°€ê¹Œìš´ ê°ì •ì˜ ëŒ€ì‚¬ ë™ì ìœ¼ë¡œ í• ë‹¹
 					if (Dialog[i].Text == "Hint")
                     {
                         for (int count = 0; count < speakEmotionEffect.Length; count++)
@@ -179,13 +189,14 @@ public class DialogManager : MonoBehaviour
                             {
                                 if (Dialog[num].GuestID == mGuestNum + 1
                                     && Dialog[num].Emotion == speakEmotionEffect[count]
-                                    && Dialog[num].Sat == 0)    // TODO: ÃßÈÄ ÅØ½ºÆ® ¿¢¼¿ ÆÄÀÏ º¸°í Á¶°Ç ¼öÁ¤ ÇÊ¿ä
+                                    && Dialog[num].Sat == 0)    // TODO: ì¶”í›„ í…ìŠ¤íŠ¸ ì—‘ì…€ íŒŒì¼ ë³´ê³  ì¡°ê±´ ìˆ˜ì • í•„ìš”
                                 {
                                     if (!mTutorialManager.isFinishedTutorial[1] 
-                                        && hintTextPos == 0)                                // ÈùÆ®°¡ Ã³À½ µîÀåÇÑ À§Ä¡¸¸ ÀúÀå
+                                        && hintTextPos == 0)                                // íŒíŠ¸ê°€ ì²˜ìŒ ë“±ì¥í•œ ìœ„ì¹˜ë§Œ ì €ì¥
                                     { hintTextPos = j; }
 
-                                    mTextList[j] += Dialog[num].Text;
+                                    if (isKorean) { mTextList[j] += Dialog[num].Text;}
+                                    else { mTextList[j] += Dialog[num].Text_Eng; }
                                     mGuestImageList[j] = Dialog[num].DialogImageNumber;
                                     mIsGuset[j] = Dialog[num].isGuest;
                                     j++;
@@ -196,7 +207,8 @@ public class DialogManager : MonoBehaviour
                     }
                     else
                     {
-                        mTextList[j] = Dialog[i].Text;
+                        if (isKorean) { mTextList[j] += Dialog[i].Text;}
+                        else { mTextList[j] += Dialog[i].Text_Eng; }
                         mGuestImageList[j] = Dialog[i].DialogImageNumber;
                         mIsGuset[j] = Dialog[i].isGuest;
                         Debug.Log(j + " " + mIsGuset[j]);
@@ -232,7 +244,7 @@ public class DialogManager : MonoBehaviour
         tGuestText.text = "";
         tPlayerText.text = "";
 
-        // ¼Õ´ÔÀÇ ´ë»ç¶ó¸é
+        // ì†ë‹˜ì˜ ëŒ€ì‚¬ë¼ë©´
         if (mIsGuset[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex] == 1)
         {
             tGuestText.transform.parent.gameObject.SetActive(true);
@@ -247,7 +259,7 @@ public class DialogManager : MonoBehaviour
         }
         Debug.Log(mDialogIndex + " " + mIsGuset[mDialogIndex]);
     }
-    public string GetDialog(int dialogindex) // ¸¸Á·µµ , ´ëÈ­ ³»¿ë ¼ø¹ø
+    public string GetDialog(int dialogindex) // ë§Œì¡±ë„ , ëŒ€í™” ë‚´ìš© ìˆœë²ˆ
     {
         return mTextList[dialogindex];
     }
@@ -263,7 +275,7 @@ public class DialogManager : MonoBehaviour
         isReading = true;
         if (tText.text == GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex))
         {
-            // ÅØ½ºÆ®°¡ ¸ğµÎ Ãâ·ÂÀÌ µÈ °æ¿ì¿¡ Å¬¸¯ ½Ã, ´ÙÀ½ ¹®ÀåÀÌ Ãâ·ÂµÈ´Ù.
+            // í…ìŠ¤íŠ¸ê°€ ëª¨ë‘ ì¶œë ¥ì´ ëœ ê²½ìš°ì— í´ë¦­ ì‹œ, ë‹¤ìŒ ë¬¸ì¥ì´ ì¶œë ¥ëœë‹¤.
             if (GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex) != "End")
             {
                 GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex += 1;
@@ -278,7 +290,7 @@ public class DialogManager : MonoBehaviour
             if(GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex + 1] == '/') { isTagInDialog = false; }
             else { isTagInDialog = true; }
 
-            // ÅÂ±×°¡ ½ÃÀÛ µÉ ¶§¸¸, ÀÔ·Â ÅÂ±×¸¦ ÅØ½ºÆ®¿¡ Ãß°¡ ÈÄ, µÚ¿¡ µé¾î¿Ã ÅÂ±×µµ Ãß°¡
+            // íƒœê·¸ê°€ ì‹œì‘ ë  ë•Œë§Œ, ì…ë ¥ íƒœê·¸ë¥¼ í…ìŠ¤íŠ¸ì— ì¶”ê°€ í›„, ë’¤ì— ë“¤ì–´ì˜¬ íƒœê·¸ë„ ì¶”ê°€
             while (mDialogCharIndex <= 0 || GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex - 1] != '>')
             {
                 if(isTagInDialog == true)
@@ -320,7 +332,7 @@ public class DialogManager : MonoBehaviour
         return temp_string;
 	}
 
-	// ¼Õ´Ô°úÀÇ ´ëÈ­¸¦ ½ÇÇà½ÃÄÑÁÖ´Â ÇÔ¼ö
+	// ì†ë‹˜ê³¼ì˜ ëŒ€í™”ë¥¼ ì‹¤í–‰ì‹œì¼œì£¼ëŠ” í•¨ìˆ˜
 	public void ReadDialog()
     {
         InitDialog();
@@ -338,27 +350,27 @@ public class DialogManager : MonoBehaviour
             mGuestAnimator.SetBool("isGuest", false);
         }
 
-        // °¡ÀÌµå ¸»Ç³¼± Ãâ·Â ÈÄ, ´Ù½Ã Ãâ·ÂµÇÁö ¾Êµµ·Ï hintTextPos¸¦ 0À¸·Î ¼³Á¤ÇÑ´Ù.(¸»Ç³¼± Àç»ı¼º ¹æÁö)
+        // ê°€ì´ë“œ ë§í’ì„  ì¶œë ¥ í›„, ë‹¤ì‹œ ì¶œë ¥ë˜ì§€ ì•Šë„ë¡ hintTextPosë¥¼ 0ìœ¼ë¡œ ì„¤ì •í•œë‹¤.(ë§í’ì„  ì¬ìƒì„± ë°©ì§€)
         if (mTutorialManager.isFinishedTutorial[1] == false
             && GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex == hintTextPos) 
         { mTutorialManager.SetActiveGuideSpeechBubble(true); hintTextPos = 0;  }                                  
 
-        // ¸¶Áö¸· End ¹®ÀÚ¿­ÀÌ ³ª¿À´Â °æ¿ì ( ´ëÈ­¸¦ ¸ğµÎ ºÒ·¯¿Â °æ¿ì)
+        // ë§ˆì§€ë§‰ End ë¬¸ìì—´ì´ ë‚˜ì˜¤ëŠ” ê²½ìš° ( ëŒ€í™”ë¥¼ ëª¨ë‘ ë¶ˆëŸ¬ì˜¨ ê²½ìš°)
         if (GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex) == "End")
         {
             isLastDialog = true;
-            // ´ëÈ­ ³»¿ëÀ» ¸ğµÎ Ãâ·ÂÇÏ°í ³ª¸é ¼Õ´Ô ÀÀ´ë¿¡ °üÇÑ ¿©ºÎ¸¦ ÇÃ·¹ÀÌ¾î¿¡°Ô ¹¯´Â´Ù. (¹Ş´Â´Ù/ ¹ŞÁö ¾Ê´Â´Ù)
+            // ëŒ€í™” ë‚´ìš©ì„ ëª¨ë‘ ì¶œë ¥í•˜ê³  ë‚˜ë©´ ì†ë‹˜ ì‘ëŒ€ì— ê´€í•œ ì—¬ë¶€ë¥¼ í”Œë ˆì´ì–´ì—ê²Œ ë¬»ëŠ”ë‹¤. (ë°›ëŠ”ë‹¤/ ë°›ì§€ ì•ŠëŠ”ë‹¤)
             TakeGuest();
             if (mTutorialManager.isFinishedTutorial[1] == false) { mTutorialManager.SetActiveGuideSpeechBubble(true); }
             return;
         }
-        // ´ëÈ­°¡ Ãâ·ÂÁßÀÎ µµÁß¿¡ Å¬¸¯ÇÑ °æ¿ì, ¹®ÀåÀÌ ÇÑ¹ø¿¡ Ãâ·ÂÀÌ µÈ´Ù.
+        // ëŒ€í™”ê°€ ì¶œë ¥ì¤‘ì¸ ë„ì¤‘ì— í´ë¦­í•œ ê²½ìš°, ë¬¸ì¥ì´ í•œë²ˆì— ì¶œë ¥ì´ ëœë‹¤.
         if (isReading == true)
         {
             ReadDialogAtAll();
             return;
         }
-        // ±âº»ÀûÀ¸·Î ºó ÅØ½ºÆ®¿¡¼­ ´ëÈ­ ³»¿ëÀ» ÇÑ ±ÛÀÚ¾¿ Ãß°¡ÇÏ¿© Ãâ·ÂÇÏ°í µô·¹ÀÌ ÇÏ±â¸¦ ¹İº¹ÇÑ´Ù.
+        // ê¸°ë³¸ì ìœ¼ë¡œ ë¹ˆ í…ìŠ¤íŠ¸ì—ì„œ ëŒ€í™” ë‚´ìš©ì„ í•œ ê¸€ìì”© ì¶”ê°€í•˜ì—¬ ì¶œë ¥í•˜ê³  ë”œë ˆì´ í•˜ê¸°ë¥¼ ë°˜ë³µí•œë‹¤.
         ReadDialogAtOne();
         return;
     }
@@ -368,7 +380,7 @@ public class DialogManager : MonoBehaviour
         gTakeGuestPanel.SetActive(true);
     }
 
-    // ¼Õ´Ô ¼ö¶ôÇÏ±â
+    // ì†ë‹˜ ìˆ˜ë½í•˜ê¸°
     public void AcceptGuest()
     {
         if(mTutorialManager.isFinishedTutorial[1] == false) { mTutorialManager.isFinishedTutorial[1] = true; }
@@ -379,76 +391,82 @@ public class DialogManager : MonoBehaviour
 
 		mGuestManager.InitGuestTime();
 
-		// ¼Õ´ÔÀÌ ÀÌµ¿ÇßÀ¸¹Ç·Î ÀÀÁ¢½Ç¿¡ ÀÖ´Â °ÍµéÀ» ÃÊ±âÈ­ ½ÃÄÑÁØ´Ù.
+		// ì†ë‹˜ì´ ì´ë™í–ˆìœ¼ë¯€ë¡œ ì‘ì ‘ì‹¤ì— ìˆëŠ” ê²ƒë“¤ì„ ì´ˆê¸°í™” ì‹œì¼œì¤€ë‹¤.
 		ClearGuest();
 		MoveSceneToWeatherSpace();
 	}
 
-    // ¼Õ´Ô °ÅÀıÇÏ±â
+    // ì†ë‹˜ ê±°ì ˆí•˜ê¸°
     public void RejectGuest()
     {
         if (!mTutorialManager.isFinishedTutorial[1] ) {  return;  }
-        Debug.Log("¼Õ´ÔÀ» ¹ŞÁö ¾Ê½À´Ï´Ù.");
+        Debug.Log("ì†ë‹˜ì„ ë°›ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 
-        // ¹æ¹®ÇÏÁö ¾Ê´Â È½¼ö¸¦ 3À¸·Î ÁöÁ¤ÇÑ´Ù. (3ÀÏ°£ ¹æ¹® X)
+        // ë°©ë¬¸í•˜ì§€ ì•ŠëŠ” íšŸìˆ˜ë¥¼ 3ìœ¼ë¡œ ì§€ì •í•œë‹¤. (3ì¼ê°„ ë°©ë¬¸ X)
 
-        // Demo Version
-        //mGuestManager.mGuestInfo[mGuestNum].mNotVisitCount = 3;
-        mGuestManager.mGuestInfo[mGuestNum].rejectCount++;
-        if (mGuestManager.mGuestInfo[mGuestNum].rejectCount >= 5) { mGuestManager.mGuestInfo[mGuestNum].isDisSat = true; }
-        // End Demo Version
+         mGuestManager.mGuestInfo[mGuestNum].mNotVisitCount = 3;
 
         mGuestManager.InitGuestTime();
 
-		// ¼Õ´ÔÀÌ ÀÌµ¿ÇßÀ¸¹Ç·Î ÀÀÁ¢½Ç¿¡ ÀÖ´Â °ÍµéÀ» ÃÊ±âÈ­ ½ÃÄÑÁØ´Ù.
+		// ì†ë‹˜ì´ ì´ë™í–ˆìœ¼ë¯€ë¡œ ì‘ì ‘ì‹¤ì— ìˆëŠ” ê²ƒë“¤ì„ ì´ˆê¸°í™” ì‹œì¼œì¤€ë‹¤.
 		if (mGuestManager.mGuestInfo[mGuestNum].mVisitCount == 1) { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = 0; }
 		ClearGuest();
         MoveSceneToWeatherSpace();
     }
 
-    // ÀÀÁ¢½ÇÀ» ÃÊ±âÈ­ ½ÃÄÑÁØ´Ù.
+    // ì‘ì ‘ì‹¤ì„ ì´ˆê¸°í™” ì‹œì¼œì¤€ë‹¤.
     private void ClearGuest()
     {
-        // ¹æ¹®È½¼ö 1È¸ Áõ°¡
+        // ë°©ë¬¸íšŸìˆ˜ 1íšŒ ì¦ê°€
         mGuestManager.mGuestInfo[mGuestNum].mVisitCount++;
 
-        // ¼Õ´ÔÀÌ ÀÀÁ¢½Ç¿¡ ¾ø´Ù°í Ç¥½Ã
+        // ì†ë‹˜ì´ ì‘ì ‘ì‹¤ì— ì—†ë‹¤ê³  í‘œì‹œ
         mGuestManager.isGuestInLivingRoom = false;
 
-        // ´ëÈ­ ÀÎµ¦½º¸¦ 0À¸·Î ÃÊ±âÈ­
+        // ëŒ€í™” ì¸ë±ìŠ¤ë¥¼ 0ìœ¼ë¡œ ì´ˆê¸°í™”
         GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex = 0;
 
-        // ´ëÈ­ ÆĞ³ÎÀ» ºñÈ°¼ºÈ­
+        // ëŒ€í™” íŒ¨ë„ì„ ë¹„í™œì„±í™”
         gTextPanel.SetActive(false);
 
-        // ¼Õ´Ô ÀÌ¹ÌÁö¸¦ ºñÈ°¼ºÈ­
+        // ì†ë‹˜ ì´ë¯¸ì§€ë¥¼ ë¹„í™œì„±í™”
     }
 
-    // ¼ö¶ô/°ÅÀı ÇÏ´Â ÆĞ³ÎÀ» ¹æ¹®ÇÑ ¼Õ´ÔÀÇ Á¤º¸·Î ÃÊ±âÈ­ ÇÑ´Ù.
+    // ìˆ˜ë½/ê±°ì ˆ í•˜ëŠ” íŒ¨ë„ì„ ë°©ë¬¸í•œ ì†ë‹˜ì˜ ì •ë³´ë¡œ ì´ˆê¸°í™” í•œë‹¤.
     private void initTakeGuestPanel()
     {
         GuestInfos guest = mGuestManager.mGuestInfo[mGuestNum];
 
-        tPanelName.text = "ÀÌ¸§: " + guest.mName;
-        tPanelAge.text = "³ªÀÌ: " + guest.mAge;
-        tPanelJob.text = "Á÷¾÷: " + guest.mJob;
+        if (LanguageManager.GetInstance().GetCurrentLanguage() == "Korean")
+        {
+            tPanelName.text = "ì´ë¦„: " + guest.mName;
+            tPanelAge.text = "ë‚˜ì´: " + guest.mAge;
+            tPanelJob.text = "ì§ì—…: " + guest.mJob;
+        }
+        else
+        {
+            tPanelName.text = "Name: " + guest.mName;
+            tPanelAge.text = "Age: " + guest.mAge;
+            tPanelJob.text = "Job: " + guest.mJob;
+        }
+
         iPanelPortrait.sprite = sGuestImageArr[mGuestNum];
         switch (mGuestNum)
         {
             case 3:
-				tPanelReasonText.text = " ¾îÂ÷ÇÇ ÀÏ¾î³­ ÀÏÀÌ°í, µÇµ¹¸± ¼ö ¾ø´Â°Å¶ó.... °ú°Å´Â °ú°ÅÀÏ »Ó. ±×¸¸ ÀÌ ÀÏ¿¡ ´ëÇØ ÀØ°í ³ª¾Æ°¡°í ½Í¾î¿ä.";
+				tPanelReasonText.text = " ì–´ì°¨í”¼ ì¼ì–´ë‚œ ì¼ì´ê³ , ë˜ëŒë¦´ ìˆ˜ ì—†ëŠ”ê±°ë¼.... ê³¼ê±°ëŠ” ê³¼ê±°ì¼ ë¿. ê·¸ë§Œ ì´ ì¼ì— ëŒ€í•´ ìŠê³  ë‚˜ì•„ê°€ê³  ì‹¶ì–´ìš”.";
 				break;
             case 6:
-				tPanelReasonText.text = " ¹«´ë¸¸ ¿Ã¶ó°¡¸é ¸Ó¸´¼ÓÀÌ »õÇÏ¾êÁ®¿ä. ¸öÀÌ Á¶±İ¸¸ Ç®¸®¸é ÁÁ°Ú¾î¿ä...";
+				tPanelReasonText.text = " ë¬´ëŒ€ë§Œ ì˜¬ë¼ê°€ë©´ ë¨¸ë¦¿ì†ì´ ìƒˆí•˜ì–˜ì ¸ìš”. ëª¸ì´ ì¡°ê¸ˆë§Œ í’€ë¦¬ë©´ ì¢‹ê² ì–´ìš”...";
 				break;
             case 9:
-				tPanelReasonText.text = " Àú´Â ¿Ö ÀÌ·¸°Ô ¸øµÇ°Ô ±¸´Â °É±î¿ä? ½Î¿ìÁö ¾Ê°íµµ ´ëÈ­·Î ÇÏ¸é µÇ´Â ¹®Á¦¿´´Âµ¥... ÇÏ¾Æ. ÀÌ·± Á¦°¡ ³Ê¹« ½È¾î¿ä.";
+				tPanelReasonText.text = " ì €ëŠ” ì™œ ì´ë ‡ê²Œ ëª»ë˜ê²Œ êµ¬ëŠ” ê±¸ê¹Œìš”? ì‹¸ìš°ì§€ ì•Šê³ ë„ ëŒ€í™”ë¡œ í•˜ë©´ ë˜ëŠ” ë¬¸ì œì˜€ëŠ”ë°... í•˜ì•„. ì´ëŸ° ì œê°€ ë„ˆë¬´ ì‹«ì–´ìš”.";
 				break;
             case 12:
-				tPanelReasonText.text = " ¾ğ´Ï¿¡°Ô´Â ÁÁÀº °¨Á¤¸¸ ³²¾ÒÀ¸¸é ÁÁ°Ú³×...";
+				tPanelReasonText.text = " ì–¸ë‹ˆì—ê²ŒëŠ” ì¢‹ì€ ê°ì •ë§Œ ë‚¨ì•˜ìœ¼ë©´ ì¢‹ê² ë„¤...";
 				break;
             case 13:
-				tPanelReasonText.text = " Æ¼·ç´Â ¾î¸£´Ï µÉ °Å¾ß.  ±â´Ù¸®¶ó´Â ¸»Àº ½Ã·¯¿ä.";
+				tPanelReasonText.text = " í‹°ë£¨ëŠ” ì–´ë¥´ë‹ˆ ë  ê±°ì•¼.  ê¸°ë‹¤ë¦¬ë¼ëŠ” ë§ì€ ì‹œëŸ¬ìš”.";
 				break;
             default:
 				tPanelReasonText.text = "";

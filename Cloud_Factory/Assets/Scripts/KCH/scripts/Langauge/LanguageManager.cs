@@ -6,6 +6,7 @@ public class LanguageManager : MonoBehaviour
 {
     private static LanguageManager instance;
     
+    [SerializeField]
     private bool isKorean;
     
     // Start is called before the first frame update
@@ -24,7 +25,7 @@ public class LanguageManager : MonoBehaviour
             }
         }
         instance = this;
-        isKorean = false;
+        isKorean = true;
     }
 
     // Update is called once per frame

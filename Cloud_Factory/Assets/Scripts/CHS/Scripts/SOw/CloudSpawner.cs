@@ -22,6 +22,9 @@ public class CloudSpawner : MonoBehaviour
     public Vector3 Cloud_ps = new Vector3(0f, 0f, 0f);
 
     public RuntimeAnimatorController[] animValue2;
+    public RuntimeAnimatorController[] animValue3;
+    public RuntimeAnimatorController[] animValue4;
+
 
     // 처음 받아와야 하는 값
     // 1) 날아갈 의자의 인덱스
@@ -96,7 +99,9 @@ public class CloudSpawner : MonoBehaviour
             int cloudColorNumber = storagedCloudData.GetCloudTypeNum();
             Debug.Log(cloudColorNumber);
 
-            cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue2[cloudColorNumber];
+            // TODO : 희귀도에 따라 외형을 변화시키는 코드 추가
+
+            cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue3[cloudColorNumber];
             
             if(cloudMove.GetComponent<Animator>().runtimeAnimatorController)
             {
@@ -106,7 +111,7 @@ public class CloudSpawner : MonoBehaviour
             {
                 Debug.Log("구름 애니메이터 적용 실패 오류발생! ");
 
-                if(animValue2[cloudColorNumber])
+                if(animValue3[cloudColorNumber])
                 {
                     Debug.Log("구름 애니메이터가 존재하지 않습니다.");
                 }

@@ -10,7 +10,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: index
-    m_EventTreshold: 2
+    m_EventTreshold: 1
   - m_ConditionMode: 1
     m_ConditionEvent: isGuest
     m_EventTreshold: 0
@@ -156,19 +156,19 @@ AnimatorStateMachine:
     m_Position: {x: -10, y: 270, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6295158320915488584}
-    m_Position: {x: -10, y: 310, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 5872582690462167427}
     m_Position: {x: -10, y: 350, z: 0}
   - serializedVersion: 1
+    m_State: {fileID: 5872582690462167427}
+    m_Position: {x: -10, y: 310, z: 0}
+  - serializedVersion: 1
     m_State: {fileID: 8193219057973259148}
-    m_Position: {x: 480, y: 300, z: 0}
+    m_Position: {x: 480, y: 340, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7451253002513162578}
     m_Position: {x: 480, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -148908286389897600}
-    m_Position: {x: 480, y: 340, z: 0}
+    m_Position: {x: 480, y: 300, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -1114129526407785208}
@@ -221,7 +221,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: index
-    m_EventTreshold: 1
+    m_EventTreshold: 2
   - m_ConditionMode: 2
     m_ConditionEvent: isGuest
     m_EventTreshold: 0
@@ -249,7 +249,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: index
-    m_EventTreshold: 1
+    m_EventTreshold: 2
   - m_ConditionMode: 1
     m_ConditionEvent: isGuest
     m_EventTreshold: 0
@@ -277,7 +277,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: index
-    m_EventTreshold: 2
+    m_EventTreshold: 1
   - m_ConditionMode: 2
     m_ConditionEvent: isGuest
     m_EventTreshold: 0

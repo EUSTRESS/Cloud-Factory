@@ -40,7 +40,7 @@ public class CloudStorageProfile : MonoBehaviour
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
         UIManager = GameObject.Find("UIManager").GetComponent<RecordUIManager>();
-        
+
         // 기존 기능 주석처리
         /*
         // 착석중인 손님 중, 구름을 제공받지 못한 손님만 제공 가능 리스트에 넣는다.
@@ -59,8 +59,10 @@ public class CloudStorageProfile : MonoBehaviour
         }
         UsingGuestNumList = temp.ToArray();
         */
-        // TODO :  구름 보관함에서 제공받을 수 있는 뭉티를 고정한다.
-        UsingGuestNumList = new int[] { 3, 6, 9, 12,13 };
+
+        // TODO :  구름 보관함에서 제공받을 수 있는 뭉티를 고정한다. (계절에 따라 고정)
+        int Season = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>().mSeason;
+        UsingGuestNumList = GetSeansonGuestList(Season);
 
         numOfUsingGuestList = UsingGuestNumList.Length;
 
@@ -258,4 +260,29 @@ public class CloudStorageProfile : MonoBehaviour
 
         Debug.Log("구름제공 메소드 호출");
     }
+
+    int[] GetSeansonGuestList(int Season)
+    {
+        int[] list = new int[5];
+
+        if (Season == 1)
+        {
+            list = new int[] { 0,1,3,4,6 };
+        }
+        else if (Season == 2)
+        {
+            list = new int[] { 12,13,14,18,19 };
+        }
+        else if(Season == 3)
+        {
+            list = new int[] { 2,8,9,10,16};
+        }
+        else if(Season == 4)
+        {
+            list = new int[] { 5,7,11,15,17 };
+        }
+
+        return list;
+    }
+
 }

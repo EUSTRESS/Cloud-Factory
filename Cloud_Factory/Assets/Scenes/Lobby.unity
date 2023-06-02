@@ -1919,6 +1919,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 766000373}
   m_CullTransparentMesh: 1
+--- !u!114 &768029370 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6332185367928956039, guid: c5f5c53e016a8534880b9afc0b639680, type: 3}
+  m_PrefabInstance: {fileID: 4884052415568563422}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &782216129
 GameObject:
   m_ObjectHideFlags: 0
@@ -8343,6 +8354,10 @@ PrefabInstance:
       propertyPath: m_Alpha
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5777868342905074559, guid: c5f5c53e016a8534880b9afc0b639680, type: 3}
+      propertyPath: loadText
+      value: 
+      objectReference: {fileID: 768029370}
     - target: {fileID: 6332185367928956039, guid: c5f5c53e016a8534880b9afc0b639680, type: 3}
       propertyPath: m_FontData.m_Font
       value: 

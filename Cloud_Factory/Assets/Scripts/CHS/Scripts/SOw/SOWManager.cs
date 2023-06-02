@@ -182,9 +182,6 @@ public class SOWManager : MonoBehaviour
                 GameObject hitObject = hit.transform.root.gameObject;
                 if (hit.transform.gameObject.tag == "Guest")
                 {
-                    // DEMO 추가 기능
-                    // 힌트 잠금
-
                     Debug.Log(hitObject.GetComponent<GuestObject>().mGuestNum + "번 손님을 클릭하였습니다.");
                     hit.transform.gameObject.GetComponent<GuestObject>().Hint();
                 }

@@ -24,17 +24,17 @@ public class LoadingSceneController : MonoBehaviour
     void Awake()
     {
         mouseCursor = GameObject.Find("MouseCursorManger").GetComponent<ChangeCursor>();
-        // ÀÎ½ºÅÏ½º ÇÒ´ç
+        // ì¸ìŠ¤í„´ìŠ¤ í• ë‹¹
         if (null == instance)
         {
             instance = this;
-            // ¸ğµç ¾À¿¡¼­ ³¯Â¥ °è»êÇØ¾ßÇÏ¹Ç·Î
-            // ´Ü, title¾À¿¡¼­´Â Á¦¿ÜÇÑ´Ù.
+            // ëª¨ë“  ì”¬ì—ì„œ ë‚ ì§œ ê³„ì‚°í•´ì•¼í•˜ë¯€ë¡œ
+            // ë‹¨, titleì”¬ì—ì„œëŠ” ì œì™¸í•œë‹¤.
             DontDestroyOnLoad(this.gameObject);
         }
         else
         {
-            // ÀÌ¹Ì Á¸ÀçÇÏ¸é ÀÌÀüºÎÅÍ »ç¿ëÇÏ´ø °ÍÀ» »ç¿ëÇÔ
+            // ì´ë¯¸ ì¡´ì¬í•˜ë©´ ì´ì „ë¶€í„° ì‚¬ìš©í•˜ë˜ ê²ƒì„ ì‚¬ìš©í•¨
             Destroy(this.gameObject);
         }
     }
@@ -46,11 +46,15 @@ public class LoadingSceneController : MonoBehaviour
 
     private string loadSceneName;
     private int loadSceneInt;
+
+    public Text loadText;
     
 
     public void LoadScene(string sceneName)
     {
         mouseCursor.SetLoadCursor();
+        if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean") { loadText.text = "í˜ê» ë›°ì–´ê°€ëŠ” ì¤‘..."; }
+        else { loadText.text = "Running as fast as I can..."; }
         canvas.sortingOrder = 10;
         gameObject.SetActive(true);
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -60,6 +64,8 @@ public class LoadingSceneController : MonoBehaviour
     public void LoadScene(int sceneNumber)
     {
         mouseCursor.SetLoadCursor();
+        if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean") { loadText.text = "í˜ê» ë›°ì–´ê°€ëŠ” ì¤‘..."; }
+        else { loadText.text = "Running as fast as I can..."; }
         canvas.sortingOrder = 10;
         gameObject.SetActive(true);
         SceneManager.sceneLoaded += OnSceneLoaded;

@@ -54,6 +54,7 @@ public class RLHReader : MonoBehaviour
 	{
 		List<RLHDBEntity> Hint;
 		Hint = mRLHDB.SetHintByGuestNum(guest_num);
+		tText = "";
 
 		if(Hint == null) { return; }
 

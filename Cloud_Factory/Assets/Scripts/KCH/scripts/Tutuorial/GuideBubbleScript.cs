@@ -172,6 +172,8 @@ public class GuideBubbleScript : MonoBehaviour
 	{
 		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut00")
 		{
+			GameObject.Find("GuestManager").GetComponent<Guest>().isTimeToTakeGuest = true;
+			GameObject.Find("GuestManager").GetComponent<Guest>().TakeGuest();
 			mTutorialManager.FadeOutScreen();
 			GameObject.Find("B_Drawing Room").transform.SetAsLastSibling();
 			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("B_Drawing Room").transform.localPosition, -200f);

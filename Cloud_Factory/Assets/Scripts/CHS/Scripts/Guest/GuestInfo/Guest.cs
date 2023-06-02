@@ -92,9 +92,8 @@ public class Guest : MonoBehaviour
     public int mGuestIndex;                                             // 이번에 방문할 뭉티의 번호
     public int[] mTodayGuestList = new int[NUM_OF_TODAY_GUEST_LIST];    // 오늘 방문 예정인 뭉티 목록
     public int mGuestCount;                                             // 방문한 뭉티의 숫자
-
-    // Demo Version
-    private Queue<int> mDemoGuestQueue;                                  // 데모버전 뭉티 리스트
+    
+    private Queue<int> mGuestQueue;                                  // 뭉티 리스트
 
     [Space (10f)]
     public float mGuestTime;                                            // 뭉티의 방문 주기의 현재 값
@@ -131,7 +130,7 @@ public class Guest : MonoBehaviour
             }
 
 			// Demo Version
-			InitDemoGuestQueue();
+			InitGuestQueue(1);
 
 			InitDay();
 
@@ -382,18 +381,18 @@ public class Guest : MonoBehaviour
     {
         // Demo Version
         int temp = -1;
-        List<int> demoList = new List<int>();
-        for(int i = mDemoGuestQueue.Count; i > 0; i--)
+        List<int> guestList = new List<int>();
+        for(int i = mGuestQueue.Count; i > 0; i--)
         {
-            temp = mDemoGuestQueue.Dequeue();
+            temp = mGuestQueue.Dequeue();
             if (mGuestInfo[temp].isDisSat == false && mGuestInfo[temp].isCure == false)
-            { demoList.Add(temp); mDemoGuestQueue.Enqueue(temp); Debug.Log(temp); }
+            { guestList.Add(temp); mGuestQueue.Enqueue(temp); Debug.Log(temp); }
         }
 
-        int demoIdx = 0;
-        int[] demoGuestArray = new int[demoList.Count];
-        foreach(int num in demoList) { demoGuestArray[demoIdx++] = num; }
-        return demoGuestArray;
+        int idx = 0;
+        int[] GuestArray = new int[guestList.Count];
+        foreach(int num in guestList) { GuestArray[idx++] = num; }
+        return GuestArray;
         /*
         List<int> guestList = new List<int>();          // 저장할 뭉티의 리스트
         int[] returnValueList = new int[6];             // 반환할 뭉티의 리스트, size는 초기화만
@@ -617,20 +616,18 @@ public class Guest : MonoBehaviour
     public void InitDay()
     {
         // 날씨의 공간에 아직 남아있는 뭉티들을 불만 뭉티로 만든다.
-
-        // Demo Version
+        
         int i = 0;
         if (mTodayGuestList.Length != 0 && mTodayGuestList.Length != NUM_OF_TODAY_GUEST_LIST)
         {
 			if(isGuestInLivingRoom == true) { mGuestCount--; }
             for(int num = 0; num <= mGuestCount; num++)
             {
-                mDemoGuestQueue.Enqueue(mDemoGuestQueue.Dequeue());
+                mGuestQueue.Enqueue(mGuestQueue.Dequeue());
             }
 		}
-        // End Demo Version
 
-		// 새로운 방문 뭉티 리스트를 뽑는다.
+        // 새로운 방문 뭉티 리스트를 뽑는다.
 		mGuestCount = -1;
 
 		// 새로운 리스트를 뽑는 함수를 호출 (테스트를 위해서 잠시 주석처리)
@@ -823,16 +820,33 @@ public class Guest : MonoBehaviour
 
             return temp_list;
     }
-
-    // Demo Version
-    private void InitDemoGuestQueue()
+    
+    public void InitGuestQueue(int season)
     {
-        mDemoGuestQueue = new Queue<int>();
+        mGuestQueue = new Queue<int>();
 
-        mDemoGuestQueue.Enqueue(3);
-		mDemoGuestQueue.Enqueue(6);
-		mDemoGuestQueue.Enqueue(9);
-		mDemoGuestQueue.Enqueue(12);
-		mDemoGuestQueue.Enqueue(13);
+        int[] seasonGuestList = new int[0];
+        switch (season)
+        {
+            case 1:
+                seasonGuestList = new int[] { 0, 1, 3, 4, 6 }; // + 22
+                break;
+            case 2:
+                seasonGuestList = new int[] { 12, 13, 14, 18, 19 }; // + 20
+                break;
+            case 3:
+                seasonGuestList = new int[] { 2, 8, 9, 10, 16 };
+                break;
+            case 4:
+                seasonGuestList = new int[] { 5, 7, 11, 15, 17 }; // + 21
+                break;
+            default:
+                break;
+        }
+
+        for (int i = 0; i < seasonGuestList.Length; i++)
+        {
+            mGuestQueue.Enqueue(seasonGuestList[i]);
+        }
 	}
 }

@@ -93,9 +93,8 @@ public class SeasonDateCalc : MonoBehaviour
         {
             mSecond = 600;
             mDay += CalcDay(ref mSecond);
-            // Demo Version
-            //mWeek = CalcWeek(ref mDay);
-            //mSeason += CalcSeason(ref mWeek);
+            mWeek = CalcWeek(ref mDay);
+            mSeason += CalcSeason(ref mWeek);
         }
 
     }
@@ -172,10 +171,18 @@ public class SeasonDateCalc : MonoBehaviour
             week = 1;
 
             SOWManager sowManager;
+            Guest mGuestManager;
             sowManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+            mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
 
             if (sowManager != null)
                 sowManager.ChangeWeatherObject(mSeason % 4);
+
+            if (mGuestManager != null)
+            {
+                mGuestManager.InitGuestQueue(mSeason % 4 + 1);
+                mGuestManager.InitDay();
+            }
         }
         return temp;
     }

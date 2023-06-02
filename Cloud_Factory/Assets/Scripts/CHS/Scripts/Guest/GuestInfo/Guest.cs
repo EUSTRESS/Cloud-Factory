@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// GuestInfoÁß¿¡¼­ ÀúÀåÇØ¾ßÇÏ´Â Á¤º¸°ª¸¸À» ´ãÀº Å¬·¡½º\
+// GuestInfoì¤‘ì—ì„œ ì €ì¥í•´ì•¼í•˜ëŠ” ì •ë³´ê°’ë§Œì„ ë‹´ì€ í´ë˜ìŠ¤\
 [System.Serializable]
 public class GuestInfoSaveData
 {
@@ -19,11 +19,11 @@ public class GuestInfoSaveData
     public bool isUsing;
 }
 
-// GuestManager¿¡¼­ ÀúÀåÇØ¾ß ÇÏ´Â Á¤º¸°ªµéÀ» ´ãÀº Å¬·¡½º
+// GuestManagerì—ì„œ ì €ì¥í•´ì•¼ í•˜ëŠ” ì •ë³´ê°’ë“¤ì„ ë‹´ì€ í´ë˜ìŠ¤
 [System.Serializable]
 public class GuestManagerSaveData
 {
-    // »ó¼ö ¼±¾ğ
+    // ìƒìˆ˜ ì„ ì–¸
     private const int NUM_OF_GUEST = 20;
     private const int NUM_OF_TODAY_GUEST_LIST = 6;
 
@@ -37,7 +37,7 @@ public class GuestManagerSaveData
     public float mGuestTime;
 }
 
-// GuestObject ³»ºÎ¿¡¼­ ÀúÀåµÇ¾î¾ß ÇÒ Á¤º¸°ªµéÀ» ´ãÀº Å¬·¡½º
+// GuestObject ë‚´ë¶€ì—ì„œ ì €ì¥ë˜ì–´ì•¼ í•  ì •ë³´ê°’ë“¤ì„ ë‹´ì€ í´ë˜ìŠ¤
 [System.Serializable]
 public class GuestObjectSaveData
 {
@@ -64,7 +64,7 @@ public class GuestObjectSaveData
 [System.Serializable]
 public class SOWSaveData
 {
-    // ¼Õ´Ô ¿ÀºêÁ§Æ® Á¤º¸ (´ë±â/Âø¼® »óÅÂ µû·Î ÀúÀå)
+    // ì†ë‹˜ ì˜¤ë¸Œì íŠ¸ ì •ë³´ (ëŒ€ê¸°/ì°©ì„ ìƒíƒœ ë”°ë¡œ ì €ì¥)
     public List<GuestObjectSaveData> UsingObjectsData = new List<GuestObjectSaveData>();
     public List<GuestObjectSaveData> WaitObjectsData = new List<GuestObjectSaveData>();
 
@@ -75,43 +75,42 @@ public class SOWSaveData
 
 public class Guest : MonoBehaviour
 {
-    // »ó¼ö ¼±¾ğ
-    public const int NUM_OF_GUEST = 20;                                 // ¼Õ´ÔÀÇ ÃÑ ÀÎ¿ø ¼ö
-    private const int NUM_OF_TODAY_GUEST_LIST = 6;                      // ÇÏ·ç¿¡ ¹æ¹®ÇÏ´Â ¼Õ´ÔÀÇ ÃÑ ÀÎ¿ø ¼ö
+    // ìƒìˆ˜ ì„ ì–¸
+    public const int NUM_OF_GUEST = 20;                                 // ì†ë‹˜ì˜ ì´ ì¸ì› ìˆ˜
+    private const int NUM_OF_TODAY_GUEST_LIST = 6;                      // í•˜ë£¨ì— ë°©ë¬¸í•˜ëŠ” ì†ë‹˜ì˜ ì´ ì¸ì› ìˆ˜
 
-    [Header ("[¼Õ´Ô Á¤º¸°ª ¸®½ºÆ®]")]
-    public GuestInfos[] mGuestInfo;                                     // ¼Õ´ÔµéÀÇ ÀÎ°ÔÀÓ Á¤º¸°ª
+    [Header ("[ì†ë‹˜ ì •ë³´ê°’ ë¦¬ìŠ¤íŠ¸]")]
+    public GuestInfos[] mGuestInfo;                                     // ì†ë‹˜ë“¤ì˜ ì¸ê²Œì„ ì •ë³´ê°’
     [SerializeField]
-    private GuestInfo[] mGuestInitInfos;                                // Scriptable ObjectsµéÀÇ Á¤º¸¸¦ ´ã°í ÀÖ´Â ¹è¿­
+    private GuestInfo[] mGuestInitInfos;                                // Scriptable Objectsë“¤ì˜ ì •ë³´ë¥¼ ë‹´ê³  ìˆëŠ” ë°°ì—´
 
-    [Header ("[¼Õ´Ô ¹æ¹® °ü·Ã Á¤º¸]")]
-    public bool isGuestInLivingRoom;                                    // ÀÀÁ¢½Ç¿¡ ¼Õ´ÔÀÌ ¹æ¹®ÇØÀÖ´Â°¡?
-    public bool isTimeToTakeGuest;                                      // ¹¶Æ¼ ¹æ¹®ÁÖ±â°¡ Áö³µ´ÂÁö È®ÀÎ
+    [Header ("[ì†ë‹˜ ë°©ë¬¸ ê´€ë ¨ ì •ë³´]")]
+    public bool isGuestInLivingRoom;                                    // ì‘ì ‘ì‹¤ì— ì†ë‹˜ì´ ë°©ë¬¸í•´ìˆëŠ”ê°€?
+    public bool isTimeToTakeGuest;                                      // ë­‰í‹° ë°©ë¬¸ì£¼ê¸°ê°€ ì§€ë‚¬ëŠ”ì§€ í™•ì¸
 
     [Space(10f)]
-    public int mGuestIndex;                                             // ÀÌ¹ø¿¡ ¹æ¹®ÇÒ ¹¶Æ¼ÀÇ ¹øÈ£
-    public int[] mTodayGuestList = new int[NUM_OF_TODAY_GUEST_LIST];    // ¿À´Ã ¹æ¹® ¿¹Á¤ÀÎ ¹¶Æ¼ ¸ñ·Ï
-    public int mGuestCount;                                             // ¹æ¹®ÇÑ ¹¶Æ¼ÀÇ ¼ıÀÚ
-
-    // Demo Version
-    private Queue<int> mDemoGuestQueue;                                  // µ¥¸ğ¹öÀü ¹¶Æ¼ ¸®½ºÆ®
+    public int mGuestIndex;                                             // ì´ë²ˆì— ë°©ë¬¸í•  ë­‰í‹°ì˜ ë²ˆí˜¸
+    public int[] mTodayGuestList = new int[NUM_OF_TODAY_GUEST_LIST];    // ì˜¤ëŠ˜ ë°©ë¬¸ ì˜ˆì •ì¸ ë­‰í‹° ëª©ë¡
+    public int mGuestCount;                                             // ë°©ë¬¸í•œ ë­‰í‹°ì˜ ìˆ«ì
+    
+    private Queue<int> mGuestQueue;                                  // ë­‰í‹° ë¦¬ìŠ¤íŠ¸
 
     [Space (10f)]
-    public float mGuestTime;                                            // ¹¶Æ¼ÀÇ ¹æ¹® ÁÖ±âÀÇ ÇöÀç °ª
-    public float mMaxGuestTime;                                         // ¹¶Æ¼ÀÇ ¹æ¹® ÁÖ±â
+    public float mGuestTime;                                            // ë­‰í‹°ì˜ ë°©ë¬¸ ì£¼ê¸°ì˜ í˜„ì¬ ê°’
+    public float mMaxGuestTime;                                         // ë­‰í‹°ì˜ ë°©ë¬¸ ì£¼ê¸°
 
 
     [SerializeField]
-    private int mGuestMax;                                              // ¿À´Ã ¹æ¹®ÇÏ´Â ¹¶Æ¼ÀÇ ÃÖ´ë ¼ıÀÚ
+    private int mGuestMax;                                              // ì˜¤ëŠ˜ ë°©ë¬¸í•˜ëŠ” ë­‰í‹°ì˜ ìµœëŒ€ ìˆ«ì
 
-    // SOWManger¿Í ¿¬µ¿ÇÏ¿© °ªÀ» ÀúÀå
-    public SOWSaveData SaveSOWdatas;                                 // ÀÌ¾îÇÏ±â¸¦ À§ÇÑ µ¥ÀÌÅÍµéÀ» ÀúÀåÇØ³õ´Â ¸®½ºÆ®
+    // SOWMangerì™€ ì—°ë™í•˜ì—¬ ê°’ì„ ì €ì¥
+    public SOWSaveData SaveSOWdatas;                                 // ì´ì–´í•˜ê¸°ë¥¼ ìœ„í•œ ë°ì´í„°ë“¤ì„ ì €ì¥í•´ë†“ëŠ” ë¦¬ìŠ¤íŠ¸
     public bool isLoad = false;
 
-    private static Guest instance = null;                               // ½Ì±ÛÅæ ±â¹ıÀ» À§ÇÔ instance »ı¼º
+    private static Guest instance = null;                               // ì‹±ê¸€í†¤ ê¸°ë²•ì„ ìœ„í•¨ instance ìƒì„±
     private void Awake()
     {
-        // ½Ì±ÛÅæ ±â¹ı »ç¿ë
+        // ì‹±ê¸€í†¤ ê¸°ë²• ì‚¬ìš©
         if (null == instance)
         {
             instance = this;
@@ -125,13 +124,13 @@ public class Guest : MonoBehaviour
             mGuestInfo = new GuestInfos[NUM_OF_GUEST];
             for (int i = 0; i< NUM_OF_GUEST; i++)
             {
-                // ±âº»ÀûÀ¸·Î ¼Õ´ÔµéÀÇ µ¥ÀÌÅÍ¸¦ ±âº» µ¥ÀÌÅÍ·Î ÃÊ±âÈ­ÇÑ´Ù.
-                // ÀÌ¾îÇÏ±â¸¦ ÇÏ°ÔµÇ´Â °æ¿ì ¼Õ´ÔµéÀÇ °¢°¢ Á¤º¸µéÀ» ÀúÀåÇØ³õÀº ¼Õ´ÔÁ¤º¸ ¸®½ºÆ®¿¡¼­ ¹Ş¾Æ¿Í °»½ÅÇÑ´Ù.
+                // ê¸°ë³¸ì ìœ¼ë¡œ ì†ë‹˜ë“¤ì˜ ë°ì´í„°ë¥¼ ê¸°ë³¸ ë°ì´í„°ë¡œ ì´ˆê¸°í™”í•œë‹¤.
+                // ì´ì–´í•˜ê¸°ë¥¼ í•˜ê²Œë˜ëŠ” ê²½ìš° ì†ë‹˜ë“¤ì˜ ê°ê° ì •ë³´ë“¤ì„ ì €ì¥í•´ë†“ì€ ì†ë‹˜ì •ë³´ ë¦¬ìŠ¤íŠ¸ì—ì„œ ë°›ì•„ì™€ ê°±ì‹ í•œë‹¤.
                 InitGuestData(i);
             }
 
 			// Demo Version
-			InitDemoGuestQueue();
+			InitGuestQueue(1);
 
 			InitDay();
 
@@ -147,14 +146,14 @@ public class Guest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // ¹¶Æ¼ÀÇ ¹æ¹®ÁÖ±â¸¦ µ¹¸°´Ù. (°ÔÀÓÀ» ½ÃÀÛÇÏ±â Àü(·Îºñ)¿¡¼­´Â ½Ã°£ÀÌ Èå¸£Áö ¾Ê´Â´Ù.
+        // ë­‰í‹°ì˜ ë°©ë¬¸ì£¼ê¸°ë¥¼ ëŒë¦°ë‹¤. (ê²Œì„ì„ ì‹œì‘í•˜ê¸° ì „(ë¡œë¹„)ì—ì„œëŠ” ì‹œê°„ì´ íë¥´ì§€ ì•ŠëŠ”ë‹¤.
         if (mGuestTime < mMaxGuestTime && SceneManager.GetActiveScene().name != "Lobby")
         {
             mGuestTime += Time.deltaTime;
         }
         else if (mGuestTime >= mMaxGuestTime && isTimeToTakeGuest == false)
         {
-            // ¸ğµç ÀÎµ¦½º°¡ ´Ù µÇÁö ¾Ê´Â ÇÑ ¹¶Æ¼ ¹æ¹®ÁÖ±â°¡ ´ÙµÈ°æ¿ì »õ·Î¿î ¹¶Æ¼¸¦ µé¿©º¸³½´Ù.
+            // ëª¨ë“  ì¸ë±ìŠ¤ê°€ ë‹¤ ë˜ì§€ ì•ŠëŠ” í•œ ë­‰í‹° ë°©ë¬¸ì£¼ê¸°ê°€ ë‹¤ëœê²½ìš° ìƒˆë¡œìš´ ë­‰í‹°ë¥¼ ë“¤ì—¬ë³´ë‚¸ë‹¤.
             if (mGuestCount < mGuestMax - 1) 
             {
 				TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
@@ -167,15 +166,15 @@ public class Guest : MonoBehaviour
                     isTimeToTakeGuest = true;
                     TakeGuest();
                 }
-                // ÀÀÁ¢½Ç ÀÌµ¿ÇÏ´Â ¹öÆ°µé¿¡ ´ëÇÑ »óÈ£ÀÛ¿ë
+                // ì‘ì ‘ì‹¤ ì´ë™í•˜ëŠ” ë²„íŠ¼ë“¤ì— ëŒ€í•œ ìƒí˜¸ì‘ìš©
             }
             else
             {
-                Debug.Log("¸ğµç ¹¶Æ¼°¡ ¹æ¹®ÇÏ¿´½À´Ï´Ù.");
+                Debug.Log("ëª¨ë“  ë­‰í‹°ê°€ ë°©ë¬¸í•˜ì˜€ìŠµë‹ˆë‹¤.");
             }
         }
 
-        //Guest ¹æ¹® ¸®½ºÆ® È®ÀÎÀ» À§ÇÑ Å×½ºÆ® ÄÚµå
+        //Guest ë°©ë¬¸ ë¦¬ìŠ¤íŠ¸ í™•ì¸ì„ ìœ„í•œ í…ŒìŠ¤íŠ¸ ì½”ë“œ
         if (Input.GetKeyDown(KeyCode.P))
         {
             mGuestInfo[0].mEmotion[0] += 5;
@@ -197,10 +196,10 @@ public class Guest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             int maxDiffValue = SpeakEmotionDialog(0);
-            Debug.Log("¸¸Á·µµ Â÷ÀÌ°¡ °¡Àå Å« °¨Á¤Àº " + maxDiffValue + "ÀÔ´Ï´Ù.");
+            Debug.Log("ë§Œì¡±ë„ ì°¨ì´ê°€ ê°€ì¥ í° ê°ì •ì€ " + maxDiffValue + "ì…ë‹ˆë‹¤.");
         }
 
-        // Æ©Åä¸®¾ó ½ºÅµ ÇÖÅ°
+        // íŠœí† ë¦¬ì–¼ ìŠ¤í‚µ í•«í‚¤
         if (Input.GetKeyDown(KeyCode.A))
         {
             TutorialManager tuto = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
@@ -211,14 +210,14 @@ public class Guest : MonoBehaviour
         
         }
 
-        // »óÇÏÇÑ¼± Ä§¹ü È®ÀÎÀ» À§ÇÑ ÇÔ¼ö Å×½ºÆ® (¼º°ø)
+        // ìƒí•˜í•œì„  ì¹¨ë²” í™•ì¸ì„ ìœ„í•œ í•¨ìˆ˜ í…ŒìŠ¤íŠ¸ (ì„±ê³µ)
         if (Input.GetKeyDown(KeyCode.D))
         {
             mGuestInfo[0].isDisSat = CheckIsDisSat(0);
             Debug.Log(mGuestInfo[0].isDisSat);
         }
 
-        // ÀÌ¾îÇÏ±âÀÎ °æ¿ì LoadÇØ¼­ ¹Ş¾Æ¿Â µ¥ÀÌÅÍ¸¦ SOWManager·Î ³Ñ°ÜÁØ´Ù.
+        // ì´ì–´í•˜ê¸°ì¸ ê²½ìš° Loadí•´ì„œ ë°›ì•„ì˜¨ ë°ì´í„°ë¥¼ SOWManagerë¡œ ë„˜ê²¨ì¤€ë‹¤.
         if (isLoad && SceneManager.GetActiveScene().name == "Space Of Weather")
         {
             SOWManager sowManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
@@ -227,21 +226,21 @@ public class Guest : MonoBehaviour
             {
                 isLoad = false;
 
-                // ÀÇÀÚ°¡ ºñ¾îÀÖ´ÂÁö¿¡ ´ëÇÑ Á¤º¸¸¦ ³Ñ°ÜÁØ´Ù.
+                // ì˜ìê°€ ë¹„ì–´ìˆëŠ”ì§€ì— ëŒ€í•œ ì •ë³´ë¥¼ ë„˜ê²¨ì¤€ë‹¤.
                 sowManager.mCheckChairEmpty = SaveSOWdatas.mCheckChairEmpty;
 
                 Debug.Log(sowManager.mCheckChairEmpty);
 
                 sowManager.mMaxChairNum = 3;
 
-                // ´ë±â»óÅÂ ¿ÀºêÁ§Æ®¿¡ ´ëÇÏ¿© ³Ñ°ÜÁØ´Ù.
+                // ëŒ€ê¸°ìƒíƒœ ì˜¤ë¸Œì íŠ¸ì— ëŒ€í•˜ì—¬ ë„˜ê²¨ì¤€ë‹¤.
                 foreach (GuestObjectSaveData data in SaveSOWdatas.WaitObjectsData)
                 {
                     sowManager.mWaitGuestList.Enqueue(data.mGuestNum);
                     sowManager.mWaitGuestObjectQueue.Enqueue(SetLoadGuest(data, sowManager));
                 }
 
-                // Âø¼®»óÅÂ ¿ÀºêÁ§Æ®¿¡ ´ëÇÏ¿© ³Ñ°ÜÁØ´Ù.
+                // ì°©ì„ìƒíƒœ ì˜¤ë¸Œì íŠ¸ì— ëŒ€í•˜ì—¬ ë„˜ê²¨ì¤€ë‹¤.
                 foreach (GuestObjectSaveData data in SaveSOWdatas.UsingObjectsData)
                 {
                     sowManager.mUsingGuestList.Add(data.mGuestNum);
@@ -256,7 +255,7 @@ public class Guest : MonoBehaviour
     {
         GameObject tempObject;
 
-        // Instance »ı¼º
+        // Instance ìƒì„±
         tempObject = Instantiate(sow.mGuestObject);
 
         // etc.
@@ -304,7 +303,7 @@ public class Guest : MonoBehaviour
         }
     }
 
-    // ¹¶Æ¼ÀÇ Á¤º¸°ªµéÀ» ¹Ş¾Æ¿À´Â API
+    // ë­‰í‹°ì˜ ì •ë³´ê°’ë“¤ì„ ë°›ì•„ì˜¤ëŠ” API
     public string GetName(int gusetNum)
     {
         return mGuestInfo[gusetNum].mName;
@@ -312,16 +311,16 @@ public class Guest : MonoBehaviour
 
     public bool CheckIsDisSat(int guestNum)
     {
-        int temp = IsExcessLine(guestNum);                      // Ä§¹üÇÏ´Â °æ¿ì¿¡ °¨Á¤°ªÀ» ÀÓÀÇ·Î ÀúÀåÇÒ º¯¼ö
+        int temp = IsExcessLine(guestNum);                      // ì¹¨ë²”í•˜ëŠ” ê²½ìš°ì— ê°ì •ê°’ì„ ì„ì˜ë¡œ ì €ì¥í•  ë³€ìˆ˜
 
-        // »óÇÏÇÑ ¼±À» Ä§¹üÇÑ °æ¿ì¸¦ È®ÀÎ
+        // ìƒí•˜í•œ ì„ ì„ ì¹¨ë²”í•œ ê²½ìš°ë¥¼ í™•ì¸
         if (temp != -1)
         {
-            mGuestInfo[guestNum].isDisSat = true;              // ºÒ¸¸ ¹¶Æ¼·Î º¯È¯
-            mGuestInfo[guestNum].mSatatisfaction = 0;          // ¸¸Á·µµ 0 À¸·Î °»½Å
-            mGuestInfo[guestNum].mVisitCount = 0;              // ³²Àº ¹æ¹®È½¼ö 0À¸·Î °»½Å
+            mGuestInfo[guestNum].isDisSat = true;              // ë¶ˆë§Œ ë­‰í‹°ë¡œ ë³€í™˜
+            mGuestInfo[guestNum].mSatatisfaction = 0;          // ë§Œì¡±ë„ 0 ìœ¼ë¡œ ê°±ì‹ 
+            mGuestInfo[guestNum].mVisitCount = 0;              // ë‚¨ì€ ë°©ë¬¸íšŸìˆ˜ 0ìœ¼ë¡œ ê°±ì‹ 
 
-            // TODO : Ä¡À¯ÀÇ ±â·ÏÀ¸·Î ºÒ¸¸ ¹¶Æ¼°¡ µÈ »óÅÂ¿Í ¼Õ´Ô ¹øÈ£, ¾î¶² °¨Á¤ º¯È­·Î ÀÎÇÑ °ÍÀÎÁö Àü´ŞÇØÁÖ±â
+            // TODO : ì¹˜ìœ ì˜ ê¸°ë¡ìœ¼ë¡œ ë¶ˆë§Œ ë­‰í‹°ê°€ ëœ ìƒíƒœì™€ ì†ë‹˜ ë²ˆí˜¸, ì–´ë–¤ ê°ì • ë³€í™”ë¡œ ì¸í•œ ê²ƒì¸ì§€ ì „ë‹¬í•´ì£¼ê¸°
 
 
             return true;
@@ -329,42 +328,42 @@ public class Guest : MonoBehaviour
         return false;
     }
 
-    // ¹¶Æ¼ÀÇ Á¤º¸°ª º¯°æ¿¡ ÇÊ¿äÇÑ API 
+    // ë­‰í‹°ì˜ ì •ë³´ê°’ ë³€ê²½ì— í•„ìš”í•œ API 
     public void SetEmotion(int guestNum, int emotionNum, int value)
     {
         mGuestInfo[guestNum].mEmotion[emotionNum] += value;
     }
 
-    public int IsExcessLine(int guestNum) // °¨Á¤ »óÇÏÇÑ¼±À» Ä§¹üÇß´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼ö. 
+    public int IsExcessLine(int guestNum) // ê°ì • ìƒí•˜í•œì„ ì„ ì¹¨ë²”í–ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜. 
     {
         SLimitEmotion[] limitEmotion = mGuestInfo[guestNum].mLimitEmotions;
 
         for (int i = 0; i < 2; i++)
         {
-            if (mGuestInfo[guestNum].mEmotion[limitEmotion[i].upLimitEmotion] >= limitEmotion[i].upLimitEmotionValue) // »óÇÏÇÑ¼±À» Ä§¹üÇÑ °æ¿ì
+            if (mGuestInfo[guestNum].mEmotion[limitEmotion[i].upLimitEmotion] >= limitEmotion[i].upLimitEmotionValue) // ìƒí•˜í•œì„ ì„ ì¹¨ë²”í•œ ê²½ìš°
             {
-                Debug.Log("»óÇÏÇÑ¼±À» Ä§¹üÇÏ¿´½À´Ï´Ù");
+                Debug.Log("ìƒí•˜í•œì„ ì„ ì¹¨ë²”í•˜ì˜€ìŠµë‹ˆë‹¤");
                 return limitEmotion[i].upLimitEmotion;
             }
             else if (mGuestInfo[guestNum].mEmotion[limitEmotion[i].downLimitEmotion] <= limitEmotion[i].downLimitEmotionValue)
             {
-                Debug.Log("»óÇÏÇÑ¼±À» Ä§¹üÇÏ¿´½À´Ï´Ù");
+                Debug.Log("ìƒí•˜í•œì„ ì„ ì¹¨ë²”í•˜ì˜€ìŠµë‹ˆë‹¤");
                 return limitEmotion[i].downLimitEmotion;
             }
         }
 
-        // »óÇÏÇÑ¼± ¸ğµÎ Ä§¹üÇÏÁö ¾Ê´Â °æ¿ì
-        Debug.Log("»óÇÏÇÑ¼±À» Ä§¹üÇÏÁö ¾Ê¾Ò½À´Ï´Ù");
+        // ìƒí•˜í•œì„  ëª¨ë‘ ì¹¨ë²”í•˜ì§€ ì•ŠëŠ” ê²½ìš°
+        Debug.Log("ìƒí•˜í•œì„ ì„ ì¹¨ë²”í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤");
         return -1;
     }
 
-    public void RenewakSat(int guestNum)     // ¸¸Á·µµ¸¦ °»½ÅÇÏ´Â ÇÔ¼ö. -> ±¸¸§ Á¦°ø ¼ø¼­ 4¹ø¿¡¼­ ÁøÇà
+    public void RenewakSat(int guestNum)     // ë§Œì¡±ë„ë¥¼ ê°±ì‹ í•˜ëŠ” í•¨ìˆ˜. -> êµ¬ë¦„ ì œê³µ ìˆœì„œ 4ë²ˆì—ì„œ ì§„í–‰
     {
         int temp = 0;
 
         for (int i = 0; i < 5; i++)
         {
-            // ¸¸Á·µµ ¹üÀ§ ³»¿¡ µé¾î°¡´ÂÁö È®ÀÎ
+            // ë§Œì¡±ë„ ë²”ìœ„ ë‚´ì— ë“¤ì–´ê°€ëŠ”ì§€ í™•ì¸
             if (mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mSatEmotions[i].emotionNum] <= mGuestInfo[guestNum].mSatEmotions[i].up &&
              mGuestInfo[guestNum].mEmotion[mGuestInfo[guestNum].mSatEmotions[i].emotionNum] >= mGuestInfo[guestNum].mSatEmotions[i].down)
             {
@@ -372,42 +371,42 @@ public class Guest : MonoBehaviour
             }
         }
 
-        Debug.Log("±âÁ¸ ¸¸Á·µµ : " + mGuestInfo[guestNum].mSatatisfaction + "ÇöÀç ¸¸Á·µµ : " + temp);
+        Debug.Log("ê¸°ì¡´ ë§Œì¡±ë„ : " + mGuestInfo[guestNum].mSatatisfaction + "í˜„ì¬ ë§Œì¡±ë„ : " + temp);
         mGuestInfo[guestNum].mSatatisfaction = temp;
     }
 
 
-    // ¹¶Æ¼ ¸®½ºÆ®¸¦ »õ·Î »ı¼ºÇÏ´Â ÇÔ¼ö
+    // ë­‰í‹° ë¦¬ìŠ¤íŠ¸ë¥¼ ìƒˆë¡œ ìƒì„±í•˜ëŠ” í•¨ìˆ˜
     public int[] NewChoiceGuest()
     {
         // Demo Version
         int temp = -1;
-        List<int> demoList = new List<int>();
-        for(int i = mDemoGuestQueue.Count; i > 0; i--)
+        List<int> guestList = new List<int>();
+        for(int i = mGuestQueue.Count; i > 0; i--)
         {
-            temp = mDemoGuestQueue.Dequeue();
+            temp = mGuestQueue.Dequeue();
             if (mGuestInfo[temp].isDisSat == false && mGuestInfo[temp].isCure == false)
-            { demoList.Add(temp); mDemoGuestQueue.Enqueue(temp); Debug.Log(temp); }
+            { guestList.Add(temp); mGuestQueue.Enqueue(temp); Debug.Log(temp); }
         }
 
-        int demoIdx = 0;
-        int[] demoGuestArray = new int[demoList.Count];
-        foreach(int num in demoList) { demoGuestArray[demoIdx++] = num; }
-        return demoGuestArray;
+        int idx = 0;
+        int[] GuestArray = new int[guestList.Count];
+        foreach(int num in guestList) { GuestArray[idx++] = num; }
+        return GuestArray;
         /*
-        List<int> guestList = new List<int>();          // ÀúÀåÇÒ ¹¶Æ¼ÀÇ ¸®½ºÆ®
-        int[] returnValueList = new int[6];             // ¹İÈ¯ÇÒ ¹¶Æ¼ÀÇ ¸®½ºÆ®, size´Â ÃÊ±âÈ­¸¸
-        int possibleToTake = 6;                         // ¹ŞÀ» ¼ö ÀÖ´Â ÃÑ ¹¶Æ¼ÀÇ ¼ö
+        List<int> guestList = new List<int>();          // ì €ì¥í•  ë­‰í‹°ì˜ ë¦¬ìŠ¤íŠ¸
+        int[] returnValueList = new int[6];             // ë°˜í™˜í•  ë­‰í‹°ì˜ ë¦¬ìŠ¤íŠ¸, sizeëŠ” ì´ˆê¸°í™”ë§Œ
+        int possibleToTake = 6;                         // ë°›ì„ ìˆ˜ ìˆëŠ” ì´ ë­‰í‹°ì˜ ìˆ˜
 
-        int totalGuestNum = 20;                         // ÃÑ ¹¶Æ¼ÀÇ ¼ö
-        int possibleGuestNum = 0;                       // ¹æ¹®ÀÌ °¡´ÉÇÑ ¹¶Æ¼ÀÇ ¼ö
+        int totalGuestNum = 20;                         // ì´ ë­‰í‹°ì˜ ìˆ˜
+        int possibleGuestNum = 0;                       // ë°©ë¬¸ì´ ê°€ëŠ¥í•œ ë­‰í‹°ì˜ ìˆ˜
 
-        List<int> VisitedGuestNum = new List<int>();    // ¹æ¹® ÀÌ·ÂÀÌ ÀÖ´Â ¹¶Æ¼ÀÇ ¸®½ºÆ®
-        List<int> NotVisitedGuestNum = new List<int>(); // ¹æ¹® ÀÌ·ÂÀÌ ¾ø´Â ¹¶Æ¼ÀÇ ¸®½ºÆ®
+        List<int> VisitedGuestNum = new List<int>();    // ë°©ë¬¸ ì´ë ¥ì´ ìˆëŠ” ë­‰í‹°ì˜ ë¦¬ìŠ¤íŠ¸
+        List<int> NotVisitedGuestNum = new List<int>(); // ë°©ë¬¸ ì´ë ¥ì´ ì—†ëŠ” ë­‰í‹°ì˜ ë¦¬ìŠ¤íŠ¸
 
-        int loopCount = 0;                              // ¹«ÇÑ ·çÇÁ°¡ ¸î¹ø µ¹¾Æ°¬´ÂÁö Ã¼Å©ÇÏ´Â º¯¼ö
+        int loopCount = 0;                              // ë¬´í•œ ë£¨í”„ê°€ ëª‡ë²ˆ ëŒì•„ê°”ëŠ”ì§€ ì²´í¬í•˜ëŠ” ë³€ìˆ˜
 
-        // ¹æ¹® È½¼ö°¡ ³¡³­ ¹¶Æ¼¿Í ¸¸Á·µµ°¡ 5°¡ µÈ ¹¶Æ¼´Â Á¦¿ÜµÇ¾î¾ß ÇÏ¹Ç·Î ¸ÕÀú ¸®½ºÆ®¿¡¼­ »©³½´Ù.
+        // ë°©ë¬¸ íšŸìˆ˜ê°€ ëë‚œ ë­‰í‹°ì™€ ë§Œì¡±ë„ê°€ 5ê°€ ëœ ë­‰í‹°ëŠ” ì œì™¸ë˜ì–´ì•¼ í•˜ë¯€ë¡œ ë¨¼ì € ë¦¬ìŠ¤íŠ¸ì—ì„œ ë¹¼ë‚¸ë‹¤.
         for (int i = 0; i < totalGuestNum; i++)
         {
             if (mGuestInfo[i].mVisitCount < 10 && mGuestInfo[i].isCure == false)
@@ -420,26 +419,26 @@ public class Guest : MonoBehaviour
                 {
                     VisitedGuestNum.Add(i);
                 }
-				possibleGuestNum++;             //¹æ¹® °¡´ÉÇÑ ¹¶Æ¼ÀÇ ¼ö¸¦ ÃÑÇÕÇÑ´Ù
+				possibleGuestNum++;             //ë°©ë¬¸ ê°€ëŠ¥í•œ ë­‰í‹°ì˜ ìˆ˜ë¥¼ ì´í•©í•œë‹¤
 			}
         }
-		if (possibleGuestNum <= possibleToTake) { possibleToTake = possibleGuestNum; }       // ¹æ¹® °¡´ÉÇÑ ¹¶Æ¼ÀÇ ¼ö°¡ 6¸¶¸® ÀÌÇÏÀÏ ¶§, ¹ŞÀ» ¼ö ÀÖ´Â ¹¶Æ¼ÀÇ ¼ö¸¦ º¯°æÇØÁØ´Ù
-        bool isFinishedChoice = false;          //¸®½ºÆ® ¼±Á¤ ¿Ï·á ¿©ºÎ È®ÀÎ
+		if (possibleGuestNum <= possibleToTake) { possibleToTake = possibleGuestNum; }       // ë°©ë¬¸ ê°€ëŠ¥í•œ ë­‰í‹°ì˜ ìˆ˜ê°€ 6ë§ˆë¦¬ ì´í•˜ì¼ ë•Œ, ë°›ì„ ìˆ˜ ìˆëŠ” ë­‰í‹°ì˜ ìˆ˜ë¥¼ ë³€ê²½í•´ì¤€ë‹¤
+        bool isFinishedChoice = false;          //ë¦¬ìŠ¤íŠ¸ ì„ ì • ì™„ë£Œ ì—¬ë¶€ í™•ì¸
 
         while (!isFinishedChoice)                 
         {
-            guestList.Clear();                  // ¼Õ´Ô ¸®½ºÆ®¸¦ ÀçÀÛ¼ºÇÒ ¶§¸¶´Ù ºñ¿öÁØ´Ù.
-            loopCount++;                        // ·çÇÁ ¹İº¹ È½¼ö¸¦ °è»êÇÑ´Ù.
+            guestList.Clear();                  // ì†ë‹˜ ë¦¬ìŠ¤íŠ¸ë¥¼ ì¬ì‘ì„±í•  ë•Œë§ˆë‹¤ ë¹„ì›Œì¤€ë‹¤.
+            loopCount++;                        // ë£¨í”„ ë°˜ë³µ íšŸìˆ˜ë¥¼ ê³„ì‚°í•œë‹¤.
 
-            int currentNum  = -1;       // ·£´ı º¯¼ö
-            int newGuest    = -1;       // »õ·Î »ÌÀº ¼Õ´ÔÀÇ ¹øÈ£ ÀúÀå
+            int currentNum  = -1;       // ëœë¤ ë³€ìˆ˜
+            int newGuest    = -1;       // ìƒˆë¡œ ë½‘ì€ ì†ë‹˜ì˜ ë²ˆí˜¸ ì €ì¥
 
-            if(loopCount >= 10)         // ¸®½ºÆ® ¼±Á¤ÀÌ 10È¸ÀÌ»ó ¹İº¹ÇØµµ °áÁ¤ÀÌ ¾ÈµÇ¾úÀ» ¶§, ºÒ¸¸/¹æ¹® ºÒ°¡ ¹¶Æ¼¸¦ Á¦¿ÜÇÏ°í ¸®½ºÆ®¸¦ ÀÛ¼ºÇÑ´Ù.
+            if(loopCount >= 10)         // ë¦¬ìŠ¤íŠ¸ ì„ ì •ì´ 10íšŒì´ìƒ ë°˜ë³µí•´ë„ ê²°ì •ì´ ì•ˆë˜ì—ˆì„ ë•Œ, ë¶ˆë§Œ/ë°©ë¬¸ ë¶ˆê°€ ë­‰í‹°ë¥¼ ì œì™¸í•˜ê³  ë¦¬ìŠ¤íŠ¸ë¥¼ ì‘ì„±í•œë‹¤.
             {
-                possibleGuestNum =  0;         // ¹æ¹® °¡´ÉÇÑ ¼Õ´ÔÀÇ ¼ö¸¦ ÃÊ±âÈ­ ÇØÁØ´Ù.
-                possibleToTake =    3;         // ¼Õ´ÔÀÇ ¼ö¸¦ ÃÖ´ë 3¸í »Ì´Â´Ù. 
+                possibleGuestNum =  0;         // ë°©ë¬¸ ê°€ëŠ¥í•œ ì†ë‹˜ì˜ ìˆ˜ë¥¼ ì´ˆê¸°í™” í•´ì¤€ë‹¤.
+                possibleToTake =    3;         // ì†ë‹˜ì˜ ìˆ˜ë¥¼ ìµœëŒ€ 3ëª… ë½‘ëŠ”ë‹¤. 
 
-                NotVisitedGuestNum.Clear();    // ¸®½ºÆ®¸¦ ºó »óÅÂ·Î ¸¸µé¾îÁØ´Ù.
+                NotVisitedGuestNum.Clear();    // ë¦¬ìŠ¤íŠ¸ë¥¼ ë¹ˆ ìƒíƒœë¡œ ë§Œë“¤ì–´ì¤€ë‹¤.
                 VisitedGuestNum.Clear();       // //
 
                 for (int i = 0; i < totalGuestNum; i++)
@@ -454,27 +453,27 @@ public class Guest : MonoBehaviour
                         {
                             VisitedGuestNum.Add(i);
                         }
-                        possibleGuestNum++;             //¹æ¹® °¡´ÉÇÑ ¹¶Æ¼ÀÇ ¼ö¸¦ ÃÑÇÕÇÑ´Ù
+                        possibleGuestNum++;             //ë°©ë¬¸ ê°€ëŠ¥í•œ ë­‰í‹°ì˜ ìˆ˜ë¥¼ ì´í•©í•œë‹¤
                     }
                 }
 				if (possibleGuestNum <= possibleToTake) { possibleToTake = possibleGuestNum; }
 			}
 
-            //¹æ¹® ÀÌ·ÂÀÌ ¾ø´Â ¹¶Æ¼ÀÇ ÀÚ¸®¸¦ ÃÖ¼Ò ÇÑ ÀÚ¸® ºñ¿ì°í, ¹æ¹® ÀÌ·ÂÀÌ ÀÖ´Â ¹¶Æ¼¸¦ ÃÖ´ë·Î »Ì´Â´Ù
-            //¹æ¹® ÀÌ·ÂÀÌ ÀÖ´Â ¹¶Æ¼ÀÇ ¼ö°¡ possibleToTake - 1 ÀÌÇÏÀÏ ¶§
+            //ë°©ë¬¸ ì´ë ¥ì´ ì—†ëŠ” ë­‰í‹°ì˜ ìë¦¬ë¥¼ ìµœì†Œ í•œ ìë¦¬ ë¹„ìš°ê³ , ë°©ë¬¸ ì´ë ¥ì´ ìˆëŠ” ë­‰í‹°ë¥¼ ìµœëŒ€ë¡œ ë½‘ëŠ”ë‹¤
+            //ë°©ë¬¸ ì´ë ¥ì´ ìˆëŠ” ë­‰í‹°ì˜ ìˆ˜ê°€ possibleToTake - 1 ì´í•˜ì¼ ë•Œ
             if (VisitedGuestNum.Count <= possibleToTake - 1){ guestList = AddToGuestList(guestList, VisitedGuestNum, VisitedGuestNum.Count); }
-            //¹æ¹® ÀÌ·ÂÀÌ ÀÖ´Â ¹¶Æ¼ÀÇ ¼ö°¡ possibleToTake ÀÌ»óÀÏ ¶§
+            //ë°©ë¬¸ ì´ë ¥ì´ ìˆëŠ” ë­‰í‹°ì˜ ìˆ˜ê°€ possibleToTake ì´ìƒì¼ ë•Œ
             else                                            { guestList = AddToGuestList(guestList, VisitedGuestNum, possibleToTake - 1); }
 
-			//¹æ¹® ÀÌ·ÂÀÌ ¾ø´Â ¹¶Æ¼°¡ ¾øÀ» ¶§, ¹æ¹® ÀÌ·ÂÀÌ ÀÖ´Â ¹¶Æ¼·Î ³²Àº ÀÚ¸®¸¦ Ã¤¿î´Ù.
+			//ë°©ë¬¸ ì´ë ¥ì´ ì—†ëŠ” ë­‰í‹°ê°€ ì—†ì„ ë•Œ, ë°©ë¬¸ ì´ë ¥ì´ ìˆëŠ” ë­‰í‹°ë¡œ ë‚¨ì€ ìë¦¬ë¥¼ ì±„ìš´ë‹¤.
 			if (NotVisitedGuestNum.Count <= 0)              { guestList = AddToGuestList(guestList, VisitedGuestNum, possibleToTake); }
-            //¹æ¹® ÀÌ·ÂÀÌ ¾ø´Â ¹¶Æ¼°¡ ÀÖÀ» ¶§, ³²Àº ÀÚ¸®¸¦ ¸ğµÎ ¹æ¹® ÀÌ·ÂÀÌ ¾ø´Â ¹¶Æ¼·Î Ã¤¿î´Ù
+            //ë°©ë¬¸ ì´ë ¥ì´ ì—†ëŠ” ë­‰í‹°ê°€ ìˆì„ ë•Œ, ë‚¨ì€ ìë¦¬ë¥¼ ëª¨ë‘ ë°©ë¬¸ ì´ë ¥ì´ ì—†ëŠ” ë­‰í‹°ë¡œ ì±„ìš´ë‹¤
             else
             {
                 if (NotVisitedGuestNum.Count > 0) { currentNum = Random.Range(0, NotVisitedGuestNum.Count); }
-                for (int num = 0; num < NotVisitedGuestNum.Count;)    // ¹æ¹® ÀÌ·ÂÀÌ ¾ø´Â ¹¶Æ¼°¡ ³²¾ÆÀÖÀ¸¸é
+                for (int num = 0; num < NotVisitedGuestNum.Count;)    // ë°©ë¬¸ ì´ë ¥ì´ ì—†ëŠ” ë­‰í‹°ê°€ ë‚¨ì•„ìˆìœ¼ë©´
                 {
-                    if (guestList.Count >= possibleToTake) { break; }        // ÀÚ¸®°¡ ¸ğµÎ Ã¡À» ¶§ ¹İº¹¹® Å»Ãâ, ÀÚ¸®°¡ ³²¾ÆÀÖ¾îµµ ¹¶Æ¼°¡ ¾ø´Â °æ¿ì´Â À§ÀÇ for¹®¿¡¼­ °Ë°Å
+                    if (guestList.Count >= possibleToTake) { break; }        // ìë¦¬ê°€ ëª¨ë‘ ì°¼ì„ ë•Œ ë°˜ë³µë¬¸ íƒˆì¶œ, ìë¦¬ê°€ ë‚¨ì•„ìˆì–´ë„ ë­‰í‹°ê°€ ì—†ëŠ” ê²½ìš°ëŠ” ìœ„ì˜ forë¬¸ì—ì„œ ê²€ê±°
 
                     if (guestList.Contains(NotVisitedGuestNum[currentNum])) { currentNum = Random.Range(0, NotVisitedGuestNum.Count); }
                     else
@@ -485,42 +484,42 @@ public class Guest : MonoBehaviour
                 }
             }
 
-			//¸®½ºÆ®¿¡¼­ ºÒ¸¸ ¹¶Æ¼ÀÇ ¼ö¸¦ ÀúÀåÇÏ´Â º¯¼ö
+			//ë¦¬ìŠ¤íŠ¸ì—ì„œ ë¶ˆë§Œ ë­‰í‹°ì˜ ìˆ˜ë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜
 			int rejectCount = 0;
             foreach (var num in guestList)
             {
                 if (mGuestInfo[num].isDisSat == true || mGuestInfo[num].mNotVisitCount > 0) { rejectCount++; }
             }
 
-            //»ÌÀ» ¼ö ÀÖ´Â ¹¶Æ¼°¡ 4¸¶¸® ÀÌ»óÀÌ°í, ´Ù½Ã »Ì°ÔµÇ´Â ºÒ¸¸/¹æ¹® ºÒ°¡ ¹¶Æ¼ ¼ö°¡ possibleToTake - 2 ÀÌ»óÀÌ¸é ´Ù½Ã »Ì±â
+            //ë½‘ì„ ìˆ˜ ìˆëŠ” ë­‰í‹°ê°€ 4ë§ˆë¦¬ ì´ìƒì´ê³ , ë‹¤ì‹œ ë½‘ê²Œë˜ëŠ” ë¶ˆë§Œ/ë°©ë¬¸ ë¶ˆê°€ ë­‰í‹° ìˆ˜ê°€ possibleToTake - 2 ì´ìƒì´ë©´ ë‹¤ì‹œ ë½‘ê¸°
             if (possibleToTake >= 4 && rejectCount >= possibleToTake - 2) { continue; }
-            //guest list ÀÛ¼º while¹® Á¾·á ¹× ºÒ¸¸/¹æ¹® ºÒ°¡ ¹¶Æ¼ guestList¿¡¼­ Á¦¿Ü
+            //guest list ì‘ì„± whileë¬¸ ì¢…ë£Œ ë° ë¶ˆë§Œ/ë°©ë¬¸ ë¶ˆê°€ ë­‰í‹° guestListì—ì„œ ì œì™¸
             else
             {
-                isFinishedChoice = true;    // ¸®½ºÆ® ÀÛ¼º Á¾·á
+                isFinishedChoice = true;    // ë¦¬ìŠ¤íŠ¸ ì‘ì„± ì¢…ë£Œ
 
-                List<int> mixList = new List<int>();    // ¸®½ºÆ® ³» ¼Õ´ÔÀÇ ¼ø¼­¸¦ ¼¯¾î ÀúÀåÇÒ »õ·Î¿î ¸®½ºÆ®
+                List<int> mixList = new List<int>();    // ë¦¬ìŠ¤íŠ¸ ë‚´ ì†ë‹˜ì˜ ìˆœì„œë¥¼ ì„ì–´ ì €ì¥í•  ìƒˆë¡œìš´ ë¦¬ìŠ¤íŠ¸
 
-                int tempNum = 0;            // ¹İÈ¯ÇÏ´Â arrayÀÇ index
-                int listSize = 0;           // ¹İÈ¯ÇÏ´Â arrayÀÇ size 
+                int tempNum = 0;            // ë°˜í™˜í•˜ëŠ” arrayì˜ index
+                int listSize = 0;           // ë°˜í™˜í•˜ëŠ” arrayì˜ size 
 
-                // ºÒ¸¸/¹æ¹® ºÒ°¡ ¹¶Æ¼¸¦ Á¦¿ÜÇÑ GuestÀÇ ¼ö¸¦ ´Ù½Ã °è»ê
+                // ë¶ˆë§Œ/ë°©ë¬¸ ë¶ˆê°€ ë­‰í‹°ë¥¼ ì œì™¸í•œ Guestì˜ ìˆ˜ë¥¼ ë‹¤ì‹œ ê³„ì‚°
                 foreach (var num in guestList)
                 {
                     if (mGuestInfo[num].isDisSat == false && mGuestInfo[num].mNotVisitCount <= 0) { listSize++; }
                 }
 
-                //guestList¿¡ ÀÖ´Â ¼Õ´Ô ¹øÈ£¸¦ ¹æ¹® °æÇèÀÌ ÀÖ´ÂÁö ¾ø´ÂÁö¿¡ »ó°ü¾øÀÌ ¼¯¾îÁØ´Ù.
+                //guestListì— ìˆëŠ” ì†ë‹˜ ë²ˆí˜¸ë¥¼ ë°©ë¬¸ ê²½í—˜ì´ ìˆëŠ”ì§€ ì—†ëŠ”ì§€ì— ìƒê´€ì—†ì´ ì„ì–´ì¤€ë‹¤.
                 List<int> tempList = new List<int>();
                 tempList = AddToGuestList(tempList, guestList, guestList.Count);
 
-                //¼¯ÀÎ guestListÀÇ Á¤º¸¸¦ ÀúÀåÇÑ tempListÀÇ ¼Õ´Ô ¹øÈ£ Áß, ºÒ¸¸ ¹¶Æ¼°¡ ¾Æ´Ï°í, ¹æ¹® ºÒ°¡ »óÅÂ°¡ ¾Æ´Ñ ¹¶Æ¼¸¸ mixList¿¡ Ãß°¡ÇØÁØ´Ù.
+                //ì„ì¸ guestListì˜ ì •ë³´ë¥¼ ì €ì¥í•œ tempListì˜ ì†ë‹˜ ë²ˆí˜¸ ì¤‘, ë¶ˆë§Œ ë­‰í‹°ê°€ ì•„ë‹ˆê³ , ë°©ë¬¸ ë¶ˆê°€ ìƒíƒœê°€ ì•„ë‹Œ ë­‰í‹°ë§Œ mixListì— ì¶”ê°€í•´ì¤€ë‹¤.
                 foreach(var num in tempList)
                 {
 					if (mGuestInfo[num].isDisSat == false && mGuestInfo[num].mNotVisitCount <= 0) { mixList.Add(num); }
 				}
 
-                // Æ©Åä¸®¾óÀÌ ÁøÇà ÁßÀÎ °æ¿ì, Ã¹ ¹øÂ° ¼Õ´ÔÀ» 0¹ø ¼Õ´ÔÀ¸·Î °íÁ¤ÇÑ´Ù.
+                // íŠœí† ë¦¬ì–¼ì´ ì§„í–‰ ì¤‘ì¸ ê²½ìš°, ì²« ë²ˆì§¸ ì†ë‹˜ì„ 0ë²ˆ ì†ë‹˜ìœ¼ë¡œ ê³ ì •í•œë‹¤.
 				TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
 				if (mTutorialManager.isTutorial == true)
                 {
@@ -555,14 +554,14 @@ public class Guest : MonoBehaviour
         return returnValueList;
     }
 
-    private List<int> AddToGuestList(List<int> guest_list, List<int> visit_guest_list, int max_list)    //AddToGuestList(¹İÈ¯ ¸®½ºÆ®, ¹æ¹® °¡´É ¼Õ´Ô ¸®½ºÆ®, ÇÔ¼ö¿¡¼­ »ÌÀ» ÃÖ´ë ¼Õ´Ô ¼ö);
+    private List<int> AddToGuestList(List<int> guest_list, List<int> visit_guest_list, int max_list)    //AddToGuestList(ë°˜í™˜ ë¦¬ìŠ¤íŠ¸, ë°©ë¬¸ ê°€ëŠ¥ ì†ë‹˜ ë¦¬ìŠ¤íŠ¸, í•¨ìˆ˜ì—ì„œ ë½‘ì„ ìµœëŒ€ ì†ë‹˜ ìˆ˜);
     {
         List<int> temp_list = guest_list;
         int currentNum = -1;
 		if (visit_guest_list.Count > 0) { currentNum = Random.Range(0, visit_guest_list.Count); }
 		for (; temp_list.Count < max_list;)
 		{
-			if (temp_list.Count > visit_guest_list.Count) { break; } //ÀÚ¸®¸¦ ¸ğµÎ Ã¤¿ì±â Àü¿¡ ³²¾ÆÀÖ´Â ¹æ¹® ÀÌ·ÂÀÌ ÀÖ´Â ¹¶Æ¼°¡ ¾øÀ¸¸é ¹İº¹¹®À» ºüÁ®³ª¿Â´Ù
+			if (temp_list.Count > visit_guest_list.Count) { break; } //ìë¦¬ë¥¼ ëª¨ë‘ ì±„ìš°ê¸° ì „ì— ë‚¨ì•„ìˆëŠ” ë°©ë¬¸ ì´ë ¥ì´ ìˆëŠ” ë­‰í‹°ê°€ ì—†ìœ¼ë©´ ë°˜ë³µë¬¸ì„ ë¹ ì ¸ë‚˜ì˜¨ë‹¤
 			if (temp_list.Contains(visit_guest_list[currentNum])) { currentNum = Random.Range(0, visit_guest_list.Count); }
 			else
 			{
@@ -574,10 +573,10 @@ public class Guest : MonoBehaviour
 	}
 
 
-    // ÇØ´ç ¹¶Æ¼¸¦ ÃÊ±âÈ­ ½ÃÄÑÁÖ´Â ÇÔ¼ö
+    // í•´ë‹¹ ë­‰í‹°ë¥¼ ì´ˆê¸°í™” ì‹œì¼œì£¼ëŠ” í•¨ìˆ˜
     public void InitGuestData(int guestNum) 
     {
-        // ½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®·Î ¸¸µé¾î ³õÀº ÃÊ±â µ¥ÀÌÅÍ°ªÀ» ¹Ş¾Æ¿Í¼­ ÃÊ±âÈ­¸¦ ½ÃÅ²´Ù.
+        // ìŠ¤í¬ë¦½í„°ë¸” ì˜¤ë¸Œì íŠ¸ë¡œ ë§Œë“¤ì–´ ë†“ì€ ì´ˆê¸° ë°ì´í„°ê°’ì„ ë°›ì•„ì™€ì„œ ì´ˆê¸°í™”ë¥¼ ì‹œí‚¨ë‹¤.
 
         GuestInfos temp         = new GuestInfos();
         temp.mName              = mGuestInitInfos[guestNum].mName.Clone() as string;
@@ -604,8 +603,8 @@ public class Guest : MonoBehaviour
         mGuestInfo[guestNum] = temp;
     }
 
-    // TODO : ÇÔ¼ö °³Æí
-    // ¹æ¹®ÁÖ±â¸¦ ÃÊ±âÈ­ ÇØÁÖ´Â ÇÔ¼ö
+    // TODO : í•¨ìˆ˜ ê°œí¸
+    // ë°©ë¬¸ì£¼ê¸°ë¥¼ ì´ˆê¸°í™” í•´ì£¼ëŠ” í•¨ìˆ˜
     public void InitGuestTime()
     {
         mGuestTime = 0.0f;
@@ -613,27 +612,25 @@ public class Guest : MonoBehaviour
         isGuestInLivingRoom = false;
     }
 
-    // ÇÏ·ç°¡ Áö³ª¸é¼­ ÃÊ±âÈ­°¡ ÇÊ¿äÇÑ Á¤º¸µéÀ» º¯È¯ÇØÁØ´Ù.
+    // í•˜ë£¨ê°€ ì§€ë‚˜ë©´ì„œ ì´ˆê¸°í™”ê°€ í•„ìš”í•œ ì •ë³´ë“¤ì„ ë³€í™˜í•´ì¤€ë‹¤.
     public void InitDay()
     {
-        // ³¯¾¾ÀÇ °ø°£¿¡ ¾ÆÁ÷ ³²¾ÆÀÖ´Â ¹¶Æ¼µéÀ» ºÒ¸¸ ¹¶Æ¼·Î ¸¸µç´Ù.
-
-        // Demo Version
+        // ë‚ ì”¨ì˜ ê³µê°„ì— ì•„ì§ ë‚¨ì•„ìˆëŠ” ë­‰í‹°ë“¤ì„ ë¶ˆë§Œ ë­‰í‹°ë¡œ ë§Œë“ ë‹¤.
+        
         int i = 0;
         if (mTodayGuestList.Length != 0 && mTodayGuestList.Length != NUM_OF_TODAY_GUEST_LIST)
         {
 			if(isGuestInLivingRoom == true) { mGuestCount--; }
             for(int num = 0; num <= mGuestCount; num++)
             {
-                mDemoGuestQueue.Enqueue(mDemoGuestQueue.Dequeue());
+                mGuestQueue.Enqueue(mGuestQueue.Dequeue());
             }
 		}
-        // End Demo Version
 
-		// »õ·Î¿î ¹æ¹® ¹¶Æ¼ ¸®½ºÆ®¸¦ »Ì´Â´Ù.
+        // ìƒˆë¡œìš´ ë°©ë¬¸ ë­‰í‹° ë¦¬ìŠ¤íŠ¸ë¥¼ ë½‘ëŠ”ë‹¤.
 		mGuestCount = -1;
 
-		// »õ·Î¿î ¸®½ºÆ®¸¦ »Ì´Â ÇÔ¼ö¸¦ È£Ãâ (Å×½ºÆ®¸¦ À§ÇØ¼­ Àá½Ã ÁÖ¼®Ã³¸®)
+		// ìƒˆë¡œìš´ ë¦¬ìŠ¤íŠ¸ë¥¼ ë½‘ëŠ” í•¨ìˆ˜ë¥¼ í˜¸ì¶œ (í…ŒìŠ¤íŠ¸ë¥¼ ìœ„í•´ì„œ ì ì‹œ ì£¼ì„ì²˜ë¦¬)
 
 		mGuestMax = NUM_OF_TODAY_GUEST_LIST;
         int[] list = new int[mGuestMax];
@@ -645,7 +642,7 @@ public class Guest : MonoBehaviour
 
         //mTodayGuestList = new int[] {0,3,6,9,12,13};
 
-        // ¹æ¹® ÁÖ±â¸¦ ÃÊ±âÈ­ÇÑ´Ù.
+        // ë°©ë¬¸ ì£¼ê¸°ë¥¼ ì´ˆê¸°í™”í•œë‹¤.
         InitGuestTime();
 
         GameObject DialogIndex = GameObject.Find("DialogIndex");
@@ -653,23 +650,23 @@ public class Guest : MonoBehaviour
         {
             DialogIndex.GetComponent<DialogIndex>().mDialogIndex = 0;
         }
-        // Ã¤Áı¹°µéÀÌ ´Ù½Ã °»½ÅµÈ´Ù.
+        // ì±„ì§‘ë¬¼ë“¤ì´ ë‹¤ì‹œ ê°±ì‹ ëœë‹¤.
 
     }
 
-    //°¨Á¤ »óÇÏÇÑ¼±¿¡ ±ÙÁ¢ÇÑ °¨Á¤µé ¹è¿­ Çü½ÄÀ¸·Î return
+    //ê°ì • ìƒí•˜í•œì„ ì— ê·¼ì ‘í•œ ê°ì •ë“¤ ë°°ì—´ í˜•ì‹ìœ¼ë¡œ return
     public int[] SpeakEmotionEffect(int guestNum)
     {
-		List<int> emotionList = new List<int>();    // »óÇÏÇÑ¼± ±ÙÁ¢ÇÑ °¨Á¤À» ÀúÀåÇÏ´Â list
-		int[] returnEmotionList = new int[4];       // À§ÀÇ List Á¤º¸¸¦ ¹İÈ¯ÇÏ´Â ¹è¿­
-        int nearValue = 100;                        // °¡Àå °¡±õ´ÙÀÇ ±âÁØÀÌ µÇ´Â °ª, °¨Á¤ ¼öÄ¡ Â÷ÀÌÀÇ ÃÖ´ëÄ¡ÀÎ 100À¸·Î ÃÊ±âÈ­
+		List<int> emotionList = new List<int>();    // ìƒí•˜í•œì„  ê·¼ì ‘í•œ ê°ì •ì„ ì €ì¥í•˜ëŠ” list
+		int[] returnEmotionList = new int[4];       // ìœ„ì˜ List ì •ë³´ë¥¼ ë°˜í™˜í•˜ëŠ” ë°°ì—´
+        int nearValue = 100;                        // ê°€ì¥ ê°€ê¹ë‹¤ì˜ ê¸°ì¤€ì´ ë˜ëŠ” ê°’, ê°ì • ìˆ˜ì¹˜ ì°¨ì´ì˜ ìµœëŒ€ì¹˜ì¸ 100ìœ¼ë¡œ ì´ˆê¸°í™”
 
-        int upDiffValue =   100;                    // »óÇÑ¼±ÀÇ Â÷ÀÌ °ª ÀúÀå º¯¼ö
-        int downDiffValue = 100;                    // ÇÏÇÑ¼±ÀÇ Â÷ÀÌ °ª ÀúÀå º¯¼ö
+        int upDiffValue =   100;                    // ìƒí•œì„ ì˜ ì°¨ì´ ê°’ ì €ì¥ ë³€ìˆ˜
+        int downDiffValue = 100;                    // í•˜í•œì„ ì˜ ì°¨ì´ ê°’ ì €ì¥ ë³€ìˆ˜
 
-		GuestInfos targetGuest = mGuestInfo[guestNum];  // ´ë»ó guest
+		GuestInfos targetGuest = mGuestInfo[guestNum];  // ëŒ€ìƒ guest
         
-        // »óÇÏÇÑ¼±¿¡ °¡Àå °¡±î¿î °ª Å½»ö
+        // ìƒí•˜í•œì„ ì— ê°€ì¥ ê°€ê¹Œìš´ ê°’ íƒìƒ‰
         for(int num = 0; num < 2; num++){
             upDiffValue = targetGuest.mLimitEmotions[num].upLimitEmotionValue                   
                 - targetGuest.mEmotion[targetGuest.mLimitEmotions[num].upLimitEmotion];
@@ -680,8 +677,8 @@ public class Guest : MonoBehaviour
             if (downDiffValue <= nearValue) { nearValue = downDiffValue; }
         }
 
-		//»óÇÏÇÑ¼±¿¡ °¡Àå ±ÙÁ¢ÇÑ °¨Á¤ÀÎÁö¸¦ Ã¼Å© ÈÄ ¸®½ºÆ®¿¡ Ãß°¡
-        // UpLimitº¸´Ù ³ô°Å³ª DownLimitº¸´Ù ³·À¸¸é ºÒ¸¸ ¹¶Æ¼ÀÌ¹Ç·Î È®ÀÎ ÇÒ ÇÊ¿ä X
+		//ìƒí•˜í•œì„ ì— ê°€ì¥ ê·¼ì ‘í•œ ê°ì •ì¸ì§€ë¥¼ ì²´í¬ í›„ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
+        // UpLimitë³´ë‹¤ ë†’ê±°ë‚˜ DownLimitë³´ë‹¤ ë‚®ìœ¼ë©´ ë¶ˆë§Œ ë­‰í‹°ì´ë¯€ë¡œ í™•ì¸ í•  í•„ìš” X
         for(int num = 0; num < 2; num++) {
 			upDiffValue = targetGuest.mLimitEmotions[num].upLimitEmotionValue                     
 				- targetGuest.mEmotion[targetGuest.mLimitEmotions[num].upLimitEmotion];
@@ -694,10 +691,10 @@ public class Guest : MonoBehaviour
 
 		int listSize = emotionList.Count;
 
-		// ¸®½ºÆ®ÀÇ Å©±â¿¡ ¸Â°Ô returnÇÒ ¹è¿­ »çÀÌÁî Àç ÇÒ´ç
+		// ë¦¬ìŠ¤íŠ¸ì˜ í¬ê¸°ì— ë§ê²Œ returní•  ë°°ì—´ ì‚¬ì´ì¦ˆ ì¬ í• ë‹¹
 		returnEmotionList = new int[listSize];
 
-		//¼ø¼­´ë·Î dialog Ãâ·ÂÇÏµµ·Ï ¿À¸§Â÷¼øÀ¸·Î ¹è¿­¿¡ Á¤·Ä
+		//ìˆœì„œëŒ€ë¡œ dialog ì¶œë ¥í•˜ë„ë¡ ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ë°°ì—´ì— ì •ë ¬
 		for (int num = 0; num < listSize; num++)
 		{
 			returnEmotionList[num] = ListMinValue(emotionList);
@@ -707,45 +704,46 @@ public class Guest : MonoBehaviour
 		return returnEmotionList;
 	}
 
-    //ListÀÇ ÃÖ¼Ú°ª ¹İÈ¯ ÇÔ¼ö
+    //Listì˜ ìµœì†Ÿê°’ ë°˜í™˜ í•¨ìˆ˜
     private int ListMinValue(List<int> list)
     {
-        if (list.Count <= 0) return -1; // ¸®½ºÆ®°¡ ºñ¾îÀÖÀ¸¸é '-1'¹İÈ¯
-        int returnValue = 20;          // °¨Á¤ ¼öÄ¡ÀÇ °³¼ö·Î ÃÊ±âÈ­
+        if (list.Count <= 0) return -1; // ë¦¬ìŠ¤íŠ¸ê°€ ë¹„ì–´ìˆìœ¼ë©´ '-1'ë°˜í™˜
+        int returnValue = 20;          // ê°ì • ìˆ˜ì¹˜ì˜ ê°œìˆ˜ë¡œ ì´ˆê¸°í™”
 
-        foreach(var num in list) { if (num <= returnValue) returnValue = num; }   // list ³»ÀÇ ÃÖ¼Ú°ª Å½»ö
+        foreach(var num in list) { if (num <= returnValue) returnValue = num; }   // list ë‚´ì˜ ìµœì†Ÿê°’ íƒìƒ‰
 
         return returnValue;
     }
 
 
-    //¸¸Á·µµ°¡ °¡Àå ¸¹ÀÌ Â÷ÀÌ³ª´Â °¨Á¤ ¹øÈ£ return
+    //ë§Œì¡±ë„ê°€ ê°€ì¥ ë§ì´ ì°¨ì´ë‚˜ëŠ” ê°ì • ë²ˆí˜¸ return
     public int SpeakEmotionDialog(int guestNum)
     {
-		int returnEmotionNum = -1;      // ¹İÈ¯ÇÒ °¨Á¤ ¹øÈ£
-		int diffValue = -1;             // ÀÓ½Ã·Î ÀúÀåÇÒ ¸¸Á·µµ ¹üÀ§¿ÍÀÇ Â÷ÀÌ°ª
-		int maxDiffValue = -1;          // Â÷ÀÌ°ª Áß¿¡¼­ °¡Àå Å« °ªÀ» ÀúÀåÇÏ´Â °Í
+		int returnEmotionNum = -1;      // ë°˜í™˜í•  ê°ì • ë²ˆí˜¸
+		int diffValue = -1;             // ì„ì‹œë¡œ ì €ì¥í•  ë§Œì¡±ë„ ë²”ìœ„ì™€ì˜ ì°¨ì´ê°’
+		int maxDiffValue = -1;          // ì°¨ì´ê°’ ì¤‘ì—ì„œ ê°€ì¥ í° ê°’ì„ ì €ì¥í•˜ëŠ” ê²ƒ
+
 
 		GuestInfos targetGuest = mGuestInfo[guestNum];
 
 		for (int i = 0; i < 5; i++)
 		{
-			// ¸¸Á·µµ ¹üÀ§º¸´Ù ÇöÀç °ªÀÌ ³ô´Ù¸é
+			// ë§Œì¡±ë„ ë²”ìœ„ë³´ë‹¤ í˜„ì¬ ê°’ì´ ë†’ë‹¤ë©´
 			if (targetGuest.mEmotion[targetGuest.mSatEmotions[i].emotionNum]
 				> targetGuest.mSatEmotions[i].up)
 			{
 				diffValue = targetGuest.mEmotion[targetGuest.mSatEmotions[i].emotionNum]
 					- targetGuest.mSatEmotions[i].up;
 			}
-			// ¸¸Á·µµ ¹üÀ§º¸´Ù ÇöÀç °ªÀÌ ³·´Ù¸é
+			// ë§Œì¡±ë„ ë²”ìœ„ë³´ë‹¤ í˜„ì¬ ê°’ì´ ë‚®ë‹¤ë©´
 			else if (targetGuest.mEmotion[targetGuest.mSatEmotions[i].emotionNum]
 				< targetGuest.mSatEmotions[i].down)
 			{
 				diffValue = targetGuest.mSatEmotions[i].down
 					- targetGuest.mEmotion[targetGuest.mSatEmotions[i].emotionNum];
 			}
-			// ÀÌ¿ÜÀÇ °æ¿ì´Â ¸¸Á·¹üÀ§¾È¿¡ ÀÖ´Â °ÍÀÌ¹Ç·Î ¹«½ÃÇÑ´Ù.
-			// temp°ªÀÌ ±âÁ¸ ÀúÀåµÈ °ªº¸´Ù ¸¸Á·µµ ¹üÀ§¿Í ¸Ö´Ù¸é °»½ÅÇÑ´Ù.
+			// ì´ì™¸ì˜ ê²½ìš°ëŠ” ë§Œì¡±ë²”ìœ„ì•ˆì— ìˆëŠ” ê²ƒì´ë¯€ë¡œ ë¬´ì‹œí•œë‹¤.
+			// tempê°’ì´ ê¸°ì¡´ ì €ì¥ëœ ê°’ë³´ë‹¤ ë§Œì¡±ë„ ë²”ìœ„ì™€ ë©€ë‹¤ë©´ ê°±ì‹ í•œë‹¤.
 			if (maxDiffValue < diffValue)
 			{
 				maxDiffValue = diffValue;
@@ -757,31 +755,31 @@ public class Guest : MonoBehaviour
 
     public int SpeakLeastDiffEmotion(int guestNum)
     {
-        int returnEmotionNum = -1;      // ¹İÈ¯ÇÒ °¨Á¤ ¹øÈ£
-        int diffValue = 100;             // ÀÓ½Ã·Î ÀúÀåÇÒ ¸¸Á·µµ ¹üÀ§¿ÍÀÇ Â÷ÀÌ°ª
-        int minDiffValue = 100;         // Â÷ÀÌ°ª Áß¿¡¼­ °¡Àå Å« °ªÀ» ÀúÀåÇÏ´Â °Í
+        int returnEmotionNum = -1;      // ë°˜í™˜í•  ê°ì • ë²ˆí˜¸
+        int diffValue = 100;             // ì„ì‹œë¡œ ì €ì¥í•  ë§Œì¡±ë„ ë²”ìœ„ì™€ì˜ ì°¨ì´ê°’
+        int minDiffValue = 100;         // ì°¨ì´ê°’ ì¤‘ì—ì„œ ê°€ì¥ í° ê°’ì„ ì €ì¥í•˜ëŠ” ê²ƒ
 
         GuestInfos targetGuest = mGuestInfo[guestNum];
 
         for (int i = 0; i < 5; i++)
         {
-            // ¸¸Á·µµ ¹üÀ§º¸´Ù ÇöÀç °ªÀÌ ³ô´Ù¸é
+            // ë§Œì¡±ë„ ë²”ìœ„ë³´ë‹¤ í˜„ì¬ ê°’ì´ ë†’ë‹¤ë©´
             if (targetGuest.mEmotion[targetGuest.mSatEmotions[i].emotionNum] 
             >  targetGuest.mSatEmotions[i].up)
             {
                 diffValue = targetGuest.mEmotion[targetGuest.mSatEmotions[i].emotionNum]
                     - targetGuest.mSatEmotions[i].up;
             }
-            // ¸¸Á·µµ ¹üÀ§º¸´Ù ÇöÀç °ªÀÌ ³·´Ù¸é
+            // ë§Œì¡±ë„ ë²”ìœ„ë³´ë‹¤ í˜„ì¬ ê°’ì´ ë‚®ë‹¤ë©´
             else if (targetGuest.mEmotion[targetGuest.mSatEmotions[i].emotionNum]
                 < targetGuest.mSatEmotions[i].down)
             {
                 diffValue = targetGuest.mSatEmotions[i].down
                     - targetGuest.mEmotion[targetGuest.mSatEmotions[i].emotionNum];
             }
-            // ÀÌ¿ÜÀÇ °æ¿ì´Â ¸¸Á·¹üÀ§¾È¿¡ ÀÖ´Â °ÍÀÌ¹Ç·Î ¹«½ÃÇÑ´Ù.
-            // temp°ªÀÌ ±âÁ¸ ÀúÀåµÈ °ªº¸´Ù ¸¸Á·µµ ¹üÀ§¿Í ¸Ö´Ù¸é °»½ÅÇÑ´Ù.
-            if (minDiffValue > diffValue)
+            // ì´ì™¸ì˜ ê²½ìš°ëŠ” ë§Œì¡±ë²”ìœ„ì•ˆì— ìˆëŠ” ê²ƒì´ë¯€ë¡œ ë¬´ì‹œí•œë‹¤.
+            // tempê°’ì´ ê¸°ì¡´ ì €ì¥ëœ ê°’ë³´ë‹¤ ë§Œì¡±ë„ ë²”ìœ„ì™€ ë©€ë‹¤ë©´ ê°±ì‹ í•œë‹¤.
+            if (minDiffValue >= diffValue)
             {
                 minDiffValue = diffValue;
                 returnEmotionNum = targetGuest.mSatEmotions[i].emotionNum;
@@ -790,7 +788,7 @@ public class Guest : MonoBehaviour
         return returnEmotionNum;
     }
 
-    // ¸¸Á·µµ 5ÀÎ ¹¶Æ¼ Á¤º¸¸¦ ³Ñ°ÜÁÖ´Â Array
+    // ë§Œì¡±ë„ 5ì¸ ë­‰í‹° ì •ë³´ë¥¼ ë„˜ê²¨ì£¼ëŠ” Array
     public int[] GetSatGuestList()
     {
 		int[] temp_list;
@@ -807,7 +805,7 @@ public class Guest : MonoBehaviour
 		return temp_list;
 	}
 
-    // ºÒ¸¸ ¹¶Æ¼ Á¤º¸¸¦ ³Ñ°ÜÁÖ´Â List
+    // ë¶ˆë§Œ ë­‰í‹° ì •ë³´ë¥¼ ë„˜ê²¨ì£¼ëŠ” List
     public int[] DisSatGuestList() {
             int[] temp_list;
 		    int temp_idx = 0;
@@ -822,16 +820,33 @@ public class Guest : MonoBehaviour
 
             return temp_list;
     }
-
-    // Demo Version
-    private void InitDemoGuestQueue()
+    
+    public void InitGuestQueue(int season)
     {
-        mDemoGuestQueue = new Queue<int>();
+        mGuestQueue = new Queue<int>();
 
-        mDemoGuestQueue.Enqueue(3);
-		mDemoGuestQueue.Enqueue(6);
-		mDemoGuestQueue.Enqueue(9);
-		mDemoGuestQueue.Enqueue(12);
-		mDemoGuestQueue.Enqueue(13);
+        int[] seasonGuestList = new int[0];
+        switch (season)
+        {
+            case 1:
+                seasonGuestList = new int[] { 0, 1, 3, 4, 6 }; // + 22
+                break;
+            case 2:
+                seasonGuestList = new int[] { 12, 13, 14, 18, 19 }; // + 20
+                break;
+            case 3:
+                seasonGuestList = new int[] { 2, 8, 9, 10, 16 };
+                break;
+            case 4:
+                seasonGuestList = new int[] { 5, 7, 11, 15, 17 }; // + 21
+                break;
+            default:
+                break;
+        }
+
+        for (int i = 0; i < seasonGuestList.Length; i++)
+        {
+            mGuestQueue.Enqueue(seasonGuestList[i]);
+        }
 	}
 }

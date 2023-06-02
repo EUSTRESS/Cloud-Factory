@@ -94,8 +94,8 @@ public class SeasonDateCalc : MonoBehaviour
             mSecond = 600;
             mDay += CalcDay(ref mSecond);
             // Demo Version
-            //mWeek = CalcWeek(ref mDay);
-            //mSeason += CalcSeason(ref mWeek);
+            mWeek = CalcWeek(ref mDay);
+            mSeason += CalcSeason(ref mWeek);
         }
 
     }
@@ -132,7 +132,6 @@ public class SeasonDateCalc : MonoBehaviour
                 second = 0;
 
                 // TODO: 페이드 인 - 페이드 아웃 효과 추가
-
 
                 mChangeDay = true;                           
             }
@@ -172,17 +171,26 @@ public class SeasonDateCalc : MonoBehaviour
             week = 1;
 
             SOWManager sowManager;
+            Guest mGuestManager;
             sowManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+            mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
 
             if (sowManager != null)
                 sowManager.ChangeWeatherObject(mSeason % 4);
+
+            if (mGuestManager != null)
+            {
+                mGuestManager.InitGuestQueue(mSeason % 4 + 1);
+                mGuestManager.InitDay();
+            }
         }
         return temp;
     }
     int CalcYear(ref int month)
     {
         int temp = 0;
-        if (month > 4)
+        // 봄 - 여름 버전이므로 month > 2로 변경. 마일스톤 별로 계절을 추가할 예정
+        if (month > 2)
         { 
             // 년 변하는 부분 -> 년 단위 변환내용은 여기에 작성
 
@@ -191,4 +199,7 @@ public class SeasonDateCalc : MonoBehaviour
         }
         return temp;
     }
+
+
+
 }

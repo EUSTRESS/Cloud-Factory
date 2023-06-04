@@ -374,6 +374,8 @@ private void Update()
 
         // 말풍선 띄우기
         SpeechBubble.SetActive(true);
+        SpeechBubble.transform.GetChild(1).gameObject.SetActive(false);
+        Invoke("ActiveHintText", 1.0f);
         SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);
         Anim.SetTrigger("Start");
         mGuestAnim.SetTrigger("Hint");
@@ -386,10 +388,15 @@ private void Update()
         Animator Anim = SpeechBubble.transform.GetChild(0).gameObject.GetComponent<Animator>();
         Anim.SetTrigger("EndBubble");
         mGuestAnim.SetTrigger("EndHint");
+        SpeechBubble.transform.GetChild(1).gameObject.SetActive(false);
         isHintTextPrinted = true;
         EndSpeakEmotion();
     }
 
+    private void ActiveHintText()
+    {
+        SpeechBubble.transform.GetChild(1).gameObject.SetActive(true);
+    }
 
     private void EndSpeakEmotion()
     {

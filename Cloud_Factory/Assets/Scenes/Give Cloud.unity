@@ -4961,8 +4961,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -144, y: 397}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -164.7555, y: 384.75}
+  m_SizeDelta: {x: 118.489, y: 54.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1496132761
 MonoBehaviour:
@@ -6804,6 +6804,7 @@ MonoBehaviour:
   - {fileID: 0}
   tUpsetMoongti: {fileID: 0}
   tAllMoongti: {fileID: 0}
+  tAuto: {fileID: 0}
   tSetting: {fileID: 0}
   tBackGroundSound: {fileID: 0}
   tEffectSound: {fileID: 0}
@@ -6828,6 +6829,17 @@ MonoBehaviour:
   - {fileID: 0}
   tReason: {fileID: 0}
   tSort: {fileID: 1496132761}
+  tSat:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tExplanation:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tExpirationDate: {fileID: 0}
+  tResetWarning: {fileID: 0}
+  tContinueWarning: {fileID: 0}
 --- !u!4 &2033372398
 Transform:
   m_ObjectHideFlags: 0

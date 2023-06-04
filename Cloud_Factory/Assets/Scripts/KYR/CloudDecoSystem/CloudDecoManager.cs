@@ -408,7 +408,7 @@ public class CloudDecoManager : MonoBehaviour
         
         selectedParts = EventSystem.current.currentSelectedGameObject.GetComponent<DecoParts>();
 
-        if (!selectedParts.canAttached) return; 
+        if (!selectedParts.isDecoPartCanAttached()) return; 
         if(!selectedParts.isEditActive)//처음 파츠를 선택한 상태. 부착가능한 공간에 부착 가능.
         {
             cursorChasing = false; //커서 따라다니지 않게 설정.

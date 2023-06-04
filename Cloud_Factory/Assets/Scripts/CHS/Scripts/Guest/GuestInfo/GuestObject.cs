@@ -233,10 +233,16 @@ private void Update()
                 <= 0.1f && Mathf.Abs(transform.position.y - mTargetChair.transform.position.y) <= 0.1f)
             {
                 // 의자 위치로 이동 , 방향에 따라서 LocalScale 조정
-                if(mSOWManager.mSitDir[mTargetChiarIndex] == 1)
+                if (mSOWManager.mSitDir[mTargetChiarIndex] == 1)
+                {
                     transform.localScale = new Vector3(CHAR_SIZE, CHAR_SIZE, 1f);
+                    SpeechBubble.transform.GetChild(1).transform.localScale = new Vector3(CHAR_SIZE, CHAR_SIZE, 1f);
+                }
                 else
+                {
                     transform.localScale = new Vector3(-CHAR_SIZE, CHAR_SIZE, 1f);
+                    SpeechBubble.transform.GetChild(1).transform.localScale = new Vector3(-CHAR_SIZE, CHAR_SIZE, 1f);
+                }
 
                 mGuestAnim.SetBool("isSit", true);
                 ChangeLayerToSit();

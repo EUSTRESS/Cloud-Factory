@@ -233,10 +233,16 @@ private void Update()
                 <= 0.1f && Mathf.Abs(transform.position.y - mTargetChair.transform.position.y) <= 0.1f)
             {
                 // 의자 위치로 이동 , 방향에 따라서 LocalScale 조정
-                if(mSOWManager.mSitDir[mTargetChiarIndex] == 1)
+                if (mSOWManager.mSitDir[mTargetChiarIndex] == 1)
+                {
                     transform.localScale = new Vector3(CHAR_SIZE, CHAR_SIZE, 1f);
+                    SpeechBubble.transform.GetChild(1).transform.localScale = new Vector3(CHAR_SIZE, CHAR_SIZE, 1f);
+                }
                 else
+                {
                     transform.localScale = new Vector3(-CHAR_SIZE, CHAR_SIZE, 1f);
+                    SpeechBubble.transform.GetChild(1).transform.localScale = new Vector3(-CHAR_SIZE, CHAR_SIZE, 1f);
+                }
 
                 mGuestAnim.SetBool("isSit", true);
                 ChangeLayerToSit();
@@ -304,10 +310,12 @@ private void Update()
         if (GetComponent<AIPath>().desiredVelocity.x >= 0.01f)
         {
             transform.localScale = new Vector3(CHAR_SIZE, CHAR_SIZE, 1f);
+            SpeechBubble.transform.GetChild(1).transform.localScale = new Vector3(CHAR_SIZE, CHAR_SIZE, 1f);
         }
         else if (GetComponent<AIPath>().desiredVelocity.x <= -0.01f)
         {
             transform.localScale = new Vector3(-CHAR_SIZE, CHAR_SIZE, 1f);
+            SpeechBubble.transform.GetChild(1).transform.localScale = new Vector3(-CHAR_SIZE, CHAR_SIZE, 1f);
         }
         // 현재 위치를 저장한다.
         mTransform = transform;
@@ -372,6 +380,8 @@ private void Update()
 
         // 말풍선 띄우기
         SpeechBubble.SetActive(true);
+        SpeechBubble.transform.GetChild(1).gameObject.SetActive(false);
+        Invoke("ActiveHintText", 1.0f);
         SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);
         Anim.SetTrigger("Start");
         mGuestAnim.SetTrigger("Hint");
@@ -384,10 +394,15 @@ private void Update()
         Animator Anim = SpeechBubble.transform.GetChild(0).gameObject.GetComponent<Animator>();
         Anim.SetTrigger("EndBubble");
         mGuestAnim.SetTrigger("EndHint");
+        SpeechBubble.transform.GetChild(1).gameObject.SetActive(false);
         isHintTextPrinted = true;
         EndSpeakEmotion();
     }
 
+    private void ActiveHintText()
+    {
+        SpeechBubble.transform.GetChild(1).gameObject.SetActive(true);
+    }
 
     private void EndSpeakEmotion()
     {

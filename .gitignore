@@ -8,6 +8,18 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+#ignore Library Game Data
+Cloud_Factory/Assets/Data/GuestManagerData.json
+Cloud_Factory/Assets/Data/SeasonDate.json
+Cloud_Factory/Library/ArtifactDB
+Cloud_Factory/Library/CurrentLayout-default.dwlt
+Cloud_Factory/Library/SceneVisibilityState.asset
+Cloud_Factory/Library/ScriptAssemblies/Assembly-CSharp.dll
+Cloud_Factory/Library/ShaderCache/EditorEncounteredVariants
+Cloud_Factory/Library/SourceAssetDB
+Cloud_Factory/Library/StateCache/SceneView/8c/8cd7c613bf844de3b80696e27a479d5e.json
+Cloud_Factory/Library/expandedItems
+Cloud_Factory/UserSettings/EditorUserSettings.asset
 # User-specific files
 *.rsuser
 *.suo

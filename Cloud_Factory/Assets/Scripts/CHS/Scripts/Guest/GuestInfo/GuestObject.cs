@@ -304,10 +304,12 @@ private void Update()
         if (GetComponent<AIPath>().desiredVelocity.x >= 0.01f)
         {
             transform.localScale = new Vector3(CHAR_SIZE, CHAR_SIZE, 1f);
+            SpeechBubble.transform.GetChild(1).transform.localScale = new Vector3(CHAR_SIZE, CHAR_SIZE, 1f);
         }
         else if (GetComponent<AIPath>().desiredVelocity.x <= -0.01f)
         {
             transform.localScale = new Vector3(-CHAR_SIZE, CHAR_SIZE, 1f);
+            SpeechBubble.transform.GetChild(1).transform.localScale = new Vector3(-CHAR_SIZE, CHAR_SIZE, 1f);
         }
         // 현재 위치를 저장한다.
         mTransform = transform;

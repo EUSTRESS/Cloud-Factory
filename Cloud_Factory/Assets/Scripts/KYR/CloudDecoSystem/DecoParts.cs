@@ -28,12 +28,6 @@ public class DecoParts : MonoBehaviour
 
     private void Update()
     {
-        if (!isDecoPartCanAttached())
-            Debug.Log("单内颇明 何馒 阂啊 裹困");
-    }
-
-   public bool isDecoPartCanAttached()
-    {
         mouseWorld = Camera.main.ScreenToWorldPoint(gameObject.transform.position);
         if (mouseWorld.x < top_right_corner.x && mouseWorld.y < top_right_corner.y &&
             mouseWorld.x > bottom_left_corner.x && mouseWorld.y > bottom_left_corner.y)
@@ -44,8 +38,19 @@ public class DecoParts : MonoBehaviour
         else
             canAttached = false;
 
-        return canAttached;
+        //Debug.Log(mouseWorld.x + "   " + mouseWorld.y);
     }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other != null)
+    //    {
+    //        Debug.Log(other.name);
+    //        canAttached = true;
+    //    }
+    //    else
+    //        canAttached = false;
+    //}
 
     public void ReSettingDecoParts()
     {

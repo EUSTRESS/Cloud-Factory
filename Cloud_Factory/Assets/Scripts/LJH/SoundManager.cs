@@ -16,6 +16,10 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] mSeasonBGMArray = new AudioClip[4]; // 4계절별로 달라지는 BGM
     public AudioClip[] mBGMArray = new AudioClip[2]; // [0] 테마 [1] 응접실
     public bool[] isOneTime = new bool[4]; // 노래 한번만 틀기
+
+    // To Use Audio Fade In Effect
+    public bool         fadeIn = true;
+    private float       timer = 0.0f;
     void Awake()
     {        
         // 오디오 소스 찾기
@@ -44,6 +48,7 @@ public class SoundManager : MonoBehaviour
             mBGM.clip = mBGMArray[1];
             mBGM.Play();
         }
+        
     }
 
     void Update()
@@ -68,6 +73,29 @@ public class SoundManager : MonoBehaviour
                     break;
             }           
         }
+
+        if(fadeIn == true)
+        {
+            AudioFadeIn(1.0f);
+        }
+    }
+
+    void AudioFadeIn(float duration)
+    {
+        Debug.Log("Fade In");
+
+        float bgmValue = SceneData.Instance.BGMValue;
+
+        timer += Time.deltaTime;
+        if (timer >= duration)
+        {
+            timer = 0.0f;
+            fadeIn = false;
+            Debug.Log("Fade In clear");
+            return;
+        }
+        mBGM.volume = bgmValue * timer / duration;
+
     }
 
     void UpdateAudio(int _iIndex)

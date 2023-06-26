@@ -1022,6 +1022,17 @@ MonoBehaviour:
   - {fileID: 0}
   tReason: {fileID: 0}
   tSort: {fileID: 0}
+  tSat:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tExplanation:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tExpirationDate: {fileID: 0}
+  tResetWarning: {fileID: 0}
+  tContinueWarning: {fileID: 0}
 --- !u!4 &209344308
 Transform:
   m_ObjectHideFlags: 0
@@ -2815,7 +2826,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 943891112}
+  m_TargetGraphic: {fileID: 940862838}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -2978,7 +2989,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 158860566}
+  m_TargetGraphic: {fileID: 943891112}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -3835,6 +3846,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 03e10a8feff3ffd43b232d6172700da9, type: 3}
   - {fileID: 8300000, guid: 15d3e6b28e55ee748beeb48cbb4c54fb, type: 3}
   isOneTime: 00000000
+  fadeIn: 1
 --- !u!4 &1253290577
 Transform:
   m_ObjectHideFlags: 0

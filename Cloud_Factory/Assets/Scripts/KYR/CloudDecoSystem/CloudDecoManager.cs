@@ -143,7 +143,7 @@ public class CloudDecoManager : MonoBehaviour
 
         }
 
-        for (int i = 0; i < mBaseCloudDt.getDecoPartsCount() + 1; i++)
+        for (int i = 0; i < mBaseCloudDt.getDecoPartsCount(); i++)
         {
             mLPartsMenu.Add(new PartsMenu(B_decoParts, I_PartsMenu, B_PosNeg, i));
 

@@ -176,11 +176,13 @@ public class SeasonDateCalc : MonoBehaviour
             mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
 
             if (sowManager != null)
+            {
                 sowManager.ChangeWeatherObject(mSeason % 4);
-
+                UpdateSeasonWalkCollider(mSeason % 4);
+            }
             if (mGuestManager != null)
             {
-                mGuestManager.InitGuestQueue(mSeason % 4 + 1);
+                mGuestManager.InitGuestQueue(mSeason % 4);
                 mGuestManager.InitDay();
             }
         }
@@ -189,8 +191,8 @@ public class SeasonDateCalc : MonoBehaviour
     int CalcYear(ref int month)
     {
         int temp = 0;
-        // 봄 - 여름 버전이므로 month > 2로 변경. 마일스톤 별로 계절을 추가할 예정
-        if (month > 2)
+        // 봄 - 여름 - 가을 버전이므로 month > 3로 변경. 마일스톤 별로 계절을 추가할 예정
+        if (month > 3)
         { 
             // 년 변하는 부분 -> 년 단위 변환내용은 여기에 작성
 
@@ -199,7 +201,24 @@ public class SeasonDateCalc : MonoBehaviour
         }
         return temp;
     }
+    private void UpdateSeasonWalkCollider(int season)
+    {
+        // 겨울이 없으므로 제외
+        season = season % 3;
 
+        // SOWManager -> Collider -> WalkCollider -> Season
+        GameObject WalkCollider = GameObject.Find("SOWManager").gameObject.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject;
+        if (WalkCollider == null)
+        {
+            return;
+        }
 
+        for (int i = 0; i < 4; i++)
+        {
+             WalkCollider.transform.GetChild(i).gameObject.SetActive(false);
+        }
+
+        WalkCollider.transform.GetChild(season).gameObject.SetActive(true);
+    }
 
 }

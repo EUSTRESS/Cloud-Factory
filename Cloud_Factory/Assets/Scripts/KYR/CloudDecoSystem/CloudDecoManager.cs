@@ -445,9 +445,7 @@ public class CloudDecoManager : MonoBehaviour
 
         if (!selectedParts.canEdit)
         {
-            selectedParts.canEdit = true;
-            selectedParts.transform.GetChild(0).gameObject.SetActive(true);
-            selectedParts.transform.GetChild(1).gameObject.SetActive(true);
+            selectedParts.UpdateEditGuidLineUI(true);
         }
     }
 
@@ -455,15 +453,11 @@ public class CloudDecoManager : MonoBehaviour
     {
         if (!selectedParts.canEdit)
         {
-            selectedParts.canEdit = true;
-            selectedParts.transform.GetChild(0).gameObject.SetActive(true);
-            selectedParts.transform.GetChild(1).gameObject.SetActive(true);
+            selectedParts.UpdateEditGuidLineUI(true);
         }
         else
         {
-            selectedParts.canEdit = false;
-            selectedParts.transform.GetChild(0).gameObject.SetActive(false);
-            selectedParts.transform.GetChild(1).gameObject.SetActive(false);
+            selectedParts.UpdateEditGuidLineUI(false);
         }
 
     }
@@ -472,7 +466,7 @@ public class CloudDecoManager : MonoBehaviour
     private void Update_PartsMoving()
     {
         if (!cursorChasing) return;
-        selectedParts.transform.position = Input.mousePosition;
+        selectedParts.ChangeDecoPartsPosition(Input.mousePosition);
     }
 
     private bool checkIsWorkComplete()

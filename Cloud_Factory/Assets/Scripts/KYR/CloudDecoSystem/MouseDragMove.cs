@@ -5,23 +5,30 @@ using UnityEngine.EventSystems;
 
 public class MouseDragMove : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandler
 {
+    private bool wasInvalidState = false;
     public void OnBeginDrag(PointerEventData eventData)
     {
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.parent.GetComponent<DecoParts>().canEdit = true;
+        DecoParts decoparts = transform.parent.GetComponent<DecoParts>();
+        decoparts.UpdateEditGuidLineUI(true);
+        bool trigger = wasInvalidState ? decoparts.canAttached : transform.parent.GetComponent<DecoParts>().CheckIsInValidPlace();
+        if (!trigger)
+        {
+            decoparts.UpdateEditGuidLineUI(false);
+            decoparts.canAttached = true;
+            wasInvalidState = true;
+            return;
+        }
         transform.parent.position = eventData.position;
-        transform.parent.GetChild(0).gameObject.SetActive(true);
-        transform.parent.GetChild(1).gameObject.SetActive(true);
+        wasInvalidState = false;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.parent.GetComponent<DecoParts>().canEdit = false;
-        transform.parent.GetChild(0).gameObject.SetActive(false);
-        transform.parent.GetChild(1).gameObject.SetActive(false);
+        transform.parent.GetComponent<DecoParts>().UpdateEditGuidLineUI(false);
     }
 
 

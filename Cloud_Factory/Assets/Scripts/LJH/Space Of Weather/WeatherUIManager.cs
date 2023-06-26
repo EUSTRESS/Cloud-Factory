@@ -87,17 +87,17 @@ public class WeatherUIManager : MonoBehaviour
             case 2:
                 UpdateSeasonBg(1);// 여름
 				UpdateSeasonGarden(1);
-				UpdateSeasonGardenSprites(2);
+                UpdateSeasonGardenSprites(2);
 				break;
             case 3:
                 UpdateSeasonBg(2);// 가을
 				UpdateSeasonGarden(2);
-				UpdateSeasonGardenSprites(3);
+                UpdateSeasonGardenSprites(3);
 				break;
             case 4:
                 UpdateSeasonBg(3); // 겨울
 				UpdateSeasonGarden(3);
-				UpdateSeasonGardenSprites(4);
+                UpdateSeasonGardenSprites(4);
 				break;
             default:
                 break;
@@ -133,6 +133,7 @@ public class WeatherUIManager : MonoBehaviour
 			else { mGardens[num].GetComponent<SpriteRenderer>().sprite = mSwitchGardenSprites[1]; }
 		}
 	}
+
 
     void UpdateSeasonGardenSprites(int season)
     {

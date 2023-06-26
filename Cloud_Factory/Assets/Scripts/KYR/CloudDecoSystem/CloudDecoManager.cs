@@ -51,6 +51,7 @@ public class CloudDecoManager : MonoBehaviour
 
     }
     public GameObject CaptureZone;
+
     //Sprite Merger
 
     public List<PartsMenu> mLPartsMenu;
@@ -134,16 +135,21 @@ public class CloudDecoManager : MonoBehaviour
             List<GameObject> tmpList = mUIDecoParts[i];
             for (int j = 0; j < 3; j++)
             {
-                if (i == 0)        //Set CloudPiece        
+                if (i == 0)        //Set CloudPiece
+                {
                     mUIDecoParts[i][j].transform.GetChild(0).GetComponent<Image>().sprite = mBaseCloudDt.getCloudParts()[j];
+
+                   
+                }
+
 
 
                 mUIDecoParts[i + 1][j].transform.GetChild(0).GetComponent<Image>().sprite = mBaseCloudDt.getSizeDifferParts(i)[j];
+               
             }
-
         }
 
-        for (int i = 0; i < mBaseCloudDt.getDecoPartsCount(); i++)
+        for (int i = 0; i < mBaseCloudDt.getDecoPartsCount() + 1; i++)
         {
             mLPartsMenu.Add(new PartsMenu(B_decoParts, I_PartsMenu, B_PosNeg, i));
 
@@ -445,7 +451,7 @@ public class CloudDecoManager : MonoBehaviour
 
         if (!selectedParts.canEdit)
         {
-            selectedParts.UpdateEditGuidLineUI(true);
+             selectedParts.UpdateEditGuidLineUI(true);
         }
     }
 

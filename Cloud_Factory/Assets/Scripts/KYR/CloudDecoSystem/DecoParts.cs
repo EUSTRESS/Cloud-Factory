@@ -28,6 +28,15 @@ public class DecoParts : MonoBehaviour
 
     private void Update()
     {
+        if(!isEditActive)
+        {
+            CheckIsInValidPlace();
+        }
+
+    }
+
+    public bool CheckIsInValidPlace()
+    {
         mouseWorld = Camera.main.ScreenToWorldPoint(gameObject.transform.position);
         if (mouseWorld.x < top_right_corner.x && mouseWorld.y < top_right_corner.y &&
             mouseWorld.x > bottom_left_corner.x && mouseWorld.y > bottom_left_corner.y)
@@ -38,19 +47,23 @@ public class DecoParts : MonoBehaviour
         else
             canAttached = false;
 
-        //Debug.Log(mouseWorld.x + "   " + mouseWorld.y);
+        return canAttached;
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other != null)
-    //    {
-    //        Debug.Log(other.name);
-    //        canAttached = true;
-    //    }
-    //    else
-    //        canAttached = false;
-    //}
+    public void UpdateEditGuidLineUI(bool isClicked)
+    {
+        canEdit = isClicked;
+        transform.GetChild(0).gameObject.SetActive(canEdit);
+        transform.GetChild(1).gameObject.SetActive(canEdit);
+    }
+    public void ChangeDecoPartsPosition(Vector3 mousePos)
+    {
+        if(!canEdit)
+        {
+            transform.position = mousePos;
+            return;
+        }
+    }
 
     public void ReSettingDecoParts()
     {

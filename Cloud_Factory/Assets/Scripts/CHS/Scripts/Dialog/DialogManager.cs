@@ -244,6 +244,8 @@ public class DialogManager : MonoBehaviour
         tGuestText.text = "";
         tPlayerText.text = "";
 
+        mGuestAnimator.Rebind();
+        
         // 손님의 대사라면
         if (mIsGuset[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex] == 1)
         {
@@ -312,7 +314,7 @@ public class DialogManager : MonoBehaviour
 			tText.text += GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex];
 			mDialogCharIndex++;
 		}
-
+        
         Invoke("ReadDialogAtOne", 0.05f);
     }
 

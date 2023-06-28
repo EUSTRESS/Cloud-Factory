@@ -11,6 +11,7 @@ public class CloudStorageProfile : MonoBehaviour
     SOWManager SOWManager;
     Guest GuestManager;
     RecordUIManager UIManager;
+    private RLHReader mRLHReader;
 
     [SerializeField]
     Image[] iPortrait = new Image[20];
@@ -40,6 +41,7 @@ public class CloudStorageProfile : MonoBehaviour
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
         UIManager = GameObject.Find("UIManager").GetComponent<RecordUIManager>();
+        mRLHReader = GameObject.Find("ProfileGroup").GetComponent<RLHReader>();
 
         // 기존 기능 주석처리
         /*
@@ -201,7 +203,7 @@ public class CloudStorageProfile : MonoBehaviour
         tAge.text = "" + info.mAge;
         tJob.text = info.mJob;
         tSat.text = "" + info.mSatatisfaction;
-		tSentence.text = info.mSentence;
+        tSentence.text = mRLHReader.LoadSummaryInfo(frontGuestIndex);
 	}
 
     void updateButton()

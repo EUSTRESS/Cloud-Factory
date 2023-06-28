@@ -174,31 +174,6 @@ public class Guest : MonoBehaviour
             }
         }
 
-        //Guest 방문 리스트 확인을 위한 테스트 코드
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            mGuestInfo[0].mEmotion[0] += 5;
-            for (int num = 0; num < mTodayGuestList.Length; num++) {
-                Debug.Log("Guest " + (num + 1) + " : " + mTodayGuestList[num]);
-             }
-		}
-
-        //
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            int[] tempList = SpeakEmotionEffect(0);
-			for (int i = 0; i < tempList.Length; i++)
-			{
-				Debug.Log("Danger Emotion" + (i + 1) + " : " + tempList[i]);
-			}
-		}
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            int maxDiffValue = SpeakEmotionDialog(0);
-            Debug.Log("만족도 차이가 가장 큰 감정은 " + maxDiffValue + "입니다.");
-        }
-
         // 튜토리얼 스킵 핫키
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -206,15 +181,7 @@ public class Guest : MonoBehaviour
             for(int i = 0; i< tuto.isFinishedTutorial.Length; i++)
             {
                 tuto.isFinishedTutorial[i] = true;
-            }
-        
-        }
-
-        // 상하한선 침범 확인을 위한 함수 테스트 (성공)
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            mGuestInfo[0].isDisSat = CheckIsDisSat(0);
-            Debug.Log(mGuestInfo[0].isDisSat);
+            } 
         }
 
         // 이어하기인 경우 Load해서 받아온 데이터를 SOWManager로 넘겨준다.
@@ -276,8 +243,6 @@ public class Guest : MonoBehaviour
         Info.isMove = data.isMove;
         Info.isGotoEntrance = data.isGotoEntrance;
         Info.isEndUsingCloud = data.isEndUsingCloud;
-
-        //Info.mTargetChair.position = new Vector3(data.mTargetChairXpos, data.mTargetChairYpos, 0.0f);
 
         // transform
         tempObject.transform.position = new Vector3(data.xPos,data.yPos,0.0f);
@@ -370,6 +335,7 @@ public class Guest : MonoBehaviour
                 temp++;
             }
         }
+
 
         Debug.Log("기존 만족도 : " + mGuestInfo[guestNum].mSatatisfaction + "현재 만족도 : " + temp);
         mGuestInfo[guestNum].mSatatisfaction = temp;

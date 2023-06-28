@@ -104,11 +104,6 @@ public class SOWManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            Debug.Log(mUsingGuestList.Count);
-            Debug.Log(mUsingGuestObjectList.Count);
-        }
 
         // 새로운 손님이 날씨의 공간으로 넘어온 경우
         if (isNewGuest)
@@ -318,7 +313,11 @@ public class SOWManager : MonoBehaviour
     // 구름 스포너로 구름정보를 넘긴다.
     public void GetCloudToGuest(int guestNum, StoragedCloudData storagedCloudData)
     {
-        GameObject.Find("CloudSpawner").GetComponent<CloudSpawner>().SpawnCloud(guestNum, storagedCloudData);
+        GameObject CloudSpawner = GameObject.Find("CloudSpawner");
+        if(CloudSpawner != null) 
+        {
+            CloudSpawner.GetComponent<CloudSpawner>().SpawnCloud(guestNum, storagedCloudData);
+        }
     }
 
     public void SetCloudData(int guestNum, StoragedCloudData storagedCloudData)

@@ -272,7 +272,7 @@ private void Update()
                 if (isEndUsingCloud)
                 {
                     // 희귀도 4재료를 사용했는지 체크
-                    if (isUseRarity4)
+                    if (!isUseRarity4)
                     {
                         // 사용하였고 아직 힌트를 출력하지 않았다면 힌트 출력
                         if (!isHintTextPrinted && !isUsingHint)
@@ -280,10 +280,10 @@ private void Update()
                             Hint();
                         }
                         // 힌트 출력을 완료했다면 귀가
-                        else if (isHintTextPrinted)
-                        {
-                            MoveToEntrance();
-                        }
+                        //else if (isHintTextPrinted)
+                        //{
+                        //    MoveToEntrance();
+                        //}
                         MoveToEntrance();
                     }
                     else

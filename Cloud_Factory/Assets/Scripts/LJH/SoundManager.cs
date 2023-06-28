@@ -91,7 +91,6 @@ public class SoundManager : MonoBehaviour
         {
             timer = 0.0f;
             fadeIn = false;
-            Debug.Log("Fade In clear");
             return;
         }
         mBGM.volume = bgmValue * timer / duration;

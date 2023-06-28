@@ -93,7 +93,8 @@ public class CommonUIManager : MonoBehaviour
     {
 		// 응접실 튜토리얼 중 구름공장으로 이동하지 못하도록 제한
 		if (mTutorialManager.isFinishedTutorial[1] == false) { return; }
-		LoadingSceneController.Instance.LoadScene("Space Of Weather");
+
+        LoadingSceneController.Instance.LoadScene("Space Of Weather");
     }
     public void GoCloudFactory()
     {

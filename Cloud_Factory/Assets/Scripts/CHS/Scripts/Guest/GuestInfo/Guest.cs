@@ -397,8 +397,23 @@ public class Guest : MonoBehaviour
             int num = guestList[Random.Range(0, guestList.Count)];
             GuestArray[idx++] = num;
             guestList.Remove(num);
-            Debug.Log(num);
         }
+        
+        TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        if (mTutorialManager.isTutorial == true)
+        {
+            for (int i = 0; i < guestListCount; i++)
+            {
+                if (GuestArray[i] == 0)
+                {
+                    int tempGuestNum = GuestArray[0];
+                    GuestArray[0] = GuestArray[i];
+                    GuestArray[i] = tempGuestNum;
+                    break;
+                }
+            }
+        }
+        
         return GuestArray;
         /*
         List<int> guestList = new List<int>();          // 저장할 뭉티의 리스트

@@ -183,7 +183,7 @@ private void Update()
             if (SceneManager.GetActiveScene().name != "Lobby"
                 && SceneManager.GetActiveScene().name != "Cloud Storage"
                 && SceneManager.GetActiveScene().name != "Give Cloud"
-                && SceneManager.GetActiveScene().name != "Give Cloud"
+                && SceneManager.GetActiveScene().name != "Drawing Room"
                 && mTutorialManager.isTutorial == false)
             {
                 mLimitTime += Time.deltaTime;
@@ -272,7 +272,7 @@ private void Update()
                 if (isEndUsingCloud)
                 {
                     // 희귀도 4재료를 사용했는지 체크
-                    if (isUseRarity4)
+                    if (!isUseRarity4)
                     {
                         // 사용하였고 아직 힌트를 출력하지 않았다면 힌트 출력
                         if (!isHintTextPrinted && !isUsingHint)
@@ -280,10 +280,10 @@ private void Update()
                             Hint();
                         }
                         // 힌트 출력을 완료했다면 귀가
-                        else if (isHintTextPrinted)
-                        {
-                            MoveToEntrance();
-                        }
+                        //else if (isHintTextPrinted)
+                        //{
+                        //    MoveToEntrance();
+                        //}
                         MoveToEntrance();
                     }
                     else
@@ -492,8 +492,6 @@ private void Update()
         //대기 시간이 지났거나, 구름을 제공받았을 때, 만족도 증감도 계산
         outSat = mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
         CalcSatVariation(enterSat, outSat);
-        // Demo Version
-        if(mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction <= 0) { mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction = 1; }
 
         mSOWManager.mCheckChairEmpty[mTargetChiarIndex] = true;
         mTargetChair = null;
@@ -518,7 +516,7 @@ private void Update()
         }
         else
         {
-            Invoke("ChangeTarget", 1.0f);
+            Invoke("ChangeTarget", 1.2f);
         }
         ChangeLayerToDefault();
 

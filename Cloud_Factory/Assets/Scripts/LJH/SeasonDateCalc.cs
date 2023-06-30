@@ -28,11 +28,10 @@ public class SeasonDateCalc : MonoBehaviour
     public int      mYear;   // 년 (~)    
 
     private bool    mChangeDay = false;
-    
 
     [Header("테스트 변수")]
     [SerializeField]
-    private float   MaxSecond = 180.0f; // 하루 단위(초)를 테스트 목적으로 바꾸기 위한 변수
+    private float   MaxSecond = 600.0f; // 하루 단위(초)를 테스트 목적으로 바꾸기 위한 변수
 
     void Awake()
     {
@@ -58,6 +57,7 @@ public class SeasonDateCalc : MonoBehaviour
         if (SceneManager.GetActiveScene().name != "Lobby"
          && SceneManager.GetActiveScene().name != "Cloud Storage"
          && SceneManager.GetActiveScene().name != "Give Cloud"
+         && SceneManager.GetActiveScene().name != "Drawing Room"
          && mTutorialManager.isTutorial == false)
         {
             // 초 계산
@@ -73,7 +73,7 @@ public class SeasonDateCalc : MonoBehaviour
             mSeason += CalcSeason(ref mWeek);
             // 년 계산
             mYear += CalcYear(ref mSeason);
-            
+
 
             if (mChangeDay)
             {
@@ -84,14 +84,14 @@ public class SeasonDateCalc : MonoBehaviour
         }
 
         // 계절별 테스트를 위한 핫키
-        if(Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             mWeek = 5;
             mSeason += CalcSeason(ref mWeek);
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            mSecond = 600;
+            mSecond = MaxSecond;
             mDay += CalcDay(ref mSecond);
             // Demo Version
             mWeek = CalcWeek(ref mDay);
@@ -219,6 +219,9 @@ public class SeasonDateCalc : MonoBehaviour
         }
 
         WalkCollider.transform.GetChild(season).gameObject.SetActive(true);
+
+        AstarPath.FindAstarPath();
+        AstarPath.active.Scan();
     }
 
 }

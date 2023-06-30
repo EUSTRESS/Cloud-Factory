@@ -57,6 +57,7 @@ public class SeasonDateCalc : MonoBehaviour
         if (SceneManager.GetActiveScene().name != "Lobby"
          && SceneManager.GetActiveScene().name != "Cloud Storage"
          && SceneManager.GetActiveScene().name != "Give Cloud"
+         && SceneManager.GetActiveScene().name != "Drawing Room"
          && mTutorialManager.isTutorial == false)
         {
             // 초 계산
@@ -90,7 +91,7 @@ public class SeasonDateCalc : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            mSecond = 600;
+            mSecond = MaxSecond;
             mDay += CalcDay(ref mSecond);
             // Demo Version
             mWeek = CalcWeek(ref mDay);

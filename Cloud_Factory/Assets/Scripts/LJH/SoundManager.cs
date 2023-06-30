@@ -115,8 +115,8 @@ public class SoundManager : MonoBehaviour
 
     // BGM 볼륨 조정
     public void SetBGMVolume(float volume)
-    {        
-        mBGM.volume = volume;
+    {
+        mBGM.volume = volume * 0.5f;
         // 값을 변경할 때 마다 저장
         SceneData.Instance.BGMValue = volume;
     }

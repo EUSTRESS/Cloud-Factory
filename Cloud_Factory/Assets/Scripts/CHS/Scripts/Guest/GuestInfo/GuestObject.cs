@@ -183,7 +183,7 @@ private void Update()
             if (SceneManager.GetActiveScene().name != "Lobby"
                 && SceneManager.GetActiveScene().name != "Cloud Storage"
                 && SceneManager.GetActiveScene().name != "Give Cloud"
-                && SceneManager.GetActiveScene().name != "Give Cloud"
+                && SceneManager.GetActiveScene().name != "Drawing Room"
                 && mTutorialManager.isTutorial == false)
             {
                 mLimitTime += Time.deltaTime;
@@ -492,8 +492,6 @@ private void Update()
         //대기 시간이 지났거나, 구름을 제공받았을 때, 만족도 증감도 계산
         outSat = mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
         CalcSatVariation(enterSat, outSat);
-        // Demo Version
-        if(mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction <= 0) { mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction = 1; }
 
         mSOWManager.mCheckChairEmpty[mTargetChiarIndex] = true;
         mTargetChair = null;
@@ -518,7 +516,7 @@ private void Update()
         }
         else
         {
-            Invoke("ChangeTarget", 1.0f);
+            Invoke("ChangeTarget", 1.2f);
         }
         ChangeLayerToDefault();
 

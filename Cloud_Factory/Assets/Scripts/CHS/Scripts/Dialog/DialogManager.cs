@@ -11,6 +11,7 @@ public class DialogManager : MonoBehaviour
     private Guest mGuestManager;
     private SOWManager mSOWManager;
     private TutorialManager mTutorialManager;
+    private RLHReader mRLHReader;
 
     public int mGuestNum;                       // 손님의 번호를 넘겨받는다.
     private int mGuestSat;                      // 손님의 현재 만족도
@@ -94,6 +95,11 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        UpdateReasonText();
+    }
+
     void initDialogManager()
     {
         mDialogIndex = 0;
@@ -106,6 +112,7 @@ public class DialogManager : MonoBehaviour
         sGuestSpriteRender = gGuestSprite.GetComponent<SpriteRenderer>();
         mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
         mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        mRLHReader = GameObject.Find("DialogManager").GetComponent<RLHReader>();
 
         mGuestAnimator = gGuestSprite.GetComponent<Animator>();
 
@@ -244,6 +251,8 @@ public class DialogManager : MonoBehaviour
         tGuestText.text = "";
         tPlayerText.text = "";
 
+        mGuestAnimator.Rebind();
+        
         // 손님의 대사라면
         if (mIsGuset[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex] == 1)
         {
@@ -312,7 +321,7 @@ public class DialogManager : MonoBehaviour
 			tText.text += GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex];
 			mDialogCharIndex++;
 		}
-
+        
         Invoke("ReadDialogAtOne", 0.05f);
     }
 
@@ -449,30 +458,13 @@ public class DialogManager : MonoBehaviour
             tPanelAge.text = "Age: " + guest.mAge;
             tPanelJob.text = "Job: " + guest.mJob;
         }
-
-        iPanelPortrait.sprite = sGuestImageArr[mGuestNum];
-        switch (mGuestNum)
-        {
-            case 3:
-				tPanelReasonText.text = " 어차피 일어난 일이고, 되돌릴 수 없는거라.... 과거는 과거일 뿐. 그만 이 일에 대해 잊고 나아가고 싶어요.";
-				break;
-            case 6:
-				tPanelReasonText.text = " 무대만 올라가면 머릿속이 새하얘져요. 몸이 조금만 풀리면 좋겠어요...";
-				break;
-            case 9:
-				tPanelReasonText.text = " 저는 왜 이렇게 못되게 구는 걸까요? 싸우지 않고도 대화로 하면 되는 문제였는데... 하아. 이런 제가 너무 싫어요.";
-				break;
-            case 12:
-				tPanelReasonText.text = " 언니에게는 좋은 감정만 남았으면 좋겠네...";
-				break;
-            case 13:
-				tPanelReasonText.text = " 티루는 어르니 될 거야.  기다리라는 말은 시러요.";
-				break;
-            default:
-				tPanelReasonText.text = "";
-				break;
-        }
         
+        iPanelPortrait.sprite = sGuestImageArr[mGuestNum];
+    }
+
+    private void UpdateReasonText()
+    {
+        tPanelReasonText.text = mRLHReader.LoadSummaryInfo(mGuestNum);
     }
 
 }

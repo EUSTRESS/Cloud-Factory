@@ -109,6 +109,27 @@ public class RLHReader : MonoBehaviour
 		}
 		return tText;
 	}
+	
+	//ProfileManager.cs
+	public string LoadSummaryInfo(int guest_num)
+	{
+		List<RLHDBEntity> Summary;
+		Summary = mRLHDB.SetHintByGuestNum(guest_num);
+
+		if(Summary == null) { return ""; }
+
+		for(int num = 0; num < Summary.Count; num++)
+		{
+			if (Summary[num].GuestID == guest_num + 1
+			    && Summary[num].Type == "summary")
+			{
+				tText = "";  
+				if(isKorean) { tText = Summary[num].KOR; }
+				else{ tText = Summary[num].ENG; }
+			}
+		}
+		return tText;
+	}
 
 	public string PrintHintText()
 	{

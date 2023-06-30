@@ -237,6 +237,7 @@ public class CloudData
             decoList.Add(Resources.Load<Sprite>("Sprite/CloudDeco/L/" + "OC_L_" + ((int)mEmotions[i].Key).ToString()));
             decoList.Add(Resources.Load<Sprite>("Sprite/CloudDeco/M/" + "OC_M_" + ((int)mEmotions[i].Key).ToString()));
             decoList.Add(Resources.Load<Sprite>("Sprite/CloudDeco/S/" + "OC_S_" + ((int)mEmotions[i].Key).ToString()));
+      
             mdecoImages.Add(decoList);
         }
     }
@@ -307,6 +308,25 @@ public class InventoryManager : MonoBehaviour
 
         mCloudStorageData = new CloudStorageData();
         beginningCloudData = new CloudData();
+
+        //이어하기 시 기존 백업된 재료들 Sprite Missing인 경우 재할당
+        List<IngredientData> updatedImageStock = new List<IngredientData>(); //새로운 리스트 생성
+        foreach (IngredientData stock in mType)
+        {
+            IngredientData dataBase = mIngredientDatas[stock.rarity - 1].mItemList.Find(item => stock.dataName == item.dataName);
+            updatedImageStock.Add(dataBase);
+        }
+
+        mType = updatedImageStock;
+    }
+
+    private void Update()
+    {
+        foreach (IngredientData stock in mType)
+        {
+            if (stock.image == null)
+                stock.rematchSpriteData(mIngredientDatas);
+        }
     }
 
     /////////////////

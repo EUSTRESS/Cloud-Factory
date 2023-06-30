@@ -55,7 +55,7 @@ public class SOWManager : MonoBehaviour
     private float[][][] ChairPosList = new float[][][]{ 
         new float[][]{ new float[]{ 1.71f, -2.91f }, new float[] { -3.52f, -0.36f }, new float[] { -0.51f, 0.39f }, new float[] { 1.55f, 0.53f } } ,
         new float[][]{ new float[]{ 1.545f, -2.154f }, new float[] { -3.436f, -0.178f }, new float[] { -0.27f, -2.8f }, new float[] { -1.64f, -2.07f } } ,
-        new float[][]{ new float[]{ 3.186f, -2.646f }, new float[] { 0.134f, -2.355f }, new float[] { 1.057f, 0.297f }, new float[] { 1.97f, 0.23f } } ,
+        new float[][]{ new float[]{ 3.186f, -2.646f }, new float[] { -0.187f, -2.355f }, new float[] { 1.057f, 0.297f }, new float[] { 1.97f, 0.23f } } ,
         new float[][]{ new float[]{ 1.9f, -3.21f }, new float[] { -1.11f, 0.19f }, new float[] { 2.06f, 0.15f }, new float[] { -0.16f, 0.17f } }
     };
 
@@ -104,11 +104,6 @@ public class SOWManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            Debug.Log(mUsingGuestList.Count);
-            Debug.Log(mUsingGuestObjectList.Count);
-        }
 
         // 새로운 손님이 날씨의 공간으로 넘어온 경우
         if (isNewGuest)
@@ -197,7 +192,6 @@ public class SOWManager : MonoBehaviour
             if (SceneManager.GetActiveScene().name == "Space Of Weather")
             {
                 GetCloudToGuest(mCloudGuestNum, mStorageCloudData);
-                isCloudGet = false;
             }
         }
     }
@@ -318,7 +312,12 @@ public class SOWManager : MonoBehaviour
     // 구름 스포너로 구름정보를 넘긴다.
     public void GetCloudToGuest(int guestNum, StoragedCloudData storagedCloudData)
     {
-        GameObject.Find("CloudSpawner").GetComponent<CloudSpawner>().SpawnCloud(guestNum, storagedCloudData);
+        GameObject CloudSpawner = GameObject.Find("CloudSpawner");
+        if(CloudSpawner != null) 
+        {
+            CloudSpawner.GetComponent<CloudSpawner>().SpawnCloud(guestNum, storagedCloudData);
+            isCloudGet = false;
+        }
     }
 
     public void SetCloudData(int guestNum, StoragedCloudData storagedCloudData)

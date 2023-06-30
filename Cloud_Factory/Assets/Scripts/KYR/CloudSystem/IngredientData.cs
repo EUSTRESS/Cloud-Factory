@@ -83,4 +83,10 @@ public class IngredientData : ScriptableObject
             iEmotion.Add(emotion.getKey2Int(), emotion.getValue());
         }
     }
+
+    public void rematchSpriteData(IngredientList[] dataList)
+    {
+        IngredientData dataBase = dataList[rarity - 1].mItemList.Find(item => dataName == item.dataName);
+        image = dataBase.image;
+    }
 }

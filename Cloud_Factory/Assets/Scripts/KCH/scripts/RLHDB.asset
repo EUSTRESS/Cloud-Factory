@@ -57,35 +57,40 @@ MonoBehaviour:
     KOR: "\uC8FC\uC778\uACF5\uC740 \uC790\uC2E0\uC774 \uC5C4\uCCAD\uB098\uAC8C \uC791\uC544\uC9C4
       \uAC83 \uAC19\uC740 \uB290\uB08C\uC774 \uB4E4 \uAC70\uC57C\u2026 <color=\"red\">\uC9C0\uAE08\uC740
       \uACBD\uC678\uAC00 \uBD80\uC871\uD574!</color>"
-    ENG: 'The protagonist will feel small and helpless... I need more awe. '
+    ENG: The protagonist will feel small and helpless... <color="red">I need more
+      awe. </color>
   - GuestID: 1
     Type: hint
     Emotion: 15
     strUD: high
     KOR: "\uBAA8\uB4E0 \uC77C\uC774 \uC798 \uD480\uB9B4 \uAC83 \uAC19\uC544\u2026
       <color=\"green\">\uB099\uCC9C\uC801\uC778 \uAC74 \uC2EB\uC740\uB370.</color>"
-    ENG: 'I feel like everything will be okay... but I shouldn''t be optimistic. '
+    ENG: 'I feel like everything will be okay... <color="green">but I shouldn''t
+      be optimistic.</color> '
   - GuestID: 1
     Type: hint
     Emotion: 2
     strUD: low
     KOR: "\uC544\uB07C\uB294 \uB204\uAD70\uAC00\uB97C \uC783\uB294\uB2E4\uBA74 <color=\"red\">\uC5C4\uCCAD
       \uC2AC\uD37C\uC57C \uD558\uC9C0 \uC54A\uC744\uAE4C?</color>"
-    ENG: Shouldn't one feel extremely sad for losing a loved one?
+    ENG: Shouldn't one feel <color="red">extremely sad for losing a loved</color>
+      one?
   - GuestID: 1
     Type: hint
     Emotion: 16
     strUD: low
     KOR: "\uADF8\uB9AC\uC6B4\uB370 \uB9CC\uB098\uC9C0 \uBABB\uD55C\uB2E4\uBA74 <color=\"red\">\uC501\uC4F8\uD55C
       \uAC10\uC815\uC774 \uB4E4\uACA0\uC9C0?</color>"
-    ENG: 'I''d probably feel bitter if I can''t see someone I miss so dearly. '
+    ENG: '<color="red">I''d probably feel bitter</color> if I can''t see someone
+      I miss so dearly. '
   - GuestID: 1
     Type: hint
     Emotion: 19
     strUD: high
     KOR: "\uC544\uC9C1 \uC5B4\uB5BB\uAC8C \uC368\uC57C \uD560\uC9C0 \uBAA8\uB974\uACA0\uC5B4,
       <color=\"green\">\uD63C\uB780\uC2A4\uB7FD\uB124.</color>"
-    ENG: 'I still have no idea how to continue my arc, this is confusing. '
+    ENG: I still have no idea how to continue my arc, <color="green">this is confusing.
+      </color>
   - GuestID: 1
     Type: summary
     Emotion: -1
@@ -128,8 +133,8 @@ MonoBehaviour:
     strUD: high
     KOR: "\uB3D9\uAE30\uB4E4, \uBD84\uBA85 \uC88B\uC740 \uC0AC\uB78C\uB4E4\uC774\uACA0\uC9C0?
       <color=\"green\">\uC544\uCC28, \uB610 \uB108\uBB34 \uAE30\uB300\uD558\uB124.</color>"
-    ENG: 'My colleagues are probably the friendliest people in the world! Oh, there
-      I go again with expecting too much... '
+    ENG: My colleagues are probably the friendliest people in the world! <color="green">Oh,
+      there I go again with expecting too much... </color>
   - GuestID: 2
     Type: hint
     Emotion: 0
@@ -137,8 +142,8 @@ MonoBehaviour:
     KOR: "\uD5E4\uD5E4, \uCCAB \uC6D4\uAE09\uC73C\uB85C\uB294 \uBA3C\uC800 \uC5C4\uB9C8\uD55C\uD14C\u2026
       <color=\"green\">\uC544, \uAE30\uBED0\uC11C \uC790\uAFB8 \uBC14\uBCF4\uAC19\uC774
       \uC6C3\uAC8C \uB3FC!!</color>"
-    ENG: 'Hehe, with my first paycheck, I''ll get mom a... Oh, I keep smiling like
-      an idiot! '
+    ENG: Hehe, with my first paycheck, I'll get mom a... <color="green">Oh, I keep
+      smiling like an idiot! </color>
   - GuestID: 2
     Type: hint
     Emotion: 15
@@ -146,15 +151,16 @@ MonoBehaviour:
     KOR: "<color=\"green\">\uB2E4 \uAD1C\uCC2E\uC744 \uAC70\uC57C!</color> \uADF8\uB3D9\uC548
       \uC5BC\uB9C8\uB098 \uACE0\uC0DD\uD588\uB294\uB370, \uC548 \uC88B\uC740 \uC77C\uC774
       \uB354 \uC77C\uC5B4\uB0A0 \uB9AC\uAC00."
-    ENG: 'Everything will be fine! I''d gone through so much, no way there''s anything
-      bad coming my way. '
+    ENG: '<color="green">Everything will be fine!</color> I''d gone through so much,
+      no way there''s anything bad coming my way. '
   - GuestID: 2
     Type: hint
     Emotion: 1
     strUD: low
     KOR: "<color=\"red\">\uC660\uC9C0 \uC804\uD600 \uBD88\uC548\uD558\uC9C0 \uC54A\uC544\u2026</color>
       \uC774\uB798\uB3C4 \uB418\uB294 \uAC78\uAE4C?"
-    ENG: 'I''m not anxious at all, for some reason... is this okay? '
+    ENG: '<color="red">I''m not anxious at all,</color> for some reason... is this
+      okay? '
   - GuestID: 2
     Type: hint
     Emotion: 19
@@ -162,8 +168,8 @@ MonoBehaviour:
     KOR: "\uC8FC\uBCC0\uC5D0\uC11C \uB0B4\uAC00 \uB108\uBB34 \uAE34\uC7A5\uAC10 \uC5C6\uC774
       \uCC28\uBD84\uD558\uB2E4\uACE0 \uAC71\uC815\uD558\uB358\uB370\u2026 <color=\"red\">\uD63C\uB780\uC2A4\uB7EC\uC6CC\uC57C
       \uD558\uB098?</color>"
-    ENG: 'People have been worried because I''m too calm and collected... should
-      I be more confused? '
+    ENG: People have been worried because I'm too calm and collected... <color="red">should
+      I be more confused? </color>
   - GuestID: 2
     Type: summary
     Emotion: -1
@@ -215,14 +221,16 @@ MonoBehaviour:
     KOR: "\uC774 \uB140\uC11D\uC774 \uB098\uB97C \uBCF4\uACE0 \uC788\uC73C\uBA74
       \uAE30\uBD84\uC774 \uC774\uC0C1\uD574. <color=\"red\">\uC0B4\uC9DD \uAE30\uC060\uC9C0\uB3C4
       \uBAA8\uB974\uACA0\uAD6C\uBA3C.</color>"
-    ENG: 'It feels weird when this fella looks at me. Maybe I''m a bit happy. '
+    ENG: It feels weird when this fella looks at me. <color="red">Maybe I'm a bit
+      happy. </color>
   - GuestID: 3
     Type: hint
     Emotion: 15
     strUD: low
     KOR: "<color=\"red\">\uC55E\uC73C\uB85C \uC88B\uC740 \uC77C\uB9CC \uC0DD\uAE38
       \uD14C\uB2C8</color> \uAC71\uC815 \uB9D0\uB77C\uACE0 \uD574\uC8FC\uACE0 \uC2F6\uAD70... "
-    ENG: 'I want to tell it not to worry because everything will be alright... '
+    ENG: I want to tell it not to worry because <color="red">everything will be alright...
+      </color>
   - GuestID: 3
     Type: hint
     Emotion: 5
@@ -231,8 +239,8 @@ MonoBehaviour:
       \uB180\uB790\uB358 \uAC8C \uC544\uC9C1\uB3C4 \uC0DD\uAC01\uB098\u2026</color>
       \uADF8\uB098\uC800\uB098, \uB098\uB294 \uC774 \uB140\uC11D\uACFC \uC55E\uC73C\uB85C
       \uC5B4\uB5BB\uAC8C \uC9C0\uB0B4\uACE0 \uC2F6\uC740 \uAC70\uC9C0?"
-    ENG: 'I still remember almost having a heart attack opening the trash can...
-      Anyway, what do I even want to do with this fella? '
+    ENG: 'I still remember <color="green">almost having a heart attack</color> opening
+      the trash can... Anyway, what do I even want to do with this fella? '
   - GuestID: 3
     Type: hint
     Emotion: 8
@@ -240,8 +248,8 @@ MonoBehaviour:
     KOR: "\uC774 \uB140\uC11D\uC758 \uC5BC\uAD74\uC774 \uC790\uAFB8 <color=\"red\">\uC0AC\uB791\uD558\uB294
       \uC6B0\uB9AC \uC190\uC8FC\uB4E4\uACFC \uACB9\uCCD0 \uBCF4\uC774\uB294\uB370,</color>
       \uC65C\uC77C\uAE4C?"
-    ENG: 'I''m reminded of my lovely grandkids whenever I see this fella... why is
-      that? '
+    ENG: '<color="red">I''m reminded of my lovely grandkids</color> whenever I see
+      this fella... why is that? '
   - GuestID: 3
     Type: hint
     Emotion: 17
@@ -251,7 +259,8 @@ MonoBehaviour:
       \uC2F6\uC5B4\uC838\u2026 <color=\"green\">\uC0AC\uB791\uD558\uBA74\uC11C\uB3C4
       \uC2EB\uC5B4\uD560 \uC218\uAC00 \uC788\uB098?</color>"
     ENG: I feel all soft when I look at this fella, but I want to push it away if
-      it comes near me... how could one love and hate at the same time?
+      it comes near me... <color="green">how could one love and hate at the same
+      time?</color>
   - GuestID: 3
     Type: summary
     Emotion: -1
@@ -298,7 +307,7 @@ MonoBehaviour:
     KOR: "\uC5B4\uCC28\uD53C \uC774\uB807\uAC8C \uB41C \uAC70, \uC774 \uC0C1\uD669\uC5D0
       <color=\"red\">\uBC18\uBC1C</color>\uD574\uC11C \uB9DE\uC11C \uC2F8\uC6B0\uB294
       \uC218\uBC16\uC5D0!"
-    ENG: 'Ugh, I have no choice but to fight back now! '
+    ENG: 'Ugh, I have no choice but to <color="red">fight back</color> now! '
   - GuestID: 4
     Type: hint
     Emotion: 2
@@ -306,22 +315,24 @@ MonoBehaviour:
     KOR: "\uCE5C\uAD6C\uB97C \uC783\uAC8C \uB41C \uAC74 <color=\"green\">\uC2AC\uD508
       \uC77C\uC774\uC9C0\uB9CC,</color> \uACC4\uC18D \uC774\uB7EC\uACE0 \uC788\uC73C\uBA74
       \uC548 \uB3FC."
-    ENG: 'It''s sad to lose a friend, but I can''t just dwell on that. '
+    ENG: '<color="green">It''s sad to lose a friend,</color> but I can''t just dwell
+      on that. '
   - GuestID: 4
     Type: hint
     Emotion: 16
     strUD: low
     KOR: "\uADF8\uB798\u2026 \uC5B4\uCA54 \uC218 \uC5C6\uB294 \uC77C\uC774\uC5C8\uC5B4.
       \uBC1B\uC544\uB4E4\uC5EC\uC57C \uD558\uC9C0\uB9CC, <color=\"red\">\uC501\uC4F8\uD558\uB124.</color>"
-    ENG: 'Yeah... I couldn''t do anything about it. I have to accept what happened,
-      but it''s slightly bitter... '
+    ENG: Yeah... I couldn't do anything about it. I have to accept what happened,
+      <color="red">but it's slightly bitter... </color>
   - GuestID: 4
     Type: hint
     Emotion: 12
     strUD: high
     KOR: "\uB0B4\uAC00 \uB108\uBB34 \uC798 \uD574\uC92C\uB358 \uAC78\uAE4C\u2026
       <color=\"green\">\uC544\uB0D0, \uC790\uCC45\uD558\uBA74 \uC548 \uB3FC!</color>"
-    ENG: 'Maybe I was too nice to him... No, I shouldn''t think it''s my fault! '
+    ENG: Maybe I was too nice to him... <color="green">No, I shouldn't think it's
+      my fault! </color>
   - GuestID: 4
     Type: hint
     Emotion: 3
@@ -329,8 +340,8 @@ MonoBehaviour:
     KOR: "\uC65C \uAC11\uC790\uAE30 \uC911\uC694\uD55C \uB0A0\uC5D0 \uC774\uB7F0
       \uC77C\uC774 \uC0DD\uACA8\uC11C\uB294\u2026 <color=\"green\">\uC544, \uC9DC\uC99D
       \uB098!</color>"
-    ENG: 'Why did this have to happen when something important was coming up... ugh,
-      how annoying! '
+    ENG: Why did this have to happen when something important was coming up... <color="green">ugh,
+      how annoying! </color>
   - GuestID: 4
     Type: summary
     Emotion: -1
@@ -384,7 +395,7 @@ MonoBehaviour:
     strUD: high
     KOR: "<color=\"green\">\uACBD\uC678\uC2EC</color> \uB54C\uBB38\uC5D0 \uC628\uBAB8\uC774
       \uC9D3\uB20C\uB9AC\uB294 \uAC83 \uAC19\uC544."
-    ENG: 'All this awe is crushing my body. '
+    ENG: All this <color="green">awe is crushing my body. </color>
   - GuestID: 5
     Type: hint
     Emotion: 11
@@ -393,9 +404,9 @@ MonoBehaviour:
       \uC548 \uC88B\uC9C0\uB9CC\u2026 \uD559\uAD50\uB3C4, \uAD50\uD68C\uB3C4, \uADF8
       \uCE5C\uAD6C\uAC00 \uC5C6\uC5B4\uC11C \uB2E4 \uC2EB\uC5B4. \uC5B4\uB514\uC5D0\uB3C4
       \uAC00\uACE0 \uC2F6\uC9C0 \uC54A\uC544\u2026"
-    ENG: 'It''s bad for me to continue to reject everything, but... what''s the use
-      of going to school, or church, if my friend''s not going to be there? I don''t
-      want to go anywhere... '
+    ENG: '<color="green">It''s bad for me to continue to reject everything, but...</color>
+      what''s the use of going to school, or church, if my friend''s not going to
+      be there? I don''t want to go anywhere... '
   - GuestID: 5
     Type: hint
     Emotion: 2
@@ -403,23 +414,24 @@ MonoBehaviour:
     KOR: "\uADF8 \uCE5C\uAD6C\uB97C \uC783\uAC8C \uB418\uBA74 \uB098\uB294 \uC5B4\uB5BB\uAC8C
       \uD574\uC57C \uD558\uC9C0? <color=\"green\">\uC2AC\uD514\uC5D0 \uBE60\uC838\uC11C
       \uC544\uBB34 \uC77C\uB3C4 \uBABB \uD560 \uAC83 \uAC19\uC544\u2026</color>"
-    ENG: 'What will I do if I actually lose him? I won''t be able to get anything
-      done, drowning in sorrow... '
+    ENG: What will I do if I actually lose him? I won't be able to get anything done,
+      <color="green">drowning in sorrow... </color>
   - GuestID: 5
     Type: hint
     Emotion: 16
     strUD: low
     KOR: "\uCE5C\uAD6C\uAC00 \uBCD1\uC5D0 \uAC78\uB9B0 \uAC74 \uB0B4 \uC798\uBABB\uC774
       \uC544\uB2C8\uB77C \uD574\uB3C4\u2026 <color=\"red\">\uC870\uAE08\uC740 \uC501\uC4F8\uD558\uB124.</color>"
-    ENG: 'Even though it''s not my fault he has leukemia... I feel a little bitter. '
+    ENG: Even though it's not my fault he has leukemia... <color="red">I feel a little
+      bitter. </color>
   - GuestID: 5
     Type: hint
     Emotion: 6
     strUD: low
     KOR: "\uC774 \uC138\uC0C1\uC758 \uBAA8\uB4E0 \uC9C8\uBCD1\uC774 <color=\"red\">\uD610\uC624\uC2A4\uB7EC\uC6CC\u2026</color>
       \uC65C \uD558\uD544 \uB0B4 \uCE5C\uAD6C\uC5D0\uAC8C \uAC10\uC5FC\uB41C \uAC70\uC57C? "
-    ENG: 'I''m disgusted at every disease there is... why did it have to infect my
-      friend? '
+    ENG: '<color="red">I''m disgusted at every disease there is...</color> why did
+      it have to infect my friend? '
   - GuestID: 5
     Type: summary
     Emotion: -1
@@ -465,8 +477,8 @@ MonoBehaviour:
     KOR: "\uC0AC\uB791\uD55C\uB2E4\uBA74 \uC5B4\uB5BB\uAC8C \uADF8\uB7F4 \uC218\uAC00
       \uC788\uACA0\uC5B4? \uC194\uC9C1\uD788 \uADF8 \uC560\uAC00 <color=\"red\">\uC0B4\uC9DD
       \uACBD\uBA78\uC2A4\uB7EC\uC6CC\u2026</color>"
-    ENG: 'How could she do such a thing if she loved me? I honestly hate her a little
-      bit... '
+    ENG: How could she do such a thing if she loved me? <color="red">I honestly hate
+      her a little bit... </color>
   - GuestID: 6
     Type: hint
     Emotion: 5
@@ -474,21 +486,23 @@ MonoBehaviour:
     KOR: "\uC5B4\uB5BB\uAC8C \uADF8\uB9AC \uAC70\uC9D3\uB9D0\uC744 \uC8C4\uCC45\uAC10
       \uC5C6\uC774 \uD560 \uC218 \uC788\uB294\uC9C0 <color=\"red\">\uB180\uB77C\uC6CC\u2026
       </color>"
-    ENG: I'm surprised at how she was able to lie so smoothly without feeling guilty...
+    ENG: <color="red">I'm surprised</color> at how she was able to lie so smoothly
+      without feeling guilty...
   - GuestID: 6
     Type: hint
     Emotion: 11
     strUD: low
     KOR: "\uADF8 \uC560\uC758 \uB208\uC744 \uBCF4\uBA74 \uC774\uC820 <color=\"red\">\uBC18\uBC1C\uAC10\uC774
       \uC870\uAE08\uC529 \uB4E4\uAE30 \uC2DC\uC791\uD574.</color>"
-    ENG: 'I want to push her away these days when I look into her eyes... '
+    ENG: 'I want to <color="red">push her away</color> these days when I look into
+      her eyes... '
   - GuestID: 6
     Type: hint
     Emotion: 8
     strUD: high
     KOR: "<color=\"green\">\uC544\uC9C1\uB3C4 \uC0AC\uB791\uD558\uC9C0\uB9CC</color>
       \uADF8\uB798\uC11C\uB294 \uB098\uB9CC \uC544\uD50C \uBFD0\uC774\uC57C."
-    ENG: 'I still love her, but it''ll only hurt me worse. '
+    ENG: '<color="green">I still love her,</color> but it''ll only hurt me worse. '
   - GuestID: 6
     Type: hint
     Emotion: 4
@@ -496,8 +510,8 @@ MonoBehaviour:
     KOR: "\uADF8 \uC560\uAC00 \uBC14\uB78C\uD53C\uC6B4 \uAC74 \uACE0\uD1B5\uC2A4\uB7FD\uC9C0\uB9CC,
       \uC0AC\uC2E4\uC774\uC57C\u2026 <color=\"green\">\uADF8 \uC120\uD0DD\uC744 \uBC1B\uC544\uB4E4\uC5EC\uC11C\uB294
       \uC548 \uB3FC.</color>"
-    ENG: 'It''s a painful truth that she did indeed cheat on me... I shouldn''t accept
-      her choices. '
+    ENG: It's a painful truth that she did indeed cheat on me... <color="green">I
+      shouldn't accept her choices. </color>
   - GuestID: 6
     Type: summary
     Emotion: -1
@@ -548,15 +562,16 @@ MonoBehaviour:
     KOR: "\uAD00\uC911\uC11D\uC5D0 \uC788\uB294 \uBAA8\uB4E0 \uC774\uB4E4\uC744 \uAC10\uC790\uB77C\uACE0
       \uC0DD\uAC01\uD574\uBCF4\uC790\u2026 <color=\"red\">\uAD00\uC911\uC740 \uC0DD\uAC01\uBCF4\uB2E4
       \uC791\uC544.</color>"
-    ENG: 'Let''s think of the audience as a bunch of potatoes... they''re much smaller
-      than I think. '
+    ENG: Let's think of the audience as a bunch of potatoes... <color="red">they're
+      much smaller than I think. </color>
   - GuestID: 7
     Type: hint
     Emotion: 15
     strUD: low
     KOR: "\uBAA8\uB4E0 \uAC8C \uC798\uB420 \uAC70\uC57C. <color=\"red\">\uC870\uAE08\uB9CC
       \uB354 \uB099\uCC9C\uC801\uC73C\uB85C \uC0DD\uAC01\uD574\uBCF4\uC790.</color>"
-    ENG: 'Everything will be okay. Let''s think a bit more positively. '
+    ENG: Everything will be okay. <color="red">Let's think a bit more positively.
+      </color>
   - GuestID: 7
     Type: hint
     Emotion: 4
@@ -564,8 +579,8 @@ MonoBehaviour:
     KOR: "\uB0B4\uAC00 \uC900\uBE44\uB418\uB4E0 \uC548 \uB418\uB4E0, \uB300\uD68C
       \uB0A0\uC9DC\uB294 \uB2E4\uAC00\uC62C \uAC70\uC57C. <color=\"red\">\uBC1B\uC544\uB4E4\uC5EC\uC57C
       \uD574. </color>"
-    ENG: 'Whether I''m ready or not, the contest is bound to happen. I have to take
-      that in. '
+    ENG: Whether I'm ready or not, the contest is bound to happen. <color="red">I
+      have to take that in. </color>
   - GuestID: 7
     Type: hint
     Emotion: 18
@@ -573,8 +588,8 @@ MonoBehaviour:
     KOR: "\uBB34\uB300\uB9CC \uC62C\uB77C\uAC00\uBA74 \uBA38\uB9BF\uC18D\uC774 \uC0C8\uD558\uC598\uC838.
       <color=\"green\">\uC5BC\uC5B4\uBD99\uC740 \uBAB8\uC774 \uC870\uAE08\uB9CC \uD480\uB9AC\uBA74
       \uC88B\uACA0\uB294\uB370\u2026</color>"
-    ENG: 'My mind draws a blank the second I step on stage... I wish I could stop
-      freezing like that... '
+    ENG: My mind draws a blank the second I step on stage... <color="green">I wish
+      I could stop freezing like that... </color>
   - GuestID: 7
     Type: hint
     Emotion: 19
@@ -582,7 +597,8 @@ MonoBehaviour:
     KOR: "\uC62C\uB77C\uAC00\uBA74 \uC2DC\uC120\uC744 \uC5B4\uB5BB\uAC8C \uACAC\uB38C\uC57C
       \uD558\uC9C0\u2026 \uB108\uBB34 <color=\"green\">\uD63C\uB780\uC2A4\uB7EC\uC6CC.
       </color>"
-    ENG: 'How will I handle those eyes staring at me...? I''m baffled. '
+    ENG: How will I handle those eyes staring at me...? <color="green">I'm baffled.
+      </color>
   - GuestID: 7
     Type: summary
     Emotion: -1
@@ -644,7 +660,7 @@ MonoBehaviour:
     KOR: "\uB0B4\uAC00 \uB108\uBB34 \uAC00\uB9CC\uD788\uB9CC \uC788\uC5C8\uB098 \uBD10.
       <color=\"red\">\uC870\uAE08 \uB354 \uD654\uB09C \uBAA8\uC2B5\uC744 \uBCF4\uC5EC\uC92C\uC5B4\uC57C
       \uD588\uB098?</color>"
-    ENG: Maybe I stayed too quiet. Should I have shown more anger?
+    ENG: Maybe I stayed too quiet. <color="red">Should I have shown more anger?</color>
   - GuestID: 8
     Type: hint
     Emotion: 13
@@ -652,8 +668,8 @@ MonoBehaviour:
     KOR: "\uB0B4\uAC00 \uBD84\uBA85\uD788 \uADF8\uB7F0 \uC7A5\uB09C\uC740 \uC2EB\uC5B4\uD55C\uB2E4\uACE0
       \uB9D0\uD560 \uC218 \uC788\uC5B4\uC57C \uD574\u2026 <color=\"red\">\uACBD\u2026
       \uBB50\uC600\uB358 \uAC83 \uAC19\uC740\uB370.</color>"
-    ENG: 'I need to be able to tell them I hate being teased like that... What was
-      the word? Contem... something. '
+    ENG: I need to be able to tell them I hate being teased like that... <color="red">What
+      was the word? Contem... something. </color>
   - GuestID: 8
     Type: hint
     Emotion: 9
@@ -662,8 +678,8 @@ MonoBehaviour:
       \uD558\uC168\uC9C0\uB9CC, \uC560\uB4E4\uC774 \uB098\uB97C \uACC4\uC18D \uAD34\uB86D\uD78C\uB2E4\uBA74
       <color=\"green\">\uADF8\uB7F0 \uADDC\uCE59\uC5D0\uB294 \uC21C\uC885\uD558\uAE30
       \uC2EB\uC5B4.</color>"
-    ENG: 'Our teacher told us not to fight, but if they''re not gonna stop picking
-      on me, I don''t want to obey that rule. '
+    ENG: Our teacher told us not to fight, but if they're not gonna stop picking
+      on me, <color="green">I don't want to obey that rule. </color>
   - GuestID: 8
     Type: hint
     Emotion: 12
@@ -671,15 +687,15 @@ MonoBehaviour:
     KOR: "\uB0B4 \uC798\uBABB\uC774 \uC544\uB2CC\uB370\uB3C4, <color=\"green\">\uB0B4\uAC00
       \uC131\uACA9\uC774 \uC18C\uC2EC\uD574\uC11C \uADF8\uB7F0 \uAC78 \uAC70\uB77C\uB294
       \uC0DD\uAC01\uC774</color> \uC790\uAFB8 \uB4E4\uC5B4."
-    ENG: 'Even if it''s not my fault, I can''t stop thinking that it might be my
-      timid personality that caused this. '
+    ENG: Even if it's not my fault, <color="green">I can't stop thinking that it
+      might be my timid personality that caused this. </color>
   - GuestID: 8
     Type: hint
     Emotion: 6
     strUD: high
     KOR: "\uB0B4\uAC00 \uADF8\uB7F0 \uC7A5\uB09C\uC740 <color=\"red\">\uC9D5\uADF8\uB7EC\uC6CC\uD55C\uB2E4\uB294
       \uAC78</color> \uC54C\uB824\uC918\uC57C \uD574."
-    ENG: 'I need to show them I''m disgusted by their action. '
+    ENG: I need to show them <color="red">I'm disgusted by their action. </color>
   - GuestID: 8
     Type: summary
     Emotion: -1
@@ -731,14 +747,14 @@ MonoBehaviour:
     KOR: "\uB0B4\uAC00 \uB108\uBB34 \uC791\uAC8C \uB290\uAEF4\uC838\u2026 \uC0AC\uC7A5\uB2D8\uC5D0
       \uB300\uD55C <color=\"green\">\uACBD\uC678\uC2EC\uC774 \uCEE4\uC11C \uADF8\uB7F0
       \uAC78\uAE4C? </color>"
-    ENG: I feel so small... is this because I am awed by my boss?
+    ENG: I feel so small... <color="green">is this because I am awed by my boss?</color>
   - GuestID: 9
     Type: hint
     Emotion: 0
     strUD: low
     KOR: "\uC608\uC804\uC5D0 \uBE44\uD574\uC11C \uBB54\uAC00 \uD574\uB0B4\uB3C4 <color=\"red\">\uADF8\uB2E4\uC9C0
       \uAE30\uC058\uC9C0 \uC54A\uC544\u2026</color>"
-    ENG: 'I don''t feel happy with anything I do anymore... '
+    ENG: '<color="red">I don''t feel happy </color>with anything I do anymore... '
   - GuestID: 9
     Type: hint
     Emotion: 11
@@ -746,8 +762,8 @@ MonoBehaviour:
     KOR: "\uC0AC\uC7A5\uB2D8\uC740 \uB0B4 \uC5B4\uB514\uAC00 \uADF8\uB807\uAC8C \uBABB
       \uBBF8\uB354\uC6B0\uC2E0 \uAC70\uC57C?! \uC774\uB798\uC11C\uC57C <color=\"green\">\uC81C\uC790\uC758
       \uBC18\uBC1C\uAC10\uB9CC \uC0AC\uAC8C \uB418\uC2E0\uB2E4\uACE0\u2026</color>"
-    ENG: 'What does my boss hate so much about me?! He''s only going to push his
-      students away with that attitude... '
+    ENG: 'What does my boss hate so much about me?! <color="green">He''s only going
+      to push his students away with that attitude...</color> '
   - GuestID: 9
     Type: hint
     Emotion: 9
@@ -755,8 +771,8 @@ MonoBehaviour:
     KOR: "\uC5D0\uD6A8\u2026 \uADF8\uB798\uB3C4, \uAC00\uB974\uCCD0\uC8FC\uC2DC\uB294
       \uAC74 \uC804\uBD80 \uB9DE\uB294 \uB9D0\uC774\uB2C8\uAE4C \uADF8\uB7F0 \uBA74\uC5D0\uC11C
       <color=\"red\">\uB098\uB3C4 \uC21C\uC885\uD574\uC57C\uC9C0.</color>"
-    ENG: 'Ugh... but he''s always right when it''s about baking, so I''ll just have
-      to obey. '
+    ENG: Ugh... but he's always right when it's about baking, <color="red">so I'll
+      just have to obey. </color>
   - GuestID: 9
     Type: hint
     Emotion: 17
@@ -764,8 +780,8 @@ MonoBehaviour:
     KOR: "\uB098\uB294 \uC2A4\uC2B9\uB2D8\uC774 \uC2EB\uC9C0\uB9CC, \uC874\uACBD\uD558\uB294
       \uB9C8\uC74C\uB3C4 \uB4E4\uC5B4. <color=\"red\">\uBB58\uAE4C, \uC774 \uC0AC\uB791\uACFC
       \uC99D\uC624\uAC00 \uC11E\uC778 \uAC10\uC815\uC740? </color>"
-    ENG: 'I hate my boss, as much as I respect him. What''s up with this love-hate
-      I feel toward him? '
+    ENG: I hate my boss, as much as I respect him. <color="red">What's up with this
+      love-hate I feel toward him? </color>
   - GuestID: 9
     Type: summary
     Emotion: -1
@@ -818,14 +834,16 @@ MonoBehaviour:
     strUD: high
     KOR: "\uC544\uC9C1\uB3C4 <color=\"green\">\uB180\uB780 \uB9C8\uC74C</color>\uC774
       \uC9C4\uC815\uC774 \uC548 \uB3FC. \uD63C\uB780\uC2A4\uB7EC\uC6CC\u2026"
-    ENG: 'I''m still taken aback by what happened... I''m perplexed... '
+    ENG: '<color="green">I''m still taken aback</color> by what happened... I''m
+      perplexed... '
   - GuestID: 10
     Type: hint
     Emotion: 4
     strUD: low
     KOR: "\uC774\uBBF8 \uC77C\uC5B4\uB09C \uC77C\uC774\uB2C8\uAE4C \uC5B4\uCA54 \uC218
       \uC5C6\uC774 <color=\"red\">\uBC1B\uC544\uB4E4\uC5EC\uC57C \uD574.</color>"
-    ENG: 'But I can''t change what happened already. I need to accept that. '
+    ENG: But I can't change what happened already. <color="red">I need to accept
+      that. </color>
   - GuestID: 10
     Type: hint
     Emotion: 9
@@ -833,8 +851,8 @@ MonoBehaviour:
     KOR: "\uADF8\uB798, \uC5C4\uB9C8\uB3C4 \uC2EB\uC9C0\uB9CC \uB098\uB97C \uC704\uD574\uC11C
       \uC794\uC18C\uB9AC\uD558\uC2E0 \uAC70\uC57C\u2026 <color=\"red\">\uB098\uB3C4
       \uC870\uAE08\uC740 \uC5C4\uB9C8 \uB9D0\uC500\uC744 \uC798 \uB4E4\uC5B4\uC57C\uC9C0.</color>"
-    ENG: 'Yeah, it''s not like mom likes nagging at me, it was for me... I''ll need
-      to be at least somewhat obedient. '
+    ENG: Yeah, it's not like mom likes nagging at me, it was for me... <color="red">I'll
+      need to be at least somewhat obedient. </color>
   - GuestID: 10
     Type: hint
     Emotion: 12
@@ -842,7 +860,8 @@ MonoBehaviour:
     KOR: "\uB0B4\uAC00 \uBA4B\uB300\uB85C \uAD74\uC9C0\uB9CC \uC54A\uC558\uB354\uB77C\uB3C4
       \uC774\uB7F0 \uC77C\uC740 \uC77C\uC5B4\uB098\uC9C0 \uC54A\uC558\uC744 \uD150\uB370\u2026
       <color=\"green\">\uB0B4 \uC798\uBABB\uC774\uC57C\u2026</color>"
-    ENG: 'This wouldn''t have happened if I wasn''t so stubborn... it''s all my fault... '
+    ENG: This wouldn't have happened if I wasn't so stubborn... <color="green">it's
+      all my fault... </color>
   - GuestID: 10
     Type: hint
     Emotion: 6
@@ -850,8 +869,8 @@ MonoBehaviour:
     KOR: "\uC5B4\uB5BB\uAC8C \uC5C4\uB9C8\uD55C\uD14C \uADF8\uB7F0 \uB9D0\uC744 \uD560
       \uC218\uAC00 \uC788\uC9C0\u2026 <color=\"green\">\uB0B4\uAC00 \uB108\uBB34
       \uD610\uC624\uC2A4\uB7EC\uC6CC.</color>"
-    ENG: 'How could I have said such things to my own mother... I''m a disgusting
-      human being. '
+    ENG: How could I have said such things to my own mother... <color="green">I'm
+      a disgusting human being. </color>
   - GuestID: 10
     Type: summary
     Emotion: -1
@@ -910,8 +929,8 @@ MonoBehaviour:
       \uC5B4\uB290 \uC815\uB3C4\uC758 <color=\"green\">\uAE30\uB300\uB97C \uD558\uACA0\uC9C0\u2026</color>
       \uADF8\uC5D0 \uBD80\uC751\uD558\uAE30 \uC704\uD574\uC11C\uB294 \uB0B4\uAC00
       \uB354 \uB178\uB825\uD574\uC57C\uB9CC \uD574. "
-    ENG: 'I bet the other person always expects me to be a fun person... To meet
-      that expectation, I need to work harder. '
+    ENG: 'I bet the other person always <color="green">expects me to be a fun person...</color>
+      To meet that expectation, I need to work harder. '
   - GuestID: 11
     Type: hint
     Emotion: 1
@@ -919,29 +938,31 @@ MonoBehaviour:
     KOR: "<color=\"green\">\uD56D\uC0C1 \uB108\uBB34 \uBD88\uC548\uD574\u2026</color>
       \uC815\uB9D0\uB85C \uC0AC\uB78C\uB4E4\uACFC \uAC00\uAE4C\uC6CC\uC9C8 \uC218
       \uC788\uC744\uAE4C?"
-    ENG: I'm so nervous all the time... Can I really have a close relationship with
-      people?
+    ENG: <color="green">I'm so nervous all the time...</color> Can I really have
+      a close relationship with people?
   - GuestID: 11
     Type: hint
     Emotion: 4
     strUD: low
     KOR: "\uB098\uB294 \uC774\uB7F0 <color=\"red\">\uB0B4 \uBAA8\uC2B5\uC744 \uC218\uC6A9\uD560
       \uC218 \uC5C6\uC5B4.</color> \uBC14\uB00C\uC5B4\uC57C\uB9CC \uD574."
-    ENG: 'I can''t accept this side of me. I need to change. '
+    ENG: '<color="red">I can''t accept this side of me.</color> I need to change. '
   - GuestID: 11
     Type: hint
     Emotion: 9
     strUD: low
     KOR: "\uC0AC\uD68C\uC5D0 \uB9DE\uCD94\uB824\uACE0 \uCD5C\uB300\uD55C <color=\"red\">\uC21C\uC885\uD558\uB294\uB370\uB3C4</color>
       \uC798 \uC548\uB418\uB124\u2026"
-    ENG: 'I''m trying to bend myself to fit in, but it''s not working... '
+    ENG: '<color="red">I''m trying to bend myself to fit in,</color> but it''s not
+      working... '
   - GuestID: 11
     Type: hint
     Emotion: 18
     strUD: high
     KOR: "\uC544\uC9C1\uB3C4 \uC0AC\uB78C\uB4E4\uACFC \uB300\uD654\uD558\uB2E4 \uBCF4\uBA74
       <color=\"green\">\uC810\uC810 \uC5BC\uC5B4\uBD99\uAC8C \uB3FC.</color>"
-    ENG: 'I start to slowly freeze up whenever I strike up a conversation... '
+    ENG: '<color="green">I start to slowly freeze up</color> whenever I strike up
+      a conversation... '
   - GuestID: 11
     Type: summary
     Emotion: -1
@@ -1001,7 +1022,8 @@ MonoBehaviour:
     KOR: "\uC544\uBB34\uB9AC \uCE5C\uAD6C\uB4E4\uC774\uC5B4\uB3C4, \uB0B4 \uAC70\uC808\uC744
       <color=\"red\">\uBC1B\uC544\uB4E4\uC774\uC9C0 \uBABB\uD560 \uC218\uB3C4 \uC788\uC5B4\u2026
       </color>"
-    ENG: 'Even if they''re my friends, they might not accept my refusal... '
+    ENG: Even if they're my friends, <color="red">they might not accept my refusal...
+      </color>
   - GuestID: 12
     Type: hint
     Emotion: 11
@@ -1009,14 +1031,16 @@ MonoBehaviour:
     KOR: "\uAC70\uC808\uD558\uAE30 \uC704\uD574\uC11C \uB0B4\uAC00 \uBD80\uC871\uD55C
       \uAC10\uC815\uC774 \uBB58\uAE4C\u2026 <color=\"red\">\uBC18\uBC1C\uAC10\uC774
       \uBD80\uC871\uD55C\uAC00?</color>"
-    ENG: 'What do I lack that''s necessary for rejection...? Perhaps it''s disapproval? '
+    ENG: What do I lack that's necessary for rejection...? <color="red">Perhaps it's
+      disapproval? </color>
   - GuestID: 12
     Type: hint
     Emotion: 9
     strUD: high
     KOR: "\uB0B4\uAC00 \uB108\uBB34 \uCE5C\uAD6C\uB4E4\uC774 \uD558\uC790\uB294 \uB300\uB85C
       <color=\"green\">\uC21C\uC885\uD574\uC640\uC11C \uADF8\uB7F0\uAC00\u2026</color>"
-    ENG: 'Maybe this happened because I always said yes to everything... '
+    ENG: Maybe this happened because I <color="green">always said yes to everything...
+      </color>
   - GuestID: 12
     Type: hint
     Emotion: 16
@@ -1024,7 +1048,7 @@ MonoBehaviour:
     KOR: "\uC801\uC5B4\uB3C4 \uD55C \uBC88\uCBE4\uC740 \uBB3C\uC5B4\uBD10 \uC8FC\uC9C0
       \uC54A\uC744\uAE4C \uD588\uB294\uB370\u2026 <color=\"green\">\uC501\uC4F8\uD558\uB124.
       </color>"
-    ENG: 'I thought they''d at least ask... I feel bitter. '
+    ENG: I thought they'd at least ask... <color="green">I feel bitter. </color>
   - GuestID: 12
     Type: hint
     Emotion: 3
@@ -1032,7 +1056,8 @@ MonoBehaviour:
     KOR: "\uD558\uAE30 \uC2EB\uB2E4\uB294 \uAC78 \uD655\uC2E4\uD788 \uBCF4\uC5EC\uC8FC\uB824\uBA74
       <color=\"red\">\uC57D\uAC04 \uC9DC\uC99D \uB09C \uD45C\uC815\uB3C4 \uC9C0\uC5B4\uC57C
       \uD558\uB824\uB098?</color>"
-    ENG: 'If I want to show them I really mean it, should I make an annoyed face? '
+    ENG: If I want to show them I really mean it, <color="red">should I make an annoyed
+      face? </color>
   - GuestID: 12
     Type: summary
     Emotion: -1
@@ -1092,21 +1117,23 @@ MonoBehaviour:
     strUD: high
     KOR: "\uC65C \uC4F8\uB370\uC5C6\uC774 \uC5B8\uB2C8\uC5D0\uAC8C <color=\"green\">\uACF5\uACA9\uC801\uC73C\uB85C
       \uAD6C\uB294 \uAC78\uAE4C\u2026</color>"
-    ENG: Why am I so aggressive toward my sister, for no reason...
+    ENG: Why am I so <color="green">aggressive toward my sister,</color> for no reason...
   - GuestID: 13
     Type: hint
     Emotion: 15
     strUD: low
     KOR: "\uB0B4\uAC00 \uB108\uBB34 \uBD80\uC815\uC801\uC73C\uB85C \uAD6C\uB098?
       <color=\"red\">\uC870\uAE08\uB9CC \uB099\uCC9C\uC801\uC73C\uB85C \uC0DD\uAC01\uD574\uBD10\uC57C\uC9C0\u2026</color>"
-    ENG: 'Am I being too negative? Maybe I should think more optimistically... '
+    ENG: Am I being too negative? <color="red">Maybe I should think more optimistically...
+      </color>
   - GuestID: 13
     Type: hint
     Emotion: 1
     strUD: high
     KOR: "\uC554\uB9CC \uC5F4\uC2EC\uD788 \uD574\uB3C4 \uBD80\uBAA8\uB2D8\uAED8\uC11C
       \uC2E4\uB9DD\uD558\uC2DC\uBA74 \uC5B4\uCA4C\uC9C0\u2026 <color=\"green\">\uBD88\uC548\uD558\uB124\u2026</color>"
-    ENG: 'What if my parents are never satiated, after all my effort... I''m nervous... '
+    ENG: What if my parents are never satiated, after all my effort... <color="green">I'm
+      nervous... </color>
   - GuestID: 13
     Type: hint
     Emotion: 17
@@ -1115,8 +1142,9 @@ MonoBehaviour:
       \uB0B4\uAC00 \uAC16\uC9C0 \uBABB\uD55C \uC0AC\uB791\uC744 \uBC1B\uC544\uC11C
       \uC9C8\uD22C\uAC00 \uB098\u2026 <color=\"green\">\uBBF8\uC6CC\uD558\uACE0 \uC2F6\uC9C0
       \uC54A\uC740\uB370, \uC560\uC99D\uC774 \uB108\uBB34 \uD06C\uB124.</color>"
-    ENG: 'Though I love my sister very much, I''m jealous of all the love she received...
-      I don''t want to hate her, but I have mixed feelings of both love and hatred. '
+    ENG: Though I love my sister very much, I'm jealous of all the love she received...
+      I don't want to hate her, but <color="green">I have mixed feelings of both
+      love and hatred. </color>
   - GuestID: 13
     Type: hint
     Emotion: 12
@@ -1125,8 +1153,8 @@ MonoBehaviour:
       \uC5C4\uB9C8 \uC544\uBE60\uAC00 \uB098\uB97C \uB354 \uBD10\uC8FC\uC168\uC744
       \uD150\uB370\u2026 <color=\"green\">\uC5B8\uB2C8\uB294 \uADF8\uB7F0 \uB098\uB354\uB7EC
       \uC790\uCC45\uD558\uC9C0 \uB9D0\uB77C\uACE0 \uD588\uC5C8\uC9C0.</color>"
-    ENG: 'If I tried just a bit more, mom and dad would''ve paid more attention to
-      me... Sis used to tell me not to blame myself. '
+    ENG: If I tried just a bit more, mom and dad would've paid more attention to
+      me... <color="green">Sis used to tell me not to blame myself. </color>
   - GuestID: 13
     Type: summary
     Emotion: -1
@@ -1175,14 +1203,16 @@ MonoBehaviour:
     strUD: low
     KOR: "\uB098\uB3C4 \uC5B4\uB974\uB2C8 \uB418\uACE0 \uC2DC\uD37C. \uAE30\uB2E4\uB9AC\uB294
       \uAC74 \uC2DC\uB7EC, <color=\"red\">\uAE30\uB300\uAC00 \uC548\uB300.</color>"
-    ENG: 'Want to be adult. Don''t like wait, wait too long. Tiroo no interested. '
+    ENG: Want to be adult. Don't like wait, wait too long. <color="red">Tiroo no
+      interested. </color>
   - GuestID: 14
     Type: hint
     Emotion: 5
     strUD: high
     KOR: "\uC5C4\uB9C8\u2026 <color=\"green\">\uB208\uBB3C \uB098\uC640\uC11C \uB180\uB78F\uC11C.</color>
       \uC5B4\uB978\uB3C4 \uC6B0\uB294 \uAC70\uC57C? \uC798 \uBAA8\uB974\uACA0\uC11C."
-    ENG: 'Mama... teardrop, surprise Tiroo. Adults cry too? I don''t know. '
+    ENG: 'Mama... <color="green">teardrop, surprise Tiroo.</color> Adults cry too?
+      I don''t know. '
   - GuestID: 14
     Type: hint
     Emotion: 1
@@ -1190,8 +1220,8 @@ MonoBehaviour:
     KOR: "\uD2F0\uB8E8, \uC5C4\uB9C8\uAC00 \uB2E4\uCE60\uAE4C \uBD10 \uAC71\uC815\uB3FC.
       \uAD6C\uB984 \uBB3C \uB9CC\uB4E4 \uB54C <color=\"green\">\uAC00\uC2B4\uC774
       \uB450\uADFC\uB450\uADFC\uD574.</color>"
-    ENG: 'Tiroo, worried mama ouchy again. Cloud water makes Tiroo''s chest ba-dum
-      ba-dum. '
+    ENG: Tiroo, worried mama ouchy again. Cloud water makes <color="green">Tiroo's
+      chest ba-dum ba-dum. </color>
   - GuestID: 14
     Type: hint
     Emotion: 16
@@ -1199,15 +1229,16 @@ MonoBehaviour:
     KOR: "\uD2F0\uB8E8, \uC8FC\uC804\uC790 \uBB34\uAC70\uC5B4\u2026 \uC5C4\uB9C8\uAC00
       \uD2F0\uB8E8 \uC5BC\uAD74 \uBCF4\uACE0 <color=\"red\">\uC4F0\uC4F0\uD558\uB0D0\uACE0
       \uD558\uC168\uB294\uB370, \uADF8\uAC8C \uBB50\uC9C0?</color>"
-    ENG: 'Tiroo, kettle heavy... Mama looked at Tiroo, asked if Tiroo is bidder.
-      What''s bidder? '
+    ENG: Tiroo, kettle heavy... Mama looked at Tiroo, <color="red">asked if Tiroo
+      is bidder. What's bidder? </color>
   - GuestID: 14
     Type: hint
     Emotion: 3
     strUD: high
     KOR: "\uD788\uC789\u2026 \uD2F0\uB8E8\uB3C4 \uD560 \uC218 \uC788\uB294\uB370,
       \uC548 \uB304\uB300. <color=\"green\">\uC9DC\uC99D \uB098!</color>"
-    ENG: 'Awuh... Tiroo can do it, but mama said no. Tiroo annoyed! '
+    ENG: Awuh... Tiroo can do it, but mama said no. <color="green">Tiroo annoyed!
+      </color>
   - GuestID: 14
     Type: summary
     Emotion: -1
@@ -1270,9 +1301,9 @@ MonoBehaviour:
       \uD55C \uC0AC\uB78C\uC774\uACE0, \uB0B4 \uC778\uC0DD\uC5D0 \uD544\uC694 \uC5C6\uB294
       \uC911\uC694\uD558\uC9C0 \uC54A\uC740 \uC0AC\uB78C\uC774\uC57C. <color=\"red\">\uADF8
       \uC0AC\uB78C\uC740 \uB0B4\uAC00 \uC0DD\uAC01\uD55C \uAC83\uBCF4\uB2E4 \uC791\uB2E4\u2026</color>"
-    ENG: 'It doesn''t matter how much they hate me because it''s just one person
-      who doesn''t matter much in my life. They''re much smaller than I think they
-      are... '
+    ENG: It doesn't matter how much they hate me because it's just one person who
+      doesn't matter much in my life. <color="red">They're much smaller than I think
+      they are... </color>
   - GuestID: 15
     Type: hint
     Emotion: 0
@@ -1281,15 +1312,15 @@ MonoBehaviour:
       \uB354 \uD654\uB0B4\uC8FC\uB294 \uCE5C\uAD6C\uB4E4 \uB355\uBD84\uC5D0 \uC870\uAE08\uC740
       \uAE30\uBED0\u2026</color> \uB098\uB97C \uC9C4\uC2EC\uC73C\uB85C \uC0AC\uB791\uD574\uC8FC\uB294
       \uC0AC\uB78C\uC774 \uC788\uAD6C\uB098."
-    ENG: 'I''m a bit happy my friends are angrier than I am about the matter... Some
-      people love me. '
+    ENG: '<color="red">I''m a bit happy</color> my friends are angrier than I am
+      about the matter... Some people love me. '
   - GuestID: 15
     Type: hint
     Emotion: 5
     strUD: high
     KOR: "\uC544\uC9C1 <color=\"green\">\uB180\uB780 \uB9C8\uC74C\uC774 \uC9C4\uC815\uC774
       \uC548 \uB3FC\u2026</color>"
-    ENG: 'I''m still shocked about the whole thing... '
+    ENG: '<color="green">I''m still shocked</color> about the whole thing... '
   - GuestID: 15
     Type: hint
     Emotion: 1
@@ -1297,7 +1328,8 @@ MonoBehaviour:
     KOR: "\uADF8\uB7F0 \uC0AC\uB78C\uC774 \uB0B4 \uACC1\uC5D0 \uC788\uB294\uB370
       \uB098\uB294 \uADF8 \uC0AC\uB78C\uC744 \uBABB \uC54C\uC544\uBCF8\uB2E4\uB2C8\u2026
       <color=\"green\">\uBD88\uC548\uD574.</color>"
-    ENG: 'That person knows me, but I don''t know who they are... I''m anxious. '
+    ENG: That person knows me, but I don't know who they are... <color="green">I'm
+      anxious. </color>
   - GuestID: 15
     Type: hint
     Emotion: 2
@@ -1306,8 +1338,8 @@ MonoBehaviour:
       \uB300\uD588\uB294\uB370, \uBB58 \uC798\uBABB\uD574\uC11C \uADF8 \uC0AC\uB78C\uC774
       \uB0A0 \uADF8\uB807\uAC8C \uC2EB\uC5B4\uD558\uB294 \uAC78\uAE4C\u2026 <color=\"green\">\uC2AC\uD504\uB2E4.
       </color>"
-    ENG: 'I was being polite to everyone; what did they hate so much about me? I''m
-      heartbroken... '
+    ENG: I was being polite to everyone; what did they hate so much about me? <color="green">I'm
+      heartbroken... </color>
   - GuestID: 15
     Type: summary
     Emotion: -1
@@ -1356,8 +1388,8 @@ MonoBehaviour:
       \uC554\uB9CC \uB0B4 \uC544\uC774\uB4E4\uC774\uB77C \uD574\uB3C4 \uB0B4 \uC778\uC0DD\uC774
       \uC544\uB2CC\uB370 \uAD1C\uD788 \uC544\uC774\uB4E4\uC744 \uBD88\uD3B8\uD558\uAC8C
       \uB9CC\uB4E0 \uAC78\uC9C0\uB3C4 \uBAA8\uB974\uACA0\uAD70\u2026 \uB044\uC751. "
-    ENG: 'Everyone has their own life; maybe I made the kids uncomfortable because
-      I was being too nosy... Ugh. '
+    ENG: '<color="red">Everyone has their own life;</color> maybe I made the kids
+      uncomfortable because I was being too nosy... Ugh. '
   - GuestID: 16
     Type: hint
     Emotion: 14
@@ -1365,8 +1397,8 @@ MonoBehaviour:
     KOR: "<color=\"green\">\uB9D0\uD22C\uAC00 \uB108\uBB34 \uACF5\uACA9\uC801\uC774\uB77C\uB294\uB370,</color>
       \uB0B4\uAC00 \uD2C0\uB9B0 \uB9D0\uC744 \uD55C \uC801\uC740 \uC5C6\uC5B4\uC11C
       \uBB50\uAC00 \uBB38\uC81C\uC778\uC9C0 \uBAA8\uB974\uACA0\uC5B4."
-    ENG: 'I''ve had people tell me that I talk too aggressively, but I don''t see
-      what the problem is because I''m always right. '
+    ENG: '<color="green">I''ve had people tell me that I talk too aggressively,</color>
+      but I don''t see what the problem is because I''m always right. '
   - GuestID: 16
     Type: hint
     Emotion: 15
@@ -1375,22 +1407,23 @@ MonoBehaviour:
       \uB290\uAE0B\uD558\uACE0 \uAE0D\uC815\uC801\uC778 \uC544\uBC84\uC9C0\uAC00
       \uB420 \uD544\uC694\uAC00</color> \uC788\uB2E4\uACE0 \uB4E4\uC5C8\uC9C0\uB9CC\u2026
       \uC798 \uBAA8\uB974\uACA0\uAD70."
-    ENG: 'I heard I need to be a more laid-back, optimistic father to the kids, but...
-      I don''t know. '
+    ENG: 'I heard I need to be a more <color="red">laid-back, optimistic father</color>
+      to the kids, but... I don''t know. '
   - GuestID: 16
     Type: hint
     Emotion: 12
     strUD: low
     KOR: "\uC870\uAE08\uC774\uB77C\uB3C4 <color=\"red\">\uB0B4 \uC798\uBABB\uC774
       \uC788\uB294 \uAC74 \uC544\uB2C8\uACA0\uC9C0?</color>"
-    ENG: 'None of this should be my fault, right? '
+    ENG: '<color="red">None of this should be my fault,</color> right? '
   - GuestID: 16
     Type: hint
     Emotion: 3
     strUD: high
     KOR: "\uB0B4\uAC00 \uBB58 \uC5B4\uB5BB\uAC8C \uB354 \uD558\uB77C\uB294 \uAC70\uC57C?
       <color=\"green\">\uC9DC\uC99D \uB098\uB294\uAD70.</color>"
-    ENG: 'What more do they want me to do? This is getting annoying... '
+    ENG: What more do they want me to do? <color="green">This is getting annoying...
+      </color>
   - GuestID: 16
     Type: summary
     Emotion: -1
@@ -1448,8 +1481,8 @@ MonoBehaviour:
     strUD: low
     KOR: "\uB098\uB97C \uC0AC\uB791\uD574\uC8FC\uB294 \uC0AC\uB78C\uC774 \uC788\uB2E4\uB294
       \uC810, <color=\"red\">\uC0AC\uC2E4 \uAE30\uC058\uAE34 \uD558\uB124\u2026</color>"
-    ENG: 'It actually makes me pretty happy to know that there''s someone who loves
-      me... '
+    ENG: '<color="red">It actually makes me pretty happy</color> to know that there''s
+      someone who loves me... '
   - GuestID: 17
     Type: hint
     Emotion: 11
@@ -1458,8 +1491,8 @@ MonoBehaviour:
       \uC774\uB7F0 \uAC10\uC815\uC744 \uB290\uB084 \uC218\uAC00 \uC788\uB294 \uAC74\uC9C0.
       <color=\"green\">\uC774\uB7F0 \uAC10\uC815\uC5D0 \uB300\uD574\uC11C\uB294 \uBC18\uBC1C\uAC10\uC744
       \uAC16\uB294 \uAC8C \uB9DE\uACA0\uC9C0. </color>"
-    ENG: 'How could I have such a feeling when I already had a husband...? It must
-      be only right for me to disapprove of such a thing. '
+    ENG: How could I have such a feeling when I already had a husband...? <color="green">It
+      must be only right for me to disapprove of such a thing. </color>
   - GuestID: 17
     Type: hint
     Emotion: 4
@@ -1468,8 +1501,8 @@ MonoBehaviour:
       \uD560 \uC218\uB294 \uC5C6\uC5B4. <color=\"red\">\uB098\uC05C \uAC10\uC815\uC774\uB77C\uB3C4
       \uC0DD\uACBC\uB2E4\uB294 \uC810\uC740 \uBD80\uC815\uD560 \uC218 \uC5C6\uC73C\uB2C8
       \uBC1B\uC544\uB4E4\uC5EC\uC57C \uD574.</color>"
-    ENG: 'I can''t continue to deny I don''t have any feelings for him. I must accept
-      that even if it''s a forbidden emotion I shouldn''t have. '
+    ENG: 'I can''t continue to deny I don''t have any feelings for him. <color="red">I
+      must accept that even if it''s a forbidden emotion I shouldn''t have.</color> '
   - GuestID: 17
     Type: hint
     Emotion: 12
@@ -1477,14 +1510,15 @@ MonoBehaviour:
     KOR: "\uD734\u2026 \uC65C \uC774\uB807\uAC8C \uB418\uB3C4\uB85D \uB098 \uC790\uC2E0\uC744
       \uB0B4\uBC84\uB824\uB454 \uAC74\uC9C0. <color=\"green\">\uB098\uB3C4 \uC815\uB9D0\uC774\uC9C0
       \uC8C4 \uB9CE\uC740 \uC0AC\uB78C\uC774\uC57C\u2026</color>"
-    ENG: 'Phew... why did I let myself fall for him? I''m such a sinful woman... '
+    ENG: Phew... why did I let myself fall for him? <color="green">I'm such a sinful
+      woman... </color>
   - GuestID: 17
     Type: hint
     Emotion: 19
     strUD: high
     KOR: "\uC55E\uC73C\uB85C \uC5B4\uB5BB\uAC8C \uD574\uC57C \uD560\uC9C0 \uBAA8\uB974\uACA0\uC5B4.
       <color=\"green\">\uD63C\uB780\uC2A4\uB7EC\uC6CC\u2026</color>"
-    ENG: 'I don''t know what to do. I''m confused... '
+    ENG: I don't know what to do. <color="green">I'm confused... </color>
   - GuestID: 17
     Type: summary
     Emotion: -1
@@ -1540,8 +1574,8 @@ MonoBehaviour:
     KOR: "\uC5B4\uB5BB\uAC8C \uBAB8\uC774 \uC774\uB807\uAC8C \uB420 \uC218\uAC00
       \uC788\uC9C0? <color=\"green\">\uAC70\uC6B8\uC5D0 \uBE44\uCE5C \uB0B4 \uBAA8\uC2B5\uC744
       \uACBD\uBA78\uD574.</color>"
-    ENG: 'How can a body even look like this? I absolutely abhor my reflection in
-      the mirror. '
+    ENG: How can a body even look like this? <color="green">I absolutely abhor my
+      reflection in the mirror. </color>
   - GuestID: 18
     Type: hint
     Emotion: 7
@@ -1549,24 +1583,24 @@ MonoBehaviour:
     KOR: "\uBBF8\uB798\uC5D0 \uB300\uD574 <color=\"red\">\uC804\uD600 \uAE30\uB300\uB418\uC9C8
       \uC54A\uC544.</color> 10\uB144\uC774 \uC9C0\uB098\uB3C4 \uB611\uAC19\uC744
       \uAC70\uC57C\u2026"
-    ENG: 'I can''t imagine what my future would be like. I''ll be the same in 10
-      years. '
+    ENG: '<color="red">I can''t imagine what my future would be like.</color> I''ll
+      be the same in 10 years. '
   - GuestID: 18
     Type: hint
     Emotion: 8
     strUD: low
     KOR: "\uC790\uC2E0\uC744 \uC0AC\uB791\uD558\uB77C\uB294\uB370, <color=\"red\">\uC774\uB7F0
       \uBAB8\uC744 \uC5B4\uB5BB\uAC8C \uC0AC\uB791\uD574?</color>"
-    ENG: 'They keep telling me to love myself, but how do I love someone with a body
-      like this? '
+    ENG: They keep telling me to love myself, <color="red">but how do I love someone
+      with a body like this? </color>
   - GuestID: 18
     Type: hint
     Emotion: 2
     strUD: high
     KOR: "\uB098\uB3C4 \uB0A8\uB4E4\uCC98\uB7FC \uB418\uACE0 \uC2F6\uC744 \uBFD0\uC778\uB370,
       \uC65C \uC774\uB807\uAC8C \uC5B4\uB824\uC6B4 \uAC78\uAE4C\u2026 <color=\"green\">\uC6B8\uC801\uD558\uB2E4.</color>"
-    ENG: 'I just wanted to be like others, why does it have to be so hard... I''m
-      depressed. '
+    ENG: I just wanted to be like others, why does it have to be so hard... <color="green">I'm
+      depressed. </color>
   - GuestID: 18
     Type: hint
     Emotion: 3
@@ -1575,7 +1609,7 @@ MonoBehaviour:
       \uC9C0\uB098\uBA74 \uD3ED\uC2DD\uD574\uBC84\uB824. <color=\"green\">\uC758\uC9C0\uAC00
       \uB108\uBB34 \uC57D\uD574\uC11C \uC9DC\uC99D \uB098\u2026 </color>"
     ENG: 'Even if I try to control the amount of food I have, I''ll binge eat again
-      in a few days. It''s so annoying how weak-willed I am... '
+      in a few days. <color="green">It''s so annoying how weak-willed I am...</color> '
   - GuestID: 18
     Type: summary
     Emotion: -1
@@ -1631,22 +1665,22 @@ MonoBehaviour:
       \uD589\uB3D9\uC5D0 \uB300\uD574 \uC598\uAE30\uD588\uB294\uAC78\u2026! \uC790\uAFB8
       \uC2EB\uC740 \uAC78 \uD574\uB300\uB2C8\uAE4C <color=\"green\">\uB098\uB3C4
       \uACF5\uACA9\uC801\uC73C\uB85C \uB300\uD560 \uC218\uBC16\uC5D0 \uC5C6\uC5C8\uC5B4.</color>"
-    ENG: 'But I told them multiple times about my pet peeve...! I had to get aggressive
-      because they kept doing something I didn''t like. '
+    ENG: But I told them multiple times about my pet peeve...! <color="green">I had
+      to get aggressive because they kept doing something I didn't like. </color>
   - GuestID: 19
     Type: hint
     Emotion: 7
     strUD: high
     KOR: "\uB0B4\uAC00 \uB0A8\uC5D0\uAC8C \uAC70\uB294 <color=\"green\">\uAE30\uB300\uAC00
       \uB108\uBB34 \uB192\uC740\uC9C0\uB3C4 \uBAA8\uB974\uACA0\uB124.</color>"
-    ENG: 'Maybe I expect too much from people. '
+    ENG: 'Maybe <color="green">I expect too much</color> from people. '
   - GuestID: 19
     Type: hint
     Emotion: 16
     strUD: high
     KOR: "\uC5B8\uC81C\uAE4C\uC9C0 \uC774\uB7F0 \uC77C\uC774 \uBC18\uBCF5\uB420\uAE4C\u2026
       <color=\"green\">\uC501\uC4F8\uD574.</color>"
-    ENG: 'When will this all end...? I feel bitter... '
+    ENG: When will this all end...? <color="green">I feel bitter... </color>
   - GuestID: 19
     Type: hint
     Emotion: 8
@@ -1655,8 +1689,8 @@ MonoBehaviour:
       \uAD74\uC5C8\uC744\uC9C0\uB3C4 \uBAB0\uB77C. <color=\"red\">\uC880 \uB354 \uC0AC\uB791\uD558\uB294
       \uB9C8\uC74C\uC73C\uB85C,</color> \uC791\uC740 \uAC74 \uB118\uAE30\uB294 \uBC95\uB3C4
       \uC54C\uC544\uC57C\uC9C0."
-    ENG: 'Yeah, I may have been a stickler... What if I turned a blind eye to trivial
-      things, with some love? '
+    ENG: Yeah, I may have been a stickler... <color="red">What if I turned a blind
+      eye to trivial things, with some love? </color>
   - GuestID: 19
     Type: hint
     Emotion: 18
@@ -1665,8 +1699,8 @@ MonoBehaviour:
       \uD574\uC11C \uB9C8\uC74C\uC744 \uC9C4\uC815\uC2DC\uCF1C\uC57C\uACA0\uC5B4.
       <color=\"red\">\uB098\uB294 \uC0DD\uAC01\uC774 \uB108\uBB34 \uB9CE\uC73C\uB2C8
       \uC57D\uAC04\uC758 \uC5BC\uC5B4\uBD99\uC74C\uC774 \uD544\uC694\uD574.</color>"
-    ENG: 'I''d better breathe deeply to calm down before I act. I think too much,
-      so I''ll need to freeze up a bit. '
+    ENG: I'd better breathe deeply to calm down before I act. <color="red">I think
+      too much, so I'll need to freeze up a bit. </color>
   - GuestID: 19
     Type: summary
     Emotion: -1
@@ -1742,8 +1776,8 @@ MonoBehaviour:
     KOR: "\uD639\uC2DC\uB098 \uADF8 \uB140\uC11D\uC774 \uB098\uB97C \uB610 \uAD34\uB86D\uD788\uB824
       \uD560 \uC218\uB3C4 \uC788\uC73C\uB2C8, <color=\"red\">\uCD5C\uC18C\uD55C \uB0B4
       \uBAB8\uC744 \uC9C0\uD0AC \uC815\uB3C4\uC758 \uACF5\uACA9\uC131\uC774 \uD544\uC694\uD558\uACA0\uC5B4.</color>"
-    ENG: 'I''ll need some aggression within me to protect myself, in case he tries
-      to pick on me again. '
+    ENG: '<color="red">I''ll need some aggression within me to protect myself,</color>
+      in case he tries to pick on me again. '
   - GuestID: 20
     Type: hint
     Emotion: 8
@@ -1752,8 +1786,8 @@ MonoBehaviour:
       \uAD70\uB2E4\uACE0 \uD574\uB3C4, <color=\"red\">\uB098\uB97C \uC0AC\uB791\uD558\uB294
       \uCE5C\uAD6C\uB4E4\uC774 \uC9C0\uCF1C\uC904 \uD14C\uB2C8 \uAD1C\uCC2E\uC744
       \uAC70\uC57C.</color>"
-    ENG: 'It''ll be okay even if the guy tries to pounce on me; my friends who love
-      me will protect me. '
+    ENG: It'll be okay even if the guy tries to pounce on me; <color="red">my friends
+      who love me will protect me. </color>
   - GuestID: 20
     Type: hint
     Emotion: 16
@@ -1764,8 +1798,8 @@ MonoBehaviour:
       \uC2DC\uAC04 \uB2F9\uD558\uAE30\uB9CC \uD588\uC9C0. <color=\"green\">\uC2DC\uAC04\uC744
       \uB3CC\uB9B4 \uC218 \uC5C6\uC5B4 \uC501\uC4F8\uD558\uB124\u2026</color>"
     ENG: 'If I could go back in time, I would fight back before the bullying got
-      out of hand; I was too afraid to back then, so I just let it happen. Not being
-      able to go back in time makes me bitter... '
+      out of hand; I was too afraid to back then, so I just let it happen. <color="green">Not
+      being able to go back in time makes me bitter...</color> '
   - GuestID: 20
     Type: hint
     Emotion: 18
@@ -1773,8 +1807,8 @@ MonoBehaviour:
     KOR: "\uBA87 \uB144\uC774 \uC9C0\uB0AC\uB294\uB370\uB3C4 <color=\"green\">\uAD50\uBCF5\uC744
       \uBCF4\uBA74 \uBAB8\uC774 \uC5BC\uC5B4\uBD99\uB294\uB370,</color> \uACE0\uCE60
       \uC218 \uC5C6\uC73C\uB824\uB098."
-    ENG: 'I still freeze up whenever I see school uniforms, even after all these
-      years... I wonder if this can be fixed. '
+    ENG: '<color="green">I still freeze up whenever I see school uniforms, even after
+      all these years...</color> I wonder if this can be fixed. '
   - GuestID: 20
     Type: hint
     Emotion: 6
@@ -1783,8 +1817,8 @@ MonoBehaviour:
       \uC5B4\uB5BB\uAC8C \uD589\uB3D9\uD560\uC9C0 \uAC10\uC774 \uC548 \uC7A1\uD600.
       <color=\"green\">\uD45C\uC815\uC5D0\uC11C \uACBD\uBA78\uC2A4\uB7EC\uC6CC\uD558\uB294
       \uAC8C \uB4DC\uB7EC\uB098\uBA74 \uBD84\uBA85 \uC2F8\uC6C0\uC774 \uB0A0 \uAC70\uC57C.</color>"
-    ENG: 'I have no idea how I''d react if I locked eyes with him. If I show any
-      aggression on my face, a fight will break out. '
+    ENG: I have no idea how I'd react if I locked eyes with him. <color="green">If
+      I show any aggression on my face, a fight will break out. </color>
   - GuestID: 20
     Type: summary
     Emotion: -1

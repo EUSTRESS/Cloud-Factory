@@ -386,12 +386,34 @@ public class Guest : MonoBehaviour
         {
             temp = mGuestQueue.Dequeue();
             if (mGuestInfo[temp].isDisSat == false && mGuestInfo[temp].isCure == false)
-            { guestList.Add(temp); mGuestQueue.Enqueue(temp); Debug.Log(temp); }
+            { guestList.Add(temp); mGuestQueue.Enqueue(temp); }
         }
 
         int idx = 0;
         int[] GuestArray = new int[guestList.Count];
-        foreach(int num in guestList) { GuestArray[idx++] = num; }
+        int guestListCount = guestList.Count;
+        for (int i = 0; i < guestListCount; i++)
+        {
+            int num = guestList[Random.Range(0, guestList.Count)];
+            GuestArray[idx++] = num;
+            guestList.Remove(num);
+        }
+        
+        TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        if (mTutorialManager.isTutorial == true)
+        {
+            for (int i = 0; i < guestListCount; i++)
+            {
+                if (GuestArray[i] == 0)
+                {
+                    int tempGuestNum = GuestArray[0];
+                    GuestArray[0] = GuestArray[i];
+                    GuestArray[i] = tempGuestNum;
+                    break;
+                }
+            }
+        }
+        
         return GuestArray;
         /*
         List<int> guestList = new List<int>();          // 저장할 뭉티의 리스트
@@ -615,18 +637,6 @@ public class Guest : MonoBehaviour
     // 하루가 지나면서 초기화가 필요한 정보들을 변환해준다.
     public void InitDay()
     {
-        // 날씨의 공간에 아직 남아있는 뭉티들을 불만 뭉티로 만든다.
-        
-        int i = 0;
-        if (mTodayGuestList.Length != 0 && mTodayGuestList.Length != NUM_OF_TODAY_GUEST_LIST)
-        {
-			if(isGuestInLivingRoom == true) { mGuestCount--; }
-            for(int num = 0; num <= mGuestCount; num++)
-            {
-                mGuestQueue.Enqueue(mGuestQueue.Dequeue());
-            }
-		}
-
         // 새로운 방문 뭉티 리스트를 뽑는다.
 		mGuestCount = -1;
 

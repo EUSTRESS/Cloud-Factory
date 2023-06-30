@@ -309,6 +309,15 @@ public class InventoryManager : MonoBehaviour
         beginningCloudData = new CloudData();
     }
 
+    private void Update()
+    {
+        foreach (IngredientData stock in mType)
+        {
+            if (stock.image == null)
+                stock.rematchSpriteData(mIngredientDatas);
+        }
+    }
+
     /////////////////
     //서버 저장 변수//
     /////////////////

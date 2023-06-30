@@ -1,17 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-// ÀÀÁ¢½Ç UI
+// ì‘ì ‘ì‹¤ UI
 public class DrawingUIManager : MonoBehaviour
 {
-    [SerializeField] bool       mTextEnd;      // ÅØ½ºÆ® Ãâ·ÂÀÌ ³¡³µ´Â Áö?
-    [SerializeField] GameObject gSpeechBubble; // ¸»Ç³¼± ¿ÀºêÁ§Æ®
-    [SerializeField] GameObject gOkNoGroup;    // ¼ö¶ô °ÅÀı ¿ÀºêÁ§Æ®
+    [SerializeField] bool       mTextEnd;      // í…ìŠ¤íŠ¸ ì¶œë ¥ì´ ëë‚¬ëŠ” ì§€?
+    [SerializeField] GameObject gSpeechBubble; // ë§í’ì„  ì˜¤ë¸Œì íŠ¸
+    [SerializeField] GameObject gOkNoGroup;    // ìˆ˜ë½ ê±°ì ˆ ì˜¤ë¸Œì íŠ¸
 
+    public Text guestNum;
+    public Text guestName;
+    public Text guestSat;
+    public Text guestVC;
+    public Text guestSV;
+
+
+    private Guest mGuestManager;
+
+    void Start()
+    {
+        mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
+        int gn = mGuestManager.mGuestIndex;
+        guestNum.text = "Guest Num: " + mGuestManager.mGuestIndex.ToString();
+        guestName.text = "Name: " + mGuestManager.mGuestInfo[gn].mName.ToString();
+        guestSat.text = "Sat: " + mGuestManager.mGuestInfo[gn].mSatatisfaction.ToString();
+        guestVC.text = "VC: " + mGuestManager.mGuestInfo[gn].mVisitCount.ToString();
+        guestSV.text = "SV: " + mGuestManager.mGuestInfo[gn].mSatVariation.ToString();
+
+
+    }
+    
     void Update()
     {
-        if (mTextEnd == true) // ÅØ½ºÆ® Ãâ·ÂÀÌ ³¡³µ´Ù¸é
+        if (mTextEnd == true) // í…ìŠ¤íŠ¸ ì¶œë ¥ì´ ëë‚¬ë‹¤ë©´
         {
             gSpeechBubble.SetActive(false);
             gOkNoGroup.SetActive(true);
@@ -24,8 +47,8 @@ public class DrawingUIManager : MonoBehaviour
         gOkNoGroup.SetActive(false);
         mTextEnd = false;
 
-        // ¼ö¶ôÇßÀ» ¶§ ¸Ş¼Òµå È£Ãâ
-        Debug.Log("ÀÀÁ¢½Ç ¼ö¶ô ¸Ş¼Òµå È£Ãâ");
+        // ìˆ˜ë½í–ˆì„ ë•Œ ë©”ì†Œë“œ í˜¸ì¶œ
+        Debug.Log("ì‘ì ‘ì‹¤ ìˆ˜ë½ ë©”ì†Œë“œ í˜¸ì¶œ");
     }
 
     public void ActiveNo()
@@ -37,7 +60,7 @@ public class DrawingUIManager : MonoBehaviour
         gOkNoGroup.SetActive(false);
         mTextEnd = false;
 
-        // °ÅÀıÇßÀ» ¶§ ¸Ş¼Òµå È£Ãâ
-        Debug.Log("ÀÀÁ¢½Ç °ÅÀı ¸Ş¼Òµå È£Ãâ");
+        // ê±°ì ˆí–ˆì„ ë•Œ ë©”ì†Œë“œ í˜¸ì¶œ
+        Debug.Log("ì‘ì ‘ì‹¤ ê±°ì ˆ ë©”ì†Œë“œ í˜¸ì¶œ");
     }
 }

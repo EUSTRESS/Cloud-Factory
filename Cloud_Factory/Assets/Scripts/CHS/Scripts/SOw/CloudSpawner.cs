@@ -57,19 +57,48 @@ public class CloudSpawner : MonoBehaviour
     {
         // 구름 인스턴스 생성
         tempCLoud = Instantiate(CloudObject);
+        Debug.Log("Instantiate");
         tempCLoud.transform.position = this.transform.position;
 
         // 목표 의자 위치 설정
         tempCLoud.GetComponent<CloudObject>().SetTargetChair(guestNum);
+        Debug.Log("SetTargetChair");
+
+        // 구름을 제공받는 손님의 isGettingCloud 상태를 갱신한다.
+        {
+            GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Guest");
+            if (gameObjects != null)
+            {
+                foreach (GameObject gameObject in gameObjects)
+                {
+                    if(gameObject == null)
+                    {
+                        continue;
+                    }
+
+                    GuestObject guestObject = gameObject.GetComponent<GuestObject>();
+                    if (guestObject != null && guestObject.mGuestNum == guestNum)
+                    {
+                        bool isGettingCloud = gameObject.GetComponent<GuestObject>().isGettingCloud;
+                        gameObject.GetComponent<GuestObject>().isGettingCloud = true;
+                    }
+                }
+            }
+        }
+
 
         // 임시로 인벤토리에 들어있는 구름 중, 맨 앞에 있는 구름의 값을 가져온다.
         CloudData = storagedCloudData;
+        
+        CloudObject cloudObject = tempCLoud.GetComponent<CloudObject>();
+        if (cloudObject != null)
+        {
+            cloudObject.SetValue(CloudData);
+            cloudObject.SetGuestNum(guestNum);
 
-        tempCLoud.GetComponent<CloudObject>().SetValue(CloudData);
-        tempCLoud.GetComponent<CloudObject>().SetGuestNum(guestNum);
-
-        // 구름과 의자의 위치값에 따라서 속도를 조절한다.
-        tempCLoud.GetComponent<CloudObject>().SetSpeed();
+            // 구름과 의자의 위치값에 따라서 속도를 조절한다.
+            cloudObject.SetSpeed();
+        }
 
         // 움직이는 구름의 이펙트를 나타내는 cloudMove에 대한 설정
         cloudMove = tempCLoud.transform.GetChild(0).gameObject;
@@ -78,8 +107,11 @@ public class CloudSpawner : MonoBehaviour
         {
             Cloud_movement movement = cloudMove.GetComponent<Cloud_movement>();
 
-            // image
-            // cloudMove.GetComponent<SpriteRenderer>().sprite = storagedCloudData.mVBase.mImage;
+            if(movement == null)
+            {
+                Debug.Log("구름 오브젝트의 movement가 초기화가 안됐습니다.");
+                return;
+            }
 
             for (int i = 0; i < storagedCloudData.mVPartsList.Count; i++)           // 파츠이미지 스프라이트로 저장
             {
@@ -97,7 +129,6 @@ public class CloudSpawner : MonoBehaviour
             // 2. 구름 재료 등급에 따른 애니메이터 나누기
 
             int cloudColorNumber = storagedCloudData.GetCloudTypeNum();
-            Debug.Log(cloudColorNumber);
 
             // TODO : 희귀도에 따라 외형을 변화시키는 코드 추가
             int IngredientDataNum = storagedCloudData.GetIngredientDataNum();

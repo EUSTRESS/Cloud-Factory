@@ -82,8 +82,6 @@ public class SoundManager : MonoBehaviour
 
     void AudioFadeIn(float duration)
     {
-        Debug.Log("Fade In");
-
         float bgmValue = SceneData.Instance.BGMValue;
 
         timer += Time.deltaTime;

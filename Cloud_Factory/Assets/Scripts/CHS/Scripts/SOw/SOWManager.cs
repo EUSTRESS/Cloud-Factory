@@ -316,6 +316,7 @@ public class SOWManager : MonoBehaviour
         if(CloudSpawner != null) 
         {
             CloudSpawner.GetComponent<CloudSpawner>().SpawnCloud(guestNum, storagedCloudData);
+            Debug.Log("SpanwCloud");
             isCloudGet = false;
         }
     }

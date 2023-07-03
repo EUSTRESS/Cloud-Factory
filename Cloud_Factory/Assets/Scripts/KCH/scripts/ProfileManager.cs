@@ -321,7 +321,7 @@ public class ProfileManager : MonoBehaviour
         if (mGuestInfo[profileGuestNum[0]].isDisSat == false && mGuestInfo[profileGuestNum[0]].isCure == false)
         {
 	        if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean") { tDialogText.text = "아직 충분한 데이터가 모이지 않았습니다."; } 
-	        else{ tDialogText.text = "Not Enough Information."; }
+	        else{ tDialogText.text = "Not enough data's been collected yet."; }
         }
         else { tDialogText.text = mRLHReader.LoadRecordInfo(profileGuestNum[0]); }
 		if (iCloudStamp[0].activeSelf)

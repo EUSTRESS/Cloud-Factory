@@ -449,7 +449,7 @@ public class CloudMakeSystem : MonoBehaviour
         float time = 1f;
         //코루틴
         if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean"){ UI_btn_txt.text = "만드는 중"; }
-        else { UI_btn_txt.text = "Making..."; }
+        else { UI_btn_txt.text = "CREATING..."; }
 
         isMakingCloud = true;
 
@@ -479,7 +479,7 @@ public class CloudMakeSystem : MonoBehaviour
 
         total = 0;
         if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean"){ UI_btn_txt.text = "제작하기"; }
-        else { UI_btn_txt.text = "Go making"; }
+        else { UI_btn_txt.text = "CREATE"; }
 
         isMakingCloud = false;
 
@@ -543,7 +543,7 @@ public class CloudMakeSystem : MonoBehaviour
 
         UI_btn_txt = this.transform.Find("B_CloudGIve").GetComponentInChildren<Text>();
         if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean"){ UI_btn_txt.text = "제작하기"; }
-        else { UI_btn_txt.text = "Go making"; }
+        else { UI_btn_txt.text = "CREATE"; }
 
         isMakingCloud = false;
 

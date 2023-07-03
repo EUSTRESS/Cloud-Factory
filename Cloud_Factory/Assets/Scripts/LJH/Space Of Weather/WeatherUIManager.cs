@@ -189,7 +189,7 @@ public class WeatherUIManager : MonoBehaviour
         mGatheringTextCount = 0; // 초기화
         if (LanguageManager.GetInstance() != null 
             && LanguageManager.GetInstance().GetCurrentLanguage() == "English")
-            { tGatheringText.text = "Gathering"; }
+            { tGatheringText.text = "Harvesting in process"; }
         else { tGatheringText.text = "재료 채집 중"; } // 초기화
 
             if (SeasonDateCalc.Instance) // null check
@@ -325,7 +325,7 @@ public class WeatherUIManager : MonoBehaviour
             
             if (LanguageManager.GetInstance() != null 
                 && LanguageManager.GetInstance().GetCurrentLanguage() == "English")
-            { tGatheringText.text = "Gathering"; }
+            { tGatheringText.text = "Harvesting in process"; }
             else { tGatheringText.text = "재료 채집 중"; } // 초기화
             
             Invoke("PrintGatheringText", 0.25f); // 0.25초 딜레이마다 . 추가

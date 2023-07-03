@@ -351,7 +351,9 @@ public class Guest : MonoBehaviour
         for(int i = mGuestQueue.Count; i > 0; i--)
         {
             temp = mGuestQueue.Dequeue();
-            if (mGuestInfo[temp].isDisSat == false && mGuestInfo[temp].isCure == false)
+            if (mGuestInfo[temp].isDisSat == false && 
+                mGuestInfo[temp].isCure == false &&
+                mGuestInfo[temp].mVisitCount <= 10)
             { guestList.Add(temp); mGuestQueue.Enqueue(temp); }
         }
 

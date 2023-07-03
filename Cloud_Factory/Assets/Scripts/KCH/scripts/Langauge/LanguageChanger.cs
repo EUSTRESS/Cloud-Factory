@@ -104,14 +104,14 @@ public class LanguageChanger : MonoBehaviour
         }
         else
         {
-            tSetting.text = "Setting";
+            tSetting.text = "SETTINGS";
             tBackGroundSound.text = "BGM";
-            tEffectSound.text = "SFx";
-            tAccept.text = "Accept";
-            tReject.text = "Cancle";
-            tResetWarning.text = "Are you sure to make a new game?\n(Data cannot be recovered.)";
-            tContinueWarning.text = "No Data";
-            tOK1.text = "OK";
+            tEffectSound.text = "SFX";
+            tAccept.text = "ACCEPT";
+            tReject.text = "CANCEL";
+            tResetWarning.text = "Reset everything and start a new game?\n(Deleted files cannot be restored.)";
+            tContinueWarning.text = "There's no data.";
+            tOK1.text = "CONFIRM";
         }
 	}
 
@@ -121,8 +121,6 @@ public class LanguageChanger : MonoBehaviour
         // "채집 중"은 WeatherUIManager에서 관리
         if (mLanguageManager.GetCurrentLanguage() == "Korean")
         {
-            tRecordOfHealing.text = "치유의\n기록";
-            tGuideBook.text = "도감";
             tDrawingRoom.text = "응접실";
             tCloudFactory.text = "구름공장";
             tSetting.text = "설정";
@@ -138,20 +136,18 @@ public class LanguageChanger : MonoBehaviour
         }
         else
         {
-            tRecordOfHealing.text = "Record\nOf\nHealing";
-            tGuideBook.text = "Guide\nBook";
-            tDrawingRoom.text = "Drawing Room";
-            tCloudFactory.text = "Cloud\nFactory";
-            tSetting.text = "Setting";
+            tDrawingRoom.text = "OFFICE";
+            tCloudFactory.text = "CLOUD\nFACTORY";
+            tSetting.text = "SETTINGS";
             tBackGroundSound.text = "BGM";
-            tEffectSound.text = "SFx";
-            tGameOver.text = "Exit Game";
-            tGather.text = "Continue to gather ingredients from garden?";
-            tGatherWarning.text = "(Warning Text.)";
-            tOK1.text = "Gather";
-            tBack.text = "Exit";
-            tResult.text = "Result";
-            tOK2.text = "OK";
+            tEffectSound.text = "SFX";
+            tGameOver.text = "Quit";
+            tGather.text = "Harvest the ingredients?";
+            tGatherWarning.text = "(Some ingredients may be lost if your inventory is full)";
+            tOK1.text = "HARVEST";
+            tBack.text = "BACK";
+            tResult.text = "RESULTS";
+            tOK2.text = "CONFIRM";
         }
     }
 
@@ -171,15 +167,15 @@ public class LanguageChanger : MonoBehaviour
         }
         else
         {
-            tSpaceOfWeather.text = "Space\nOf\nWeather";
-            tCloudFactory.text = "Cloud\nFactory";
-            tSetting.text = "Setting";
+            tSpaceOfWeather.text = "WEATHER\nROOM";
+            tCloudFactory.text = "CLOUD\nFACTORY";
+            tSetting.text = "SETTINGS";
             tBackGroundSound.text = "BGM";
-            tEffectSound.text = "SFx";
-            tGameOver.text = "Exit Game";
-            tReason.text = "Reason for visit:";
-            tAccept.text = "Accept";
-            tReject.text = "Reject";
+            tEffectSound.text = "SFX";
+            tGameOver.text = "Quit";
+            tReason.text = "REASON OF VISIT:";
+            tAccept.text = "ACCEPT";
+            tReject.text = "REJECT";
         }
     }
     
@@ -201,16 +197,16 @@ public class LanguageChanger : MonoBehaviour
         }
         else
         {
-            tBack.text = "Back";
-            tUpsetMoongti.text = "Show only upset Moongti";
-            tAllMoongti.text = "Show all";
+            tBack.text = "BACK";
+            tUpsetMoongti.text = "Unhappy Ones";
+            tAllMoongti.text = "Everyone";
             for (int i = 0; i < 3; i++)
             {
-                tGiveCloud[i].text = "Give Cloud";
-                tName[i].text = "Name: ";
-                tAge[i].text = "Age: ";
-                tJob[i].text = "Job: ";
-                tUsedCloud[i].text = "Used Cloud: ";
+                tGiveCloud[i].text = "SEND";
+                tName[i].text = "NAME: ";
+                tAge[i].text = "AGE: ";
+                tJob[i].text = "JOB: ";
+                tUsedCloud[i].text = "Used Clouds: ";
             }
         }
     }
@@ -219,8 +215,6 @@ public class LanguageChanger : MonoBehaviour
     {
         if (mLanguageManager.GetCurrentLanguage() == "Korean")
         {
-            tRecordOfHealing.text = "치유의\n기록";
-            tGuideBook.text = "도감";
             tSpaceOfWeather.text = "날씨의 공간";
             tDrawingRoom.text = "응접실";
             tSetting.text = "설정";
@@ -230,14 +224,12 @@ public class LanguageChanger : MonoBehaviour
         }
         else
         {
-            tRecordOfHealing.text = "Record\nOf\nHealing";
-            tGuideBook.text = "Guide\nBook";
-            tSpaceOfWeather.text = "Space\nOf\nWeather";
-            tDrawingRoom.text = "Drawing Room";
-            tSetting.text = "Setting";
+            tSpaceOfWeather.text = "WEATHER\nROOM";
+            tDrawingRoom.text = "OFFICE";
+            tSetting.text = "SETTINGS";
             tBackGroundSound.text = "BGM";
-            tEffectSound.text = "SFx";
-            tGameOver.text = "Exit Game";
+            tEffectSound.text = "SFX";
+            tGameOver.text = "Quit";
         }
     }
 
@@ -250,8 +242,8 @@ public class LanguageChanger : MonoBehaviour
         }
         else
         {
-            tBack.text = "Back";
-            tSort.text = "Emotion";
+            tBack.text = "BACK";
+            tSort.text = "EMOTION ⇅";
         }
     }
     
@@ -265,9 +257,9 @@ public class LanguageChanger : MonoBehaviour
         }
         else
         {
-            tAuto.text = "Auto";
-            tOK1.text = "Complete";
-            tBack.text = "Back";
+            tAuto.text = "AUTO";
+            tOK1.text = "FINISH";
+            tBack.text = "BACK";
         }
     }
     
@@ -290,17 +282,17 @@ public class LanguageChanger : MonoBehaviour
         }
         else
         {
-            tBack.text = "Back";
-            tExpirationDate.text = "Expiration Date";
-            tSort.text = "Emotion";
+            tBack.text = "BACK";
+            tExpirationDate.text = "TIME LEFT⇅";
+            tSort.text = "EMOTION ⇅";
             for (int i = 0; i < 3; i++)
             {
-                tGiveCloud[i].text = "Give Cloud";
-                tName[i].text = "Name: ";
-                tAge[i].text = "Age: ";
-                tJob[i].text = "Job: ";
-                tSat[i].text = "Satisfaction: ";
-                tExplanation[i].text = "Summary: ";
+                tGiveCloud[i].text = "SEND";
+                tName[i].text = "NAME: ";
+                tAge[i].text = "AGE: ";
+                tJob[i].text = "JOB: ";
+                tSat[i].text = "SATISFACTION: ";
+                tExplanation[i].text = "REASON OF VISIT: ";//
             }
         }
     }

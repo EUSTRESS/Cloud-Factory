@@ -297,7 +297,7 @@ public class CloudMakeSystem : MonoBehaviour
                     //앞에 채택 경우: outOfBound
                     //뒤에 채택 경우: outOfBound, 앞에서 none 결과 값이 나왔기 떄문.
                     if (subTargetIdx >= 0 ? true : false)//우선순위(1): 대상의 앞의 감정과 조합한다.
-                        commend = emoTableDATA.getCombineResult(emotionList[targetIdx].Key, emotionList[subTargetIdx].Key) != Emotion.NONE ? false : true;//index가 OutOfBound가 아니고 조합의 결과가 있다면! command = false
+                        commend = emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key] != Emotion.NONE ? false : true;//index가 OutOfBound가 아니고 조합의 결과가 있다면! command = false
                     else
                     {
                         commend = false;
@@ -308,15 +308,15 @@ public class CloudMakeSystem : MonoBehaviour
 
                     //우선순위(2): 위에서 command가 true가 나면 우선순위 (2)로 넘어간다.   subTargetIdx = targetIdx + 1
                     if (!commend && subTargetIdx < emotionList.Count ? true : false)
-                        commend = emoTableDATA.getCombineResult(emotionList[targetIdx].Key, emotionList[subTargetIdx].Key) != Emotion.NONE ? true : false;
-
+                        commend = emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key] != Emotion.NONE ? true : false;
+                    
                     //우선순위(1)또는 (2)에서 감정조합의 결과가 정상적으로 나온 경우.
                     if (commend)
                     {
                         //(1) 조합에 사용된 두 감정 중 낮은 수치를 가져온다.
                         int CEmoV = emotionList[targetIdx].Value <= emotionList[subTargetIdx].Value ? emotionList[targetIdx].Value : emotionList[subTargetIdx].Value;
-                        EmotionInfo finalEmo = new EmotionInfo(emoTableDATA.getCombineResult(emotionList[targetIdx].Key, emotionList[subTargetIdx].Key), CEmoV);
-
+                        EmotionInfo finalEmo = new EmotionInfo(emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key], CEmoV);
+                        
                         emotionList[targetIdx] = finalEmo;//(2)targetEmotion을 조합된 새 감정으로 바꾼다.
                         Debug.Log("[조합결과]" + finalEmo.Key);
                         //(2)조합에 사용 된 감정은 리스트에서 제외한다.(for문 안이기 떄문에 index 관리 해줘야 한다.)

@@ -261,6 +261,7 @@ public class SOWManager : MonoBehaviour
             int guestNum = mUsingGuestList[i];
             mGuestManager.mGuestInfo[guestNum].isDisSat = true;
             mGuestManager.mGuestInfo[guestNum].mSitChairIndex = -1;
+            Debug.Log(guestNum + "번 손님이 착석 중 집으로 돌아갑니다");
         }
 
         // 존재하는 모든 구름을 삭제한다.

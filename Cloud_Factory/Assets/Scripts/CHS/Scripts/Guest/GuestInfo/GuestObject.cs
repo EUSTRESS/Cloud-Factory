@@ -533,6 +533,9 @@ private void Update()
         sitCollider.enabled = false;
         walkCollider.enabled = true;
 
+        GetComponent<AIPath>().enabled = false;
+        GetComponent<AIPath>().enabled = true;
+
         // 부여받은 의자 인덱스값 초기화
         mGuestManager.mGuestInfo[mGuestNum].mSitChairIndex = -1;
     }

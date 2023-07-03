@@ -170,7 +170,7 @@ public class Guest : MonoBehaviour
             }
             else
             {
-                Debug.Log("모든 뭉티가 방문하였습니다.");
+
             }
         }
 

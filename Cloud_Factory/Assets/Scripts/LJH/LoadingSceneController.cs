@@ -54,7 +54,7 @@ public class LoadingSceneController : MonoBehaviour
     {
         mouseCursor.SetLoadCursor();
         if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean") { loadText.text = "힘껏 뛰어가는 중..."; }
-        else { loadText.text = "Running as fast as I can..."; }
+        else { loadText.text = "Getting there in the blink of an eye..."; }
         canvas.sortingOrder = 10;
         gameObject.SetActive(true);
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -65,7 +65,7 @@ public class LoadingSceneController : MonoBehaviour
     {
         mouseCursor.SetLoadCursor();
         if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean") { loadText.text = "힘껏 뛰어가는 중..."; }
-        else { loadText.text = "Running as fast as I can..."; }
+        else { loadText.text = "Getting there in the blink of an eye..."; }
         canvas.sortingOrder = 10;
         gameObject.SetActive(true);
         SceneManager.sceneLoaded += OnSceneLoaded;

@@ -788,7 +788,7 @@ AnimatorStateTransition:
     m_ConditionEvent: increase
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: Interaction
+    m_ConditionEvent: InteractionEnd
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4044182712590870002}
@@ -1352,7 +1352,7 @@ AnimatorStateMachine:
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: -6263447631941834145}
-    m_Position: {x: -50, y: 480, z: 0}
+    m_Position: {x: -130, y: 470, z: 0}
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:

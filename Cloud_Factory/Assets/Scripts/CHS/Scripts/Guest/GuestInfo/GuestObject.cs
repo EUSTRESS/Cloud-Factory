@@ -31,6 +31,7 @@ public class GuestObject : MonoBehaviour
     public int[] faceValue;                 // 감정 표현시, 이펙트로 나오는 감정의 번호       
     public GameObject SpeechBubble;         // 감정 표현시, 말풍선 내용을 채우는 텍스트 칸
     public bool isSpeakEmotion;             // 손님이 감정표현 중인지를 나타내는 변수값      
+    public bool isGettingCloud;
 
     [Header("[희귀도 4 재료 제공 대사 관련]")]
     private RLHReader   textReader;
@@ -130,6 +131,7 @@ public class GuestObject : MonoBehaviour
         mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
         mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         mGuestAnim = GetComponent<Animator>();
+        isGettingCloud = false;
 
         sitCollider = this.transform.GetChild(0).transform.GetChild(0).gameObject.GetComponent<CircleCollider2D>();
         walkCollider = this.transform.GetChild(0).transform.GetChild(1).gameObject.GetComponent<CircleCollider2D>();
@@ -272,19 +274,20 @@ private void Update()
                 if (isEndUsingCloud)
                 {
                     // 희귀도 4재료를 사용했는지 체크
-                    if (!isUseRarity4)
+                    if (isUseRarity4)
                     {
                         // 사용하였고 아직 힌트를 출력하지 않았다면 힌트 출력
                         if (!isHintTextPrinted && !isUsingHint)
                         {
                             Hint();
+                            Debug.Log("퇴장과 함께 힌트 출력");
                         }
                         // 힌트 출력을 완료했다면 귀가
-                        //else if (isHintTextPrinted)
-                        //{
-                        //    MoveToEntrance();
-                        //}
-                        MoveToEntrance();
+                        else if (isHintTextPrinted)
+                        {
+                            MoveToEntrance();
+                        }
+                        //MoveToEntrance();
                     }
                     else
                     {
@@ -298,12 +301,6 @@ private void Update()
         if (isEndUsingCloud && !isHintTextPrinted)
         {
 
-            //isHintTextPrinted = true;
-			//TextMeshPro Text = SpeechBubble.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>();
-			//Text.text = textReader.PrintHintText();
-			//SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);                                  // 말풍선 활성화
-			//SpeechBubble.transform.GetChild(1).gameObject.SetActive(true);                                  // 텍스트 활성화
-			//Invoke("EndBubble", 5.0f);
 		}
 
         // 걷는 방향에 따라 애니메이션의 방향을 다르게 지정한다.
@@ -333,6 +330,11 @@ private void Update()
             return;         
         }
 
+        if(isGettingCloud)
+        {
+            Debug.Log("Is Getting Cloud");
+            return;
+        }
 
         // 힌트를 출력중인 경우에도 감정표현을 할 수 없다.
         // TODO : 힌트를 출력중인 경우 return하게끔 구현
@@ -376,18 +378,20 @@ private void Update()
         Animator Anim = SpeechBubble.transform.GetChild(0).gameObject.GetComponent<Animator>();
         Text.text = temp;
 
+        // 말풍선 크기 및 방향 조정
         SpeechBubble.transform.GetChild(1).gameObject.transform.localScale = this.transform.localScale;
 
         // 말풍선 띄우기
         SpeechBubble.SetActive(true);
         SpeechBubble.transform.GetChild(1).gameObject.SetActive(false);
         Invoke("ActiveHintText", 1.0f);
+
         SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);
         Anim.SetTrigger("Start");
         mGuestAnim.SetTrigger("Hint");
 
         // 일정시간 이후 말풍선 제거
-        Invoke("EndBubble", 5.0f);
+        Invoke("EndBubble", 10.0f);
     }
     private void EndBubble()
     {
@@ -500,9 +504,14 @@ private void Update()
         mGuestManager.mGuestInfo[mGuestNum].isUsing = false;
         mGuestAnim.SetBool("isUsing", false);
 
+        mTargetChiarIndex = -1;
         isGotoEntrance = true;
         mGuestAnim.SetBool("isSit", false);
 
+        // 진행중이던 감정 표현을 멈춘다.
+        mGuestAnim.SetTrigger("InteractionEnd");
+
+        // 나갈때 손님의 정보에 따라 애니메이션을 변경한다.
         if (mGuestManager.mGuestInfo[mGuestNum].isDisSat == true)
         {
             mGuestAnim.SetBool("isDisSat", true);
@@ -523,6 +532,9 @@ private void Update()
         // TODO : 콜라이더 변경 Sitting -> Walking
         sitCollider.enabled = false;
         walkCollider.enabled = true;
+
+        GetComponent<AIPath>().enabled = false;
+        GetComponent<AIPath>().enabled = true;
 
         // 부여받은 의자 인덱스값 초기화
         mGuestManager.mGuestInfo[mGuestNum].mSitChairIndex = -1;

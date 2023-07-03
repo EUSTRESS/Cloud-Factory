@@ -184,8 +184,9 @@ public class CloudStorageProfile : MonoBehaviour
         // 가져온 정보값을 이용하여 채운다.
         iProfile.sprite = UIManager.sBasicProfile[frontGuestIndex];
 
-        // DEMO 기능
-        // TODO : 뭉티 정보를 불러와서 방문한 적이 있는 경우에만 정보를 띄운다.
+        /*
+        DEMO 기능
+        TODO : 뭉티 정보를 불러와서 방문한 적이 있는 경우에만 정보를 띄운다.
         if (info.mVisitCount < 2)
         {
             tName.text = "???";
@@ -198,6 +199,7 @@ public class CloudStorageProfile : MonoBehaviour
 
             return;
         }
+        */
 
         tName.text = info.mName;        
         tAge.text = "" + info.mAge;

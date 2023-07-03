@@ -25939,13 +25939,33 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1667958163}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2817c67b6957f641baf63239e80b51e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gRareGroup: {fileID: 734154460}
-  gPlantGroup: {fileID: 1948140769}
+  gPlantGroup_main: {fileID: 0}
+  gPlantGroup_rare1:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  gPlantGroup_rare2:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  gPlantGroup_rare3:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  gPlantGroup_rare4:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   gNextBtn: {fileID: 477164906}
   gPrevBtn: {fileID: 56445255}
   iNextBtn: {fileID: 477164910}
@@ -25967,6 +25987,24 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 94b8847ca91dd2246af6a5236961529d, type: 3}
   - {fileID: 21300000, guid: b7502d49b7156374e9af227bf9f6697a, type: 3}
   tGuideText: {fileID: 659677621}
+  Emotion_Page:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Cloud_Page:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Plant_Info:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  QM_Info:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &1667958168
 MonoBehaviour:
   m_ObjectHideFlags: 0

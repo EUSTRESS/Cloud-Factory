@@ -45,6 +45,8 @@ public class GuideBook : MonoBehaviour
         gPageIndex = 1; // 기본 1 페이지부터 시작
         gChapter[0] = true; // 기본 감정 도감
         gPlantChapter[0] = true; // 기본 희귀도 1
+        Emotion_page_num = 0;
+        Cloud_page_num = 0;
 
         for(int i = 0; i < Plant_num; i++)
         {
@@ -125,12 +127,12 @@ public class GuideBook : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A))
         {
-            for(int i = 0; i < 12; i++)
+            for(int i = 0; i < 3; i++)
             {
                 Plant_get[i] = true;
             }
         }
-        for(int i = 0; i < 12; i++)
+        for(int i = 0; i < 3; i++)
         {
             if (Plant_get[i] == true)
             {
@@ -261,7 +263,7 @@ public class GuideBook : MonoBehaviour
         }
         else if (gPlantChapter[2])
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 4;  i++)
             {
                 gPlantGroup_rare3[i].SetActive(false);
             }

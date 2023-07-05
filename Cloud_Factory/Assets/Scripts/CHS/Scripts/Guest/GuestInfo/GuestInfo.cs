@@ -4,92 +4,96 @@ using System.Collections.Generic;
 [System.Serializable]
 public struct SSatEmotion
 {
-    public int emotionNum;                                      // °¨Á¤ ¹øÈ£
-    public int up;                                              // ¸¸Á·µµ ¹üÀ§ »óÇÑ¼±
-    public int down;                                            // ¸¸Á·µµ ¹üÀ§ ÇÏÇÑ¼±
+    public int emotionNum;                                      // ê°ì • ë²ˆí˜¸
+    public int up;                                              // ë§Œì¡±ë„ ë²”ìœ„ ìƒí•œì„ 
+    public int down;                                            // ë§Œì¡±ë„ ë²”ìœ„ í•˜í•œì„ 
 }
 
 [System.Serializable]
 public struct SLimitEmotion
 {
-    public int upLimitEmotion;                                  // ¼Õ´ÔÀÇ °¨Á¤ »óÇÑ¼±
-    public int upLimitEmotionValue;                             // ¼Õ´ÔÀÇ °¨Á¤ »óÇÑ¼± °ª
+    public int upLimitEmotion;                                  // ì†ë‹˜ì˜ ê°ì • ìƒí•œì„ 
+    public int upLimitEmotionValue;                             // ì†ë‹˜ì˜ ê°ì • ìƒí•œì„  ê°’
 
-    public int downLimitEmotion;                                // ¼Õ´ÔÀÇ °¨Á¤ ÇÏÇÑ¼±
-    public int downLimitEmotionValue;                           // ¼Õ´ÔÀÇ °¨Á¤ ÇÏÇÑ¼± °ª
+    public int downLimitEmotion;                                // ì†ë‹˜ì˜ ê°ì • í•˜í•œì„ 
+    public int downLimitEmotionValue;                           // ì†ë‹˜ì˜ ê°ì • í•˜í•œì„  ê°’
 }
 
 
 [CreateAssetMenu(menuName = "Scriptable/Guest_info", fileName = "Guest Info")]
-// ¼Õ´ÔÀÇ ÃÊ±â Á¤º¸°ªµéÀ» ScriptableObjectÇü½ÄÀ¸·Î °¡Áö°í ÀÖ´Â´Ù.
+// ì†ë‹˜ì˜ ì´ˆê¸° ì •ë³´ê°’ë“¤ì„ ScriptableObjectí˜•ì‹ìœ¼ë¡œ ê°€ì§€ê³  ìˆëŠ”ë‹¤.
 public class GuestInfo : ScriptableObject
 {
-    [Header(" [¼Õ´Ô Á¤º¸] ")]
-    public string mName;                                            // ¼Õ´ÔÀÇ ÀÌ¸§
-    public int mSeed;                                               // ¼Õ´ÔÀÌ ½É°í °¥ ¼ö ÀÖ´Â Àç·áÀÇ ÀÎµ¦½º °ª
-    public int  mAge;                                               // ¼Õ´ÔÀÇ ³ªÀÌ
-    public string  mJob;                                            // ¼Õ´ÔÀÇ Á÷¾÷
-    public string mSentence;                                        // ¼Õ´Ô ÇÑÁÙ¿ä¾à
+    [Header(" [ì†ë‹˜ ì •ë³´] ")]
+    public string mName;                                            // ì†ë‹˜ì˜ ì´ë¦„
+    public string mNameEN;
+    public int mSeed;                                               // ì†ë‹˜ì´ ì‹¬ê³  ê°ˆ ìˆ˜ ìˆëŠ” ì¬ë£Œì˜ ì¸ë±ìŠ¤ ê°’
+    public int  mAge;                                               // ì†ë‹˜ì˜ ë‚˜ì´
+    public string  mJob;                                            // ì†ë‹˜ì˜ ì§ì—…
+    public string mJobEN;
+    public string mSentence;                                        // ì†ë‹˜ í•œì¤„ìš”ì•½
 
-    [Header ("[°¨Á¤ °ü·Ã]")]
-    public int[] mEmotion = new int[20];                            // ¼Õ´ÔÀÇ °¨Á¤ °ª. ÃÑ 20°¡Áö
-    public SSatEmotion[] mSatEmotions = new SSatEmotion[5];         // ¼Õ´ÔÀÇ ¸¸Á·µµ ¹üÀ§ 5Á¾·ù
-    public SLimitEmotion[] mLimitEmotions = new SLimitEmotion[2];   // ¼Õ´ÔÀÇ »óÇÏÇÑ¼± °¨Á¤ °¢°¢ 2Á¾·ù
+    [Header ("[ê°ì • ê´€ë ¨]")]
+    public int[] mEmotion = new int[20];                            // ì†ë‹˜ì˜ ê°ì • ê°’. ì´ 20ê°€ì§€
+    public SSatEmotion[] mSatEmotions = new SSatEmotion[5];         // ì†ë‹˜ì˜ ë§Œì¡±ë„ ë²”ìœ„ 5ì¢…ë¥˜
+    public SLimitEmotion[] mLimitEmotions = new SLimitEmotion[2];   // ì†ë‹˜ì˜ ìƒí•˜í•œì„  ê°ì • ê°ê° 2ì¢…ë¥˜
 
-    [Header("[¸¸Á·µµ °ü·Ã]")]
-    public int mSatatisfaction;                                     // ¼Õ´ÔÀÇ ¸¸Á·µµ
-    public int mSatVariation;                                       // ¼Õ´ÔÀÇ ¸¸Á·µµ Áõ°¨ Á¤µµ
-    public bool isDisSat;                                           // ºÒ¸¸ ¹¶Æ¼ÀÎÁö È®ÀÎ
-    public bool isCure;                                             // ¼Õ´ÔÀÌ ¸¸Á·µµ 5¸¦ Ã¤¿ö ¸ğµÎ Ä¡À¯ÇÏ¿´´ÂÁö È®ÀÎ 
+    [Header("[ë§Œì¡±ë„ ê´€ë ¨]")]
+    public int mSatatisfaction;                                     // ì†ë‹˜ì˜ ë§Œì¡±ë„
+    public int mSatVariation;                                       // ì†ë‹˜ì˜ ë§Œì¡±ë„ ì¦ê° ì •ë„
+    public bool isDisSat;                                           // ë¶ˆë§Œ ë­‰í‹°ì¸ì§€ í™•ì¸
+    public bool isCure;                                             // ì†ë‹˜ì´ ë§Œì¡±ë„ 5ë¥¼ ì±„ì›Œ ëª¨ë‘ ì¹˜ìœ í•˜ì˜€ëŠ”ì§€ í™•ì¸ 
 
-    [Header("[¹æ¹® È½¼ö °ü·Ã]")]
-    public int  mVisitCount;                                        // ³²Àº ¹æ¹® È½¼ö
-    public int  mNotVisitCount;                                     // ¹æ¹®ÇÏÁö ¾Ê´Â È½¼ö
+    [Header("[ë°©ë¬¸ íšŸìˆ˜ ê´€ë ¨]")]
+    public int  mVisitCount;                                        // ë‚¨ì€ ë°©ë¬¸ íšŸìˆ˜
+    public int  mNotVisitCount;                                     // ë°©ë¬¸í•˜ì§€ ì•ŠëŠ” íšŸìˆ˜
 
-    [Header("[³¯¾¾ÀÇ °ø°£ ¹èÄ¡ °ü·Ã]")]
-    public bool isChosen;                                           // ¼±ÅÃµÇ¾ú´ÂÁö È®ÀÎÇÏ´Â º¯¼ö
-    public int   mSitChairIndex;                                    // ¼Õ´ÔÀÌ ÇöÀç ¹ŞÀº ÀÇÀÚ ÀÎµ¦½º
-    public bool isUsing = false;                                    // ±¸¸§À» Á¦°ø¹Ş¾Ò´ÂÁö
+    [Header("[ë‚ ì”¨ì˜ ê³µê°„ ë°°ì¹˜ ê´€ë ¨]")]
+    public bool isChosen;                                           // ì„ íƒë˜ì—ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
+    public int   mSitChairIndex;                                    // ì†ë‹˜ì´ í˜„ì¬ ë°›ì€ ì˜ì ì¸ë±ìŠ¤
+    public bool isUsing = false;                                    // êµ¬ë¦„ì„ ì œê³µë°›ì•˜ëŠ”ì§€
 
-    [Header("[±âÅ¸]")]
-	public List<StoragedCloudData> mUsedCloud = new List<StoragedCloudData>();                          // »ç¿ëÇÑ ±¸¸§ ¸®½ºÆ®¸¦ ÀúÀåÇÑ´Ù. ÃÖ´ë 10°³
+    [Header("[ê¸°íƒ€]")]
+	public List<StoragedCloudData> mUsedCloud = new List<StoragedCloudData>();                          // ì‚¬ìš©í•œ êµ¬ë¦„ ë¦¬ìŠ¤íŠ¸ë¥¼ ì €ì¥í•œë‹¤. ìµœëŒ€ 10ê°œ
 }
 
 
-// GuestManager¿¡¼­ °ü¸®ÇÏ´Â ¼Õ´Ô Á¤º¸°ªµé
+// GuestManagerì—ì„œ ê´€ë¦¬í•˜ëŠ” ì†ë‹˜ ì •ë³´ê°’ë“¤
 [System.Serializable]
 public class GuestInfos
 {
-    [Header(" [¼Õ´Ô Á¤º¸] ")]
-    public string mName;                                            // ¼Õ´ÔÀÇ ÀÌ¸§
-    public int mSeed;                                               // ¼Õ´ÔÀÌ ½É°í °¥ ¼ö ÀÖ´Â Àç·áÀÇ ÀÎµ¦½º °ª
-    public int mAge;                                                // ¼Õ´ÔÀÇ ³ªÀÌ
-    public string mJob;                                             // ¼Õ´ÔÀÇ Á÷¾÷
-    public string mSentence;                                        // ¼Õ´Ô ÇÑÁÙ¿ä¾à
+    [Header(" [ì†ë‹˜ ì •ë³´] ")]
+    public string mName;                                            // ì†ë‹˜ì˜ ì´ë¦„
+    public string mNameEN;
+    public int mSeed;                                               // ì†ë‹˜ì´ ì‹¬ê³  ê°ˆ ìˆ˜ ìˆëŠ” ì¬ë£Œì˜ ì¸ë±ìŠ¤ ê°’
+    public int mAge;                                                // ì†ë‹˜ì˜ ë‚˜ì´
+    public string mJob;                                             // ì†ë‹˜ì˜ ì§ì—…
+    public string mJobEN;
+    public string mSentence;                                        // ì†ë‹˜ í•œì¤„ìš”ì•½
 
-    [Header("[°¨Á¤ °ü·Ã]")]
-    public int[] mEmotion = new int[20];                            // ¼Õ´ÔÀÇ °¨Á¤ °ª. ÃÑ 20°¡Áö
-    public SSatEmotion[] mSatEmotions = new SSatEmotion[5];         // ¼Õ´ÔÀÇ ¸¸Á·µµ ¹üÀ§ 5Á¾·ù
-    public SLimitEmotion[] mLimitEmotions = new SLimitEmotion[2];   // ¼Õ´ÔÀÇ »óÇÏÇÑ¼± °¨Á¤ °¢°¢ 2Á¾·ù
+    [Header("[ê°ì • ê´€ë ¨]")]
+    public int[] mEmotion = new int[20];                            // ì†ë‹˜ì˜ ê°ì • ê°’. ì´ 20ê°€ì§€
+    public SSatEmotion[] mSatEmotions = new SSatEmotion[5];         // ì†ë‹˜ì˜ ë§Œì¡±ë„ ë²”ìœ„ 5ì¢…ë¥˜
+    public SLimitEmotion[] mLimitEmotions = new SLimitEmotion[2];   // ì†ë‹˜ì˜ ìƒí•˜í•œì„  ê°ì • ê°ê° 2ì¢…ë¥˜
 
-    [Header("[¸¸Á·µµ °ü·Ã]")]
-    public int mSatatisfaction;                                     // ¼Õ´ÔÀÇ ¸¸Á·µµ
-	public int mSatVariation;                                       // ¼Õ´ÔÀÇ ¸¸Á·µµ Áõ°¨ Á¤µµ
-	public bool isDisSat;                                           // ºÒ¸¸ ¹¶Æ¼ÀÎÁö È®ÀÎ
-    public bool isCure;                                             // ¼Õ´ÔÀÌ ¸¸Á·µµ 5¸¦ Ã¤¿ö ¸ğµÎ Ä¡À¯ÇÏ¿´´ÂÁö È®ÀÎ 
+    [Header("[ë§Œì¡±ë„ ê´€ë ¨]")]
+    public int mSatatisfaction;                                     // ì†ë‹˜ì˜ ë§Œì¡±ë„
+	public int mSatVariation;                                       // ì†ë‹˜ì˜ ë§Œì¡±ë„ ì¦ê° ì •ë„
+	public bool isDisSat;                                           // ë¶ˆë§Œ ë­‰í‹°ì¸ì§€ í™•ì¸
+    public bool isCure;                                             // ì†ë‹˜ì´ ë§Œì¡±ë„ 5ë¥¼ ì±„ì›Œ ëª¨ë‘ ì¹˜ìœ í•˜ì˜€ëŠ”ì§€ í™•ì¸ 
 
-    [Header("[¹æ¹® È½¼ö °ü·Ã]")]
-    public int mVisitCount;                                         // ³²Àº ¹æ¹® È½¼ö
-    public int mNotVisitCount;                                      // ¹æ¹®ÇÏÁö ¾Ê´Â È½¼ö
+    [Header("[ë°©ë¬¸ íšŸìˆ˜ ê´€ë ¨]")]
+    public int mVisitCount;                                         // ë‚¨ì€ ë°©ë¬¸ íšŸìˆ˜
+    public int mNotVisitCount;                                      // ë°©ë¬¸í•˜ì§€ ì•ŠëŠ” íšŸìˆ˜
 
-    [Header("[³¯¾¾ÀÇ °ø°£ ¹èÄ¡ °ü·Ã]")]
-    public bool isChosen;                                           // ¼±ÅÃµÇ¾ú´ÂÁö È®ÀÎÇÏ´Â º¯¼ö
-    public int mSitChairIndex;                                      // ¼Õ´ÔÀÌ ÇöÀç ¹ŞÀº ÀÇÀÚ ÀÎµ¦½º
-    public bool isUsing = false;                                    // ±¸¸§À» Á¦°ø¹Ş¾Ò´ÂÁö
+    [Header("[ë‚ ì”¨ì˜ ê³µê°„ ë°°ì¹˜ ê´€ë ¨]")]
+    public bool isChosen;                                           // ì„ íƒë˜ì—ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
+    public int mSitChairIndex;                                      // ì†ë‹˜ì´ í˜„ì¬ ë°›ì€ ì˜ì ì¸ë±ìŠ¤
+    public bool isUsing = false;                                    // êµ¬ë¦„ì„ ì œê³µë°›ì•˜ëŠ”ì§€
 
-    public int rejectCount;                                         // Demo Version °ÅÀı È½¼ö
+    public int rejectCount;                                         // Demo Version ê±°ì ˆ íšŸìˆ˜
 
-    [Header("[±âÅ¸]")]
-    public List<StoragedCloudData> mUsedCloud = new List<StoragedCloudData>();                          // »ç¿ëÇÑ ±¸¸§ ¸®½ºÆ®¸¦ ÀúÀåÇÑ´Ù. ÃÖ´ë 10°³
+    [Header("[ê¸°íƒ€]")]
+    public List<StoragedCloudData> mUsedCloud = new List<StoragedCloudData>();                          // ì‚¬ìš©í•œ êµ¬ë¦„ ë¦¬ìŠ¤íŠ¸ë¥¼ ì €ì¥í•œë‹¤. ìµœëŒ€ 10ê°œ
 }
 

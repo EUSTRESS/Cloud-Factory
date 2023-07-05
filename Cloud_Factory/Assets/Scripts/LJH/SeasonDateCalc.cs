@@ -29,6 +29,8 @@ public class SeasonDateCalc : MonoBehaviour
 
     private bool    mChangeDay = false;
 
+    private GameObject loadingUI;
+
     [Header("테스트 변수")]
     [SerializeField]
     private float   MaxSecond = 600.0f; // 하루 단위(초)를 테스트 목적으로 바꾸기 위한 변수
@@ -48,6 +50,8 @@ public class SeasonDateCalc : MonoBehaviour
             // 이미 존재하면 이전부터 사용하던 것을 사용함
             Destroy(this.gameObject);
         }
+
+        loadingUI = GameObject.Find("LoadingUI");
     }
 
     void Update()
@@ -58,6 +62,7 @@ public class SeasonDateCalc : MonoBehaviour
          && SceneManager.GetActiveScene().name != "Cloud Storage"
          && SceneManager.GetActiveScene().name != "Give Cloud"
          && SceneManager.GetActiveScene().name != "Drawing Room"
+         && loadingUI.activeSelf == false
          && mTutorialManager.isTutorial == false)
         {
             // 초 계산

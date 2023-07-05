@@ -3970,6 +3970,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 03e10a8feff3ffd43b232d6172700da9, type: 3}
   - {fileID: 8300000, guid: 15d3e6b28e55ee748beeb48cbb4c54fb, type: 3}
   isOneTime: 00000000
+  fadeIn: 1
 --- !u!1 &1182112640
 GameObject:
   m_ObjectHideFlags: 0
@@ -5250,9 +5251,12 @@ MonoBehaviour:
   rightArrow: {fileID: 8648144061704417411, guid: b63e268ba7f9ec24282c0ff6fb6aa801, type: 3}
   commonFadeOutScreen: {fileID: 2276493549760337385, guid: 61d044dec42c8a1449be0ae522e8326b, type: 3}
   fadeOutScreen1: {fileID: 2859837941283298021, guid: a96d9139143c1b548885484279832ead, type: 3}
+  giveCloudFadeOutScreen: {fileID: 4477037497823701477, guid: 83456aed0efd70d49ae99192752b3cbe, type: 3}
+  giveCloudFadeOutScreen2: {fileID: 804193916274158904, guid: 8f2fa32967df5534384d38cc5caf47ee, type: 3}
   storageFadeOutScreen0: {fileID: 7256708203614886898, guid: 8056565470ed2eb4aa3a040df70bd81d, type: 3}
   storageFadeOutScreen: {fileID: 8103931239445395661, guid: 4ff09c27f57a9174795af06a15eb6e8c, type: 3}
   decoFadeOutScreen: {fileID: 1998084525914599915, guid: fedf676f73575694ea902dd0a530131b, type: 3}
+  decoFadeOutDeco: {fileID: 6236998726228229813, guid: 983f612439bb9024da4dc52ccb2b017e, type: 3}
 --- !u!4 &1388719288
 Transform:
   m_ObjectHideFlags: 0

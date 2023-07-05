@@ -570,10 +570,12 @@ public class Guest : MonoBehaviour
 
         GuestInfos temp         = new GuestInfos();
         temp.mName              = mGuestInitInfos[guestNum].mName.Clone() as string;
+        temp.mNameEN            = mGuestInitInfos[guestNum].mNameEN.Clone() as string;
         temp.mSeed              = mGuestInitInfos[guestNum].mSeed;
         temp.mEmotion           = mGuestInitInfos[guestNum].mEmotion.Clone() as int[];
         temp.mAge               = mGuestInitInfos[guestNum].mAge;
         temp.mJob               = mGuestInitInfos[guestNum].mJob;
+        temp.mJobEN             = mGuestInitInfos[guestNum].mJobEN;
         temp.mSatatisfaction    = mGuestInitInfos[guestNum].mSatatisfaction;
         temp.mSatVariation      = mGuestInitInfos[guestNum].mSatVariation;
         temp.mSatEmotions       = mGuestInitInfos[guestNum].mSatEmotions;

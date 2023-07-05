@@ -50,9 +50,12 @@ public class TutorialManager : MonoBehaviour
 	[Header ("페이드 아웃 프리펩 오브젝트")]
     public GameObject commonFadeOutScreen;		// 화면을 모두 가리는 공용 Fade Out 스크린
     public GameObject fadeOutScreen1;
-	public GameObject storageFadeOutScreen0;
+    public GameObject giveCloudFadeOutScreen;
+    public GameObject giveCloudFadeOutScreen2;
+    public GameObject storageFadeOutScreen0;
     public GameObject storageFadeOutScreen;
     public GameObject decoFadeOutScreen;
+    public GameObject decoFadeOutDeco;
     private GameObject fadeOutScreenObject;
 
 	[Header("튜토리얼용 뭉티 오브젝트")]
@@ -108,6 +111,16 @@ public class TutorialManager : MonoBehaviour
                 }
                 isTutorial = false;
                 DestroyAllObject();
+                if (SceneManager.GetActiveScene().name == "Space Of Weather")
+                {
+	                GameObject.Find("B_Option").transform.SetSiblingIndex(5);
+	                GameObject.Find("UIManager").GetComponent<CommonUIManager>().gOption.transform.SetSiblingIndex(15);
+                }
+                else if (SceneManager.GetActiveScene().name == "Cloud Factory")
+                {
+	                GameObject.Find("B_Option").transform.SetSiblingIndex(7);
+	                GameObject.Find("UIManager").GetComponent<CommonUIManager>().gOption.transform.SetSiblingIndex(13);
+                }
             }
 
             // 스토리 소개, 응접실 안내 튜토리얼
@@ -265,6 +278,20 @@ public class TutorialManager : MonoBehaviour
 		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
 	}
 
+	public void FadeOutGiveCloud()
+	{
+		fadeOutScreenObject = Instantiate(giveCloudFadeOutScreen);
+		fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
+		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
+	}
+	
+	public void FadeOutGiveCloud2()
+	{
+		fadeOutScreenObject = Instantiate(giveCloudFadeOutScreen2);
+		fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
+		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
+	}
+
 	public void FadeOutCloudStorage0()
 	{
 		fadeOutScreenObject = Instantiate(storageFadeOutScreen0);
@@ -285,6 +312,15 @@ public class TutorialManager : MonoBehaviour
 		fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
 		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
 	}
+    
+    public void FadeOutDecoCloudDeco()
+    {
+	    fadeOutScreenObject = Instantiate(decoFadeOutDeco);
+	    fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
+	    fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
+    }
+    
+
 
 	// Tutorial 간 모든 씬에서 출력되는 기본 오브젝트(emptyScreenObject, guideSpeechBubbleObject)를 생성해준다.
 	public void InstantiateBasicObjects(int dialog_index)

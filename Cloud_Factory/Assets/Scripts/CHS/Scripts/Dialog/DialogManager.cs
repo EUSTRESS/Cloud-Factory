@@ -369,8 +369,11 @@ public class DialogManager : MonoBehaviour
         {
             isLastDialog = true;
             // 대화 내용을 모두 출력하고 나면 손님 응대에 관한 여부를 플레이어에게 묻는다. (받는다/ 받지 않는다)
+            if (mTutorialManager.isFinishedTutorial[1] == false) { 
+                mTutorialManager.SetActiveGuideSpeechBubble(true);
+                return;
+            }
             TakeGuest();
-            if (mTutorialManager.isFinishedTutorial[1] == false) { mTutorialManager.SetActiveGuideSpeechBubble(true); }
             return;
         }
         // 대화가 출력중인 도중에 클릭한 경우, 문장이 한번에 출력이 된다.

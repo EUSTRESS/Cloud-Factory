@@ -489,6 +489,9 @@ public class CloudMakeSystem : MonoBehaviour
         if (mTutorialManager.isFinishedTutorial[4] == false) {
             mTutorialManager.SetActiveArrowUIObject(false);
             mTutorialManager.SetActiveGuideSpeechBubble(true);
+            mTutorialManager.FadeOutScreen();
+            GameObject.Find("B_Back").transform.SetAsLastSibling();
+            GameObject.Find("GuideBubble(Clone)").transform.SetAsLastSibling();
         }
 
 		yield break;

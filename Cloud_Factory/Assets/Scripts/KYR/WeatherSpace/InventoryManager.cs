@@ -308,25 +308,29 @@ public class InventoryManager : MonoBehaviour
 
         mCloudStorageData = new CloudStorageData();
         beginningCloudData = new CloudData();
-
-        //이어하기 시 기존 백업된 재료들 Sprite Missing인 경우 재할당
-        List<IngredientData> updatedImageStock = new List<IngredientData>(); //새로운 리스트 생성
-        foreach (IngredientData stock in mType)
-        {
-            IngredientData dataBase = mIngredientDatas[stock.rarity - 1].mItemList.Find(item => stock.dataName == item.dataName);
-            updatedImageStock.Add(dataBase);
-        }
-
-        mType = updatedImageStock;
     }
 
     private void Update()
     {
         foreach (IngredientData stock in mType)
         {
-            if (stock.image == null)
-                stock.rematchSpriteData(mIngredientDatas);
+            if (stock.image != null) continue;
+
+            //stock.rematchSpriteData(mIngredientDatas);
+            ReAllocateInventoryData();
+
+            break;
         }
+    }
+
+    private void ReAllocateInventoryData()
+    {
+        List<IngredientData> List = new List<IngredientData>();
+        foreach (IngredientData stock in mType)
+        {
+            List.Add(mIngredientDatas[stock.rarity - 1].mItemList.Find(item => stock.dataName == item.dataName));
+        }
+        mType = List;
     }
 
     /////////////////

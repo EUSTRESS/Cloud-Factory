@@ -57,6 +57,13 @@ public class CloudSpawner : MonoBehaviour
     {
         // 구름 인스턴스 생성
         tempCLoud = Instantiate(CloudObject);
+
+        SOWManager SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+        if(SOWManager != null)
+        {
+            SOWManager.mCloudObjectList.Add(tempCLoud);
+        }
+
         Debug.Log("Instantiate");
         tempCLoud.transform.position = this.transform.position;
 
@@ -85,7 +92,6 @@ public class CloudSpawner : MonoBehaviour
                 }
             }
         }
-
 
         // 임시로 인벤토리에 들어있는 구름 중, 맨 앞에 있는 구름의 값을 가져온다.
         CloudData = storagedCloudData;

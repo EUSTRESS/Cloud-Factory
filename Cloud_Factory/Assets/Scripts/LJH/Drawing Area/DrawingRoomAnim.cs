@@ -17,15 +17,14 @@ public class DrawingRoomAnim : MonoBehaviour
     }
     void Update()
     {
-        if (mGuestManager.isGuestInLivingRoom && !isOnetime)
+        if (mGuestManager.isGuestInLivingRoom)
         {
             mExM.SetActive(true);
             isOnetime = true;
         }
-        else if (!mGuestManager.isGuestInLivingRoom && isOnetime)
+        else
         {
-            mExM.SetActive(true);
-            isOnetime = false;
+            mExM.SetActive(false);
         }
     }
 }

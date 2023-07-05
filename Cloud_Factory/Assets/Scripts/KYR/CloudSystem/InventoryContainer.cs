@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Linq;
 using TMPro;
+
+
 public class InventoryContainer : MonoBehaviour
 {
     //Interface UI
@@ -137,6 +139,7 @@ public class InventoryContainer : MonoBehaviour
        
 
         setInven(invenData);
+
     }
 
     private void setInven(Dictionary<IngredientData, int> _mData)
@@ -294,8 +297,8 @@ public class InventoryContainer : MonoBehaviour
     private void selectStock(string dataName)
     {
         IngredientData stockDt = inventoryManager.mIngredientDatas[inventoryManager.minvenLevel - 1].mItemList.Find(item => dataName == item.dataName);
+
         
-        //전체 Data에서 삭제
         mUiStocksData[stockDt]--;
 
         GameObject uiGameObj = findObjectWithData(stockDt);

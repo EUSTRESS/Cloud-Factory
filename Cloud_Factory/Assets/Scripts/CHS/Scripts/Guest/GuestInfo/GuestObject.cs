@@ -277,7 +277,7 @@ private void Update()
                     if (isUseRarity4)
                     {
                         // 사용하였고 아직 힌트를 출력하지 않았다면 힌트 출력
-                        if (!isHintTextPrinted && !isUsingHint)
+                        if (!isHintTextPrinted && !isUsingHint && !mGuestManager.mGuestInfo[mGuestNum].isDisSat)
                         {
                             Hint();
                             Debug.Log("퇴장과 함께 힌트 출력");

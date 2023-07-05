@@ -281,29 +281,29 @@ public class GuideBook : MonoBehaviour
 
     void Update_Cloud_Page(bool page_on, int Page_num)
     {
-        Cloud_page_num = Page_num;
-        for (int i = 0; i < 4; i++)
-        {
-            Page_num = 1;
-            Cloud_Page[i].SetActive(false);
-        }
-        if (page_on)
-        {
-            Cloud_Page[Cloud_page_num].SetActive(true);
-        }
+        //Cloud_page_num = Page_num;
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    Page_num = 1;
+        //    Cloud_Page[i].SetActive(false);
+        //}
+        //if (page_on)
+        //{
+        //    Cloud_Page[Cloud_page_num].SetActive(true);
+        //}
     }
 
     void Update_Emotion_Page(bool page_on, int Page_num)
     {
-        Emotion_page_num = Page_num;
-        for (int i = 0; i < 4; i++)
-        {
-            Page_num = 1;
-            Emotion_Page[i].SetActive(false);
-        }
-        if (page_on)
-        {
-            Emotion_Page[Emotion_page_num].SetActive(true);
-        }
+        //Emotion_page_num = Page_num;
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    Page_num = 1;
+        //    Emotion_Page[i].SetActive(false);
+        //}
+        //if (page_on)
+        //{
+        //    Emotion_Page[Emotion_page_num].SetActive(true);
+        //}
     }
 }

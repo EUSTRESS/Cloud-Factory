@@ -86,8 +86,36 @@ public class SeasonDateCalc : MonoBehaviour
         // 계절별 테스트를 위한 핫키
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            // 계절이 바뀌는 것도 하루가 지나는 것이므로 초기화 해준다.
+            Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
+            SOWManager SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+
+            // 날씨의 공간이고 아무 손님도 방문하지 않은 상태에서만 핫 키 사용 가능
+            {
+                if(SceneManager.GetActiveScene().name != "Space Of Weather")
+                {
+                    Debug.Log("날씨의 공간이 아닙니다.");
+                    return;
+                }
+                
+                if(SOWManager != null)
+                {
+                    if(SOWManager.mUsingGuestList.Count > 0)
+                    {
+                        Debug.Log("날씨의 공간에 손님이 남아있어 핫키를 사용할 수 없습니다.");
+                        return;
+                    }    
+                }
+            }
+
             mWeek = 5;
             mSeason += CalcSeason(ref mWeek);
+
+            if (GuestManager != null && SOWManager != null)
+            {
+                GuestManager.InitDay();
+                SOWManager.InitSOW();
+            }
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
@@ -97,7 +125,6 @@ public class SeasonDateCalc : MonoBehaviour
             mWeek = CalcWeek(ref mDay);
             mSeason += CalcSeason(ref mWeek);
         }
-
     }
 
     // ref를 선언해서 변수의 주소 값 접근
@@ -178,11 +205,13 @@ public class SeasonDateCalc : MonoBehaviour
             if (sowManager != null)
             {
                 sowManager.ChangeWeatherObject(mSeason % 4);
-                UpdateSeasonWalkCollider(mSeason % 4);
+                // UpdateSeasonWalkCollider(mSeason % 4);
             }
             if (mGuestManager != null)
             {
-                mGuestManager.InitGuestQueue(mSeason % 4);
+                // 가을계절까지만 나오므로 % 3연산
+                mGuestManager.InitGuestQueue(mSeason % 3 + 1);
+                //mGuestManager.InitGuestQueue(mSeason % 4);
                 mGuestManager.InitDay();
             }
         }

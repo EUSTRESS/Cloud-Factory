@@ -81,26 +81,25 @@ public class CloudStorageProfile : MonoBehaviour
         Profiles[2] = GameObject.Find("I_ProfileBG3");
 
         btGiveBtn = GameObject.Find("B_CloudGIve").GetComponent<Button>();
-        
-
+       
         initProfileList();
     }
 
     public void GetNextProfile()
     {
-        // 이전 프로필을 불러온다.
-
-        // 맨앞에 나온 손님의 인덱스가 
-        if (UsingGuestIndex >= numOfUsingGuestList - 1)
         {
-            //UsingGuestIndex = 0;
-            UsingGuestIndex = numOfUsingGuestList - 1;
-            return;
+            // 맨앞에 나온 손님의 인덱스가 
+            if (UsingGuestIndex >= numOfUsingGuestList - 1)
+            {
+                //UsingGuestIndex = 0;
+                UsingGuestIndex = numOfUsingGuestList - 1;
+                return;
+            }
         }
-
+        // 이전 프로필을 불러온다.
         frontProfileInfo = (frontProfileInfo + 1) % 3;
-        UsingGuestIndex++;
 
+        UsingGuestIndex++;
         frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
 
         updateProfileList();
@@ -109,17 +108,20 @@ public class CloudStorageProfile : MonoBehaviour
 
     public void GetPrevProfile()
     {
-        // 다음 프로필을 불러온다.       
-        if (UsingGuestIndex <= 0)
         {
-            UsingGuestIndex = 0;
-            return;
+            // 다음 프로필을 불러온다.       
+            if (UsingGuestIndex <= 0)
+            {
+                UsingGuestIndex = 0;
+                return;
+            }
         }
-
+        // 다음 프로필을 불러온다.
         frontProfileInfo = (frontProfileInfo - 1 + 3) % 3;
-        UsingGuestIndex--;
 
+        UsingGuestIndex--;
         frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
+
         updateProfileList();
         UIManager.ShowPrevProfile();
     }
@@ -201,6 +203,7 @@ public class CloudStorageProfile : MonoBehaviour
         }
         */
 
+        // 정보 최신화
         tName.text = info.mName;        
         tAge.text = "" + info.mAge;
         tJob.text = info.mJob;

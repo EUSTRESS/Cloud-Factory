@@ -63,12 +63,6 @@ public class CloudObject : MonoBehaviour
                 transform.position = Vector2.MoveTowards(transform.position, targetChairPos.position + temp, cloudSpeed * Time.deltaTime);
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StopToUse();
-
-        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -160,13 +154,23 @@ public class CloudObject : MonoBehaviour
         }
     }
 
+
+
     public void StopToUse()
     {
-        if(Target != null)
-            Target.GetComponent<GuestObject>().isEndUsingCloud = true;
-        Debug.Log("코루틴 강제 중단");
+        //if (Target != null)
+        //{
+        //    GuestObject guestObject = Target.GetComponent<GuestObject>();
+        //    if(guestObject != null) 
+        //    {
+        //        guestObject.isEndUsingCloud = true;   
+        //    }
+        //}
+ 
         GuestManager.mGuestInfo[mGuestNum].isUsing = false;
+        GuestManager.mGuestInfo[mGuestNum].isDisSat = true;
         this.transform.GetChild(0).GetComponent<Animator>().SetTrigger("End");
+        Debug.Log("구름 End");
     }
         
 

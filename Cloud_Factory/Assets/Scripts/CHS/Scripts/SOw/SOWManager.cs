@@ -20,7 +20,9 @@ public class SOWManager : MonoBehaviour
     public Queue<GameObject> mWaitGuestObjectQueue;     // 대기 손님 오브젝트들을 관리할 리스트
     [HideInInspector]
     public List<GameObject> mUsingGuestObjectList;     // 사용 손님 오브젝트들을 관리할 리스트
-    
+
+    public List<GameObject> mCloudObjectList;
+
     [Header("[의자 & 웨이포인트 관련]")]
     public GameObject[] mChairPos;                      // 손님이 앉아서 구름을 사용할 의자(구름)
     public GameObject[] mWayPoint;                      // 손님이 걸어다니며 산책하는 경로들
@@ -87,6 +89,7 @@ public class SOWManager : MonoBehaviour
             mUsingGuestList         = new List<int>();
             mWaitGuestObjectQueue   = new Queue<GameObject>();
             mUsingGuestObjectList   = new List<GameObject>();
+            mCloudObjectList        = new List<GameObject>();
             mCheckChairEmpty        = new Dictionary<int, bool>();
             isNewGuest              = false;
             isCloudGet              = false;
@@ -203,6 +206,10 @@ public class SOWManager : MonoBehaviour
         mUsingGuestList.Clear();
         mCheckChairEmpty.Clear();
 
+        // 구름 오브젝트 정리
+        DestoryClouds();
+        mCloudObjectList.Clear();
+
         // 업그레이드 단계에 따라 mCheckChairEmpty에서 확인하는 의자의 개수가 줄어든다.
         // 아직 합치지 않았으므로 일괄적으로 3개로 가정하고 개발한다.
         for (int i = 0; i < mMaxChairNum; i++)
@@ -264,15 +271,19 @@ public class SOWManager : MonoBehaviour
             Debug.Log(guestNum + "번 손님이 착석 중 집으로 돌아갑니다");
         }
 
-        // 존재하는 모든 구름을 삭제한다.
-        GameObject[] Clouds = GameObject.FindGameObjectsWithTag("Cloud");
-        if (Clouds != null)
-        {
-            foreach(GameObject i in Clouds)
-            {
-                i.SendMessage("StopToUse");
-            }
-        }
+        //// 존재하는 모든 구름을 삭제한다.
+        //GameObject[] Clouds = GameObject.FindGameObjectsWithTag("Cloud");
+        //if (Clouds != null)
+        //{
+        //    foreach(GameObject i in Clouds)
+        //    {
+        //        CloudObject cloudObject = i.GetComponent<CloudObject>();
+        //        if(cloudObject != null)
+        //        {
+        //            cloudObject.StopToUse();
+        //        }
+        //    }
+        //}
 
     }
 
@@ -340,6 +351,21 @@ public class SOWManager : MonoBehaviour
         for (int i = 0; i < 8; i++)
         {
             mWayPoint[i].transform.position = new Vector3(WayPosList[weather][i][0], WayPosList[weather][i][1], 0f);
+        }
+    }
+
+    void DestoryClouds()
+    {
+        foreach(GameObject obj in mCloudObjectList)
+        {
+            if(obj != null)
+            {
+                CloudObject cloudObject = obj.GetComponent<CloudObject>();
+                if(cloudObject != null)
+                {
+                    cloudObject.StopToUse();
+                }
+            }
         }
     }
 

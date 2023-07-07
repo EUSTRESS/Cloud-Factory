@@ -54,8 +54,12 @@ public class TutorialManager : MonoBehaviour
     public GameObject giveCloudFadeOutScreen2;
     public GameObject storageFadeOutScreen0;
     public GameObject storageFadeOutScreen;
+    public GameObject storageFadeOutExpir;
+    public GameObject storageFadeOutReceipt;
+    public GameObject fadeOutSend;
     public GameObject decoFadeOutScreen;
     public GameObject decoFadeOutDeco;
+    public GameObject decoFadeOutVariation;
     private GameObject fadeOutScreenObject;
 
 	[Header("튜토리얼용 뭉티 오브젝트")]
@@ -305,6 +309,27 @@ public class TutorialManager : MonoBehaviour
 		fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
 		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
 	}
+    
+    public void FadeOutCloudExpir()
+    {
+	    fadeOutScreenObject = Instantiate(storageFadeOutExpir);
+	    fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
+	    fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
+    }
+    
+    public void FadeOutCloudReceipt()
+    {
+	    fadeOutScreenObject = Instantiate(storageFadeOutReceipt);
+	    fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
+	    fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
+    }
+    
+    public void FadeOutCloudSend()
+    {
+	    fadeOutScreenObject = Instantiate(fadeOutSend);
+	    fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
+	    fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
+    }
 
     public void FadeOutDecoCloud()
     {
@@ -320,9 +345,16 @@ public class TutorialManager : MonoBehaviour
 	    fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
     }
     
+    public void FadeOutDecoCloudVariation()
+    {
+	    fadeOutScreenObject = Instantiate(decoFadeOutVariation);
+	    fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
+	    fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
+    }
 
 
-	// Tutorial 간 모든 씬에서 출력되는 기본 오브젝트(emptyScreenObject, guideSpeechBubbleObject)를 생성해준다.
+
+    // Tutorial 간 모든 씬에서 출력되는 기본 오브젝트(emptyScreenObject, guideSpeechBubbleObject)를 생성해준다.
 	public void InstantiateBasicObjects(int dialog_index)
     {
 		emptyScreenObject = Instantiate(emptyScreen);

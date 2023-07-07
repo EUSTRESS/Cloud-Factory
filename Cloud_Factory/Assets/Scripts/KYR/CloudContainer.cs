@@ -77,7 +77,9 @@ public class CloudContainer : MonoBehaviour
             if(selected.gameObject.GetComponent<RightClickButton>().GetIsFinishedRightClick() == false) { return; }
 			mTutorialManager.SetActiveFadeOutScreen(false);
 			mTutorialManager.SetActiveGuideSpeechBubble(true);
-		}
+            mTutorialManager.FadeOutCloudReceipt();
+            GameObject.Find("GuideBubble(Clone)").transform.SetAsLastSibling();
+        }
 
 		if (!isCloudSelected)
         {

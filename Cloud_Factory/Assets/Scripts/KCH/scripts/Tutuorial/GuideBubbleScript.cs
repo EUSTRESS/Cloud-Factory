@@ -133,31 +133,37 @@ public class GuideBubbleScript : MonoBehaviour
 			mDialog[6, 1] = "이곳은 구름을 꾸밀 수 있는 공간입니다. 위쪽의 장식은 클릭해서 원하는 위치에 갖다 놓을 수 있습니다. 쓸 수 있는 장식의 개수는 장식의 위쪽 숫자로 알 수 있습니다.";
 			mDialog[6, 2] = "FadeOut61";
 			mDialog[6, 3] = "장식의 옆에 있는 \'증가\' 또는 \'감소\' 버튼을 누르면 재료의 특성에 따라 손님의 감정이 오르거나 내려갑니다.";
-			mDialog[6, 4] = "\'증가\'를 누르면 특정 감정을 더 느끼게 되고, \'감소\'를 누르면 덜 느끼게 됩니다.";
-			mDialog[6, 5] = "FadeOut62";
-			mDialog[6, 6] = "이번 손님은 슬픔을 경험하고 싶으니, 슬픔을 더 느끼도록 슬픔 장식 옆의 \'증가\' 버튼을 눌러봅시다.";
-			mDialog[6, 7] = "GuideSpeechOut60";
+			mDialog[6, 4] = "FadeOut62";
+			mDialog[6, 5] = "\'증가\'를 누르면 특정 감정을 더 느끼게 되고, \'감소\'를 누르면 덜 느끼게 됩니다.";
+			mDialog[6, 6] = "FadeOut63";
+			mDialog[6, 7] = "이번 손님은 슬픔을 경험하고 싶으니, 슬픔을 더 느끼도록 슬픔 장식 옆의 \'증가\' 버튼을 눌러봅시다.";
+			mDialog[6, 8] = "GuideSpeechOut60";
 			// 화살표 UI
-			mDialog[6, 8] = "좋습니다. 구름을 완성하려면 위쪽의 <b>모든</b> 장식을 붙이고, 오른쪽에서 각 장식이 손님에게 줄 <b>영향</b>을 골라야 합니다.";
-			mDialog[6, 9] = "장식을 한꺼번에 넣고 싶다면 \'자동\' 버튼을 눌러주세요.";
-			mDialog[6, 10] = "이제 구름을 완성해봅시다.";
-			mDialog[6, 11] = "FadeOut63";
+			mDialog[6, 9] = "좋습니다. 구름을 완성하려면 위쪽의 <b>모든</b> 장식을 붙이고, 오른쪽에서 각 장식이 손님에게 줄 <b>영향</b>을 골라야 합니다.";
+			mDialog[6, 10] = "FadeOut64";
+			mDialog[6, 11] = "장식을 한꺼번에 넣고 싶다면 \'자동\' 버튼을 눌러주세요.";
+			mDialog[6, 12] = "FadeOut65";
+			mDialog[6, 13] = "이제 구름을 완성해봅시다.";
+			mDialog[6, 14] = "FadeOut66";
 			// 돌아가기 버튼 막기
 
 
 			// 화살표 UI
 			mDialog[7, 0] = "완성된 구름은 구름 보관함에 저장됩니다.";
-			mDialog[7, 1] = "구름은 보관 기간이 지나면 사라집니다. 보관 기간별로 보려면 위쪽의 \'보관 기간별\' 옆에 있는 네모를 클릭하면 됩니다.";
-			mDialog[7, 2] = "구름을 계속 우클릭하고 있으면 어떤 재료로 만들었는지 볼 수 있습니다.";
-			mDialog[7, 3] = "FadeOut70";
-			// 우클릭 이벤트 추가 필요
-			mDialog[7, 4] = "아까 만들었던 구름을 클릭해봅시다.";
-			// 화살표 UI
+			mDialog[7, 1] = "FadeOut70";
+			mDialog[7, 2] = "구름은 보관 기간이 지나면 사라집니다. 보관 기간별로 보려면 위쪽의 \'보관 기간별\' 옆에 있는 네모를 클릭하면 됩니다.";
+			mDialog[7, 3] = "DeleteFade";
+			mDialog[7, 4] = "구름을 계속 우클릭하고 있으면 어떤 재료로 만들었는지 볼 수 있습니다.";
 			mDialog[7, 5] = "FadeOut71";
-			mDialog[7, 6] = "오른쪽에서는 손님의 접수지로 정보를 얻을 수 있습니다. \'만족도\'에 주목해주세요! 모든 손님은 자기가 좋아하는 계절에 이 숫자가 5가 될 때까지 재방문합니다. 당신의 목표는 이 숫자가 5가 되기까지 도와주는 것입니다.";
-			mDialog[7, 7] = "이 숫자는 손님이 조절하고 싶은 다섯가지 감정 중 하나가 만족스러워졌을 때마다 오르게 됩니다. 반대로, 적당한 양에서 벗어나게 되면 내려갑니다. 어떤 감정을 얼마나 원하는지는 뭉티의 이야기로 알 수 있습니다.";
-			mDialog[7, 8] = "올바른 뭉티의 접수지 위에서 \'보내기\' 버튼을 누르면 날씨의 공간으로 구름이 보내집니다. 뭉티의 만족도가 0이 되면 다시는 방문하지 않으니 조심하세요!";
-			mDialog[7, 9] = "FadeOut72";
+			// 우클릭 이벤트 추가 필요
+			mDialog[7, 6] = "아까 만들었던 구름을 클릭해봅시다.";
+			// 화살표 UI
+			mDialog[7, 7] = "FadeOut72";
+			mDialog[7, 8] = "오른쪽에서는 손님의 접수지로 정보를 얻을 수 있습니다. \'만족도\'에 주목해주세요! 모든 손님은 자기가 좋아하는 계절에 이 숫자가 5가 될 때까지 재방문합니다. 당신의 목표는 이 숫자가 5가 되기까지 도와주는 것입니다.";
+			mDialog[7, 9] = "이 숫자는 손님이 조절하고 싶은 다섯가지 감정 중 하나가 만족스러워졌을 때마다 오르게 됩니다. 반대로, 적당한 양에서 벗어나게 되면 내려갑니다. 어떤 감정을 얼마나 원하는지는 뭉티의 이야기로 알 수 있습니다.";
+			mDialog[7, 10] = "FadeOut73";
+			mDialog[7, 11] = "올바른 뭉티의 접수지 위에서 \'보내기\' 버튼을 누르면 날씨의 공간으로 구름이 보내집니다. 뭉티의 만족도가 0이 되면 다시는 방문하지 않으니 조심하세요!";
+			mDialog[7, 12] = "FadeOut74";
 
 			
 			mDialog[8, 0] = "FadeOut80";
@@ -227,31 +233,37 @@ public class GuideBubbleScript : MonoBehaviour
 			mDialog[6, 1] = "This is where you decorate the cloud. The decors on the top are placeable by clicking and dropping. The amount of decors you have to place are written on the top of each types of ingredient.";
 			mDialog[6, 2] = "FadeOut61";
 			mDialog[6, 3] = "The customer\'s change in emotion depends on which buttons you press.";
-			mDialog[6, 4] = "\'Up\' will make them feel more of the emotion, but \'down\' makes them feel less of it.";
-			mDialog[6, 5] = "FadeOut62";
-			mDialog[6, 6] = "This customer wants to feel sad; let\'s press on the \'Up\' button next to the decor that affects sadness, so they feel more of it.";
-			mDialog[6, 7] = "GuideSpeechOut60";
+			mDialog[6, 4] = "FadeOut62";
+			mDialog[6, 5] = "\'Up\' will make them feel more of the emotion, but \'down\' makes them feel less of it.";
+			mDialog[6, 6] = "FadeOut63";
+			mDialog[6, 7] = "This customer wants to feel sad; let\'s press on the \'Up\' button next to the decor that affects sadness, so they feel more of it.";
+			mDialog[6, 8] = "GuideSpeechOut60";
 			// 화살표 UI
-			mDialog[6, 8] = "Excellent! To finish making the cloud, use <b>all</b> decor parts and assign their <b>effects</b> by pressing the buttons.";
-			mDialog[6, 9] = "If you want to skip with decoration, press \'AUTO\' button on the top.";
-			mDialog[6, 10] = "Let\'s finish off making the cloud.";
-			mDialog[6, 11] = "FadeOut63";
+			mDialog[6, 9] = "Excellent! To finish making the cloud, use <b>all</b> decor parts and assign their <b>effects</b> by pressing the buttons.";
+			mDialog[6, 10] = "FadeOut64";
+			mDialog[6, 11] = "If you want to skip with decoration, press \'AUTO\' button on the top.";
+			mDialog[6, 12] = "FadeOut65";
+			mDialog[6, 13] = "Let\'s finish off making the cloud.";
+			mDialog[6, 14] = "FadeOut66";
 			// 돌아가기 버튼 막기
 
 
 			// 화살표 UI
 			mDialog[7, 0] = "Decorated clouds are stored in the cloud storage.";
-			mDialog[7, 1] = "All clouds have an expiration date and will disappear once they run out of time. If you want to sort them by how much time they have, click on the little square next to 'TIME LEFT⇅'.";
-			mDialog[7, 2] = "You can see what the clouds are made of by keeping RMB clicked on the cloud.";
-			mDialog[7, 3] = "FadeOut70";
-			// 우클릭 이벤트 추가 필요
-			mDialog[7, 4] = "Let\'s click on the cloud you made.";
-			// 화살표 UI
+			mDialog[7, 1] = "FadeOut70";
+			mDialog[7, 2] = "All clouds have an expiration date and will disappear once they run out of time. If you want to sort them by how much time they have, click on the little square next to 'TIME LEFT⇅'.";
+			mDialog[7, 3] = "DeleteFade";
+			mDialog[7, 4] = "You can see what the clouds are made of by keeping RMB clicked on the cloud.";
 			mDialog[7, 5] = "FadeOut71";
-			mDialog[7, 6] = "You can see the info of the customers on the right. The \'SATISFACTION\' is what you have to focus on! All customers revisit this factory in their favorite weather until the number reaches 5. Your goal is to help them reach that number.";
-			mDialog[7, 7] = "The number will increase whenever one of their five \'key\' emotion reaches the right amount. It decreases once there is too much or too little of certain emotion. Listen to them well so you know which emotion may be the key!";
-			mDialog[7, 8] = "Pressing the \'SEND\' button on the right Moongty\'s reception sheet will send the cloud into the Weather Room. Be careful, the customers will never visit again if their SATISFACTION reaches 0! ";
-			mDialog[7, 9] = "FadeOut72";
+			// 우클릭 이벤트 추가 필요
+			mDialog[7, 6] = "Let\'s click on the cloud you made.";
+			// 화살표 UI
+			mDialog[7, 7] = "FadeOut72";
+			mDialog[7, 8] = "You can see the info of the customers on the right. The \'SATISFACTION\' is what you have to focus on! All customers revisit this factory in their favorite weather until the number reaches 5. Your goal is to help them reach that number.";
+			mDialog[7, 9] = "The number will increase whenever one of their five \'key\' emotion reaches the right amount. It decreases once there is too much or too little of certain emotion. Listen to them well so you know which emotion may be the key!";
+			mDialog[7, 10] = "FadeOut73";
+			mDialog[7, 11] = "Pressing the \'SEND\' button on the right Moongty\'s reception sheet will send the cloud into the Weather Room. Be careful, the customers will never visit again if their SATISFACTION reaches 0! ";
+			mDialog[7, 12] = "FadeOut74";
 
 			
 			mDialog[8, 0] = "FadeOut80";
@@ -422,26 +434,70 @@ public class GuideBubbleScript : MonoBehaviour
 		{
 			presentDialogNum++;
 			currentDialogNum++;
+			mTutorialManager.SetActiveFadeOutScreen(false);
+			mTutorialManager.FadeOutDecoCloudVariation();
+			this.gameObject.transform.SetAsLastSibling();
+
+		}
+
+		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut63")
+		{
+			presentDialogNum++;
+			currentDialogNum++;
 
 		}
 		
 		if (mDialog[mDialogIndex, currentDialogNum] == "GuideSpeechOut60")
 		{
-			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("ButtonGroup(1)").transform.Find("PosButton").transform.localPosition, -200f, -260f);
-			Debug.Log(GameObject.Find("ButtonGroup(1)").transform.Find("PosButton").transform.localPosition);
 			presentDialogNum++;
 			currentDialogNum++;
 			this.gameObject.SetActive(false);
 			return;
 		}
 		
-		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut63")
+		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut64")
+		{
+			presentDialogNum++;
+			currentDialogNum++;
+			mTutorialManager.FadeOutScreen();
+			GameObject.Find("B_DecoAuto").transform.SetAsLastSibling();
+			this.gameObject.transform.SetAsLastSibling();
+
+		}
+		
+		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut65")
+		{
+			presentDialogNum++;
+			currentDialogNum++;
+			GameObject.Find("B_DecoAuto").transform.SetSiblingIndex(8);
+			mTutorialManager.SetActiveFadeOutScreen(false);
+			this.gameObject.SetActive(false);
+			return;
+		}
+		
+		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut66")
 		{
 			this.gameObject.SetActive(false);
 			return;
 		}
 
 		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut70")
+		{
+			mTutorialManager.FadeOutCloudExpir();
+			presentDialogNum++;
+			currentDialogNum++;
+			this.gameObject.transform.SetAsLastSibling();
+		}
+
+		if (mDialog[mDialogIndex, currentDialogNum] == "DeleteFade")
+		{
+			presentDialogNum++;
+			currentDialogNum++;
+			mTutorialManager.SetActiveFadeOutScreen(false);
+			return;
+		}
+		
+		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut71")
 		{
 			mTutorialManager.FadeOutCloudStorage0();
 			presentDialogNum++;
@@ -450,7 +506,7 @@ public class GuideBubbleScript : MonoBehaviour
 			return;
 		}
 
-		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut71")
+		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut72")
 		{
 			mTutorialManager.FadeOutCloudStorage();
 			presentDialogNum++;
@@ -458,14 +514,21 @@ public class GuideBubbleScript : MonoBehaviour
 			this.gameObject.SetActive(false);
 			return;
 		}
-
-		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut72")
+		
+		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut73")
 		{
+			presentDialogNum++;
+			currentDialogNum++;
+			mTutorialManager.SetActiveFadeOutScreen(false);
 			mTutorialManager.FadeOutScreen();
 			GameObject tempButton = GameObject.Find("I_ProfileBG1").transform.Find("B_CloudGIve").gameObject;
 			tempButton.transform.SetParent(GameObject.Find("Canvas").transform);
 			tempButton.transform.SetAsLastSibling();
-			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("Canvas").transform.Find("B_CloudGIve").gameObject.transform.localPosition, -200f);
+			this.gameObject.transform.SetAsLastSibling();
+		}
+		
+		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut74")
+		{
 			this.gameObject.SetActive(false);
 			return;
 		}

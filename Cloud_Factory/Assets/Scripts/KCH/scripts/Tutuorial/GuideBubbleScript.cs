@@ -520,10 +520,11 @@ public class GuideBubbleScript : MonoBehaviour
 			presentDialogNum++;
 			currentDialogNum++;
 			mTutorialManager.SetActiveFadeOutScreen(false);
-			mTutorialManager.FadeOutScreen();
-			GameObject tempButton = GameObject.Find("I_ProfileBG1").transform.Find("B_CloudGIve").gameObject;
-			tempButton.transform.SetParent(GameObject.Find("Canvas").transform);
-			tempButton.transform.SetAsLastSibling();
+			// 오류 발생 위험으로 주석 처리
+			//mTutorialManager.FadeOutScreen();
+			//GameObject tempButton = GameObject.Find("I_ProfileBG1").transform.Find("B_CloudGIve").gameObject;
+			//tempButton.transform.SetParent(GameObject.Find("Canvas").transform);
+			//tempButton.transform.SetAsLastSibling();
 			this.gameObject.transform.SetAsLastSibling();
 		}
 		

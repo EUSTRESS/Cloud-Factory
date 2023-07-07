@@ -48,8 +48,10 @@ public class RecordUIManager : MonoBehaviour
         mProfile3 = GameObject.Find("I_ProfileBG3").GetComponent<ProfileMoving>();
 
         SOWManager SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
+
         // 구름 이용이 가능한 뭉티들의 리스트를 초기화 하는 함수 호출
         initProfileList();
+
     }
     private void Update()
     {
@@ -73,8 +75,6 @@ public class RecordUIManager : MonoBehaviour
 
     public void ShowNextProfile()
     {
-
-
         // 다음 페이지
         mIsNext = true;
         mIsPrev = false;

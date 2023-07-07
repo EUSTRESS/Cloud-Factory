@@ -287,10 +287,8 @@ public class CloudMakeSystem : MonoBehaviour
                     //-3-1 조합할 인접 감정을 우선순위에 따라 선정한다.
                     EmotionInfo fndItm = new EmotionInfo(content.Key, mergedV);
                     int targetIdx = emotionList.FindIndex(a => (a.Key == content.Key && a.Value == mergedV)); //추출된 감정리스트에서의 조합대상 감정의 idx
-                    int subTargetIdx = targetIdx - 1;
-                    Debug.Log("[(3)조합대상]" + "{" + targetIdx + "}");
+                    int subTargetIdx = targetIdx - 1 ;
                     Debug.Log("[(3)조합대상]" + "{" + targetIdx + "}" + emotionList[targetIdx].Key);
-                    Debug.Log("[(3)조합대상]" + "{" + subTargetIdx + "}");
 
 
                     bool commend;
@@ -305,11 +303,14 @@ public class CloudMakeSystem : MonoBehaviour
                         Debug.Log("[우선순위2]채택");
                     }
 
+                    Debug.Log("-1 인덱스 검사 결과 :" + emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key].ToString());
 
                     //우선순위(2): 위에서 command가 true가 나면 우선순위 (2)로 넘어간다.   subTargetIdx = targetIdx + 1
                     if (!commend && subTargetIdx < emotionList.Count ? true : false)
                         commend = emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key] != Emotion.NONE ? true : false;
-                    
+
+                    Debug.Log("+1 인덱스 검사 결과 :" + emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key].ToString());
+
                     //우선순위(1)또는 (2)에서 감정조합의 결과가 정상적으로 나온 경우.
                     if (commend)
                     {

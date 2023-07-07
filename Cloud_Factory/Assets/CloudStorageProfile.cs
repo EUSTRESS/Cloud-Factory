@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEditor.UIElements;
 
 public class CloudStorageProfile : MonoBehaviour
 {
@@ -38,6 +39,12 @@ public class CloudStorageProfile : MonoBehaviour
 
     void Awake()
     {
+ 
+    }
+
+    private void Start()
+    {
+        // 데이터 불러오기
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
         UIManager = GameObject.Find("UIManager").GetComponent<RecordUIManager>();
@@ -75,27 +82,25 @@ public class CloudStorageProfile : MonoBehaviour
             frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
 
         Profiles = new GameObject[3];
-
         Profiles[0] = GameObject.Find("I_ProfileBG1");
         Profiles[1] = GameObject.Find("I_ProfileBG2");
         Profiles[2] = GameObject.Find("I_ProfileBG3");
 
         btGiveBtn = GameObject.Find("B_CloudGIve").GetComponent<Button>();
-       
-        initProfileList();
+
+        StartCoroutine("initProfileList");
     }
 
     public void GetNextProfile()
     {
+        // 맨앞에 나온 손님의 인덱스가 
+        if (UsingGuestIndex >= numOfUsingGuestList - 1)
         {
-            // 맨앞에 나온 손님의 인덱스가 
-            if (UsingGuestIndex >= numOfUsingGuestList - 1)
-            {
-                //UsingGuestIndex = 0;
-                UsingGuestIndex = numOfUsingGuestList - 1;
-                return;
-            }
+            //UsingGuestIndex = 0;
+            UsingGuestIndex = numOfUsingGuestList - 1;
+            return;
         }
+        
         // 이전 프로필을 불러온다.
         frontProfileInfo = (frontProfileInfo + 1) % 3;
 
@@ -126,50 +131,112 @@ public class CloudStorageProfile : MonoBehaviour
         UIManager.ShowPrevProfile();
     }
 
-    void initProfileList()
+    private void Update()
     {
-        updateProfileList();
+        UpdateBtGive();
     }
 
-    void updateProfileList()
+    void UpdateBtGive()
     {
+        // TODO : 실시간으로 손님이 착석하면 사용할 수 있는 버튼을 활성화해준다.
+        // 1. 현재 보고 있는 손님에 대한 정보를 받아온다.
+        // 2. 확인한다.
+        // 3. 갱신한다.   
 
         GameObject Profile = Profiles[frontProfileInfo];
+
         // Button
         btGiveBtn = Profile.transform.GetChild(1).GetComponent<Button>();
 
-        // 손님이 없는 경우에는 정보 업데이트를 하지 않는다.
-        if (numOfUsingGuestList == 0)
+        List<int> UsingList = SOWManager.mUsingGuestList;
+        bool test = false;
+        for (int i = 0; i < UsingList.Count; i++)
         {
-            btGiveBtn.interactable = false;
-            Debug.Log("구름제공이 가능한 손님이 존재하지 않습니다.");
-            return;   
-        }
-
-        // DEMO 버전 추가사항
-        // 해당 손님이 날씨의 공간에 존재하지 않는다면 제공버튼이 비활성화 된다.
-        {
-            List<int> UsingList = SOWManager.mUsingGuestList;
-            bool test = false;
-            for(int i = 0; i < UsingList.Count; i++)
+            if (UsingList[i] == frontGuestIndex)
             {
-                if(UsingList[i] == frontGuestIndex)
+                // isSit 상태를 확인
+                GuestObject obj = SOWManager.mUsingGuestObjectList[i].GetComponent<GuestObject>();
+                if (obj != null && obj.isSit)
                 {
+                    if (obj.mGuestNum != frontGuestIndex)
+                    {
+                        continue;
+                    }
                     test = true;
                     break;
                 }
             }
-            if(test)
+        }
+        if (test)
+        {
+            btGiveBtn.interactable = true;
+        }
+        else
+        {
+            btGiveBtn.interactable = false;
+        }
+    }
+
+    IEnumerator initProfileList()
+    {
+        updateProfileList();
+        yield return new WaitForEndOfFrame();
+    }
+
+    void updateProfileList()
+    {
+         GameObject Profile = Profiles[frontProfileInfo];
+        { 
+            // Button
+            btGiveBtn = Profile.transform.GetChild(1).GetComponent<Button>();
+
+            /*
+            //// 손님이 없는 경우에는 정보 업데이트를 하지 않는다.
+            //if (numOfUsingGuestList == 0)
+            //{
+            //    btGiveBtn.interactable = false;
+            //    Debug.Log("구름제공이 가능한 손님이 존재하지 않습니다.");
+            //    return;   
+            //}
+            */
+
+            // DEMO 버전 추가사항
+            // 해당 손님이 날씨의 공간에 존재하지 않는다면 제공버튼이 비활성화 된다.
             {
-                btGiveBtn.interactable = true;
-            }
-            else
-            {
-                btGiveBtn.interactable = false;
+                List<int> UsingList = SOWManager.mUsingGuestList;
+                bool test = false;
+                for (int i = 0; i < UsingList.Count; i++)
+                {
+                    if (UsingList[i] == frontGuestIndex)
+                    {
+                        // isSit 상태를 확인
+                        GuestObject obj = SOWManager.mUsingGuestObjectList[i].GetComponent<GuestObject>();
+                        if (obj != null && obj.isSit)
+                        {
+                            if (obj.mGuestNum != frontGuestIndex)
+                            {
+                                continue;
+                            }
+                            test = true;
+                            break;
+                        }
+                    }
+                }
+                if (test)
+                {
+                    btGiveBtn.interactable = true;
+                }
+                else
+                {
+                    btGiveBtn.interactable = false;
+                }
             }
         }
         // Image
         Image iProfile = Profile.transform.GetChild(0).GetComponent<Image>();
+
+        // 한 줄 요약
+        Text tSentence = Profile.transform.GetChild(6).GetComponent<Text>();
 
         // 나이 이름 직업
         Text tName = Profile.transform.GetChild(7).GetComponent<Text>();
@@ -178,7 +245,6 @@ public class CloudStorageProfile : MonoBehaviour
 
         // 만족도, 한 줄 요약
         Text tSat = Profile.transform.GetChild(10).GetComponent<Text>();
-        Text tSentence = Profile.transform.GetChild(11).GetComponent<Text>();
 
         // 뭉티 정보를 가져온다.
         GuestInfos info = GuestManager.GetComponent<Guest>().mGuestInfo[frontGuestIndex];
@@ -204,11 +270,11 @@ public class CloudStorageProfile : MonoBehaviour
         */
 
         // 정보 최신화
+        tSentence.text = "한 줄 요약: " + mRLHReader.LoadSummaryInfo(frontGuestIndex);
         tName.text = info.mName;        
         tAge.text = "" + info.mAge;
         tJob.text = info.mJob;
         tSat.text = "" + info.mSatatisfaction;
-        tSentence.text = mRLHReader.LoadSummaryInfo(frontGuestIndex);
 	}
 
     void updateButton()
@@ -244,7 +310,8 @@ public class CloudStorageProfile : MonoBehaviour
         {
             return;
         }
-  
+        
+        // IsUsing 상태 변경 
         int guestNum = frontGuestIndex;
         GuestManager.mGuestInfo[guestNum].isUsing = true;
 
@@ -262,9 +329,9 @@ public class CloudStorageProfile : MonoBehaviour
 				sow.mUsingGuestObjectList.RemoveAt(i);
 			}
         }
+
 		SOWManager.SetCloudData(guestNum, storagedCloudData);
 		SceneManager.LoadScene("Space Of Weather");
-
         Debug.Log("구름제공 메소드 호출");
     }
 

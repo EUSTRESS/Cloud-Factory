@@ -50,6 +50,9 @@ public class CloudDecoManager : MonoBehaviour
         }
 
     }
+
+    public GameObject ErrorFinderDibugger;
+
     public GameObject CaptureZone;
 
     //Sprite Merger
@@ -138,14 +141,17 @@ public class CloudDecoManager : MonoBehaviour
                 if (i == 0)        //Set CloudPiece
                 {
                     mUIDecoParts[i][j].transform.GetChild(0).GetComponent<Image>().sprite = mBaseCloudDt.getCloudParts()[j];
-
-                   
                 }
 
 
 
                 mUIDecoParts[i + 1][j].transform.GetChild(0).GetComponent<Image>().sprite = mBaseCloudDt.getSizeDifferParts(i)[j];
-               
+
+                if (mBaseCloudDt.getCloudParts()[j] == null)
+                {
+                    ErrorFinderDibugger.GetComponent<TextMeshProUGUI>().text = mBaseCloudDt.mEmotions[i + 1].Key.ToString() + " Image Is Missing";
+                }
+
             }
         }
 

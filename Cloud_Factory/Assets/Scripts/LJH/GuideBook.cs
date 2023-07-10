@@ -5,29 +5,29 @@ using UnityEngine.UI;
 
 public class GuideBook : MonoBehaviour
 {
-    public GameObject gRareGroup; // Àç·á Èñ±Íµµ ºĞ·ù UI
+    public GameObject gRareGroup; // ì¬ë£Œ í¬ê·€ë„ ë¶„ë¥˜ UI
     public GameObject gPlantGroup_main;
-    // Àç·áUI
+    // ì¬ë£ŒUI
     public GameObject[] gPlantGroup_rare1 = new GameObject[4];
     public GameObject[] gPlantGroup_rare2 = new GameObject[4];
     public GameObject[] gPlantGroup_rare3 = new GameObject[4];
     public GameObject[] gPlantGroup_rare4 = new GameObject[4];
 
-    public GameObject gNextBtn; // ´ÙÀ½ ÆäÀÌÁö ¹öÆ°
+    public GameObject gNextBtn; // ë‹¤ìŒ í˜ì´ì§€ ë²„íŠ¼
     public GameObject gPrevBtn;
 
-    public Image iNextBtn; // ´ÙÀ½ ÆäÀÌÁö ¹öÆ° ÀÌ¹ÌÁö
+    public Image iNextBtn; // ë‹¤ìŒ í˜ì´ì§€ ë²„íŠ¼ ì´ë¯¸ì§€
     public Image iPrevBtn;
 
-    public Image[] iRareChange = new Image[3]; // Èñ±Íµµ¿¡ µû¶ó¼­ ¹Ù²î´Â UI (¹è°æ, ÆäÀÌÁö(´ÙÀ½, ÀÌÀü) ³Ñ±è)
-    public Sprite[] sRareBG = new Sprite[5]; // ¹è°æ [0] ±âº»
-    public Sprite[] sRarePage = new Sprite[5]; // ÆäÀÌÁö ³Ñ±è [0] ±âº»
+    public Image[] iRareChange = new Image[3]; // í¬ê·€ë„ì— ë”°ë¼ì„œ ë°”ë€ŒëŠ” UI (ë°°ê²½, í˜ì´ì§€(ë‹¤ìŒ, ì´ì „) ë„˜ê¹€)
+    public Sprite[] sRareBG = new Sprite[5]; // ë°°ê²½ [0] ê¸°ë³¸
+    public Sprite[] sRarePage = new Sprite[5]; // í˜ì´ì§€ ë„˜ê¹€ [0] ê¸°ë³¸
 
-    public Text tGuideText; // µµ°¨ °¡ÀÌµå ÅØ½ºÆ®
+    public Text tGuideText; // ë„ê° ê°€ì´ë“œ í…ìŠ¤íŠ¸
 
-    private int gPageIndex; // ÆäÀÌÁö ÀÎµ¦½º
-    private bool[] gChapter = new bool[3]; // ÆäÀÌÁö ´ëºĞ·ù , 0 : °¨Á¤ ~
-    private bool[] gPlantChapter = new bool[4]; // Àç·á ÆäÀÌÁö ºĞ·ù , 0 : Èñ±Íµµ 1 ~
+    private int gPageIndex; // í˜ì´ì§€ ì¸ë±ìŠ¤
+    [SerializeField]private bool[] gChapter = new bool[3]; // í˜ì´ì§€ ëŒ€ë¶„ë¥˜ , 0 : ê°ì • ~
+    [SerializeField]private bool[] gPlantChapter = new bool[4]; // ì¬ë£Œ í˜ì´ì§€ ë¶„ë¥˜ , 0 : í¬ê·€ë„ 1 ~
 
     private int Emotion_page_num;
     private int Cloud_page_num;
@@ -39,12 +39,19 @@ public class GuideBook : MonoBehaviour
     public GameObject[] Plant_Info = new GameObject[12];
     public GameObject[] QM_Info = new GameObject[12];
 
+    private InventoryManager mInventoryManager;
+    // ì±„ì§‘ ê¸°ë¡ì´ ìˆëŠ” ì¬ë£Œ ì •ë³´ê°€ ì €ì¥ë˜ëŠ” ë³€ìˆ˜
+    // ingredientHistory[0]: ì±„ì§‘ëœ ì ì´ ìˆëŠ” í¬ê·€ë„ 1 ì¬ë£Œ ë¦¬ìŠ¤íŠ¸
+    // ì´ë¦„ ê°€ì ¸ì˜¤ëŠ” ë²•: ingredientHistory[rarity - 1][index].dataName;
+    // ì´ë¯¸ì§€ ê°€ì ¸ì˜¤ëŠ” ë²• : ingredientHistory[rarity - 1][index].image;
+    private List<List<IngredientData>> ingredientHistory; 
+
     
     private void Awake()
     {
-        gPageIndex = 1; // ±âº» 1 ÆäÀÌÁöºÎÅÍ ½ÃÀÛ
-        gChapter[0] = true; // ±âº» °¨Á¤ µµ°¨
-        gPlantChapter[0] = true; // ±âº» Èñ±Íµµ 1
+        gPageIndex = 1; // ê¸°ë³¸ 1 í˜ì´ì§€ë¶€í„° ì‹œì‘
+        gChapter[0] = true; // ê¸°ë³¸ ê°ì • ë„ê°
+        gPlantChapter[0] = true; // ê¸°ë³¸ í¬ê·€ë„ 1
         Emotion_page_num = 0;
         Cloud_page_num = 0;
 
@@ -52,20 +59,27 @@ public class GuideBook : MonoBehaviour
         {
             Plant_get[i] = false;
         }
+
+        mInventoryManager = FindObjectOfType<InventoryManager>();
+        ingredientHistory = new List<List<IngredientData>>();
+        for (int i = 0; i < mInventoryManager.ingredientHistory.Count; i++)
+        {
+            ingredientHistory.Add(new List<IngredientData>());
+        }
     }
 
     void Update()
     {
         if (gChapter[0])
         {
-            tGuideText.text = "°¨Á¤ µµ°¨" + gPageIndex.ToString() + "ÆäÀÌÁö";
+            tGuideText.text = "ê°ì • ë„ê°" + gPageIndex.ToString() + "í˜ì´ì§€";
             UpdateGuideUI(0);
             Update_Emotion_Page(true, gPageIndex - 1);
             Update_Cloud_Page(false, gPageIndex - 1);
         }            
         else if(gChapter[1])
         {
-            tGuideText.text = "±¸¸§ µµ°¨" + gPageIndex.ToString() + "ÆäÀÌÁö";
+            tGuideText.text = "êµ¬ë¦„ ë„ê°" + gPageIndex.ToString() + "í˜ì´ì§€";
             UpdateGuideUI(0);
             Update_Emotion_Page(false, gPageIndex - 1);
             Update_Cloud_Page(true, gPageIndex - 1);
@@ -75,7 +89,8 @@ public class GuideBook : MonoBehaviour
         {
             if (gPlantChapter[0])
             {
-                tGuideText.text = "Èñ±Íµµ1 Àç·á µµ°¨" + gPageIndex.ToString() + "ÆäÀÌÁö";
+                tGuideText.text = "í¬ê·€ë„1 ì¬ë£Œ ë„ê°" + gPageIndex.ToString() + "í˜ì´ì§€";
+                UpdateIngredientHistory(1);
                 UpdateGuideUI(1);
                 UpdatePlant_UI();
                 Update_Emotion_Page(false, gPageIndex - 1);
@@ -84,7 +99,8 @@ public class GuideBook : MonoBehaviour
                 
             else if (gPlantChapter[1])
             {
-                tGuideText.text = "Èñ±Íµµ2 Àç·á µµ°¨" + gPageIndex.ToString() + "ÆäÀÌÁö";
+                tGuideText.text = "í¬ê·€ë„2 ì¬ë£Œ ë„ê°" + gPageIndex.ToString() + "í˜ì´ì§€";
+                UpdateIngredientHistory(2);
                 UpdateGuideUI(2);
                 UpdatePlant_UI();
                 Update_Emotion_Page(false, gPageIndex - 1);
@@ -92,7 +108,8 @@ public class GuideBook : MonoBehaviour
             }               
             else if (gPlantChapter[2])
             {
-                tGuideText.text = "Èñ±Íµµ3 Àç·á µµ°¨" + gPageIndex.ToString() + "ÆäÀÌÁö";
+                tGuideText.text = "í¬ê·€ë„3 ì¬ë£Œ ë„ê°" + gPageIndex.ToString() + "í˜ì´ì§€";
+                UpdateIngredientHistory(3);
                 UpdateGuideUI(3);
                 UpdatePlant_UI();
                 Update_Emotion_Page(false, gPageIndex - 1);
@@ -100,7 +117,8 @@ public class GuideBook : MonoBehaviour
             }             
             else if (gPlantChapter[3])
             {
-                tGuideText.text = "Èñ±Íµµ4 Àç·á µµ°¨" + gPageIndex.ToString() + "ÆäÀÌÁö";
+                tGuideText.text = "í¬ê·€ë„4 ì¬ë£Œ ë„ê°" + gPageIndex.ToString() + "í˜ì´ì§€";
+                UpdateIngredientHistory(4);
                 UpdateGuideUI(4);
                 UpdatePlant_UI();
                 Update_Emotion_Page(false, gPageIndex - 1);
@@ -149,7 +167,12 @@ public class GuideBook : MonoBehaviour
         iRareChange[2].sprite = sRarePage[_iIndex];
     }
 
-    #region ¹öÆ°ÀÌ¹ÌÁöÈ£¹ö¸µ
+    private void UpdateIngredientHistory(int rarity)
+    {
+        this.ingredientHistory[rarity - 1] = mInventoryManager.ingredientHistory[rarity - 1];
+    }
+
+    #region ë²„íŠ¼ì´ë¯¸ì§€í˜¸ë²„ë§
     public void ActiveNextBtnImage()
     {
         if (gPageIndex < 4)
@@ -181,7 +204,7 @@ public class GuideBook : MonoBehaviour
             --gPageIndex;
     }
 
-    #region °¨Á¤ ±¸¸§ Àç·á ¹öÆ°
+    #region ê°ì • êµ¬ë¦„ ì¬ë£Œ ë²„íŠ¼
     public void ActiveFeel()
     {
         ChangeChapter(false, false, 1, true, false, false);
@@ -200,14 +223,14 @@ public class GuideBook : MonoBehaviour
     void ChangeChapter(bool _bRare, bool _bGroupPlant ,int _iPageIndex, bool _bFeel, bool _bCloud, bool _bPlant)
     {
         gRareGroup.SetActive(_bRare);
-        gPlantGroup_main.SetActive(_bGroupPlant); // Àç·á UI
-        gPageIndex = 1; // ÆäÀÌÁö ÃÊ±âÈ­
+        gPlantGroup_main.SetActive(_bGroupPlant); // ì¬ë£Œ UI
+        gPageIndex = 1; // í˜ì´ì§€ ì´ˆê¸°í™”
         gChapter[0] = _bFeel;
         gChapter[1] = _bCloud;
         gChapter[2] = _bPlant;
     }
 
-    #region Èñ±Íµµ
+    #region í¬ê·€ë„
     public void ClickRare1()
     {
         UpdateRareUI(0);

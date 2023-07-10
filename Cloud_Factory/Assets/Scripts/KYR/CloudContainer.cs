@@ -114,7 +114,7 @@ public class CloudContainer : MonoBehaviour
         speechBubble = Instantiate(speechBubbleObject);
         speechBubble.transform.SetParent(GameObject.Find("Canvas").transform);
         speechBubble.transform.SetSiblingIndex(4);
-        speechBubble.transform.position = selected.position + new Vector3(150f, 0f, 0f);
+        speechBubble.transform.position = selected.position + new Vector3(0f, 70f, 0f);
         for (num = 0; num < mUiStocksData[selected.GetSiblingIndex()].mIngredientDatas.Count; num++)
         {
             switch (mUiStocksData[selected.GetSiblingIndex()].mIngredientDatas[num].rarity)

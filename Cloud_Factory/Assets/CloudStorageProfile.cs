@@ -91,7 +91,16 @@ public class CloudStorageProfile : MonoBehaviour
         StartCoroutine("initProfileList");
     }
 
-    public void GetNextProfile()
+    public void GetNextProfileBtn()
+    {
+        Invoke("GetNextProfile", 0.18f);
+    }
+        public void GetPrevProfileBtn()
+    {
+        Invoke("GetPrevProfile", 0.18f);
+    }
+
+    private void GetNextProfile()
     {
         // 맨앞에 나온 손님의 인덱스가 
         if (UsingGuestIndex >= numOfUsingGuestList - 1)
@@ -108,10 +117,10 @@ public class CloudStorageProfile : MonoBehaviour
         frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
 
         updateProfileList();
-        UIManager.ShowNextProfile();
+        // UIManager.ShowNextProfile();
     }
 
-    public void GetPrevProfile()
+    private void GetPrevProfile()
     {
         {
             // 다음 프로필을 불러온다.       
@@ -128,7 +137,7 @@ public class CloudStorageProfile : MonoBehaviour
         frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
 
         updateProfileList();
-        UIManager.ShowPrevProfile();
+        // UIManager.ShowPrevProfile();
     }
 
     private void Update()

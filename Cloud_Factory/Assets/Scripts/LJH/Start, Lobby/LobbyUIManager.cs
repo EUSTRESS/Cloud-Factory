@@ -81,6 +81,9 @@ public class LobbyUIManager : MonoBehaviour
         mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
         mSeason = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>();
         mInvenManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
+        mLanguageChanger = FindObjectOfType<LanguageChanger>();
+
+        ChangeLobbyLanguage();
 
         isFirstPlay = true; // 처음 플레이한다고 넣어두고
         // 여기서 최초 1회 플레이인지 아닌지 판단.
@@ -94,9 +97,7 @@ public class LobbyUIManager : MonoBehaviour
 
     void Start()
     {
-		mLanguageChanger = FindObjectOfType<LanguageChanger>();
 
-        ChangeLobbyLanguage();
     }
 
     void Update()

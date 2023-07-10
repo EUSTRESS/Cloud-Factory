@@ -308,6 +308,12 @@ public class InventoryManager : MonoBehaviour
 
         mCloudStorageData = new CloudStorageData();
         beginningCloudData = new CloudData();
+
+        ingredientHistory = new List<List<IngredientData>>();
+        for (int i = 0; i < 4; i++)
+        {
+            ingredientHistory.Add(new List<IngredientData>());
+        }
     }
 
     private void Update()
@@ -340,6 +346,7 @@ public class InventoryManager : MonoBehaviour
 
     public List<IngredientData>  mType;
     public List<int>  mCnt;
+    public List<List<IngredientData>> ingredientHistory;  
 
     public int minvenLevel=3;
 
@@ -378,6 +385,14 @@ public class InventoryManager : MonoBehaviour
 
             mType.Add(_stock.Key);
             mCnt.Add(_stock.Value);
+
+            for (int i = 0; i < ingredientHistory.Count; i++)
+            {
+                if (!mIngredientDatas[i].mItemList.Contains(_stock.Key)) continue;
+                if (!ingredientHistory[i].Contains(_stock.Key)) ingredientHistory[i].Add(_stock.Key);
+                break;
+            }
+            
             return true;
         }
 

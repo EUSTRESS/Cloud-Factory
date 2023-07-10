@@ -56,7 +56,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject storageFadeOutScreen;
     public GameObject storageFadeOutExpir;
     public GameObject storageFadeOutReceipt;
-    public GameObject fadeOutSend;
+    public GameObject storageFadeOutSend;
     public GameObject decoFadeOutScreen;
     public GameObject decoFadeOutDeco;
     public GameObject decoFadeOutVariation;
@@ -294,6 +294,9 @@ public class TutorialManager : MonoBehaviour
 		fadeOutScreenObject = Instantiate(giveCloudFadeOutScreen2);
 		fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
 		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
+		if (LanguageManager.GetInstance().GetCurrentLanguage() == "Korean")
+		{ fadeOutScreenObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = "제작하기"; }
+		else { fadeOutScreenObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = "CREATE"; }
 	}
 
 	public void FadeOutCloudStorage0()
@@ -309,6 +312,16 @@ public class TutorialManager : MonoBehaviour
 		fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
 		fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
 	}
+
+    public void FadeOutCloudStorageSend()
+    {
+	    fadeOutScreenObject = Instantiate(storageFadeOutSend);
+	    fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
+	    fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
+	    if (LanguageManager.GetInstance().GetCurrentLanguage() == "Korean")
+	    { fadeOutScreenObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = "구름 제공"; }
+	    else { fadeOutScreenObject.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = "SEND"; }
+    }
     
     public void FadeOutCloudExpir()
     {
@@ -320,13 +333,6 @@ public class TutorialManager : MonoBehaviour
     public void FadeOutCloudReceipt()
     {
 	    fadeOutScreenObject = Instantiate(storageFadeOutReceipt);
-	    fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
-	    fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
-    }
-    
-    public void FadeOutCloudSend()
-    {
-	    fadeOutScreenObject = Instantiate(fadeOutSend);
 	    fadeOutScreenObject.transform.SetParent(GameObject.Find("Canvas").transform);
 	    fadeOutScreenObject.transform.localPosition = new Vector3(0f, 0f, 0f);
     }

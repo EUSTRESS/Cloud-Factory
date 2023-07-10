@@ -192,9 +192,14 @@ public class SOWManager : MonoBehaviour
 
         if (isCloudGet)
         {
+            Debug.Log("isCloudGet is True");
             if (SceneManager.GetActiveScene().name == "Space Of Weather")
             {
                 GetCloudToGuest(mCloudGuestNum, mStorageCloudData);
+            }
+            else
+            {
+                Debug.Log("씬을 찾는 것에 실패");
             }
         }
     }
@@ -330,6 +335,10 @@ public class SOWManager : MonoBehaviour
             CloudSpawner.GetComponent<CloudSpawner>().SpawnCloud(guestNum, storagedCloudData);
             Debug.Log("SpanwCloud");
             isCloudGet = false;
+        }
+        else
+        {
+            Debug.Log("CloudSpawner is null");
         }
     }
 

@@ -325,10 +325,14 @@ public class CloudMakeSystem : MonoBehaviour
 
                         emotionList.RemoveAt(subTargetIdx);
                         // 삭제할 값의 index가 현재 타겟 중인  index보다 작은 경우(상관 있음. 현재 타겟중인 값이 앞으로 밀리기 때문에, index를 -1 해주어야 한다.
-                        if (subTargetIdx < i) i--;
+                        if (subTargetIdx < i) i = i - 1 < 0 ? 0 : i - 1;
                         // 삭제할 값의 index가 현재 타겟 중인 index보다 클 경우.(상관 없음: 리스트의 길이만 달라진다.)
 
                         possibility = true;
+                    }
+                    else
+                    {
+                        Debug.Log("![ 조합이 불가능 합니다.]");
                     }
   
                 }

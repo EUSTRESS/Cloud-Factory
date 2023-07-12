@@ -314,6 +314,8 @@ public class InventoryManager : MonoBehaviour
         {
             ingredientHistory.Add(new List<IngredientData>());
         }
+
+        cloudHistory = new List<Sprite>();
     }
 
     private void Update()
@@ -346,7 +348,8 @@ public class InventoryManager : MonoBehaviour
 
     public List<IngredientData>  mType;
     public List<int>  mCnt;
-    public List<List<IngredientData>> ingredientHistory;  
+    public List<List<IngredientData>> ingredientHistory;
+    public List<Sprite> cloudHistory;
 
     public int minvenLevel=3;
 
@@ -446,6 +449,7 @@ public class InventoryManager : MonoBehaviour
             parts.Add(cloudBase.transform.GetChild(i).gameObject);
         }
 
+        if(!cloudHistory.Contains(createdCloudData.getBaseCloudSprite())) cloudHistory.Add(createdCloudData.getBaseCloudSprite());
 
         mCloudStorageData.mDatas.Add(new StoragedCloudData(createdCloudData.getFinalEmotion(), cloudBase, parts, createdCloudData.GetIngredientDatas()));
         createdCloudData = beginningCloudData;

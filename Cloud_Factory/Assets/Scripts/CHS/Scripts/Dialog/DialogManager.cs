@@ -177,6 +177,9 @@ public class DialogManager : MonoBehaviour
 		if (mGuestVisitCount <= 1 || mGuestVisitCount >= 10) { tempVisitCount = mGuestVisitCount; }
 		else { tempVisitCount = 2; }
 
+        // 만족도가 0일 때 대사 스크립트가 없으므로, 1일 때의 대사 출력
+        if (mGuestSat == 0) mGuestSat = 1;
+
 		// 손님 번호 -> 방문 횟수 -> 만족도 순으로 엑셀 텍스트 파일을 체크한다.
 		for (i = 0; i < Dialog.Count; ++i)
         {

@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class GuideBook : MonoBehaviour
 {
+    private static int DEFAULT_MAX_INFO_COUNT = 6;
+    
+    public Transform ingrViewPort;
+    public Transform cloudViewPort;
+    
     public GameObject gRareGroup; // 재료 희귀도 분류 UI
     public GameObject gPlantGroup_main;
-    // 재료UI
-    public GameObject[] gPlantGroup_rare1 = new GameObject[4];
-    public GameObject[] gPlantGroup_rare2 = new GameObject[4];
-    public GameObject[] gPlantGroup_rare3 = new GameObject[4];
-    public GameObject[] gPlantGroup_rare4 = new GameObject[4];
 
     public GameObject gNextBtn; // 다음 페이지 버튼
     public GameObject gPrevBtn;
@@ -34,17 +34,20 @@ public class GuideBook : MonoBehaviour
     public GameObject[] Emotion_Page = new GameObject[4];
     public GameObject[] Cloud_Page = new GameObject[4];
     private static int Plant_num = 3;
-
-    private bool[] Plant_get = new bool[12];
-    public GameObject[] Plant_Info = new GameObject[12];
+    
     public GameObject[] QM_Info = new GameObject[12];
+
+    public GameObject ingrExist;
+    public GameObject ingrEmpty;
+    public GameObject cloudBasic;
 
     private InventoryManager mInventoryManager;
     // 채집 기록이 있는 재료 정보가 저장되는 변수
     // ingredientHistory[0]: 채집된 적이 있는 희귀도 1 재료 리스트
     // 이름 가져오는 법: ingredientHistory[rarity - 1][index].dataName;
     // 이미지 가져오는 법 : ingredientHistory[rarity - 1][index].image;
-    private List<List<IngredientData>> ingredientHistory; 
+    private List<List<IngredientData>> ingredientHistory;
+    private List<Sprite> cloudHistory;
 
     
     private void Awake()
@@ -57,7 +60,7 @@ public class GuideBook : MonoBehaviour
 
         for(int i = 0; i < Plant_num; i++)
         {
-            Plant_get[i] = false;
+            //Plant_get[i] = false;
         }
 
         mInventoryManager = FindObjectOfType<InventoryManager>();
@@ -66,13 +69,21 @@ public class GuideBook : MonoBehaviour
         {
             ingredientHistory.Add(new List<IngredientData>());
         }
+
+        cloudHistory = new List<Sprite>();
     }
 
     void Update()
     {
+
+    }
+
+    public void UpdateGuideBook()
+    {
         if (gChapter[0])
         {
             tGuideText.text = "감정 도감" + gPageIndex.ToString() + "페이지";
+            cloudViewPort.gameObject.SetActive(false);
             UpdateGuideUI(0);
             Update_Emotion_Page(true, gPageIndex - 1);
             Update_Cloud_Page(false, gPageIndex - 1);
@@ -80,6 +91,7 @@ public class GuideBook : MonoBehaviour
         else if(gChapter[1])
         {
             tGuideText.text = "구름 도감" + gPageIndex.ToString() + "페이지";
+            UpdateCloudGuideBook();
             UpdateGuideUI(0);
             Update_Emotion_Page(false, gPageIndex - 1);
             Update_Cloud_Page(true, gPageIndex - 1);
@@ -90,9 +102,10 @@ public class GuideBook : MonoBehaviour
             if (gPlantChapter[0])
             {
                 tGuideText.text = "희귀도1 재료 도감" + gPageIndex.ToString() + "페이지";
+                ClearIngrGuideBook();
                 UpdateIngredientHistory(1);
+                UpdateIngrGuideBook(1);
                 UpdateGuideUI(1);
-                UpdatePlant_UI();
                 Update_Emotion_Page(false, gPageIndex - 1);
                 Update_Cloud_Page(false, gPageIndex - 1);
             }
@@ -100,27 +113,30 @@ public class GuideBook : MonoBehaviour
             else if (gPlantChapter[1])
             {
                 tGuideText.text = "희귀도2 재료 도감" + gPageIndex.ToString() + "페이지";
+                ClearIngrGuideBook();
                 UpdateIngredientHistory(2);
+                UpdateIngrGuideBook(2);
                 UpdateGuideUI(2);
-                UpdatePlant_UI();
                 Update_Emotion_Page(false, gPageIndex - 1);
                 Update_Cloud_Page(false, gPageIndex - 1);
             }               
             else if (gPlantChapter[2])
             {
                 tGuideText.text = "희귀도3 재료 도감" + gPageIndex.ToString() + "페이지";
+                ClearIngrGuideBook();
                 UpdateIngredientHistory(3);
+                UpdateIngrGuideBook(3);
                 UpdateGuideUI(3);
-                UpdatePlant_UI();
                 Update_Emotion_Page(false, gPageIndex - 1);
                 Update_Cloud_Page(false, gPageIndex - 1);
             }             
             else if (gPlantChapter[3])
             {
                 tGuideText.text = "희귀도4 재료 도감" + gPageIndex.ToString() + "페이지";
+                ClearIngrGuideBook();
                 UpdateIngredientHistory(4);
+                UpdateIngrGuideBook(4);
                 UpdateGuideUI(4);
-                UpdatePlant_UI();
                 Update_Emotion_Page(false, gPageIndex - 1);
                 Update_Cloud_Page(false, gPageIndex - 1);
             }             
@@ -141,23 +157,6 @@ public class GuideBook : MonoBehaviour
         }            
         else
             gPrevBtn.SetActive(true);
-
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            for(int i = 0; i < 3; i++)
-            {
-                Plant_get[i] = true;
-            }
-        }
-        for(int i = 0; i < 3; i++)
-        {
-            if (Plant_get[i] == true)
-            {
-                Plant_Info[i].SetActive(true);
-                QM_Info[i].SetActive(false);
-            }
-        }
     }
 
     void UpdateGuideUI(int _iIndex)
@@ -197,25 +196,30 @@ public class GuideBook : MonoBehaviour
     {
         if (gPageIndex < 4)
             ++gPageIndex;
+        UpdateGuideBook();
     }
     public void ClickPrevBtn()
     {
         if (gPageIndex > 1)
             --gPageIndex;
+        UpdateGuideBook();
     }
 
     #region 감정 구름 재료 버튼
     public void ActiveFeel()
     {
         ChangeChapter(false, false, 1, true, false, false);
+        UpdateGuideBook();
     }
     public void ActiveCloud()
     {
         ChangeChapter(false, false, 1, false, true, false);
+        UpdateGuideBook();
     }
     public void ActivePlant()
     {
         ChangeChapter(true, true, 1, false, false, true);
+        UpdateGuideBook();
         ClickRare1();
     }
     #endregion
@@ -257,49 +261,7 @@ public class GuideBook : MonoBehaviour
         }
         gPlantChapter[_iIndex] = true;
         gPageIndex = 1;
-    }
-
-    void UpdatePlant_UI()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            gPlantGroup_rare1[i].SetActive(false);
-            gPlantGroup_rare2[i].SetActive(false);
-            gPlantGroup_rare3[i].SetActive(false);
-            gPlantGroup_rare4[i].SetActive(false);
-        }
-        if (gPlantChapter[0])
-        {
-            for(int i = 0; i < 4; i++)
-            {
-                gPlantGroup_rare1[i].SetActive(false);
-            }
-            gPlantGroup_rare1[gPageIndex - 1].SetActive(true);
-        }
-        else if (gPlantChapter[1])
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                gPlantGroup_rare2[i].SetActive(false);
-            }
-            gPlantGroup_rare2[gPageIndex - 1].SetActive(true);
-        }
-        else if (gPlantChapter[2])
-        {
-            for (int i = 0; i < 4;  i++)
-            {
-                gPlantGroup_rare3[i].SetActive(false);
-            }
-            gPlantGroup_rare3[gPageIndex - 1].SetActive(true);
-        }
-        else if (gPlantChapter[3])
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                gPlantGroup_rare4[i].SetActive(false);
-            }
-            gPlantGroup_rare4[gPageIndex - 1].SetActive(true);
-        }
+        UpdateGuideBook();
     }
 
     void Update_Cloud_Page(bool page_on, int Page_num)
@@ -328,5 +290,51 @@ public class GuideBook : MonoBehaviour
         //{
         //    Emotion_Page[Emotion_page_num].SetActive(true);
         //}
+    }
+
+    private void ClearIngrGuideBook()
+    {
+        for (int i = ingrViewPort.childCount; i > 0; i--)
+        {
+            Destroy(ingrViewPort.GetChild(i - 1).gameObject);
+        }
+    }
+
+    private void UpdateIngrGuideBook(int rarity)
+    {
+        int ingrIndex = (gPageIndex - 1) * DEFAULT_MAX_INFO_COUNT; 
+        for (int i = ingrIndex; i < ingrIndex + DEFAULT_MAX_INFO_COUNT; i++)
+        {
+            if (i < ingredientHistory[rarity - 1].Count)
+            {
+                GameObject temp = Instantiate(ingrExist, ingrViewPort, true);
+                temp.transform.GetChild(0).GetComponent<Image>().sprite = ingredientHistory[rarity - 1][i].image;
+                temp.transform.GetChild(1).GetComponent<Text>().text = ingredientHistory[rarity - 1][i].dataName.ToString();
+            }
+            else
+            {
+                GameObject temp = Instantiate(ingrEmpty, ingrViewPort, true);
+            }
+        }
+    }
+
+    private void UpdateCloudGuideBook()
+    {
+        cloudViewPort.gameObject.SetActive(true);
+        this.cloudHistory = mInventoryManager.cloudHistory;
+        
+        for (int i = cloudViewPort.childCount; i > 0; i--)
+        {
+            Destroy(cloudViewPort.GetChild(i - 1).gameObject);
+        }
+        
+        int cloudIndex = (gPageIndex - 1) * DEFAULT_MAX_INFO_COUNT;
+        
+        for (int i = cloudIndex; i < cloudIndex + DEFAULT_MAX_INFO_COUNT; i++)
+        {
+            GameObject temp = Instantiate(cloudBasic, cloudViewPort, true);
+            
+            if (i < cloudHistory.Count) temp.GetComponent<Image>().sprite = cloudHistory[i];
+        }
     }
 }

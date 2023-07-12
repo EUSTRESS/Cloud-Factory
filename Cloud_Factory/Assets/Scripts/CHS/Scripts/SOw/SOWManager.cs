@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -53,6 +52,9 @@ public class SOWManager : MonoBehaviour
 
     private int mTempGuestNum;                          // 임시 손님 번호값
 
+
+    // QA용
+    int _sat = 0;
 
     private float[][][] ChairPosList = new float[][][]{ 
         new float[][]{ new float[]{ 1.71f, -2.91f }, new float[] { -3.52f, -0.36f }, new float[] { -0.51f, 0.39f }, new float[] { 1.55f, 0.53f } } ,
@@ -195,7 +197,7 @@ public class SOWManager : MonoBehaviour
             Debug.Log("isCloudGet is True");
             if (SceneManager.GetActiveScene().name == "Space Of Weather")
             {
-                GetCloudToGuest(mCloudGuestNum, mStorageCloudData);
+                GetCloudToGuest(mCloudGuestNum, mStorageCloudData, _sat);
             }
             else
             {
@@ -327,12 +329,12 @@ public class SOWManager : MonoBehaviour
     }
 
     // 구름 스포너로 구름정보를 넘긴다.
-    public void GetCloudToGuest(int guestNum, StoragedCloudData storagedCloudData)
+    public void GetCloudToGuest(int guestNum, StoragedCloudData storagedCloudData /*QA용*/, int sat)
     {
         GameObject CloudSpawner = GameObject.Find("CloudSpawner");
         if(CloudSpawner != null) 
         {
-            CloudSpawner.GetComponent<CloudSpawner>().SpawnCloud(guestNum, storagedCloudData);
+            CloudSpawner.GetComponent<CloudSpawner>().SpawnCloud(guestNum, storagedCloudData, sat);
             Debug.Log("SpanwCloud");
             isCloudGet = false;
         }
@@ -342,11 +344,12 @@ public class SOWManager : MonoBehaviour
         }
     }
 
-    public void SetCloudData(int guestNum, StoragedCloudData storagedCloudData)
+    public void SetCloudData(int guestNum, StoragedCloudData storagedCloudData /* QA용 */ , int sat)
     {
         mCloudGuestNum = guestNum;
         mStorageCloudData = storagedCloudData;
         isCloudGet = true;
+        _sat = sat;
     }
 
 

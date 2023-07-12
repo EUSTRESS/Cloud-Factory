@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 //GuestObject.prefab에 추가 예정
 public class RLHReader : MonoBehaviour
 {
+	private static RLHReader instance;
 	// 불러올 값들 선언
 	private Guest mGuestManager;
 
@@ -20,12 +22,21 @@ public class RLHReader : MonoBehaviour
 
 	// Start is called before the first frame update
 	void Awake()
-    {
+	{
+		instance = this;
 		tText = "";
 		mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
 		
 		if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean") { isKorean = true; }
 		else { isKorean = false; }
+	}
+
+	public static RLHReader GetInstance()
+	{
+		if (instance != null) return instance;
+		instance = FindObjectOfType<RLHReader>();
+		if (instance == null) Debug.Log("There's no active EnemySpawner object");
+		return instance;
 	}
 
 	//ProfileManager.cs

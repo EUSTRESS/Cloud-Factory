@@ -312,7 +312,7 @@ public class DialogManager : MonoBehaviour
             if(isTagInDialog == true) { tText.text += "</color>"; }
 		}
 
-        if(isTagInDialog = true) {
+        if(isTagInDialog == true) {
 			tText.text = InsertCharInString(tText.text.ToString(), GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex], mDialogCharIndex);
 			mDialogCharIndex++;
 		}

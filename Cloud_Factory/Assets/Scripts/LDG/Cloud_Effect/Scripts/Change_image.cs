@@ -20,16 +20,24 @@ public class Change_image : MonoBehaviour, IPointerEnterHandler, IPointerClickHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+
         originalSprite.sprite = Change_Sprite; 
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        // TODO : frontGuestIndex가 받을 수 있는 상황에만 변환된다.
+        if(GetComponent<Button>().interactable == false)
+        {
+            return;
+        }
+
         originalSprite.sprite = Click_change_Sprite;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+
         originalSprite.sprite = return_Sprite;
     }
 }

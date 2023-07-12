@@ -37,6 +37,10 @@ public class CloudStorageProfile : MonoBehaviour
     // 구름을 제공받을 수 있는 손님들의 리스트의 길이
     int numOfUsingGuestList;
 
+    public Toggle   plusToggle;
+    public Toggle   minusToggle;
+    private int sat = 0;
+
     void Awake()
     {
  
@@ -49,7 +53,7 @@ public class CloudStorageProfile : MonoBehaviour
         GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
         UIManager = GameObject.Find("UIManager").GetComponent<RecordUIManager>();
         mRLHReader = GameObject.Find("ProfileGroup").GetComponent<RLHReader>();
-
+        mRLHReader = RLHReader.GetInstance();
         // 기존 기능 주석처리
         /*
         // 착석중인 손님 중, 구름을 제공받지 못한 손님만 제공 가능 리스트에 넣는다.
@@ -69,7 +73,7 @@ public class CloudStorageProfile : MonoBehaviour
         UsingGuestNumList = temp.ToArray();
         */
 
-        // TODO :  구름 보관함에서 제공받을 수 있는 뭉티를 고정한다. (계절에 따라 고정)
+        // TODO :  구름 보관함에서 제공받을 수 있는 뭉티를 고정한다. (계절에 따라 고정)lll
         int Season = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>().mSeason;
         UsingGuestNumList = GetSeansonGuestList(Season);
 
@@ -88,7 +92,7 @@ public class CloudStorageProfile : MonoBehaviour
 
         btGiveBtn = GameObject.Find("B_CloudGIve").GetComponent<Button>();
 
-        StartCoroutine("initProfileList");
+        updateProfileList();
     }
 
     public void GetNextProfileBtn()
@@ -241,8 +245,10 @@ public class CloudStorageProfile : MonoBehaviour
                 }
             }
         }
+
         // Image
         Image iProfile = Profile.transform.GetChild(0).GetComponent<Image>();
+
 
         // 한 줄 요약
         Text tSentence = Profile.transform.GetChild(6).GetComponent<Text>();
@@ -260,7 +266,6 @@ public class CloudStorageProfile : MonoBehaviour
 
         // 가져온 정보값을 이용하여 채운다.
         iProfile.sprite = UIManager.sBasicProfile[frontGuestIndex];
-
         /*
         DEMO 기능
         TODO : 뭉티 정보를 불러와서 방문한 적이 있는 경우에만 정보를 띄운다.
@@ -292,7 +297,10 @@ public class CloudStorageProfile : MonoBehaviour
     }
 
     public void GiveCloud()
-    { 
+    {
+        TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        if (mTutorialManager.isFinishedTutorial[7] == false) mTutorialManager.isFinishedTutorial[7] = true;
+
         SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
         // 구름 제공하는 메소드 호출
@@ -339,7 +347,23 @@ public class CloudStorageProfile : MonoBehaviour
 			}
         }
 
-		SOWManager.SetCloudData(guestNum, storagedCloudData);
+        // QA용
+        {
+            if(plusToggle.isOn == true)
+            {
+                sat = 1;
+            }
+            else if(minusToggle.isOn == true)
+            {
+                sat = -1;
+            }
+            else
+            {
+                sat = 0;
+            }
+        }
+
+		SOWManager.SetCloudData(guestNum, storagedCloudData, sat);
 		SceneManager.LoadScene("Space Of Weather");
         Debug.Log("구름제공 메소드 호출");
     }
@@ -368,4 +392,15 @@ public class CloudStorageProfile : MonoBehaviour
         return list;
     }
 
+
+    // TEST
+    public void Plus()
+    {
+        minusToggle.isOn = false;
+    }
+
+    public void Minus()
+    {
+        plusToggle.isOn = false;
+    }
 }

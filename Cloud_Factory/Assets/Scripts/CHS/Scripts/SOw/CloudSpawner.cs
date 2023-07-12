@@ -53,7 +53,7 @@ public class CloudSpawner : MonoBehaviour
     }
 
     // 구름을 생성하고 초기화한다.
-    public void SpawnCloud(int guestNum, StoragedCloudData storagedCloudData)
+    public void SpawnCloud(int guestNum, StoragedCloudData storagedCloudData /*QA용*/, int sat)
     {
         // 구름 인스턴스 생성
         tempCLoud = Instantiate(CloudObject);
@@ -104,6 +104,9 @@ public class CloudSpawner : MonoBehaviour
 
             // 구름과 의자의 위치값에 따라서 속도를 조절한다.
             cloudObject.SetSpeed();
+
+            // QA용
+            cloudObject.sat = sat;
         }
 
         // 움직이는 구름의 이펙트를 나타내는 cloudMove에 대한 설정

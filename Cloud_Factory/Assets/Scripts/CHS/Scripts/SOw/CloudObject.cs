@@ -32,7 +32,9 @@ public class CloudObject : MonoBehaviour
     // 내부에서 수행해야 할 기능
     // 1) 손님과의 충돌 처리 (충돌 시 사용한다는 판정)
     // 2) 충돌 시 해당 손님의 감정값이 변화하게끔 설정
-    
+
+    // QA용
+    public int sat =0 ;
 
     private void Awake()
     {
@@ -194,7 +196,18 @@ public class CloudObject : MonoBehaviour
             Debug.Log("상하한선을 침범하지 않았습니다.");
 
         // 만족도 값 갱신
-        GuestManager.RenewakSat(mGuestNum);
+        {
+            // QA용 테스트 작업
+            if (sat != 0)
+            {
+                GuestManager.mGuestInfo[mGuestNum].mSatatisfaction += sat;
+            }
+            else
+            {
+                GuestManager.RenewakSat(mGuestNum);
+                Debug.Log("Renewak");
+            }
+        }
 
         //사용한 구름 정보 업데이트
         GuestManager.mGuestInfo[mGuestNum].mUsedCloud.Add(virtualCloudData);

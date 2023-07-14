@@ -21,8 +21,8 @@ public class DecoParts : MonoBehaviour
         isEditActive = false;
         canEdit = false;
        // top_right_corner = _top_right_corner;
-        top_right_corner =new Vector2(4,2);
-        bottom_left_corner = new Vector2(-8, -4);
+        top_right_corner =new Vector2(2,1);
+        bottom_left_corner = new Vector2(-6, -3);
         // bottom_left_corner = _bottom_left_corner;
     }
 

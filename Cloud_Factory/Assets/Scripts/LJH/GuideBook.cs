@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class GuideBook : MonoBehaviour
 {
-    private static int DEFAULT_MAX_INFO_COUNT = 6;
+    private static int DEFAULT_MAX_INFO_COUNT = 12;
     
-    public Transform ingrViewPort;
+    public Transform ingrViewPort1;
+    public Transform ingrViewPort2;
     public Transform cloudViewPort;
+
+    public GameObject emotionPageGroup;
     
     public GameObject gRareGroup; // 재료 희귀도 분류 UI
     public GameObject gPlantGroup_main;
@@ -71,6 +74,8 @@ public class GuideBook : MonoBehaviour
         }
 
         cloudHistory = new List<Sprite>();
+
+        UpdateGuideBook();
     }
 
     void Update()
@@ -80,9 +85,22 @@ public class GuideBook : MonoBehaviour
 
     public void UpdateGuideBook()
     {
+        ingrViewPort1.gameObject.SetActive(false);
+        ingrViewPort2.gameObject.SetActive(false);
+        cloudViewPort.gameObject.SetActive(false);
+        emotionPageGroup.SetActive(false);
+
+        for (int i = 0; i < emotionPageGroup.transform.childCount; i++)
+        {
+            emotionPageGroup.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        
         if (gChapter[0])
         {
             tGuideText.text = "감정 도감" + gPageIndex.ToString() + "페이지";
+            emotionPageGroup.SetActive(true);
+            if (gPageIndex <= emotionPageGroup.transform.childCount)
+                emotionPageGroup.transform.GetChild(gPageIndex - 1).gameObject.SetActive(true);
             cloudViewPort.gameObject.SetActive(false);
             UpdateGuideUI(0);
             Update_Emotion_Page(true, gPageIndex - 1);
@@ -294,26 +312,49 @@ public class GuideBook : MonoBehaviour
 
     private void ClearIngrGuideBook()
     {
-        for (int i = ingrViewPort.childCount; i > 0; i--)
+        for (int i = ingrViewPort1.childCount; i > 0; i--)
         {
-            Destroy(ingrViewPort.GetChild(i - 1).gameObject);
+            Destroy(ingrViewPort1.GetChild(i - 1).gameObject);
+        }
+        
+        for (int i = ingrViewPort2.childCount; i > 0; i--)
+        {
+            Destroy(ingrViewPort2.GetChild(i - 1).gameObject);
         }
     }
 
     private void UpdateIngrGuideBook(int rarity)
     {
-        int ingrIndex = (gPageIndex - 1) * DEFAULT_MAX_INFO_COUNT; 
-        for (int i = ingrIndex; i < ingrIndex + DEFAULT_MAX_INFO_COUNT; i++)
+        ingrViewPort1.gameObject.SetActive(true);
+        ingrViewPort2.gameObject.SetActive(true);
+        
+        int ingrIndex = (gPageIndex - 1) * DEFAULT_MAX_INFO_COUNT;
+        int i;
+        for (i = ingrIndex; i < ingrIndex + (DEFAULT_MAX_INFO_COUNT / 2); i++)
         {
             if (i < ingredientHistory[rarity - 1].Count)
             {
-                GameObject temp = Instantiate(ingrExist, ingrViewPort, true);
+                GameObject temp = Instantiate(ingrExist, ingrViewPort1, true);
                 temp.transform.GetChild(0).GetComponent<Image>().sprite = ingredientHistory[rarity - 1][i].image;
                 temp.transform.GetChild(1).GetComponent<Text>().text = ingredientHistory[rarity - 1][i].dataName.ToString();
             }
             else
             {
-                GameObject temp = Instantiate(ingrEmpty, ingrViewPort, true);
+                GameObject temp = Instantiate(ingrEmpty, ingrViewPort1, true);
+            }
+        }
+        
+        for (; i < ingrIndex + DEFAULT_MAX_INFO_COUNT; i++)
+        {
+            if (i < ingredientHistory[rarity - 1].Count)
+            {
+                GameObject temp = Instantiate(ingrExist, ingrViewPort2, true);
+                temp.transform.GetChild(0).GetComponent<Image>().sprite = ingredientHistory[rarity - 1][i].image;
+                temp.transform.GetChild(1).GetComponent<Text>().text = ingredientHistory[rarity - 1][i].dataName.ToString();
+            }
+            else
+            {
+                GameObject temp = Instantiate(ingrEmpty, ingrViewPort2, true);
             }
         }
     }
@@ -328,9 +369,9 @@ public class GuideBook : MonoBehaviour
             Destroy(cloudViewPort.GetChild(i - 1).gameObject);
         }
         
-        int cloudIndex = (gPageIndex - 1) * DEFAULT_MAX_INFO_COUNT;
+        int cloudIndex = (gPageIndex - 1) * (DEFAULT_MAX_INFO_COUNT / 2);
         
-        for (int i = cloudIndex; i < cloudIndex + DEFAULT_MAX_INFO_COUNT; i++)
+        for (int i = cloudIndex; i < cloudIndex + (DEFAULT_MAX_INFO_COUNT / 2); i++)
         {
             GameObject temp = Instantiate(cloudBasic, cloudViewPort, true);
             

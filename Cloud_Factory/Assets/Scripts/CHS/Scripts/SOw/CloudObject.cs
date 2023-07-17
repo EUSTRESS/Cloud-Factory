@@ -34,7 +34,7 @@ public class CloudObject : MonoBehaviour
     // 2) 충돌 시 해당 손님의 감정값이 변화하게끔 설정
 
     // QA용
-    public int sat =0 ;
+    public int sat = 0 ;
 
     private void Awake()
     {
@@ -102,12 +102,15 @@ public class CloudObject : MonoBehaviour
             // 구름의 감정값을 적용된 경우의 결과값의 만족도 변화량에 따라서 손님 애니메이션 변경
             int prevSat = GuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
 
-            // 임의 적용 -> 구름의 감정값을 더한 후, 만족도와 상하한선 근접값을 구하여 업데이트한다.
-            for (int i = 0; i < mFinalEmotions.Count; ++i)
+            if (sat == 0)
             {
-                GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value);               
+                // 임의 적용 -> 구름의 감정값을 더한 후, 만족도와 상하한선 근접값을 구하여 업데이트한다.
+                for (int i = 0; i < mFinalEmotions.Count; ++i)
+                {
+                    GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value);
+                }
+                GuestManager.RenewakSat(mGuestNum);
             }
-            GuestManager.RenewakSat(mGuestNum);
 
             int currSat = GuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
 
@@ -115,14 +118,25 @@ public class CloudObject : MonoBehaviour
             collision.gameObject.transform.root.gameObject.GetComponent<GuestObject>().faceValue = GuestManager.SpeakEmotionEffect(mGuestNum);
             collision.gameObject.transform.root.gameObject.GetComponent<GuestObject>().dialogEmotion = GuestManager.SpeakEmotionDialog(mGuestNum);
 
-            // 임의 적용 해제 -> 실제 적용되는 시간에 적용하여야 하기 때문에 다시 더해준 값을 빼준다.
-            for (int i = 0; i < mFinalEmotions.Count; ++i)
+            if (sat == 0)
             {
-                GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value * -1);
+                // 임의 적용 해제 -> 실제 적용되는 시간에 적용하여야 하기 때문에 다시 더해준 값을 빼준다.
+                for (int i = 0; i < mFinalEmotions.Count; ++i)
+                {
+                    GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value * -1);
+                }
+                GuestManager.RenewakSat(mGuestNum);
             }
-            GuestManager.RenewakSat(mGuestNum);
 
-            collision.gameObject.transform.root.gameObject.GetComponent<GuestObject>().mGuestAnim.SetInteger("increase", currSat - prevSat);
+            // QA
+            if (sat == 0)
+            {
+                collision.gameObject.transform.root.gameObject.GetComponent<GuestObject>().mGuestAnim.SetInteger("increase", currSat - prevSat);
+            }
+            else
+            {
+                collision.gameObject.transform.root.gameObject.GetComponent<GuestObject>().mGuestAnim.SetInteger("increase", sat);
+            }
             collision.gameObject.transform.root.gameObject.GetComponent<GuestObject>().mGuestAnim.SetTrigger("TakeCloud");
 
             // 더이상 구름에 대한 충돌체크가 필요 없으므로 비활성화
@@ -178,13 +192,16 @@ public class CloudObject : MonoBehaviour
 
     bool UsingCloud()
     {
-        // 감정 값 변환함수 호출
-        for (int i = 0; i < mFinalEmotions.Count; ++i)
+        // QA용 조건문 추가
+        if(sat == 0)
         {
-            GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value);
-            Debug.Log(mGuestNum + "번 손님 감정변환 함수 호출" + (int)mFinalEmotions[i].Key + " " + mFinalEmotions[i].Value);
+            // 감정 값 변환함수 호출
+            for (int i = 0; i < mFinalEmotions.Count; ++i)
+            {
+                GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value);
+                Debug.Log(mGuestNum + "번 손님 감정변환 함수 호출" + (int)mFinalEmotions[i].Key + " " + mFinalEmotions[i].Value);
+            }
         }
-
         // TODO : 구름을 사용한 손님의 정보값 갱신 (LIST : 감정 값, 상하한선 계산, 만족도 갱신)
 
         // 감정 상하한선 검사

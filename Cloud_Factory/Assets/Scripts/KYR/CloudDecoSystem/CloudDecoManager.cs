@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
 public class CloudDecoManager : MonoBehaviour
 {
-    //ÆÄÃ÷ Áõ°¨¼Ò Å¬·¡½º
+    //íŒŒì¸  ì¦ê°ì†Œ í´ë˜ìŠ¤
     public Vector2 mouseWorld;
     [System.Serializable]
     public class PartsMenu
@@ -17,7 +17,7 @@ public class CloudDecoManager : MonoBehaviour
         private GameObject B_Pos;
         private GameObject B_Neg;
 
-        public bool state; //°¨¼Ò È¤Àº Áõ°¡?
+        public bool state; //ê°ì†Œ í˜¹ì€ ì¦ê°€?
         public bool isInit;
         public PartsMenu(GameObject _B_decoParts, GameObject _I_PartsMenu, GameObject _B_PosNeg, int _idx)
         {
@@ -59,24 +59,24 @@ public class CloudDecoManager : MonoBehaviour
     //Sprite Merger
 
     public List<PartsMenu> mLPartsMenu;
-    //µ¥ÄÚ¿ë ¹öÆ° ±×·ì
+    //ë°ì½”ìš© ë²„íŠ¼ ê·¸ë£¹
     public GameObject B_decoParts;
     public GameObject B_PosNeg;
-    public GameObject[] B_Edits; //frame : ÀÌµ¿, Rotate: È¸Àü. ¿ÜºÎ¿¡¼­ ´ëÀÔ.
+    public GameObject[] B_Edits; //frame : ì´ë™, Rotate: íšŒì „. ì™¸ë¶€ì—ì„œ ëŒ€ì….
 
     public GameObject P_FinSBook;
     //Text
-    public GameObject[] T_CountInfo; //ÆÄÃ÷°³¼ö
+    public GameObject[] T_CountInfo; //íŒŒì¸ ê°œìˆ˜
 
     //Image
-    public GameObject I_targetCloud; //½ºÄÉÄ¡ºÏ À§¿¡ ¿Ã¸®´Â ±¸¸§ ÀÌ¹ÌÁö °ÔÀÓ¿ÀºêÁ§Æ®
+    public GameObject I_targetCloud; //ìŠ¤ì¼€ì¹˜ë¶ ìœ„ì— ì˜¬ë¦¬ëŠ” êµ¬ë¦„ ì´ë¯¸ì§€ ê²Œì„ì˜¤ë¸Œì íŠ¸
     private GameObject I_BasicDecoCloud;
-    public GameObject I_PartsMenu; //Áõ°¨¼Ò ÆÄÃ÷ ¸Ş´º
+    public GameObject I_PartsMenu; //ì¦ê°ì†Œ íŒŒì¸  ë©”ë‰´
 
-    public Sprite[] I_SelectedSticker; //¼±ÅÃµÊÀ» ¾Ë·ÁÁÖ´Â Å×ÀÌÇÁ ÀÌ¹ÌÁö
+    public Sprite[] I_SelectedSticker; //ì„ íƒë¨ì„ ì•Œë ¤ì£¼ëŠ” í…Œì´í”„ ì´ë¯¸ì§€
     public Sprite[] I_UnSelectedSticker; //default img
 
-    public CloudData mBaseCloudDt;// ±¸¸§°øÀå¿¡¼­ ±¸¸§ µ¥ÀÌÅÍ Á¦°ø.
+    public CloudData mBaseCloudDt;// êµ¬ë¦„ê³µì¥ì—ì„œ êµ¬ë¦„ ë°ì´í„° ì œê³µ.
 
     private bool cursorChasing;
     private bool isDecoDone;
@@ -87,7 +87,7 @@ public class CloudDecoManager : MonoBehaviour
     private int mCloudPieceDecoMax;
     private InventoryManager inventoryManager;
     private List<GameObject> LDecoParts;
-    //½ºÄÉÄ¡ºÏ ±âÁî¸ğ
+    //ìŠ¤ì¼€ì¹˜ë¶ ê¸°ì¦ˆëª¨
     public Vector2 top_right_corner;
     public Vector2 bottom_left_corner;
 
@@ -97,7 +97,7 @@ public class CloudDecoManager : MonoBehaviour
     {
         mUIDecoParts = new List<List<GameObject>>();
         LDecoParts = new List<GameObject>();
-        //(¾À ÀÌµ¿½Ã¿¡¸¸ °¡´É)
+        //(ì”¬ ì´ë™ì‹œì—ë§Œ ê°€ëŠ¥)
         inventoryManager = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>();
 
 
@@ -109,7 +109,7 @@ public class CloudDecoManager : MonoBehaviour
     {
         cursorChasing = false;
         isDecoDone = false;
-        //UI ¼¼ÆÃ
+        //UI ì„¸íŒ…
         for (int i = 0; i < 3; i++)
         {
             Transform tmp = B_decoParts.transform.GetChild(i);
@@ -125,11 +125,11 @@ public class CloudDecoManager : MonoBehaviour
     }
     private void init()
     {
-        //Cloud data °¡Á®¿À±â.(¾ÀÀÌµ¿½Ã¿¡¸¸°¡´É)
+        //Cloud data ê°€ì ¸ì˜¤ê¸°.(ì”¬ì´ë™ì‹œì—ë§Œê°€ëŠ¥)
         mBaseCloudDt = getTargetCloudData();
 
 
-        //Å¬¶ó¿ìµå µ¥ÀÌÅÍ¿¡ µû¶ó UI¿¡ ÀÌ¹ÌÁö »ğÀÔ.
+        //í´ë¼ìš°ë“œ ë°ì´í„°ì— ë”°ë¼ UIì— ì´ë¯¸ì§€ ì‚½ì….
         //Set Base Cloud Image on Sketchbook.
         I_targetCloud.transform.GetComponent<Image>().sprite = mBaseCloudDt.getForDecoCloudSprite();
 
@@ -162,8 +162,8 @@ public class CloudDecoManager : MonoBehaviour
 
         }
 
-        //ÆÄÃ÷ °³¼ö Á¦ÇÑ.
-        mCloudPieceDecoMax = 10; //±¸¸§Á¶°¢Àº 10°³·Î ÇÑÁ¤.
+        //íŒŒì¸  ê°œìˆ˜ ì œí•œ.
+        mCloudPieceDecoMax = 10; //êµ¬ë¦„ì¡°ê°ì€ 10ê°œë¡œ í•œì •.
         List<int> cntList = mBaseCloudDt.getMaxDecoPartsCount();
         for (int i = 0; i < mBaseCloudDt.getDecoPartsCount(); i++)
         {
@@ -177,12 +177,12 @@ public class CloudDecoManager : MonoBehaviour
     }
 
     //UI Button Functions
-    public void cloudDecoDoneBtn() //¸¶Áö¸· ½ºÄÉÄ¡ºÏ °á°ú ¤Ó OK ¹öÆ°
+    public void cloudDecoDoneBtn() //ë§ˆì§€ë§‰ ìŠ¤ì¼€ì¹˜ë¶ ê²°ê³¼ ã…£ OK ë²„íŠ¼
     {
 		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
 		if (mTutorialManager.isFinishedTutorial[6] == false) { mTutorialManager.isFinishedTutorial[6] = true; }
 		List<int> mEmoValues = new List<int>();
-        //°¨Á¤°è»ê.
+        //ê°ì •ê³„ì‚°.
         for (int i = 0; i < mLPartsMenu.Count; i++)
         {
             if (mLPartsMenu[i].getPartsNPState())
@@ -197,11 +197,11 @@ public class CloudDecoManager : MonoBehaviour
         SceneManager.LoadScene("Cloud Storage");
     }
 
-    public void cloudDecoBackBtn() // ½ºÄÉÄ¡ºÏ °á°ú | Reset ¹öÆ°
+    public void cloudDecoBackBtn() // ìŠ¤ì¼€ì¹˜ë¶ ê²°ê³¼ | Reset ë²„íŠ¼
     {
         TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
         if (mTutorialManager.isFinishedTutorial[6] == false) { return; }
-        Destroy(P_FinSBook.transform.GetChild(0).GetChild(0).gameObject); //»èÁ¦
+        Destroy(P_FinSBook.transform.GetChild(0).GetChild(0).gameObject); //ì‚­ì œ
         I_targetCloud = I_BasicDecoCloud;
         initParam();
         init();
@@ -215,13 +215,13 @@ public class CloudDecoManager : MonoBehaviour
         P_FinSBook.SetActive(false);
     }
 
-    public void clickedAutoSettingBtn() //ÀÚµ¿ ¹èÄ¡
+    public void clickedAutoSettingBtn() //ìë™ ë°°ì¹˜
     {
-        float width_max_range = I_targetCloud.GetComponent<RectTransform>().rect.width/2;                                  // ÆÄÃ÷°¡ ±¸¸§ ¹ÛÀ¸·Î ¹ş¾î³ªÁö ¾Êµµ·Ï ¹üÀ§ Á¶Á¤
+        float width_max_range = I_targetCloud.GetComponent<RectTransform>().rect.width/2;                                  // íŒŒì¸ ê°€ êµ¬ë¦„ ë°–ìœ¼ë¡œ ë²—ì–´ë‚˜ì§€ ì•Šë„ë¡ ë²”ìœ„ ì¡°ì •
         float Height_max_range = I_targetCloud.GetComponent<RectTransform>().rect.height/2;                                
-        Vector2 I_targetCloudPosition = new Vector2(I_targetCloud.transform.position.x, I_targetCloud.transform.position.y);    // ±¸¸§ ÀÌ¹ÌÁöÀÇ Áß½É º¤ÅÍ¸¦ ¹Ş¾Æ¿Â´Ù.
+        Vector2 I_targetCloudPosition = new Vector2(I_targetCloud.transform.position.x, I_targetCloud.transform.position.y);    // êµ¬ë¦„ ì´ë¯¸ì§€ì˜ ì¤‘ì‹¬ ë²¡í„°ë¥¼ ë°›ì•„ì˜¨ë‹¤.
 
-        GameObject[] cloudParts = new GameObject[mBaseCloudDt.getDecoPartsCount()];      // ±¸¸§ ÆÄÃ÷µéÀÇ À§Ä¡¿Í Å©±â ºñ±³¸¦ À§ÇØ Áö¿ª º¯¼ö·Î ¼±¾ğ
+        GameObject[] cloudParts = new GameObject[mBaseCloudDt.getDecoPartsCount()];      // êµ¬ë¦„ íŒŒì¸ ë“¤ì˜ ìœ„ì¹˜ì™€ í¬ê¸° ë¹„êµë¥¼ ìœ„í•´ ì§€ì—­ ë³€ìˆ˜ë¡œ ì„ ì–¸
         int partsIdx = 0;
 
         // Vector2 top_right_corner = I_targetCloud.Rect
@@ -233,7 +233,7 @@ public class CloudDecoManager : MonoBehaviour
                 float x = Random.Range(-width_max_range, width_max_range);
 				float y = Random.Range(-Height_max_range, Height_max_range);
 
-                // ¹üÀ§¸¦ ÁÙ¿©µµ ±¸¸§ ¹ÛÀ¸·Î ÆÄÃ÷°¡ Æ¢¾î³ª¿À´Â ºÎºĞÀÌ Á¸Àç. ±× ºÎºĞ¿¡ ÆÄÃ÷°¡ ºÎÂøµÇ¸é, À§Ä¡¸¦ ´Ù½Ã ¼³Á¤ÇÏµµ·Ï
+                // ë²”ìœ„ë¥¼ ì¤„ì—¬ë„ êµ¬ë¦„ ë°–ìœ¼ë¡œ íŒŒì¸ ê°€ íŠ€ì–´ë‚˜ì˜¤ëŠ” ë¶€ë¶„ì´ ì¡´ì¬. ê·¸ ë¶€ë¶„ì— íŒŒì¸ ê°€ ë¶€ì°©ë˜ë©´, ìœ„ì¹˜ë¥¼ ë‹¤ì‹œ ì„¤ì •í•˜ë„ë¡
                 while (!IsDecoPartInCloud(x, y))
                 {
 					x = Random.Range(-width_max_range, width_max_range);
@@ -242,13 +242,13 @@ public class CloudDecoManager : MonoBehaviour
 
                 cloudParts[partsIdx] = Instantiate(partsObj, new Vector2(0, 0), transform.rotation);
 				cloudParts[partsIdx].transform.SetParent(transform);
-				cloudParts[partsIdx].transform.position = new Vector2(x, y) + I_targetCloudPosition;        // ·£´ıÀ¸·Î »ı¼ºÇÑ ÁÂÇ¥¸¦ ±âÁØÁ¡(±¸¸§ ÀÌ¹ÌÁöÀÇ Áß½É º¤ÅÍ) ±âÁØÀ¸·Î À§Ä¡¸¦ ¼±Á¤ÇØÁØ´Ù.
+				cloudParts[partsIdx].transform.position = new Vector2(x, y) + I_targetCloudPosition;        // ëœë¤ìœ¼ë¡œ ìƒì„±í•œ ì¢Œí‘œë¥¼ ê¸°ì¤€ì (êµ¬ë¦„ ì´ë¯¸ì§€ì˜ ì¤‘ì‹¬ ë²¡í„°) ê¸°ì¤€ìœ¼ë¡œ ìœ„ì¹˜ë¥¼ ì„ ì •í•´ì¤€ë‹¤.
 
-                //  ÆÄÃ÷ ¹üÀ§¿¡ ´Ù¸¥ ÆÄÃ÷°¡ ¾ø´ÂÁö °Ë»ö ÇÊ¿ä transform.localScaleºñ±³ 
-                if (partsIdx > 0) {   // µÎ ¹øÂ° ÆÄÃ÷¸¦ ºÎÂø ÇÒ ¶§ºÎÅÍ °ãÃÆ´ÂÁö È®ÀÎ
+                //  íŒŒì¸  ë²”ìœ„ì— ë‹¤ë¥¸ íŒŒì¸ ê°€ ì—†ëŠ”ì§€ ê²€ìƒ‰ í•„ìš” transform.localScaleë¹„êµ 
+                if (partsIdx > 0) {   // ë‘ ë²ˆì§¸ íŒŒì¸ ë¥¼ ë¶€ì°© í•  ë•Œë¶€í„° ê²¹ì³¤ëŠ”ì§€ í™•ì¸
                     for(int num = 0; num < partsIdx;)
                     {
-                        if(IsObjectOverlapped(cloudParts[num], cloudParts[partsIdx]))   // ÆÄÃ÷°¡ °ãÃÆÀ¸¸é, »õ·Î¿î ÆÄÃ÷ À§Ä¡ Àç¼±Á¤
+                        if(IsObjectOverlapped(cloudParts[num], cloudParts[partsIdx]))   // íŒŒì¸ ê°€ ê²¹ì³¤ìœ¼ë©´, ìƒˆë¡œìš´ íŒŒì¸  ìœ„ì¹˜ ì¬ì„ ì •
                         {
 							x = Random.Range(-width_max_range, width_max_range);
 							y = Random.Range(-Height_max_range, Height_max_range);
@@ -271,31 +271,31 @@ public class CloudDecoManager : MonoBehaviour
 
     private bool IsObjectOverlapped(GameObject existing_object, GameObject new_object)
     {
-        float existing_width_range = existing_object.GetComponent<RectTransform>().rect.width / 2;                                  // ±âÁ¸ ¿ÀºêÁ§Æ®ÀÇ °¡·Î ±æÀÌ / 2
-        float existing_height_range = existing_object.GetComponent<RectTransform>().rect.height / 2;                                // ±âÁ¸ ¿ÀºêÁ§Æ®ÀÇ ¼¼·Î ±æÀÌ / 2
-        Vector2 existing_position = new Vector2(existing_object.transform.position.x, existing_object.transform.position.y);        // ±âÁ¸ ¿ÀºêÁ§Æ®ÀÇ À§Ä¡
+        float existing_width_range = existing_object.GetComponent<RectTransform>().rect.width / 2;                                  // ê¸°ì¡´ ì˜¤ë¸Œì íŠ¸ì˜ ê°€ë¡œ ê¸¸ì´ / 2
+        float existing_height_range = existing_object.GetComponent<RectTransform>().rect.height / 2;                                // ê¸°ì¡´ ì˜¤ë¸Œì íŠ¸ì˜ ì„¸ë¡œ ê¸¸ì´ / 2
+        Vector2 existing_position = new Vector2(existing_object.transform.position.x, existing_object.transform.position.y);        // ê¸°ì¡´ ì˜¤ë¸Œì íŠ¸ì˜ ìœ„ì¹˜
 
-        float new_width_range = new_object.GetComponent<RectTransform>().rect.width / 2;                                            // ºñ±³ÇÒ ¿ÀºêÁ§Æ®ÀÇ °¡·Î ±æÀÌ / 2
-        float new_height_range = new_object.GetComponent<RectTransform>().rect.height / 2;                                         // ºñ±³ÇÒ ¿ÀºêÁ§Æ®ÀÇ ¼¼·Î ±æÀÌ / 2
-        Vector2 new_position = new Vector2(new_object.transform.position.x, new_object.transform.position.y);                       // ºñ±³ÇÒ ¿ÀºêÁ§Æ®ÀÇ À§Ä¡
+        float new_width_range = new_object.GetComponent<RectTransform>().rect.width / 2;                                            // ë¹„êµí•  ì˜¤ë¸Œì íŠ¸ì˜ ê°€ë¡œ ê¸¸ì´ / 2
+        float new_height_range = new_object.GetComponent<RectTransform>().rect.height / 2;                                         // ë¹„êµí•  ì˜¤ë¸Œì íŠ¸ì˜ ì„¸ë¡œ ê¸¸ì´ / 2
+        Vector2 new_position = new Vector2(new_object.transform.position.x, new_object.transform.position.y);                       // ë¹„êµí•  ì˜¤ë¸Œì íŠ¸ì˜ ìœ„ì¹˜
 
-        // ºñ±³ÇÒ ¿ÀºêÁ§Æ®°¡ ±âÁ¸ ¿ÀºêÁ§Æ®º¸´Ù ¿ìÃø¿¡ À§Ä¡ÇÑ °æ¿ì
+        // ë¹„êµí•  ì˜¤ë¸Œì íŠ¸ê°€ ê¸°ì¡´ ì˜¤ë¸Œì íŠ¸ë³´ë‹¤ ìš°ì¸¡ì— ìœ„ì¹˜í•œ ê²½ìš°
         if ((new_position.x >= existing_position.x)
-            && (new_position.x - existing_position.x >= new_width_range + existing_width_range))                                    // µÎ ¿ÀºêÁ§Æ®ÀÇ xÃà Â÷ÀÌ°¡ Å©¹Ç·Î °ãÄ¥ ¼ö ¾ø´Ù
+            && (new_position.x - existing_position.x >= new_width_range + existing_width_range))                                    // ë‘ ì˜¤ë¸Œì íŠ¸ì˜ xì¶• ì°¨ì´ê°€ í¬ë¯€ë¡œ ê²¹ì¹  ìˆ˜ ì—†ë‹¤
         { return false; }
         else if((new_position.x >= existing_position.x)
-			&& (new_position.x - existing_position.x < new_width_range + existing_width_range))                                     // µÎ ¿ÀºêÁ§Æ®ÀÇ xÃà Â÷ÀÌ°¡ ÃæºĞÈ÷ Å©Áö ¾ÊÀ¸¹Ç·Î yÃà ºñ±³ ½ÃÀÛ
+			&& (new_position.x - existing_position.x < new_width_range + existing_width_range))                                     // ë‘ ì˜¤ë¸Œì íŠ¸ì˜ xì¶• ì°¨ì´ê°€ ì¶©ë¶„íˆ í¬ì§€ ì•Šìœ¼ë¯€ë¡œ yì¶• ë¹„êµ ì‹œì‘
         {
-            if((new_position.y >= existing_position.y)                                                                              // ºñ±³ÇÒ ¿ÀºêÁ§Æ®°¡ ±âÁ¸ ¿ÀºêÁ§Æ®º¸´Ù »ó´ÜÀÏ ¶§,
-                && (new_position.y - existing_position.y >= new_height_range + existing_height_range))                              // yÃàÀÇ Â÷ÀÌ°¡ Å©¹Ç·Î °ãÄ¡Áö ¾Ê´Â´Ù
+            if((new_position.y >= existing_position.y)                                                                              // ë¹„êµí•  ì˜¤ë¸Œì íŠ¸ê°€ ê¸°ì¡´ ì˜¤ë¸Œì íŠ¸ë³´ë‹¤ ìƒë‹¨ì¼ ë•Œ,
+                && (new_position.y - existing_position.y >= new_height_range + existing_height_range))                              // yì¶•ì˜ ì°¨ì´ê°€ í¬ë¯€ë¡œ ê²¹ì¹˜ì§€ ì•ŠëŠ”ë‹¤
             { return false; }
             else if((new_position.y < existing_position.y)
                 && (existing_position.y - new_position.y >= new_height_range + existing_height_range))
             { return false; }
-            else { return true; }                                                                                                   // xÃà°ú yÃà µÑ ´Ù Â÷ÀÌ°¡ ÃæºĞÈ÷ Å©Áö ¾ÊÀ¸¹Ç·Î °ãÄ£´Ù°í ÆÇ´Ü
+            else { return true; }                                                                                                   // xì¶•ê³¼ yì¶• ë‘˜ ë‹¤ ì°¨ì´ê°€ ì¶©ë¶„íˆ í¬ì§€ ì•Šìœ¼ë¯€ë¡œ ê²¹ì¹œë‹¤ê³  íŒë‹¨
         }
 
-        //ºñ±³ÇÒ ¿ÀºêÁ§Æ®°¡ ±âÁ¸ ¿ÀºêÁ§Æ®º¸´Ù ÁÂÃø¿¡ À§Ä¡ÇÑ °æ¿ì
+        //ë¹„êµí•  ì˜¤ë¸Œì íŠ¸ê°€ ê¸°ì¡´ ì˜¤ë¸Œì íŠ¸ë³´ë‹¤ ì¢Œì¸¡ì— ìœ„ì¹˜í•œ ê²½ìš°
         if ((new_position.x < existing_position.x)
             && (existing_position.x - new_position.x >= new_width_range + existing_width_range))
         { return false; }
@@ -315,12 +315,12 @@ public class CloudDecoManager : MonoBehaviour
 
     private bool IsDecoPartInCloud(float width_range, float height_range)
     {
-		//¡à¡à¡à¡à¡à¡à¡á¡à¡à¡à
-		//¡à¡à¡à¡á¡á¡á¡á¡á¡à¡à
-		//¡à¡à¡á¡á¡á¡á¡á¡á¡à¡à
-		//¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á
-		//¡à¡à¡á¡á¡á¡á¡á¡á¡á¡à
-		//¡à¡à¡à¡à¡á¡á¡á¡à¡à¡à
+		//â–¡â–¡â–¡â–¡â–¡â–¡â– â–¡â–¡â–¡
+		//â–¡â–¡â–¡â– â– â– â– â– â–¡â–¡
+		//â–¡â–¡â– â– â– â– â– â– â–¡â–¡
+		//â– â– â– â– â– â– â– â– â– â– 
+		//â–¡â–¡â– â– â– â– â– â– â– â–¡
+		//â–¡â–¡â–¡â–¡â– â– â– â–¡â–¡â–¡
         if((width_range <= 100 && height_range >= 200)
             || (width_range <= -200 && height_range >= 100)
             || (width_range <= -300 && height_range >= 0)
@@ -339,17 +339,17 @@ public class CloudDecoManager : MonoBehaviour
 		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
 
 		GameObject target = EventSystem.current.currentSelectedGameObject.transform.gameObject;
-        int idx = target.transform.parent.GetSiblingIndex();// ºÎ¸ğ°¡ ¸î¹øÂ° siblingÀÎÁö.
+        int idx = target.transform.parent.GetSiblingIndex();// ë¶€ëª¨ê°€ ëª‡ë²ˆì§¸ siblingì¸ì§€.
 
         if (idx > mBaseCloudDt.getDecoPartsCount()) return;
 
         Debug.Log("clicked_" + target.name);
-        if(mLPartsMenu[idx].isInit) //Ã³À½ÀÌ¸é µÑ´Ù Ã¼Å©°¡ ¾ÈµÇ¾îÀÖÀ½.
+        if(mLPartsMenu[idx].isInit) //ì²˜ìŒì´ë©´ ë‘˜ë‹¤ ì²´í¬ê°€ ì•ˆë˜ì–´ìˆìŒ.
         {
             
-            if (mTutorialManager.isFinishedTutorial[6] == false && mLPartsMenu[1].isInit == true)
+            if (mTutorialManager.isFinishedTutorial[6] == false && mLPartsMenu[0].isInit == true)
             {
-                if(idx != 1 || target.transform.GetSiblingIndex() != 0) { return; }
+                if(idx != 0 || target.transform.GetSiblingIndex() != 0) { return; }
                 else { 
                     mTutorialManager.SetActiveGuideSpeechBubble(true);
                     mTutorialManager.SetActiveFadeOutScreen(false);
@@ -364,7 +364,7 @@ public class CloudDecoManager : MonoBehaviour
         }
         else
         {
-            if (mTutorialManager.isFinishedTutorial[6] == false && idx == 1) { return; }
+            if (mTutorialManager.isFinishedTutorial[6] == false && idx == 0) { return; }
             mLPartsMenu[idx].btnClicked(I_SelectedSticker,I_UnSelectedSticker);
         }
 
@@ -377,7 +377,7 @@ public class CloudDecoManager : MonoBehaviour
         int cnt = partsIdx >= 1 ? int.Parse(T_CountInfo[partsIdx - 1].GetComponent<TMP_Text>().text) : 0 ;
 
             
-        //°³¼ö °¨¼Ò½ÃÅ°±â, Á¦ÇÑ°³¼ö¸¦ ¼ÒÁøÇÏ¸é Å¬¸¯ ÇÒ ¼ö ¾ø´Ù.
+        //ê°œìˆ˜ ê°ì†Œì‹œí‚¤ê¸°, ì œí•œê°œìˆ˜ë¥¼ ì†Œì§„í•˜ë©´ í´ë¦­ í•  ìˆ˜ ì—†ë‹¤.
         switch (partsIdx)
         {
             case 0:
@@ -405,29 +405,29 @@ public class CloudDecoManager : MonoBehaviour
 
         newParts.GetComponent<Button>().onClick.AddListener(EPartsClickedInArea);
 
-        LDecoParts.Add(newParts);//ÆÄÃ÷ °ü¸®ÇÏ´Â ¸®½ºÆ®¿¡ Ãß°¡.
+        LDecoParts.Add(newParts);//íŒŒì¸  ê´€ë¦¬í•˜ëŠ” ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€.
 
         cursorChasing = true;
     }
 
     public void EPartsClickedInArea()
     {
-        //²Ù¹Ì±â°¡ ¿Ï·áµÈ »óÅÂ¶ó¸é »ç¿ëÀÚ Á¶ÀÛ¿¡ ¹İÀÀÇÏÁö ¾Ê´Â´Ù.
+        //ê¾¸ë¯¸ê¸°ê°€ ì™„ë£Œëœ ìƒíƒœë¼ë©´ ì‚¬ìš©ì ì¡°ì‘ì— ë°˜ì‘í•˜ì§€ ì•ŠëŠ”ë‹¤.
         if (isDecoDone)
             return;
-        //Å¬¸¯µÈ °´Ã¼·Î º¯°æÇØÁà¾ßÇÔ
+        //í´ë¦­ëœ ê°ì²´ë¡œ ë³€ê²½í•´ì¤˜ì•¼í•¨
         if(LDecoParts.Count>1 && EventSystem.current.currentSelectedGameObject.transform.parent != selectedParts.transform.parent)
                 return;
         
         selectedParts = EventSystem.current.currentSelectedGameObject.GetComponent<DecoParts>();
 
         if (!selectedParts.canAttached) return; 
-        if(!selectedParts.isEditActive)//Ã³À½ ÆÄÃ÷¸¦ ¼±ÅÃÇÑ »óÅÂ. ºÎÂø°¡´ÉÇÑ °ø°£¿¡ ºÎÂø °¡´É.
+        if(!selectedParts.isEditActive)//ì²˜ìŒ íŒŒì¸ ë¥¼ ì„ íƒí•œ ìƒíƒœ. ë¶€ì°©ê°€ëŠ¥í•œ ê³µê°„ì— ë¶€ì°© ê°€ëŠ¥.
         {
-            cursorChasing = false; //Ä¿¼­ µû¶ó´Ù´ÏÁö ¾Ê°Ô ¼³Á¤.
-            selectedParts.ReSettingDecoParts(); //CanEdit = true·Î ¸¸µê.
+            cursorChasing = false; //ì»¤ì„œ ë”°ë¼ë‹¤ë‹ˆì§€ ì•Šê²Œ ì„¤ì •.
+            selectedParts.ReSettingDecoParts(); //CanEdit = trueë¡œ ë§Œë“¦.
 
-            //»õ·Î¿î ¹öÆ° ¸¸µé¾î¼­ µ¤¾î ¾º¿ò.
+            //ìƒˆë¡œìš´ ë²„íŠ¼ ë§Œë“¤ì–´ì„œ ë®ì–´ ì”Œì›€.
             GameObject B_Frame = Instantiate(B_Edits[0], Vector2.zero, selectedParts.transform.rotation);
             B_Frame.transform.SetParent(selectedParts.transform,false);
             B_Frame.AddComponent<MouseDragMove>();
@@ -439,7 +439,7 @@ public class CloudDecoManager : MonoBehaviour
             B_Rotate.AddComponent<MouseDragRotate>();
 
 
-            //Rotation Button Frame Á¶Á¤.
+            //Rotation Button Frame ì¡°ì •.
             float rotateImg_H = B_Rotate.GetComponent<RectTransform>().sizeDelta.y/2.0f;
             float PartsImg_H = selectedParts.gameObject.GetComponent<RectTransform>().sizeDelta.y/2.0f;
             float correctionPos = PartsImg_H - rotateImg_H + rotateImg_H * 2;
@@ -452,9 +452,9 @@ public class CloudDecoManager : MonoBehaviour
             return;
         }
 
-        //ºÎÂøÀÌ ÇÑ¹ø µÇ¸é canEdit»óÅÂ´Â ¾ğÁ¦³ª trueÀÌ´Ù.
+        //ë¶€ì°©ì´ í•œë²ˆ ë˜ë©´ canEditìƒíƒœëŠ” ì–¸ì œë‚˜ trueì´ë‹¤.
         if (!selectedParts.isEditActive) return;
-        //½ºÄÉÄ¡ºÏ¿¡ ºÎÂøµÈ »óÅÂ¿¡¼­¸¸ ¾Æ·¡ÄÚµå Á¢±Ù °¡´É.
+        //ìŠ¤ì¼€ì¹˜ë¶ì— ë¶€ì°©ëœ ìƒíƒœì—ì„œë§Œ ì•„ë˜ì½”ë“œ ì ‘ê·¼ ê°€ëŠ¥.
 
         if (!selectedParts.canEdit)
         {
@@ -484,7 +484,7 @@ public class CloudDecoManager : MonoBehaviour
 
     private bool checkIsWorkComplete()
     {
-        //Áõ°¨ ¼±ÅÃÀ» ¿Ï·áÇß´ÂÁö Ã¼Å©
+        //ì¦ê° ì„ íƒì„ ì™„ë£Œí–ˆëŠ”ì§€ ì²´í¬
         for(int i = 0; i < mLPartsMenu.Count; i++)
         {
             if (mLPartsMenu[i].isInit == true) return false;
@@ -495,7 +495,7 @@ public class CloudDecoManager : MonoBehaviour
         return true;
     }
 
-    private void createFinCloud() //±¸¸§À§¿¡ ÆÄÃ÷ ºÙÀº °ÔÀÓ¿ÀºêÁ§Æ® »ı¼º.
+    private void createFinCloud() //êµ¬ë¦„ìœ„ì— íŒŒì¸  ë¶™ì€ ê²Œì„ì˜¤ë¸Œì íŠ¸ ìƒì„±.
     {
         if (isDecoDone) return;
 
@@ -509,7 +509,7 @@ public class CloudDecoManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);
 
-		//½ºÄÉÄ¡ºÏ¿¡ ºÙ¿©Áø ÆÄÃ÷µéÀº <CloudDecoManager>¾Æ·¡¿¡ ÀúÀåµÇ´Âµ¥, ÀÌ¸¦ ÀúÀåÇÒ¶§´Â ±¸¸§º£ÀÌ½º ÇÏÀ§·Î ¹Ù²Û´Ù.
+		//ìŠ¤ì¼€ì¹˜ë¶ì— ë¶™ì—¬ì§„ íŒŒì¸ ë“¤ì€ <CloudDecoManager>ì•„ë˜ì— ì €ì¥ë˜ëŠ”ë°, ì´ë¥¼ ì €ì¥í• ë•ŒëŠ” êµ¬ë¦„ë² ì´ìŠ¤ í•˜ìœ„ë¡œ ë°”ê¾¼ë‹¤.
 		while (transform.childCount != 0)
 		{
 			transform.GetChild(0).SetParent(FinCloud.transform);

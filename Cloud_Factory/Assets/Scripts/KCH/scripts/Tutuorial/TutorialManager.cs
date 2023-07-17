@@ -91,6 +91,14 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    public static TutorialManager GetInstance()
+    {
+	    if (instance != null) return instance;
+	    instance = FindObjectOfType<TutorialManager>();
+	    if (instance == null) Debug.Log("There's no active Tutorial Manager");
+	    return instance;
+    }
+
     public void ChangeAllTutorialStatus()
     {
 	    if (isTutorial == false)

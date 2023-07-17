@@ -97,10 +97,13 @@ public class CloudStorageProfile : MonoBehaviour
 
     public void GetNextProfileBtn()
     {
+        if (TutorialManager.GetInstance().isTutorial) return;
         Invoke("GetNextProfile", 0.18f);
     }
         public void GetPrevProfileBtn()
     {
+        
+        if (TutorialManager.GetInstance().isTutorial) return;
         Invoke("GetPrevProfile", 0.18f);
     }
 

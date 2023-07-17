@@ -4,40 +4,40 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-// Ä¡À¯ÀÇ ±â·Ï UI
+// ì¹˜ìœ ì˜ ê¸°ë¡ UI
 public class RecordUIManager : MonoBehaviour
 {
     [Header("GAME OBJECT")]
-    // Ä¡À¯ÀÇ ±â·Ï
-    public GameObject gShowUpset; // ºÒ¸¸ ¹¶Æ¼º¸±â
-    public GameObject gShowAll;   // ÀüÃ¼ º¸±â 
-    public GameObject[] gStampF = new GameObject[4]; // ºÒ¸¸ ¹¶Æ¼ ½ºÅÆÇÁ
-    public GameObject gUpsetStory; // ºÒ¸¸ ¹¶Æ¼´Â ½ºÅä¸® ¾ø¾îÁü
-    // Ä¡À¯ÀÇ±â·Ï
-    public Image[] iProfileBG = new Image[4]; // ÇÁ·ÎÇÊ ¹è°æ
+    // ì¹˜ìœ ì˜ ê¸°ë¡
+    public GameObject gShowUpset; // ë¶ˆë§Œ ë­‰í‹°ë³´ê¸°
+    public GameObject gShowAll;   // ì „ì²´ ë³´ê¸° 
+    public GameObject[] gStampF = new GameObject[4]; // ë¶ˆë§Œ ë­‰í‹° ìŠ¤íƒ¬í”„
+    public GameObject gUpsetStory; // ë¶ˆë§Œ ë­‰í‹°ëŠ” ìŠ¤í† ë¦¬ ì—†ì–´ì§
+    // ì¹˜ìœ ì˜ê¸°ë¡
+    public Image[] iProfileBG = new Image[4]; // í”„ë¡œí•„ ë°°ê²½
     public Image iMainBg;
 
     [Header("SPRITES")]
-    public Sprite[] sBasicProfile = new Sprite[4]; // ±âº» ÇÁ·ÎÇÊ
-    public Sprite[] sUpsetProfile = new Sprite[4]; // È­³­ ÇÁ·ÎÇÊ
+    public Sprite[] sBasicProfile = new Sprite[4]; // ê¸°ë³¸ í”„ë¡œí•„
+    public Sprite[] sUpsetProfile = new Sprite[4]; // í™”ë‚œ í”„ë¡œí•„
 
     [Header("BUTTON")]
 
-    //Ä¡À¯ÀÇ ±â·Ï     
-    public Button btNextBtn;           // ´ÙÀ½ÆäÀÌÁö ¹öÆ°
-    public Button btPrevBtn;           // ÀÌÀüÆäÀÌÁö ¹öÆ°
+    //ì¹˜ìœ ì˜ ê¸°ë¡     
+    public Button btNextBtn;           // ë‹¤ìŒí˜ì´ì§€ ë²„íŠ¼
+    public Button btPrevBtn;           // ì´ì „í˜ì´ì§€ ë²„íŠ¼
 
 
     [HideInInspector]
-    public bool mIsNext;               // Ä¡À¯ÀÇ ±â·Ï ´ÙÀ½ ÆäÀÌÁö   
+    public bool mIsNext;               // ì¹˜ìœ ì˜ ê¸°ë¡ ë‹¤ìŒ í˜ì´ì§€   
     [HideInInspector]
-    public bool mIsPrev;               // Ä¡À¯ÀÇ ±â·Ï ÀÌÀü ÆäÀÌÁö
+    public bool mIsPrev;               // ì¹˜ìœ ì˜ ê¸°ë¡ ì´ì „ í˜ì´ì§€
 
-    private ProfileMoving mProfile1;   // ÇÁ·ÎÇÊ ¿òÁ÷ÀÓ ´ã´ç ½ºÅ©¸³Æ®
-    private ProfileMoving mProfile2;   // ÇÁ·ÎÇÊ ¿òÁ÷ÀÓ ´ã´ç ½ºÅ©¸³Æ®
-    private ProfileMoving mProfile3;   // ÇÁ·ÎÇÊ ¿òÁ÷ÀÓ ´ã´ç ½ºÅ©¸³Æ®
+    private ProfileMoving mProfile1;   // í”„ë¡œí•„ ì›€ì§ì„ ë‹´ë‹¹ ìŠ¤í¬ë¦½íŠ¸
+    private ProfileMoving mProfile2;   // í”„ë¡œí•„ ì›€ì§ì„ ë‹´ë‹¹ ìŠ¤í¬ë¦½íŠ¸
+    private ProfileMoving mProfile3;   // í”„ë¡œí•„ ì›€ì§ì„ ë‹´ë‹¹ ìŠ¤í¬ë¦½íŠ¸
 
-    // ±¸¸§ Á¦°øÀ» À§ÇÑ ÂüÁ¶ ¿ÀºêÁ§Æ®
+    // êµ¬ë¦„ ì œê³µì„ ìœ„í•œ ì°¸ì¡° ì˜¤ë¸Œì íŠ¸
     public GameObject mGetCloudContainer;
     SOWManager SOWManager;
 
@@ -49,7 +49,7 @@ public class RecordUIManager : MonoBehaviour
 
         SOWManager SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
-        // ±¸¸§ ÀÌ¿ëÀÌ °¡´ÉÇÑ ¹¶Æ¼µéÀÇ ¸®½ºÆ®¸¦ ÃÊ±âÈ­ ÇÏ´Â ÇÔ¼ö È£Ãâ
+        // êµ¬ë¦„ ì´ìš©ì´ ê°€ëŠ¥í•œ ë­‰í‹°ë“¤ì˜ ë¦¬ìŠ¤íŠ¸ë¥¼ ì´ˆê¸°í™” í•˜ëŠ” í•¨ìˆ˜ í˜¸ì¶œ
         initProfileList();
 
     }
@@ -66,8 +66,8 @@ public class RecordUIManager : MonoBehaviour
 
     void updateProfileList()
     {
-        // º¸¿©Áö´Â ¸®½ºÆ®¸¦ ±âÁØÀ¸·Î 1¹øÀº ÇöÀç ÇÁ·ÎÇÊÀÌ º¸ÀÌ´Â ¹¶Æ¼, 2¹øÀº ´ÙÀ½ ¹¶Æ¼, 3¹øÀº ÇöÀç ÀÌÀüÀÇ ¹¶Æ¼¸¦ ¾÷µ¥ÀÌÆ®ÇÑ´Ù.
-        // ¸¸¾à 1,2,3¹ø Áß Á¸ÀçÇÏÁö ¾Ê´Â °æ¿ì¿¡´Â µû·Î ¾÷µ¥ÀÌÆ® ÇÏÁö ¾Ê´Â´Ù.
+        // ë³´ì—¬ì§€ëŠ” ë¦¬ìŠ¤íŠ¸ë¥¼ ê¸°ì¤€ìœ¼ë¡œ 1ë²ˆì€ í˜„ì¬ í”„ë¡œí•„ì´ ë³´ì´ëŠ” ë­‰í‹°, 2ë²ˆì€ ë‹¤ìŒ ë­‰í‹°, 3ë²ˆì€ í˜„ì¬ ì´ì „ì˜ ë­‰í‹°ë¥¼ ì—…ë°ì´íŠ¸í•œë‹¤.
+        // ë§Œì•½ 1,2,3ë²ˆ ì¤‘ ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê²½ìš°ì—ëŠ” ë”°ë¡œ ì—…ë°ì´íŠ¸ í•˜ì§€ ì•ŠëŠ”ë‹¤.
 
 
     }
@@ -75,7 +75,9 @@ public class RecordUIManager : MonoBehaviour
 
     public void ShowNextProfile()
     {
-        // ´ÙÀ½ ÆäÀÌÁö
+        if (TutorialManager.GetInstance().isTutorial) return;
+        
+        // ë‹¤ìŒ í˜ì´ì§€
         mIsNext = true;
         mIsPrev = false;
 
@@ -83,24 +85,24 @@ public class RecordUIManager : MonoBehaviour
         mProfile2.mIsMoving = true;
         mProfile3.mIsMoving = true;
 
-        // ¹ö±× ¹æÁö¸¦ À§ÇÑ ¹öÆ° ºñÈ°¼ºÈ­
+        // ë²„ê·¸ ë°©ì§€ë¥¼ ìœ„í•œ ë²„íŠ¼ ë¹„í™œì„±í™”
         btNextBtn.interactable = false;
         btPrevBtn.interactable = false;
-        // ºÒ¸¸ ¹¶Æ¼¸¸ º¼ ¶§
+        // ë¶ˆë§Œ ë­‰í‹°ë§Œ ë³¼ ë•Œ
         if (mProfile1.mIsUpset && mProfile2.mIsUpset && mProfile3.mIsUpset)
-            Invoke("DelayActiveBtn", 0.5f);  // È°¼ºÈ­ µô·¹ÀÌ
-        // ÀüÃ¼ ¹¶Æ¼ º¼ ¶§
+            Invoke("DelayActiveBtn", 0.5f);  // í™œì„±í™” ë”œë ˆì´
+        // ì „ì²´ ë­‰í‹° ë³¼ ë•Œ
         else if (!mProfile1.mIsUpset && !mProfile2.mIsUpset && !mProfile3.mIsUpset)
-            Invoke("DelayActiveBtn", 1.0f);  // È°¼ºÈ­ µô·¹ÀÌ        
+            Invoke("DelayActiveBtn", 1.0f);  // í™œì„±í™” ë”œë ˆì´        
 
-        // ´ÙÀ½ ¹¶Æ¼ Á¤º¸ ºÒ·¯¿À´Â ¸Ş¼Òµå È£ÃâÇÏ´Â ºÎºĞ
-        Debug.Log("´ÙÀ½ ¹¶Æ¼ Á¤º¸ È£Ãâ");
+        // ë‹¤ìŒ ë­‰í‹° ì •ë³´ ë¶ˆëŸ¬ì˜¤ëŠ” ë©”ì†Œë“œ í˜¸ì¶œí•˜ëŠ” ë¶€ë¶„
+        Debug.Log("ë‹¤ìŒ ë­‰í‹° ì •ë³´ í˜¸ì¶œ");
     }
     public void ShowPrevProfile()
     {
+        if (TutorialManager.GetInstance().isTutorial) return;
 
-
-        // ÀÌÀü ÆäÀÌÁö
+        // ì´ì „ í˜ì´ì§€
         mIsNext = false;
         mIsPrev = true;
 
@@ -108,54 +110,54 @@ public class RecordUIManager : MonoBehaviour
         mProfile2.mIsMoving = true;
         mProfile3.mIsMoving = true;
 
-        // ¹ö±× ¹æÁö¸¦ À§ÇÑ ¹öÆ° ºñÈ°¼ºÈ­
+        // ë²„ê·¸ ë°©ì§€ë¥¼ ìœ„í•œ ë²„íŠ¼ ë¹„í™œì„±í™”
         btNextBtn.interactable = false;
         btPrevBtn.interactable = false;
         Invoke("DelayActiveBtn", 0.5f);
 
-        // ´ÙÀ½ ¹¶Æ¼ Á¤º¸ ºÒ·¯¿À´Â ¸Ş¼Òµå È£ÃâÇÏ´Â ºÎºĞ
+        // ë‹¤ìŒ ë­‰í‹° ì •ë³´ ë¶ˆëŸ¬ì˜¤ëŠ” ë©”ì†Œë“œ í˜¸ì¶œí•˜ëŠ” ë¶€ë¶„
         
 
 
-        Debug.Log("ÀÌÀü ¹¶Æ¼ Á¤º¸ È£Ãâ");
+        Debug.Log("ì´ì „ ë­‰í‹° ì •ë³´ í˜¸ì¶œ");
     }
     void DelayActiveBtn()
     {
         btNextBtn.interactable = true;
         btPrevBtn.interactable = true;
     }
-    // ºÒ¸¸ ¹¶Æ¼ º¸¿©ÁÖ´Â ÇÔ¼ö
+    // ë¶ˆë§Œ ë­‰í‹° ë³´ì—¬ì£¼ëŠ” í•¨ìˆ˜
     public void ShowUpsetMoongti()
     {
         ControlMoongtiUI(sUpsetProfile, true);
 
-        // »ö ¿ø»ö
+        // ìƒ‰ ì›ìƒ‰
         iProfileBG[0].color = new Color(255f / 255f, 255f / 255f, 255f / 255f);
         iProfileBG[1].color = new Color(255f / 255f, 255f / 255f, 255f / 255f);
         iProfileBG[2].color = new Color(255f / 255f, 255f / 255f, 255f / 255f);
         iMainBg.color = new Color(222f / 255f, 219f / 255f, 217f / 255f);
 
-        // ¹¶Æ¼ Á¤º¸ ºÒ·¯¿À´Â ¸Ş¼Òµå È£ÃâÇÏ´Â ºÎºĞ
-        Debug.Log("ºÒ¸¸ ¹¶Æ¼ Á¤º¸ ºÒ·¯¿À´Â ¸Ş¼Òµå È£Ãâ");
+        // ë­‰í‹° ì •ë³´ ë¶ˆëŸ¬ì˜¤ëŠ” ë©”ì†Œë“œ í˜¸ì¶œí•˜ëŠ” ë¶€ë¶„
+        Debug.Log("ë¶ˆë§Œ ë­‰í‹° ì •ë³´ ë¶ˆëŸ¬ì˜¤ëŠ” ë©”ì†Œë“œ í˜¸ì¶œ");
     }
-    // ÀüÃ¼ º¸±â
+    // ì „ì²´ ë³´ê¸°
     public void ShowAllMoongti()
     {
         ControlMoongtiUI(sBasicProfile, false);
 
-        // »ö Á¤ÇØÁø »ö
+        // ìƒ‰ ì •í•´ì§„ ìƒ‰
         iProfileBG[0].color = new Color(235f / 255f, 246f / 255f, 255f / 255f);
         iProfileBG[1].color = new Color(255f / 255f, 237f / 255f, 253f / 255f);
         iProfileBG[2].color = new Color(255f / 255f, 255f / 255f, 239f / 255f);
         iMainBg.color = new Color(194f / 255f, 216f / 255f, 233f / 255f);
 
-        // ¹¶Æ¼ Á¤º¸ ºÒ·¯¿À´Â ¸Ş¼Òµå È£ÃâÇÏ´Â ºÎºĞ
-        Debug.Log("ÀüÃ¼ ¹¶Æ¼ Á¤º¸ ºÒ·¯¿À´Â ¸Ş¼Òµå È£Ãâ");
+        // ë­‰í‹° ì •ë³´ ë¶ˆëŸ¬ì˜¤ëŠ” ë©”ì†Œë“œ í˜¸ì¶œí•˜ëŠ” ë¶€ë¶„
+        Debug.Log("ì „ì²´ ë­‰í‹° ì •ë³´ ë¶ˆëŸ¬ì˜¤ëŠ” ë©”ì†Œë“œ í˜¸ì¶œ");
     }
 
     void ControlMoongtiUI(Sprite[] _szProfile, bool _bisUpset)
     {
-        // ±âº»¹è°æÀ¸·Î ½ºÇÁ¶óÀÌÆ® ±³Ã¼
+        // ê¸°ë³¸ë°°ê²½ìœ¼ë¡œ ìŠ¤í”„ë¼ì´íŠ¸ êµì²´
         for (int index = 0; index < iProfileBG.Length; index++)
         {
             iProfileBG[index].sprite = _szProfile[index];
@@ -169,7 +171,7 @@ public class RecordUIManager : MonoBehaviour
         gShowUpset.SetActive(!_bisUpset);
 
         for (int index = 0; index < gStampF.Length; index++)
-        { // stamp ºñÈ°¼ºÈ­
+        { // stamp ë¹„í™œì„±í™”
             gStampF[index].SetActive(_bisUpset);
         }
 

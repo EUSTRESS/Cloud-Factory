@@ -97,7 +97,7 @@ public class GuideBook : MonoBehaviour
         
         if (gChapter[0])
         {
-            tGuideText.text = "감정 도감" + gPageIndex.ToString() + "페이지";
+            tGuideText.text = "";
             emotionPageGroup.SetActive(true);
             if (gPageIndex <= emotionPageGroup.transform.childCount)
                 emotionPageGroup.transform.GetChild(gPageIndex - 1).gameObject.SetActive(true);

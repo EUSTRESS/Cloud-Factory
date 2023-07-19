@@ -180,6 +180,7 @@ public class TutorialManager : MonoBehaviour
 	public GameObject GetActiveGuideSpeechBubble()		{ return guideSpeechBubbleObject; }
     public void SetActiveFadeOutScreen(bool _bool)      { if (fadeOutScreenObject != null) { fadeOutScreenObject.SetActive(_bool); } }
 	public void SetActiveArrowUIObject(bool _bool)		{ if (arrowObject != null) { arrowObject.SetActive(_bool); } }
+	public void DestoryBlockTouchObject()				{ if (blockScreenTouchObject != null) Destroy(blockScreenTouchObject); }
 
     // 날씨의 공간(1) 튜토리얼
     // 말풍선을 띄운다. 대사 多 대사 넘기는 버튼 有

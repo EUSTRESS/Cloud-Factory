@@ -205,7 +205,7 @@ public class WeatherUIManager : MonoBehaviour
                 UpdateGatherAnim(560, 570, false, false, false, true);
         }
         // 5초 동안 채집 후 결과 출력
-        Invoke("Gathering", 5.0f);
+        Invoke("Gathering", 2.0f);
 
         mSOWManager.yardGatherCount[selectedYard.transform.GetSiblingIndex()]--;
         if (GameObject.Find("TutorialManager").GetComponent<TutorialManager>().isFinishedTutorial[2] == false

@@ -727,6 +727,7 @@ MonoBehaviour:
   faceValue: 
   SpeechBubble: {fileID: 0}
   isSpeakEmotion: 0
+  isGettingCloud: 0
   isUseRarity4: 0
   mGuestAnim: {fileID: 0}
   mSOWManager: {fileID: 0}
@@ -967,13 +968,14 @@ GameObject:
   - component: {fileID: 3798422383002064232}
   - component: {fileID: 4787976409421695902}
   - component: {fileID: 4726976275423194629}
+  - component: {fileID: 2104073591608771406}
   m_Layer: 12
   m_Name: EmotionDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7110530047038758898
 RectTransform:
   m_ObjectHideFlags: 0
@@ -990,8 +992,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.051, y: 0.1773}
-  m_SizeDelta: {x: 1.8068, y: 0.7846}
+  m_AnchoredPosition: {x: 0.048, y: 0.1877}
+  m_SizeDelta: {x: 1.7445, y: 0.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3798422383002064232
 MeshRenderer:
@@ -1140,6 +1142,20 @@ SortingGroup:
   m_SortingLayerID: 649879739
   m_SortingLayer: 6
   m_SortingOrder: 0
+--- !u!114 &2104073591608771406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6345532713300255412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 0
 --- !u!1 &8517084649661653854
 GameObject:
   m_ObjectHideFlags: 0

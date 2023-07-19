@@ -384,7 +384,8 @@ private void Update()
         // 말풍선 띄우기
         SpeechBubble.SetActive(true);
         SpeechBubble.transform.GetChild(1).gameObject.SetActive(false);
-        Invoke("ActiveHintText", 1.0f);
+
+        // Invoke("ActiveHintText", 1.0f);
 
         SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);
         Anim.SetTrigger("Start");
@@ -396,10 +397,13 @@ private void Update()
     private void EndBubble()
     {
         Animator Anim = SpeechBubble.transform.GetChild(0).gameObject.GetComponent<Animator>();
+
         Anim.SetTrigger("EndBubble");
         mGuestAnim.SetTrigger("EndHint");
+
         SpeechBubble.transform.GetChild(1).gameObject.SetActive(false);
         isHintTextPrinted = true;
+
         EndSpeakEmotion();
     }
 
@@ -507,6 +511,12 @@ private void Update()
         mTargetChiarIndex = -1;
         isGotoEntrance = true;
         mGuestAnim.SetBool("isSit", false);
+
+        if (TutorialManager.GetInstance().isTutorial)
+        {
+            TutorialManager.GetInstance().SetActiveGuideSpeechBubble(true);
+            TutorialManager.GetInstance().DestoryBlockTouchObject();
+        }
 
         // 진행중이던 감정 표현을 멈춘다.
         mGuestAnim.SetTrigger("InteractionEnd");

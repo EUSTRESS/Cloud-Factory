@@ -100,7 +100,7 @@ public class CloudStorageProfile : MonoBehaviour
         if (TutorialManager.GetInstance().isTutorial) return;
         Invoke("GetNextProfile", 0.18f);
     }
-        public void GetPrevProfileBtn()
+    public void GetPrevProfileBtn()
     {
         
         if (TutorialManager.GetInstance().isTutorial) return;
@@ -112,39 +112,40 @@ public class CloudStorageProfile : MonoBehaviour
         // 맨앞에 나온 손님의 인덱스가 
         if (UsingGuestIndex >= numOfUsingGuestList - 1)
         {
-            //UsingGuestIndex = 0;
             UsingGuestIndex = numOfUsingGuestList - 1;
-            return;
         }
         
         // 이전 프로필을 불러온다.
         frontProfileInfo = (frontProfileInfo + 1) % 3;
-
         UsingGuestIndex++;
-        frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
 
+        if (UsingGuestIndex > numOfUsingGuestList - 1)
+        {
+            UsingGuestIndex = 0;
+        }
+        frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
         updateProfileList();
-        // UIManager.ShowNextProfile();
     }
 
     private void GetPrevProfile()
     {
+        // 다음 프로필을 불러온다.       
+        if (UsingGuestIndex <= 0)
         {
-            // 다음 프로필을 불러온다.       
-            if (UsingGuestIndex <= 0)
-            {
-                UsingGuestIndex = 0;
-                return;
-            }
+            UsingGuestIndex = 0;
         }
+        
         // 다음 프로필을 불러온다.
         frontProfileInfo = (frontProfileInfo - 1 + 3) % 3;
-
         UsingGuestIndex--;
-        frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
 
+        // 다음 프로필을 불러온다.       
+        if (UsingGuestIndex < 0)
+        {
+            UsingGuestIndex = numOfUsingGuestList - 1;
+        }
+        frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
         updateProfileList();
-        // UIManager.ShowPrevProfile();
     }
 
     private void Update()

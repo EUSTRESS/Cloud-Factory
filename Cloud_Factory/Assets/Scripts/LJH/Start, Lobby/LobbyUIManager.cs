@@ -758,6 +758,10 @@ public class LobbyUIManager : MonoBehaviour
     // 새로하기 경고창
     public void ActiveWarning()
     {
+        // 수정 필요
+        NewGame();
+        return;
+        
         if (isFirstPlay)  // 바로 새로운 게임 스타트         
             NewGame();
         else

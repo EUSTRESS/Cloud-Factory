@@ -508,6 +508,12 @@ private void Update()
         isGotoEntrance = true;
         mGuestAnim.SetBool("isSit", false);
 
+        if (TutorialManager.GetInstance().isTutorial)
+        {
+            TutorialManager.GetInstance().SetActiveGuideSpeechBubble(true);
+            TutorialManager.GetInstance().DestoryBlockTouchObject();
+        }
+
         // 진행중이던 감정 표현을 멈춘다.
         mGuestAnim.SetTrigger("InteractionEnd");
 

@@ -5,27 +5,27 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public enum ECheckBox // Ã¼Å©¹Ú½º ÀÎµ¦½º
+public enum ECheckBox // ì²´í¬ë°•ìŠ¤ ì¸ë±ìŠ¤
 {
     Date,
     Number,
     Emotion
 }
 
-// ±¸¸§ °øÀå UI
+// êµ¬ë¦„ ê³µì¥ UI
 public class CloudUIManager : MonoBehaviour
 {    
-    public Sprite       mDropBoxDown; // È­»ìÇ¥ ¾Æ·¡
-    public Sprite       mDropBoxUp;   // È­»ìÇ¥ À§
+    public Sprite       mDropBoxDown; // í™”ì‚´í‘œ ì•„ë˜
+    public Sprite       mDropBoxUp;   // í™”ì‚´í‘œ ìœ„
 
-    public Image        mArrow;       // µå·Ó ¹Ú½º È­»ìÇ¥
+    public Image        mArrow;       // ë“œë¡­ ë°•ìŠ¤ í™”ì‚´í‘œ
 
-    public GameObject   mTemplate;    // µå·Ó ¹Ú½º ³»¿ë
-    public GameObject[] mGiveCloudCheckBox = new GameObject[3]; // ±¸¸§ Á¦°øÈ­¸é Ã¼Å© ¹Ú½º 3°³
+    public GameObject   mTemplate;    // ë“œë¡­ ë°•ìŠ¤ ë‚´ìš©
+    public GameObject[] mGiveCloudCheckBox = new GameObject[3]; // êµ¬ë¦„ ì œê³µí™”ë©´ ì²´í¬ ë°•ìŠ¤ 3ê°œ
 
-    public TMP_Dropdown mSortDropBox; // µå·Ó¹Ú½º
+    public TMP_Dropdown mSortDropBox; // ë“œë¡­ë°•ìŠ¤
 
-    private Dropdown mDropdown;       // µå·Ó´Ù¿î Å¬·¡½º
+    private Dropdown mDropdown;       // ë“œë¡­ë‹¤ìš´ í´ë˜ìŠ¤
 
     void Start()
     {
@@ -34,22 +34,21 @@ public class CloudUIManager : MonoBehaviour
 
     void Update()
     {
-        // È­»ìÇ¥ ÇÃ¸³
+        // í™”ì‚´í‘œ í”Œë¦½
         if (mTemplate.activeSelf) mArrow.sprite = mDropBoxUp;
         else if (!mTemplate.activeSelf) mArrow.sprite = mDropBoxDown;
     }
 
-    // º¸°ü ±â°£ º°·Î Á¤·Ä
+    // ë³´ê´€ ê¸°ê°„ ë³„ë¡œ ì •ë ¬
     public void SortStorageDate()
     {
-		if (GameObject.Find("TutorialManager").GetComponent<TutorialManager>().isFinishedTutorial[7] == false) { return; }
 		if (!mGiveCloudCheckBox[(int)ECheckBox.Date].activeSelf)
         {
             mSortDropBox.interactable = false;
             mGiveCloudCheckBox[(int)ECheckBox.Date].SetActive(true);
             mGiveCloudCheckBox[(int)ECheckBox.Emotion].SetActive(false);
 
-            Debug.Log("º¸°ü ±â°£º°·Î Á¤·Ä ¸Ş¼Òµå È£Ãâ");
+            Debug.Log("ë³´ê´€ ê¸°ê°„ë³„ë¡œ ì •ë ¬ ë©”ì†Œë“œ í˜¸ì¶œ");
         }
         else
         {
@@ -58,18 +57,17 @@ public class CloudUIManager : MonoBehaviour
 
     }
 
-    // °¨Á¤À¸·Î Á¤·Ä
+    // ê°ì •ìœ¼ë¡œ ì •ë ¬
     public void SortEmotion()
     {
-		if (GameObject.Find("TutorialManager").GetComponent<TutorialManager>().isFinishedTutorial[7] == false) { return; }
-		if (!mGiveCloudCheckBox[(int)ECheckBox.Emotion].activeSelf)
+        if (!mGiveCloudCheckBox[(int)ECheckBox.Emotion].activeSelf)
         {
             mSortDropBox.interactable = transform;
             mGiveCloudCheckBox[(int)ECheckBox.Emotion].SetActive(true);
             mGiveCloudCheckBox[(int)ECheckBox.Date].SetActive(false);
 
-            Debug.Log("ÇöÀç ÀÎµ¦½º : " + mDropdown.mDropdownIndex);
-            Debug.Log("ÀÎµ¦½º ¹Ş¾Æ¿Í¼­ ÇöÀç Àû¿ëµÇ¾î ÀÖ´Â ÀÎµ¦½º·Î °¨Á¤º° Á¤·Ä ¸Ş¼Òµå È£Ãâ");
+            Debug.Log("í˜„ì¬ ì¸ë±ìŠ¤ : " + mDropdown.mDropdownIndex);
+            Debug.Log("ì¸ë±ìŠ¤ ë°›ì•„ì™€ì„œ í˜„ì¬ ì ìš©ë˜ì–´ ìˆëŠ” ì¸ë±ìŠ¤ë¡œ ê°ì •ë³„ ì •ë ¬ ë©”ì†Œë“œ í˜¸ì¶œ");
 
             
         }
@@ -80,7 +78,7 @@ public class CloudUIManager : MonoBehaviour
         }
     }
 
-    // Ã¼Å©Ç¥½Ã Åä±Û
+    // ì²´í¬í‘œì‹œ í† ê¸€
     void ToggleCheckBox(GameObject CheckBox)
     {
         if (!CheckBox.activeSelf)
@@ -88,7 +86,7 @@ public class CloudUIManager : MonoBehaviour
         else
             CheckBox.SetActive(false);
     }
-    // µå·Ó¹Ú½º È°¼ºÈ­ Åä±Û
+    // ë“œë¡­ë°•ìŠ¤ í™œì„±í™” í† ê¸€
     void ToggleDropBox(TMP_Dropdown DropDown)
     {
         if (!DropDown.interactable)
@@ -96,7 +94,7 @@ public class CloudUIManager : MonoBehaviour
         else
             DropDown.interactable = false;
     }
-    // µ¹¾Æ°¡±â ¹öÆ°
+    // ëŒì•„ê°€ê¸° ë²„íŠ¼
     public void GoToCloudFactory()
     {
         LoadingSceneController.Instance.LoadScene("Cloud Factory");

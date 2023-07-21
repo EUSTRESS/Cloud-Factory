@@ -19,10 +19,14 @@ public class CloudMakerAnimController : MonoBehaviour
     {
 
         inventoryManager = GameObject.FindWithTag("InventoryManager").transform.GetComponent<InventoryManager>();
-        if (inventoryManager.createdCloudData.mEmotions.Count == 0) return;
+        if (inventoryManager.createdCloudData.mEmotions.Count == 0)
+        {
+            this.gameObject.GetComponent<Button>().enabled = true;
+            return;
+        }
         //애니메이션이 얼마나 진행되었는지 InventoryManager.cs의 CloudData에서 받아옴
         for(int idx = 0; idx < 3; idx++) { isAnimProgressed[idx] = inventoryManager.createdCloudData.getAnimProgressed(idx); }
-
+        this.gameObject.GetComponent<Button>().enabled = false;
         mResultColorIdx = inventoryManager.createdCloudData.getBaseCloudColorIdx();
         Debug.Log(mResultColorIdx);//Assets/Resources/Sprite/CloudOnMachine
 

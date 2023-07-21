@@ -6,21 +6,21 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.EventSystems;
 
-// º¸°ü ÀÎº¥Åä¸® UI
+// ë³´ê´€ ì¸ë²¤í† ë¦¬ UI
 public class StorageUIManager : MonoBehaviour
 {
-    public Sprite       mDropBoxDown; // È­»ìÇ¥ ¾Æ·¡
-    public Sprite       mDropBoxUp;   // È­»ìÇ¥ À§
+    public Sprite       mDropBoxDown; // í™”ì‚´í‘œ ì•„ë˜
+    public Sprite       mDropBoxUp;   // í™”ì‚´í‘œ ìœ„
 
-    public Image        mArrow;       // µå·Ó ¹Ú½º È­»ìÇ¥
+    public Image        mArrow;       // ë“œë¡­ ë°•ìŠ¤ í™”ì‚´í‘œ
 
-    public GameObject   mTemplate;    // µå·Ó ¹Ú½º ³»¿ë
-    public GameObject[] mGiveCloudCheckBox = new GameObject[3]; // ±¸¸§ Á¦°øÈ­¸é Ã¼Å© ¹Ú½º 2°³
+    public GameObject   mTemplate;    // ë“œë¡­ ë°•ìŠ¤ ë‚´ìš©
+    public GameObject[] mGiveCloudCheckBox = new GameObject[3]; // êµ¬ë¦„ ì œê³µí™”ë©´ ì²´í¬ ë°•ìŠ¤ 2ê°œ
 
-    public TMP_Dropdown mSortDropBox; // µå·Ó¹Ú½º
+    public TMP_Dropdown mSortDropBox; // ë“œë¡­ë°•ìŠ¤
 
     public CloudMakeSystem cloudMakeSystem;
-    private Dropdown    mDropdown;    // µå·Ó´Ù¿î Å¬·¡½º
+    private Dropdown    mDropdown;    // ë“œë¡­ë‹¤ìš´ í´ë˜ìŠ¤
 
     private InventoryContainer inventoryContainer; //yeram
 
@@ -32,22 +32,21 @@ public class StorageUIManager : MonoBehaviour
     }
     void Update()
     {
-        // È­»ìÇ¥ ÇÃ¸³
+        // í™”ì‚´í‘œ í”Œë¦½
         if (mTemplate.activeSelf) mArrow.sprite = mDropBoxUp;
         else if (!mTemplate.activeSelf) mArrow.sprite = mDropBoxDown;
     }
 
-    // °¨Á¤À¸·Î Á¤·Ä
+    // ê°ì •ìœ¼ë¡œ ì •ë ¬
     public void SortEmotion()
     {
-        if(GameObject.Find("TutorialManager").GetComponent<TutorialManager>().isFinishedTutorial[4] == false) { return; }
 		if (!mGiveCloudCheckBox[(int)ECheckBox.Emotion].activeSelf)
         {
             mSortDropBox.interactable = true;
             mGiveCloudCheckBox[(int)ECheckBox.Emotion].SetActive(true);
 
-            Debug.Log("ÇöÀç ÀÎµ¦½º : " + mDropdown.mDropdownIndex);
-            Debug.Log("ÀÎµ¦½º ¹Ş¾Æ¿Í¼­ ÇöÀç Àû¿ëµÇ¾î ÀÖ´Â ÀÎµ¦½º·Î °¨Á¤º° Á¤·Ä ¸Ş¼Òµå È£Ãâ");
+            Debug.Log("í˜„ì¬ ì¸ë±ìŠ¤ : " + mDropdown.mDropdownIndex);
+            Debug.Log("ì¸ë±ìŠ¤ ë°›ì•„ì™€ì„œ í˜„ì¬ ì ìš©ë˜ì–´ ìˆëŠ” ì¸ë±ìŠ¤ë¡œ ê°ì •ë³„ ì •ë ¬ ë©”ì†Œë“œ í˜¸ì¶œ");
             inventoryContainer.OnDropdownEvent();
         }
         else
@@ -58,7 +57,7 @@ public class StorageUIManager : MonoBehaviour
         }
     }
 
-    // µ¹¾Æ°¡±â ¹öÆ°
+    // ëŒì•„ê°€ê¸° ë²„íŠ¼
     public void GoToCloudFactory()
     {
         TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
@@ -76,14 +75,14 @@ public class StorageUIManager : MonoBehaviour
     public void MakeCloud()
     {
 
-		Debug.Log("±¸¸§ Á¦ÀÛ ¸Ş¼Òµå È£Ãâ");
+		Debug.Log("êµ¬ë¦„ ì œì‘ ë©”ì†Œë“œ í˜¸ì¶œ");
 
 		bool isMakingCloud = GameObject.Find("I_CloudeGen").GetComponent<CloudMakeSystem>().isMakingCloud;
 		bool isMtrlListEmpty = GameObject.Find("I_CloudeGen").GetComponent<CloudMakeSystem>().d_selectMtrlListEmpty();
 
-		// ÀÌ¹Ì ±¸¸§À» Á¶ÇÕ ÁßÀÌ°Å³ª, Á¶ÇÕÄ­¿¡ Àç·á°¡ ¾øÀ» ¶§ ¹öÆ°À» ´­·¯µµ ¾Æ¹« ÀÏµµ ÀÏ¾î³ªÁö ¾Êµµ·Ï ÇÑ´Ù.
-        // ±¸¸§ÀÌ ÀÌ¹Ì ¸¸µé¾îÁø »óÅÂ´Â ¾ÖÃÊ¿¡ ´õÀÌ»ó Àç·á¸¦ Á¶ÇÕÄ­¿¡ ³ÖÀ» ¼ö ¾ø±â ¶§¹®¿¡ µû¶ó return Ã³¸® ÇÏÁö ¾ÊÀ½
-		if (isMakingCloud || isMtrlListEmpty) { Debug.Log("Á¶ÇÕÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù."); return; }     
+		// ì´ë¯¸ êµ¬ë¦„ì„ ì¡°í•© ì¤‘ì´ê±°ë‚˜, ì¡°í•©ì¹¸ì— ì¬ë£Œê°€ ì—†ì„ ë•Œ ë²„íŠ¼ì„ ëˆŒëŸ¬ë„ ì•„ë¬´ ì¼ë„ ì¼ì–´ë‚˜ì§€ ì•Šë„ë¡ í•œë‹¤.
+        // êµ¬ë¦„ì´ ì´ë¯¸ ë§Œë“¤ì–´ì§„ ìƒíƒœëŠ” ì• ì´ˆì— ë”ì´ìƒ ì¬ë£Œë¥¼ ì¡°í•©ì¹¸ì— ë„£ì„ ìˆ˜ ì—†ê¸° ë•Œë¬¸ì— ë”°ë¼ return ì²˜ë¦¬ í•˜ì§€ ì•ŠìŒ
+		if (isMakingCloud || isMtrlListEmpty) { Debug.Log("ì¡°í•©ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤."); return; }     
 		cloudMakeSystem.E_createCloud(EventSystem.current.currentSelectedGameObject.name);
     }
 }

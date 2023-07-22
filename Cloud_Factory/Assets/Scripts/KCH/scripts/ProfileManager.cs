@@ -29,12 +29,7 @@ public class ProfileManager : MonoBehaviour
 	public Sprite[] sBasicProfile = new Sprite[20]; // 기본 프로필
 	public Sprite[] sUpsetProfile = new Sprite[20]; // 화난 프로필
 
-	[Header("Upset Stamp")]
-	public GameObject[] iCloudStamp = new GameObject[3];        // 제공받은 구름에 표시할 스탬프
-	public GameObject iDialogStamp;                             // dialog에 표시할 스탬프
-	private GameObject tempStamp;
-
-    private bool isClickedPrev;
+	private bool isClickedPrev;
     private bool isClickedNext;
 
 
@@ -287,11 +282,7 @@ public class ProfileManager : MonoBehaviour
                 }
             }
         }
-
-        // 해당 뭉티가 불만 뭉티일 경우 스탬프 출력
-		if (mGuestInfo[guest_index].isDisSat && !iCloudStamp[profile_num].activeSelf) { iCloudStamp[profile_num].SetActive(true); }
-        else if (!mGuestInfo[guest_index].isDisSat && iCloudStamp[profile_num].activeSelf) { iCloudStamp[profile_num].SetActive(false); }
-	}
+    }
 
     private void clearUsedCloudList(int profile_num)
     {
@@ -324,19 +315,18 @@ public class ProfileManager : MonoBehaviour
 	        else{ tDialogText.text = "Not enough data's been collected yet."; }
         }
         else { tDialogText.text = mRLHReader.LoadRecordInfo(profileGuestNum[0]); }
-		if (iCloudStamp[0].activeSelf)
-		{
-			iDialogStamp.SetActive(true);
-			tDialog.SetActive(false);
-			dialogBGImage.sprite = sUpsetDialogBG;
-		}
-		else
-		{
-			iDialogStamp.SetActive(false);
-			tDialog.SetActive(true);
-			dialogBGImage.sprite = sDialogBG;
-		}
-	}
+
+        if (isUpset)
+        {
+	        tDialog.SetActive(false);
+	        dialogBGImage.sprite = sUpsetDialogBG;
+        }
+        else
+        {
+	        tDialog.SetActive(true);
+	        dialogBGImage.sprite = sDialogBG;
+        }
+    }
 
     // Swap iProfileBG, iCloudStamp
     private void SwapProfile(int start_num, int end_num)
@@ -349,10 +339,6 @@ public class ProfileManager : MonoBehaviour
             temp_object = iProfileBG[start_num];
             for(int num = start_num; num < end_num; num++) { iProfileBG[num] = iProfileBG[num + 1]; }
             iProfileBG[end_num] = temp_object;
-
-			temp_object = iCloudStamp[start_num];
-			for (int num = start_num; num < end_num; num++) { iCloudStamp[num] = iCloudStamp[num + 1]; }
-			iCloudStamp[end_num] = temp_object;
 
             temp_guest_num = profileGuestNum[start_num];
 			for (int num = start_num; num < end_num; num++) { profileGuestNum[num] = profileGuestNum[num + 1]; }
@@ -368,10 +354,6 @@ public class ProfileManager : MonoBehaviour
 			temp_object = iProfileBG[start_num];
 			for (int num = start_num; num > end_num; num--) { iProfileBG[num] = iProfileBG[num - 1]; }
 			iProfileBG[end_num] = temp_object;
-
-			temp_object = iCloudStamp[start_num];
-			for (int num = start_num; num > end_num; num--) { iCloudStamp[num] = iCloudStamp[num - 1]; }
-			iCloudStamp[end_num] = temp_object;
 
 			temp_guest_num = profileGuestNum[start_num];
 			for (int num = start_num; num > end_num; num--) { profileGuestNum[num] = profileGuestNum[num - 1]; }

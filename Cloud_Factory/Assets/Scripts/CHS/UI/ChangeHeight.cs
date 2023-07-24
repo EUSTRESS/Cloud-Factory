@@ -13,8 +13,8 @@ public class ChangeHeight : MonoBehaviour
     private void Awake()
     {
         Rect = GetComponent<RectTransform>();
-        height = 400.0f;
-        minHeight = 370.0f;
+        height = 450.0f;
+        minHeight = 420.0f;
         ChangeSpeed = 0.04f;
         isUp = false;
     }
@@ -25,7 +25,7 @@ public class ChangeHeight : MonoBehaviour
         {
             isUp = true;
         }
-        else if(height > 400.0f && isUp == true)
+        else if(height > 450.0f && isUp == true)
         {
             isUp = false;
         }
@@ -33,12 +33,12 @@ public class ChangeHeight : MonoBehaviour
         if(isUp)
         {
             height += ChangeSpeed;
-            Rect.sizeDelta = new Vector2(400, height);
+            Rect.sizeDelta = new Vector2(450, height);
         }
         else
         {
             height -= ChangeSpeed;
-            Rect.sizeDelta = new Vector2(400, height);
+            Rect.sizeDelta = new Vector2(450, height);
         }
     }
 }

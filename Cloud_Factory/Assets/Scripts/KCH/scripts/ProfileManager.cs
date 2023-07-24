@@ -213,9 +213,9 @@ public class ProfileManager : MonoBehaviour
         {
 			if (iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.activeSelf == true)
             { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.SetActive(false); }
-			iProfileBG[profile_num].transform.Find("T_Name(INPUT)").gameObject.GetComponent<Text>().text = "";
-			iProfileBG[profile_num].transform.Find("T_Age(INPUT)").gameObject.GetComponent<Text>().text = "";
-			iProfileBG[profile_num].transform.Find("T_Job(INPUT)").gameObject.GetComponent<Text>().text = "";
+			iProfileBG[profile_num].transform.Find("Name").transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = "";
+			iProfileBG[profile_num].transform.Find("Age").transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = "";
+			iProfileBG[profile_num].transform.Find("Job").transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = "";
 
 			clearUsedCloudList(profile_num);
 
@@ -240,9 +240,27 @@ public class ProfileManager : MonoBehaviour
         else if (mGuestInfo[guest_index].isCure) { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = sCuredProfile[guest_index]; }
         else { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = sBasicProfile[guest_index]; }
 
-		iProfileBG[profile_num].transform.Find("T_Name(INPUT)").gameObject.GetComponent<Text>().text = mGuestInfo[guest_index].mName;
-		iProfileBG[profile_num].transform.Find("T_Age(INPUT)").gameObject.GetComponent<Text>().text = mGuestInfo[guest_index].mAge.ToString();
-		iProfileBG[profile_num].transform.Find("T_Job(INPUT)").gameObject.GetComponent<Text>().text = mGuestInfo[guest_index].mJob;
+        if (LanguageManager.GetInstance().GetCurrentLanguage() == "English")
+        {
+	        iProfileBG[profile_num].transform.Find("Name").transform.GetChild(0).transform.GetChild(0).transform
+			        .GetChild(1).GetComponent<Text>().text =
+		        mGuestInfo[guest_index].mNameEN;
+	        iProfileBG[profile_num].transform.Find("Job").transform.GetChild(0).transform.GetChild(0).transform
+			        .GetChild(1).GetComponent<Text>().text =
+		        mGuestInfo[guest_index].mJobEN;
+        }
+        else
+        {
+	        iProfileBG[profile_num].transform.Find("Name").transform.GetChild(0).transform.GetChild(0).transform
+			        .GetChild(1).GetComponent<Text>().text =
+		        mGuestInfo[guest_index].mName;
+	        iProfileBG[profile_num].transform.Find("Job").transform.GetChild(0).transform.GetChild(0).transform
+			        .GetChild(1).GetComponent<Text>().text =
+		        mGuestInfo[guest_index].mJob;
+        }
+
+        iProfileBG[profile_num].transform.Find("T_Age(INPUT)").gameObject.GetComponent<Text>().text =
+	        mGuestInfo[guest_index].mAge.ToString();
 
         // 해당 프로필 종이의 사용한 구름의 정보 제거
         clearUsedCloudList(profile_num);

@@ -170,11 +170,6 @@ public class RecordUIManager : MonoBehaviour
         gShowAll.SetActive(_bisUpset);
         gShowUpset.SetActive(!_bisUpset);
 
-        for (int index = 0; index < gStampF.Length; index++)
-        { // stamp 비활성화
-            gStampF[index].SetActive(_bisUpset);
-        }
-
         gUpsetStory.SetActive(!_bisUpset);
     }
 

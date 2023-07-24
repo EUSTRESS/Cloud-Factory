@@ -46,6 +46,7 @@ public class TutorialManager : MonoBehaviour
 	public GameObject leftArrow;
 	public GameObject rightArrow;
 	private GameObject arrowObject;
+	public GameObject RightMouse_Click;
 
 	[Header ("페이드 아웃 프리펩 오브젝트")]
     public GameObject commonFadeOutScreen;		// 화면을 모두 가리는 공용 Fade Out 스크린

@@ -29,7 +29,12 @@ public class ProfileManager : MonoBehaviour
 	public Sprite[] sBasicProfile = new Sprite[20]; // 기본 프로필
 	public Sprite[] sUpsetProfile = new Sprite[20]; // 화난 프로필
 
-	private bool isClickedPrev;
+	[Header("Upset Stamp")]
+	public GameObject[] iCloudStamp = new GameObject[3];        // 제공받은 구름에 표시할 스탬프
+	public GameObject iDialogStamp;                             // dialog에 표시할 스탬프
+	private GameObject tempStamp;
+
+    private bool isClickedPrev;
     private bool isClickedNext;
 
 
@@ -213,9 +218,9 @@ public class ProfileManager : MonoBehaviour
         {
 			if (iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.activeSelf == true)
             { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.SetActive(false); }
-			iProfileBG[profile_num].transform.Find("Name").transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = "";
-			iProfileBG[profile_num].transform.Find("Age").transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = "";
-			iProfileBG[profile_num].transform.Find("Job").transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = "";
+			iProfileBG[profile_num].transform.Find("T_Name(INPUT)").gameObject.GetComponent<Text>().text = "";
+			iProfileBG[profile_num].transform.Find("T_Age(INPUT)").gameObject.GetComponent<Text>().text = "";
+			iProfileBG[profile_num].transform.Find("T_Job(INPUT)").gameObject.GetComponent<Text>().text = "";
 
 			clearUsedCloudList(profile_num);
 
@@ -240,27 +245,9 @@ public class ProfileManager : MonoBehaviour
         else if (mGuestInfo[guest_index].isCure) { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = sCuredProfile[guest_index]; }
         else { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = sBasicProfile[guest_index]; }
 
-        if (LanguageManager.GetInstance().GetCurrentLanguage() == "English")
-        {
-	        iProfileBG[profile_num].transform.Find("Name").transform.GetChild(0).transform.GetChild(0).transform
-			        .GetChild(1).GetComponent<Text>().text =
-		        mGuestInfo[guest_index].mNameEN;
-	        iProfileBG[profile_num].transform.Find("Job").transform.GetChild(0).transform.GetChild(0).transform
-			        .GetChild(1).GetComponent<Text>().text =
-		        mGuestInfo[guest_index].mJobEN;
-        }
-        else
-        {
-	        iProfileBG[profile_num].transform.Find("Name").transform.GetChild(0).transform.GetChild(0).transform
-			        .GetChild(1).GetComponent<Text>().text =
-		        mGuestInfo[guest_index].mName;
-	        iProfileBG[profile_num].transform.Find("Job").transform.GetChild(0).transform.GetChild(0).transform
-			        .GetChild(1).GetComponent<Text>().text =
-		        mGuestInfo[guest_index].mJob;
-        }
-
-        iProfileBG[profile_num].transform.Find("T_Age(INPUT)").gameObject.GetComponent<Text>().text =
-	        mGuestInfo[guest_index].mAge.ToString();
+		iProfileBG[profile_num].transform.Find("T_Name(INPUT)").gameObject.GetComponent<Text>().text = mGuestInfo[guest_index].mName;
+		iProfileBG[profile_num].transform.Find("T_Age(INPUT)").gameObject.GetComponent<Text>().text = mGuestInfo[guest_index].mAge.ToString();
+		iProfileBG[profile_num].transform.Find("T_Job(INPUT)").gameObject.GetComponent<Text>().text = mGuestInfo[guest_index].mJob;
 
         // 해당 프로필 종이의 사용한 구름의 정보 제거
         clearUsedCloudList(profile_num);
@@ -300,7 +287,11 @@ public class ProfileManager : MonoBehaviour
                 }
             }
         }
-    }
+
+        // 해당 뭉티가 불만 뭉티일 경우 스탬프 출력
+		if (mGuestInfo[guest_index].isDisSat && !iCloudStamp[profile_num].activeSelf) { iCloudStamp[profile_num].SetActive(true); }
+        else if (!mGuestInfo[guest_index].isDisSat && iCloudStamp[profile_num].activeSelf) { iCloudStamp[profile_num].SetActive(false); }
+	}
 
     private void clearUsedCloudList(int profile_num)
     {
@@ -333,18 +324,19 @@ public class ProfileManager : MonoBehaviour
 	        else{ tDialogText.text = "Not enough data's been collected yet."; }
         }
         else { tDialogText.text = mRLHReader.LoadRecordInfo(profileGuestNum[0]); }
-
-        if (isUpset)
-        {
-	        tDialog.SetActive(false);
-	        dialogBGImage.sprite = sUpsetDialogBG;
-        }
-        else
-        {
-	        tDialog.SetActive(true);
-	        dialogBGImage.sprite = sDialogBG;
-        }
-    }
+		if (iCloudStamp[0].activeSelf)
+		{
+			iDialogStamp.SetActive(true);
+			tDialog.SetActive(false);
+			dialogBGImage.sprite = sUpsetDialogBG;
+		}
+		else
+		{
+			iDialogStamp.SetActive(false);
+			tDialog.SetActive(true);
+			dialogBGImage.sprite = sDialogBG;
+		}
+	}
 
     // Swap iProfileBG, iCloudStamp
     private void SwapProfile(int start_num, int end_num)
@@ -357,6 +349,10 @@ public class ProfileManager : MonoBehaviour
             temp_object = iProfileBG[start_num];
             for(int num = start_num; num < end_num; num++) { iProfileBG[num] = iProfileBG[num + 1]; }
             iProfileBG[end_num] = temp_object;
+
+			temp_object = iCloudStamp[start_num];
+			for (int num = start_num; num < end_num; num++) { iCloudStamp[num] = iCloudStamp[num + 1]; }
+			iCloudStamp[end_num] = temp_object;
 
             temp_guest_num = profileGuestNum[start_num];
 			for (int num = start_num; num < end_num; num++) { profileGuestNum[num] = profileGuestNum[num + 1]; }
@@ -372,6 +368,10 @@ public class ProfileManager : MonoBehaviour
 			temp_object = iProfileBG[start_num];
 			for (int num = start_num; num > end_num; num--) { iProfileBG[num] = iProfileBG[num - 1]; }
 			iProfileBG[end_num] = temp_object;
+
+			temp_object = iCloudStamp[start_num];
+			for (int num = start_num; num > end_num; num--) { iCloudStamp[num] = iCloudStamp[num - 1]; }
+			iCloudStamp[end_num] = temp_object;
 
 			temp_guest_num = profileGuestNum[start_num];
 			for (int num = start_num; num > end_num; num--) { profileGuestNum[num] = profileGuestNum[num - 1]; }

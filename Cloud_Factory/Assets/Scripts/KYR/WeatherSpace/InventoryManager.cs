@@ -214,7 +214,22 @@ public class CloudData
         if ((int)mEmotions[0].Key < 8)
             targetImgName = "0";
 
-        string targetUnion = mIngredientDtCount >= 3 ? "2" : "3";
+        string targetUnion = "";
+        switch (mIngredientDtCount)
+        {
+            case 1:
+            case 2:
+                targetUnion = "2";
+                break;
+            case 3:
+                targetUnion = "3";
+                break;
+            case 4:
+            default:
+                targetUnion = "4";
+                break;
+        }
+        Debug.Log("targetUnion" + targetUnion);
         mcloudBaseImage = Resources.Load<Sprite>("Sprite/Base/"+ targetUnion + "union/" + "OC_Cloud_" + ((int)mEmotions[0].Key).ToString());
         mcloudDecoBaseImage = Resources.Load<Sprite>("Sprite/Base/" + targetUnion + "union/" + "Deco/"+ "OC_Cloud_" + ((int)mEmotions[0].Key).ToString());
     }

@@ -126,8 +126,8 @@ public class SOWManager : MonoBehaviour
             // 손님 오브젝트에 해당하는 번호를 넣어준다.
             tempObject.GetComponent<GuestObject>().setGuestNum(mTempGuestNum);
 			tempObject.GetComponent<RLHReader>().LoadHintInfo(mTempGuestNum);
-			tempObject.GetComponent<GuestObject>().initAnimator();
             tempObject.GetComponent<GuestObject>().init();
+            tempObject.GetComponent<GuestObject>().initAnimator();
 
             // 산책로를 설정한다. 
             tempObject.GetComponent<WayPoint>().WayPos = mWayPoint;

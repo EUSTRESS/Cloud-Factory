@@ -55,8 +55,9 @@ public class CloudStorageProfile : MonoBehaviour
         mRLHReader = GameObject.Find("ProfileGroup").GetComponent<RLHReader>();
         mRLHReader = RLHReader.GetInstance();
         // 기존 기능 주석처리
-        /*
+        
         // 착석중인 손님 중, 구름을 제공받지 못한 손님만 제공 가능 리스트에 넣는다.
+        /*
         List<int> temp = new List<int>();
         foreach(int i in SOWManager.mUsingGuestList)
         {
@@ -76,14 +77,11 @@ public class CloudStorageProfile : MonoBehaviour
         // TODO :  구름 보관함에서 제공받을 수 있는 뭉티를 고정한다. (계절에 따라 고정)lll
         int Season = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>().mSeason;
         UsingGuestNumList = GetSeansonGuestList(Season);
-
         numOfUsingGuestList = UsingGuestNumList.Length;
+
 
         frontProfileInfo = 0;
         UsingGuestIndex = 0;
-
-        if (numOfUsingGuestList != 0)
-            frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
 
         Profiles = new GameObject[3];
         Profiles[0] = GameObject.Find("I_ProfileBG1");
@@ -92,17 +90,26 @@ public class CloudStorageProfile : MonoBehaviour
 
         btGiveBtn = GameObject.Find("B_CloudGIve").GetComponent<Button>();
 
-        updateProfileList();
+        if (numOfUsingGuestList != 0)
+        {
+            frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
+            updateProfileList();
+        }
     }
 
     public void GetNextProfileBtn()
     {
+        if (numOfUsingGuestList == 0)
+            return;
+
         if (TutorialManager.GetInstance().isTutorial) return;
         Invoke("GetNextProfile", 0.18f);
     }
     public void GetPrevProfileBtn()
     {
-        
+        if (numOfUsingGuestList == 0)
+            return;
+
         if (TutorialManager.GetInstance().isTutorial) return;
         Invoke("GetPrevProfile", 0.18f);
     }
@@ -369,7 +376,6 @@ public class CloudStorageProfile : MonoBehaviour
 
 		SOWManager.SetCloudData(guestNum, storagedCloudData, sat);
 		SceneManager.LoadScene("Space Of Weather");
-        Debug.Log("구름제공 메소드 호출");
     }
 
     int[] GetSeansonGuestList(int Season)
@@ -393,7 +399,56 @@ public class CloudStorageProfile : MonoBehaviour
             list = new int[] { 5,7,11,15,17 };
         }
 
-        return list;
+        List<int> resultLIst = new List<int>();
+
+        foreach(int i in list)
+        {
+            // 날씨의 공간에 존재하는지 확인한다.
+             bool exist = false;
+            foreach (int j in SOWManager.mUsingGuestList)
+            {
+                if(i == j)
+                {
+                    exist = true;
+                    break;
+                }    
+            }
+
+            if (exist == true)
+            {
+                resultLIst.Add(i);
+                continue;
+            }
+
+            foreach (int j in SOWManager.mWaitGuestList)
+            {
+                if (i == j)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+
+            if (exist == true)
+            {
+                resultLIst.Add(i);
+                continue;
+            }
+        }
+
+        /*
+        foreach(int i in list)
+        {
+            GuestInfos guestInfos = GuestManager.mGuestInfo[i];
+            if (guestInfos.isCure == false 
+                && guestInfos.isDisSat == false)
+            {
+
+                resultLIst.Add(i);        
+            }
+        }
+        */
+        return resultLIst.ToArray();
     }
 
 

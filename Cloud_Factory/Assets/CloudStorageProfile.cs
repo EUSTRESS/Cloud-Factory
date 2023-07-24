@@ -260,17 +260,17 @@ public class CloudStorageProfile : MonoBehaviour
         // Image
         Image iProfile = Profile.transform.GetChild(0).GetComponent<Image>();
 
+        // 나이 이름 직업
+        Text tName = Profile.transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
+        Text tAge = Profile.transform.GetChild(3).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
+        Text tJob = Profile.transform.GetChild(4).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
+
+        // 만족도, 한 줄 요약
+        Text tSat = Profile.transform.GetChild(5).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
 
         // 한 줄 요약
         Text tSentence = Profile.transform.GetChild(6).GetComponent<Text>();
 
-        // 나이 이름 직업
-        Text tName = Profile.transform.GetChild(7).GetComponent<Text>();
-        Text tAge = Profile.transform.GetChild(8).GetComponent<Text>();
-        Text tJob = Profile.transform.GetChild(9).GetComponent<Text>();
-
-        // 만족도, 한 줄 요약
-        Text tSat = Profile.transform.GetChild(10).GetComponent<Text>();
 
         // 뭉티 정보를 가져온다.
         GuestInfos info = GuestManager.GetComponent<Guest>().mGuestInfo[frontGuestIndex];
@@ -294,13 +294,21 @@ public class CloudStorageProfile : MonoBehaviour
         }
         */
 
-        // 정보 최신화
-        tSentence.text = "한 줄 요약: " + mRLHReader.LoadSummaryInfo(frontGuestIndex);
-        tName.text = info.mName;        
+        if (LanguageManager.GetInstance().GetCurrentLanguage() == "English")
+        {
+            tSentence.text = "Summary: " + mRLHReader.LoadSummaryInfo(frontGuestIndex);
+            tName.text = info.mNameEN;
+            tJob.text = info.mJobEN;
+        }
+        else
+        {
+            tSentence.text = "한 줄 요약: " + mRLHReader.LoadSummaryInfo(frontGuestIndex);
+            tName.text = info.mName;
+            tJob.text = info.mJob;
+        }
         tAge.text = "" + info.mAge;
-        tJob.text = info.mJob;
         tSat.text = "" + info.mSatatisfaction;
-	}
+    }
 
     void updateButton()
     {

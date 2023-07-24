@@ -72,8 +72,18 @@ public class CloudContainer : MonoBehaviour
             inventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
 
 		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+		if (mTutorialManager.isFinishedTutorial[7] == false)
+		{
+			Transform selected = EventSystem.current.currentSelectedGameObject.transform;
+            if(selected.gameObject.GetComponent<RightClickButton>().GetIsFinishedRightClick() == false) { return; }
+			mTutorialManager.SetActiveFadeOutScreen(false);
+			mTutorialManager.SetActiveGuideSpeechBubble(true);
+            mTutorialManager.FadeOutCloudReceipt();
+            GameObject.Find("GuideBubble(Clone)").transform.SetAsLastSibling();
+        }
 
         if (mSelectedCloudTransform != null) //이미 선택이 된 경우에는 UI를 원래로 돌리기.
+
         {
             if (mTutorialManager.isFinishedTutorial[7] == false) return;
             mSelectedCloudTransform.GetChild(1).GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -97,7 +107,6 @@ public class CloudContainer : MonoBehaviour
             }
             Debug.Log("구름 선택:" + mUiStocksData[mSelectedCloudTransform.GetSiblingIndex()]);
             isCloudSelected = true;
-            
             if (mTutorialManager.isFinishedTutorial[7] == false)
             {
                 if(mSelectedCloudTransform.gameObject.GetComponent<RightClickButton>().GetIsFinishedRightClick() == false) { return; }
@@ -109,7 +118,6 @@ public class CloudContainer : MonoBehaviour
         }
         else
         {
-            if (mTutorialManager.isFinishedTutorial[7] == false) return;
             unclicked();
             isCloudSelected = false;
         }

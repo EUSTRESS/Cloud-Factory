@@ -149,11 +149,12 @@ public class LobbyUIManager : MonoBehaviour
 
     public void NewGame()
     {
-        if (true == isFirstPlay)
-        {
-            isFirstPlay = false; // 최초 플레이 끝.
-            SaveLobby_InitData(); // 최초 플레이 끝난 것 저장.
-        }      
+        // 주석 삭제 필요
+        //if (true == isFirstPlay)
+        //{
+        //    isFirstPlay = false; // 최초 플레이 끝.
+        //    SaveLobby_InitData(); // 최초 플레이 끝난 것 저장.
+        //}      
 
         SceneData mSceneData = GameObject.Find("SceneDataManager").GetComponent<SceneData>();
         mSceneData.mContinueGmae = false;
@@ -758,10 +759,6 @@ public class LobbyUIManager : MonoBehaviour
     // 새로하기 경고창
     public void ActiveWarning()
     {
-        // 수정 필요
-        NewGame();
-        return;
-        
         if (isFirstPlay)  // 바로 새로운 게임 스타트         
             NewGame();
         else

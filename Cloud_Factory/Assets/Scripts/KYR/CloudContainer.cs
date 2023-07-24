@@ -75,6 +75,7 @@ public class CloudContainer : MonoBehaviour
 
         if (mSelectedCloudTransform != null) //이미 선택이 된 경우에는 UI를 원래로 돌리기.
         {
+            if (mTutorialManager.isFinishedTutorial[7] == false) return;
             mSelectedCloudTransform.GetChild(1).GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             for (int num = 0; num < mSelectedCloudTransform.GetChild(1).transform.childCount; num++)
             {

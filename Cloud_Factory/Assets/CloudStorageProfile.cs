@@ -55,8 +55,9 @@ public class CloudStorageProfile : MonoBehaviour
         mRLHReader = GameObject.Find("ProfileGroup").GetComponent<RLHReader>();
         mRLHReader = RLHReader.GetInstance();
         // 기존 기능 주석처리
-        /*
+        
         // 착석중인 손님 중, 구름을 제공받지 못한 손님만 제공 가능 리스트에 넣는다.
+        /*
         List<int> temp = new List<int>();
         foreach(int i in SOWManager.mUsingGuestList)
         {
@@ -76,14 +77,11 @@ public class CloudStorageProfile : MonoBehaviour
         // TODO :  구름 보관함에서 제공받을 수 있는 뭉티를 고정한다. (계절에 따라 고정)lll
         int Season = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>().mSeason;
         UsingGuestNumList = GetSeansonGuestList(Season);
-
         numOfUsingGuestList = UsingGuestNumList.Length;
+
 
         frontProfileInfo = 0;
         UsingGuestIndex = 0;
-
-        if (numOfUsingGuestList != 0)
-            frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
 
         Profiles = new GameObject[3];
         Profiles[0] = GameObject.Find("I_ProfileBG1");
@@ -92,17 +90,26 @@ public class CloudStorageProfile : MonoBehaviour
 
         btGiveBtn = GameObject.Find("B_CloudGIve").GetComponent<Button>();
 
-        updateProfileList();
+        if (numOfUsingGuestList != 0)
+        {
+            frontGuestIndex = UsingGuestNumList[UsingGuestIndex];
+            updateProfileList();
+        }
     }
 
     public void GetNextProfileBtn()
     {
+        if (numOfUsingGuestList == 0)
+            return;
+
         if (TutorialManager.GetInstance().isTutorial) return;
         Invoke("GetNextProfile", 0.18f);
     }
     public void GetPrevProfileBtn()
     {
-        
+        if (numOfUsingGuestList == 0)
+            return;
+
         if (TutorialManager.GetInstance().isTutorial) return;
         Invoke("GetPrevProfile", 0.18f);
     }
@@ -253,17 +260,17 @@ public class CloudStorageProfile : MonoBehaviour
         // Image
         Image iProfile = Profile.transform.GetChild(0).GetComponent<Image>();
 
+        // 나이 이름 직업
+        Text tName = Profile.transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
+        Text tAge = Profile.transform.GetChild(3).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
+        Text tJob = Profile.transform.GetChild(4).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
+
+        // 만족도, 한 줄 요약
+        Text tSat = Profile.transform.GetChild(5).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
 
         // 한 줄 요약
         Text tSentence = Profile.transform.GetChild(6).GetComponent<Text>();
 
-        // 나이 이름 직업
-        Text tName = Profile.transform.GetChild(7).GetComponent<Text>();
-        Text tAge = Profile.transform.GetChild(8).GetComponent<Text>();
-        Text tJob = Profile.transform.GetChild(9).GetComponent<Text>();
-
-        // 만족도, 한 줄 요약
-        Text tSat = Profile.transform.GetChild(10).GetComponent<Text>();
 
         // 뭉티 정보를 가져온다.
         GuestInfos info = GuestManager.GetComponent<Guest>().mGuestInfo[frontGuestIndex];
@@ -287,13 +294,21 @@ public class CloudStorageProfile : MonoBehaviour
         }
         */
 
-        // 정보 최신화
-        tSentence.text = "한 줄 요약: " + mRLHReader.LoadSummaryInfo(frontGuestIndex);
-        tName.text = info.mName;        
+        if (LanguageManager.GetInstance().GetCurrentLanguage() == "English")
+        {
+            tSentence.text = "Summary: " + mRLHReader.LoadSummaryInfo(frontGuestIndex);
+            tName.text = info.mNameEN;
+            tJob.text = info.mJobEN;
+        }
+        else
+        {
+            tSentence.text = "한 줄 요약: " + mRLHReader.LoadSummaryInfo(frontGuestIndex);
+            tName.text = info.mName;
+            tJob.text = info.mJob;
+        }
         tAge.text = "" + info.mAge;
-        tJob.text = info.mJob;
         tSat.text = "" + info.mSatatisfaction;
-	}
+    }
 
     void updateButton()
     {
@@ -369,7 +384,6 @@ public class CloudStorageProfile : MonoBehaviour
 
 		SOWManager.SetCloudData(guestNum, storagedCloudData, sat);
 		SceneManager.LoadScene("Space Of Weather");
-        Debug.Log("구름제공 메소드 호출");
     }
 
     int[] GetSeansonGuestList(int Season)
@@ -393,7 +407,56 @@ public class CloudStorageProfile : MonoBehaviour
             list = new int[] { 5,7,11,15,17 };
         }
 
-        return list;
+        List<int> resultLIst = new List<int>();
+
+        foreach(int i in list)
+        {
+            // 날씨의 공간에 존재하는지 확인한다.
+             bool exist = false;
+            foreach (int j in SOWManager.mUsingGuestList)
+            {
+                if(i == j)
+                {
+                    exist = true;
+                    break;
+                }    
+            }
+
+            if (exist == true)
+            {
+                resultLIst.Add(i);
+                continue;
+            }
+
+            foreach (int j in SOWManager.mWaitGuestList)
+            {
+                if (i == j)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+
+            if (exist == true)
+            {
+                resultLIst.Add(i);
+                continue;
+            }
+        }
+
+        /*
+        foreach(int i in list)
+        {
+            GuestInfos guestInfos = GuestManager.mGuestInfo[i];
+            if (guestInfos.isCure == false 
+                && guestInfos.isDisSat == false)
+            {
+
+                resultLIst.Add(i);        
+            }
+        }
+        */
+        return resultLIst.ToArray();
     }
 
 

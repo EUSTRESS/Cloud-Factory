@@ -65,6 +65,7 @@ public class CloudContainer : MonoBehaviour
     /////////////////////
     //Button Interact///
     ////////////////////
+    private Transform mSelectedCloudTransform = null;
     public void clicked() //matarial in inventory selected
     {
         if (inventoryManager == null)
@@ -81,18 +82,39 @@ public class CloudContainer : MonoBehaviour
             GameObject.Find("GuideBubble(Clone)").transform.SetAsLastSibling();
         }
 
-		if (!isCloudSelected)
+        if (mSelectedCloudTransform != null) //이미 선택이 된 경우에는 UI를 원래로 돌리기.
+
         {
-            //해당 구름 선택 UI 표시
-            Transform selected = EventSystem.current.currentSelectedGameObject.transform;
-            mSelecedCloud = mUiStocksData[selected.GetSiblingIndex()];
-            selected.GetChild(1).GetComponent<Image>().color = new Color(0.7f, 0.7f, 0.7f, 1.0f); 
-            for(int num = 0; num < selected.GetChild(1).transform.childCount; num++)
+            if (mTutorialManager.isFinishedTutorial[7] == false) return;
+            mSelectedCloudTransform.GetChild(1).GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            for (int num = 0; num < mSelectedCloudTransform.GetChild(1).transform.childCount; num++)
             {
-                selected.GetChild(1).transform.GetChild(num).GetComponent<Image>().color = new Color(0.7f, 0.7f, 0.7f, 1.0f);
+                mSelectedCloudTransform.GetChild(1).transform.GetChild(num).GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             }
-            Debug.Log("구름 선택:" + mUiStocksData[selected.GetSiblingIndex()]);
+            isCloudSelected = false;
+        }
+
+        if (!isCloudSelected)
+        { 
+            //해당 구름 선택 UI 표시
+            mSelectedCloudTransform = EventSystem.current.currentSelectedGameObject.transform;
+           
+            mSelecedCloud = mUiStocksData[mSelectedCloudTransform.GetSiblingIndex()];
+            mSelectedCloudTransform.GetChild(1).GetComponent<Image>().color = new Color(0.7f, 0.7f, 0.7f, 1.0f); 
+            for(int num = 0; num < mSelectedCloudTransform.GetChild(1).transform.childCount; num++)
+            {
+                mSelectedCloudTransform.GetChild(1).transform.GetChild(num).GetComponent<Image>().color = new Color(0.7f, 0.7f, 0.7f, 1.0f);
+            }
+            Debug.Log("구름 선택:" + mUiStocksData[mSelectedCloudTransform.GetSiblingIndex()]);
             isCloudSelected = true;
+            if (mTutorialManager.isFinishedTutorial[7] == false)
+            {
+                if(mSelectedCloudTransform.gameObject.GetComponent<RightClickButton>().GetIsFinishedRightClick() == false) { return; }
+                mTutorialManager.SetActiveFadeOutScreen(false);
+                mTutorialManager.SetActiveGuideSpeechBubble(true);
+                mTutorialManager.FadeOutCloudReceipt();
+                GameObject.Find("GuideBubble(Clone)").transform.SetAsLastSibling();
+            }
         }
         else
         {

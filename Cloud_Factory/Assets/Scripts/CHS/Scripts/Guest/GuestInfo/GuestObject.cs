@@ -101,6 +101,7 @@ public class GuestObject : MonoBehaviour
     // 감정표현 이펙트를 Front/Back으로 나누어서 관리한다.
     public Animator FrontEffect;
     public Animator BackEffect;
+    GameObject Body;
 
     // 손님 번호를 저장해준다.
     public void setGuestNum(int guestNum = 0)
@@ -130,7 +131,10 @@ public class GuestObject : MonoBehaviour
         mTargetChair = null;
         mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
         mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
-        mGuestAnim = GetComponent<Animator>();
+
+        Body = this.transform.GetChild(4).gameObject;
+        mGuestAnim = Body.GetComponent<Animator>();
+         
         isGettingCloud = false;
 
         sitCollider = this.transform.GetChild(0).transform.GetChild(0).gameObject.GetComponent<CircleCollider2D>();
@@ -225,7 +229,6 @@ private void Update()
         {
             Debug.Log("Destroy");
             Destroy(this.gameObject);
-           
         }
 
         // 의자에 도달한 경우
@@ -486,12 +489,10 @@ private void Update()
         mGuestAnim.SetTrigger("EndHint");
     }
 
-
     // 애니메이션 클립들을 손님에 맞게 초기화한다.
     public void initAnimator()
     {
-        GetComponent<Animator>().runtimeAnimatorController = animators[mGuestNum];
-        Debug.Log("init Guest Anim");
+        mGuestAnim.runtimeAnimatorController = animators[mGuestNum];
     }
 
     // 입구로 퇴장하는 함수이다.
@@ -568,11 +569,11 @@ private void Update()
 
     public void ChangeLayerToSit()
     {
-        this.GetComponent<SortingGroup>().sortingLayerName = "SittingGuest";
+        Body.GetComponent<SortingGroup>().sortingLayerName = "SittingGuest";
     }
 
     public void ChangeLayerToDefault()
     {
-        this.GetComponent<SortingGroup>().sortingLayerName = "Guest";
+        Body.GetComponent<SortingGroup>().sortingLayerName = "Guest";
     }
 }

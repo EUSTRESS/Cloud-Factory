@@ -352,6 +352,7 @@ public class GuideBubbleScript : MonoBehaviour
 		{
 			mTutorialManager.FadeOutScreen();
 			GameObject.Find("B_Cloud Factory").transform.SetAsLastSibling();
+			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("B_Cloud Factory").transform.localPosition, -170f);
 			this.gameObject.SetActive(false);
 			return;
 		}

@@ -120,7 +120,6 @@ public class DialogManager : MonoBehaviour
         mGuestSat = mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
         mGuestVisitCount = mGuestManager.mGuestInfo[mGuestNum].mVisitCount;
         mGuestSatVariation = mGuestManager.mGuestInfo[mGuestNum].mSatVariation;
-        tGuestName.text = mGuestManager.mGuestInfo[mGuestNum].mName;
 
         mGuestImageList = new int[40];
         mTextList = new string[40];
@@ -130,10 +129,12 @@ public class DialogManager : MonoBehaviour
         if (LanguageManager.GetInstance().GetCurrentLanguage() == "Korean")
         {
             isKorean = true;
+            tGuestName.text = mGuestManager.mGuestInfo[mGuestNum].mName;
         }
         else
         {
             isKorean = false;
+            tGuestName.text = mGuestManager.mGuestInfo[mGuestNum].mNameEN;
         }
     }
 

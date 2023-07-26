@@ -211,7 +211,7 @@ public class SeasonDateCalc : MonoBehaviour
             if (sowManager != null)
             {
                 sowManager.ChangeWeatherObject(mSeason % 4);
-                // UpdateSeasonWalkCollider(mSeason % 4);
+                UpdateSeasonWalkCollider(mSeason % 4);
             }
             if (mGuestManager != null)
             {
@@ -235,7 +235,6 @@ public class SeasonDateCalc : MonoBehaviour
     }
     private void UpdateSeasonWalkCollider(int season)
     {
-        // 겨울이 없으므로 제외
         season = season % 4;
 
         // SOWManager -> Collider -> WalkCollider -> Season
@@ -251,9 +250,6 @@ public class SeasonDateCalc : MonoBehaviour
         }
 
         WalkCollider.transform.GetChild(season).gameObject.SetActive(true);
-
-        AstarPath.FindAstarPath();
-        AstarPath.active.Scan();
     }
 
 }

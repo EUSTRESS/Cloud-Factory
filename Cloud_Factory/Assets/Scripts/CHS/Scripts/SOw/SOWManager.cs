@@ -168,7 +168,7 @@ public class SOWManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log(hit.transform.gameObject);
+                    // Debug.Log(hit.transform.gameObject);
                 }
             }
         }

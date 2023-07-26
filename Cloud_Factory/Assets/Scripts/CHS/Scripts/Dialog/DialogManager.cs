@@ -221,31 +221,20 @@ public class DialogManager : MonoBehaviour
                         else { mTextList[j] += Dialog[i].Text_Eng; }
                         mGuestImageList[j] = Dialog[i].DialogImageNumber;
                         mIsGuset[j] = Dialog[i].isGuest;
-                        Debug.Log(j + " " + mIsGuset[j]);
+                        // Debug.Log(j + " " + mIsGuset[j]);
                         j++;
                     }
                 }
             }
         }
-        //for (i = 0; i < mDialogDB.DialogText1.Count; ++i)
-        //{
-        //    if (mDialogDB.DialogText1[i].GuestID == mGuestNum + 1)
-        //    {
-        //        if (mDialogDB.DialogText1[i].VisitCount == mGuestVisitCount)
-        //        {
-        //            if (mDialogDB.DialogText1[i].Sat == mGuestSat)
-        //            {
-        //                mTextList[j] = mDialogDB.DialogText1[i].Text;
-        //                mGuestImageList[j] = mDialogDB.DialogText1[i].DialogImageNumber;
-        //                mIsGuset[j] = mDialogDB.DialogText1[i].isGuest;
-        //                Debug.Log(j + " " + mIsGuset[j]);
-        //                j++;
-        //            }
-        //        }
-        //    }
-        //}
-
+        
         mTextList[j] = "End";
+        int k = 0;
+        while (mTextList[k] != "End")
+        {
+            mTextList[k] = mTextList[k].Replace(' ', '\u00A0');
+            k++;
+        }
     }
 
     private void InitDialog()
@@ -269,7 +258,6 @@ public class DialogManager : MonoBehaviour
 			tPlayerText.transform.parent.gameObject.SetActive(true);
 			tText = tPlayerText;
         }
-        Debug.Log(mDialogIndex + " " + mIsGuset[mDialogIndex]);
     }
     public string GetDialog(int dialogindex) // 만족도 , 대화 내용 순번
     {
@@ -307,7 +295,17 @@ public class DialogManager : MonoBehaviour
             {
                 if(isTagInDialog == true)
                 {
-					tText.text += GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex];
+                    //char sentence = GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex];
+                    //if(sentence == ' ')
+                    //{
+                    //    tText.text += '\u00A0';
+                    //    Debug.Log("nbsp");
+                    //}
+                    //else
+                    //{
+                    //    tText.text += sentence;
+                    //}
+                    tText.text += GetDialog(GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex)[mDialogCharIndex];
 					mDialogCharIndex++;
 				}
                 else { mDialogCharIndex++; }

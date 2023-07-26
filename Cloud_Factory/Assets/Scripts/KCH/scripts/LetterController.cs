@@ -13,10 +13,13 @@ public class LetterControllerData
 
 public class LetterController : MonoBehaviour
 {
+	private static int DEFAULT_GUEST_COUNT = 20;
+	
 	private int originalDay;
 
 	public int[] satGuestList;
 	public int listCount;
+	public Sprite[] guestSprite = new Sprite[DEFAULT_GUEST_COUNT];
 
 	public GameObject letterObject;
 
@@ -66,6 +69,7 @@ public class LetterController : MonoBehaviour
 		RLHReader rRLHReader = GameObject.Find("UIManager").GetComponent<RLHReader>();
 
 		letter.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = rRLHReader.LoadLetterInfo(guest_num);
+		letter.transform.GetChild(2).gameObject.GetComponent<Image>().sprite = guestSprite[guest_num];
 	}
 
 	private void InitSatGuestList()

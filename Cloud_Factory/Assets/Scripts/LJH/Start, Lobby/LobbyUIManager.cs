@@ -39,9 +39,11 @@ public class LobbyUIManager : MonoBehaviour
     public GameObject   gOption;     // 옵션 게임 오브젝트
     public GameObject   gWarning;    // 새로운 게임 경고창
     public GameObject   gContinueWarning;    // 이어하기 경고창
+    public GameObject   gMainBackGround;  // 타이틀 배경화면
 
     // INDEX -> [0]: C04 [1]: C07 [2]: C10 [3]:C13 [4]:C14 // 봄 타이틀 뭉티 관리
-    public GameObject[] gSpringMoongti = new GameObject[20]; // 전체 뭉티 타이틀 스프라이트 관리
+    public GameObject[] gMoongti = new GameObject[20]; // 전체 뭉티 타이틀 스프라이트 관리
+    //public int[]
 
 
     [Header("TEXT")]
@@ -73,7 +75,9 @@ public class LobbyUIManager : MonoBehaviour
     public Sprite[] sUnHoverNewLan = new Sprite[2];
     public Sprite[] sHoverConLan = new Sprite[2];
     public Sprite[] sUnHoverConLan = new Sprite[2];
-    
+
+    public Sprite[] sSeasonBackGround = new Sprite[4];
+
     public GameObject[] sLanguageCheckSprites = new GameObject[2];
 
     void Awake()
@@ -90,8 +94,9 @@ public class LobbyUIManager : MonoBehaviour
         Load_InitData();
         // 사운드 로드 및 저장한 이력이 있는 지 판단.
         Load_SoundData();
-        
 
+
+        Load_SeasonDate(); // 이 때 계절의 정보를 토대로, 만족도 5 뭉티와, 타이틀 화면 변경.
         Load_GuestSatisfaction(); // 만족도 5 뭉티 판별
     }
 
@@ -113,33 +118,6 @@ public class LobbyUIManager : MonoBehaviour
             // 소수점 -2 자리부터 반올림
             tBgmValue.text = Mathf.Ceil(sBGM.value * 100).ToString();
             tSfxValue.text = Mathf.Ceil(sSFx.value * 100).ToString();
-        }
-
-        switch (mSeason.mSeason)
-        {
-            // 저장한 값 로딩하는 과정에서 SetActive 바로해버리면 된다.
-
-            //case 1: // 봄
-            //    // 봄 뭉티 만족도 5 관리
-            //    if (bSpringMoongti[0])
-            //        gSpringMoongti[0].SetActive(true);
-            //    if (bSpringMoongti[1])
-            //        gSpringMoongti[1].SetActive(true);
-            //    if (bSpringMoongti[2])
-            //        gSpringMoongti[2].SetActive(true);
-            //    if (bSpringMoongti[3])
-            //        gSpringMoongti[3].SetActive(true);
-            //    if (bSpringMoongti[4])
-            //        gSpringMoongti[4].SetActive(true);
-            //    break;
-            //case 2: // 여름
-            //    break;
-            //case 3: // 가을
-            //    break;
-            //case 4: // 겨울
-            //    break;
-            //default:
-            //    break;
         }
     }
 
@@ -164,6 +142,7 @@ public class LobbyUIManager : MonoBehaviour
 
         // 데이터를 초기화 시키는 함수 호출할 필요 없이
         // 각 클래스 생성자에서 자동 초기화된다.
+        mSeason.Init_Data();
     }
 
     public void ContinueGame()
@@ -196,7 +175,7 @@ public class LobbyUIManager : MonoBehaviour
 
        
         // Load_Data
-        Load_SeasonDate();
+        //Load_SeasonDate();
         Load_Inventory();
         Load_Guest();
         Load_SOW();      
@@ -233,16 +212,26 @@ public class LobbyUIManager : MonoBehaviour
             SeasonDateCalc.Instance.mYear = gSeasonDate.GetComponent<SeasonDateCalc>().mYear;
         }
 
+        if (null == gMainBackGround)
+        {
+            Debug.Log("gMangBackGround is null");
+            return;
+        }
+        
+        // 계절별로 바꾼다.
+        gMainBackGround.GetComponent<Image>().sprite = sSeasonBackGround[(SeasonDateCalc.Instance.mSeason - 1)];
+
     }
 
     void Load_Inventory()
     {
         string mInvenDataPath = Path.Combine(Application.dataPath + "/Data/", "InventoryData.json");
-        // 파일 스트림 개방
-        FileStream stream = new FileStream(Application.dataPath + "/Data/InventoryData.json", FileMode.Open);
-
+       
         if (File.Exists(mInvenDataPath)) // 해당 파일이 생성되었으면 불러오기
         {
+            // 파일 스트림 개방
+            FileStream stream = new FileStream(Application.dataPath + "/Data/InventoryData.json", FileMode.Open);
+
             // 복호화는 나중에 한번에 하기
             // 스트림 배열만큼 바이트 배열 생성
             byte[] bInventoryData = new byte[stream.Length];
@@ -271,11 +260,12 @@ public class LobbyUIManager : MonoBehaviour
     void Load_Guest()
     {
         string mGuestManagerDataPath = Path.Combine(Application.dataPath + "/Data/", "GuestManagerData.json");
-        // 파일 스트림 개방
-        FileStream ManagerStream = new FileStream(Application.dataPath + "/Data/GuestManagerData.json", FileMode.Open);
-
+       
         if (File.Exists(mGuestManagerDataPath)) // 해당 파일이 생성되었으면 불러오기
         {
+            // 파일 스트림 개방
+            FileStream ManagerStream = new FileStream(Application.dataPath + "/Data/GuestManagerData.json", FileMode.Open);
+
             // 복호화는 나중에 한번에 하기
             // 스트림 배열만큼 바이트 배열 생성
             byte[] bGuestInfoData = new byte[ManagerStream.Length];
@@ -336,11 +326,12 @@ public class LobbyUIManager : MonoBehaviour
     void Load_GuestSatisfaction()
     {
         string mGuestManagerDataPath = Path.Combine(Application.dataPath + "/Data/", "GuestManagerData.json");
-        // 파일 스트림 개방
-        FileStream ManagerStream = new FileStream(Application.dataPath + "/Data/GuestManagerData.json", FileMode.Open);
-
+        
         if (File.Exists(mGuestManagerDataPath)) // 해당 파일이 생성되었으면 불러오기
         {
+            // 파일 스트림 개방
+            FileStream ManagerStream = new FileStream(Application.dataPath + "/Data/GuestManagerData.json", FileMode.Open);
+
             // 복호화는 나중에 한번에 하기
             // 스트림 배열만큼 바이트 배열 생성
             byte[] bGuestInfoData = new byte[ManagerStream.Length];
@@ -370,13 +361,35 @@ public class LobbyUIManager : MonoBehaviour
 
                 for (int i = 0; i < NUM_OF_GUEST; i++)
                 {
-                    GuestInfoSaveData info = dGuestInfoData.GuestInfos[i];
+                    switch (SeasonDateCalc.Instance.mSeason)
+                    {
+                        case 1: // 봄
+                            if (3 != i && 6 != i && 9 != i && 12 != i && 13 != i)
+                                continue;
+                            break;
+                        case 2: // 여름
+                            if (0 != i && 1 != i && 8 != i && 18 != i && 19 != i)
+                                continue;
+                            break;
+                        case 3: // 가을
+                            if (2 != i && 5 != i && 10 != i && 14 != i && 17 != i)
+                                continue;
+                            break;
+                        case 4: // 겨울
+                            if (4 != i && 7 != i && 11 != i && 15 != i && 16 != i)
+                                continue;
+                            break;
+                        default:
+                            break;
+                    }
 
+                    GuestInfoSaveData info = dGuestInfoData.GuestInfos[i];
                     if (info == null) Debug.Log("Info Null");
 
                     if (5 == info.mSatatisfaction) // 만족도가 5인 뭉티
-                    {
-                        gSpringMoongti[i].SetActive(true);
+                    {     
+                        // 뭉티 나오는 거는 바뀜 예정이니 출력안함.
+                        //gMoongti[i].SetActive(true);
                     }
                 }
                 //mGuestManagerData.GuestInfos = mGuestManager.mGuestInfo.Clone() as GuestInfoSaveData[];
@@ -387,11 +400,12 @@ public class LobbyUIManager : MonoBehaviour
     void Load_SOW()
     {
         string mSOWSaveDataPath = Path.Combine(Application.dataPath + "/Data/", "SOWSaveData.json");
-        // 파일 스트림 개방
-        FileStream SOWSaveStream = new FileStream(Application.dataPath + "/Data/SOWSaveData.json", FileMode.Open);
-
+        
         if (File.Exists(mSOWSaveDataPath)) // 해당 파일이 생성되었으면 불러오기
         {
+            // 파일 스트림 개방
+            FileStream SOWSaveStream = new FileStream(Application.dataPath + "/Data/SOWSaveData.json", FileMode.Open);
+
             // 복호화는 나중에 한번에 하기
             // 스트림 배열만큼 바이트 배열 생성
             byte[] bSOWSaveData = new byte[SOWSaveStream.Length];
@@ -446,11 +460,12 @@ public class LobbyUIManager : MonoBehaviour
     void Load_Tutorial()
     {
         string mTutorialSaveDataPath = Path.Combine(Application.dataPath + "/Data/", "TutorialData.json");
-        // 파일 스트림 개방
-        FileStream TutorialSaveStream = new FileStream(Application.dataPath + "/Data/TutorialData.json", FileMode.Open);
-
+       
         if (File.Exists(mTutorialSaveDataPath)) // 해당 파일이 생성되었으면 불러오기
-        {
+        { 
+            // 파일 스트림 개방
+            FileStream TutorialSaveStream = new FileStream(Application.dataPath + "/Data/TutorialData.json", FileMode.Open);
+
             // 복호화는 나중에 한번에 하기
             // 스트림 배열만큼 바이트 배열 생성
             byte[] bTutorialSaveData = new byte[TutorialSaveStream.Length];
@@ -488,11 +503,12 @@ public class LobbyUIManager : MonoBehaviour
     void Load_SOWManagerData()
     {
         string mSowManagerSaveDataPath = Path.Combine(Application.dataPath + "/Data/", "SOWManagerData.json");
-        // 파일 스트림 개방
-        FileStream SOWmanageSaveStream = new FileStream(Application.dataPath + "/Data/SOWManagerData.json", FileMode.Open);
-
+       
         if (File.Exists(mSowManagerSaveDataPath)) // 해당 파일이 생성되었으면 불러오기
         {
+            // 파일 스트림 개방
+            FileStream SOWmanageSaveStream = new FileStream(Application.dataPath + "/Data/SOWManagerData.json", FileMode.Open);
+
             // 복호화는 나중에 한번에 하기
             // 스트림 배열만큼 바이트 배열 생성
             byte[] bSOWManagerSaveData = new byte[SOWmanageSaveStream.Length];
@@ -530,11 +546,12 @@ public class LobbyUIManager : MonoBehaviour
     void Load_LetterControllerData()
     {
         string mLetterControllerDataPath = Path.Combine(Application.dataPath + "/Data/", "LetterControllerData.json");
-        // 파일 스트림 개방
-        FileStream LetterControllerStream = new FileStream(Application.dataPath + "/Data/LetterControllerData.json", FileMode.Open);
-
+        
         if (File.Exists(mLetterControllerDataPath)) // 해당 파일이 생성되었으면 불러오기
         {
+            // 파일 스트림 개방
+            FileStream LetterControllerStream = new FileStream(Application.dataPath + "/Data/LetterControllerData.json", FileMode.Open);
+
             // 복호화는 나중에 한번에 하기
             // 스트림 배열만큼 바이트 배열 생성
             byte[] bLetterControllerData = new byte[LetterControllerStream.Length];
@@ -575,11 +592,13 @@ public class LobbyUIManager : MonoBehaviour
     void Load_SoundData() // 이어할 데이터가 있는 지, 새롭게 플레이 하는 지, 이전에 소리를 저장한 데이터가 있는 지
     {
         string mSoundDataPath = Path.Combine(Application.dataPath + "/Data/", "SoundData.json");
-        // 파일 스트림 개방
-        FileStream SoundDataStream = new FileStream(Application.dataPath + "/Data/SoundData.json", FileMode.Open);
-
+        
         if (File.Exists(mSoundDataPath)) // 해당 파일이 생성되었으면 불러오기
         {
+            // 파일 스트림 개방
+            FileStream SoundDataStream = new FileStream(Application.dataPath + "/Data/SoundData.json", FileMode.Open);
+
+
             // 복호화는 나중에 한번에 하기
             // 스트림 배열만큼 바이트 배열 생성
             byte[] bSoundData = new byte[SoundDataStream.Length];
@@ -614,11 +633,12 @@ public class LobbyUIManager : MonoBehaviour
     void Load_InitData() // 이어할 데이터가 있는 지, 새롭게 플레이 하는 지, 이전에 소리를 저장한 데이터가 있는 지
     {
         string mInitDataPath = Path.Combine(Application.dataPath + "/Data/", "InitData.json");
-        // 파일 스트림 개방
-        FileStream InitDataStream = new FileStream(Application.dataPath + "/Data/InitData.json", FileMode.Open);
-
+       
         if (File.Exists(mInitDataPath)) // 해당 파일이 생성되었으면 불러오기
         {
+            // 파일 스트림 개방
+            FileStream InitDataStream = new FileStream(Application.dataPath + "/Data/InitData.json", FileMode.Open);
+
             // 복호화는 나중에 한번에 하기
             // 스트림 배열만큼 바이트 배열 생성
             byte[] bInitData = new byte[InitDataStream.Length];
@@ -758,9 +778,9 @@ public class LobbyUIManager : MonoBehaviour
     // 새로하기 경고창
     public void ActiveWarning()
     {
-        // 수정 필요
-        NewGame();
-        return;
+        //// 수정 필요
+        //NewGame();
+        //return;
         
         if (isFirstPlay)  // 바로 새로운 게임 스타트         
             NewGame();

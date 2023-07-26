@@ -211,7 +211,7 @@ public class SeasonDateCalc : MonoBehaviour
             if (sowManager != null)
             {
                 sowManager.ChangeWeatherObject(mSeason % 4);
-                // UpdateSeasonWalkCollider(mSeason % 4);
+                UpdateSeasonWalkCollider(mSeason % 4);
             }
             if (mGuestManager != null)
             {
@@ -235,7 +235,6 @@ public class SeasonDateCalc : MonoBehaviour
     }
     private void UpdateSeasonWalkCollider(int season)
     {
-        // 겨울이 없으므로 제외
         season = season % 4;
 
         // SOWManager -> Collider -> WalkCollider -> Season
@@ -251,9 +250,14 @@ public class SeasonDateCalc : MonoBehaviour
         }
 
         WalkCollider.transform.GetChild(season).gameObject.SetActive(true);
-
-        AstarPath.FindAstarPath();
-        AstarPath.active.Scan();
     }
 
+    public void Init_Data()
+    {
+        mSecond = 0; // 초, 시간, 600초=10분=하루
+        mDay = 1;    // 일 (1~20일)
+        mWeek = 0;   // 주 (5일마다 1주, 4주가 최대)
+        mSeason = 1; // 달, 계절 (4주마다 1달, 봄,여름,가을,겨울 순으로 4달)
+        mYear = 1;   // 년 (~)    
+    }
 }

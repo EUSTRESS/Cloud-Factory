@@ -252,4 +252,12 @@ public class SeasonDateCalc : MonoBehaviour
         WalkCollider.transform.GetChild(season).gameObject.SetActive(true);
     }
 
+    public void Init_Data()
+    {
+        mSecond = 0; // 초, 시간, 600초=10분=하루
+        mDay = 1;    // 일 (1~20일)
+        mWeek = 0;   // 주 (5일마다 1주, 4주가 최대)
+        mSeason = 1; // 달, 계절 (4주마다 1달, 봄,여름,가을,겨울 순으로 4달)
+        mYear = 1;   // 년 (~)    
+    }
 }

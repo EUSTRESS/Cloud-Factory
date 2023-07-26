@@ -6,14 +6,16 @@ using UnityEngine.UI;
 public class GuideBook : MonoBehaviour
 {
     private static int DEFAULT_MAX_INFO_COUNT = 12;
-    
+
     public Transform ingrViewPort1;
     public Transform ingrViewPort2;
     public Transform cloudViewPort;
 
     public GameObject emotionPageGroup;
-    
-    public GameObject gRareGroup; // 재료 희귀도 분류 UI
+
+    public GameObject[] gRare = new GameObject[4];
+    public GameObject gRareGroupFront; // 재료 희귀도 분류 UI
+    public GameObject gRareGroupBack;
     public GameObject gPlantGroup_main;
 
     public GameObject gNextBtn; // 다음 페이지 버튼
@@ -244,7 +246,8 @@ public class GuideBook : MonoBehaviour
 
     void ChangeChapter(bool _bRare, bool _bGroupPlant ,int _iPageIndex, bool _bFeel, bool _bCloud, bool _bPlant)
     {
-        gRareGroup.SetActive(_bRare);
+        gRareGroupFront.SetActive(_bRare);
+        gRareGroupBack.SetActive(_bRare);
         gPlantGroup_main.SetActive(_bGroupPlant); // 재료 UI
         gPageIndex = 1; // 페이지 초기화
         gChapter[0] = _bFeel;
@@ -276,8 +279,10 @@ public class GuideBook : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             gPlantChapter[i] = false;
+            gRare[i].transform.SetParent(gRareGroupBack.transform);
         }
         gPlantChapter[_iIndex] = true;
+        gRare[_iIndex].transform.SetParent(gRareGroupFront.transform);
         gPageIndex = 1;
         UpdateGuideBook();
     }

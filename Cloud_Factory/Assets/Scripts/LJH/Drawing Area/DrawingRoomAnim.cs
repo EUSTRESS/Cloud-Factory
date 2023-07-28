@@ -6,9 +6,8 @@ using UnityEngine;
 
 public class DrawingRoomAnim : MonoBehaviour
 {
-    private Guest mGuestManager;
-    public GameObject mExM;
-    private bool isOnetime;
+    private Guest       mGuestManager;
+    public  GameObject  mExM;
 
     void Awake()
     {
@@ -20,7 +19,6 @@ public class DrawingRoomAnim : MonoBehaviour
         if (mGuestManager.isGuestInLivingRoom)
         {
             mExM.SetActive(true);
-            isOnetime = true;
         }
         else
         {

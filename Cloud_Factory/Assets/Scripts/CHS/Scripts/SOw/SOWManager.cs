@@ -8,7 +8,6 @@ public class SOWManagerSaveData
     public int[] yardGatherCount = new int[4];
 }
 
-
 public class SOWManager : MonoBehaviour
 {
     [Header("[날씨의 공간에 배치된 손님 정보]")]

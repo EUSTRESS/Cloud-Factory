@@ -79,7 +79,6 @@ public class CloudStorageProfile : MonoBehaviour
         UsingGuestNumList = GetSeansonGuestList(Season);
         numOfUsingGuestList = UsingGuestNumList.Length;
 
-
         frontProfileInfo = 0;
         UsingGuestIndex = 0;
 
@@ -456,6 +455,7 @@ public class CloudStorageProfile : MonoBehaviour
             }
         }
         */
+
         return resultLIst.ToArray();
     }
 

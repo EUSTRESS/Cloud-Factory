@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class GuideBook : MonoBehaviour
 {
-    private static int DEFAULT_MAX_INFO_COUNT = 12;
+    private static int DEFAULT_MAX_INFO_COUNT = 18;
+    private static int DEFAULT_RARITY_1_COUNT = 12;
+    private static int DEFAULT_RARITY_2_COUNT = 4;
+    private static int DEFAULT_RARITY_3_COUNT = 8;
 
     public Transform ingrViewPort1;
     public Transform ingrViewPort2;
@@ -121,7 +124,8 @@ public class GuideBook : MonoBehaviour
         {
             if (gPlantChapter[0])
             {
-                tGuideText.text = "희귀도1 재료 도감" + gPageIndex.ToString() + "페이지";
+                //tGuideText.text = "희귀도1 재료 도감" + gPageIndex.ToString() + "페이지";
+                tGuideText.text = "";
                 ClearIngrGuideBook();
                 UpdateIngredientHistory(1);
                 UpdateIngrGuideBook(1);
@@ -132,7 +136,8 @@ public class GuideBook : MonoBehaviour
                 
             else if (gPlantChapter[1])
             {
-                tGuideText.text = "희귀도2 재료 도감" + gPageIndex.ToString() + "페이지";
+                //tGuideText.text = "희귀도2 재료 도감" + gPageIndex.ToString() + "페이지";
+                tGuideText.text = "";
                 ClearIngrGuideBook();
                 UpdateIngredientHistory(2);
                 UpdateIngrGuideBook(2);
@@ -142,7 +147,8 @@ public class GuideBook : MonoBehaviour
             }               
             else if (gPlantChapter[2])
             {
-                tGuideText.text = "희귀도3 재료 도감" + gPageIndex.ToString() + "페이지";
+                //tGuideText.text = "희귀도3 재료 도감" + gPageIndex.ToString() + "페이지";
+                tGuideText.text = "";
                 ClearIngrGuideBook();
                 UpdateIngredientHistory(3);
                 UpdateIngrGuideBook(3);
@@ -152,7 +158,8 @@ public class GuideBook : MonoBehaviour
             }             
             else if (gPlantChapter[3])
             {
-                tGuideText.text = "희귀도4 재료 도감" + gPageIndex.ToString() + "페이지";
+                //tGuideText.text = "희귀도4 재료 도감" + gPageIndex.ToString() + "페이지";
+                tGuideText.text = "";
                 ClearIngrGuideBook();
                 UpdateIngredientHistory(4);
                 UpdateIngrGuideBook(4);
@@ -194,32 +201,38 @@ public class GuideBook : MonoBehaviour
     #region 버튼이미지호버링
     public void ActiveNextBtnImage()
     {
+        if (gChapter[2]) return;
         if (gPageIndex < 4)
             iNextBtn.color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 255 / 255f);
     }
     public void UnActiveNextBtnImage()
     {
+        if (gChapter[2]) return;
         iNextBtn.color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 0 / 255f);
     }
     public void ActivePrevBtnImage()
     {
+        if (gChapter[2]) return;
         if (gPageIndex > 1)
             iPrevBtn.color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 255 / 255f);
     }
     public void UnActivePrevBtnImage()
     {
+        if (gChapter[2]) return;
         iPrevBtn.color = new Color(255 / 255f, 255 / 255f, 255 / 255f, 0 / 255f);
     }
     #endregion
 
     public void ClickNextBtn()
     {
+        if (gChapter[2]) return;
         if (gPageIndex < 4)
             ++gPageIndex;
         UpdateGuideBook();
     }
     public void ClickPrevBtn()
     {
+        if (gChapter[2]) return;
         if (gPageIndex > 1)
             --gPageIndex;
         UpdateGuideBook();
@@ -332,11 +345,35 @@ public class GuideBook : MonoBehaviour
     {
         ingrViewPort1.gameObject.SetActive(true);
         ingrViewPort2.gameObject.SetActive(true);
+
+        int maxRarityCount = 0;
+        switch (rarity)
+        {
+            case 1:
+                maxRarityCount = DEFAULT_RARITY_1_COUNT;
+                break;
+            
+            case 2:
+                maxRarityCount = DEFAULT_RARITY_2_COUNT;
+                break;
+            
+            case 3:
+                maxRarityCount = DEFAULT_RARITY_3_COUNT;
+                break;
+            
+            case 4:
+                maxRarityCount = DEFAULT_RARITY_1_COUNT;
+                break;
+            
+            default:
+                break;
+        }
         
         int ingrIndex = (gPageIndex - 1) * DEFAULT_MAX_INFO_COUNT;
         int i;
         for (i = ingrIndex; i < ingrIndex + (DEFAULT_MAX_INFO_COUNT / 2); i++)
         {
+            if (i >= maxRarityCount) break;
             if (i < ingredientHistory[rarity - 1].Count)
             {
                 GameObject temp = Instantiate(ingrExist, ingrViewPort1, true);
@@ -351,6 +388,7 @@ public class GuideBook : MonoBehaviour
         
         for (; i < ingrIndex + DEFAULT_MAX_INFO_COUNT; i++)
         {
+            if (i >= maxRarityCount) break;
             if (i < ingredientHistory[rarity - 1].Count)
             {
                 GameObject temp = Instantiate(ingrExist, ingrViewPort2, true);

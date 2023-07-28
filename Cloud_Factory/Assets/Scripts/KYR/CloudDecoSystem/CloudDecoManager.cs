@@ -215,6 +215,31 @@ public class CloudDecoManager : MonoBehaviour
         P_FinSBook.SetActive(false);
     }
 
+    public void clickedDecoResetBtn() //데코 및 수치 초기화.
+    {
+        mUIDecoParts = new List<List<GameObject>>();
+        LDecoParts = new List<GameObject>();
+
+        // 데코 수치 초기화.
+        initParam();
+        init();
+
+        //배치된 GameObject Parts 삭제
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+            Destroy(transform.GetChild(i).gameObject);
+        }
+
+        for (int i = 0; i < B_PosNeg.transform.childCount; i++)
+        {
+            B_PosNeg.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = I_UnSelectedSticker[0];
+            B_PosNeg.transform.GetChild(i).GetChild(1).GetComponent<Image>().sprite = I_UnSelectedSticker[1];
+        }
+
+    }
+
+
     public void clickedAutoSettingBtn() //자동 배치
     {
         float width_max_range = I_targetCloud.GetComponent<RectTransform>().rect.width/2;                                  // 파츠가 구름 밖으로 벗어나지 않도록 범위 조정
@@ -243,6 +268,18 @@ public class CloudDecoManager : MonoBehaviour
                 cloudParts[partsIdx] = Instantiate(partsObj, new Vector2(0, 0), transform.rotation);
 				cloudParts[partsIdx].transform.SetParent(transform);
 				cloudParts[partsIdx].transform.position = new Vector2(x, y) + I_targetCloudPosition;        // 랜덤으로 생성한 좌표를 기준점(구름 이미지의 중심 벡터) 기준으로 위치를 선정해준다.
+
+                //자동으로 배치된 파츠에 수정 기능 추가
+                cloudParts[partsIdx].AddComponent<DecoParts>();
+                selectedParts = cloudParts[partsIdx].GetComponent<DecoParts>();
+                selectedParts.init(top_right_corner, bottom_left_corner);
+                cloudParts[partsIdx].AddComponent<Button>();
+                selectedParts.transform.SetParent(this.transform, true);
+
+                cloudParts[partsIdx].GetComponent<Button>().onClick.AddListener(EPartsClickedInArea);
+
+                LDecoParts.Add(cloudParts[partsIdx]);//파츠 관리하는 리스트에 추가.
+
 
                 //  파츠 범위에 다른 파츠가 없는지 검색 필요 transform.localScale비교 
                 if (partsIdx > 0) {   // 두 번째 파츠를 부착 할 때부터 겹쳤는지 확인

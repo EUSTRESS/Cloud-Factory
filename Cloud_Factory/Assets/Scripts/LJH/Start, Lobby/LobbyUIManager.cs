@@ -40,6 +40,7 @@ public class LobbyUIManager : MonoBehaviour
     public GameObject   gWarning;    // 새로운 게임 경고창
     public GameObject   gContinueWarning;    // 이어하기 경고창
     public GameObject   gMainBackGround;  // 타이틀 배경화면
+    public GameObject   gMainLogo;  // 타이틀 로고
 
     // INDEX -> [0]: C04 [1]: C07 [2]: C10 [3]:C13 [4]:C14 // 봄 타이틀 뭉티 관리
     public GameObject[] gMoongti = new GameObject[20]; // 전체 뭉티 타이틀 스프라이트 관리
@@ -77,6 +78,7 @@ public class LobbyUIManager : MonoBehaviour
     public Sprite[] sUnHoverConLan = new Sprite[2];
 
     public Sprite[] sSeasonBackGround = new Sprite[4];
+    public Sprite[] sSeasonLogo = new Sprite[4];
 
     public GameObject[] sLanguageCheckSprites = new GameObject[2];
 
@@ -90,6 +92,13 @@ public class LobbyUIManager : MonoBehaviour
         ChangeLobbyLanguage();
 
         isFirstPlay = true; // 처음 플레이한다고 넣어두고
+
+        // 데이터 폴더가 없다면 생성하기
+        if (!File.Exists(Application.dataPath + "/Data/"))
+        {
+            Directory.CreateDirectory(Application.dataPath + "/Data/");
+        }
+
         // 여기서 최초 1회 플레이인지 아닌지 판단.
         Load_InitData();
         // 사운드 로드 및 저장한 이력이 있는 지 판단.
@@ -211,7 +220,7 @@ public class LobbyUIManager : MonoBehaviour
             SeasonDateCalc.Instance.mSeason = gSeasonDate.GetComponent<SeasonDateCalc>().mSeason;
             SeasonDateCalc.Instance.mYear = gSeasonDate.GetComponent<SeasonDateCalc>().mYear;
         }
-
+        
         if (null == gMainBackGround)
         {
             Debug.Log("gMangBackGround is null");
@@ -220,6 +229,14 @@ public class LobbyUIManager : MonoBehaviour
         
         // 계절별로 바꾼다.
         gMainBackGround.GetComponent<Image>().sprite = sSeasonBackGround[(SeasonDateCalc.Instance.mSeason - 1)];
+
+        if (null == gMainLogo)
+        {
+            Debug.Log("gMainLogo is null");
+            return;
+        }
+        gMainLogo.GetComponent<Image>().sprite = sSeasonLogo[(SeasonDateCalc.Instance.mSeason - 1)];
+        
 
     }
 

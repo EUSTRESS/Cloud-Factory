@@ -121,11 +121,13 @@ public class RecordUIManager : MonoBehaviour
 
         Debug.Log("이전 뭉티 정보 호출");
     }
+
     void DelayActiveBtn()
     {
         btNextBtn.interactable = true;
         btPrevBtn.interactable = true;
     }
+
     // 불만 뭉티 보여주는 함수
     public void ShowUpsetMoongti()
     {

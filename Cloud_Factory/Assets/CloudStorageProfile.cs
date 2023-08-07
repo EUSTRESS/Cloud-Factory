@@ -41,6 +41,9 @@ public class CloudStorageProfile : MonoBehaviour
     public Toggle   minusToggle;
     private int sat = 0;
 
+    [SerializeField]
+    Sprite emptyProfileImage;
+
     void Awake()
     {
  
@@ -88,6 +91,8 @@ public class CloudStorageProfile : MonoBehaviour
         Profiles[2] = GameObject.Find("I_ProfileBG3");
 
         btGiveBtn = GameObject.Find("B_CloudGIve").GetComponent<Button>();
+
+
 
         if (numOfUsingGuestList != 0)
         {
@@ -208,8 +213,8 @@ public class CloudStorageProfile : MonoBehaviour
 
     void updateProfileList()
     {
-         GameObject Profile = Profiles[frontProfileInfo];
-        { 
+        GameObject Profile = Profiles[frontProfileInfo];
+        {
             // Button
             btGiveBtn = Profile.transform.GetChild(1).GetComponent<Button>();
 
@@ -270,43 +275,63 @@ public class CloudStorageProfile : MonoBehaviour
         // 한 줄 요약
         Text tSentence = Profile.transform.GetChild(6).GetComponent<Text>();
 
-
-        // 뭉티 정보를 가져온다.
-        GuestInfos info = GuestManager.GetComponent<Guest>().mGuestInfo[frontGuestIndex];
-
-        // 가져온 정보값을 이용하여 채운다.
-        iProfile.sprite = UIManager.sBasicProfile[frontGuestIndex];
-        /*
-        DEMO 기능
-        TODO : 뭉티 정보를 불러와서 방문한 적이 있는 경우에만 정보를 띄운다.
-        if (info.mVisitCount < 2)
+        if (frontGuestIndex != -1)
         {
-            tName.text = "???";
-            tAge.text = "???";
-            tJob.text = "???";
-            tSat.text = "???";
-            tSentence.text = "정보를 알 수 없습니다.";
+
+            // 뭉티 정보를 가져온다.
+            GuestInfos info = GuestManager.GetComponent<Guest>().mGuestInfo[frontGuestIndex];
+
+            // 가져온 정보값을 이용하여 채운다.
+            iProfile.sprite = UIManager.sBasicProfile[frontGuestIndex];
+            /*
+            DEMO 기능
+            TODO : 뭉티 정보를 불러와서 방문한 적이 있는 경우에만 정보를 띄운다.
+            if (info.mVisitCount < 2)
+            {
+                tName.text = "???";
+                tAge.text = "???";
+                tJob.text = "???";
+                tSat.text = "???";
+                tSentence.text = "정보를 알 수 없습니다.";
+                if (LanguageManager.GetInstance().GetCurrentLanguage() == "English")
+                    tSentence.text = "No information has been released.";
+
+                return;
+            }
+            */
+
             if (LanguageManager.GetInstance().GetCurrentLanguage() == "English")
-                tSentence.text = "No information has been released.";
-
-            return;
-        }
-        */
-
-        if (LanguageManager.GetInstance().GetCurrentLanguage() == "English")
-        {
-            tSentence.text = "Summary: " + mRLHReader.LoadSummaryInfo(frontGuestIndex);
-            tName.text = info.mNameEN;
-            tJob.text = info.mJobEN;
+            {
+                tSentence.text = "Summary: " + mRLHReader.LoadSummaryInfo(frontGuestIndex);
+                tName.text = info.mNameEN;
+                tJob.text = info.mJobEN;
+            }
+            else
+            {
+                tSentence.text = "한 줄 요약: " + mRLHReader.LoadSummaryInfo(frontGuestIndex);
+                tName.text = info.mName;
+                tJob.text = info.mJob;
+            }
+            tAge.text = "" + info.mAge;
+            tSat.text = "" + info.mSatatisfaction;
         }
         else
         {
-            tSentence.text = "한 줄 요약: " + mRLHReader.LoadSummaryInfo(frontGuestIndex);
-            tName.text = info.mName;
-            tJob.text = info.mJob;
+            iProfile.sprite = emptyProfileImage;
+
+            if (LanguageManager.GetInstance().GetCurrentLanguage() == "English")
+            {
+                tSentence.text = "Summary: ";
+            }
+            else
+            {
+                tSentence.text = "한 줄 요약: ";
+            }
+            tName.text = "";
+            tJob.text = "";
+            tAge.text = "";
+            tSat.text = "";
         }
-        tAge.text = "" + info.mAge;
-        tSat.text = "" + info.mSatatisfaction;
     }
 
     void updateButton()
@@ -455,6 +480,11 @@ public class CloudStorageProfile : MonoBehaviour
             }
         }
         */
+
+        while(resultLIst.Count < 3)
+        {
+            resultLIst.Add(-1);
+        }
 
         return resultLIst.ToArray();
     }

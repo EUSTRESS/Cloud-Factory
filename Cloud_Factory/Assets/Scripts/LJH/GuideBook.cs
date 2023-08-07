@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GuideBook : MonoBehaviour
 {
     private static int DEFAULT_MAX_INFO_COUNT = 18;
+    private static int DEFAULT_MAX_CLOUD_INFO_COUNT = 12;
     private static int DEFAULT_RARITY_1_COUNT = 12;
     private static int DEFAULT_RARITY_2_COUNT = 4;
     private static int DEFAULT_RARITY_3_COUNT = 8;
@@ -15,6 +16,7 @@ public class GuideBook : MonoBehaviour
     public Transform cloudViewPort;
 
     public GameObject emotionPageGroup;
+    public GameObject cloudPageGroup;
 
     public GameObject[] gRare = new GameObject[4];
     public GameObject gRareGroupFront; // 재료 희귀도 분류 UI
@@ -94,6 +96,7 @@ public class GuideBook : MonoBehaviour
         ingrViewPort2.gameObject.SetActive(false);
         cloudViewPort.gameObject.SetActive(false);
         emotionPageGroup.SetActive(false);
+        cloudPageGroup.SetActive(false);
 
         for (int i = 0; i < emotionPageGroup.transform.childCount; i++)
         {
@@ -113,7 +116,8 @@ public class GuideBook : MonoBehaviour
         }            
         else if(gChapter[1])
         {
-            tGuideText.text = "구름 도감" + gPageIndex.ToString() + "페이지";
+            //tGuideText.text = "구름 도감" + gPageIndex.ToString() + "페이지";
+            tGuideText.text = "";
             UpdateCloudGuideBook();
             UpdateGuideUI(0);
             Update_Emotion_Page(false, gPageIndex - 1);
@@ -411,10 +415,16 @@ public class GuideBook : MonoBehaviour
         {
             Destroy(cloudViewPort.GetChild(i - 1).gameObject);
         }
+
+        if (gPageIndex < 2)
+        {
+            cloudPageGroup.SetActive(true);
+            return;
+        }
         
-        int cloudIndex = (gPageIndex - 1) * (DEFAULT_MAX_INFO_COUNT / 2);
+        int cloudIndex = (gPageIndex - 2) * (DEFAULT_MAX_CLOUD_INFO_COUNT / 2);
         
-        for (int i = cloudIndex; i < cloudIndex + (DEFAULT_MAX_INFO_COUNT / 2); i++)
+        for (int i = cloudIndex; i < cloudIndex + (DEFAULT_MAX_CLOUD_INFO_COUNT / 2); i++)
         {
             GameObject temp = Instantiate(cloudBasic, cloudViewPort, true);
             

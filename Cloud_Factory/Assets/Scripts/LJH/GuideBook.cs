@@ -383,6 +383,10 @@ public class GuideBook : MonoBehaviour
                 GameObject temp = Instantiate(ingrExist, ingrViewPort1, true);
                 temp.transform.GetChild(0).GetComponent<Image>().sprite = ingredientHistory[rarity - 1][i].image;
                 temp.transform.GetChild(1).GetComponent<Text>().text = ingredientHistory[rarity - 1][i].dataName.ToString();
+                temp.transform.GetChild(2).transform.Find("Text0").GetComponent<Text>().text =
+                    ingredientHistory[rarity - 1][i].emotions[0].getKey2Int().ToString();
+                temp.transform.GetChild(2).transform.Find("Text1").GetComponent<Text>().text =
+                    ingredientHistory[rarity - 1][i].emotions[1].getKey2Int().ToString();
             }
             else
             {
@@ -398,6 +402,10 @@ public class GuideBook : MonoBehaviour
                 GameObject temp = Instantiate(ingrExist, ingrViewPort2, true);
                 temp.transform.GetChild(0).GetComponent<Image>().sprite = ingredientHistory[rarity - 1][i].image;
                 temp.transform.GetChild(1).GetComponent<Text>().text = ingredientHistory[rarity - 1][i].dataName.ToString();
+                temp.transform.GetChild(2).transform.Find("Text0").GetComponent<Text>().text =
+                    ingredientHistory[rarity - 1][i].emotions[0].getKey2Int().ToString();
+                temp.transform.GetChild(2).transform.Find("Text1").GetComponent<Text>().text =
+                    ingredientHistory[rarity - 1][i].emotions[1].getKey2Int().ToString();
             }
             else
             {

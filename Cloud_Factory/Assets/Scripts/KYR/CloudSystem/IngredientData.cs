@@ -3,27 +3,27 @@ using UnityEngine;
 using Newtonsoft.Json;
 
 public enum Emotion
-{   //PLEASUREºÎÅÍ 0~ ÀÇ °ªÀ» °®À½
-    PLEASURE, //±â»Ý 0
-    UNREST, //ºÒ¾È 1 
-    SADNESS, //½½ÇÄ 2
-    IRRITATION, //Â¥Áõ 3
-    ACCEPT,//¼ö¿ë 4
-    SUPCON, //SUPRISE+CONFUSION ³í¶õ,È¥¶õ 5
-    DISGUST, //Çø¿À 6
-    INTEXPEC, //INTERSTING+EXPECTATION °ü½É,±â´ë 7
+{   //PLEASUREë¶€í„° 0~ ì˜ ê°’ì„ ê°–ìŒ
+    PLEASURE, //ê¸°ì¨ 0
+    UNREST, //ë¶ˆì•ˆ 1 
+    SADNESS, //ìŠ¬í”” 2
+    IRRITATION, //ì§œì¦ 3
+    ACCEPT,//ìˆ˜ìš© 4
+    SUPCON, //SUPRISE+CONFUSION ë…¼ëž€,í˜¼ëž€ 5
+    DISGUST, //í˜ì˜¤ 6
+    INTEXPEC, //INTERSTING+EXPECTATION ê´€ì‹¬,ê¸°ëŒ€ 7
     LOVE, //8
-    OBED, //¼øÁ¾. 9
+    OBED, //ìˆœì¢…. 9
     AWE,//10
-    CONTRAY,//¹Ý´ë 11
+    CONTRAY,//ë°˜ëŒ€ 11
     BLAME,//12
     DESPISE,//13
-    AGGRESS,//AGGRESSION °ø°Ý¼º 14
-    OPTIMISM,//³«r°ü, ³«Ãµ 15
+    AGGRESS,//AGGRESSION ê³µê²©ì„± 14
+    OPTIMISM,//ë‚™rê´€, ë‚™ì²œ 15
     BITTER,//16
     LOVHAT, //LOVE AND HATRED 17
     FREEZE,//18
-    CHAOTIC,//È¥¶õ½º·¯¿ò 19
+    CHAOTIC,//í˜¼ëž€ìŠ¤ëŸ¬ì›€ 19
     NONE //20
 }
 
@@ -43,7 +43,7 @@ public class EmotionInfo
 
     public int getKey2Int()
     {
-        return (int)Key; //Emotion Enum ÀÇ °íÀ¯°ª(index°ª)À¸·Î º¯È¯ÇØ¼­ Á¦°ø
+        return (int)Key; //Emotion Enum ì˜ ê³ ìœ ê°’(indexê°’)ìœ¼ë¡œ ë³€í™˜í•´ì„œ ì œê³µ
     }
 
     public int getValue()
@@ -57,15 +57,15 @@ public class IngredientData : ScriptableObject
 {
 
 
-    // LJH, º¯¼ö¸¶´Ù Á÷·ÄÈ­
+    // LJH, ë³€ìˆ˜ë§ˆë‹¤ ì§ë ¬í™”
     [SerializeField]
-    public string dataName; //Àç·á ÀÌ¸§
+    public string dataName; //ìž¬ë£Œ ì´ë¦„
 
-    // LJH, ½ºÇÁ¶óÀÌÆ®´Â Á÷·ÄÈ­ ºÒ°¡´ÉÀÌ¾î¼­ JsonIgnore¾ÈÇÏ¸é ¿À·ù
+    // LJH, ìŠ¤í”„ë¼ì´íŠ¸ëŠ” ì§ë ¬í™” ë¶ˆê°€ëŠ¥ì´ì–´ì„œ JsonIgnoreì•ˆí•˜ë©´ ì˜¤ë¥˜
     [JsonIgnore]
-    public Sprite image;// ÀÌ¹ÌÁö
+    public Sprite image;// ì´ë¯¸ì§€
 
-    //Èñ±Íµµ : Èñ±Íµµ¿¡ µû¶ó¼­ °¨Á¤ÀÇ ±¸¼º Á¾·ù ¹× °³¼ö°¡ ´Þ¶óÁø´Ù.
+    //í¬ê·€ë„ : í¬ê·€ë„ì— ë”°ë¼ì„œ ê°ì •ì˜ êµ¬ì„± ì¢…ë¥˜ ë° ê°œìˆ˜ê°€ ë‹¬ë¼ì§„ë‹¤.
     [SerializeField]
     public int rarity;
 

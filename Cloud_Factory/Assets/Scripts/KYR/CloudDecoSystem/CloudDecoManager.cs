@@ -81,11 +81,12 @@ public class CloudDecoManager : MonoBehaviour
     private bool cursorChasing;
     private bool isDecoDone;
 
-
+    [SerializeField]
     private DecoParts selectedParts;
     private List<List<GameObject>> mUIDecoParts;
     private int mCloudPieceDecoMax;
     private InventoryManager inventoryManager;
+    [SerializeField]
     private List<GameObject> LDecoParts;
     //스케치북 기즈모
     public Vector2 top_right_corner;
@@ -413,7 +414,8 @@ public class CloudDecoManager : MonoBehaviour
         int partsIdx = target.transform.parent.GetSiblingIndex(); //parent = type(?)
         int cnt = partsIdx >= 1 ? int.Parse(T_CountInfo[partsIdx - 1].GetComponent<TMP_Text>().text) : 0 ;
 
-            
+       
+
         //개수 감소시키기, 제한개수를 소진하면 클릭 할 수 없다.
         switch (partsIdx)
         {
@@ -452,11 +454,17 @@ public class CloudDecoManager : MonoBehaviour
         //꾸미기가 완료된 상태라면 사용자 조작에 반응하지 않는다.
         if (isDecoDone)
             return;
-        //클릭된 객체로 변경해줘야함
-        if(LDecoParts.Count>1 && EventSystem.current.currentSelectedGameObject.transform.parent != selectedParts.transform.parent)
-                return;
-        
+
         selectedParts = EventSystem.current.currentSelectedGameObject.GetComponent<DecoParts>();
+
+        //클릭된 객체로 변경해줘야함
+        for (int i = 0; i < LDecoParts.Count; i++)
+        {
+            if (LDecoParts[i] == selectedParts) continue;
+            if (LDecoParts[i].transform.childCount < 2) continue;
+            LDecoParts[i].GetComponent<DecoParts>().UpdateEditGuidLineUI(false);
+        }
+
 
         if (!selectedParts.canAttached) return; 
         if(!selectedParts.isEditActive)//처음 파츠를 선택한 상태. 부착가능한 공간에 부착 가능.

@@ -192,8 +192,8 @@ public class CloudMakeSystem : MonoBehaviour
     [SerializeField]
     private CloudSystem.S_list slct_mtrl; //selected_material data class
     [SerializeField]
-    private Text UI_btn_txt;
-
+    private Image UI_btn_Sprite;
+    private List<Sprite> UI_L_btn_create;
     //count
     private int total;
 
@@ -453,8 +453,7 @@ public class CloudMakeSystem : MonoBehaviour
 
         float time = 1f;
         //코루틴
-        if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean"){ UI_btn_txt.text = "만드는 중"; }
-        else { UI_btn_txt.text = "CREATING..."; }
+        UI_btn_Sprite.sprite = UI_L_btn_create[1];
 
         isMakingCloud = true;
 
@@ -483,8 +482,7 @@ public class CloudMakeSystem : MonoBehaviour
 		slct_mtrl.u_init(total);
 
         total = 0;
-        if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean"){ UI_btn_txt.text = "제작하기"; }
-        else { UI_btn_txt.text = "CREATE"; }
+        UI_btn_Sprite.sprite = UI_L_btn_create[0];
 
         isMakingCloud = false;
 
@@ -549,9 +547,12 @@ public class CloudMakeSystem : MonoBehaviour
         slct_mtrl.init(this.transform.Find("Contents").transform);
         slct_mtrl.default_sprite = default_sprite;
 
-        UI_btn_txt = this.transform.Find("B_CloudGIve").GetComponentInChildren<Text>();
-        if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean"){ UI_btn_txt.text = "제작하기"; }
-        else { UI_btn_txt.text = "CREATE"; }
+        UI_btn_Sprite = this.transform.Find("B_CloudGIve").GetComponent<Image>();
+        UI_L_btn_create = new List<Sprite>();
+        UI_L_btn_create.Add(Resources.Load<Sprite>("Sprite/UI/btCreate1"));
+        UI_L_btn_create.Add(Resources.Load<Sprite>("Sprite/UI/btCreate2"));
+
+        UI_btn_Sprite.sprite = UI_L_btn_create[0];
 
         isMakingCloud = false;
 

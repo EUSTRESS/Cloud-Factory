@@ -259,10 +259,10 @@ public class ProfileManager : MonoBehaviour
 		        mGuestInfo[guest_index].mJob;
         }
 
-        iProfileBG[profile_num].transform.Find("T_Age(INPUT)").gameObject.GetComponent<Text>().text =
-	        mGuestInfo[guest_index].mAge.ToString();
+	    iProfileBG[profile_num].transform.Find("Age").transform.GetChild(0).transform.GetChild(0).transform
+			    .GetChild(1).GetComponent<Text>().text = mGuestInfo[guest_index].mAge.ToString();
 
-        // 해당 프로필 종이의 사용한 구름의 정보 제거
+	    // 해당 프로필 종이의 사용한 구름의 정보 제거
         clearUsedCloudList(profile_num);
         
         // 사용한 구름의 정보 업데이트

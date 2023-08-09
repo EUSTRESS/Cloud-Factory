@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -159,6 +160,7 @@ namespace CloudSystem
 
 public class CloudMakeSystem : MonoBehaviour
 {
+    public GameObject ErrorFinderDibugger;
     ////////////////////////////////////////////////////////
     ///////            Interface Value               ///////
     ////////////////////////////////////////////////////////
@@ -192,8 +194,8 @@ public class CloudMakeSystem : MonoBehaviour
     [SerializeField]
     private CloudSystem.S_list slct_mtrl; //selected_material data class
     [SerializeField]
-    private Text UI_btn_txt;
-
+    private Image UI_btn_Sprite;
+    private List<Sprite> UI_L_btn_create;
     //count
     private int total;
 
@@ -266,103 +268,119 @@ public class CloudMakeSystem : MonoBehaviour
 
         Dictionary<Emotion, int> tmpList = new Dictionary<Emotion, int>();
 
+        
         while (isOverlapState(emotionList))
         {
-            bool possibility = false;
-            for (int i = 0; i < emotionList.Count; i++)
+            try
             {
-                EmotionInfo content = emotionList[i];
-
-                if (tmpList.ContainsKey(content.Key))//-1- content가 중복리스트에 포함되어있으면
+                bool possibility = false;
+                for (int i = 0; i < emotionList.Count; i++)
                 {
-                    //overlapsEmosList.Add(content.Key, new KeyValuePair<int, int>(tmpList.Value, content.Value));
-                    //-2- 중복 감정 중 낮은 수치를 가진 감정이 조합에 사용된다.
-                    int mergedV = tmpList[content.Key] <= content.Value ? tmpList[content.Key] : content.Value;//삼항연산자를 이용하여 더 작은 값 차용.
-                    Debug.Log("[(1)낮은수치사용]" + tmpList[content.Key] + "|" + content.Value + "에서" + mergedV + "차용!");
-                    tmpList.Remove(content.Key);//-2-1 조합에 사용될 감정을 처리했으면 중복감정 리스트에서 제외한다.
+                    EmotionInfo content = emotionList[i];
 
-                    Debug.Log("[(2)중복발견]중복아이템 리스트에서 삭제");
-                    Debug_PrintState("[현재중복리스트 삭제 결과]", tmpList);
-                    //-3- "emotionList" 에서 작은 값을 가진 감정과 인접한 감정과 감정 조합이 일어난다.
-                    //-3-1 조합할 인접 감정을 우선순위에 따라 선정한다.
-                    EmotionInfo fndItm = new EmotionInfo(content.Key, mergedV);
-                    int targetIdx = emotionList.FindIndex(a => (a.Key == content.Key && a.Value == mergedV)); //추출된 감정리스트에서의 조합대상 감정의 idx
-                    int subTargetIdx = targetIdx - 1 ;
-                    Debug.Log("[(3)조합대상]" + "{" + targetIdx + "}" + emotionList[targetIdx].Key);
+                    if (tmpList.ContainsKey(content.Key))//-1- content가 중복리스트에 포함되어있으면
+                    {
+                        //overlapsEmosList.Add(content.Key, new KeyValuePair<int, int>(tmpList.Value, content.Value));
+                        //-2- 중복 감정 중 낮은 수치를 가진 감정이 조합에 사용된다.
+                        int mergedV = tmpList[content.Key] <= content.Value ? tmpList[content.Key] : content.Value;//삼항연산자를 이용하여 더 작은 값 차용.
+                        Debug.Log("[(1)낮은수치사용]" + tmpList[content.Key] + "|" + content.Value + "에서" + mergedV + "차용!");
+                        tmpList.Remove(content.Key);//-2-1 조합에 사용될 감정을 처리했으면 중복감정 리스트에서 제외한다.
+
+                        Debug.Log("[(2)중복발견]중복아이템 리스트에서 삭제");
+                        Debug_PrintState("[현재중복리스트 삭제 결과]", tmpList);
+                        //-3- "emotionList" 에서 작은 값을 가진 감정과 인접한 감정과 감정 조합이 일어난다.
+                        //-3-1 조합할 인접 감정을 우선순위에 따라 선정한다.
+                        EmotionInfo fndItm = new EmotionInfo(content.Key, mergedV);
+                        int targetIdx = emotionList.FindIndex(a => (a.Key == content.Key && a.Value == mergedV)); //추출된 감정리스트에서의 조합대상 감정의 idx
+                        int subTargetIdx = targetIdx - 1;
+                        Debug.Log("[(3)조합대상]" + "{" + targetIdx + "}" + emotionList[targetIdx].Key);
 
 
-                    bool commend;
-                    //앞에 채택 경우: outOfBound
-                    //뒤에 채택 경우: outOfBound, 앞에서 none 결과 값이 나왔기 떄문.
-                    if (subTargetIdx >= 0 ? true : false)//우선순위(1): 대상의 앞의 감정과 조합한다.
-                        commend = emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key] != Emotion.NONE ? false : true;//index가 OutOfBound가 아니고 조합의 결과가 있다면! command = false
+                        bool commend;
+                        //앞에 채택 경우: outOfBound
+                        //뒤에 채택 경우: outOfBound, 앞에서 none 결과 값이 나왔기 떄문.
+                        if (subTargetIdx >= 0)//우선순위(1): 대상의 앞의 감정과 조합한다.
+                            commend = emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key] == Emotion.NONE ? false : true;//index가 OutOfBound가 아니고 조합의 결과가 있다면! command = true
+                        else
+                        {
+                            commend = false;
+                            subTargetIdx = targetIdx + 1;
+                            Debug.Log("[우선순위2]채택");
+                        }
+
+
+                        Debug.Log("-1 인덱스 검사 결과 :" + emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key].ToString());
+                        Debug.Log("-1 인덱스 검사 결과 targetID:" + targetIdx + "SubTargetID" + subTargetIdx);
+
+
+                        //우선순위(2): 위에서 command가 true가 나면 우선순위 (2)로 넘어간다.   subTargetIdx = targetIdx + 1
+                        if (!commend && subTargetIdx < emotionList.Count)
+                            commend = emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key] == Emotion.NONE ? false : true;
+
+                        Debug.Log("+1 인덱스 검사 결과 :" + emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key].ToString());
+                        Debug.Log("+1 인덱스 검사 결과 targetID:" + targetIdx + "SubTargetID" + subTargetIdx);
+
+
+                        //우선순위(1)또는 (2)에서 감정조합의 결과가 정상적으로 나온 경우.
+                        if (commend)
+                        {
+                            //(1) 조합에 사용된 두 감정 중 낮은 수치를 가져온다.
+                            int CEmoV = emotionList[targetIdx].Value <= emotionList[subTargetIdx].Value ? emotionList[targetIdx].Value : emotionList[subTargetIdx].Value;
+                            EmotionInfo finalEmo = new EmotionInfo(emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key], CEmoV);
+
+                            emotionList[targetIdx] = finalEmo;//(2)targetEmotion을 조합된 새 감정으로 바꾼다.
+                            Debug.Log("[조합결과]" + finalEmo.Key);
+                            //(2)조합에 사용 된 감정은 리스트에서 제외한다.(for문 안이기 떄문에 index 관리 해줘야 한다.)
+                            if (finalEmo.Key == Emotion.NONE) continue;
+
+                            emotionList.RemoveAt(subTargetIdx);
+                            // 삭제할 값의 index가 현재 타겟 중인  index보다 작은 경우(상관 있음. 현재 타겟중인 값이 앞으로 밀리기 때문에, index를 -1 해주어야 한다.
+                            if (subTargetIdx < i) i = i - 1 < 0 ? 0 : i - 1;
+                            // 삭제할 값의 index가 현재 타겟 중인 index보다 클 경우.(상관 없음: 리스트의 길이만 달라진다.)
+
+                            possibility = true;
+                        }
+                        else
+                        {
+                            Debug.Log("![ 조합이 불가능 합니다.]");
+                        }
+
+                    }
                     else
                     {
-                        commend = false;
-                        subTargetIdx = targetIdx + 1;
-                        Debug.Log("[우선순위2]채택");
+                        if (Emotion.PLEASURE <= content.Key && content.Key <= Emotion.INTEXPEC)
+                            tmpList.Add(content.Key, content.Value);
                     }
-
-                    Debug.Log("-1 인덱스 검사 결과 :" + emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key].ToString());
-
-                    //우선순위(2): 위에서 command가 true가 나면 우선순위 (2)로 넘어간다.   subTargetIdx = targetIdx + 1
-                    if (!commend && subTargetIdx < emotionList.Count ? true : false)
-                        commend = emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key] != Emotion.NONE ? true : false;
-
-                    Debug.Log("+1 인덱스 검사 결과 :" + emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key].ToString());
-
-                    //우선순위(1)또는 (2)에서 감정조합의 결과가 정상적으로 나온 경우.
-                    if (commend)
-                    {
-                        //(1) 조합에 사용된 두 감정 중 낮은 수치를 가져온다.
-                        int CEmoV = emotionList[targetIdx].Value <= emotionList[subTargetIdx].Value ? emotionList[targetIdx].Value : emotionList[subTargetIdx].Value;
-                        EmotionInfo finalEmo = new EmotionInfo(emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key], CEmoV);
-                        
-                        emotionList[targetIdx] = finalEmo;//(2)targetEmotion을 조합된 새 감정으로 바꾼다.
-                        Debug.Log("[조합결과]" + finalEmo.Key);
-                        //(2)조합에 사용 된 감정은 리스트에서 제외한다.(for문 안이기 떄문에 index 관리 해줘야 한다.)
-                        if (finalEmo.Key == Emotion.NONE) continue;
-
-                        emotionList.RemoveAt(subTargetIdx);
-                        // 삭제할 값의 index가 현재 타겟 중인  index보다 작은 경우(상관 있음. 현재 타겟중인 값이 앞으로 밀리기 때문에, index를 -1 해주어야 한다.
-                        if (subTargetIdx < i) i = i - 1 < 0 ? 0 : i - 1;
-                        // 삭제할 값의 index가 현재 타겟 중인 index보다 클 경우.(상관 없음: 리스트의 길이만 달라진다.)
-
-                        possibility = true;
-                    }
-                    else
-                    {
-                        Debug.Log("![ 조합이 불가능 합니다.]");
-                    }
-  
+                    Debug_PrintState("[현재감정리스트]", emotionList);
+                    Debug_PrintState("[현재중복리스트]", tmpList);
                 }
-                else
-                {
-                    if (Emotion.PLEASURE <= content.Key && content.Key <= Emotion.INTEXPEC)
-                        tmpList.Add(content.Key, content.Value);
-                }
-                Debug_PrintState("[현재감정리스트]", emotionList);
-                Debug_PrintState("[현재중복리스트]", tmpList);
+
+                if (!possibility)
+                    break;
+
+
+
             }
-
-            if (!possibility)
-                break;
+            catch (Exception ex)
+            {
+                Debug.Log(ex);
+            }
+           
 
         }
-
         //최종 감정 리스트 저장.
         //중복이 있다면 그중 가장 큰 감정 채용
         Dictionary<Emotion, int> LoverlapsEmo = new Dictionary<Emotion, int>();
-        
+
         foreach (EmotionInfo emotion in emotionList)
         {
-            if(LoverlapsEmo.Count == 0)
+            if (LoverlapsEmo.Count == 0)
             {
                 LoverlapsEmo.Add(emotion.Key, emotion.Value);
                 continue;
             }
 
-            if(LoverlapsEmo.ContainsKey(emotion.Key))
+            if (LoverlapsEmo.ContainsKey(emotion.Key))
             {
                 if (LoverlapsEmo[emotion.Key] < emotion.Value)
                     LoverlapsEmo[emotion.Key] = emotion.Value;
@@ -374,7 +392,7 @@ public class CloudMakeSystem : MonoBehaviour
         Debug_PrintState("[중복 감정 중 큰감정 채용]", LoverlapsEmo);
 
         List<EmotionInfo> LfinalEmo = new List<EmotionInfo>();
-        foreach (KeyValuePair<Emotion,int> overlap in LoverlapsEmo)
+        foreach (KeyValuePair<Emotion, int> overlap in LoverlapsEmo)
         {
             EmotionInfo tmp = new EmotionInfo(overlap.Key, overlap.Value);
             LfinalEmo.Add(tmp);
@@ -387,16 +405,16 @@ public class CloudMakeSystem : MonoBehaviour
 
         //2가지 감정 선택(제일 큰 감정 + 두번째로 큰 감정)
         int roopCnt = 2;
-        while(roopCnt!=0)
+        while (roopCnt != 0)
         {
             EmotionInfo maxValue = new EmotionInfo(emotionList[0].Key, emotionList[0].Value);
             foreach (EmotionInfo emotion in emotionList)
             {
                 if (maxValue.Value < emotion.Value)
                     maxValue = emotion;
-                else if(maxValue.Value == emotion.Value) //같다면 둘 중 랜덤으로 선택.
+                else if (maxValue.Value == emotion.Value) //같다면 둘 중 랜덤으로 선택.
                 {
-                    int i = Random.Range(0, 2);
+                    int i = UnityEngine.Random.Range(0, 2);
                     maxValue = (i == 0 ? maxValue : emotion);
 
                 }
@@ -410,7 +428,6 @@ public class CloudMakeSystem : MonoBehaviour
         emotionList = LfinalEmo;
         Debug_PrintState("[최종감정리스트]", emotionList);
         mEmotions = emotionList;
-
 
     }
 
@@ -453,8 +470,7 @@ public class CloudMakeSystem : MonoBehaviour
 
         float time = 1f;
         //코루틴
-        if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean"){ UI_btn_txt.text = "만드는 중"; }
-        else { UI_btn_txt.text = "CREATING..."; }
+        UI_btn_Sprite.sprite = UI_L_btn_create[1];
 
         isMakingCloud = true;
 
@@ -483,8 +499,7 @@ public class CloudMakeSystem : MonoBehaviour
 		slct_mtrl.u_init(total);
 
         total = 0;
-        if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean"){ UI_btn_txt.text = "제작하기"; }
-        else { UI_btn_txt.text = "CREATE"; }
+        UI_btn_Sprite.sprite = UI_L_btn_create[0];
 
         isMakingCloud = false;
 
@@ -508,10 +523,15 @@ public class CloudMakeSystem : MonoBehaviour
         //해당 감정에 맞는 구름 이미지 생성
         InventoryManager inventoryManager = GameObject.FindWithTag("InventoryManager").transform.GetComponent<InventoryManager>();
         inventoryManager.createdCloudData = new CloudData(mEmotions, slct_mtrl.getCloudShelfLife(), slct_mtrl.mGetingredientDatas(mtrlDATA)); //createdCloudData 갱신.
-                                                                          //큰 수치 = 구름색
-                                                                          //다음 수치 = 구름의 장식
+                                                                                                                                              //큰 수치 = 구름색
+                                                                                                                                              //다음 수치 = 구름의 장식
 
-        transform.Find("I_Result").gameObject.GetComponent<Image>().sprite = inventoryManager.createdCloudData.getBaseCloudSprite();
+        Sprite ResultCloudSprite = transform.Find("I_Result").gameObject.GetComponent<Image>().sprite;
+        ResultCloudSprite = inventoryManager.createdCloudData.getBaseCloudSprite();
+
+        if (ResultCloudSprite == null)
+            ErrorFinderDibugger.GetComponent<Text>().text = "Debug Log : No Cloud Image" + inventoryManager.createdCloudData.getFinalEmotion()[0];
+
         Debug.Log("구름이 만들어졌습니다.");
 
     }
@@ -549,9 +569,12 @@ public class CloudMakeSystem : MonoBehaviour
         slct_mtrl.init(this.transform.Find("Contents").transform);
         slct_mtrl.default_sprite = default_sprite;
 
-        UI_btn_txt = this.transform.Find("B_CloudGIve").GetComponentInChildren<Text>();
-        if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean"){ UI_btn_txt.text = "제작하기"; }
-        else { UI_btn_txt.text = "CREATE"; }
+        UI_btn_Sprite = this.transform.Find("B_CloudGIve").GetComponent<Image>();
+        UI_L_btn_create = new List<Sprite>();
+        UI_L_btn_create.Add(Resources.Load<Sprite>("Sprite/UI/btCreate1"));
+        UI_L_btn_create.Add(Resources.Load<Sprite>("Sprite/UI/btCreate2"));
+
+        UI_btn_Sprite.sprite = UI_L_btn_create[0];
 
         isMakingCloud = false;
 

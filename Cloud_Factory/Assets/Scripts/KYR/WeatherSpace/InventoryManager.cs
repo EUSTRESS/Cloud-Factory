@@ -232,6 +232,10 @@ public class CloudData
         Debug.Log("targetUnion" + targetUnion);
         mcloudBaseImage = Resources.Load<Sprite>("Sprite/Base/"+ targetUnion + "union/" + "OC_Cloud_" + ((int)mEmotions[0].Key).ToString());
         mcloudDecoBaseImage = Resources.Load<Sprite>("Sprite/Base/" + targetUnion + "union/" + "Deco/"+ "OC_Cloud_" + ((int)mEmotions[0].Key).ToString());
+
+        if (mcloudBaseImage == null || mcloudDecoBaseImage == null)
+            Debug.LogWarning("NO CloudImage");
+            
     }
     private void setDecoImage(List<EmotionInfo> Emotions)
     {

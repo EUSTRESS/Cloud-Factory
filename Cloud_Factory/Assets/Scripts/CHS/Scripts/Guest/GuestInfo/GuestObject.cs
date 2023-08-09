@@ -59,6 +59,8 @@ public class GuestObject : MonoBehaviour
         new List<int> {18,19,5,17,10}  // SURPRISE
     };
 
+
+
     // 감정표현 시, 감정에 대해 표현할 말풍선 내용 리스트 -> 감정 번호를 이용하여 내용을 가져와서 채운다.
     string[] EmotionDialogList = new string[]
     {

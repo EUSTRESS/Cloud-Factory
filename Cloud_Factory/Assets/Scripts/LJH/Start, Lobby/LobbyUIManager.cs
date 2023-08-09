@@ -72,15 +72,17 @@ public class LobbyUIManager : MonoBehaviour
     private Sprite sHoveringCon;
     private Sprite sUnHoveringCon;
 
-    public Sprite[] sHoverNewLan = new Sprite[2];
-    public Sprite[] sUnHoverNewLan = new Sprite[2];
-    public Sprite[] sHoverConLan = new Sprite[2];
-    public Sprite[] sUnHoverConLan = new Sprite[2];
+    public Sprite[] sHoverNewLan = new Sprite[8];
+    public Sprite[] sUnHoverNewLan = new Sprite[8];
+    public Sprite[] sHoverConLan = new Sprite[8];
+    public Sprite[] sUnHoverConLan = new Sprite[8];
 
     public Sprite[] sSeasonBackGround = new Sprite[4];
     public Sprite[] sSeasonLogo = new Sprite[4];
 
     public GameObject[] sLanguageCheckSprites = new GameObject[2];
+
+    public RectTransform[] gNewConTransform = new RectTransform[2];
 
     void Awake()
     {
@@ -89,7 +91,6 @@ public class LobbyUIManager : MonoBehaviour
         mInvenManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         mLanguageChanger = FindObjectOfType<LanguageChanger>();
 
-        ChangeLobbyLanguage();
 
         isFirstPlay = true; // 처음 플레이한다고 넣어두고
 
@@ -107,6 +108,8 @@ public class LobbyUIManager : MonoBehaviour
 
         Load_SeasonDate(); // 이 때 계절의 정보를 토대로, 만족도 5 뭉티와, 타이틀 화면 변경.
         Load_GuestSatisfaction(); // 만족도 5 뭉티 판별
+
+        ChangeLobbyLanguage();
     }
 
     void Start()
@@ -868,20 +871,74 @@ public class LobbyUIManager : MonoBehaviour
         {
             sLanguageCheckSprites[0].SetActive(true);
             sLanguageCheckSprites[1].SetActive(false);
-            sHoveringNew = sHoverNewLan[0];
-            sUnHoveringNew = sUnHoverNewLan[0];
-            sHoveringCon = sHoverConLan[0];
-            sUnHoveringCon = sUnHoverConLan[0];
+
+            float Season = SeasonDateCalc.Instance.mSeason;
+            int iIndex = 0;
+            if (1 == Season)
+            {
+                iIndex = 0;
+                gNewConTransform[0].anchoredPosition = new Vector3(15, 43, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+            }
+            else if (2 == Season)
+            {
+                iIndex = 2;
+                gNewConTransform[0].anchoredPosition = new Vector3(135, 43, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+            }
+            else if (3 == Season)
+            {
+                iIndex = 4;
+                gNewConTransform[0].anchoredPosition = new Vector3(-101, 123, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+            }
+            else if (4 == Season)
+            {
+                iIndex = 6;
+                gNewConTransform[0].anchoredPosition = new Vector3(-50, 50, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+            }
+            sHoveringNew = sHoverNewLan[iIndex];
+            sUnHoveringNew = sUnHoverNewLan[iIndex];
+            sHoveringCon = sHoverConLan[iIndex];
+            sUnHoveringCon = sUnHoverConLan[iIndex];
         }
         else
         {
             
             sLanguageCheckSprites[0].SetActive(false);
             sLanguageCheckSprites[1].SetActive(true);
-            sHoveringNew = sHoverNewLan[1];
-            sUnHoveringNew = sUnHoverNewLan[1];
-            sHoveringCon = sHoverConLan[1];
-            sUnHoveringCon = sUnHoverConLan[1];
+
+            float Season = SeasonDateCalc.Instance.mSeason;
+            int iIndex = 1;
+            if (1 == Season)
+            {
+                iIndex = 1;
+                gNewConTransform[0].anchoredPosition = new Vector3(15, 43, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+            }
+            else if (2 == Season)
+            {
+                iIndex = 3;
+                gNewConTransform[0].anchoredPosition = new Vector3(135, 43, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+            }
+            else if (3 == Season)
+            {
+                iIndex = 5;
+                gNewConTransform[0].anchoredPosition = new Vector3(-101, 123, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+            }
+            else if (4 == Season)
+            {
+                iIndex = 7;
+                gNewConTransform[0].anchoredPosition = new Vector3(-50, 50, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+            }
+            sHoveringNew = sHoverNewLan[iIndex];
+            sUnHoveringNew = sUnHoverNewLan[iIndex];
+            sHoveringCon = sHoverConLan[iIndex];
+            sUnHoveringCon = sUnHoverConLan[iIndex];
         }
 
         mLanguageChanger.ChangeLanguageInLobby();

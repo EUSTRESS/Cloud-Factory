@@ -24,6 +24,13 @@ public class InitData
     public bool isFirstPlay;    
 }
 
+[System.Serializable]
+public class FirstSatMoongtiData
+{
+    const int MAX_NUM = 20;
+    public bool[] isFirstSatMoongti = new bool[MAX_NUM];
+}
+
 
 
 // 로비 씬 UI 담당
@@ -72,15 +79,19 @@ public class LobbyUIManager : MonoBehaviour
     private Sprite sHoveringCon;
     private Sprite sUnHoveringCon;
 
-    public Sprite[] sHoverNewLan = new Sprite[2];
-    public Sprite[] sUnHoverNewLan = new Sprite[2];
-    public Sprite[] sHoverConLan = new Sprite[2];
-    public Sprite[] sUnHoverConLan = new Sprite[2];
+    public Sprite[] sHoverNewLan = new Sprite[8];
+    public Sprite[] sUnHoverNewLan = new Sprite[8];
+    public Sprite[] sHoverConLan = new Sprite[8];
+    public Sprite[] sUnHoverConLan = new Sprite[8];
 
     public Sprite[] sSeasonBackGround = new Sprite[4];
     public Sprite[] sSeasonLogo = new Sprite[4];
 
     public GameObject[] sLanguageCheckSprites = new GameObject[2];
+
+    public RectTransform[] gNewConTransform = new RectTransform[2];
+
+    private bool[] bFirstSatMoongti = new bool[20 /*NUM_OF_GUEST*/];
 
     void Awake()
     {
@@ -89,7 +100,6 @@ public class LobbyUIManager : MonoBehaviour
         mInvenManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
         mLanguageChanger = FindObjectOfType<LanguageChanger>();
 
-        ChangeLobbyLanguage();
 
         isFirstPlay = true; // 처음 플레이한다고 넣어두고
 
@@ -107,6 +117,8 @@ public class LobbyUIManager : MonoBehaviour
 
         Load_SeasonDate(); // 이 때 계절의 정보를 토대로, 만족도 5 뭉티와, 타이틀 화면 변경.
         Load_GuestSatisfaction(); // 만족도 5 뭉티 판별
+
+        ChangeLobbyLanguage();
     }
 
     void Start()
@@ -369,6 +381,9 @@ public class LobbyUIManager : MonoBehaviour
 
             // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
 
+            // 1회 이상 만족도 5를 채운 뭉티인지 체크하기 위해, Load한다.
+            Load_FirstSatMoongtiData();
+
             // guest manager 로딩
             /*저장할 데이터 값*/
 
@@ -382,19 +397,31 @@ public class LobbyUIManager : MonoBehaviour
                     {
                         case 1: // 봄
                             if (3 != i && 6 != i && 9 != i && 12 != i && 13 != i)
+                            {
+                                gMoongti[i].SetActive(false);
                                 continue;
+                            }
                             break;
                         case 2: // 여름
                             if (0 != i && 1 != i && 8 != i && 18 != i && 19 != i)
+                            {
+                                gMoongti[i].SetActive(false);
                                 continue;
+                            }
                             break;
                         case 3: // 가을
                             if (2 != i && 5 != i && 10 != i && 14 != i && 17 != i)
+                            {
+                                gMoongti[i].SetActive(false);
                                 continue;
+                            }
                             break;
                         case 4: // 겨울
                             if (4 != i && 7 != i && 11 != i && 15 != i && 16 != i)
+                            {
+                                gMoongti[i].SetActive(false);
                                 continue;
+                            }
                             break;
                         default:
                             break;
@@ -403,15 +430,111 @@ public class LobbyUIManager : MonoBehaviour
                     GuestInfoSaveData info = dGuestInfoData.GuestInfos[i];
                     if (info == null) Debug.Log("Info Null");
 
+                    // TEST CODE
+                    //info.mSatatisfaction = 5;                    
+
+                    // 게임 플레이에서 1회 이상, 만족도 5가 채워진 뭉티인 경우 현재 만족도에 상관없이 띄워준다.
+                    if (true == bFirstSatMoongti[i])
+                    {
+                        gMoongti[i].SetActive(true);
+                        continue;
+                    }
+
                     if (5 == info.mSatatisfaction) // 만족도가 5인 뭉티
                     {     
                         // 뭉티 나오는 거는 바뀜 예정이니 출력안함.
-                        //gMoongti[i].SetActive(true);
+                        gMoongti[i].SetActive(true);
+
+                        // 아직 최초로 만족도 5가 채워지지 않았다면. 채워준다.
+                        if (false == bFirstSatMoongti[i])
+                        {
+                            bFirstSatMoongti[i] = true;                            
+                        }
                     }
                 }
                 //mGuestManagerData.GuestInfos = mGuestManager.mGuestInfo.Clone() as GuestInfoSaveData[];
+
+                // 위의 반복문에서 갱신된 데이터를 Json 파일에 저장해놓는다.
+                Save_FirstSatMoongtiData();
+
             }
         }
+    }
+
+    void Load_FirstSatMoongtiData()
+    {
+        string mInitDataPath = Path.Combine(Application.dataPath + "/Data/", "FirstSatMoongtiData.json");
+
+        if (File.Exists(mInitDataPath)) // 해당 파일이 생성되었으면 불러오기
+        {
+            // 파일 스트림 개방
+            FileStream FirstSatDataStream = new FileStream(Application.dataPath + "/Data/FirstSatMoongtiData.json", FileMode.Open);
+
+            // 복호화는 나중에 한번에 하기
+            // 스트림 배열만큼 바이트 배열 생성
+            byte[] bFirstSatData = new byte[FirstSatDataStream.Length];
+            // 읽어오기
+            FirstSatDataStream.Read(bFirstSatData, 0, bFirstSatData.Length);
+            FirstSatDataStream.Close();
+
+            // jsondata를 스트링 타입으로 가져오기
+            string jFirstSatData = Encoding.UTF8.GetString(bFirstSatData);
+            Debug.Log(jFirstSatData);
+
+            // 역직렬화
+            FirstSatMoongtiData dFristSatData = JsonConvert.DeserializeObject<FirstSatMoongtiData>(jFirstSatData);
+            if (null == dFristSatData) // 저장된 데이터 없으면 리턴
+                return;
+            // 데이터 직렬화
+            string jData = JsonConvert.SerializeObject(dFristSatData);
+
+            // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+            //Debug.Log("=======Load : dSOWSaveData =========");
+            //Debug.Log(jData);
+            //Debug.Log("=======Load=========");
+
+
+            // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
+            const int MAX_NUM = 20;
+            for(int i = 0; i < MAX_NUM; ++i)
+            {
+                bFirstSatMoongti[i] = dFristSatData.isFirstSatMoongti[i];
+            }
+            //isFirstPlay = dInitData.isFirstPlay;
+        }
+    }
+    void Save_FirstSatMoongtiData()
+    {
+        // 파일이 있다면
+        if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "FirstSatMoongtiData.json")))
+        {
+            // 삭제
+            System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "FirstSatMoongtiData.json"));
+
+        }
+
+        FileStream stream = new FileStream(Application.dataPath + "/Data/FirstSatMoongtiData.json", FileMode.OpenOrCreate);
+
+        // 저장할 변수가 담긴 클래스 생성
+        FirstSatMoongtiData mFirstSatData = new FirstSatMoongtiData();
+
+        // 데이터 업데이트
+        const int NUM_MAX = 20;
+        for (int i = 0; i < NUM_MAX; i++) 
+        {
+            mFirstSatData.isFirstSatMoongti[i] = bFirstSatMoongti[i];
+        }       
+
+        // 데이터 직렬화
+        string jFirstSatData = JsonConvert.SerializeObject(mFirstSatData);
+
+        // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+        byte[] bFirstSatData = Encoding.UTF8.GetBytes(jFirstSatData);
+        Debug.Log(jFirstSatData);
+        // 해당 파일 스트림에 적는다.                
+        stream.Write(bFirstSatData, 0, bFirstSatData.Length);
+        // 스트림 닫기
+        stream.Close();
     }
 
     void Load_SOW()
@@ -868,20 +991,86 @@ public class LobbyUIManager : MonoBehaviour
         {
             sLanguageCheckSprites[0].SetActive(true);
             sLanguageCheckSprites[1].SetActive(false);
-            sHoveringNew = sHoverNewLan[0];
-            sUnHoveringNew = sUnHoverNewLan[0];
-            sHoveringCon = sHoverConLan[0];
-            sUnHoveringCon = sUnHoverConLan[0];
+
+            float Season = SeasonDateCalc.Instance.mSeason;
+            int iIndex = 0;
+            if (1 == Season)
+            {
+                iIndex = 0;
+                gNewConTransform[0].anchoredPosition = new Vector3(15, 43, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+
+                iNewGame.GetComponent<RectTransform>().sizeDelta = new Vector2(310, 165);
+                iContiueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(250, 190);
+            }
+            else if (2 == Season)
+            {
+                iIndex = 2;
+                gNewConTransform[0].anchoredPosition = new Vector3(90, 45, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(200, -55, 0);
+
+                iNewGame.GetComponent<RectTransform>().sizeDelta = new Vector2(258, 148);
+                iContiueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(294, 162);
+            }
+            else if (3 == Season)
+            {
+                iIndex = 4;
+                gNewConTransform[0].anchoredPosition = new Vector3(-145, 125, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(-60, 45, 0);
+
+                iNewGame.GetComponent<RectTransform>().sizeDelta = new Vector2(238, 137);
+                iContiueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(279, 147);
+            }
+            else if (4 == Season)
+            {
+                iIndex = 6;
+                gNewConTransform[0].anchoredPosition = new Vector3(-90, 65, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(-12, -55, 0);
+
+                iNewGame.GetComponent<RectTransform>().sizeDelta = new Vector2(297, 151);
+                iContiueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(346, 135);
+            }
+            sHoveringNew = sHoverNewLan[iIndex];
+            sUnHoveringNew = sUnHoverNewLan[iIndex];
+            sHoveringCon = sHoverConLan[iIndex];
+            sUnHoveringCon = sUnHoverConLan[iIndex];
         }
         else
         {
             
             sLanguageCheckSprites[0].SetActive(false);
             sLanguageCheckSprites[1].SetActive(true);
-            sHoveringNew = sHoverNewLan[1];
-            sUnHoveringNew = sUnHoverNewLan[1];
-            sHoveringCon = sHoverConLan[1];
-            sUnHoveringCon = sUnHoverConLan[1];
+
+            float Season = SeasonDateCalc.Instance.mSeason;
+            int iIndex = 1;
+            if (1 == Season)
+            {
+                iIndex = 1;
+                gNewConTransform[0].anchoredPosition = new Vector3(15, 43, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+            }
+            else if (2 == Season)
+            {
+                iIndex = 3;
+                gNewConTransform[0].anchoredPosition = new Vector3(135, 43, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+            }
+            else if (3 == Season)
+            {
+                iIndex = 5;
+                gNewConTransform[0].anchoredPosition = new Vector3(-101, 123, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+            }
+            else if (4 == Season)
+            {
+                iIndex = 7;
+                gNewConTransform[0].anchoredPosition = new Vector3(-50, 50, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+            }
+            sHoveringNew = sHoverNewLan[iIndex];
+            sUnHoveringNew = sUnHoverNewLan[iIndex];
+            sHoveringCon = sHoverConLan[iIndex];
+            sUnHoveringCon = sUnHoverConLan[iIndex];
         }
 
         mLanguageChanger.ChangeLanguageInLobby();

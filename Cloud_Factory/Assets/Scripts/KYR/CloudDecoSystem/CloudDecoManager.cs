@@ -149,7 +149,7 @@ public class CloudDecoManager : MonoBehaviour
 
                 mUIDecoParts[i + 1][j].transform.GetChild(0).GetComponent<Image>().sprite = mBaseCloudDt.getSizeDifferParts(i)[j];
 
-                if (mBaseCloudDt.getCloudParts()[j] == null)
+                if (mBaseCloudDt.getSizeDifferParts(i)[j] == null)
                 {
                     ErrorFinderDibugger.GetComponent<TextMeshProUGUI>().text = mBaseCloudDt.mEmotions[i + 1].Key.ToString() + " Image Is Missing";
                 }

@@ -18,6 +18,7 @@ public class RLHReader : MonoBehaviour
 
 	private string tText;						// 대화가 저장 될 텍스트
 
+	[SerializeField]
 	private bool isKorean;
 
 	// Start is called before the first frame update
@@ -26,7 +27,10 @@ public class RLHReader : MonoBehaviour
 		instance = this;
 		tText = "";
 		mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
-		
+	}
+
+	void Start()
+	{
 		if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean") { isKorean = true; }
 		else { isKorean = false; }
 	}

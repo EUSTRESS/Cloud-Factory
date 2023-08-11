@@ -156,6 +156,7 @@ public class SeasonDateCalc : MonoBehaviour
                 {
                     GuestManager.InitDay();
                     SOWManager.InitSOW();
+                    ingredientDataAutoAdder.CheckIsCured();
 
                     // End Demo Version
                 }

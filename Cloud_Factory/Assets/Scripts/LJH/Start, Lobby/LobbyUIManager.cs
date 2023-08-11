@@ -68,6 +68,7 @@ public class LobbyUIManager : MonoBehaviour
     public bool[] bSpringMoongti = new bool[5]; // 봄 타이틀 뭉티 Bool로 만족도 5 관리
     public bool isFirstPlay = true; // 처음하는 지 이어하는 지.
     public bool isCreateData = false; // 저장한 데이터가 있는 지 없는 지
+    private bool gOptionOn; // 옵션창 켜졌는지 확인하는 bool변수
 
     [Header("IMAGE")]
     public Image iNewGame;
@@ -140,8 +141,19 @@ public class LobbyUIManager : MonoBehaviour
             tBgmValue.text = Mathf.Ceil(sBGM.value * 100).ToString();
             tSfxValue.text = Mathf.Ceil(sSFx.value * 100).ToString();
         }
+
+        gOptionOn = gOption.activeSelf;
+        if (gOptionOn)
+        {
+            sSFx.onValueChanged.AddListener(ChangeCheck_SFx);
+        }
     }
 
+    private void ChangeCheck_SFx(float Change_value)
+    {
+        sSFx.value = Change_value;
+        mSFx.Play();
+    }
     /*
      * BUTTON에 할당할 메소드
      */

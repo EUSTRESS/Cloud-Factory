@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Èñ±Íµµ 4ÀÇ Àç·áµéÀÇ ¼öÈ® °¡´É ¿©ºÎ¸¦ ÆÇ´Ü ÈÄ ÀÚµ¿À¸·Î ¸®½ºÆ®¿¡ Ãß°¡ÇÏ´Â ½ºÅ©¸³Æ®
-// ³¯ÀÌ ¹Ù²ğ ¶§¸¶´Ù, SeasonDateCalc.CalcDay()¿¡¼­ ½ÇÇà
-// Ã³À½¿¡´Â Ä¡À¯µÈ ¹¶Æ¼°¡ ¾øÀ¸¹Ç·Î 1ÀÏÂ÷¿¡¼­´Â ½ÇÇà X
+// í¬ê·€ë„ 4ì˜ ì¬ë£Œë“¤ì˜ ìˆ˜í™• ê°€ëŠ¥ ì—¬ë¶€ë¥¼ íŒë‹¨ í›„ ìë™ìœ¼ë¡œ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€í•˜ëŠ” ìŠ¤í¬ë¦½íŠ¸
+// ë‚ ì´ ë°”ë€” ë•Œë§ˆë‹¤, SeasonDateCalc.CalcDay()ì—ì„œ ì‹¤í–‰
+// ì²˜ìŒì—ëŠ” ì¹˜ìœ ëœ ë­‰í‹°ê°€ ì—†ìœ¼ë¯€ë¡œ 1ì¼ì°¨ì—ì„œëŠ” ì‹¤í–‰ X
 public class IngredientDataAutoAdder : MonoBehaviour
 {
-	int guestCount = 20;        // ¶óÀÌºê ¼­ºñ½º µµÁß ¼Õ´ÔÀÇ ¼ö Ãß°¡ °¡´É¼ºÀ¸·Î ÀÎÇÑ º¯¼ö ¼³Á¤
+	int guestCount = 20;        // ë¼ì´ë¸Œ ì„œë¹„ìŠ¤ ë„ì¤‘ ì†ë‹˜ì˜ ìˆ˜ ì¶”ê°€ ê°€ëŠ¥ì„±ìœ¼ë¡œ ì¸í•œ ë³€ìˆ˜ ì„¤ì •
 
     GuestInfos[] mGuestInfo;
 
-    private Guest mGuestManager;                        // ¼Õ´ÔÀÇ Á¤º¸¸¦ ¹Ş¾Æ¿À±â À§ÇÑ ÂüÁ¶
-    private InventoryManager mInverntoryManager;        // ÀÎº¥Åä¸® ¸Å´ÏÀúÀÇ Ã¤Áı °¡´É Àç·á ¸®½ºÆ®¸¦ ºÒ·¯¿À±â À§ÇÑ ÂüÁ¶
+    private Guest mGuestManager;                        // ì†ë‹˜ì˜ ì •ë³´ë¥¼ ë°›ì•„ì˜¤ê¸° ìœ„í•œ ì°¸ì¡°
+    private InventoryManager mInverntoryManager;        // ì¸ë²¤í† ë¦¬ ë§¤ë‹ˆì €ì˜ ì±„ì§‘ ê°€ëŠ¥ ì¬ë£Œ ë¦¬ìŠ¤íŠ¸ë¥¼ ë¶ˆëŸ¬ì˜¤ê¸° ìœ„í•œ ì°¸ì¡°
 
     // Start is called before the first frame update
     void Start()
@@ -20,10 +20,10 @@ public class IngredientDataAutoAdder : MonoBehaviour
         mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
         mInverntoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
        
-        mGuestInfo = mGuestManager.mGuestInfo;   // GuestManagerÀÇ ¼Õ´Ô Á¤º¸¸¦ ¹Ş¾Æ¿È
+        mGuestInfo = mGuestManager.mGuestInfo;   // GuestManagerì˜ ì†ë‹˜ ì •ë³´ë¥¼ ë°›ì•„ì˜´
 	}
 
-    // Ä¡À¯µÈ ¼Õ´ÔÀÌ ÀÖ´ÂÁö Ã¼Å©ÇÏ´Â ÇÔ¼ö
+    // ì¹˜ìœ ëœ ì†ë‹˜ì´ ìˆëŠ”ì§€ ì²´í¬í•˜ëŠ” í•¨ìˆ˜
     public void CheckIsCured()
     {
         for(int num = 0; num < guestCount; num++)
@@ -32,10 +32,10 @@ public class IngredientDataAutoAdder : MonoBehaviour
         }
     }
 
-    // Ä¡À¯µÈ ¼Õ´ÔÀÌ ÀÖÀ» ½Ã, InventoryManagerÀÇ mIngredientData[3](Èñ±Íµµ 4¸¦ ÀúÀåÇÏ´Â ¸®½ºÆ®)¿¡ Ä¡À¯µÈ ¼Õ´ÔÀÇ Àç·á¸¦ Ãß°¡
+    // ì¹˜ìœ ëœ ì†ë‹˜ì´ ìˆì„ ì‹œ, InventoryManagerì˜ mIngredientData[3](í¬ê·€ë„ 4ë¥¼ ì €ì¥í•˜ëŠ” ë¦¬ìŠ¤íŠ¸)ì— ì¹˜ìœ ëœ ì†ë‹˜ì˜ ì¬ë£Œë¥¼ ì¶”ê°€
     private void AddIngredientToList(int guest_num)
     {
-        // guest_num¿¡ ÇØ´çÇÏ´Â ¼Õ´ÔÀÇ Á¦°ø Àç·á ¹Ş¾Æ¿À´Â °úÁ¤
+        // guest_numì— í•´ë‹¹í•˜ëŠ” ì†ë‹˜ì˜ ì œê³µ ì¬ë£Œ ë°›ì•„ì˜¤ëŠ” ê³¼ì •
         IngredientData data = ScriptableObject.CreateInstance<IngredientData>();
         string tempWord = mGuestInfo[guest_num].mSeed.ToString();
         data.name = tempWord;
@@ -45,13 +45,13 @@ public class IngredientDataAutoAdder : MonoBehaviour
         data.emotions[0] = new EmotionInfo((Emotion)mGuestInfo[guest_num].mSeed, -1);
         data.init();
 
-        // Àç·á°¡ Áßº¹µÇ´ÂÁö °Ë»ç
+        // ì¬ë£Œê°€ ì¤‘ë³µë˜ëŠ”ì§€ ê²€ì‚¬
         foreach (IngredientData tempData in mInverntoryManager.mIngredientDatas[3].mItemList)
         {
             if (tempData.dataName == data.dataName) { return; }
         }
 
-        // Àç·á°¡ Áßº¹µÇÁö ¾ÊÀ¸¸é Èñ±Íµµ 4 Àç·á ¸®½ºÆ®¿¡ Ãß°¡
+        // ì¬ë£Œê°€ ì¤‘ë³µë˜ì§€ ì•Šìœ¼ë©´ í¬ê·€ë„ 4 ì¬ë£Œ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
         mInverntoryManager.mIngredientDatas[3].mItemList.Add(data);
     } 
 }

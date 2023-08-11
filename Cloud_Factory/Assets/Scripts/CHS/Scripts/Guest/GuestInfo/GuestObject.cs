@@ -433,8 +433,10 @@ private void Update()
 
         // Text가 NULL이 아닌경우 내용 채워넣기
         if (Text != null)
+        {
+            Text.fontSize = 3.5f;
             Text.text = temp;
-
+        }
         SpeechBubble.transform.GetChild(1).gameObject.transform.localScale = this.transform.localScale;
 
         // 말풍선 띄우기

@@ -339,6 +339,11 @@ public class Guest : MonoBehaviour
 
         Debug.Log("기존 만족도 : " + mGuestInfo[guestNum].mSatatisfaction + "현재 만족도 : " + temp);
         mGuestInfo[guestNum].mSatatisfaction = temp;
+
+        if(mGuestInfo[guestNum].mSatatisfaction >= 5)
+        {
+            mGuestInfo[guestNum].isCure = true;
+        }
     }
 
 

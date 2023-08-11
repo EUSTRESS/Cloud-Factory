@@ -32,21 +32,33 @@ public class CommonUIManager : MonoBehaviour
     [Header("IMAGES")]
     public Image        iSeasons;      // 달력 이미지
 
-    private AudioSource mSFx;          // 효과음 오디오 소스 예시
+    private AudioSource mSFx;          // 효과음 오디오 소스 예시, 기본 효과음
+    private AudioSource mBGM;
 
     private TutorialManager mTutorialManager;
     private Guest mGuestManager;
 	void Awake()
     {
-        if (SceneManager.GetActiveScene().name == "Lobby" ||
-            SceneManager.GetActiveScene().name == "Space Of Weather" ||
-            SceneManager.GetActiveScene().name == "Drawing Room" ||
-            SceneManager.GetActiveScene().name == "Cloud Factory")
-            mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
+        //if (SceneManager.GetActiveScene().name == "Lobby" ||
+        //    SceneManager.GetActiveScene().name == "Space Of Weather" ||
+        //    SceneManager.GetActiveScene().name == "Drawing Room" ||
+        //    SceneManager.GetActiveScene().name == "Cloud Factory")
 
-		mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        // 모든 씬에서 찾는다.
+        mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
+        mBGM = GameObject.Find("mBGM").GetComponent<AudioSource>();
+
+        mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
         mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
-	}
+
+        if (SceneData.Instance) // null check
+        {
+            // 씬이 변경될 때 저장된 값으로 새로 업데이트
+            mBGM.volume = SceneData.Instance.BGMValue;
+            mSFx.volume = SceneData.Instance.SFxValue;
+            //mSubSFx.volume = SceneData.Instance.SFxValue;
+        }
+    }
 
     void Update()
     {
@@ -88,11 +100,15 @@ public class CommonUIManager : MonoBehaviour
             tSfxValue.text = Mathf.Ceil(sSFx.value * 100).ToString();
         }
 
-        OptionOn = gOption.activeSelf;
-        if (OptionOn)
+        if (gOption)
         {
-            sSFx.onValueChanged.AddListener(ChangeCheck_SFx);
+            OptionOn = gOption.activeSelf;
+            if (OptionOn)
+            {
+                sSFx.onValueChanged.AddListener(ChangeCheck_SFx);
+            }
         }
+        
     }
 
     private void ChangeCheck_SFx(float change_value)
@@ -108,6 +124,7 @@ public class CommonUIManager : MonoBehaviour
 		if (mTutorialManager.isFinishedTutorial[1] == false) { return; }
 
         LoadingSceneController.Instance.LoadScene("Space Of Weather");
+        mSFx.Play();
     }
     public void GoCloudFactory()
     {
@@ -117,6 +134,7 @@ public class CommonUIManager : MonoBehaviour
         // 재료 채집 튜토리얼 후 구름공장으로 이동할 때, 튜토리얼 진행도를 저장
 		if (!mTutorialManager.isFinishedTutorial[2]) { mTutorialManager.isFinishedTutorial[2] = true; }
 		LoadingSceneController.Instance.LoadScene("Cloud Factory");
+        mSFx.Play();
     }
     public void GoDrawingRoom()
     {
@@ -124,6 +142,7 @@ public class CommonUIManager : MonoBehaviour
         if (mTutorialManager.isFinishedTutorial[0] == false) { mTutorialManager.isFinishedTutorial[0] = true; }
 
         LoadingSceneController.Instance.LoadScene("Drawing Room");
+        mSFx.Play();
     }
     public void GoRecordOfHealing()
     {
@@ -131,11 +150,13 @@ public class CommonUIManager : MonoBehaviour
         SceneData.Instance.prevSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
         LoadingSceneController.Instance.LoadScene("Record Of Healing");
+        mSFx.Play();
     }
     public void GoPrevScene()
     {
-        // 치유의 기록을 들어가기전 씬으로 이동   
+        // 치유의 기록을 들어가기전 씬으로 이동      
         LoadingSceneController.Instance.LoadScene(SceneData.Instance.prevSceneIndex);
+        mSFx.Play();        
     }
     public void GoGiveCloud()
     {
@@ -148,10 +169,12 @@ public class CommonUIManager : MonoBehaviour
 
         LoadingSceneController.Instance.LoadScene("Give Cloud");
         GameObject.Find("InventoryManager").GetComponent<InventoryManager>().go2CloudFacBtn();
+        mSFx.Play();
     }
     public void GoCloudStorage()
     {
         LoadingSceneController.Instance.LoadScene("Cloud Storage");
+        mSFx.Play();
     }
 
     public void GoDecoCloud()
@@ -159,6 +182,7 @@ public class CommonUIManager : MonoBehaviour
         // 구름 공장에서 구름 데코까지 이동하는 튜토리얼
 		if (mTutorialManager.isFinishedTutorial[5] == false) { mTutorialManager.isFinishedTutorial[5] = true; }
 		LoadingSceneController.Instance.LoadScene("DecoCloud");
+        mSFx.Play();
     }
 
     // 옵션창 활성화, 비활성화
@@ -181,10 +205,12 @@ public class CommonUIManager : MonoBehaviour
     public void ActiveGuideBook()
     {
         gGuideBook.SetActive(true);
+        mSFx.Play();
     }
     public void UnActiveGuideBook()
     {
         gGuideBook.SetActive(false);
+        mSFx.Play();
     }
 
     // 게임 종료

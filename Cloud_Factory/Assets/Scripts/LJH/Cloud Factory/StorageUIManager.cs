@@ -27,7 +27,24 @@ public class StorageUIManager : MonoBehaviour
     public CloudMakeSystem cloudMakeSystem;
     private Dropdown    mDropdown;    // 드롭다운 클래스   
 
+    private AudioSource mSFx;          // 효과음 오디오 소스 예시, 기본 효과음
+    private AudioSource mBGM;
+
     private InventoryContainer inventoryContainer; //yeram
+
+    private void Awake()
+    {
+        mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
+        mBGM = GameObject.Find("mBGM").GetComponent<AudioSource>();
+
+        if (SceneData.Instance) // null check
+        {
+            // 씬이 변경될 때 저장된 값으로 새로 업데이트
+            mBGM.volume = SceneData.Instance.BGMValue;
+            mSFx.volume = SceneData.Instance.SFxValue;
+            //mSubSFx.volume = SceneData.Instance.SFxValue;
+        }
+    }
 
     void Start()
     {
@@ -38,10 +55,17 @@ public class StorageUIManager : MonoBehaviour
     void Update()
     {
         // 화살표 플립
-        if (mTemplate.activeSelf) mArrow.sprite = mDropBoxUp;
-        else if (!mTemplate.activeSelf) mArrow.sprite = mDropBoxDown;
+        //mSortDropBox.
+        //if (mSortDropBox.interactable) { 
+        //    mArrow.sprite = mDropBoxUp; 
+        //}
+        //else if (!mTemplate.activeSelf) {
+        //    mArrow.sprite = mDropBoxDown; 
+        //}
 
         UpdateMakeLoading();
+
+        
     }
 
     // 감정으로 정렬
@@ -62,6 +86,8 @@ public class StorageUIManager : MonoBehaviour
             mGiveCloudCheckBox[(int)ECheckBox.Emotion].SetActive(false);
             inventoryContainer.cancelDropdownEvent();
         }
+
+        mSFx.Play();
     }
 
     // 돌아가기 버튼
@@ -78,6 +104,7 @@ public class StorageUIManager : MonoBehaviour
 		bool isMakingCloud = GameObject.Find("I_CloudeGen").GetComponent<CloudMakeSystem>().isMakingCloud;
         if (isMakingCloud) { return; }
 		LoadingSceneController.Instance.LoadScene("Cloud Factory");
+        mSFx.Play();
     }
     public void MakeCloud()
     {
@@ -90,6 +117,8 @@ public class StorageUIManager : MonoBehaviour
         // 구름이 이미 만들어진 상태는 애초에 더이상 재료를 조합칸에 넣을 수 없기 때문에 따라 return 처리 하지 않음
 		if (isMakingCloud || isMtrlListEmpty) { Debug.Log("조합이 불가능합니다."); return; }     
 		cloudMakeSystem.E_createCloud(EventSystem.current.currentSelectedGameObject.name);
+
+        mSFx.Play();
     }
 
     void UpdateMakeLoading()
@@ -132,5 +161,9 @@ public class StorageUIManager : MonoBehaviour
             mUpdateLoadingPer = mUpdateTime / mLoadingCoolDownTime;
             mMakeLoadingSlider.fillAmount = (Mathf.Lerp(0, 100, mUpdateLoadingPer) / 100);
         }
+    }
+    public void SFx_Play()
+    {
+        mSFx.Play();
     }
 }

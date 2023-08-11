@@ -152,7 +152,7 @@ public class LobbyUIManager : MonoBehaviour
     private void ChangeCheck_SFx(float Change_value)
     {
         sSFx.value = Change_value;
-        mSFx.Play();
+        //mSFx.Play();
     }
     /*
      * BUTTON에 할당할 메소드
@@ -938,6 +938,8 @@ public class LobbyUIManager : MonoBehaviour
             NewGame();
         else
             gWarning.SetActive(true);
+
+        mSFx.Play();
     }
     public void ActiveContinueWarning()
     {
@@ -947,16 +949,22 @@ public class LobbyUIManager : MonoBehaviour
             ContinueGame();
         else
             gContinueWarning.SetActive(true);
+
+        mSFx.Play();
     }
 
     public void UnAcitveWarning()
     {
         gWarning.SetActive(false);
+
+        mSFx.Play();
     }
 
     public void UnAcitveContinueWarning()
     {
         gContinueWarning.SetActive(false);
+
+        mSFx.Play();
     }
     public void HoveringNewGame()
     {
@@ -985,6 +993,8 @@ public class LobbyUIManager : MonoBehaviour
         LanguageManager.GetInstance().SetKorean();
         ChangeLobbyLanguage();
 
+        mSFx.Play();
+
     }
 
     public void ChangeEng()
@@ -994,6 +1004,7 @@ public class LobbyUIManager : MonoBehaviour
         LanguageManager.GetInstance().SetEnglish();
         ChangeLobbyLanguage();
 
+        mSFx.Play();
     }
 
 

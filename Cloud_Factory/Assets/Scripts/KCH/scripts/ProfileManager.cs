@@ -70,10 +70,15 @@ public class ProfileManager : MonoBehaviour
 		InitProfile();
 	}
 
+	void Start()
+	{
+		
+	}
+
 	// Update is called once per frame
 	void Update()
     {
-        
+    	UpdateDialogPaper();
     }
 
     // 초기 프로필 설정

@@ -13,6 +13,7 @@ public class CommonUIManager : MonoBehaviour
     // 오브젝트 Active 관리
     public GameObject   gOption;       // 옵션 게임 오브젝트
     public GameObject   gGuideBook;
+    private bool OptionOn; // 옵션창이 켜졌는지 확인하는 변수
 
     [Header("TEXT")]
     public Text         tDate;         // 날짜 텍스트
@@ -86,8 +87,20 @@ public class CommonUIManager : MonoBehaviour
             tBgmValue.text = Mathf.Ceil(sBGM.value * 100).ToString();
             tSfxValue.text = Mathf.Ceil(sSFx.value * 100).ToString();
         }
+
+        OptionOn = gOption.activeSelf;
+        if (OptionOn)
+        {
+            sSFx.onValueChanged.AddListener(ChangeCheck_SFx);
+        }
     }
-    
+
+    private void ChangeCheck_SFx(float change_value)
+    {
+        sSFx.value = change_value;
+        mSFx.Play();
+    }
+
     // 씬 이동 버튼들
     public void GoSpaceOfWeather()
     {

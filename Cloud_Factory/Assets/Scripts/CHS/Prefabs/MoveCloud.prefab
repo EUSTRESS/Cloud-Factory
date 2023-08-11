@@ -111,11 +111,9 @@ MonoBehaviour:
   part_2: {fileID: 8424231269261285982}
   Parts_fly: {fileID: 6463415146193650126, guid: c934e15f110fb82409de257557fa3d82, type: 3}
   Parts_fly_2: {fileID: 2891701104757291661, guid: f77a7a90f83a2354c9d40680c706ed6d, type: 3}
-  Target_guestnum: 0
-  Change_Cloud_scale: {x: 0, y: 0, z: 0}
-  Change_Part_scale: {x: 0, y: 0, z: 0}
-  Change_CloudImage: {fileID: 0}
-  Change_PartImage: {fileID: 0}
+  IsUsing: 0
+  random_num: 0
+  random_num_2: 0
 --- !u!222 &8424231269228615617
 CanvasRenderer:
   m_ObjectHideFlags: 0

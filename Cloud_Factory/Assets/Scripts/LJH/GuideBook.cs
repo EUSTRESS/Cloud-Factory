@@ -385,8 +385,11 @@ public class GuideBook : MonoBehaviour
                 temp.transform.GetChild(1).GetComponent<Text>().text = ingredientHistory[rarity - 1][i].dataName.ToString();
                 temp.transform.GetChild(2).transform.Find("Text0").GetComponent<Text>().text =
                     ingredientHistory[rarity - 1][i].emotions[0].getKey2Int().ToString();
-                temp.transform.GetChild(2).transform.Find("Text1").GetComponent<Text>().text =
-                    ingredientHistory[rarity - 1][i].emotions[1].getKey2Int().ToString();
+                if(rarity <= 3)
+                {
+                    temp.transform.GetChild(2).transform.Find("Text1").GetComponent<Text>().text =
+                        ingredientHistory[rarity - 1][i].emotions[1].getKey2Int().ToString();
+                }
             }
             else
             {
@@ -404,8 +407,11 @@ public class GuideBook : MonoBehaviour
                 temp.transform.GetChild(1).GetComponent<Text>().text = ingredientHistory[rarity - 1][i].dataName.ToString();
                 temp.transform.GetChild(2).transform.Find("Text0").GetComponent<Text>().text =
                     ingredientHistory[rarity - 1][i].emotions[0].getKey2Int().ToString();
-                temp.transform.GetChild(2).transform.Find("Text1").GetComponent<Text>().text =
-                    ingredientHistory[rarity - 1][i].emotions[1].getKey2Int().ToString();
+                if(rarity <= 3)
+                {
+                    temp.transform.GetChild(2).transform.Find("Text1").GetComponent<Text>().text =
+                        ingredientHistory[rarity - 1][i].emotions[1].getKey2Int().ToString();
+                }
             }
             else
             {

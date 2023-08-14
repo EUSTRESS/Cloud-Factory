@@ -43,16 +43,17 @@ public class Parts_BummerEffect : MonoBehaviour
         MoveDir_Part3[0] = new Vector3(-0.5f, -1.0f, 0f);    // 파츠3의 왼쪽방향
         MoveDir_Part3[1] = new Vector3(1.3f, -1.0f, 0f);     // 파츠3의 오른쪽방향
 
-        for (int i = 0; i < 3; i++) { ChangeDir_Times[i] = 0.0f; }
-
         // true면은 왼쪽, false면은 오른쪽
         ChangeDir_Check[0] = true;
         ChangeDir_Check[1] = true;
         ChangeDir_Check[2] = false;
 
-        for (int i = 0; i < 3; i++) { FadeOut_StartTime[i] = 0.0f; }
-        for (int i = 0; i < 3; i++) { transparency[i] = 1.0f; }
-
+        for (int i = 0; i < 3; i++) 
+        { 
+            FadeOut_StartTime[i] = 0.0f;
+            transparency[i] = 1.0f;
+            ChangeDir_Times[i] = 0.0f;
+        }
         StartEffect = 0.0f;
     }
 
@@ -102,7 +103,7 @@ public class Parts_BummerEffect : MonoBehaviour
     {
         ChangeDir_Times[2] += Time.deltaTime;
         FadeOut_StartTime[2] += Time.deltaTime;
-        Parts[2].transform.Translate(dir3 * (Time.deltaTime / 1));
+        Parts[2].transform.Translate(dir3 * (Time.deltaTime / 1.5f));
         if (ChangeDir_Times[2] >= 0.5f)
         {
             ChangeDir_Check[2] = !(ChangeDir_Check[2]);

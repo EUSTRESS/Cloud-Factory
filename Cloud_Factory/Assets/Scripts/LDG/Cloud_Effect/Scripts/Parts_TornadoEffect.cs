@@ -33,6 +33,10 @@ public class Parts_TornadoEffect : MonoBehaviour
     // 1,2,3파츠가 순서대로 나오는 시간변수
     private float StartEffect;
 
+    private float speed = 0.5f;
+    private float frequency = 0.1f;
+    private float amplitude = 0.1f;
+
     void Start()
     {
         MoveDir_Part1[0] = new Vector3(-1.2f, 1.0f, 0f);    // 파츠1의 왼쪽방향
@@ -106,7 +110,7 @@ public class Parts_TornadoEffect : MonoBehaviour
     {
         ChangeDir_Times[2] += Time.deltaTime;
         FadeOut_StartTime[2] += Time.deltaTime;
-        PartBodys[2].transform.Translate(dir3 * (Time.deltaTime / 1));
+        PartBodys[2].transform.Translate(dir3 * (Time.deltaTime / 1.5f));
         if (ChangeDir_Times[2] >= 0.5f)
         {
             ChangeDir_Check[2] = !(ChangeDir_Check[2]);

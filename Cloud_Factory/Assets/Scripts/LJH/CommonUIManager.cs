@@ -219,4 +219,9 @@ public class CommonUIManager : MonoBehaviour
         mSFx.Play();
         Application.Quit();
     }
+
+    public void SFx_Play()
+    {
+        mSFx.Play();
+    }
 }

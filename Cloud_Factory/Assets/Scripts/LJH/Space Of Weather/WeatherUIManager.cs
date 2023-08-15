@@ -50,8 +50,13 @@ public class WeatherUIManager : MonoBehaviour
 	public Sprite[] mWinterGardenSprites = new Sprite[2];
     private Sprite[] mSwitchGardenSprites = new Sprite[2];
 
-	//예람
-	private GameObject selectedYard;
+    private AudioSource mSFx;          // 효과음 오디오 소스 예시, 기본 효과음
+    private AudioSource mSubSFx;
+
+    public SoundManager mSoundManager;
+
+    //예람
+    private GameObject selectedYard;
     private void Awake()
     {
         mSeason = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>();
@@ -62,6 +67,17 @@ public class WeatherUIManager : MonoBehaviour
         SceneData mSceneData = GameObject.Find("SceneDataManager").GetComponent<SceneData>();
         if (true == mSceneData.mContinueGmae) // 이어하기 중이라면 로딩.
             Load_SOWManagerData();
+
+        mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
+        mSubSFx = GameObject.Find("mSubSFx").GetComponent<AudioSource>();
+
+        if (SceneData.Instance) // null check
+        {
+            // 씬이 변경될 때 저장된 값으로 새로 업데이트
+            mSubSFx.volume = SceneData.Instance.SFxValue;
+            mSFx.volume = SceneData.Instance.SFxValue;
+            //mSubSFx.volume = SceneData.Instance.SFxValue;
+        }
 
     }
 
@@ -174,12 +190,17 @@ public class WeatherUIManager : MonoBehaviour
         if (mTutorialManager.isFinishedTutorial[2] == false)
         { mTutorialManager.SetActiveFadeOutScreen(false); }
 		mGuideGather.SetActive(true);
-	}
+
+        mSFx.Play();
+
+    }
     // 나가기, 채집하시겠씁니까? 오브젝트 비활성화    
     public void CloseGuideGather()
     {
 		if (mTutorialManager.isFinishedTutorial[2] == false) { return; }
 		mGuideGather.SetActive(false);
+
+        mSFx.Play();
     }
     // 채집하기
     public void GoingToGather()
@@ -276,6 +297,10 @@ public class WeatherUIManager : MonoBehaviour
         mGathering.SetActive(false);
         mGatherResult.SetActive(true);
 
+
+        mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_HarvestDone];
+        mSubSFx.Play();
+
         CancelInvoke(); // 인보크 충돌 방지를 위해서 출력 결과가 나오면 모든 인보크 꺼버림
     }
 
@@ -341,7 +366,7 @@ public class WeatherUIManager : MonoBehaviour
             GameObject.Find("B_GardenSpring").transform.SetSiblingIndex(5);
 		}
 
-		mGatherResult.SetActive(false);        
+		mGatherResult.SetActive(false);
     }
 
     void Load_SOWManagerData()

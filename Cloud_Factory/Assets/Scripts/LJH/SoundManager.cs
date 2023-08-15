@@ -16,7 +16,7 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip[] mSeasonBGMArray = new AudioClip[4]; // 4계절별로 달라지는 BGM
     public AudioClip[] mBGMArray = new AudioClip[2]; // [0] 테마 [1] 응접실
-    private enum SFx {
+    public enum SFx {
         SFx_CloudeDecorEnd,
         SFx_CloudMaking,
         SFx_CloudMonitor,

@@ -85,6 +85,7 @@ public class DialogManager : MonoBehaviour
             ReadDialog();
 
             initAnimator();
+            initTakeGuestPanel();
 
             // 대화 패널을 활성화
             gTextPanel.SetActive(true);
@@ -96,7 +97,6 @@ public class DialogManager : MonoBehaviour
 
     void Start()
     {
-        initTakeGuestPanel();
         UpdateReasonText();
     }
 
@@ -459,9 +459,9 @@ public class DialogManager : MonoBehaviour
         }
         else
         {
-            tPanelName.text = "Name: " + guest.mNameEN;
+            tPanelName.text = "Name: " + guest.mName;
             tPanelAge.text = "Age: " + guest.mAge;
-            tPanelJob.text = "Job: " + guest.mJobEN;
+            tPanelJob.text = "Job: " + guest.mJob;
         }
         
         iPanelPortrait.sprite = sGuestImageArr[mGuestNum];

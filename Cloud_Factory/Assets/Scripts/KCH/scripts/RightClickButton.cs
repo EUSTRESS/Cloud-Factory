@@ -11,7 +11,7 @@ public class RightClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 
 	private TutorialManager mTutorialManager;
 
-	void Start()
+	void Awake()
 	{
 		mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
 

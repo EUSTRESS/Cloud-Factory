@@ -105,6 +105,10 @@ public class GuestObject : MonoBehaviour
     public Animator BackEffect;
     GameObject Body;
 
+    // Add Sound
+    private AudioSource mSubSFx;
+    private SoundManager mSoundManager;
+
     // 손님 번호를 저장해준다.
     public void setGuestNum(int guestNum = 0)
     {
@@ -115,6 +119,10 @@ public class GuestObject : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+
+        // Sound
+        mSubSFx = GameObject.Find("mSubSFx").GetComponent<AudioSource>();
+        mSoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
     }
 
     public void init()
@@ -396,6 +404,13 @@ private void Update()
         Anim.SetTrigger("Start");
         mGuestAnim.SetTrigger("Hint");
 
+        // Add Sound       
+        if (null != mSubSFx && null != mSoundManager)
+        {
+            mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_Hint];
+            mSubSFx.Play();
+        }
+
         // 일정시간 이후 말풍선 제거
         Invoke("EndBubble", 10.0f);
     }
@@ -443,6 +458,13 @@ private void Update()
         SpeechBubble.SetActive(true);
         SpeechBubble.transform.GetChild(0).gameObject.SetActive(true);
         Anim.SetTrigger("Start");
+
+        // Add Sound       
+        if (null != mSubSFx && null != mSoundManager)
+        {
+            mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_Hint];
+            mSubSFx.Play();
+        }
 
         // 딜레이
         yield return new WaitForSeconds(DELAY_OF_SPEECH_BUBBLE);

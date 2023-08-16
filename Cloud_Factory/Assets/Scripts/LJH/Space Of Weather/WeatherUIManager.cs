@@ -232,7 +232,9 @@ public class WeatherUIManager : MonoBehaviour
         if (GameObject.Find("TutorialManager").GetComponent<TutorialManager>().isFinishedTutorial[2] == false
             && GameObject.Find("TutorialManager").GetComponent<TutorialManager>().isTutorial == true) 
         { mSOWManager.yardGatherCount[selectedYard.transform.GetSiblingIndex()]++; }
-	}
+
+        mSFx.Play();
+    }
     
     void UpdateGatherAnim(int _iX, int _iY, bool _bSpring, bool _bSummer, bool _bFall, bool _bWinter)
     {
@@ -367,6 +369,8 @@ public class WeatherUIManager : MonoBehaviour
 		}
 
 		mGatherResult.SetActive(false);
+
+        mSFx.Play();
     }
 
     void Load_SOWManagerData()

@@ -203,6 +203,7 @@ public class CloudMakeSystem : MonoBehaviour
     [HideInInspector]
     public bool isMakingCloud;   // 구름 제작 중, InventoryContainer.cs에서 선택된 재료들을 클릭할 수 없게 제한하기 위한 변수 
 
+    public int getCurrentTotalMtrl() { return total; } 
     private void d_selectMtrl(string name)
     {
         if (total >= 5) return; //최대 5개까지 선택 가능
@@ -526,8 +527,8 @@ public class CloudMakeSystem : MonoBehaviour
                                                                                                                                               //큰 수치 = 구름색
                                                                                                                                               //다음 수치 = 구름의 장식
 
-        Sprite ResultCloudSprite = transform.Find("I_Result").gameObject.GetComponent<Image>().sprite;
-        ResultCloudSprite = inventoryManager.createdCloudData.getBaseCloudSprite();
+        Sprite ResultCloudSprite = inventoryManager.createdCloudData.getBaseCloudSprite(); 
+        transform.Find("I_Result").gameObject.GetComponent<Image>().sprite = ResultCloudSprite;
 
         if (ResultCloudSprite == null)
             ErrorFinderDibugger.GetComponent<Text>().text = "Debug Log : No Cloud Image" + inventoryManager.createdCloudData.getFinalEmotion()[0];

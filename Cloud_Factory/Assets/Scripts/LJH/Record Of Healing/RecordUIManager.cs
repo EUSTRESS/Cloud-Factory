@@ -41,11 +41,25 @@ public class RecordUIManager : MonoBehaviour
     public GameObject mGetCloudContainer;
     SOWManager SOWManager;
 
+    private AudioSource mSFx;          // 효과음 오디오 소스 예시, 기본 효과음
+    private AudioSource mBGM;
+
     void Awake()
     {
         mProfile1 = GameObject.Find("I_ProfileBG1").GetComponent<ProfileMoving>();
         mProfile2 = GameObject.Find("I_ProfileBG2").GetComponent<ProfileMoving>();
         mProfile3 = GameObject.Find("I_ProfileBG3").GetComponent<ProfileMoving>();
+
+        mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
+        mBGM = GameObject.Find("mBGM").GetComponent<AudioSource>();
+
+        if (SceneData.Instance) // null check
+        {
+            // 씬이 변경될 때 저장된 값으로 새로 업데이트
+            mBGM.volume = SceneData.Instance.BGMValue;
+            mSFx.volume = SceneData.Instance.SFxValue;
+            //mSubSFx.volume = SceneData.Instance.SFxValue;
+        }
 
         SOWManager SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
 
@@ -97,6 +111,8 @@ public class RecordUIManager : MonoBehaviour
 
         // 다음 뭉티 정보 불러오는 메소드 호출하는 부분
         Debug.Log("다음 뭉티 정보 호출");
+
+        mSFx.Play();
     }
     public void ShowPrevProfile()
     {
@@ -120,6 +136,8 @@ public class RecordUIManager : MonoBehaviour
 
 
         Debug.Log("이전 뭉티 정보 호출");
+
+        mSFx.Play();
     }
 
     void DelayActiveBtn()
@@ -141,6 +159,8 @@ public class RecordUIManager : MonoBehaviour
 
         // 뭉티 정보 불러오는 메소드 호출하는 부분
         Debug.Log("불만 뭉티 정보 불러오는 메소드 호출");
+
+        mSFx.Play();
     }
     // 전체 보기
     public void ShowAllMoongti()
@@ -155,6 +175,8 @@ public class RecordUIManager : MonoBehaviour
 
         // 뭉티 정보 불러오는 메소드 호출하는 부분
         Debug.Log("전체 뭉티 정보 불러오는 메소드 호출");
+
+        mSFx.Play();
     }
 
     void ControlMoongtiUI(Sprite[] _szProfile, bool _bisUpset)

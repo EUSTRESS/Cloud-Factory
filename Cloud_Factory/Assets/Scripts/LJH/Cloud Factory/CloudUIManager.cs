@@ -27,9 +27,23 @@ public class CloudUIManager : MonoBehaviour
 
     private Dropdown mDropdown;       // 드롭다운 클래스
 
+    private AudioSource mSFx;          // 효과음 오디오 소스 예시, 기본 효과음
+    private AudioSource mBGM;
+
     void Start()
     {
         mDropdown = GetComponent<Dropdown>();
+
+        mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
+        mBGM = GameObject.Find("mBGM").GetComponent<AudioSource>();
+
+        if (SceneData.Instance) // null check
+        {
+            // 씬이 변경될 때 저장된 값으로 새로 업데이트
+            mBGM.volume = SceneData.Instance.BGMValue;
+            mSFx.volume = SceneData.Instance.SFxValue;
+            //mSubSFx.volume = SceneData.Instance.SFxValue;
+        }
     }
 
     void Update()
@@ -49,6 +63,8 @@ public class CloudUIManager : MonoBehaviour
             mGiveCloudCheckBox[(int)ECheckBox.Emotion].SetActive(false);
 
             Debug.Log("보관 기간별로 정렬 메소드 호출");
+
+            mSFx.Play();
         }
         else
         {
@@ -69,7 +85,8 @@ public class CloudUIManager : MonoBehaviour
             Debug.Log("현재 인덱스 : " + mDropdown.mDropdownIndex);
             Debug.Log("인덱스 받아와서 현재 적용되어 있는 인덱스로 감정별 정렬 메소드 호출");
 
-            
+            mSFx.Play();
+
         }
         else
         {
@@ -85,6 +102,8 @@ public class CloudUIManager : MonoBehaviour
             CheckBox.SetActive(true);
         else
             CheckBox.SetActive(false);
+
+        mSFx.Play();
     }
     // 드롭박스 활성화 토글
     void ToggleDropBox(TMP_Dropdown DropDown)
@@ -93,10 +112,19 @@ public class CloudUIManager : MonoBehaviour
             DropDown.interactable = true;
         else
             DropDown.interactable = false;
+
+        mSFx.Play();
     }
     // 돌아가기 버튼
     public void GoToCloudFactory()
     {
         LoadingSceneController.Instance.LoadScene("Cloud Factory");
+
+        mSFx.Play();
+    }
+
+    public void SFx_Play()
+    {
+        mSFx.Play();
     }
 }

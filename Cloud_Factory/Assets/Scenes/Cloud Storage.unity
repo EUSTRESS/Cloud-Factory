@@ -509,6 +509,7 @@ GameObject:
   - component: {fileID: 34863543}
   - component: {fileID: 34863542}
   - component: {fileID: 34863541}
+  - component: {fileID: 34863544}
   m_Layer: 5
   m_Name: D_Sort
   m_TagString: Untagged
@@ -605,6 +606,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1381769641}
+        m_TargetAssemblyTypeName: CloudUIManager, Assembly-CSharp
+        m_MethodName: SFx_Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &34863542
 MonoBehaviour:
@@ -644,6 +657,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 34863539}
   m_CullTransparentMesh: 1
+--- !u!114 &34863544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34863539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1381769641}
+          m_TargetAssemblyTypeName: CloudUIManager, Assembly-CSharp
+          m_MethodName: SFx_Play
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &37459249
 GameObject:
   m_ObjectHideFlags: 0
@@ -12565,6 +12607,18 @@ MonoBehaviour:
         - m_Target: {fileID: 1970321358}
           m_TargetAssemblyTypeName: ChangeCursor, Assembly-CSharp
           m_MethodName: SetHoldCursor
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1381769641}
+          m_TargetAssemblyTypeName: CloudUIManager, Assembly-CSharp
+          m_MethodName: SFx_Play
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

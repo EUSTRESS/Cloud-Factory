@@ -16,14 +16,18 @@ public class Make_PartEffect : MonoBehaviour
     public GameObject Parts_HeartBeatEffect;
     private GameObject New_HeartBeatEffect;
 
+    public GameObject Parts_BounceEffect;
+    private GameObject New_BounceEffect;
+
     private float destroy_time;
 
     void Start()
     {
-        //InvokeRepeating("Make_FadeEffect_Cloud", 1.0f, 5.0f);
-        //InvokeRepeating("Make_TornadoEffect_Cloud", 1.5f, 5.0f);
-        //InvokeRepeating("Make_BummerEffect_Cloud", 1.5f, 5.0f);
-        //InvokeRepeating("Make_HeartBeatEffect_Cloud", 2.0f, 5.0f);
+        //InvokeRepeating("Make_FadeEffect_Cloud", 0.0f, 5.0f);
+        //InvokeRepeating("Make_TornadoEffect_Cloud", 0.0f, 5.0f);
+        //InvokeRepeating("Make_BummerEffect_Cloud", 0.0f, 5.0f);
+        //InvokeRepeating("Make_HeartBeatEffect_Cloud", 0.0f, 5.0f);
+        //InvokeRepeating("Make_BounceEffect_Cloud", 0.0f, 5.0f);
     }
 
     // Update is called once per frame
@@ -36,6 +40,7 @@ public class Make_PartEffect : MonoBehaviour
             //Destroy(New_TornadoEffect);
             //Destroy(New_BummerEffect);
             //Destroy(New_HeartBeatEffect);
+            //Destroy(New_BounceEffect);
             destroy_time = 0.0f;
         }
     }
@@ -58,5 +63,10 @@ public class Make_PartEffect : MonoBehaviour
     void Make_HeartBeatEffect_Cloud()
     {
         New_HeartBeatEffect = Instantiate(Parts_HeartBeatEffect);
+    }
+
+    void Make_BounceEffect_Cloud()
+    {
+        New_BounceEffect = Instantiate(Parts_BounceEffect);
     }
 }

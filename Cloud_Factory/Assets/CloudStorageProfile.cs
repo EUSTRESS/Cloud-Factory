@@ -57,25 +57,6 @@ public class CloudStorageProfile : MonoBehaviour
         UIManager = GameObject.Find("UIManager").GetComponent<RecordUIManager>();
         mRLHReader = GameObject.Find("ProfileGroup").GetComponent<RLHReader>();
         mRLHReader = RLHReader.GetInstance();
-        // 기존 기능 주석처리
-        
-        // 착석중인 손님 중, 구름을 제공받지 못한 손님만 제공 가능 리스트에 넣는다.
-        /*
-        List<int> temp = new List<int>();
-        foreach(int i in SOWManager.mUsingGuestList)
-        {
-            if (GuestManager.mGuestInfo[i].isUsing == false)
-            { 
-                temp.Add(i);
-                Debug.Log(i + "번 손님은 구름 제공이 가능합니다.");
-            }
-            else
-            {
-                Debug.Log(i + "번 손님은 구름 제공이 가능하지 않습니다.");
-            }
-        }
-        UsingGuestNumList = temp.ToArray();
-        */
 
         // TODO :  구름 보관함에서 제공받을 수 있는 뭉티를 고정한다. (계절에 따라 고정)lll
         int Season = GameObject.Find("Season Date Calc").GetComponent<SeasonDateCalc>().mSeason;
@@ -218,16 +199,6 @@ public class CloudStorageProfile : MonoBehaviour
             // Button
             btGiveBtn = Profile.transform.GetChild(1).GetComponent<Button>();
 
-            /*
-            //// 손님이 없는 경우에는 정보 업데이트를 하지 않는다.
-            //if (numOfUsingGuestList == 0)
-            //{
-            //    btGiveBtn.interactable = false;
-            //    Debug.Log("구름제공이 가능한 손님이 존재하지 않습니다.");
-            //    return;   
-            //}
-            */
-
             // DEMO 버전 추가사항
             // 해당 손님이 날씨의 공간에 존재하지 않는다면 제공버튼이 비활성화 된다.
             {
@@ -283,22 +254,6 @@ public class CloudStorageProfile : MonoBehaviour
 
             // 가져온 정보값을 이용하여 채운다.
             iProfile.sprite = UIManager.sBasicProfile[frontGuestIndex];
-            /*
-            DEMO 기능
-            TODO : 뭉티 정보를 불러와서 방문한 적이 있는 경우에만 정보를 띄운다.
-            if (info.mVisitCount < 2)
-            {
-                tName.text = "???";
-                tAge.text = "???";
-                tJob.text = "???";
-                tSat.text = "???";
-                tSentence.text = "정보를 알 수 없습니다.";
-                if (LanguageManager.GetInstance().GetCurrentLanguage() == "English")
-                    tSentence.text = "No information has been released.";
-
-                return;
-            }
-            */
 
             if (LanguageManager.GetInstance().GetCurrentLanguage() == "English")
             {
@@ -467,19 +422,6 @@ public class CloudStorageProfile : MonoBehaviour
                 continue;
             }
         }
-
-        /*
-        foreach(int i in list)
-        {
-            GuestInfos guestInfos = GuestManager.mGuestInfo[i];
-            if (guestInfos.isCure == false 
-                && guestInfos.isDisSat == false)
-            {
-
-                resultLIst.Add(i);        
-            }
-        }
-        */
 
         while(resultLIst.Count < 3)
         {

@@ -207,11 +207,12 @@ public class CloudData
     {
         //감정에 따라 맞는 보관기간-> 사용한 재료의 개수에 따라서 달라진다.
     }
+
     private void setCloudImage(List<EmotionInfo> Emotions)
     {
         //감정에 따라 맞는 base 구름이미지
         string targetImgName = ((int)mEmotions[0].Key).ToString();
-        if ((int)mEmotions[0].Key < 8)
+        if ((int)mEmotions[0].Key < 8)//현재 리소스 부재로인한 오류 임시 해결 방책.
             targetImgName = "0";
 
         string targetUnion = "";
@@ -230,7 +231,8 @@ public class CloudData
                 break;
         }
         Debug.Log("targetUnion" + targetUnion);
-        mcloudBaseImage = Resources.Load<Sprite>("Sprite/Base/"+ targetUnion + "union/" + "OC_Cloud_" + ((int)mEmotions[0].Key).ToString());
+        //mcloudBaseImage = Resources.Load<Sprite>("Sprite/Base/"+ targetUnion + "union/" + "OC_Cloud_" + ((int)mEmotions[0].Key).ToString());
+        mcloudBaseImage = Resources.Load<Sprite>("Sprite/Base/"+ targetUnion + "union/" + "OC_Cloud_" + targetImgName);
         mcloudDecoBaseImage = Resources.Load<Sprite>("Sprite/Base/" + targetUnion + "union/" + "Deco/"+ "OC_Cloud_" + ((int)mEmotions[0].Key).ToString());
 
         if (mcloudBaseImage == null || mcloudDecoBaseImage == null)

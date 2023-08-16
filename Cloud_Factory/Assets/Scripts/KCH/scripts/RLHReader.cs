@@ -46,6 +46,9 @@ public class RLHReader : MonoBehaviour
 	//ProfileManager.cs
 	public string LoadRecordInfo(int guest_num)
 	{
+		if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean") { isKorean = true; }
+		else { isKorean = false; }
+
 		List<RLHDBEntity> Record;
 		Record = mRLHDB.SetHintByGuestNum(guest_num);
 
@@ -67,6 +70,9 @@ public class RLHReader : MonoBehaviour
 	//GuestObject.cs
     public void LoadHintInfo(int guest_num)
 	{
+		if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean") { isKorean = true; }
+		else { isKorean = false; }
+
 		List<RLHDBEntity> Hint;
 		Hint = mRLHDB.SetHintByGuestNum(guest_num);
 		tText = "";
@@ -107,6 +113,9 @@ public class RLHReader : MonoBehaviour
 	// UIManager.object (Scene Of Weather)
 	public string LoadLetterInfo(int guest_num)
 	{
+		if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean") { isKorean = true; }
+		else { isKorean = false; }
+
 		List<RLHDBEntity> letter;
 		letter= mRLHDB.SetHintByGuestNum(guest_num);
 
@@ -128,6 +137,9 @@ public class RLHReader : MonoBehaviour
 	//ProfileManager.cs
 	public string LoadSummaryInfo(int guest_num)
 	{
+		if(LanguageManager.GetInstance().GetCurrentLanguage() == "Korean") { isKorean = true; }
+		else { isKorean = false; }
+
 		List<RLHDBEntity> Summary;
 		Summary = mRLHDB.SetHintByGuestNum(guest_num);
 

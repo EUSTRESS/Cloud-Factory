@@ -92,7 +92,9 @@ public class CloudDecoManager : MonoBehaviour
     public Vector2 top_right_corner;
     public Vector2 bottom_left_corner;
 
-
+    // Sound
+    private AudioSource mSubSFx;
+    private SoundManager mSoundManager;
 
     private void Start()
     {
@@ -104,6 +106,10 @@ public class CloudDecoManager : MonoBehaviour
 
         initParam();
         init();
+
+        // Sound
+        mSubSFx = GameObject.Find("mSubSFx").GetComponent<AudioSource>();
+        mSoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
     }
 
     private void initParam()
@@ -195,7 +201,9 @@ public class CloudDecoManager : MonoBehaviour
 
         inventoryManager.addStock(I_targetCloud);
         //LoadScene
-        SceneManager.LoadScene("Cloud Storage");
+        //SceneManager.LoadScene("Cloud Storage");
+
+        LoadingSceneController.Instance.LoadScene("Cloud Storage");
     }
 
     public void cloudDecoBackBtn() // 스케치북 결과 | Reset 버튼
@@ -447,6 +455,13 @@ public class CloudDecoManager : MonoBehaviour
         LDecoParts.Add(newParts);//파츠 관리하는 리스트에 추가.
 
         cursorChasing = true;
+
+        // Add Sound       
+        if (null != mSubSFx && null != mSoundManager)
+        {
+            mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_StickerPeel];
+            mSubSFx.Play();
+        }
     }
 
     public void EPartsClickedInArea()
@@ -494,6 +509,13 @@ public class CloudDecoManager : MonoBehaviour
             B_Rotate.SetActive(false);
 
             selectedParts.isEditActive = true;
+
+            // Add Sound       
+            if (null != mSubSFx && null != mSoundManager)
+            {
+                mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_StickerStick];
+                mSubSFx.Play();
+            }
             return;
         }
 
@@ -504,6 +526,13 @@ public class CloudDecoManager : MonoBehaviour
         if (!selectedParts.canEdit)
         {
              selectedParts.UpdateEditGuidLineUI(true);
+
+            // Add Sound       
+            if (null != mSubSFx && null != mSoundManager)
+            {
+                mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_StickerPeel];
+                mSubSFx.Play();
+            }
         }
     }
 
@@ -516,6 +545,13 @@ public class CloudDecoManager : MonoBehaviour
         else
         {
             selectedParts.UpdateEditGuidLineUI(false);
+
+            // Add Sound       
+            if (null != mSubSFx && null != mSoundManager)
+            {
+                mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_StickerStick];
+                mSubSFx.Play();
+            }
         }
 
     }
@@ -546,10 +582,18 @@ public class CloudDecoManager : MonoBehaviour
 
         StartCoroutine(popUpFinSBook());
     }
-
+    
     IEnumerator popUpFinSBook()
     {
         isDecoDone = true;
+
+        // Add Sound       
+        if (null != mSubSFx && null != mSoundManager)
+        {
+            mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_CloudeDecorEnd];
+            mSubSFx.Play();
+        }
+
         GameObject FinCloud = Instantiate(I_targetCloud, I_targetCloud.transform.position, I_targetCloud.transform.rotation);    
 
         yield return new WaitForSeconds(1.0f);

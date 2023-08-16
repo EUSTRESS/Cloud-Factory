@@ -59,7 +59,8 @@ public class GuideBook : MonoBehaviour
     private List<List<IngredientData>> ingredientHistory;
     private List<Sprite> cloudHistory;
 
-    
+    private AudioSource mSFx;
+
     private void Awake()
     {
         gPageIndex = 1; // 기본 1 페이지부터 시작
@@ -83,6 +84,15 @@ public class GuideBook : MonoBehaviour
         cloudHistory = new List<Sprite>();
 
         UpdateGuideBook();
+
+        mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
+
+        if (SceneData.Instance) // null check
+        {
+            // 씬이 변경될 때 저장된 값으로 새로 업데이트
+            mSFx.volume = SceneData.Instance.SFxValue;
+            //mSubSFx.volume = SceneData.Instance.SFxValue;
+        }
     }
 
     void Update()
@@ -233,6 +243,8 @@ public class GuideBook : MonoBehaviour
         if (gPageIndex < 4)
             ++gPageIndex;
         UpdateGuideBook();
+
+        mSFx.Play();
     }
     public void ClickPrevBtn()
     {
@@ -240,6 +252,8 @@ public class GuideBook : MonoBehaviour
         if (gPageIndex > 1)
             --gPageIndex;
         UpdateGuideBook();
+
+        mSFx.Play();
     }
 
     #region 감정 구름 재료 버튼
@@ -247,17 +261,23 @@ public class GuideBook : MonoBehaviour
     {
         ChangeChapter(false, false, 1, true, false, false);
         UpdateGuideBook();
+
+        mSFx.Play();
     }
     public void ActiveCloud()
     {
         ChangeChapter(false, false, 1, false, true, false);
         UpdateGuideBook();
+
+        mSFx.Play();
     }
     public void ActivePlant()
     {
         ChangeChapter(true, true, 1, false, false, true);
         UpdateGuideBook();
         ClickRare1();
+
+        mSFx.Play();
     }
     #endregion
 

@@ -89,6 +89,13 @@ public class CloudContainer : MonoBehaviour
         { 
             //해당 구름 선택 UI 표시
             mSelectedCloudTransform = EventSystem.current.currentSelectedGameObject.transform;
+
+            if (mTutorialManager.isFinishedTutorial[7] == false
+                && mSelectedCloudTransform.gameObject.GetComponent<RightClickButton>().GetIsFinishedRightClick() == false)
+            {
+                mSelectedCloudTransform = null;
+                return;
+            }
            
             mSelecedCloud = mUiStocksData[mSelectedCloudTransform.GetSiblingIndex()];
             mSelectedCloudTransform.GetChild(1).GetComponent<Image>().color = new Color(0.7f, 0.7f, 0.7f, 1.0f); 
@@ -100,7 +107,6 @@ public class CloudContainer : MonoBehaviour
             isCloudSelected = true;
             if (mTutorialManager.isFinishedTutorial[7] == false)
             {
-                if(mSelectedCloudTransform.gameObject.GetComponent<RightClickButton>().GetIsFinishedRightClick() == false) { return; }
                 mTutorialManager.SetActiveFadeOutScreen(false);
                 mTutorialManager.SetActiveGuideSpeechBubble(true);
                 mTutorialManager.FadeOutCloudReceipt();

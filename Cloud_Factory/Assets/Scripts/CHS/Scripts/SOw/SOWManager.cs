@@ -145,6 +145,7 @@ public class SOWManager : MonoBehaviour
         {
             // 남은 의자가 있다면 해당 의자에 대한 인덱스를 반환받고, 이외는 -1를 받아온다.
             int chairNum = GetRandChiarIndex();
+            if (TutorialManager.GetInstance().isTutorial) chairNum = 1; 
 
             if (chairNum != -1)
             {

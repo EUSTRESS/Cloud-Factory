@@ -483,8 +483,24 @@ private void Update()
         mGuestAnim.SetInteger("FaceValue", ChangeFaceValue(emotionNum));
 
         // 해당 emotionNum에 해당하는 이펙트를 재생시킨다.
+        Transform backEffectTransform = BackEffect.gameObject.transform;
         BackEffect.SetInteger("EmotionValue", emotionNum);
         Debug.Log("Emotion Value : " + emotionNum);
+        switch (emotionNum)
+        {
+            case 0:
+                break;
+            case 1:
+                backEffectTransform.position = new Vector3(0.2f, backEffectTransform.position.y, backEffectTransform.position.z);
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                backEffectTransform.position = new Vector3(0.12f, backEffectTransform.position.y, backEffectTransform.position.z);
+                break;
+        }
 
         mGuestAnim.SetTrigger("Interaction");
         Invoke("EndInteraction", 2.9f);

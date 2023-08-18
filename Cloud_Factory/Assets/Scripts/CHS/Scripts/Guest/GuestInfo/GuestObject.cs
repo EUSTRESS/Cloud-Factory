@@ -122,10 +122,6 @@ public class GuestObject : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
-
-        // Sound
-        mSubSFx = GameObject.Find("mSubSFx").GetComponent<AudioSource>();
-        mSoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
     }
 
     public void init()
@@ -173,6 +169,16 @@ public class GuestObject : MonoBehaviour
 
 private void Update()
     {
+        if (SceneManager.GetActiveScene().name == "Space Of Weather")
+        {
+            // Sound
+            if (null == mSubSFx)
+                mSubSFx = GameObject.Find("mSubSFx").GetComponent<AudioSource>();
+
+            if (null == mSoundManager)
+                mSoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+        }
+        
         // 할당받는 의자 설정
         if (mTargetChiarIndex != -1 && isGotoEntrance == false)
         {

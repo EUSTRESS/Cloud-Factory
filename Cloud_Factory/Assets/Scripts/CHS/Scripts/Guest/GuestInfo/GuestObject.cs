@@ -10,6 +10,9 @@ using TMPro;
 
 public class GuestObject : MonoBehaviour
 {
+    private static float DEFAULT_BACKEFFECT_POS_X = -0.12f;
+    private static float DEFAULT_BACKEFFECT_POS_Y = 1.5f;
+
     // 오브젝트 내에서 필요한 변수
     [Header("[손님 정보]")]
     public float        mLimitTime;         // 손님이 대기한 시간
@@ -119,10 +122,6 @@ public class GuestObject : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
-
-        // Sound
-        mSubSFx = GameObject.Find("mSubSFx").GetComponent<AudioSource>();
-        mSoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
     }
 
     public void init()
@@ -170,6 +169,16 @@ public class GuestObject : MonoBehaviour
 
 private void Update()
     {
+        if (SceneManager.GetActiveScene().name == "Space Of Weather")
+        {
+            // Sound
+            if (null == mSubSFx)
+                mSubSFx = GameObject.Find("mSubSFx").GetComponent<AudioSource>();
+
+            if (null == mSoundManager)
+                mSoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+        }
+        
         // 할당받는 의자 설정
         if (mTargetChiarIndex != -1 && isGotoEntrance == false)
         {
@@ -491,14 +500,64 @@ private void Update()
             case 0:
                 break;
             case 1:
-                backEffectTransform.position = new Vector3(0.2f, backEffectTransform.position.y, backEffectTransform.position.z);
+                backEffectTransform.localPosition = new Vector3(-0.2f, DEFAULT_BACKEFFECT_POS_Y, 0f);
                 break;
             case 2:
+                backEffectTransform.localPosition = new Vector3(0f, DEFAULT_BACKEFFECT_POS_Y, 0f);
                 break;
             case 3:
+                backEffectTransform.localPosition = new Vector3(-0.15f, 1.4f, 0f);
+                break;
+            case 4:
+                backEffectTransform.localPosition = new Vector3(DEFAULT_BACKEFFECT_POS_X, DEFAULT_BACKEFFECT_POS_Y, 0f);
+                break;
+            case 5:
+                backEffectTransform.localPosition = new Vector3(-0.27f, 1.8f, 0f);
+                break;
+            case 6:
+                backEffectTransform.localPosition = new Vector3(-0.27f, 1.7f, 0f);
+                break;
+            case 7:
+                backEffectTransform.localPosition = new Vector3(DEFAULT_BACKEFFECT_POS_X, DEFAULT_BACKEFFECT_POS_Y, 0f);
+                break;
+            case 8:
+                backEffectTransform.localPosition = new Vector3(DEFAULT_BACKEFFECT_POS_X, DEFAULT_BACKEFFECT_POS_Y, 0f);
+                break;
+            case 9:
+                backEffectTransform.localPosition = new Vector3(0.12f, DEFAULT_BACKEFFECT_POS_Y, 0f);
+                break;
+            case 10:
+                backEffectTransform.localPosition = new Vector3(DEFAULT_BACKEFFECT_POS_X, DEFAULT_BACKEFFECT_POS_Y, 0f);
+                break;
+            case 11:
+                backEffectTransform.localPosition = new Vector3(-0.27f, 1.7f, 0f);
+                break;
+            case 12:
+                backEffectTransform.localPosition = new Vector3(DEFAULT_BACKEFFECT_POS_X, DEFAULT_BACKEFFECT_POS_Y, 0f);
+                break;
+            case 13:
+                backEffectTransform.localPosition = new Vector3(DEFAULT_BACKEFFECT_POS_X, DEFAULT_BACKEFFECT_POS_Y, 0f);
+                break;
+            case 14:
+                backEffectTransform.localPosition = new Vector3(DEFAULT_BACKEFFECT_POS_X, DEFAULT_BACKEFFECT_POS_Y, 0f);
+                break;
+            case 15:
+                backEffectTransform.localPosition = new Vector3(DEFAULT_BACKEFFECT_POS_X, DEFAULT_BACKEFFECT_POS_Y, 0f);
+                break;
+            case 16:
+;                backEffectTransform.localPosition = new Vector3(DEFAULT_BACKEFFECT_POS_X, DEFAULT_BACKEFFECT_POS_Y, 0f);
+                break;
+            case 17:
+                backEffectTransform.localPosition = new Vector3(-0.21f, DEFAULT_BACKEFFECT_POS_Y, 0f);
+                break;
+            case 18:
+                backEffectTransform.localPosition = new Vector3(DEFAULT_BACKEFFECT_POS_X, DEFAULT_BACKEFFECT_POS_Y, 0f);
+                break;
+            case 19:
+                backEffectTransform.localPosition = new Vector3(DEFAULT_BACKEFFECT_POS_X, DEFAULT_BACKEFFECT_POS_Y, 0f);
                 break;
             default:
-                backEffectTransform.position = new Vector3(0.12f, backEffectTransform.position.y, backEffectTransform.position.z);
+                backEffectTransform.localPosition = new Vector3(DEFAULT_BACKEFFECT_POS_X, DEFAULT_BACKEFFECT_POS_Y, 0f);
                 break;
         }
 

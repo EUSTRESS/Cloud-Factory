@@ -19,6 +19,9 @@ public class DrawingUIManager : MonoBehaviour
 
     private Guest mGuestManager;
 
+    // Add Sound
+    private AudioSource mSFx;    
+
     void Start()
     {
         mGuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
@@ -29,7 +32,7 @@ public class DrawingUIManager : MonoBehaviour
         guestVC.text = "VC: " + mGuestManager.mGuestInfo[gn].mVisitCount.ToString();
         guestSV.text = "SV: " + mGuestManager.mGuestInfo[gn].mSatVariation.ToString();
 
-
+        mSFx = GameObject.Find("mSFx").GetComponent<AudioSource>();
     }
     
     void Update()
@@ -49,6 +52,8 @@ public class DrawingUIManager : MonoBehaviour
 
         // 수락했을 때 메소드 호출
         Debug.Log("응접실 수락 메소드 호출");
+
+        mSFx.Play();
     }
 
     public void ActiveNo()
@@ -62,5 +67,7 @@ public class DrawingUIManager : MonoBehaviour
 
         // 거절했을 때 메소드 호출
         Debug.Log("응접실 거절 메소드 호출");
+
+        mSFx.Play();
     }
 }

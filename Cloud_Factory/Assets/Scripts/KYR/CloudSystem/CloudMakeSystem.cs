@@ -203,6 +203,10 @@ public class CloudMakeSystem : MonoBehaviour
     [HideInInspector]
     public bool isMakingCloud;   // 구름 제작 중, InventoryContainer.cs에서 선택된 재료들을 클릭할 수 없게 제한하기 위한 변수 
 
+    // Add Sound
+    private AudioSource mSubSFx;
+    private SoundManager mSoundManager;
+
     public int getCurrentTotalMtrl() { return total; } 
     private void d_selectMtrl(string name)
     {
@@ -216,7 +220,14 @@ public class CloudMakeSystem : MonoBehaviour
 		if (mTutorialManager.isFinishedTutorial[4] == false
 			&& total == 2)
 		{ mTutorialManager.SetActiveArrowUIObject(true); }
-	}
+
+        // Add Sound       
+        if (null != mSubSFx && null != mSoundManager)
+        {
+            mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_UseIngredient];
+            mSubSFx.Play();
+        }
+    }
 
     public bool d_selectMtrlListFull()
     {
@@ -239,7 +250,14 @@ public class CloudMakeSystem : MonoBehaviour
 		if (mTutorialManager.isFinishedTutorial[4] == false
 			&& total != 2)
 		{ mTutorialManager.SetActiveArrowUIObject(false); }
-	}
+
+        // Add Sound       
+        if (null != mSubSFx && null != mSoundManager)
+        {
+            mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_UseIngredient];
+            mSubSFx.Play();
+        }
+    }
 
     private bool isOverlapState(List<EmotionInfo> emotionList)
     {
@@ -477,7 +495,14 @@ public class CloudMakeSystem : MonoBehaviour
 
         //making UI 처리
         StartCoroutine(isMaking(time));
-	}
+
+        // Add Sound       
+        if (null != mSubSFx && null != mSoundManager)
+        {
+            mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_MonitorLoading];
+            mSubSFx.Play();
+        }
+    }
 
     IEnumerator isMaking(float time) //UI 처리
     {
@@ -534,6 +559,13 @@ public class CloudMakeSystem : MonoBehaviour
             ErrorFinderDibugger.GetComponent<Text>().text = "Debug Log : No Cloud Image" + inventoryManager.createdCloudData.getFinalEmotion()[0];
 
         Debug.Log("구름이 만들어졌습니다.");
+
+        // Add Sound       
+        if (null != mSubSFx && null != mSoundManager)
+        {
+            mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_CloudMonitor];
+            mSubSFx.Play();
+        }
 
     }
 
@@ -609,6 +641,10 @@ public class CloudMakeSystem : MonoBehaviour
         InventoryManager inventoryManager = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<InventoryManager>();
         mtrlDATA = inventoryManager.mIngredientDatas[inventoryManager.minvenLevel - 1];
         init();
+
+        // Sound
+        mSubSFx = GameObject.Find("mSubSFx").GetComponent<AudioSource>();
+        mSoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
     }
 
 }

@@ -25,8 +25,6 @@ public class RightClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHa
 		{
 			isFinishedRightClick = true;
 		}
-
-
 	}
 
 	void Update()

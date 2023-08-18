@@ -446,6 +446,7 @@ public class TutorialManager : MonoBehaviour
 		if (isFinishedTutorial[1] == true
 			&& isFinishedTutorial[2] == false
 			&& arrowObject == null
+			&& guideSpeechBubbleObject.activeSelf == false
 			&& mSOWManager.mUsingGuestObjectList[0].GetComponent<GuestObject>().isSit == true)
 		{
 			InstantiateArrowUIObject(mSOWManager.mUsingGuestObjectList[0].transform.localPosition, -1.75f, 1f, false);

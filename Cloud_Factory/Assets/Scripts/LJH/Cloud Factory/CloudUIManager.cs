@@ -118,6 +118,7 @@ public class CloudUIManager : MonoBehaviour
     // 돌아가기 버튼
     public void GoToCloudFactory()
     {
+        if(TutorialManager.GetInstance().isFinishedTutorial[7] == false) return;
         LoadingSceneController.Instance.LoadScene("Cloud Factory");
 
         mSFx.Play();

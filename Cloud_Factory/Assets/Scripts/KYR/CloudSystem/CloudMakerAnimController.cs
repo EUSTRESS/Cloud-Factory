@@ -15,7 +15,11 @@ public class CloudMakerAnimController : MonoBehaviour
 
     InventoryManager inventoryManager;
 
-	void Start()
+    // Add Sound
+    private AudioSource mSubSFx;
+    private SoundManager mSoundManager;
+
+    void Start()
     {
 
         inventoryManager = GameObject.FindWithTag("InventoryManager").transform.GetComponent<InventoryManager>();
@@ -37,6 +41,20 @@ public class CloudMakerAnimController : MonoBehaviour
         mFinalCloud.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprite/CloudOnMachine/" + "OC_Maker_" + mResultColorIdx);
         
         StartCoroutine(makingAnimHandler());
+
+        // Sound
+        mSubSFx = GameObject.Find("mSubSFx").GetComponent<AudioSource>();
+        mSoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+
+        // Add Sound       
+        if (null != mSubSFx && null != mSoundManager)
+        {
+            if (false == mFinalCloud.activeSelf)
+            {
+                mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_CloudMaking];
+                mSubSFx.Play();
+            }
+        }
     }
 
     IEnumerator makingAnimHandler()

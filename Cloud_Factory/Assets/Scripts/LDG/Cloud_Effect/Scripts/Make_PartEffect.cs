@@ -21,6 +21,9 @@ public class Make_PartEffect : MonoBehaviour
 
     public GameObject Parts_TwinkleEffect;
     private GameObject New_TwinkleEffect;
+
+    public GameObject Parts_DiagonalEffect;
+    private GameObject New_DiagonalEffect;
     
     private float destroy_time;
 
@@ -31,7 +34,8 @@ public class Make_PartEffect : MonoBehaviour
         //InvokeRepeating("Make_BummerEffect_Cloud", 0.0f, 5.0f);
         //InvokeRepeating("Make_HeartBeatEffect_Cloud", 0.0f, 5.0f);
         //InvokeRepeating("Make_BounceEffect_Cloud", 0.0f, 5.0f);
-        InvokeRepeating("Make_TwinkleEffect_Cloud", 0.0f, 5.0f);
+        //InvokeRepeating("Make_TwinkleEffect_Cloud", 0.0f, 5.0f);
+        //InvokeRepeating("Make_DiagonalEffect_Cloud", 0.0f, 5.0f);
     }
 
     // Update is called once per frame
@@ -45,7 +49,8 @@ public class Make_PartEffect : MonoBehaviour
             //Destroy(New_BummerEffect);
             //Destroy(New_HeartBeatEffect);
             //Destroy(New_BounceEffect);
-            Destroy(New_TwinkleEffect);
+            //Destroy(New_TwinkleEffect);
+            //Destroy(New_DiagonalEffect);
             destroy_time = 0.0f;
         }
     }
@@ -77,5 +82,10 @@ public class Make_PartEffect : MonoBehaviour
     void Make_TwinkleEffect_Cloud()
     {
         New_TwinkleEffect = Instantiate(Parts_TwinkleEffect);
+    }
+
+    void Make_DiagonalEffect_Cloud()
+    {
+        New_DiagonalEffect = Instantiate(Parts_DiagonalEffect);
     }
 }

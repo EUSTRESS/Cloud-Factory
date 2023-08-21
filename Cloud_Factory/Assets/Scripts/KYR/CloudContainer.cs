@@ -74,7 +74,6 @@ public class CloudContainer : MonoBehaviour
 		TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
 
         if (mSelectedCloudTransform != null) //이미 선택이 된 경우에는 UI를 원래로 돌리기.
-
         {
             if (mTutorialManager.isFinishedTutorial[7] == false) return;
             mSelectedCloudTransform.GetChild(1).GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -83,6 +82,8 @@ public class CloudContainer : MonoBehaviour
                 mSelectedCloudTransform.GetChild(1).transform.GetChild(num).GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             }
             isCloudSelected = false;
+            mSelectedCloudTransform = null;
+            return;
         }
 
         if (!isCloudSelected)

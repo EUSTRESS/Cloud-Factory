@@ -399,7 +399,7 @@ private void Update()
         TextMeshPro Text = SpeechBubble.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>();
         Animator Anim = SpeechBubble.transform.GetChild(0).gameObject.GetComponent<Animator>();
         Text.text = temp;
-
+        Text.fontSize = 1.3f;
         // 말풍선 크기 및 방향 조정
         SpeechBubble.transform.GetChild(1).gameObject.transform.localScale = this.transform.localScale;
 

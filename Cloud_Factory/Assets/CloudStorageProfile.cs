@@ -403,7 +403,8 @@ public class CloudStorageProfile : MonoBehaviour
 
             if (exist == true)
             {
-                resultLIst.Add(i);
+                if (GuestManager.mGuestInfo[i].isDisSat == false)
+                    resultLIst.Add(i);
                 continue;
             }
 
@@ -418,7 +419,8 @@ public class CloudStorageProfile : MonoBehaviour
 
             if (exist == true)
             {
-                resultLIst.Add(i);
+                if (GuestManager.mGuestInfo[i].isDisSat == false)
+                    resultLIst.Add(i);
                 continue;
             }
         }

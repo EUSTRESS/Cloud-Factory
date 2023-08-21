@@ -213,6 +213,7 @@ public class SOWManager : MonoBehaviour
     {
         mWaitGuestList.Clear();
         mUsingGuestList.Clear();
+        mUsingGuestObjectList.Clear();
         mCheckChairEmpty.Clear();
 
         // 구름 오브젝트 정리

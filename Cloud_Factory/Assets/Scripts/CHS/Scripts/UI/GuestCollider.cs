@@ -10,6 +10,10 @@ public class GuestCollider : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         GameObject temp = collision.gameObject.transform.root.gameObject;
+        if(temp.tag == "Guest")
+        {
+            temp = collision.gameObject.transform.root.gameObject.transform.GetChild(4).gameObject;
+        }
         if (temp.tag == "Guest" && temp.GetComponent<SortingGroup>().sortingLayerName == "Guest")
         {
             if (this.gameObject.transform.position.y < collision.gameObject.transform.position.y)
@@ -27,6 +31,10 @@ public class GuestCollider : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         GameObject temp = collision.gameObject.transform.root.gameObject;
+        if (temp.tag == "Guest")
+        {
+            temp = collision.gameObject.transform.root.gameObject.transform.GetChild(4).gameObject;
+        }
         if (temp.tag == "Guest")
         {
             if (temp.GetComponent<SortingGroup>().sortingLayerName == "SittingGuest" && !isTriggerWithUI)

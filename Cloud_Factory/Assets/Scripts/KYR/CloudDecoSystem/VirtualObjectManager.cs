@@ -28,6 +28,31 @@ public class VirtualGameObject
 //구름 하나를 구성하는 오브젝트
 public class VirtualObjectManager : MonoBehaviour
 {
+    public float PartsRateX = 1.51f;
+    public float PartsRateY = 0.71f;
+    public float ObjectScale = 0.3f;
+
+    public void updatePartsContertRate(GameObject obejct, StoragedCloudData stock)
+    {
+        RectTransform rectTran = obejct.GetComponent<RectTransform>();
+
+        for (int i = 0; i < obejct.transform.childCount; i++)
+        {
+            GameObject obejctP;
+            obejctP = obejct.transform.GetChild(i).gameObject;
+
+            float newX = rectTran.localPosition.x * PartsRateX / rectTran.rect.width;
+            float newY = rectTran.localPosition.y * PartsRateY / rectTran.rect.height;
+
+            obejctP.transform.localPosition = new Vector3(newX, newY, 1.0f);
+
+            // TODO: 파츠의 크기에 따라 LocalScale을 변경해준다.
+            obejctP.transform.localScale = new Vector3(ObjectScale, ObjectScale, 0.12f);
+
+            obejctP.GetComponent<SpriteRenderer>().size =
+                 new Vector2(obejctP.GetComponent<SpriteRenderer>().size.x * 0.9f, obejctP.GetComponent<SpriteRenderer>().size.y * 0.9f);
+        }
+    }
     public GameObject OBPrefab; //게임오브젝트 안에 버튼과 이미지 컴포넌트가 있는 Prefab
     public GameObject convertVirtualToGameObject(VirtualGameObject VObject)
     {
@@ -46,6 +71,7 @@ public class VirtualObjectManager : MonoBehaviour
         result = Instantiate(OBPrefab, VObject.mPosition, VObject.mRotation);
 
         result.GetComponent<SpriteRenderer>().sprite = VObject.mImage;
+
 
         return result;
     }
@@ -94,6 +120,11 @@ public class VirtualObjectManager : MonoBehaviour
         // 구름의 소팅 레이어를 변경
         obejct.GetComponent<SpriteRenderer>().sortingLayerName = "Cloud";
 
+        obejct.transform.localScale = new Vector3(176.69f, 176.69f,1.0f);
+
+        obejct.GetComponent<Image>().enabled = false;
+        obejct.GetComponent<SpriteRenderer>().enabled = true;
+
         foreach (VirtualGameObject Vpart in stock.mVPartsList)
         {
             GameObject obejctP;
@@ -110,21 +141,26 @@ public class VirtualObjectManager : MonoBehaviour
             obejctP.GetComponent<SpriteRenderer>().sortingLayerName = "Parts";
             obejctP.GetComponent<SpriteRenderer>().enabled = true;
 
-            float newX = rectTran.localPosition.x * 1.51f / rectTran.rect.width;
-            float newY = rectTran.localPosition.y * 0.71f / rectTran.rect.height;
+            float newX = rectTran.localPosition.x * 1.0f / rectTran.rect.width;
+            float newY = rectTran.localPosition.y * 1.0f / rectTran.rect.height;
 
             rectTran.localPosition = new Vector3(newX, newY, 1.0f);
 
             // TODO: 파츠의 크기에 따라 LocalScale을 변경해준다.
-            obejctP.transform.localScale = new Vector3(0.9f, 0.9f, 0.12f);
+            obejctP.transform.localScale = new Vector3(0.27f, 0.27f, 0.12f);
 
             obejctP.GetComponent<SpriteRenderer>().size =
                  new Vector2(obejctP.GetComponent<SpriteRenderer>().size.x * 0.9f, obejctP.GetComponent<SpriteRenderer>().size.y * 0.9f);
         }
 
         obejct.transform.localPosition = InstancePosition;
-        obejct.transform.localScale = new Vector3(0.11f, 0.12f, 0.12f);
+       // obejct.transform.localScale = new Vector3(0.11f, 0.12f, 0.12f);
 
         return obejct;
+    }
+
+    public void realtimeImageToSpriteConverter()
+    {
+
     }
 }

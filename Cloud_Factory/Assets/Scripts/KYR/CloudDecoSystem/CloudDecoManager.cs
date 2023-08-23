@@ -95,6 +95,9 @@ public class CloudDecoManager : MonoBehaviour
     // Sound
     private AudioSource mSubSFx;
     private SoundManager mSoundManager;
+    
+    // Tutorial
+    private bool isPosNegButtonIntroduced;
 
     private void Start()
     {
@@ -106,6 +109,12 @@ public class CloudDecoManager : MonoBehaviour
 
         initParam();
         init();
+        
+        if(TutorialManager.GetInstance().isTutorial) isPosNegButtonIntroduced = false;
+        else
+        {
+            isPosNegButtonIntroduced = true;
+        }
 
         // Sound
         mSubSFx = GameObject.Find("mSubSFx").GetComponent<AudioSource>();
@@ -393,13 +402,18 @@ public class CloudDecoManager : MonoBehaviour
         if(mLPartsMenu[idx].isInit) //처음이면 둘다 체크가 안되어있음.
         {
             
-            if (mTutorialManager.isFinishedTutorial[6] == false && mLPartsMenu[0].isInit == true)
+            if (mTutorialManager.isFinishedTutorial[6] == false 
+                && mLPartsMenu[0].isInit == true)
             {
                 if(idx != 0 || target.transform.GetSiblingIndex() != 0) { return; }
-                else { 
+                
+                if (isPosNegButtonIntroduced) {}
+                else
+                {
                     mTutorialManager.SetActiveGuideSpeechBubble(true);
                     mTutorialManager.SetActiveFadeOutScreen(false);
                     mTutorialManager.SetActiveArrowUIObject(false);
+                    isPosNegButtonIntroduced = true;
                 }
             }
 

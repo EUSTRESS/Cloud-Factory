@@ -212,8 +212,12 @@ public class CloudData
     {
         //감정에 따라 맞는 base 구름이미지
         string targetImgName = ((int)mEmotions[0].Key).ToString();
-        if ((int)mEmotions[0].Key < 8)//현재 리소스 부재로인한 오류 임시 해결 방책.
+        if ((int)mEmotions[0].Key >= 8)//현재 리소스 부재로인한 오류 임시 해결 방책.
+        {
             targetImgName = "0";
+            mEmotions[0].Key = Emotion.PLEASURE;
+
+        }
 
         string targetUnion = "";
         switch (mIngredientDtCount)

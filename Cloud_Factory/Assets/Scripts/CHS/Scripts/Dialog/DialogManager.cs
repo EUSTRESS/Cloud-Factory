@@ -70,6 +70,14 @@ public class DialogManager : MonoBehaviour
     private bool isKorean;
 
 
+    // 손님 효과음을 위한 리스트 설정
+    private int[] femaleVoice = new int[] { 0,1,2,3,6,7,8,11,12,13,14,16,18};
+    private int[] maleVoice = new int[] { 4, 5, 9 ,10, 15, 17, 19 };
+    private bool _voice = true; // true : 여성 , false : 남성
+
+    // 여 0 1 2 3 6 7(아동) 8 11 12 13(아동) 14 16 18
+    // 남 4 5 9 10 15 17 19
+
     // 테스트 함수
     // 대화창에서 다른 캐릭터 혹은 다른 만족도의 텍스트를 받아오는 경우 오류가 있는지 확인하기 위한 함수
 
@@ -125,6 +133,15 @@ public class DialogManager : MonoBehaviour
         mTextList = new string[40];
         mIsGuset = new int[40];
         isReading = false;
+
+        for(int i = 0; i< maleVoice.Length; i++)
+        {
+            if(mGuestSat == i)
+            {
+                _voice = false;
+                break;
+            }
+        }
 
         if (LanguageManager.GetInstance().GetCurrentLanguage() == "Korean")
         {
@@ -352,7 +369,8 @@ public class DialogManager : MonoBehaviour
 
 		mGuestAnimator.SetInteger("index", mGuestImageList[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex]);
 
-        if(mIsGuset[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex] == 1)
+        int isGuest = mIsGuset[GameObject.Find("DialogIndex").GetComponent<DialogIndex>().mDialogIndex];
+        if (isGuest == 1)
         {
             mGuestAnimator.SetBool("isGuest", true);
         }
@@ -360,6 +378,9 @@ public class DialogManager : MonoBehaviour
         {
             mGuestAnimator.SetBool("isGuest", false);
         }
+
+        // TODO : isGuest값이 1인 경우 손님 보이스 출력 (성별 판별은 _voice 변수를 통해 판별), 0인 경우 플레이어 보이스 출력
+
 
         // 가이드 말풍선 출력 후, 다시 출력되지 않도록 hintTextPos를 0으로 설정한다.(말풍선 재생성 방지)
         if (mTutorialManager.isFinishedTutorial[1] == false

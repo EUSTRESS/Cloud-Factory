@@ -4,20 +4,19 @@ using UnityEngine;
 using UnityEngine.Rendering;
 public class UICollider : MonoBehaviour
 {
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject temp = collision.gameObject.transform.root.gameObject;
-        if(temp.tag == "Guest")
+        Debug.Log(collision.gameObject.name);
+        GameObject temp = collision.gameObject.transform.root.Find("Body").gameObject;
+        if(temp !=null)
+        {
+            Debug.Log("null");
+        }
+        if (temp.tag == "Guest")
         {
             if(temp.GetComponent<SortingGroup>().sortingLayerName == "Guest")
             {
+                Debug.Log("Guest In");
                 temp.GetComponent<SortingGroup>().sortingLayerName = "Default";
                 collision.gameObject.GetComponent<GuestCollider>().isTriggerWithUI = true;
             }
@@ -26,7 +25,7 @@ public class UICollider : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        GameObject temp = collision.gameObject.transform.root.gameObject;
+        GameObject temp = collision.gameObject.transform.root.Find("Body").gameObject;
         if (temp.tag.Equals("Guest"))
         {
             if (temp.GetComponent<SortingGroup>().sortingLayerName == "Default")

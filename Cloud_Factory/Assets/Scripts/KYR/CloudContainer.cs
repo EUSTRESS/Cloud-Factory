@@ -36,6 +36,18 @@ public class CloudContainer : MonoBehaviour
 
     private bool isCloudSelected = false;
 
+    private GameObject ConvertedSpriteVerGameObject;
+    //구름 Image를 Sprite로 변환하기 위한 디버그용 버튼 이벤트 함수
+    public void ConverterDebugBtn()
+    {
+        ConvertedSpriteVerGameObject = Virtualobjectmanager.InstantiateVirtualObjectToSceneToSprite(mSelecedCloud, Vector3.zero);
+    }
+
+    public void SetSizeOrScale()
+    {
+        Virtualobjectmanager.updatePartsContertRate(ConvertedSpriteVerGameObject, mSelecedCloud);
+    }
+    
     // Start is called before the first frame update
     void Start()
     {

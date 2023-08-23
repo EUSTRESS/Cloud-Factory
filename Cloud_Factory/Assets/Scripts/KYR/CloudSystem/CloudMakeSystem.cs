@@ -287,7 +287,8 @@ public class CloudMakeSystem : MonoBehaviour
 
         Dictionary<Emotion, int> tmpList = new Dictionary<Emotion, int>();
 
-        
+        //무한 루프 방지
+        int loopNum = 0;
         while (isOverlapState(emotionList))
         {
             try
@@ -384,8 +385,10 @@ public class CloudMakeSystem : MonoBehaviour
             {
                 Debug.Log(ex);
             }
-           
 
+
+            if (loopNum++ > 10000)
+                throw new Exception("Infinite Loop");
         }
         //최종 감정 리스트 저장.
         //중복이 있다면 그중 가장 큰 감정 채용
@@ -421,6 +424,8 @@ public class CloudMakeSystem : MonoBehaviour
         Debug_PrintState("[최종감정리스트(1)]", emotionList);
 
         LfinalEmo = new List<EmotionInfo>();
+
+        
 
         //2가지 감정 선택(제일 큰 감정 + 두번째로 큰 감정)
         int roopCnt = 2;

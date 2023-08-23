@@ -41,7 +41,7 @@ public class GuideBubbleScript : MonoBehaviour
 		currentDialogNum = -1;
 		presentDialogNum = 0;
 
-		mDialog = new string[9, 15];
+		mDialog = new string[9, 20];
 
 		//  mDialog 초기화
 		for (int num1 = 0; num1 < 9; num1++)
@@ -141,10 +141,11 @@ public class GuideBubbleScript : MonoBehaviour
 			// 화살표 UI
 			mDialog[6, 9] = "좋습니다. 구름을 완성하려면 위쪽의 <b>모든</b> 장식을 붙이고, 오른쪽에서 각 장식이 손님에게 줄 <b>영향</b>을 골라야 합니다.";
 			mDialog[6, 10] = "FadeOut64";
-			mDialog[6, 11] = "장식을 한꺼번에 넣고 싶다면 \'자동\' 버튼을 눌러주세요.";
-			mDialog[6, 12] = "FadeOut65";
-			mDialog[6, 13] = "이제 구름을 완성해봅시다.";
-			mDialog[6, 14] = "FadeOut66";
+			mDialog[6, 11] = "임시:: 초기화 버튼을 눌러, 선택한 장식과 영향을 모두 초기화 할 수 있습니다.";
+			mDialog[6, 12] = "장식을 한꺼번에 넣고 싶다면 \'자동\' 버튼을 눌러주세요.";
+			mDialog[6, 13] = "FadeOut65";
+			mDialog[6, 14] = "이제 구름을 완성해봅시다.";
+			mDialog[6, 15] = "FadeOut66";
 			// 돌아가기 버튼 막기
 
 
@@ -241,10 +242,11 @@ public class GuideBubbleScript : MonoBehaviour
 			// 화살표 UI
 			mDialog[6, 9] = "Excellent! To finish making the cloud, use <b>all</b> decor parts and assign their <b>effects</b> by pressing the buttons.";
 			mDialog[6, 10] = "FadeOut64";
-			mDialog[6, 11] = "If you want to skip with decoration, press \'AUTO\' button on the top.";
-			mDialog[6, 12] = "FadeOut65";
-			mDialog[6, 13] = "Let\'s finish off making the cloud.";
-			mDialog[6, 14] = "FadeOut66";
+			mDialog[6, 11] = "Test:: Introducing reset button.";
+			mDialog[6, 12] = "If you want to skip with decoration, press \'AUTO\' button on the top.";
+			mDialog[6, 13] = "FadeOut65";
+			mDialog[6, 14] = "Let\'s finish off making the cloud.";
+			mDialog[6, 15] = "FadeOut66";
 			// 돌아가기 버튼 막기
 
 

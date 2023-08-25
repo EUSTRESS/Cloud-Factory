@@ -81,6 +81,10 @@ public class DialogManager : MonoBehaviour
     // 테스트 함수
     // 대화창에서 다른 캐릭터 혹은 다른 만족도의 텍스트를 받아오는 경우 오류가 있는지 확인하기 위한 함수
 
+    // Add Sound
+    private AudioSource mSubSFx;
+    private SoundManager mSoundManager;
+
     void Awake()
     {
 
@@ -106,6 +110,10 @@ public class DialogManager : MonoBehaviour
     {
         initTakeGuestPanel();
         UpdateReasonText();
+
+        // Sound
+        mSubSFx = GameObject.Find("mSubSFx").GetComponent<AudioSource>();
+        mSoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
     }
 
     void initDialogManager()
@@ -136,7 +144,7 @@ public class DialogManager : MonoBehaviour
 
         for(int i = 0; i< maleVoice.Length; i++)
         {
-            if(mGuestSat == i)
+            if(mGuestNum == maleVoice[i])
             {
                 _voice = false;
                 break;
@@ -158,7 +166,9 @@ public class DialogManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // Sound Check, 문장이 끝나도 사운드가 들릴 때.
+        if (false == isReading && null != mSubSFx)
+            mSubSFx.Stop();
     }
     void initAnimator()
     {
@@ -381,6 +391,8 @@ public class DialogManager : MonoBehaviour
 
         // TODO : isGuest값이 1인 경우 손님 보이스 출력 (성별 판별은 _voice 변수를 통해 판별), 0인 경우 플레이어 보이스 출력
 
+        // Add Sound
+        AddSound(isGuest);        
 
         // 가이드 말풍선 출력 후, 다시 출력되지 않도록 hintTextPos를 0으로 설정한다.(말풍선 재생성 방지)
         if (mTutorialManager.isFinishedTutorial[1] == false
@@ -493,4 +505,38 @@ public class DialogManager : MonoBehaviour
         tPanelReasonText.text = mRLHReader.LoadSummaryInfo(mGuestNum);
     }
 
+    private void AddSound(int _isGuest)
+    {
+        if (null == mSubSFx)
+        {
+            mSubSFx = GameObject.Find("mSubSFx").GetComponent<AudioSource>();
+        }
+
+        if (null == mSoundManager)
+        {
+            mSoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+        }
+
+        mSubSFx.Stop();
+        if (0 == _isGuest)
+        {
+            // player           
+            mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_TalkNarr];
+        }
+        else
+        {
+            if (false == _voice)
+            {
+                // 남성
+                mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_TalkMale];
+            }
+            else
+            {
+                // 여성
+                mSubSFx.clip = mSoundManager.mSubSFxArray[(int)SoundManager.SFx.SFx_TalkFemale];
+            }
+        }
+
+        mSubSFx.Play();
+    }
 }

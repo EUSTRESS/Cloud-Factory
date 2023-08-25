@@ -213,6 +213,7 @@ public class SOWManager : MonoBehaviour
     {
         mWaitGuestList.Clear();
         mUsingGuestList.Clear();
+        mWaitGuestObjectQueue.Clear();
         mUsingGuestObjectList.Clear();
         mCheckChairEmpty.Clear();
 

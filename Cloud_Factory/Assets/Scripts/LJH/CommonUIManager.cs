@@ -149,6 +149,8 @@ public class CommonUIManager : MonoBehaviour
         // 치유의 기록 이전 씬 인덱스 저장
         SceneData.Instance.prevSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
+        Debug.Log("수락후 치유의기록이동!!!");
+
         LoadingSceneController.Instance.LoadScene("Record Of Healing");
         mSFx.Play();
     }

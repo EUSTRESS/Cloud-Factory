@@ -144,7 +144,7 @@ public class DialogManager : MonoBehaviour
 
         for(int i = 0; i< maleVoice.Length; i++)
         {
-            if(mGuestSat == i)
+            if(mGuestNum == maleVoice[i])
             {
                 _voice = false;
                 break;

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GuideBubbleScript : MonoBehaviour
 {
+	public GameObject emptyScreen;
+	
 	private Text tGuideText;
 
 	private string[,] mDialog;
@@ -322,7 +324,8 @@ public class GuideBubbleScript : MonoBehaviour
 		if (mDialog[mDialogIndex, currentDialogNum] == "FadeOut10")
 		{
 			GameObject.Find("DialogManager").GetComponent<DialogManager>().gTakeGuestPanel.SetActive(true);
-			mTutorialManager.InstantiateArrowUIObject(GameObject.Find("B_OK").transform.localPosition, 300f);
+			// mTutorialManager.InstantiateArrowUIObject(GameObject.Find("B_OK").transform.localPosition, 300f);
+			mTutorialManager.InstantiateArrowUIObject(new Vector3(310f, 75f, 0f), 300f);
 			this.gameObject.SetActive(false);
 			return;
 		}
@@ -464,6 +467,7 @@ public class GuideBubbleScript : MonoBehaviour
 			currentDialogNum++;
 			mTutorialManager.FadeOutScreen();
 			GameObject.Find("B_DecoAuto").transform.SetAsLastSibling();
+			emptyScreen.transform.SetAsLastSibling();
 			this.gameObject.transform.SetAsLastSibling();
 
 		}

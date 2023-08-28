@@ -7,6 +7,9 @@ public class UICollider : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.gameObject.name);
+        if (collision.gameObject.tag != "Guest")
+            return;
+
         GameObject temp = collision.gameObject.transform.root.Find("Body").gameObject;
         if(temp !=null)
         {
@@ -25,6 +28,9 @@ public class UICollider : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (collision.gameObject.tag != "Guest")
+            return;
+
         GameObject temp = collision.gameObject.transform.root.Find("Body").gameObject;
         if (temp.tag.Equals("Guest"))
         {

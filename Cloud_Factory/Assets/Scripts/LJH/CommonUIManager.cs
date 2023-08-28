@@ -131,6 +131,9 @@ public class CommonUIManager : MonoBehaviour
         // 응접실 튜토리얼 중 구름공장으로 이동하지 못하도록 제한
         if (mTutorialManager.isFinishedTutorial[1] == false) { return; }
 
+        if (SceneManager.GetActiveScene().name == "DecoCloud"
+            && !mTutorialManager.isFinishedTutorial[6]) { return; }
+
         // 재료 채집 튜토리얼 후 구름공장으로 이동할 때, 튜토리얼 진행도를 저장
 		if (!mTutorialManager.isFinishedTutorial[2]) { mTutorialManager.isFinishedTutorial[2] = true; }
 		LoadingSceneController.Instance.LoadScene("Cloud Factory");

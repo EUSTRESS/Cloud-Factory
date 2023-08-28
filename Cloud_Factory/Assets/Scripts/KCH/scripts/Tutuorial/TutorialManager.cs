@@ -177,7 +177,13 @@ public class TutorialManager : MonoBehaviour
         return false;
     }
 
-    public void SetActiveGuideSpeechBubble(bool _bool)  { if (guideSpeechBubbleObject != null) { guideSpeechBubbleObject.SetActive(_bool); } }
+    public void SetActiveGuideSpeechBubble(bool _bool)
+    {
+	    if (guideSpeechBubbleObject == null) return;
+	    
+	    guideSpeechBubbleObject.SetActive(_bool);
+    }
+    
 	public GameObject GetActiveGuideSpeechBubble()		{ return guideSpeechBubbleObject; }
     public void SetActiveFadeOutScreen(bool _bool)      { if (fadeOutScreenObject != null) { fadeOutScreenObject.SetActive(_bool); } }
 	public void SetActiveArrowUIObject(bool _bool)		{ if (arrowObject != null) { arrowObject.SetActive(_bool); } }
@@ -382,6 +388,7 @@ public class TutorialManager : MonoBehaviour
 		guideSpeechBubbleObject.transform.SetParent(GameObject.Find("Canvas").transform);
 		guideSpeechBubbleObject.transform.localPosition = new Vector3(0f, -340f, 0f);
 		guideSpeechBubbleObject.GetComponent<GuideBubbleScript>().SetDialogIndex(dialog_index);
+		guideSpeechBubbleObject.GetComponent<GuideBubbleScript>().emptyScreen = emptyScreenObject;
 
         if(SceneManager.GetActiveScene().name == "Space Of Weather"
             || SceneManager.GetActiveScene().name == "Drawing Room"

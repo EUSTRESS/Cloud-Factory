@@ -601,6 +601,7 @@ private void Update()
     {
         //대기 시간이 지났거나, 구름을 제공받았을 때, 만족도 증감도 계산
         outSat = mGuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
+        if (outSat >= 5) mGuestManager.mGuestInfo[mGuestNum].isCure = true;
         CalcSatVariation(enterSat, outSat);
 
         mSOWManager.mCheckChairEmpty[mTargetChiarIndex] = true;

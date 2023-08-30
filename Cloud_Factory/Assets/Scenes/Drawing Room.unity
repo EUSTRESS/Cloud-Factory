@@ -2403,6 +2403,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1985470901}
+        m_TargetAssemblyTypeName: Button_runout, Assembly-CSharp
+        m_MethodName: B_Ok_Clicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &416193062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2617,6 +2629,18 @@ MonoBehaviour:
       - m_Target: {fileID: 237507249}
         m_TargetAssemblyTypeName: DialogManager, Assembly-CSharp
         m_MethodName: RejectGuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1985470902}
+        m_TargetAssemblyTypeName: Rejectbutton_Runout, Assembly-CSharp
+        m_MethodName: B_NO_Clicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6748,6 +6772,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1985470899}
   - component: {fileID: 1985470900}
+  - component: {fileID: 1985470901}
+  - component: {fileID: 1985470902}
   m_Layer: 5
   m_Name: OkNoGroup
   m_TagString: Untagged
@@ -6791,6 +6817,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ProfileBG: {fileID: 660294150}
+  B_OK: {fileID: 416193059}
+  B_NO: {fileID: 446167067}
+--- !u!114 &1985470901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985470898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9faa1ff0b02e9c342a9df34082f0e3a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OkNoGroup: {fileID: 1985470898}
+--- !u!114 &1985470902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985470898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9edc7739fda633e489005841f0592d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OkNoGroup: {fileID: 1985470898}
   B_OK: {fileID: 416193059}
   B_NO: {fileID: 446167067}
 --- !u!1 &1994770581

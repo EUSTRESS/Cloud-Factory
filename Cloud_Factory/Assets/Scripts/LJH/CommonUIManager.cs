@@ -16,8 +16,10 @@ public class CommonUIManager : MonoBehaviour
     private bool OptionOn; // 옵션창이 켜졌는지 확인하는 변수
 
     [Header("TEXT")]
-    public Text         tDate;         // 날짜 텍스트
-    public Text         tYear;         // 날짜 텍스트
+    public Text         tDate;         // 요일 텍스트
+    public Text         tYear;         // 년도 텍스트
+    public Text         tDateNum;   // 요일 숫자 텍스트
+    public Text         tYearNum;   // 년도 숫자 텍스트
     [Space (3f)]
     public Text         tBgmValue;     // BGM 볼륨 텍스트
     public Text         tSfxValue;     // SFx 볼륨 텍스트

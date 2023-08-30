@@ -176,8 +176,29 @@ public class DialogManager : MonoBehaviour
         mGuestAnimator.runtimeAnimatorController = GetComponent<DrawAniClip>().animators[mGuestNum];
     }
 
-    public void MoveSceneToWeatherSpace()
+    public void AcceptAfterMoveSceneToWeatherSpace()
     {
+        gTakeGuestPanel.SetActive(false);
+
+        mSOWManager.InsertGuest(mGuestNum);
+        mSOWManager.isNewGuest = true;
+
+        mGuestManager.InitGuestTime();
+
+        // 손님이 이동했으므로 응접실에 있는 것들을 초기화 시켜준다. 
+        ClearGuest();
+        SceneManager.LoadScene("Space Of Weather");
+    }
+
+    public void RejectAfterMoveSceneToWeatherSpace()
+    {
+        gTakeGuestPanel.SetActive(false);
+        // 방문하지 않는 횟수를 3으로 지정한다. (3일간 방문 X)
+        mGuestManager.mGuestInfo[mGuestNum].mNotVisitCount = 3;
+        mGuestManager.InitGuestTime();
+        // 손님이 이동했으므로 응접실에 있는 것들을 초기화 시켜준다.
+        ClearGuest();
+
         SceneManager.LoadScene("Space Of Weather");
     }
 
@@ -431,16 +452,8 @@ public class DialogManager : MonoBehaviour
     public void AcceptGuest()
     {
         if(mTutorialManager.isFinishedTutorial[1] == false) { mTutorialManager.isFinishedTutorial[1] = true; }
-        gTakeGuestPanel.SetActive(false);
 
-		mSOWManager.InsertGuest(mGuestNum);
-		mSOWManager.isNewGuest = true;
-
-		mGuestManager.InitGuestTime();
-
-		// 손님이 이동했으므로 응접실에 있는 것들을 초기화 시켜준다.
-		ClearGuest();
-		MoveSceneToWeatherSpace();
+        Invoke("AcceptAfterMoveSceneToWeatherSpace", 1.5f);
 	}
 
     // 손님 거절하기
@@ -448,17 +461,9 @@ public class DialogManager : MonoBehaviour
     {
         if (!mTutorialManager.isFinishedTutorial[1] ) {  return;  }
         Debug.Log("손님을 받지 않습니다.");
-
-        // 방문하지 않는 횟수를 3으로 지정한다. (3일간 방문 X)
-
-         mGuestManager.mGuestInfo[mGuestNum].mNotVisitCount = 3;
-
-        mGuestManager.InitGuestTime();
-
-		// 손님이 이동했으므로 응접실에 있는 것들을 초기화 시켜준다.
 		if (mGuestManager.mGuestInfo[mGuestNum].mVisitCount == 1) { mGuestManager.mGuestInfo[mGuestNum].mSatVariation = 0; }
-		ClearGuest();
-        MoveSceneToWeatherSpace();
+		
+        Invoke("RejectAfterMoveSceneToWeatherSpace", 1.0f);
     }
 
     // 응접실을 초기화 시켜준다.

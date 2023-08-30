@@ -120,7 +120,7 @@ public class VirtualObjectManager : MonoBehaviour
         // 구름의 소팅 레이어를 변경
         obejct.GetComponent<SpriteRenderer>().sortingLayerName = "Cloud";
 
-        obejct.transform.localScale = new Vector3(176.69f, 176.69f,1.0f);
+        //obejct.transform.localScale = new Vector3(176.69f, 176.69f,1.0f);
 
         obejct.GetComponent<Image>().enabled = false;
         obejct.GetComponent<SpriteRenderer>().enabled = true;
@@ -154,7 +154,7 @@ public class VirtualObjectManager : MonoBehaviour
         }
 
         obejct.transform.localPosition = InstancePosition;
-       // obejct.transform.localScale = new Vector3(0.11f, 0.12f, 0.12f);
+        obejct.transform.localScale = new Vector3(0.11f, 0.12f, 0.12f);
 
         return obejct;
     }

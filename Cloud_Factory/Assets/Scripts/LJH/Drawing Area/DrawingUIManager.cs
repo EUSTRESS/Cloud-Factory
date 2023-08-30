@@ -47,7 +47,7 @@ public class DrawingUIManager : MonoBehaviour
     public void ActiveOk()
     {
         gSpeechBubble.SetActive(true);
-        gOkNoGroup.SetActive(false);
+        //gOkNoGroup.SetActive(false);
         mTextEnd = false;
 
         // 수락했을 때 메소드 호출
@@ -62,7 +62,7 @@ public class DrawingUIManager : MonoBehaviour
         if (!mTutorialManager.isFinishedTutorial[1]) { return; }
 
         gSpeechBubble.SetActive(true);
-        gOkNoGroup.SetActive(false);
+        //gOkNoGroup.SetActive(false);
         mTextEnd = false;
 
         // 거절했을 때 메소드 호출

@@ -15,11 +15,18 @@ public class CloudSpawner : MonoBehaviour
         
     public GameObject   CloudObject;        // 구름 오브젝트 프리팹
 
+    // (리스트인덱스값) : (파츠이펙트프리팹이름) - (감정)
+    // 0 : FadeEffectCloud - 기쁨,혐오,관심&기대,얼어붙음,혼란스러움 / 1 : TornadoEffectCloud - 불안 / 2 : BummerEffectCloud - 슬픔,자책,씁쓸함 / 3 : HeartBeatEffectCloud - 짜증,반발,낙천,애증
+    // 4 : BounceEffectCloud - 수용,놀람&혼란,사랑 / 5 : TwinkleEffectCloud - 순종,경외 / 6 : FogEffectCloud - 경멸 / 7 : DiagonalEffectCloud - 공격성
+    //public GameObject[] Make_EffectCloudObject = new GameObject[8];
+
     public int          cloudSpeed;         // 구름이 이동하는 속도
+
+    private Vector3 Cloud_ps;
 
     private GameObject  tempCLoud;          // 구름 제공 전 정보값을 채우기 위한 Temp 오브젝트
 
-    public Vector3 Cloud_ps = new Vector3(0f, 0f, 0f);
+    //private GameObject temporaryCloud;
 
     public RuntimeAnimatorController[] animValue2;
     public RuntimeAnimatorController[] animValue3;

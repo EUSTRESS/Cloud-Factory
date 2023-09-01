@@ -69,14 +69,18 @@ public class CommonUIManager : MonoBehaviour
             if (LanguageManager.GetInstance() != null 
                 && LanguageManager.GetInstance().GetCurrentLanguage() == "English")
             {
-                tDate.text = "Day" + SeasonDateCalc.Instance.mDay.ToString();
-                tYear.text = "Year" + SeasonDateCalc.Instance.mYear.ToString();
+                tDate.text = "Day";
+                tYear.text = "Year";
+                tDateNum.text = SeasonDateCalc.Instance.mDay.ToString();
+                tYearNum.text = SeasonDateCalc.Instance.mYear.ToString();
 
             }
             else
             {
-                tDate.text = SeasonDateCalc.Instance.mDay.ToString() + "일";
-                tYear.text = SeasonDateCalc.Instance.mYear.ToString() + "년차";
+                tDate.text = "Day";
+                tYear.text = "Year";
+                tDateNum.text = SeasonDateCalc.Instance.mDay.ToString();
+                tYearNum.text = SeasonDateCalc.Instance.mYear.ToString();
             }
 
             if (SeasonDateCalc.Instance.mSeason == 1)

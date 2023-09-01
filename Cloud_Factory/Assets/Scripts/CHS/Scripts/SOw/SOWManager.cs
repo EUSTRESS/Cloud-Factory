@@ -56,10 +56,10 @@ public class SOWManager : MonoBehaviour
     int _sat = 0;
 
     private float[][][] ChairPosList = new float[][][]{ 
-        new float[][]{ new float[]{ 1.71f, -2.91f }, new float[] { -3.52f, -0.36f }, new float[] { -0.51f, 0.39f }, new float[] { 1.55f, 0.53f } } ,
-        new float[][]{ new float[]{ 1.545f, -2.154f }, new float[] { -3.436f, -0.178f }, new float[] { -0.27f, -2.8f }, new float[] { -1.64f, -2.07f } } ,
-        new float[][]{ new float[]{ 3.186f, -2.646f }, new float[] { -0.187f, -2.355f }, new float[] { 1.057f, 0.297f }, new float[] { 1.97f, 0.23f } } ,
-        new float[][]{ new float[]{ 1.9f, -3.21f }, new float[] { -0.99f, 0.19f }, new float[] { 2.27f, 0.15f }, new float[] { -0.16f, 0.17f } }
+        new float[][]{ new float[]{ 1.71f, -2.91f }, new float[] { -3.52f, -0.36f }, new float[] { -0.51f, 0.39f }, new float[] { 2.126f, -0.221f } } ,
+        new float[][]{ new float[]{ 1.545f, -2.154f }, new float[] { -3.436f, -0.178f }, new float[] { -0.27f, -2.8f }, new float[] { -1.794f, -2.114f } } ,
+        new float[][]{ new float[]{ 3.186f, -2.646f }, new float[] { -0.187f, -2.355f }, new float[] { 1.057f, 0.297f }, new float[] { 1.835f, -3.451f } } ,
+        new float[][]{ new float[]{ 1.9f, -3.21f }, new float[] { -0.99f, 0.19f }, new float[] { 2.27f, 0.15f }, new float[] { 0.83f, 0.66f } }
     };
 
     private float[][][] WayPosList = new float[][][]{
@@ -70,10 +70,10 @@ public class SOWManager : MonoBehaviour
     };
 
     private int[][] SitDirList = new int[][] {
-        new int[]{ 1,1,1,1 },
+        new int[]{ 1,1,1,0 },
         new int[]{ 0,1,1,1 },
         new int[]{ 0,1,0,1 },
-        new int[]{ 1,0,0,1 }
+        new int[]{ 1,0,0,0 }
     };
 
 
@@ -98,7 +98,7 @@ public class SOWManager : MonoBehaviour
             this.transform.GetChild(2).gameObject.SetActive(true);
 
             // 현재 단계에 맞는 의자 개수 설정
-            mMaxChairNum = 3;
+            mMaxChairNum = 4;
             InitSOW();
         }
         else
@@ -154,42 +154,46 @@ public class SOWManager : MonoBehaviour
             }
         }
 
-        // 날씨의 공간 상의 손님을 선택하기 <- 상호작용
-        if (Input.GetMouseButtonDown(0))
+        // 날씨의 공간에서만 상호작용이 가능
+        if(SceneManager.GetActiveScene().name == "Space of Weather")
         {
-            Vector2 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(vec, Vector2.zero);
-            if (hit.collider != null)
+            // 날씨의 공간 상의 손님을 선택하기 <- 상호작용
+            if (Input.GetMouseButtonDown(0))
             {
-                GameObject hitObject = hit.transform.root.gameObject;
-                if (hit.transform.gameObject.tag == "Guest")
+                Vector2 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.Raycast(vec, Vector2.zero);
+                if (hit.collider != null)
                 {
+                    GameObject hitObject = hit.transform.root.gameObject;
+                    if (hit.transform.gameObject.tag == "Guest")
+                    {
 
-                    Debug.Log(hitObject.GetComponent<GuestObject>().mGuestNum + "번 손님을 클릭하였습니다.");
-                    hit.transform.gameObject.GetComponent<GuestObject>().SpeakEmotion();
-                }
-                else
-                {
-                    // Debug.Log(hit.transform.gameObject);
+                        Debug.Log(hitObject.GetComponent<GuestObject>().mGuestNum + "번 손님을 클릭하였습니다.");
+                        hit.transform.gameObject.GetComponent<GuestObject>().SpeakEmotion();
+                    }
+                    else
+                    {
+                        // Debug.Log(hit.transform.gameObject);
+                    }
                 }
             }
-        }
-        // Test. 희귀도4 재료를 이용한 구름을 제공받은 경우 클리어 힌트를 제공하는 것을 우클릭으로 테스트한다.
-        if (Input.GetMouseButtonDown(1))
-        {
-            Vector2 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(vec, Vector2.zero);
-            if (hit.collider != null)
+            // Test. 희귀도4 재료를 이용한 구름을 제공받은 경우 클리어 힌트를 제공하는 것을 우클릭으로 테스트한다.
+            if (Input.GetMouseButtonDown(1))
             {
-                GameObject hitObject = hit.transform.root.gameObject;
-                if (hit.transform.gameObject.tag == "Guest")
+                Vector2 vec = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.Raycast(vec, Vector2.zero);
+                if (hit.collider != null)
                 {
-                    Debug.Log(hitObject.GetComponent<GuestObject>().mGuestNum + "번 손님을 클릭하였습니다.");
-                    hit.transform.gameObject.GetComponent<GuestObject>().Hint();
-                }
-                else
-                {
-                    Debug.Log(hit.transform.gameObject);
+                    GameObject hitObject = hit.transform.root.gameObject;
+                    if (hit.transform.gameObject.tag == "Guest")
+                    {
+                        Debug.Log(hitObject.GetComponent<GuestObject>().mGuestNum + "번 손님을 클릭하였습니다.");
+                        hit.transform.gameObject.GetComponent<GuestObject>().Hint();
+                    }
+                    else
+                    {
+                        Debug.Log(hit.transform.gameObject);
+                    }
                 }
             }
         }

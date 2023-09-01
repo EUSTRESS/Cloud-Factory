@@ -46,8 +46,8 @@ public class DrawingUIManager : MonoBehaviour
 
     public void ActiveOk()
     {
-        gSpeechBubble.SetActive(true);
-        //gOkNoGroup.SetActive(false);
+        // gSpeechBubble.SetActive(true);
+        // gOkNoGroup.SetActive(false);
         mTextEnd = false;
 
         // 수락했을 때 메소드 호출
@@ -61,7 +61,7 @@ public class DrawingUIManager : MonoBehaviour
         TutorialManager mTutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
         if (!mTutorialManager.isFinishedTutorial[1]) { return; }
 
-        gSpeechBubble.SetActive(true);
+        // gSpeechBubble.SetActive(true);
         //gOkNoGroup.SetActive(false);
         mTextEnd = false;
 

@@ -155,7 +155,7 @@ public class SOWManager : MonoBehaviour
         }
 
         // 날씨의 공간에서만 상호작용이 가능
-        if(SceneManager.GetActiveScene().name == "Space of Weather")
+        if(SceneManager.GetActiveScene().name == "Space Of Weather")
         {
             // 날씨의 공간 상의 손님을 선택하기 <- 상호작용
             if (Input.GetMouseButtonDown(0))

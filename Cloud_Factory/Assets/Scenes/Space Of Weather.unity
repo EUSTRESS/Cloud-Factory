@@ -12919,16 +12919,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f70e3112036a07439171ebfe834a977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CloudObject: {fileID: 2076399108697384002, guid: ce77449bbaa1af940b4a6f109fe917e3, type: 3}
-  EffectCloudObjects:
-  - {fileID: 6239315949326007351, guid: ef6e55bb94b9e6d40ad0cd53677046e4, type: 3}
-  - {fileID: 3514956874902710806, guid: 88ecb02c6fd7a8a4383e5e6103402129, type: 3}
-  - {fileID: 5994302607460520759, guid: fe1ff2d34f6a57644813b40b9f0389aa, type: 3}
-  - {fileID: 1817307940456232621, guid: c804950499bdcfa4f8f05c99e106ecaa, type: 3}
-  - {fileID: 9066367631029791627, guid: 7405177f9017d6a4c92debf0d13f09a6, type: 3}
-  - {fileID: 1522201251968495362, guid: 2b3f78303800af44295eede92ad56ca9, type: 3}
-  - {fileID: 473225150597847384, guid: b31eba3825fe7794593f6c98a70739a5, type: 3}
-  - {fileID: 8482857376320857625, guid: 97132ccd42a9fd04392a7dbd3082b3f7, type: 3}
+  CloudData:
+    mFinalEmotions: []
+    mPartsList: []
+    mdate: 0
+    mBase: {fileID: 0}
+    mVBase:
+      mPosition: {x: 0, y: 0, z: 0}
+      mRotation: {x: 0, y: 0, z: 0, w: 0}
+      mScale: {x: 0, y: 0, z: 0}
+      mWidth: 0
+      mHeight: 0
+      mImage: {fileID: 0}
+    mVPartsList: []
+    mIngredientDatas: []
+    mCloudTypeNum: 0
   cloudSpeed: 0
   Cloud_ps: {x: 0, y: 0, z: 0}
   animValue2:
@@ -12958,6 +12963,9 @@ MonoBehaviour:
   - {fileID: 9100000, guid: b9457b186b599464e82c66f3711bb0fe, type: 2}
   - {fileID: 9100000, guid: f402aae033c01104fb7c6d929ed5450b, type: 2}
   - {fileID: 9100000, guid: 07d17923951f2a3419581c9cc2da3f58, type: 2}
+  EffectCloudObj: {fileID: 4425956919304304566, guid: a95264540d46e3c49a754700701a26a0, type: 3}
+  newTempCloud: {fileID: 0}
+  IsUsing: 0
 --- !u!1 &701158698
 GameObject:
   m_ObjectHideFlags: 0
@@ -18117,16 +18125,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f70e3112036a07439171ebfe834a977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CloudObject: {fileID: 2076399108697384002, guid: ce77449bbaa1af940b4a6f109fe917e3, type: 3}
-  EffectCloudObjects:
-  - {fileID: 6239315949326007351, guid: ef6e55bb94b9e6d40ad0cd53677046e4, type: 3}
-  - {fileID: 3514956874902710806, guid: 88ecb02c6fd7a8a4383e5e6103402129, type: 3}
-  - {fileID: 5994302607460520759, guid: fe1ff2d34f6a57644813b40b9f0389aa, type: 3}
-  - {fileID: 1817307940456232621, guid: c804950499bdcfa4f8f05c99e106ecaa, type: 3}
-  - {fileID: 9066367631029791627, guid: 7405177f9017d6a4c92debf0d13f09a6, type: 3}
-  - {fileID: 1522201251968495362, guid: 2b3f78303800af44295eede92ad56ca9, type: 3}
-  - {fileID: 473225150597847384, guid: b31eba3825fe7794593f6c98a70739a5, type: 3}
-  - {fileID: 8482857376320857625, guid: 97132ccd42a9fd04392a7dbd3082b3f7, type: 3}
+  CloudData:
+    mFinalEmotions: []
+    mPartsList: []
+    mdate: 0
+    mBase: {fileID: 0}
+    mVBase:
+      mPosition: {x: 0, y: 0, z: 0}
+      mRotation: {x: 0, y: 0, z: 0, w: 0}
+      mScale: {x: 0, y: 0, z: 0}
+      mWidth: 0
+      mHeight: 0
+      mImage: {fileID: 0}
+    mVPartsList: []
+    mIngredientDatas: []
+    mCloudTypeNum: 0
   cloudSpeed: 0
   Cloud_ps: {x: 0, y: 0, z: 0}
   animValue2:
@@ -18156,6 +18169,9 @@ MonoBehaviour:
   - {fileID: 9100000, guid: b9457b186b599464e82c66f3711bb0fe, type: 2}
   - {fileID: 9100000, guid: f402aae033c01104fb7c6d929ed5450b, type: 2}
   - {fileID: 9100000, guid: 07d17923951f2a3419581c9cc2da3f58, type: 2}
+  EffectCloudObj: {fileID: 4425956919304304566, guid: a95264540d46e3c49a754700701a26a0, type: 3}
+  newTempCloud: {fileID: 0}
+  IsUsing: 0
 --- !u!1 &1047496861
 GameObject:
   m_ObjectHideFlags: 0
@@ -20135,16 +20151,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f70e3112036a07439171ebfe834a977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CloudObject: {fileID: 2076399108697384002, guid: ce77449bbaa1af940b4a6f109fe917e3, type: 3}
-  EffectCloudObjects:
-  - {fileID: 6239315949326007351, guid: ef6e55bb94b9e6d40ad0cd53677046e4, type: 3}
-  - {fileID: 3514956874902710806, guid: 88ecb02c6fd7a8a4383e5e6103402129, type: 3}
-  - {fileID: 5994302607460520759, guid: fe1ff2d34f6a57644813b40b9f0389aa, type: 3}
-  - {fileID: 1817307940456232621, guid: c804950499bdcfa4f8f05c99e106ecaa, type: 3}
-  - {fileID: 9066367631029791627, guid: 7405177f9017d6a4c92debf0d13f09a6, type: 3}
-  - {fileID: 1522201251968495362, guid: 2b3f78303800af44295eede92ad56ca9, type: 3}
-  - {fileID: 473225150597847384, guid: b31eba3825fe7794593f6c98a70739a5, type: 3}
-  - {fileID: 8482857376320857625, guid: 97132ccd42a9fd04392a7dbd3082b3f7, type: 3}
+  CloudData:
+    mFinalEmotions: []
+    mPartsList: []
+    mdate: 0
+    mBase: {fileID: 0}
+    mVBase:
+      mPosition: {x: 0, y: 0, z: 0}
+      mRotation: {x: 0, y: 0, z: 0, w: 0}
+      mScale: {x: 0, y: 0, z: 0}
+      mWidth: 0
+      mHeight: 0
+      mImage: {fileID: 0}
+    mVPartsList: []
+    mIngredientDatas: []
+    mCloudTypeNum: 0
   cloudSpeed: 0
   Cloud_ps: {x: 0, y: 0, z: 0}
   animValue2:
@@ -20174,6 +20195,9 @@ MonoBehaviour:
   - {fileID: 9100000, guid: b9457b186b599464e82c66f3711bb0fe, type: 2}
   - {fileID: 9100000, guid: f402aae033c01104fb7c6d929ed5450b, type: 2}
   - {fileID: 9100000, guid: 07d17923951f2a3419581c9cc2da3f58, type: 2}
+  EffectCloudObj: {fileID: 4425956919304304566, guid: a95264540d46e3c49a754700701a26a0, type: 3}
+  newTempCloud: {fileID: 0}
+  IsUsing: 0
 --- !u!1 &1128106451
 GameObject:
   m_ObjectHideFlags: 0
@@ -30445,16 +30469,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f70e3112036a07439171ebfe834a977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CloudObject: {fileID: 2076399108697384002, guid: ce77449bbaa1af940b4a6f109fe917e3, type: 3}
-  EffectCloudObjects:
-  - {fileID: 6239315949326007351, guid: ef6e55bb94b9e6d40ad0cd53677046e4, type: 3}
-  - {fileID: 3514956874902710806, guid: 88ecb02c6fd7a8a4383e5e6103402129, type: 3}
-  - {fileID: 5994302607460520759, guid: fe1ff2d34f6a57644813b40b9f0389aa, type: 3}
-  - {fileID: 1817307940456232621, guid: c804950499bdcfa4f8f05c99e106ecaa, type: 3}
-  - {fileID: 9066367631029791627, guid: 7405177f9017d6a4c92debf0d13f09a6, type: 3}
-  - {fileID: 1522201251968495362, guid: 2b3f78303800af44295eede92ad56ca9, type: 3}
-  - {fileID: 473225150597847384, guid: b31eba3825fe7794593f6c98a70739a5, type: 3}
-  - {fileID: 8482857376320857625, guid: 97132ccd42a9fd04392a7dbd3082b3f7, type: 3}
+  CloudData:
+    mFinalEmotions: []
+    mPartsList: []
+    mdate: 0
+    mBase: {fileID: 0}
+    mVBase:
+      mPosition: {x: 0, y: 0, z: 0}
+      mRotation: {x: 0, y: 0, z: 0, w: 0}
+      mScale: {x: 0, y: 0, z: 0}
+      mWidth: 0
+      mHeight: 0
+      mImage: {fileID: 0}
+    mVPartsList: []
+    mIngredientDatas: []
+    mCloudTypeNum: 0
   cloudSpeed: 0
   Cloud_ps: {x: 0, y: 0, z: 0}
   animValue2:
@@ -30484,6 +30513,9 @@ MonoBehaviour:
   - {fileID: 9100000, guid: b9457b186b599464e82c66f3711bb0fe, type: 2}
   - {fileID: 9100000, guid: f402aae033c01104fb7c6d929ed5450b, type: 2}
   - {fileID: 9100000, guid: 07d17923951f2a3419581c9cc2da3f58, type: 2}
+  EffectCloudObj: {fileID: 4425956919304304566, guid: a95264540d46e3c49a754700701a26a0, type: 3}
+  newTempCloud: {fileID: 0}
+  IsUsing: 0
 --- !u!1 &1767291895
 GameObject:
   m_ObjectHideFlags: 0

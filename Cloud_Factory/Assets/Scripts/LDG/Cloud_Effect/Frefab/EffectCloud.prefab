@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3980239525210722764}
   m_Layer: 0
   m_Name: EffectCloud
-  m_TagString: Untagged
+  m_TagString: Cloud
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 4497281627634807522}
   - component: {fileID: 6015168567542812642}
   - component: {fileID: 4544785776083274844}
+  - component: {fileID: 4609171399109485960}
   m_Layer: 0
   m_Name: MainMoveCloud
   m_TagString: Untagged
@@ -272,3 +273,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4609171399109485960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8370742697635910144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2fadde7de4c8e4dac08614e07f23ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ran_num: 0
+  ran_num2: 0
+  Cloud: {fileID: 0}
+  part: {fileID: 0}
+  part_2: {fileID: 0}
+  Parts_fly: {fileID: 0}
+  Parts_fly_2: {fileID: 0}
+  IsUsing: 0
+  random_num: 0
+  random_num_2: 0

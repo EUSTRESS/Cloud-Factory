@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
+using System.Text;
+using Newtonsoft.Json;
+using AESWithJava.Con;
+using System;
 
 // 공통 UI 담당
 // 계절, 날짜 업데이트
@@ -209,9 +214,14 @@ public class CommonUIManager : MonoBehaviour
 
         // 옵션창 끌 때 소리 변경내역 저장함.
         SaveUnitManager mSaveUnitData = GameObject.Find("SaveUnitManager").GetComponent<SaveUnitManager>();
-        if (null == mSaveUnitData)
-            return;
-        mSaveUnitData.Save_SoundData();
+        if (null != mSaveUnitData)
+            mSaveUnitData.Save_SoundData();
+
+        // 옵션창 끌 때 한/영 저장함.
+        LanguageManager mLanguageManager = GameObject.Find("LanguageManager").GetComponent<LanguageManager>();
+        if (null != mLanguageManager)
+            Save_IsKorean(mLanguageManager.GetIsKorean());
+
     }
     public void ActiveGuideBook()
     {
@@ -234,5 +244,36 @@ public class CommonUIManager : MonoBehaviour
     public void SFx_Play()
     {
         mSFx.Play();
+    }
+
+    public void Save_IsKorean(bool isKorean)
+    {
+        // 파일이 있다면
+        if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "LanguageData.json")))
+        {
+            // 삭제
+            System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "LanguageData.json"));
+
+        }
+        
+        FileStream stream = new FileStream(Application.dataPath + "/Data/LanguageData.json", FileMode.OpenOrCreate);
+
+        // 저장할 변수가 담긴 클래스 생성
+        LanguageData mLanguageData = new LanguageData();
+
+        // 데이터 업데이트       
+        mLanguageData.isKorean = isKorean;
+        //mInitData.isFirstPlay = false; // 저장했으니까 처음 플레이가 아님.
+
+        // 데이터 직렬화
+        string jLanguageData = JsonConvert.SerializeObject(mLanguageData);
+
+        // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+        byte[] bLanguageData = Encoding.UTF8.GetBytes(jLanguageData);
+        Debug.Log(jLanguageData);
+        // 해당 파일 스트림에 적는다.                
+        stream.Write(bLanguageData, 0, bLanguageData.Length);
+        // 스트림 닫기
+        stream.Close();
     }
 }

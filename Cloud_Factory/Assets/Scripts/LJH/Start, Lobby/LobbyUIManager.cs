@@ -19,6 +19,12 @@ public class SoundData
 }
 
 [System.Serializable]
+public class LanguageData
+{
+    public bool isKorean;
+}
+
+[System.Serializable]
 public class InitData
 {
     public bool isFirstPlay;    
@@ -119,6 +125,8 @@ public class LobbyUIManager : MonoBehaviour
         Load_SeasonDate(); // 이 때 계절의 정보를 토대로, 만족도 5 뭉티와, 타이틀 화면 변경.
         Load_GuestSatisfaction(); // 만족도 5 뭉티 판별
 
+        Load_LanguageData();
+
         ChangeLobbyLanguage();
     }
 
@@ -215,6 +223,8 @@ public class LobbyUIManager : MonoBehaviour
         //Load_SOWManagerData(); // 로비에 매니저가 없어서, 날씨의 공간 들어와서 로딩할것.
         Load_LetterControllerData();
 
+        // Load_History();
+
         // 문자열을 int형으로 파싱해서 빌드 인덱스로 활용한다
         // 현재 빌드 인덱스가 날씨의 공간이 6이므로 6인데 이거 빌드 인덱스 바뀌면 안됨...
         LoadingSceneController.Instance.LoadScene(6); 
@@ -296,6 +306,38 @@ public class LobbyUIManager : MonoBehaviour
             mInvenManager.minvenLevel = dInventoryData.minvenLevel;
             mInvenManager.mMaxInvenCnt = dInventoryData.mMaxInvenCnt;
             mInvenManager.mMaxStockCnt = dInventoryData.mMaxStockCnt;
+        }
+    }
+    void Load_History()
+    {
+        string mHistoryDataPath = Path.Combine(Application.dataPath + "/Data/", "HistoryData.json");
+
+        if (File.Exists(mHistoryDataPath)) // 해당 파일이 생성되었으면 불러오기
+        {
+            // 파일 스트림 개방
+            FileStream stream = new FileStream(Application.dataPath + "/Data/HistoryData.json", FileMode.Open);
+
+            // 복호화는 나중에 한번에 하기
+            // 스트림 배열만큼 바이트 배열 생성
+            byte[] bHistoryData = new byte[stream.Length];
+            // 읽어오기
+            stream.Read(bHistoryData, 0, bHistoryData.Length);
+            stream.Close();
+
+            // jsondata를 스트링 타입으로 가져오기
+            string jHistoryData = Encoding.UTF8.GetString(bHistoryData);
+            Debug.Log(jHistoryData);
+
+            // 역직렬화
+            HistoryData dHistoryData = JsonConvert.DeserializeObject<HistoryData>(jHistoryData);
+
+            if (null == dHistoryData) // 저장된 데이터 없으면 리턴
+                return;
+
+            // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
+            mInvenManager.ingredientHistory = dHistoryData.mIngredientHistoryDatas.ToList();
+
+            // dHistoryData에 있는 스프라이트 경로들은 스프라이트 Load함수 따로 만들어서 mInvenManager에 Sprite에 각자 넣어줘야함.
         }
     }
     void Load_Guest()
@@ -821,6 +863,48 @@ public class LobbyUIManager : MonoBehaviour
         }
     }
 
+    void Load_LanguageData() // 이어할 데이터가 있는 지, 새롭게 플레이 하는 지, 이전에 소리를 저장한 데이터가 있는 지
+    {
+        string mInitDataPath = Path.Combine(Application.dataPath + "/Data/", "LanguageData.json");
+
+        if (File.Exists(mInitDataPath)) // 해당 파일이 생성되었으면 불러오기
+        {
+            // 파일 스트림 개방
+            FileStream LanguageDataStream = new FileStream(Application.dataPath + "/Data/LanguageData.json", FileMode.Open);
+
+            // 복호화는 나중에 한번에 하기
+            // 스트림 배열만큼 바이트 배열 생성
+            byte[] bLanguageData = new byte[LanguageDataStream.Length];
+            // 읽어오기
+            LanguageDataStream.Read(bLanguageData, 0, bLanguageData.Length);
+            LanguageDataStream.Close();
+
+            // jsondata를 스트링 타입으로 가져오기
+            string jLanguageData = Encoding.UTF8.GetString(bLanguageData);
+            Debug.Log(jLanguageData);
+
+            // 역직렬화
+            LanguageData dLanguageData = JsonConvert.DeserializeObject<LanguageData>(jLanguageData);
+            if (null == dLanguageData) // 저장된 데이터 없으면 리턴
+                return;
+            // 데이터 직렬화
+            string jData = JsonConvert.SerializeObject(dLanguageData);
+
+            // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+            //Debug.Log("=======Load : dSOWSaveData =========");
+            //Debug.Log(jData);
+            //Debug.Log("=======Load=========");
+
+
+            // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
+            LanguageManager mLanguageManager = GameObject.Find("LanguageManager").GetComponent<LanguageManager>();
+            if (null != mLanguageManager)
+                mLanguageManager.SetLanguageData(dLanguageData.isKorean);
+           
+            //isFirstPlay = dInitData.isFirstPlay;
+        }
+    }
+
     public void ActiveOption()
     {
         mSFx.Play();
@@ -831,6 +915,10 @@ public class LobbyUIManager : MonoBehaviour
         mSFx.Play();
         gOption.SetActive(false);
         SaveLobby_SoundData();
+        // 옵션창 끌 때 한/영 저장함.
+        LanguageManager mLanguageManager = GameObject.Find("LanguageManager").GetComponent<LanguageManager>();
+        if (null != mLanguageManager)
+            Save_IsKorean(mLanguageManager.GetIsKorean());
     }
 
     // 로비에 저장 매니저 없으니까 임시로 함수 생성.
@@ -911,6 +999,37 @@ public class LobbyUIManager : MonoBehaviour
         Debug.Log(jInitData);
         // 해당 파일 스트림에 적는다.                
         stream.Write(bInitData, 0, bInitData.Length);
+        // 스트림 닫기
+        stream.Close();
+    }
+
+    public void Save_IsKorean(bool isKorean)
+    {
+        // 파일이 있다면
+        if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "LanguageData.json")))
+        {
+            // 삭제
+            System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "LanguageData.json"));
+
+        }
+
+        FileStream stream = new FileStream(Application.dataPath + "/Data/LanguageData.json", FileMode.OpenOrCreate);
+
+        // 저장할 변수가 담긴 클래스 생성
+        LanguageData mLanguageData = new LanguageData();
+
+        // 데이터 업데이트       
+        mLanguageData.isKorean = isKorean;
+        //mInitData.isFirstPlay = false; // 저장했으니까 처음 플레이가 아님.
+
+        // 데이터 직렬화
+        string jLanguageData = JsonConvert.SerializeObject(mLanguageData);
+
+        // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+        byte[] bLanguageData = Encoding.UTF8.GetBytes(jLanguageData);
+        Debug.Log(jLanguageData);
+        // 해당 파일 스트림에 적는다.                
+        stream.Write(bLanguageData, 0, bLanguageData.Length);
         // 스트림 닫기
         stream.Close();
     }
@@ -1069,26 +1188,38 @@ public class LobbyUIManager : MonoBehaviour
             if (1 == Season)
             {
                 iIndex = 1;
-                gNewConTransform[0].anchoredPosition = new Vector3(15, 43, 0);
-                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+                gNewConTransform[0].anchoredPosition = new Vector3(30, 25, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(105, -72.5f, 0);
+
+                iNewGame.GetComponent<RectTransform>().sizeDelta = new Vector2(380, 185);
+                iContiueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(370, 225);
             }
             else if (2 == Season)
             {
                 iIndex = 3;
-                gNewConTransform[0].anchoredPosition = new Vector3(135, 43, 0);
-                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+                gNewConTransform[0].anchoredPosition = new Vector3(100, 40, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(197, -65, 0);
+
+                iNewGame.GetComponent<RectTransform>().sizeDelta = new Vector2(309, 164);
+                iContiueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(285, 158);
             }
             else if (3 == Season)
             {
                 iIndex = 5;
-                gNewConTransform[0].anchoredPosition = new Vector3(-101, 123, 0);
-                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+                gNewConTransform[0].anchoredPosition = new Vector3(-101, 130, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(-101, 35, 0);
+
+                iNewGame.GetComponent<RectTransform>().sizeDelta = new Vector2(340, 144);
+                iContiueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(320, 153);
             }
             else if (4 == Season)
             {
                 iIndex = 7;
-                gNewConTransform[0].anchoredPosition = new Vector3(-50, 50, 0);
-                gNewConTransform[1].anchoredPosition = new Vector3(123, -57, 0);
+                gNewConTransform[0].anchoredPosition = new Vector3(-55, 60, 0);
+                gNewConTransform[1].anchoredPosition = new Vector3(-25, -60, 0);
+
+                iNewGame.GetComponent<RectTransform>().sizeDelta = new Vector2(352, 137);
+                iContiueGame.GetComponent<RectTransform>().sizeDelta = new Vector2(331, 131);
             }
             sHoveringNew = sHoverNewLan[iIndex];
             sUnHoveringNew = sUnHoverNewLan[iIndex];

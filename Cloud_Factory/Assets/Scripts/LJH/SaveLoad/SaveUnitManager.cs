@@ -81,6 +81,8 @@ public class SaveUnitManager : MonoBehaviour
             Save_LetterControlData();
             Save_SoundData();
 
+            // Save_HistoryData();
+
             // 튜토리얼 데이터 저장.
             // 튜토리얼이 끝날 때 저장한다.
             //Save_Tutorial();
@@ -519,6 +521,51 @@ public class SaveUnitManager : MonoBehaviour
         // 스트림 닫기
         stream.Close();
     }
+
+    void Save_HistoryData()
+    {
+        if (mInvenManager) // null check
+        {
+            // 암호화는 나중에 한번에 하기
+
+            // 파일이 있다면
+            if (System.IO.File.Exists(Path.Combine(Application.dataPath + "/Data/", "HistoryData.json")))
+            {
+                // 삭제
+                System.IO.File.Delete(Path.Combine(Application.dataPath + "/Data/", "HistoryData.json"));
+
+            }
+            // 삭제 후 다시 개방
+            // 이유는, 동적으로 생성 될 경우에 json을 초기화 하지 않고 덮어 씌우기 때문에 전에 있던 데이터보다 적을 경우
+            // 뒤에 남는 쓰레기 값들로 인하여 역직렬화 오류 발생함
+            // 동적으로 생성하는 경우가 아닌 경우 (ex, 현재 씬 인덱스 등)은 상관 없음
+            // 파일 스트림 개방
+            FileStream stream = new FileStream(Application.dataPath + "/Data/HistoryData.json", FileMode.OpenOrCreate);
+
+            // 저장할 변수가 담긴 클래스 생성
+
+            // 재료, 구름 도감 정보 한번에 할 것
+            HistoryData mHistoryData = new HistoryData();
+
+            // 데이터 업데이트
+            mHistoryData.mIngredientHistoryDatas = mInvenManager.ingredientHistory.ToList();
+            
+            // Todo
+            // 경로 추가되면 string 타입 저장 2개 더 하면 된다.            
+
+            // 데이터 직렬화
+            string jHistoryData = JsonConvert.SerializeObject(mHistoryData);
+
+            // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+            byte[] bHistoryData = Encoding.UTF8.GetBytes(jHistoryData);
+            Debug.Log(jHistoryData);
+            // 해당 파일 스트림에 적는다.                
+            stream.Write(bHistoryData, 0, bHistoryData.Length);
+            // 스트림 닫기
+            stream.Close();
+        }
+    }
+
 
     // 종료될 때
     void OnDisable()

@@ -54,4 +54,13 @@ public class LanguageManager : MonoBehaviour
         if (isKorean == false) return "English";
         return "Korean";
     }
+
+    public bool GetIsKorean()
+    {
+        return isKorean;
+    }
+    public void SetLanguageData(bool _isKorean)
+    {
+        isKorean = _isKorean;
+    }
 }

@@ -341,11 +341,11 @@ public class InventoryManager : MonoBehaviour
         beginningCloudData = new CloudData();
 
         ingredientHistory = new List<List<IngredientData>>();
-        ingredientHistoryPath = new List<List<string>>();
+        ingredientHistoryPath = new List<Dictionary<string, string>>();
         for (int i = 0; i < 4; i++)
         {
             ingredientHistory.Add(new List<IngredientData>());
-            ingredientHistoryPath.Add(new List<string>());
+            ingredientHistoryPath.Add(new Dictionary<string, string>());
         }
 
         cloudHistory = new List<Sprite>();
@@ -383,7 +383,7 @@ public class InventoryManager : MonoBehaviour
     public List<IngredientData>  mType;
     public List<int>  mCnt;
     public List<List<IngredientData>> ingredientHistory;
-    public List<List<string>> ingredientHistoryPath;
+    public List<Dictionary<string, string>> ingredientHistoryPath;
     public List<Sprite> cloudHistory;
     public List<string> cloudHistoryPath;
 
@@ -431,7 +431,7 @@ public class InventoryManager : MonoBehaviour
                 if (!ingredientHistory[i].Contains(_stock.Key))
                 {
                     ingredientHistory[i].Add(_stock.Key);
-                    ingredientHistoryPath[i].Add("Sprite/Ingredient/Rarity" + _stock.Key.rarity + "/M" + _stock.Key.rarity + "_" + _stock.Key.dataName);
+                    ingredientHistoryPath[i].Add(_stock.Key.dataName, "Sprite/Ingredient/Rarity" + _stock.Key.rarity + "/M" + _stock.Key.rarity + "_" + _stock.Key.dataName);
                 }
                 break;
             }

@@ -7,31 +7,30 @@ public class CloudSpawner : MonoBehaviour
 {
     SOWManager          SOWManager;         
     InventoryManager    InventoryManager;
-    StoragedCloudData   CloudData;
+    public StoragedCloudData   CloudData;
 
     GameObject cloudMove;
 
     bool                isCloudGive;        // 창고에서 구름을 제공하였는가
-        
-    public GameObject   CloudObject;        // 구름 오브젝트 프리팹
-
-    // (리스트인덱스값) : (파츠이펙트프리팹이름) - (감정)
-    // 0 : FadeEffectCloud - 기쁨,혐오,관심&기대,얼어붙음,혼란스러움 / 1 : TornadoEffectCloud - 불안 / 2 : BummerEffectCloud - 슬픔,자책,씁쓸함 / 3 : HeartBeatEffectCloud - 짜증,반발,낙천,애증
-    // 4 : BounceEffectCloud - 수용,놀람&혼란,사랑 / 5 : TwinkleEffectCloud - 순종,경외 / 6 : FogEffectCloud - 경멸 / 7 : DiagonalEffectCloud - 공격성
-    //public GameObject[] Make_EffectCloudObject = new GameObject[8];
 
     public int          cloudSpeed;         // 구름이 이동하는 속도
 
-    private Vector3 Cloud_ps;
-
-    private GameObject  tempCLoud;          // 구름 제공 전 정보값을 채우기 위한 Temp 오브젝트
-
-    //private GameObject temporaryCloud;
+    public Vector3 Cloud_ps;
 
     public RuntimeAnimatorController[] animValue2;
     public RuntimeAnimatorController[] animValue3;
     public RuntimeAnimatorController[] animValue4;
 
+
+    public GameObject EffectCloudObj;   // 새로운 구름 오브젝트 프리팹
+
+    Make_PartEffect make_PartEffect;
+
+    public GameObject newTempCloud;
+
+    public bool IsUsing;                   // 구름을 사용중인지 체크
+
+    GameObject MainEffectCloudMove;
 
     // 처음 받아와야 하는 값
     // 1) 날아갈 의자의 인덱스
@@ -50,32 +49,39 @@ public class CloudSpawner : MonoBehaviour
         InventoryManager = GameObject.Find("InventoryManager").GetComponent<InventoryManager>();
     }
 
+    void Start()
+    {
+        IsUsing = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (tempCLoud != null)
-        {
-            Cloud_ps = tempCLoud.transform.position;
-        }
+
     }
 
     // 구름을 생성하고 초기화한다.
     public void SpawnCloud(int guestNum, StoragedCloudData storagedCloudData /*QA용*/, int sat)
     {
         // 구름 인스턴스 생성
-        tempCLoud = Instantiate(CloudObject);
+        newTempCloud = Instantiate(EffectCloudObj);
+        newTempCloud.transform.GetChild(0).gameObject.SetActive(true);
+
+        make_PartEffect = newTempCloud.GetComponent<Make_PartEffect>();
 
         SOWManager SOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
         if(SOWManager != null)
         {
-            SOWManager.mCloudObjectList.Add(tempCLoud);
+            SOWManager.mCloudObjectList.Add(newTempCloud);
         }
 
         Debug.Log("Instantiate");
-        tempCLoud.transform.position = this.transform.position;
+        newTempCloud.transform.position = this.transform.position;
+        Cloud_ps = newTempCloud.transform.position;
 
         // 목표 의자 위치 설정
-        tempCLoud.GetComponent<CloudObject>().SetTargetChair(guestNum);
+        newTempCloud.GetComponent<CloudObject>().SetTargetChair(guestNum);
+        
         Debug.Log("SetTargetChair");
 
         // 구름을 제공받는 손님의 isGettingCloud 상태를 갱신한다.
@@ -102,8 +108,8 @@ public class CloudSpawner : MonoBehaviour
 
         // 임시로 인벤토리에 들어있는 구름 중, 맨 앞에 있는 구름의 값을 가져온다.
         CloudData = storagedCloudData;
-        
-        CloudObject cloudObject = tempCLoud.GetComponent<CloudObject>();
+
+        CloudObject cloudObject = newTempCloud.GetComponent<CloudObject>(); 
         if (cloudObject != null)
         {
             cloudObject.SetValue(CloudData);
@@ -116,29 +122,16 @@ public class CloudSpawner : MonoBehaviour
             cloudObject.sat = sat;
         }
 
-        // 움직이는 구름의 이펙트를 나타내는 cloudMove에 대한 설정
-        cloudMove = tempCLoud.transform.GetChild(0).gameObject;
+        // 움직이는 구름의 이펙트를 나타내는 MaincloudMove에 대한 설정
+        MainEffectCloudMove = newTempCloud.transform.GetChild(0).gameObject;
 
         // MoveCloud 관련
         {
-            Cloud_movement movement = cloudMove.GetComponent<Cloud_movement>();
-
-            if(movement == null)
+            Make_PartEffect make_PartEffect = MainEffectCloudMove.GetComponent<Make_PartEffect>();
+            if(make_PartEffect == null)
             {
-                Debug.Log("구름 오브젝트의 movement가 초기화가 안됐습니다.");
                 return;
             }
-
-            for (int i = 0; i < storagedCloudData.mVPartsList.Count; i++)           // 파츠이미지 스프라이트로 저장
-            {
-                movement.Parts_fly.GetComponent<SpriteRenderer>().sprite = storagedCloudData.mVPartsList[i].mImage;
-                movement.Parts_fly_2.GetComponent<SpriteRenderer>().sprite = storagedCloudData.mVPartsList[i].mImage;
-            }
-
-            // scale
-            //cloudMove.transform.localScale = new Vector3(0.11f, 0.12f, 0.5f);
-            movement.Parts_fly.transform.localScale = new Vector3(0.11f, 0.11f, 0.5f);
-            movement.Parts_fly_2.transform.localScale = new Vector3(0.16f, 0.16f, 0.5f);
 
             // TODO : MoveCloud Animator를 종류에 맞게 변경 -> CloudData값을 이용
             // 1. 구름 색상을 지정 (적용 완료)
@@ -150,20 +143,29 @@ public class CloudSpawner : MonoBehaviour
             int IngredientDataNum = storagedCloudData.GetIngredientDataNum();
 
             Debug.Log("구름에 사용된 파츠 개수 : " + IngredientDataNum);
+
+            // Prefab수정및 애니메이션 수정한 부분입니다 - 동규 -
             if (IngredientDataNum <= 2)
             {
-                cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue3[cloudColorNumber];
+                //cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue3[cloudColorNumber];
+                MainEffectCloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue3[cloudColorNumber];
             }
             else if (IngredientDataNum == 3)
             {
-                cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue2[cloudColorNumber];
+                //cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue2[cloudColorNumber];
+                MainEffectCloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue2[cloudColorNumber];
             }
             else
             {
-                cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue4[cloudColorNumber];
+                //cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue4[cloudColorNumber];
+                MainEffectCloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue4[cloudColorNumber];
             }
-            
-            if(cloudMove.GetComponent<Animator>().runtimeAnimatorController)
+
+            //if(cloudMove.GetComponent<Animator>().runtimeAnimatorController)
+            //{
+
+            //}
+            if (MainEffectCloudMove.GetComponent<Animator>().runtimeAnimatorController)
             {
 
             }
@@ -213,9 +215,7 @@ public class CloudSpawner : MonoBehaviour
     // 구름 이동
     public void MoveCloud()
     {
-        Transform t_target = tempCLoud.GetComponent<CloudObject>().targetChairPos;
-        tempCLoud.transform.position = Vector2.MoveTowards(transform.position, t_target.position, cloudSpeed * Time.deltaTime);
+        Transform New_Target = newTempCloud.GetComponent<CloudObject>().targetChairPos;
+        newTempCloud.transform.position = Vector2.MoveTowards(transform.position, New_Target.position, cloudSpeed * Time.deltaTime);
     }
-
-
 }

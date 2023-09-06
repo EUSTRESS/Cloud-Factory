@@ -79,7 +79,9 @@ public class CloudObject : MonoBehaviour
             if (Target.GetComponent<GuestObject>().mGuestNum != mGuestNum)
                 return;
 
-            this.transform.GetChild(0).gameObject.GetComponent<Cloud_movement>().IsUsing = true;
+            //this.transform.GetChild(0).gameObject.GetComponent<Cloud_movement>().IsUsing = true;
+            //this.transform.gameObject.GetComponent<CloudSpawner>().IsUsing = true;
+            this.transform.gameObject.GetComponent<Make_PartEffect>().IsUsing = true;
 
             // 구름을 사용하는 손님의 머리 위치로 이동시킨다.
             this.transform.position = collision.gameObject.transform.position;
@@ -166,6 +168,7 @@ public class CloudObject : MonoBehaviour
             this.transform.GetChild(0).GetComponent<Animator>().SetTrigger("End");
             GuestManager.mGuestInfo[mGuestNum].isUsing = false;
 
+            Destroy(this.transform.GetChild(0).gameObject);
             Destroy(this.transform.GetChild(1).gameObject);
         }
     }

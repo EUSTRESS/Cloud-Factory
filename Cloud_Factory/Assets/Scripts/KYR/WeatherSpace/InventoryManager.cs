@@ -30,7 +30,13 @@ public class CloudStorageData
     }
 }
 
+[System.Serializable]
+public class HistoryData
+{
+    public List<List<IngredientData>> mIngredientHistoryDatas;
 
+    // Add Sprite Directory
+}
 
 
 [System.Serializable]

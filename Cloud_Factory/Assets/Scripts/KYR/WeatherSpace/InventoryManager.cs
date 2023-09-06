@@ -239,6 +239,12 @@ public class CloudData
         mcloudBaseImage = Resources.Load<Sprite>("Sprite/Base/"+ targetUnion + "union/" + "OC_Cloud_" + targetImgName);
         mcloudDecoBaseImage = Resources.Load<Sprite>("Sprite/Base/" + targetUnion + "union/" + "Deco/"+ "OC_Cloud_" + ((int)mEmotions[0].Key).ToString());
 
+        if (!GameObject.Find("InventoryManager").GetComponent<InventoryManager>().cloudHistory.Contains(mcloudBaseImage))
+        {
+            GameObject.Find("InventoryManager").GetComponent<InventoryManager>().cloudHistory.Add(mcloudBaseImage);
+            GameObject.Find("InventoryManager").GetComponent<InventoryManager>().cloudHistoryPath.Add("Sprite/Base/" + targetUnion + "union/" + "OC_Cloud_" + targetImgName);
+        }
+
         if (mcloudBaseImage == null || mcloudDecoBaseImage == null)
             Debug.LogWarning("NO CloudImage");
             
@@ -335,12 +341,15 @@ public class InventoryManager : MonoBehaviour
         beginningCloudData = new CloudData();
 
         ingredientHistory = new List<List<IngredientData>>();
+        ingredientHistoryPath = new List<List<string>>();
         for (int i = 0; i < 4; i++)
         {
             ingredientHistory.Add(new List<IngredientData>());
+            ingredientHistoryPath.Add(new List<string>());
         }
 
         cloudHistory = new List<Sprite>();
+        cloudHistoryPath = new List<string>();
     }
 
     private void Update()
@@ -374,7 +383,9 @@ public class InventoryManager : MonoBehaviour
     public List<IngredientData>  mType;
     public List<int>  mCnt;
     public List<List<IngredientData>> ingredientHistory;
+    public List<List<string>> ingredientHistoryPath;
     public List<Sprite> cloudHistory;
+    public List<string> cloudHistoryPath;
 
     public int minvenLevel=3;
 
@@ -417,7 +428,11 @@ public class InventoryManager : MonoBehaviour
             for (int i = 0; i < ingredientHistory.Count; i++)
             {
                 if (!mIngredientDatas[i].mItemList.Contains(_stock.Key)) continue;
-                if (!ingredientHistory[i].Contains(_stock.Key)) ingredientHistory[i].Add(_stock.Key);
+                if (!ingredientHistory[i].Contains(_stock.Key))
+                {
+                    ingredientHistory[i].Add(_stock.Key);
+                    ingredientHistoryPath[i].Add("Sprite/Ingredient/Rarity" + _stock.Key.rarity + "/M" + _stock.Key.rarity + "_" + _stock.Key.dataName);
+                }
                 break;
             }
             
@@ -473,8 +488,6 @@ public class InventoryManager : MonoBehaviour
             DontDestroyOnLoad(cloudBase.transform.GetChild(i).gameObject);
             parts.Add(cloudBase.transform.GetChild(i).gameObject);
         }
-
-        if(!cloudHistory.Contains(createdCloudData.getBaseCloudSprite())) cloudHistory.Add(createdCloudData.getBaseCloudSprite());
 
         mCloudStorageData.mDatas.Add(new StoragedCloudData(createdCloudData.getFinalEmotion(), cloudBase, parts, createdCloudData.GetIngredientDatas()));
         createdCloudData = beginningCloudData;

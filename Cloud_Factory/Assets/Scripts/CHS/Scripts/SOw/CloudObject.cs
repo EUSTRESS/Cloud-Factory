@@ -15,25 +15,25 @@ public class CloudObject : MonoBehaviour
     SOWManager SOWManager;
     Guest GuestManager;
 
-    [Header("±¸¸§ Á¤º¸")]
-    public int mGuestNum;                       // Å¸°Ù ¼Õ´Ô ¹øÈ£
-    public float cloudSpeed;                    // ±¸¸§ ¼Óµµ
-    public List<EmotionInfo> mFinalEmotions;    // º¯È¯ÇÒ °¨Á¤°ª ¸®½ºÆ®
+    [Header("êµ¬ë¦„ ì •ë³´")]
+    public int mGuestNum;                       // íƒ€ê²Ÿ ì†ë‹˜ ë²ˆí˜¸
+    public float cloudSpeed;                    // êµ¬ë¦„ ì†ë„
+    public List<EmotionInfo> mFinalEmotions;    // ë³€í™˜í•  ê°ì •ê°’ ë¦¬ìŠ¤íŠ¸
     private StoragedCloudData virtualCloudData;
 
-    [Header("±¸¸§ ÀÌµ¿ ¹× »ç¿ë Á¤º¸")]
+    [Header("êµ¬ë¦„ ì´ë™ ë° ì‚¬ìš© ì •ë³´")]
     public bool isAlive = false;                //
-    public GameObject Target;                   // ¸ñÇ¥ ¼Õ´Ô
-    public float DelayToUse;                    // ±¸¸§ »ç¿ë½Ã°£
+    public GameObject Target;                   // ëª©í‘œ ì†ë‹˜
+    public float DelayToUse;                    // êµ¬ë¦„ ì‚¬ìš©ì‹œê°„
 
-    // Ã³À½ ¹Ş¾Æ¿Í¾ß ÇÏ´Â °ª
-    // 1) Cloud Spawner·ÎºÎÅÍ Á¤º¸°ªÀ» ¹Ş¾Æ¿Â´Ù.
+    // ì²˜ìŒ ë°›ì•„ì™€ì•¼ í•˜ëŠ” ê°’
+    // 1) Cloud Spawnerë¡œë¶€í„° ì •ë³´ê°’ì„ ë°›ì•„ì˜¨ë‹¤.
 
-    // ³»ºÎ¿¡¼­ ¼öÇàÇØ¾ß ÇÒ ±â´É
-    // 1) ¼Õ´Ô°úÀÇ Ãæµ¹ Ã³¸® (Ãæµ¹ ½Ã »ç¿ëÇÑ´Ù´Â ÆÇÁ¤)
-    // 2) Ãæµ¹ ½Ã ÇØ´ç ¼Õ´ÔÀÇ °¨Á¤°ªÀÌ º¯È­ÇÏ°Ô²û ¼³Á¤
+    // ë‚´ë¶€ì—ì„œ ìˆ˜í–‰í•´ì•¼ í•  ê¸°ëŠ¥
+    // 1) ì†ë‹˜ê³¼ì˜ ì¶©ëŒ ì²˜ë¦¬ (ì¶©ëŒ ì‹œ ì‚¬ìš©í•œë‹¤ëŠ” íŒì •)
+    // 2) ì¶©ëŒ ì‹œ í•´ë‹¹ ì†ë‹˜ì˜ ê°ì •ê°’ì´ ë³€í™”í•˜ê²Œë” ì„¤ì •
 
-    // QA¿ë
+    // QAìš©
     public int sat = 0 ;
 
     private void Awake()
@@ -61,7 +61,7 @@ public class CloudObject : MonoBehaviour
                 Vector3 temp;
                 temp = new Vector3(-0.4f, 1.4f, 0f);
 
-                // TODO : ÀÇÀÚ¸¦ ¾É´Â ¹æÇâ¿¡ µû¶ó¼­ targetChairPos¿¡ ´ëÇÑ °ªÀ» º¯È¯½ÃÄÑÁØ´Ù.
+                // TODO : ì˜ìë¥¼ ì•‰ëŠ” ë°©í–¥ì— ë”°ë¼ì„œ targetChairPosì— ëŒ€í•œ ê°’ì„ ë³€í™˜ì‹œì¼œì¤€ë‹¤.
                 transform.position = Vector2.MoveTowards(transform.position, targetChairPos.position + temp, cloudSpeed * Time.deltaTime);
             }
         }
@@ -71,7 +71,7 @@ public class CloudObject : MonoBehaviour
     {
         if (collision.gameObject.tag == "Guest" && isAlive)
         {
-            // ±¸¸§À» ¹ŞÀº ¼Õ´ÔÀ» »ç¿ë»óÅÂ·Î º¯°æ
+            // êµ¬ë¦„ì„ ë°›ì€ ì†ë‹˜ì„ ì‚¬ìš©ìƒíƒœë¡œ ë³€ê²½
             //GuestManager.mGuestInfo[mGuestNum].isUsing = true;
 
             Target = collision.gameObject.transform.root.gameObject;
@@ -83,16 +83,16 @@ public class CloudObject : MonoBehaviour
             //this.transform.gameObject.GetComponent<CloudSpawner>().IsUsing = true;
             this.transform.gameObject.GetComponent<Make_PartEffect>().IsUsing = true;
 
-            // ±¸¸§À» »ç¿ëÇÏ´Â ¼Õ´ÔÀÇ ¸Ó¸® À§Ä¡·Î ÀÌµ¿½ÃÅ²´Ù.
+            // êµ¬ë¦„ì„ ì‚¬ìš©í•˜ëŠ” ì†ë‹˜ì˜ ë¨¸ë¦¬ ìœ„ì¹˜ë¡œ ì´ë™ì‹œí‚¨ë‹¤.
             this.transform.position = collision.gameObject.transform.position;
             this.transform.Translate(new Vector3(0.0f, 1.05f, 0.0f));
 
-            // ±¸¸§À» »ç¿ëÁßÀÎ ¸ğ¼ÇÀ» ¶ç¿î´Ù. (¾Ö´Ï¸ŞÀÌ¼Ç º¯°æ)
+            // êµ¬ë¦„ì„ ì‚¬ìš©ì¤‘ì¸ ëª¨ì…˜ì„ ë„ìš´ë‹¤. (ì• ë‹ˆë©”ì´ì…˜ ë³€ê²½)
             {
-                // moveCloud¸¦ Using»óÅÂ·Î ¹Ù²Û´Ù.
+                // moveCloudë¥¼ Usingìƒíƒœë¡œ ë°”ê¾¼ë‹¤.
                 this.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Using");
 
-                // VirtualObjectManager¸¦ ÅëÇØ¼­ ¿ÀºêÁ§Æ®¸¦ ¸¸µé¾î³½´Ù. (ÆÄÃ÷¸¦ ³ªÅ¸³»±â À§ÇØ »ç¿ë)
+                // VirtualObjectManagerë¥¼ í†µí•´ì„œ ì˜¤ë¸Œì íŠ¸ë¥¼ ë§Œë“¤ì–´ë‚¸ë‹¤. (íŒŒì¸ ë¥¼ ë‚˜íƒ€ë‚´ê¸° ìœ„í•´ ì‚¬ìš©)
                 VirtualObjectManager vObjectManager = GameObject.Find("VirtualObjectManager").GetComponent<VirtualObjectManager>();
                 GameObject tempObject = vObjectManager.InstantiateVirtualObjectToSceneToSprite(virtualCloudData, this.transform.position);
                 tempObject.transform.SetParent(this.transform);
@@ -100,15 +100,15 @@ public class CloudObject : MonoBehaviour
                 tempObject.GetComponent<SpriteRenderer>().enabled = false;
             }
 
-            // ±¸¸§À» »ç¿ëÁßÀÎ »óÅÂ·Î¸¸µç´Ù.
+            // êµ¬ë¦„ì„ ì‚¬ìš©ì¤‘ì¸ ìƒíƒœë¡œë§Œë“ ë‹¤.
             StartCoroutine("WaitForSetEmotion");
 
-            // ±¸¸§ÀÇ °¨Á¤°ªÀ» Àû¿ëµÈ °æ¿ìÀÇ °á°ú°ªÀÇ ¸¸Á·µµ º¯È­·®¿¡ µû¶ó¼­ ¼Õ´Ô ¾Ö´Ï¸ŞÀÌ¼Ç º¯°æ
+            // êµ¬ë¦„ì˜ ê°ì •ê°’ì„ ì ìš©ëœ ê²½ìš°ì˜ ê²°ê³¼ê°’ì˜ ë§Œì¡±ë„ ë³€í™”ëŸ‰ì— ë”°ë¼ì„œ ì†ë‹˜ ì• ë‹ˆë©”ì´ì…˜ ë³€ê²½
             int prevSat = GuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
 
             if (sat == 0)
             {
-                // ÀÓÀÇ Àû¿ë -> ±¸¸§ÀÇ °¨Á¤°ªÀ» ´õÇÑ ÈÄ, ¸¸Á·µµ¿Í »óÇÏÇÑ¼± ±ÙÁ¢°ªÀ» ±¸ÇÏ¿© ¾÷µ¥ÀÌÆ®ÇÑ´Ù.
+                // ì„ì˜ ì ìš© -> êµ¬ë¦„ì˜ ê°ì •ê°’ì„ ë”í•œ í›„, ë§Œì¡±ë„ì™€ ìƒí•˜í•œì„  ê·¼ì ‘ê°’ì„ êµ¬í•˜ì—¬ ì—…ë°ì´íŠ¸í•œë‹¤.
                 for (int i = 0; i < mFinalEmotions.Count; ++i)
                 {
                     GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value);
@@ -118,13 +118,13 @@ public class CloudObject : MonoBehaviour
 
             int currSat = GuestManager.mGuestInfo[mGuestNum].mSatatisfaction;
 
-            // °¨Á¤Ç¥Çö¿¡ »ç¿ëµÉ º¯¼öµéÀ» °»½ÅÇÑ´Ù.
+            // ê°ì •í‘œí˜„ì— ì‚¬ìš©ë  ë³€ìˆ˜ë“¤ì„ ê°±ì‹ í•œë‹¤.
             collision.gameObject.transform.root.gameObject.GetComponent<GuestObject>().faceValue = GuestManager.SpeakEmotionEffect(mGuestNum);
             collision.gameObject.transform.root.gameObject.GetComponent<GuestObject>().dialogEmotion = GuestManager.SpeakEmotionDialog(mGuestNum);
 
             if (sat == 0)
             {
-                // ÀÓÀÇ Àû¿ë ÇØÁ¦ -> ½ÇÁ¦ Àû¿ëµÇ´Â ½Ã°£¿¡ Àû¿ëÇÏ¿©¾ß ÇÏ±â ¶§¹®¿¡ ´Ù½Ã ´õÇØÁØ °ªÀ» »©ÁØ´Ù.
+                // ì„ì˜ ì ìš© í•´ì œ -> ì‹¤ì œ ì ìš©ë˜ëŠ” ì‹œê°„ì— ì ìš©í•˜ì—¬ì•¼ í•˜ê¸° ë•Œë¬¸ì— ë‹¤ì‹œ ë”í•´ì¤€ ê°’ì„ ë¹¼ì¤€ë‹¤.
                 for (int i = 0; i < mFinalEmotions.Count; ++i)
                 {
                     GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value * -1);
@@ -143,30 +143,36 @@ public class CloudObject : MonoBehaviour
             }
             collision.gameObject.transform.root.gameObject.GetComponent<GuestObject>().mGuestAnim.SetTrigger("TakeCloud");
 
-            // ´õÀÌ»ó ±¸¸§¿¡ ´ëÇÑ Ãæµ¹Ã¼Å©°¡ ÇÊ¿ä ¾øÀ¸¹Ç·Î ºñÈ°¼ºÈ­
+            // ë”ì´ìƒ êµ¬ë¦„ì— ëŒ€í•œ ì¶©ëŒì²´í¬ê°€ í•„ìš” ì—†ìœ¼ë¯€ë¡œ ë¹„í™œì„±í™”
             this.GetComponent<CapsuleCollider2D>().enabled = false;
         }
     }
 
-    // ±¸¸§À» »ç¿ëÇÏ´Â Áß ±â´Ù¸®´Â ÇÔ¼öÀÌ´Ù.
+    // êµ¬ë¦„ì„ ì‚¬ìš©í•˜ëŠ” ì¤‘ ê¸°ë‹¤ë¦¬ëŠ” í•¨ìˆ˜ì´ë‹¤.
     IEnumerator WaitForSetEmotion()
     {
-        Debug.Log("ÄÚ·çÆ¾ ½ÃÀÛ");
+#if UNITY_EDITOR
+        Debug.Log("ì½”ë£¨í‹´ ì‹œì‘");
+#endif
         yield return new WaitForSeconds(DelayToUse);
 
         bool result = UsingCloud();
 
         if(!result)
         {
-            Debug.Log("±¸¸§ Á¤º¸°ªÀ» ¼Õ´Ô¿¡°Ô Àü´ŞÇÏ´Â °úÁ¤¿¡¼­ ¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.");
+#if UNITY_EDITOR
+            Debug.Log("êµ¬ë¦„ ì •ë³´ê°’ì„ ì†ë‹˜ì—ê²Œ ì „ë‹¬í•˜ëŠ” ê³¼ì •ì—ì„œ ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.");
+#endif
         }
         else
         {
             Target.GetComponent<GuestObject>().isEndUsingCloud = true;
-            Debug.Log("ÄÚ·çÆ¾ Á¾·á");
+#if UNITY_EDITOR
+            Debug.Log("ì½”ë£¨í‹´ ì¢…ë£Œ");
+#endif
 
-            // ¸ğµç °úÁ¤À» ¸¶Ä£ ÈÄ, Á¦°Å
-            // TODO -> ±¸¸§ ¼Ò¸ê ¾Ö´Ï¸ŞÀÌ¼ÇÀ» Àç»ıÇÏ´Â °ÍÀ¸·Î º¯°æ (±¸¸§ ¼Ò¸ê ¾Ö´Ï¸ŞÀÌ¼Ç¿¡ ±¸¸§ ¿ÀºêÁ§Æ®¸¦ Á¦°ÅÇÏ´Â ±â´ÉÀ» Ãß°¡)
+            // ëª¨ë“  ê³¼ì •ì„ ë§ˆì¹œ í›„, ì œê±°
+            // TODO -> êµ¬ë¦„ ì†Œë©¸ ì• ë‹ˆë©”ì´ì…˜ì„ ì¬ìƒí•˜ëŠ” ê²ƒìœ¼ë¡œ ë³€ê²½ (êµ¬ë¦„ ì†Œë©¸ ì• ë‹ˆë©”ì´ì…˜ì— êµ¬ë¦„ ì˜¤ë¸Œì íŠ¸ë¥¼ ì œê±°í•˜ëŠ” ê¸°ëŠ¥ì„ ì¶”ê°€)
             this.transform.GetChild(0).GetComponent<Animator>().SetTrigger("End");
             GuestManager.mGuestInfo[mGuestNum].isUsing = false;
         }
@@ -188,35 +194,44 @@ public class CloudObject : MonoBehaviour
         GuestManager.mGuestInfo[mGuestNum].isUsing = false;
         GuestManager.mGuestInfo[mGuestNum].isDisSat = true;
         this.transform.GetChild(0).GetComponent<Animator>().SetTrigger("End");
-        Debug.Log("±¸¸§ End");
+#if UNITY_EDITOR
+        Debug.Log("êµ¬ë¦„ End");
+#endif
     }
         
 
     bool UsingCloud()
     {
-        // QA¿ë Á¶°Ç¹® Ãß°¡
+        // QAìš© ì¡°ê±´ë¬¸ ì¶”ê°€
         if(sat == 0)
         {
-            // °¨Á¤ °ª º¯È¯ÇÔ¼ö È£Ãâ
+            // ê°ì • ê°’ ë³€í™˜í•¨ìˆ˜ í˜¸ì¶œ
             for (int i = 0; i < mFinalEmotions.Count; ++i)
             {
                 GuestManager.SetEmotion(mGuestNum, (int)mFinalEmotions[i].Key, mFinalEmotions[i].Value);
-                Debug.Log(mGuestNum + "¹ø ¼Õ´Ô °¨Á¤º¯È¯ ÇÔ¼ö È£Ãâ" + (int)mFinalEmotions[i].Key + " " + mFinalEmotions[i].Value);
+#if UNITY_EDITOR
+                Debug.Log(mGuestNum + "ë²ˆ ì†ë‹˜ ê°ì •ë³€í™˜ í•¨ìˆ˜ í˜¸ì¶œ" + (int)mFinalEmotions[i].Key + " " + mFinalEmotions[i].Value);
+#endif
             }
         }
-        // TODO : ±¸¸§À» »ç¿ëÇÑ ¼Õ´ÔÀÇ Á¤º¸°ª °»½Å (LIST : °¨Á¤ °ª, »óÇÏÇÑ¼± °è»ê, ¸¸Á·µµ °»½Å)
+        // TODO : êµ¬ë¦„ì„ ì‚¬ìš©í•œ ì†ë‹˜ì˜ ì •ë³´ê°’ ê°±ì‹  (LIST : ê°ì • ê°’, ìƒí•˜í•œì„  ê³„ì‚°, ë§Œì¡±ë„ ê°±ì‹ )
 
-        // °¨Á¤ »óÇÏÇÑ¼± °Ë»ç
+        // ê°ì • ìƒí•˜í•œì„  ê²€ì‚¬
         if (GuestManager.IsExcessLine(mGuestNum) != -1)
         {
             GuestManager.mGuestInfo[mGuestNum].isDisSat = true;
         }
         else
-            Debug.Log("»óÇÏÇÑ¼±À» Ä§¹üÇÏÁö ¾Ê¾Ò½À´Ï´Ù.");
-
-        // ¸¸Á·µµ °ª °»½Å
         {
-            // QA¿ë Å×½ºÆ® ÀÛ¾÷
+#if UNITY_EDITOR
+            Debug.Log("ìƒí•˜í•œì„ ì„ ì¹¨ë²”í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
+#endif
+        }
+
+
+        // ë§Œì¡±ë„ ê°’ ê°±ì‹ 
+        {
+            // QAìš© í…ŒìŠ¤íŠ¸ ì‘ì—…
             if (sat != 0)
             {
                 GuestManager.mGuestInfo[mGuestNum].mSatatisfaction += sat;
@@ -224,18 +239,20 @@ public class CloudObject : MonoBehaviour
             else
             {
                 GuestManager.RenewakSat(mGuestNum);
+#if UNITY_EDITOR
                 Debug.Log("Renewak");
+#endif
             }
         }
 
-        //»ç¿ëÇÑ ±¸¸§ Á¤º¸ ¾÷µ¥ÀÌÆ®
+        //ì‚¬ìš©í•œ êµ¬ë¦„ ì •ë³´ ì—…ë°ì´íŠ¸
         GuestManager.mGuestInfo[mGuestNum].mUsedCloud.Add(virtualCloudData);
 
         return true;
     }
 
 
-    // ¾Æ·¡ÀÇ 4°³ÀÇ ÇÔ¼ö´Â ±¸¸§ÀÌ »ı¼ºµÉ ¶§ ½ºÆ÷³Ê¿¡¼­ »ç¿ëÇÏ´Â ÇÔ¼öÀÌ´Ù.
+    // ì•„ë˜ì˜ 4ê°œì˜ í•¨ìˆ˜ëŠ” êµ¬ë¦„ì´ ìƒì„±ë  ë•Œ ìŠ¤í¬ë„ˆì—ì„œ ì‚¬ìš©í•˜ëŠ” í•¨ìˆ˜ì´ë‹¤.
     public void SetTargetChair(int guestNum)
     {
         targetChairPos = SOWManager.mChairPos[GuestManager.mGuestInfo[guestNum].mSitChairIndex].transform;
@@ -258,18 +275,20 @@ public class CloudObject : MonoBehaviour
     }
 
 
-    // »ı¼º -> ÀÌµ¿À¸·Î ³Ñ¾î°¥ ¶§ ¾Ö´Ï¸ŞÀÌ¼Ç ÀÌº¥Æ®·Î ¹ßµ¿µÈ´Ù.
+    // ìƒì„± -> ì´ë™ìœ¼ë¡œ ë„˜ì–´ê°ˆ ë•Œ ì• ë‹ˆë©”ì´ì…˜ ì´ë²¤íŠ¸ë¡œ ë°œë™ëœë‹¤.
     public void SetSpeed()
     {
-        //ÇöÀç À§Ä¡°ª°ú ¸ñÇ¥ ÀÇÀÚÀÇ À§Ä¡°ªÀ» ¹Ş¾Æ¿Í¼­ °ªÀ» °è»êÇÑ´Ù.
-        // distance = ½ºÆù À§Ä¡¿Í ÀÇÀÚ À§Ä¡°£ °Å¸®
+        //í˜„ì¬ ìœ„ì¹˜ê°’ê³¼ ëª©í‘œ ì˜ìì˜ ìœ„ì¹˜ê°’ì„ ë°›ì•„ì™€ì„œ ê°’ì„ ê³„ì‚°í•œë‹¤.
+        // distance = ìŠ¤í° ìœ„ì¹˜ì™€ ì˜ì ìœ„ì¹˜ê°„ ê±°ë¦¬
         float distance = Mathf.Sqrt(Mathf.Pow(this.transform.position.x - targetChairPos.position.x, 2f) 
             + Mathf.Pow(this.transform.position.y - targetChairPos.position.y, 2f));
 
-        // °Å¸®°ªÀ» ±âº»°ª¿¡ °öÇÏ´Â Çü½ÄÀ» ÀÌ¿ëÇÏ¿© °¡±î¿ï¼ö·Ï ´À¸®°Ô ¸¸µç´Ù.
+        // ê±°ë¦¬ê°’ì„ ê¸°ë³¸ê°’ì— ê³±í•˜ëŠ” í˜•ì‹ì„ ì´ìš©í•˜ì—¬ ê°€ê¹Œìš¸ìˆ˜ë¡ ëŠë¦¬ê²Œ ë§Œë“ ë‹¤.
         cloudSpeed = 0.1f * distance;
 
+#if UNITY_EDITOR
         Debug.Log(cloudSpeed);
+#endif
     }
 
 }

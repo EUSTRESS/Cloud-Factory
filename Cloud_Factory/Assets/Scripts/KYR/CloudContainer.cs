@@ -116,7 +116,9 @@ public class CloudContainer : MonoBehaviour
             {
                 mSelectedCloudTransform.GetChild(1).transform.GetChild(num).GetComponent<Image>().color = new Color(0.7f, 0.7f, 0.7f, 1.0f);
             }
+#if UNITY_EDITOR
             Debug.Log("구름 선택:" + mUiStocksData[mSelectedCloudTransform.GetSiblingIndex()]);
+#endif
             isCloudSelected = true;
             if (mTutorialManager.isFinishedTutorial[7] == false)
             {
@@ -210,7 +212,9 @@ public class CloudContainer : MonoBehaviour
     //DropDown public Method
     public void OnDropdownEvent()
     {
+#if UNITY_EDITOR
         Debug.Log("[DropdownEvent] {" + mDropDown.mDropdown.value + "} clicked.");
+#endif
         mDropDown.mDropdownIndex = mDropDown.mDropdown.value;
         mSortedData = new List<StoragedCloudData>(); //init
         mSortedData = sortStock(mDropDown.mDropdownIndex);

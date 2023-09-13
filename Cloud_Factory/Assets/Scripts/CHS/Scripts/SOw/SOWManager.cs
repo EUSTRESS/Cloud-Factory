@@ -122,7 +122,9 @@ public class SOWManager : MonoBehaviour
             tempObject = Instantiate(mGuestObject);
 
             // 손님 생성 확인을 위한 디버깅
+#if UNITY_EDITOR
             Debug.Log("손님 생성");
+#endif
 
             // 손님 오브젝트에 해당하는 번호를 넣어준다.
             tempObject.GetComponent<GuestObject>().setGuestNum(mTempGuestNum);
@@ -167,13 +169,16 @@ public class SOWManager : MonoBehaviour
                     GameObject hitObject = hit.transform.root.gameObject;
                     if (hit.transform.gameObject.tag == "Guest")
                     {
-
+#if UNITY_EDITOR
                         Debug.Log(hitObject.GetComponent<GuestObject>().mGuestNum + "번 손님을 클릭하였습니다.");
+#endif
                         hit.transform.gameObject.GetComponent<GuestObject>().SpeakEmotion();
                     }
                     else
                     {
+#if UNITY_EDITOR
                         // Debug.Log(hit.transform.gameObject);
+#endif
                     }
                 }
             }
@@ -187,12 +192,16 @@ public class SOWManager : MonoBehaviour
                     GameObject hitObject = hit.transform.root.gameObject;
                     if (hit.transform.gameObject.tag == "Guest")
                     {
+#if UNITY_EDITOR
                         Debug.Log(hitObject.GetComponent<GuestObject>().mGuestNum + "번 손님을 클릭하였습니다.");
+#endif
                         hit.transform.gameObject.GetComponent<GuestObject>().Hint();
                     }
                     else
                     {
+#if UNITY_EDITOR
                         Debug.Log(hit.transform.gameObject);
+#endif
                     }
                 }
             }
@@ -200,14 +209,18 @@ public class SOWManager : MonoBehaviour
 
         if (isCloudGet)
         {
+#if UNITY_EDITOR
             Debug.Log("isCloudGet is True");
+#endif
             if (SceneManager.GetActiveScene().name == "Space Of Weather")
             {
                 GetCloudToGuest(mCloudGuestNum, mStorageCloudData, _sat);
             }
             else
             {
+#if UNITY_EDITOR
                 Debug.Log("씬을 찾는 것에 실패");
+#endif
             }
         }
     }
@@ -276,14 +289,18 @@ public class SOWManager : MonoBehaviour
         {
             int guestNum = mWaitGuestList.Dequeue();
             mGuestManager.mGuestInfo[guestNum].isDisSat = true;
+#if UNITY_EDITOR
             Debug.Log(guestNum + "번 손님이 대기중 집으로 돌아갑니다"); 
+#endif
         }
         for (int i = 0; i < mUsingGuestList.Count; i++)
         {
             int guestNum = mUsingGuestList[i];
             mGuestManager.mGuestInfo[guestNum].isDisSat = true;
             mGuestManager.mGuestInfo[guestNum].mSitChairIndex = -1;
+#if UNITY_EDITOR
             Debug.Log(guestNum + "번 손님이 착석 중 집으로 돌아갑니다");
+#endif
         }
 
         //// 존재하는 모든 구름을 삭제한다.
@@ -343,12 +360,16 @@ public class SOWManager : MonoBehaviour
         if(CloudSpawner != null) 
         {
             CloudSpawner.GetComponent<CloudSpawner>().SpawnCloud(guestNum, storagedCloudData, sat);
+#if UNITY_EDITOR
             Debug.Log("SpanwCloud");
+#endif
             isCloudGet = false;
         }
         else
         {
+#if UNITY_EDITOR
             Debug.Log("CloudSpawner is null");
+#endif
         }
     }
 

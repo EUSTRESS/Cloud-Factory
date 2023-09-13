@@ -119,7 +119,9 @@ namespace CloudSystem
         {
             for (int i = 0; i < _total; i++)
             {
+#if UNITY_EDITOR
                 Debug.Log("이미지 초기화");
+#endif
                 UI_slct_mtrl[i].GetComponent<Image>().sprite = default_sprite;
             }
         }
@@ -277,7 +279,9 @@ public class CloudMakeSystem : MonoBehaviour
     }
     private void d_readCSV(string name)//구름 조합법 알고리즘
     {
+#if UNITY_EDITOR
         Debug.Log("조합재료를 확인합니다.");
+#endif
         //1.계산 들어갈 감정 리스트 추출. => Base Emotion List
         List<EmotionInfo> emotionList = slct_mtrl.mGetTotalEmoList(mtrlDATA);
 
@@ -303,17 +307,23 @@ public class CloudMakeSystem : MonoBehaviour
                         //overlapsEmosList.Add(content.Key, new KeyValuePair<int, int>(tmpList.Value, content.Value));
                         //-2- 중복 감정 중 낮은 수치를 가진 감정이 조합에 사용된다.
                         int mergedV = tmpList[content.Key] <= content.Value ? tmpList[content.Key] : content.Value;//삼항연산자를 이용하여 더 작은 값 차용.
+#if UNITY_EDITOR
                         Debug.Log("[(1)낮은수치사용]" + tmpList[content.Key] + "|" + content.Value + "에서" + mergedV + "차용!");
+#endif
                         tmpList.Remove(content.Key);//-2-1 조합에 사용될 감정을 처리했으면 중복감정 리스트에서 제외한다.
 
+#if UNITY_EDITOR
                         Debug.Log("[(2)중복발견]중복아이템 리스트에서 삭제");
                         Debug_PrintState("[현재중복리스트 삭제 결과]", tmpList);
+#endif
                         //-3- "emotionList" 에서 작은 값을 가진 감정과 인접한 감정과 감정 조합이 일어난다.
                         //-3-1 조합할 인접 감정을 우선순위에 따라 선정한다.
                         EmotionInfo fndItm = new EmotionInfo(content.Key, mergedV);
                         int targetIdx = emotionList.FindIndex(a => (a.Key == content.Key && a.Value == mergedV)); //추출된 감정리스트에서의 조합대상 감정의 idx
                         int subTargetIdx = targetIdx - 1;
+#if UNITY_EDITOR
                         Debug.Log("[(3)조합대상]" + "{" + targetIdx + "}" + emotionList[targetIdx].Key);
+#endif
 
 
                         bool commend;
@@ -325,20 +335,24 @@ public class CloudMakeSystem : MonoBehaviour
                         {
                             commend = false;
                             subTargetIdx = targetIdx + 1;
+#if UNITY_EDITOR
                             Debug.Log("[우선순위2]채택");
+#endif
                         }
 
-
+#if UNITY_EDITOR
                         Debug.Log("-1 인덱스 검사 결과 :" + emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key].ToString());
                         Debug.Log("-1 인덱스 검사 결과 targetID:" + targetIdx + "SubTargetID" + subTargetIdx);
+#endif
 
 
                         //우선순위(2): 위에서 command가 true가 나면 우선순위 (2)로 넘어간다.   subTargetIdx = targetIdx + 1
                         if (!commend && subTargetIdx < emotionList.Count)
                             commend = emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key] == Emotion.NONE ? false : true;
-
+#if UNITY_EDITOR
                         Debug.Log("+1 인덱스 검사 결과 :" + emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key].ToString());
                         Debug.Log("+1 인덱스 검사 결과 targetID:" + targetIdx + "SubTargetID" + subTargetIdx);
+#endif
 
 
                         //우선순위(1)또는 (2)에서 감정조합의 결과가 정상적으로 나온 경우.
@@ -349,7 +363,9 @@ public class CloudMakeSystem : MonoBehaviour
                             EmotionInfo finalEmo = new EmotionInfo(emoTableDATA.EmotionDataR[(int)emotionList[targetIdx].Key].EmotionDataC[(int)emotionList[subTargetIdx].Key], CEmoV);
 
                             emotionList[targetIdx] = finalEmo;//(2)targetEmotion을 조합된 새 감정으로 바꾼다.
+#if UNITY_EDITOR
                             Debug.Log("[조합결과]" + finalEmo.Key);
+#endif
                             //(2)조합에 사용 된 감정은 리스트에서 제외한다.(for문 안이기 떄문에 index 관리 해줘야 한다.)
                             if (finalEmo.Key == Emotion.NONE) continue;
 
@@ -362,7 +378,9 @@ public class CloudMakeSystem : MonoBehaviour
                         }
                         else
                         {
+#if UNITY_EDITOR
                             Debug.Log("![ 조합이 불가능 합니다.]");
+#endif
                         }
 
                     }
@@ -371,8 +389,10 @@ public class CloudMakeSystem : MonoBehaviour
                         if (Emotion.PLEASURE <= content.Key && content.Key <= Emotion.INTEXPEC)
                             tmpList.Add(content.Key, content.Value);
                     }
+#if UNITY_EDITOR
                     Debug_PrintState("[현재감정리스트]", emotionList);
                     Debug_PrintState("[현재중복리스트]", tmpList);
+#endif
                 }
 
                 if (!possibility)
@@ -383,7 +403,9 @@ public class CloudMakeSystem : MonoBehaviour
             }
             catch (Exception ex)
             {
+#if UNITY_EDITOR
                 Debug.Log(ex);
+#endif
             }
 
 
@@ -411,7 +433,9 @@ public class CloudMakeSystem : MonoBehaviour
                 LoverlapsEmo.Add(emotion.Key, emotion.Value);
 
         }
+#if UNITY_EDITOR
         Debug_PrintState("[중복 감정 중 큰감정 채용]", LoverlapsEmo);
+#endif
 
         List<EmotionInfo> LfinalEmo = new List<EmotionInfo>();
         foreach (KeyValuePair<Emotion, int> overlap in LoverlapsEmo)
@@ -421,7 +445,9 @@ public class CloudMakeSystem : MonoBehaviour
         }
 
         emotionList = LfinalEmo;
+#if UNITY_EDITOR
         Debug_PrintState("[최종감정리스트(1)]", emotionList);
+#endif
 
         LfinalEmo = new List<EmotionInfo>();
 
@@ -450,7 +476,9 @@ public class CloudMakeSystem : MonoBehaviour
         }
 
         emotionList = LfinalEmo;
+#if UNITY_EDITOR
         Debug_PrintState("[최종감정리스트]", emotionList);
+#endif
         mEmotions = emotionList;
 
     }
@@ -464,8 +492,9 @@ public class CloudMakeSystem : MonoBehaviour
         {
             result += (info.Key.ToString()+":" + info.Value + "|");
         }
-
+#if UNITY_EDITOR
         Debug.Log(result);
+#endif
     }
 
     private void Debug_PrintState(string sTitle, Dictionary<Emotion, int> emotionList)
@@ -475,8 +504,9 @@ public class CloudMakeSystem : MonoBehaviour
         {
             result += (info.Key.ToString() + "|");
         }
-
+#if UNITY_EDITOR
         Debug.Log(result);
+#endif
     }
     private void d_createCloud(string name = null)
     {
@@ -488,7 +518,9 @@ public class CloudMakeSystem : MonoBehaviour
 
         if (total < 1)
         {
+#if UNITY_EDITOR
             Debug.Log("재료수가 부족합니다.");
+#endif
             return;
         }
 
@@ -563,7 +595,9 @@ public class CloudMakeSystem : MonoBehaviour
         if (ResultCloudSprite == null)
             ErrorFinderDibugger.GetComponent<Text>().text = "Debug Log : No Cloud Image" + inventoryManager.createdCloudData.getFinalEmotion()[0];
 
+#if UNITY_EDITOR
         Debug.Log("구름이 만들어졌습니다.");
+#endif
 
         // Add Sound       
         if (null != mSubSFx && null != mSoundManager)

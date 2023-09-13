@@ -28,11 +28,13 @@ public class CloudMakerAnimController : MonoBehaviour
             this.gameObject.GetComponent<Button>().enabled = true;
             return;
         }
-        //¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ¾ó¸¶³ª ÁøÇàµÇ¾ú´ÂÁö InventoryManager.csÀÇ CloudData¿¡¼­ ¹Ş¾Æ¿È
+        //ì• ë‹ˆë©”ì´ì…˜ì´ ì–¼ë§ˆë‚˜ ì§„í–‰ë˜ì—ˆëŠ”ì§€ InventoryManager.csì˜ CloudDataì—ì„œ ë°›ì•„ì˜´
         for(int idx = 0; idx < 3; idx++) { isAnimProgressed[idx] = inventoryManager.createdCloudData.getAnimProgressed(idx); }
         this.gameObject.GetComponent<Button>().enabled = false;
         mResultColorIdx = inventoryManager.createdCloudData.getBaseCloudColorIdx();
+#if UNITY_EDITOR
         Debug.Log(mResultColorIdx);//Assets/Resources/Sprite/CloudOnMachine
+#endif
 
         factoryObject[0] = transform.GetChild(1).gameObject;// I_Enter
         factoryObject[1] = transform.GetChild(2).gameObject;//I_Exit

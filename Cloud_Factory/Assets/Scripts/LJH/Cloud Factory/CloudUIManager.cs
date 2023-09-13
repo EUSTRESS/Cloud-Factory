@@ -62,7 +62,9 @@ public class CloudUIManager : MonoBehaviour
             mGiveCloudCheckBox[(int)ECheckBox.Date].SetActive(true);
             mGiveCloudCheckBox[(int)ECheckBox.Emotion].SetActive(false);
 
+#if UNITY_EDITOR
             Debug.Log("보관 기간별로 정렬 메소드 호출");
+#endif
 
             mSFx.Play();
         }
@@ -82,8 +84,10 @@ public class CloudUIManager : MonoBehaviour
             mGiveCloudCheckBox[(int)ECheckBox.Emotion].SetActive(true);
             mGiveCloudCheckBox[(int)ECheckBox.Date].SetActive(false);
 
+#if UNITY_EDITOR
             Debug.Log("현재 인덱스 : " + mDropdown.mDropdownIndex);
             Debug.Log("인덱스 받아와서 현재 적용되어 있는 인덱스로 감정별 정렬 메소드 호출");
+#endif
 
             mSFx.Play();
 

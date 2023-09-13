@@ -11,9 +11,9 @@ public class CloudSpawner : MonoBehaviour
 
     GameObject cloudMove;
 
-    bool                isCloudGive;        // Ã¢°í¿¡¼­ ±¸¸§À» Á¦°øÇÏ¿´´Â°¡
+    bool                isCloudGive;        // ì°½ê³ ì—ì„œ êµ¬ë¦„ì„ ì œê³µí•˜ì˜€ëŠ”ê°€
 
-    public int          cloudSpeed;         // ±¸¸§ÀÌ ÀÌµ¿ÇÏ´Â ¼Óµµ
+    public int          cloudSpeed;         // êµ¬ë¦„ì´ ì´ë™í•˜ëŠ” ì†ë„
 
     public Vector3 Cloud_ps;
 
@@ -22,24 +22,24 @@ public class CloudSpawner : MonoBehaviour
     public RuntimeAnimatorController[] animValue4;
 
 
-    public GameObject EffectCloudObj;   // »õ·Î¿î ±¸¸§ ¿ÀºêÁ§Æ® ÇÁ¸®ÆÕ
+    public GameObject EffectCloudObj;   // ìƒˆë¡œìš´ êµ¬ë¦„ ì˜¤ë¸Œì íŠ¸ í”„ë¦¬íŒ¹
 
     Make_PartEffect make_PartEffect;
 
     public GameObject newTempCloud;
 
-    public bool IsUsing;                   // ±¸¸§À» »ç¿ëÁßÀÎÁö Ã¼Å©
+    public bool IsUsing;                   // êµ¬ë¦„ì„ ì‚¬ìš©ì¤‘ì¸ì§€ ì²´í¬
 
     GameObject MainEffectCloudMove;
 
-    // Ã³À½ ¹Ş¾Æ¿Í¾ß ÇÏ´Â °ª
-    // 1) ³¯¾Æ°¥ ÀÇÀÚÀÇ ÀÎµ¦½º
-    // 2) ¾î¶² ±¸¸§À» »ı¼ºÇÏ´ÂÁö¿¡ ´ëÇÑ °ª
+    // ì²˜ìŒ ë°›ì•„ì™€ì•¼ í•˜ëŠ” ê°’
+    // 1) ë‚ ì•„ê°ˆ ì˜ìì˜ ì¸ë±ìŠ¤
+    // 2) ì–´ë–¤ êµ¬ë¦„ì„ ìƒì„±í•˜ëŠ”ì§€ì— ëŒ€í•œ ê°’
 
-    // ³»ºÎ¿¡¼­ ¼öÇàÇØ¾ßÇÒ ±â´É
-    // 1) ±¸¸§ »ı¼º
-    // 2) ±¸¸§ Á¤º¸ ÃÊ±âÈ­
-    // 3) ±¸¸§À» ÁöÁ¤µÈ ÀÇÀÚ·Î º¸³»±â
+    // ë‚´ë¶€ì—ì„œ ìˆ˜í–‰í•´ì•¼í•  ê¸°ëŠ¥
+    // 1) êµ¬ë¦„ ìƒì„±
+    // 2) êµ¬ë¦„ ì •ë³´ ì´ˆê¸°í™”
+    // 3) êµ¬ë¦„ì„ ì§€ì •ëœ ì˜ìë¡œ ë³´ë‚´ê¸°
 
     private void Awake()
     {
@@ -60,10 +60,10 @@ public class CloudSpawner : MonoBehaviour
 
     }
 
-    // ±¸¸§À» »ı¼ºÇÏ°í ÃÊ±âÈ­ÇÑ´Ù.
-    public void SpawnCloud(int guestNum, StoragedCloudData storagedCloudData /*QA¿ë*/, int sat)
+    // êµ¬ë¦„ì„ ìƒì„±í•˜ê³  ì´ˆê¸°í™”í•œë‹¤.
+    public void SpawnCloud(int guestNum, StoragedCloudData storagedCloudData /*QAìš©*/, int sat)
     {
-        // ±¸¸§ ÀÎ½ºÅÏ½º »ı¼º
+        // êµ¬ë¦„ ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
         newTempCloud = Instantiate(EffectCloudObj);
         newTempCloud.transform.GetChild(0).gameObject.SetActive(true);
 
@@ -75,16 +75,20 @@ public class CloudSpawner : MonoBehaviour
             SOWManager.mCloudObjectList.Add(newTempCloud);
         }
 
+#if UNITY_EDITOR
         Debug.Log("Instantiate");
+#endif
         newTempCloud.transform.position = this.transform.position;
         Cloud_ps = newTempCloud.transform.position;
 
-        // ¸ñÇ¥ ÀÇÀÚ À§Ä¡ ¼³Á¤
+        // ëª©í‘œ ì˜ì ìœ„ì¹˜ ì„¤ì •
         newTempCloud.GetComponent<CloudObject>().SetTargetChair(guestNum);
         
+#if UNITY_EDITOR
         Debug.Log("SetTargetChair");
+#endif
 
-        // ±¸¸§À» Á¦°ø¹Ş´Â ¼Õ´ÔÀÇ isGettingCloud »óÅÂ¸¦ °»½ÅÇÑ´Ù.
+        // êµ¬ë¦„ì„ ì œê³µë°›ëŠ” ì†ë‹˜ì˜ isGettingCloud ìƒíƒœë¥¼ ê°±ì‹ í•œë‹¤.
         {
             GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Guest");
             if (gameObjects != null)
@@ -106,7 +110,7 @@ public class CloudSpawner : MonoBehaviour
             }
         }
 
-        // ÀÓ½Ã·Î ÀÎº¥Åä¸®¿¡ µé¾îÀÖ´Â ±¸¸§ Áß, ¸Ç ¾Õ¿¡ ÀÖ´Â ±¸¸§ÀÇ °ªÀ» °¡Á®¿Â´Ù.
+        // ì„ì‹œë¡œ ì¸ë²¤í† ë¦¬ì— ë“¤ì–´ìˆëŠ” êµ¬ë¦„ ì¤‘, ë§¨ ì•ì— ìˆëŠ” êµ¬ë¦„ì˜ ê°’ì„ ê°€ì ¸ì˜¨ë‹¤.
         CloudData = storagedCloudData;
 
         CloudObject cloudObject = newTempCloud.GetComponent<CloudObject>(); 
@@ -115,17 +119,17 @@ public class CloudSpawner : MonoBehaviour
             cloudObject.SetValue(CloudData);
             cloudObject.SetGuestNum(guestNum);
 
-            // ±¸¸§°ú ÀÇÀÚÀÇ À§Ä¡°ª¿¡ µû¶ó¼­ ¼Óµµ¸¦ Á¶ÀıÇÑ´Ù.
+            // êµ¬ë¦„ê³¼ ì˜ìì˜ ìœ„ì¹˜ê°’ì— ë”°ë¼ì„œ ì†ë„ë¥¼ ì¡°ì ˆí•œë‹¤.
             cloudObject.SetSpeed();
 
-            // QA¿ë
+            // QAìš©
             cloudObject.sat = sat;
         }
 
-        // ¿òÁ÷ÀÌ´Â ±¸¸§ÀÇ ÀÌÆåÆ®¸¦ ³ªÅ¸³»´Â MaincloudMove¿¡ ´ëÇÑ ¼³Á¤
+        // ì›€ì§ì´ëŠ” êµ¬ë¦„ì˜ ì´í™íŠ¸ë¥¼ ë‚˜íƒ€ë‚´ëŠ” MaincloudMoveì— ëŒ€í•œ ì„¤ì •
         MainEffectCloudMove = newTempCloud.transform.GetChild(0).gameObject;
 
-        // MoveCloud °ü·Ã
+        // MoveCloud ê´€ë ¨
         {
             Make_PartEffect make_PartEffect = MainEffectCloudMove.GetComponent<Make_PartEffect>();
             if(make_PartEffect == null)
@@ -133,18 +137,20 @@ public class CloudSpawner : MonoBehaviour
                 return;
             }
 
-            // TODO : MoveCloud Animator¸¦ Á¾·ù¿¡ ¸Â°Ô º¯°æ -> CloudData°ªÀ» ÀÌ¿ë
-            // 1. ±¸¸§ »ö»óÀ» ÁöÁ¤ (Àû¿ë ¿Ï·á)
-            // 2. ±¸¸§ Àç·á µî±Ş¿¡ µû¸¥ ¾Ö´Ï¸ŞÀÌÅÍ ³ª´©±â
+            // TODO : MoveCloud Animatorë¥¼ ì¢…ë¥˜ì— ë§ê²Œ ë³€ê²½ -> CloudDataê°’ì„ ì´ìš©
+            // 1. êµ¬ë¦„ ìƒ‰ìƒì„ ì§€ì • (ì ìš© ì™„ë£Œ)
+            // 2. êµ¬ë¦„ ì¬ë£Œ ë“±ê¸‰ì— ë”°ë¥¸ ì• ë‹ˆë©”ì´í„° ë‚˜ëˆ„ê¸°
 
             int cloudColorNumber = storagedCloudData.GetCloudTypeNum();
 
-            // TODO : Èñ±Íµµ¿¡ µû¶ó ¿ÜÇüÀ» º¯È­½ÃÅ°´Â ÄÚµå Ãß°¡
+            // TODO : í¬ê·€ë„ì— ë”°ë¼ ì™¸í˜•ì„ ë³€í™”ì‹œí‚¤ëŠ” ì½”ë“œ ì¶”ê°€
             int IngredientDataNum = storagedCloudData.GetIngredientDataNum();
 
-            Debug.Log("±¸¸§¿¡ »ç¿ëµÈ ÆÄÃ÷ °³¼ö : " + IngredientDataNum);
+#if UNITY_EDITOR
+            Debug.Log("êµ¬ë¦„ì— ì‚¬ìš©ëœ íŒŒì¸  ê°œìˆ˜ : " + IngredientDataNum);
+#endif
 
-            // Prefab¼öÁ¤¹× ¾Ö´Ï¸ŞÀÌ¼Ç ¼öÁ¤ÇÑ ºÎºĞÀÔ´Ï´Ù - µ¿±Ô -
+            // Prefabìˆ˜ì •ë° ì• ë‹ˆë©”ì´ì…˜ ìˆ˜ì •í•œ ë¶€ë¶„ì…ë‹ˆë‹¤ - ë™ê·œ -
             if (IngredientDataNum <= 2)
             {
                 //cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue3[cloudColorNumber];
@@ -171,11 +177,15 @@ public class CloudSpawner : MonoBehaviour
             }
             else
             {
-                Debug.Log("±¸¸§ ¾Ö´Ï¸ŞÀÌÅÍ Àû¿ë ½ÇÆĞ ¿À·ù¹ß»ı! ");
+#if UNITY_EDITOR
+                Debug.Log("êµ¬ë¦„ ì• ë‹ˆë©”ì´í„° ì ìš© ì‹¤íŒ¨ ì˜¤ë¥˜ë°œìƒ! ");
+#endif
 
                 if(animValue3[cloudColorNumber])
                 {
-                    Debug.Log("±¸¸§ ¾Ö´Ï¸ŞÀÌÅÍ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+#if UNITY_EDITOR
+                    Debug.Log("êµ¬ë¦„ ì• ë‹ˆë©”ì´í„°ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+#endif
                 }
             }
         }
@@ -212,7 +222,7 @@ public class CloudSpawner : MonoBehaviour
 
         return sprite;
     }
-    // ±¸¸§ ÀÌµ¿
+    // êµ¬ë¦„ ì´ë™
     public void MoveCloud()
     {
         Transform New_Target = newTempCloud.GetComponent<CloudObject>().targetChairPos;

@@ -110,7 +110,9 @@ public class RecordUIManager : MonoBehaviour
             Invoke("DelayActiveBtn", 1.0f);  // 활성화 딜레이        
 
         // 다음 뭉티 정보 불러오는 메소드 호출하는 부분
+#if UNITY_EDITOR
         Debug.Log("다음 뭉티 정보 호출");
+#endif
 
         mSFx.Play();
     }
@@ -134,8 +136,9 @@ public class RecordUIManager : MonoBehaviour
         // 다음 뭉티 정보 불러오는 메소드 호출하는 부분
         
 
-
+#if UNITY_EDITOR
         Debug.Log("이전 뭉티 정보 호출");
+#endif
 
         mSFx.Play();
     }
@@ -158,7 +161,9 @@ public class RecordUIManager : MonoBehaviour
         iMainBg.color = new Color(222f / 255f, 219f / 255f, 217f / 255f);
 
         // 뭉티 정보 불러오는 메소드 호출하는 부분
+#if UNITY_EDITOR
         Debug.Log("불만 뭉티 정보 불러오는 메소드 호출");
+#endif
 
         mSFx.Play();
     }
@@ -174,7 +179,9 @@ public class RecordUIManager : MonoBehaviour
         iMainBg.color = new Color(194f / 255f, 216f / 255f, 233f / 255f);
 
         // 뭉티 정보 불러오는 메소드 호출하는 부분
+#if UNITY_EDITOR
         Debug.Log("전체 뭉티 정보 불러오는 메소드 호출");
+#endif
 
         mSFx.Play();
     }

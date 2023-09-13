@@ -240,7 +240,9 @@ public class CloudData
                 targetUnion = "4";
                 break;
         }
+#if UNITY_EDITOR
         Debug.Log("targetUnion" + targetUnion);
+#endif
         //mcloudBaseImage = Resources.Load<Sprite>("Sprite/Base/"+ targetUnion + "union/" + "OC_Cloud_" + ((int)mEmotions[0].Key).ToString());
         mcloudBaseImage = Resources.Load<Sprite>("Sprite/Base/"+ targetUnion + "union/" + "OC_Cloud_" + targetImgName);
         mcloudDecoBaseImage = Resources.Load<Sprite>("Sprite/Base/" + targetUnion + "union/" + "Deco/"+ "OC_Cloud_" + ((int)mEmotions[0].Key).ToString());
@@ -252,8 +254,12 @@ public class CloudData
         }
 
         if (mcloudBaseImage == null || mcloudDecoBaseImage == null)
+        {
+#if UNITY_EDITOR
             Debug.LogWarning("NO CloudImage");
-            
+#endif
+        }
+
     }
     private void setDecoImage(List<EmotionInfo> Emotions)
     {

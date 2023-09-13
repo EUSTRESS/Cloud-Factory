@@ -184,7 +184,9 @@ public class WeatherUIManager : MonoBehaviour
         system.UpdateYardGatherCount();
 		if (system.CanBeGathered(selectedYard) == false)
 		{
+#if UNITY_EDITOR
 			Debug.Log("채집 가능 횟수가 모두 차감되었습니다.");
+#endif
 			return;
 		}
         if (mTutorialManager.isFinishedTutorial[2] == false)
@@ -390,7 +392,9 @@ public class WeatherUIManager : MonoBehaviour
 
             // jsondata를 스트링 타입으로 가져오기
             string jSOWManagerSaveData = Encoding.UTF8.GetString(bSOWManagerSaveData);
+#if UNITY_EDITOR
             Debug.Log(jSOWManagerSaveData);
+#endif
 
             // 역직렬화
             SOWManagerSaveData dSOWManagerSaveData = JsonConvert.DeserializeObject<SOWManagerSaveData>(jSOWManagerSaveData);
@@ -399,9 +403,11 @@ public class WeatherUIManager : MonoBehaviour
             //string jData = JsonConvert.SerializeObject(dSOWManagerSaveData);
 
             // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+#if UNITY_EDITOR
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
+#endif
 
             // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
             SOWManager mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();

@@ -376,7 +376,7 @@ public class CloudDecoManager : MonoBehaviour
 		//■■■■■■■■■■
 		//□□■■■■■■■□
 		//□□□□■■■□□□
-        if((width_range <= 100 && height_range >= 200)
+        if ((width_range <= 100 && height_range >= 200)
             || (width_range <= -200 && height_range >= 100)
             || (width_range <= -300 && height_range >= 0)
             || (width_range <= -300 && height_range <= -100)
@@ -385,7 +385,12 @@ public class CloudDecoManager : MonoBehaviour
             || (width_range >= 300 && height_range >= 0)
             || (width_range >= 400 && height_range <= -100)
             || (width_range >= 200 && height_range <= -200))
-        { Debug.Log("Out of Range"); return false; }
+        {
+#if UNITY_EDITOR
+            Debug.Log("Out of Range"); 
+#endif
+            return false;
+        }
 		return true;
 	}
 
@@ -398,7 +403,9 @@ public class CloudDecoManager : MonoBehaviour
 
         if (idx > mBaseCloudDt.getDecoPartsCount()) return;
 
+#if UNITY_EDITOR
         Debug.Log("clicked_" + target.name);
+#endif
         if(mLPartsMenu[idx].isInit) //처음이면 둘다 체크가 안되어있음.
         {
             

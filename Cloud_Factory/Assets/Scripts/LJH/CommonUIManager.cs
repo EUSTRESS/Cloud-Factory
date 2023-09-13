@@ -163,7 +163,9 @@ public class CommonUIManager : MonoBehaviour
         // 치유의 기록 이전 씬 인덱스 저장
         SceneData.Instance.prevSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
+#if UNITY_EDITOR
         Debug.Log("수락후 치유의기록이동!!!");
+#endif
 
         LoadingSceneController.Instance.LoadScene("Record Of Healing");
         mSFx.Play();
@@ -270,7 +272,9 @@ public class CommonUIManager : MonoBehaviour
 
         // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
         byte[] bLanguageData = Encoding.UTF8.GetBytes(jLanguageData);
+#if UNITY_EDITOR
         Debug.Log(jLanguageData);
+#endif
         // 해당 파일 스트림에 적는다.                
         stream.Write(bLanguageData, 0, bLanguageData.Length);
         // 스트림 닫기

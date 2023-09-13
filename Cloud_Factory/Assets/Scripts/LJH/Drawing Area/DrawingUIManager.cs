@@ -51,7 +51,9 @@ public class DrawingUIManager : MonoBehaviour
         mTextEnd = false;
 
         // 수락했을 때 메소드 호출
+#if UNITY_EDITOR
         Debug.Log("응접실 수락 메소드 호출");
+#endif
 
         mSFx.Play();
     }
@@ -66,7 +68,9 @@ public class DrawingUIManager : MonoBehaviour
         mTextEnd = false;
 
         // 거절했을 때 메소드 호출
+#if UNITY_EDITOR
         Debug.Log("응접실 거절 메소드 호출");
+#endif
 
         mSFx.Play();
     }

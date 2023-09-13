@@ -96,6 +96,8 @@ public class CloudObject : MonoBehaviour
                 VirtualObjectManager vObjectManager = GameObject.Find("VirtualObjectManager").GetComponent<VirtualObjectManager>();
                 GameObject tempObject = vObjectManager.InstantiateVirtualObjectToSceneToSprite(virtualCloudData, this.transform.position);
                 tempObject.transform.SetParent(this.transform);
+
+                tempObject.GetComponent<SpriteRenderer>().enabled = false;
             }
 
             // 구름을 사용중인 상태로만든다.

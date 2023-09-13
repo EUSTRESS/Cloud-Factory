@@ -72,8 +72,10 @@ public class StorageUIManager : MonoBehaviour
             mSortDropBox.interactable = true;
             mGiveCloudCheckBox[(int)ECheckBox.Emotion].SetActive(true);
 
+#if UNITY_EDITOR
             Debug.Log("현재 인덱스 : " + mDropdown.mDropdownIndex);
             Debug.Log("인덱스 받아와서 현재 적용되어 있는 인덱스로 감정별 정렬 메소드 호출");
+#endif
             inventoryContainer.OnDropdownEvent();
         }
         else
@@ -122,16 +124,24 @@ public class StorageUIManager : MonoBehaviour
 
     public void MakeCloud()
     {
+#if UNITY_EDITOR
 		Debug.Log("구름 제작 메소드 호출");
+#endif
 
 		bool isMakingCloud = GameObject.Find("I_CloudeGen").GetComponent<CloudMakeSystem>().isMakingCloud;
 		bool isMtrlListEmpty = GameObject.Find("I_CloudeGen").GetComponent<CloudMakeSystem>().d_selectMtrlListEmpty();
         
 		// 이미 구름을 조합 중이거나, 조합칸에 재료가 없을 때 버튼을 눌러도 아무 일도 일어나지 않도록 한다.
         // 구름이 이미 만들어진 상태는 애초에 더이상 재료를 조합칸에 넣을 수 없기 때문에 따라 return 처리 하지 않음
-		if (isMakingCloud || isMtrlListEmpty) { Debug.Log("조합이 불가능합니다."); return; }  
-        
-		cloudMakeSystem.E_createCloud(EventSystem.current.currentSelectedGameObject.name);
+        if (isMakingCloud || isMtrlListEmpty)
+        {
+#if UNITY_EDITOR
+            Debug.Log("조합이 불가능합니다.");
+#endif
+            return;
+        }
+
+        cloudMakeSystem.E_createCloud(EventSystem.current.currentSelectedGameObject.name);
 
         isCloudMade = true;
 

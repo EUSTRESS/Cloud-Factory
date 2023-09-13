@@ -243,7 +243,9 @@ public class LobbyUIManager : MonoBehaviour
             // 복호화
             //sDateData = AESWithJava.Con.Program.Decrypt(sDateData, key);
 
+#if UNITY_EDITOR
             Debug.Log(sDateData);
+#endif
 
             // 데이터를 새로운 오브젝트에 덮어씌운다
             JsonUtility.FromJsonOverwrite(sDateData, gSeasonDate.AddComponent<SeasonDateCalc>());
@@ -257,7 +259,9 @@ public class LobbyUIManager : MonoBehaviour
         
         if (null == gMainBackGround)
         {
+#if UNITY_EDITOR
             Debug.Log("gMangBackGround is null");
+#endif
             return;
         }
         
@@ -266,7 +270,9 @@ public class LobbyUIManager : MonoBehaviour
 
         if (null == gMainLogo)
         {
+#if UNITY_EDITOR
             Debug.Log("gMainLogo is null");
+#endif
             return;
         }
         gMainLogo.GetComponent<Image>().sprite = sSeasonLogo[(SeasonDateCalc.Instance.mSeason - 1)];
@@ -292,7 +298,9 @@ public class LobbyUIManager : MonoBehaviour
 
             // jsondata를 스트링 타입으로 가져오기
             string jInventoryData = Encoding.UTF8.GetString(bInventoryData);
+#if UNITY_EDITOR
             Debug.Log(jInventoryData);
+#endif
 
             // 역직렬화
             InventoryData dInventoryData = JsonConvert.DeserializeObject<InventoryData>(jInventoryData);
@@ -326,7 +334,9 @@ public class LobbyUIManager : MonoBehaviour
 
             // jsondata를 스트링 타입으로 가져오기
             string jHistoryData = Encoding.UTF8.GetString(bHistoryData);
+#if UNITY_EDITOR
             Debug.Log(jHistoryData);
+#endif
 
             // 역직렬화
             HistoryData dHistoryData = JsonConvert.DeserializeObject<HistoryData>(jHistoryData);
@@ -358,7 +368,9 @@ public class LobbyUIManager : MonoBehaviour
 
             // jsondata를 스트링 타입으로 가져오기
             string jGuestInfoData = Encoding.UTF8.GetString(bGuestInfoData);
+#if UNITY_EDITOR
             Debug.Log(jGuestInfoData);
+#endif
 
             // 역직렬화
             GuestManagerSaveData dGuestInfoData = JsonConvert.DeserializeObject<GuestManagerSaveData>(jGuestInfoData);
@@ -381,7 +393,12 @@ public class LobbyUIManager : MonoBehaviour
                 {
                     GuestInfoSaveData info = dGuestInfoData.GuestInfos[i];
 
-                    if (info == null) Debug.Log("Info Null");
+                    if (info == null)
+                    {
+#if UNITY_EDITOR
+                        Debug.Log("Info Null");
+#endif
+                    }
 
                     GuestManager.mGuestInfo[i].mEmotion = info.mEmotion.Clone() as int[]; ;
                     GuestManager.mGuestInfo[i].mSatatisfaction = info.mSatatisfaction;
@@ -424,7 +441,9 @@ public class LobbyUIManager : MonoBehaviour
 
             // jsondata를 스트링 타입으로 가져오기
             string jGuestInfoData = Encoding.UTF8.GetString(bGuestInfoData);
+#if UNITY_EDITOR
             Debug.Log(jGuestInfoData);
+#endif
 
             // 역직렬화
             GuestManagerSaveData dGuestInfoData = JsonConvert.DeserializeObject<GuestManagerSaveData>(jGuestInfoData);
@@ -482,7 +501,12 @@ public class LobbyUIManager : MonoBehaviour
                     }
 
                     GuestInfoSaveData info = dGuestInfoData.GuestInfos[i];
-                    if (info == null) Debug.Log("Info Null");
+                    if (info == null)
+                    {
+#if UNITY_EDITOR
+                        Debug.Log("Info Null");
+#endif
+                    }
 
                     // TEST CODE
                     //info.mSatatisfaction = 5;                    
@@ -533,7 +557,9 @@ public class LobbyUIManager : MonoBehaviour
 
             // jsondata를 스트링 타입으로 가져오기
             string jFirstSatData = Encoding.UTF8.GetString(bFirstSatData);
+#if UNITY_EDITOR
             Debug.Log(jFirstSatData);
+#endif
 
             // 역직렬화
             FirstSatMoongtiData dFristSatData = JsonConvert.DeserializeObject<FirstSatMoongtiData>(jFirstSatData);
@@ -543,9 +569,11 @@ public class LobbyUIManager : MonoBehaviour
             string jData = JsonConvert.SerializeObject(dFristSatData);
 
             // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+#if UNITY_EDITOR
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
+#endif
 
 
             // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
@@ -584,7 +612,9 @@ public class LobbyUIManager : MonoBehaviour
 
         // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
         byte[] bFirstSatData = Encoding.UTF8.GetBytes(jFirstSatData);
+#if UNITY_EDITOR
         Debug.Log(jFirstSatData);
+#endif
         // 해당 파일 스트림에 적는다.                
         stream.Write(bFirstSatData, 0, bFirstSatData.Length);
         // 스트림 닫기
@@ -609,7 +639,9 @@ public class LobbyUIManager : MonoBehaviour
 
             // jsondata를 스트링 타입으로 가져오기
             string jSOWSaveData = Encoding.UTF8.GetString(bSOWSaveData);
+#if UNITY_EDITOR
             Debug.Log(jSOWSaveData);
+#endif
 
             // 역직렬화
             SOWSaveData dSOWSaveData = JsonConvert.DeserializeObject<SOWSaveData>(jSOWSaveData);
@@ -619,9 +651,11 @@ public class LobbyUIManager : MonoBehaviour
             string jData = JsonConvert.SerializeObject(dSOWSaveData);
 
             // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+#if UNITY_EDITOR
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
+#endif
 
             // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
             Guest GuestManager = GameObject.Find("GuestManager").GetComponent<Guest>();
@@ -637,17 +671,21 @@ public class LobbyUIManager : MonoBehaviour
             }
 
             //string jAData = JsonConvert.SerializeObject(sowInfo);
+#if UNITY_EDITOR
             //Debug.Log("=======Load : sowInfo =========");
             //Debug.Log(jAData);
             //Debug.Log("=======Load=========");
+#endif
 
             GuestManager.SaveSOWdatas = sowInfo;
             GuestManager.isLoad = true;
 
             //string jBData = JsonConvert.SerializeObject(GuestManager.SaveSOWdatas);
+#if UNITY_EDITOR
             //Debug.Log("=======Load :  GuestManager.SaveSOWdatas  =========");
             //Debug.Log(jBData);
             //Debug.Log("=======Load=========");
+#endif
 
         }
     }
@@ -669,7 +707,9 @@ public class LobbyUIManager : MonoBehaviour
 
             // jsondata를 스트링 타입으로 가져오기
             string jTutorialSaveData = Encoding.UTF8.GetString(bTutorialSaveData);
+#if UNITY_EDITOR
             Debug.Log(jTutorialSaveData);
+#endif
 
             // 역직렬화
             TutorialData dTutorialSaveData = JsonConvert.DeserializeObject<TutorialData>(jTutorialSaveData);
@@ -679,9 +719,11 @@ public class LobbyUIManager : MonoBehaviour
             //string jData = JsonConvert.SerializeObject(dTutorialSaveData);
 
             // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+#if UNITY_EDITOR
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
+#endif
 
             // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
             TutorialManager tutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
@@ -712,7 +754,9 @@ public class LobbyUIManager : MonoBehaviour
 
             // jsondata를 스트링 타입으로 가져오기
             string jSOWManagerSaveData = Encoding.UTF8.GetString(bSOWManagerSaveData);
+#if UNITY_EDITOR
             Debug.Log(jSOWManagerSaveData);
+#endif
 
             // 역직렬화
             SOWManagerSaveData dSOWManagerSaveData = JsonConvert.DeserializeObject<SOWManagerSaveData>(jSOWManagerSaveData);
@@ -722,9 +766,11 @@ public class LobbyUIManager : MonoBehaviour
             //string jData = JsonConvert.SerializeObject(dSOWManagerSaveData);
 
             // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+#if UNITY_EDITOR
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
+#endif
 
             // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
             SOWManager mSOWManager = GameObject.Find("SOWManager").GetComponent<SOWManager>();
@@ -755,7 +801,9 @@ public class LobbyUIManager : MonoBehaviour
 
             // jsondata를 스트링 타입으로 가져오기
             string jLetterControllerData = Encoding.UTF8.GetString(bLetterControllerData);
+#if UNITY_EDITOR
             Debug.Log(jLetterControllerData);
+#endif
 
             // 역직렬화
             LetterControllerData dLetterControllerData = JsonConvert.DeserializeObject<LetterControllerData>(jLetterControllerData);
@@ -765,9 +813,11 @@ public class LobbyUIManager : MonoBehaviour
             string jData = JsonConvert.SerializeObject(dLetterControllerData);
 
             // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+#if UNITY_EDITOR
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
+#endif
 
             // 이어하기 시, 필요한 정보값들을 불러와서 갱신한다. (GuestManager)
             LetterController mLetterController = GameObject.Find("GuestManager").GetComponent<LetterController>();
@@ -802,7 +852,9 @@ public class LobbyUIManager : MonoBehaviour
 
             // jsondata를 스트링 타입으로 가져오기
             string jSoundData = Encoding.UTF8.GetString(bSoundData);
+#if UNITY_EDITOR
             Debug.Log(jSoundData);
+#endif
 
             // 역직렬화
             SoundData dSoundData = JsonConvert.DeserializeObject<SoundData>(jSoundData);
@@ -812,9 +864,11 @@ public class LobbyUIManager : MonoBehaviour
             string jData = JsonConvert.SerializeObject(dSoundData);
 
             // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+#if UNITY_EDITOR
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
+#endif
 
 
             // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
@@ -842,7 +896,10 @@ public class LobbyUIManager : MonoBehaviour
 
             // jsondata를 스트링 타입으로 가져오기
             string jInitData = Encoding.UTF8.GetString(bInitData);
+            
+            #if UNITY_EDITOR
             Debug.Log(jInitData);
+            #endif
 
             // 역직렬화
             InitData dInitData = JsonConvert.DeserializeObject<InitData>(jInitData);
@@ -852,9 +909,11 @@ public class LobbyUIManager : MonoBehaviour
             string jData = JsonConvert.SerializeObject(dInitData);
 
             // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+#if UNITY_EDITOR
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
+#endif
 
 
             // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
@@ -881,7 +940,9 @@ public class LobbyUIManager : MonoBehaviour
 
             // jsondata를 스트링 타입으로 가져오기
             string jLanguageData = Encoding.UTF8.GetString(bLanguageData);
+#if UNITY_EDITOR
             Debug.Log(jLanguageData);
+#endif
 
             // 역직렬화
             LanguageData dLanguageData = JsonConvert.DeserializeObject<LanguageData>(jLanguageData);
@@ -891,9 +952,11 @@ public class LobbyUIManager : MonoBehaviour
             string jData = JsonConvert.SerializeObject(dLanguageData);
 
             // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
+#if UNITY_EDITOR
             //Debug.Log("=======Load : dSOWSaveData =========");
             //Debug.Log(jData);
             //Debug.Log("=======Load=========");
+#endif
 
 
             // 덮어씌워진(저장된) 데이터를 현재 사용되는 데이터에 갱신하면 로딩 끝!
@@ -956,7 +1019,9 @@ public class LobbyUIManager : MonoBehaviour
 
         // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
         byte[] bSoundData = Encoding.UTF8.GetBytes(jSoundData);
+#if UNITY_EDITOR
         Debug.Log(jSoundData);
+#endif
         // 해당 파일 스트림에 적는다.                
         stream.Write(bSoundData, 0, bSoundData.Length);
         // 스트림 닫기
@@ -996,7 +1061,9 @@ public class LobbyUIManager : MonoBehaviour
 
         // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
         byte[] bInitData = Encoding.UTF8.GetBytes(jInitData);
+#if UNITY_EDITOR
         Debug.Log(jInitData);
+#endif
         // 해당 파일 스트림에 적는다.                
         stream.Write(bInitData, 0, bInitData.Length);
         // 스트림 닫기
@@ -1027,7 +1094,9 @@ public class LobbyUIManager : MonoBehaviour
 
         // json 데이터를 Encoding.UTF8의 함수로 바이트 배열로 만들고
         byte[] bLanguageData = Encoding.UTF8.GetBytes(jLanguageData);
+#if UNITY_EDITOR
         Debug.Log(jLanguageData);
+#endif
         // 해당 파일 스트림에 적는다.                
         stream.Write(bLanguageData, 0, bLanguageData.Length);
         // 스트림 닫기
@@ -1044,7 +1113,9 @@ public class LobbyUIManager : MonoBehaviour
     public void GoCredit()
     {
         // 크레딧 화면으로 전환
+#if UNITY_EDITOR
         Debug.Log("크레딧화면으로 전환");
+#endif
     }
     // 새로하기 경고창
     public void ActiveWarning()

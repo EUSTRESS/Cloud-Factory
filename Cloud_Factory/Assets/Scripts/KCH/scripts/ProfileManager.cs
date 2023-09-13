@@ -322,10 +322,13 @@ public class ProfileManager : MonoBehaviour
         if (iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.activeSelf == true) 
                 { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.SetActive(false); }
 		iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = null;
-		iProfileBG[profile_num].transform.Find("T_Name(INPUT)").gameObject.GetComponent<Text>().text = " ";
-		iProfileBG[profile_num].transform.Find("T_Age(INPUT)").gameObject.GetComponent<Text>().text = " ";
-		iProfileBG[profile_num].transform.Find("T_Job(INPUT)").gameObject.GetComponent<Text>().text = " ";
-	}
+		iProfileBG[profile_num].transform.Find("Name").transform.GetChild(0).transform.GetChild(0).transform
+			.GetChild(1).GetComponent<Text>().text = " ";
+		iProfileBG[profile_num].transform.Find("Job").transform.GetChild(0).transform.GetChild(0).transform
+			.GetChild(1).GetComponent<Text>().text = " ";
+		iProfileBG[profile_num].transform.Find("Age").transform.GetChild(0).transform.GetChild(0).transform
+			.GetChild(1).GetComponent<Text>().text = " ";
+    }
 
     // dialog text를 불만 뭉티인지 아닌지에 따라 출력 여부 결정
     // dialog text를 맨 앞 손님의 번호에 맞게 업데이트

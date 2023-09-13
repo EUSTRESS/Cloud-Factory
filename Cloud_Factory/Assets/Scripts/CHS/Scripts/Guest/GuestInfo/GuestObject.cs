@@ -238,7 +238,9 @@ private void Update()
             // 불만 손님으로 변환 후, 귀가
             mGuestManager.mGuestInfo[mGuestNum].isDisSat = true;
 
+#if UNITY_EDITOR
             Debug.Log("Time");
+#endif
 
             MoveToEntrance();
         }
@@ -246,7 +248,9 @@ private void Update()
         // 입구에 도달한 경우
         if (isGotoEntrance == true && transform.position.x - mSOWManager.mWayPoint[0].transform.position.x <= 0.2f)
         {
+#if UNITY_EDITOR
             Debug.Log("Destroy");
+#endif
             Destroy(this.gameObject);
         }
 
@@ -302,7 +306,9 @@ private void Update()
                         if (!isHintTextPrinted && !isUsingHint && !mGuestManager.mGuestInfo[mGuestNum].isDisSat)
                         {
                             Hint();
+#if UNITY_EDITOR
                             Debug.Log("퇴장과 함께 힌트 출력");
+#endif
                         }
                         // 힌트 출력을 완료했다면 귀가
                         else if (isHintTextPrinted)
@@ -348,20 +354,26 @@ private void Update()
         // 이미 상호작용 중인 경우에는 클릭할 수 없게 제한한다.
         if (isSpeakEmotion)
         {
+#if UNITY_EDITOR
             Debug.Log("Already Speaking");
+#endif
             return;         
         }
 
         if(isGettingCloud)
         {
+#if UNITY_EDITOR
             Debug.Log("Is Getting Cloud");
+#endif
             return;
         }
 
         // 힌트를 출력중인 경우에도 감정표현을 할 수 없다.
         // TODO : 힌트를 출력중인 경우 return하게끔 구현
 
+#if UNITY_EDITOR
         Debug.Log("감정 모션을 출력합니다");
+#endif        
         isSpeakEmotion = true;
 
         // 감정 상한, 하한 범위에 가장 가까운 감정에 대한 힌트(이펙트)
@@ -386,7 +398,9 @@ private void Update()
         // 이미 상호작용 중인 경우에는 클릭할 수 없게 제한한다.
         if (isSpeakEmotion)
         {
+#if UNITY_EDITOR
             Debug.Log("Already Speaking");
+#endif
             return;
         }
 
@@ -453,7 +467,9 @@ private void Update()
         TextMeshPro Text = SpeechBubble.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>();
         Animator Anim = SpeechBubble.transform.GetChild(0).gameObject.GetComponent<Animator>();
 
+#if UNITY_EDITOR
         Debug.Log("DialogEmotion : " + dialogEmotion);
+#endif
 
         // Text가 NULL이 아닌경우 내용 채워넣기
         if (Text != null)
@@ -486,7 +502,9 @@ private void Update()
     {
         yield return new WaitForSeconds(delay);
 
+#if UNITY_EDITOR
         Debug.Log(emotionNum + "Emotion 출력");
+#endif
 
         // Interaction 트리거 발동 -> emotionNum에 따라서 FaceValue값을 변동시킨다.
         mGuestAnim.SetInteger("FaceValue", ChangeFaceValue(emotionNum));
@@ -494,7 +512,9 @@ private void Update()
         // 해당 emotionNum에 해당하는 이펙트를 재생시킨다.
         Transform backEffectTransform = BackEffect.gameObject.transform;
         BackEffect.SetInteger("EmotionValue", emotionNum);
+#if UNITY_EDITOR
         Debug.Log("Emotion Value : " + emotionNum);
+#endif
         switch (emotionNum)
         {
             case 0:
@@ -582,7 +602,9 @@ private void Update()
     {
         BackEffect.SetInteger("EmotionValue", -1);
         mGuestAnim.SetTrigger("InteractionEnd");
+#if UNITY_EDITOR
         Debug.Log("Emotion 출력 마무리");
+#endif
     }
 
     void EndHint()

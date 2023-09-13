@@ -196,7 +196,9 @@ public class Guest : MonoBehaviour
                 // 의자가 비어있는지에 대한 정보를 넘겨준다.
                 sowManager.mCheckChairEmpty = SaveSOWdatas.mCheckChairEmpty;
 
+#if UNITY_EDITOR
                 Debug.Log(sowManager.mCheckChairEmpty);
+#endif
 
                 sowManager.mMaxChairNum = 3;
 
@@ -251,7 +253,9 @@ public class Guest : MonoBehaviour
         if(Info.mTargetChiarIndex != -1 && Info.isSit == true)
         {
             Info.mGuestAnim.SetTrigger("AlreadySit");
+#if UNITY_EDITOR
             Debug.Log("AlreadySit");
+#endif
         }
 
         return tempObject;
@@ -307,18 +311,24 @@ public class Guest : MonoBehaviour
         {
             if (mGuestInfo[guestNum].mEmotion[limitEmotion[i].upLimitEmotion] >= limitEmotion[i].upLimitEmotionValue) // 상하한선을 침범한 경우
             {
+#if UNITY_EDITOR
                 Debug.Log("상하한선을 침범하였습니다");
+#endif
                 return limitEmotion[i].upLimitEmotion;
             }
             else if (mGuestInfo[guestNum].mEmotion[limitEmotion[i].downLimitEmotion] <= limitEmotion[i].downLimitEmotionValue)
             {
+#if UNITY_EDITOR
                 Debug.Log("상하한선을 침범하였습니다");
+#endif
                 return limitEmotion[i].downLimitEmotion;
             }
         }
 
         // 상하한선 모두 침범하지 않는 경우
+#if UNITY_EDITOR
         Debug.Log("상하한선을 침범하지 않았습니다");
+#endif
         return -1;
     }
 
@@ -336,8 +346,9 @@ public class Guest : MonoBehaviour
             }
         }
 
-
+#if UNITY_EDITOR
         Debug.Log("기존 만족도 : " + mGuestInfo[guestNum].mSatatisfaction + "현재 만족도 : " + temp);
+#endif
         mGuestInfo[guestNum].mSatatisfaction = temp;
 
         if(mGuestInfo[guestNum].mSatatisfaction >= 5)

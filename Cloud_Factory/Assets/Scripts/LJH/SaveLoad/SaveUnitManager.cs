@@ -81,7 +81,7 @@ public class SaveUnitManager : MonoBehaviour
             Save_LetterControlData();
             Save_SoundData();
 
-            // Save_HistoryData();
+            Save_HistoryData();
 
             // 튜토리얼 데이터 저장.
             // 튜토리얼이 끝날 때 저장한다.
@@ -573,6 +573,8 @@ public class SaveUnitManager : MonoBehaviour
 
             // 데이터 업데이트
             mHistoryData.mIngredientHistoryDatas = mInvenManager.ingredientHistory.ToList();
+            mHistoryData.mIngredientHistoryPath = mInvenManager.ingredientHistoryPath.ToList();
+            mHistoryData.mCloudHistoryPath = mInvenManager.cloudHistoryPath.ToList();
             
             // Todo
             // 경로 추가되면 string 타입 저장 2개 더 하면 된다.            

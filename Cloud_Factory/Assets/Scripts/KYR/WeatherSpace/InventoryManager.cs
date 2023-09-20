@@ -34,8 +34,8 @@ public class CloudStorageData
 public class HistoryData
 {
     public List<List<IngredientData>> mIngredientHistoryDatas;
-
-    // Add Sprite Directory
+    public List<Dictionary<string, string>> mIngredientHistoryPath;
+    public List<string> mCloudHistoryPath;
 }
 
 
@@ -443,6 +443,7 @@ public class InventoryManager : MonoBehaviour
                 if (!ingredientHistory[i].Contains(_stock.Key))
                 {
                     ingredientHistory[i].Add(_stock.Key);
+
                     ingredientHistoryPath[i].Add(_stock.Key.dataName, "Sprite/Ingredient/Rarity" + _stock.Key.rarity + "/M" + _stock.Key.rarity + "_" + _stock.Key.dataName);
                 }
                 break;

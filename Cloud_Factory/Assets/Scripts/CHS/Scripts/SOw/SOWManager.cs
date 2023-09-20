@@ -98,7 +98,7 @@ public class SOWManager : MonoBehaviour
             this.transform.GetChild(2).gameObject.SetActive(true);
 
             // 현재 단계에 맞는 의자 개수 설정
-            mMaxChairNum = 4;
+            mMaxChairNum = 3;
             InitSOW();
         }
         else

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ProfileManager : MonoBehaviour
 {
@@ -218,7 +219,7 @@ public class ProfileManager : MonoBehaviour
         {
 			if (iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.activeSelf == true)
             { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.SetActive(false); }
-			iProfileBG[profile_num].transform.Find("Name").transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = "";
+			iProfileBG[profile_num].transform.Find("Name").transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<TMP_Text>().text = "";
 			iProfileBG[profile_num].transform.Find("Age").transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = "";
 			iProfileBG[profile_num].transform.Find("Job").transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>().text = "";
 
@@ -248,7 +249,7 @@ public class ProfileManager : MonoBehaviour
         if (LanguageManager.GetInstance().GetCurrentLanguage() == "English")
         {
 	        iProfileBG[profile_num].transform.Find("Name").transform.GetChild(0).transform.GetChild(0).transform
-			        .GetChild(1).GetComponent<Text>().text =
+			        .GetChild(1).GetComponent<TMP_Text>().text =
 		        mGuestInfo[guest_index].mNameEN;
 	        iProfileBG[profile_num].transform.Find("Job").transform.GetChild(0).transform.GetChild(0).transform
 			        .GetChild(1).GetComponent<Text>().text =
@@ -257,7 +258,7 @@ public class ProfileManager : MonoBehaviour
         else
         {
 	        iProfileBG[profile_num].transform.Find("Name").transform.GetChild(0).transform.GetChild(0).transform
-			        .GetChild(1).GetComponent<Text>().text =
+			        .GetChild(1).GetComponent<TMP_Text>().text =
 		        mGuestInfo[guest_index].mName;
 	        iProfileBG[profile_num].transform.Find("Job").transform.GetChild(0).transform.GetChild(0).transform
 			        .GetChild(1).GetComponent<Text>().text =
@@ -323,7 +324,7 @@ public class ProfileManager : MonoBehaviour
                 { iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.SetActive(false); }
 		iProfileBG[profile_num].transform.Find("I_Portrait").gameObject.GetComponent<Image>().sprite = null;
 		iProfileBG[profile_num].transform.Find("Name").transform.GetChild(0).transform.GetChild(0).transform
-			.GetChild(1).GetComponent<Text>().text = " ";
+			.GetChild(1).GetComponent<TMP_Text>().text = " ";
 		iProfileBG[profile_num].transform.Find("Job").transform.GetChild(0).transform.GetChild(0).transform
 			.GetChild(1).GetComponent<Text>().text = " ";
 		iProfileBG[profile_num].transform.Find("Age").transform.GetChild(0).transform.GetChild(0).transform

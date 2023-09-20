@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Animations;
+using TMPro;
 
 public class DialogManager : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class DialogManager : MonoBehaviour
     public GameObject gTakeGuestPanel;          // 손님 받기/ 거절 버튼
 
     public Text tText;                          // 대화가 진행 될 텍스트
-    public Text tGuestName;                     // 대화중이 손님의 이름이 표시될 텍스트
+    public TMP_Text tGuestName;                     // 대화중이 손님의 이름이 표시될 텍스트
     public Text tPlayerText;                    // 대화중에 플레이어의 대화가 진행 될 텍스트
     public Text tGuestText;                     // 대화중에 플레이어의 대화가 진행 될 텍스트
 
@@ -55,7 +56,7 @@ public class DialogManager : MonoBehaviour
 
     // 수락/거절 패널에 필요한 텍스트 오브젝트 받기
     [SerializeField]
-    private Text tPanelName;                    // 방문 손님의 이름
+    private TMP_Text tPanelName;                    // 방문 손님의 이름
     [SerializeField]
     private Text tPanelAge;                     // 방문 손님의 나이
     [SerializeField]

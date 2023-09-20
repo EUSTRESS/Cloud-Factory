@@ -8,11 +8,11 @@ public class Cloud_movement : MonoBehaviour
 {
     public int ran_num = 0;     // 파츠튀어나오는 위치를 정해주는 첫번째 변수
     public int ran_num2 = 0;    // 파츠튀어나오는 위치를 정해주는 두번째 변수
-    public GameObject Cloud;
-    public GameObject part;
-    public GameObject part_2;
-    public GameObject Parts_fly;
-    public GameObject Parts_fly_2;
+    private GameObject Cloud;
+    private GameObject part;
+    private GameObject part_2;
+    private GameObject Parts_fly;
+    private GameObject Parts_fly_2;
     public bool IsUsing = false;
 
     public float random_num;
@@ -25,37 +25,37 @@ public class Cloud_movement : MonoBehaviour
         //Random.Range(1, 5);
         ran_num2 = 2;
         //Get_ran_num();
-        GameObject go = Instantiate(Parts_fly);
-        GameObject go2 = Instantiate(Parts_fly_2);
+        //GameObject go = Instantiate(Parts_fly);
+        //GameObject go2 = Instantiate(Parts_fly_2);
 
         switch (ran_num)
         {
             case 1:
                 random_num = Random.Range(0.1f, 0.7f);
-                part.transform.localPosition = new Vector2(-0.7f, 0.3f);
-                go.transform.position = part.transform.position;
-                InvokeRepeating("Make_copy", 0.5f,random_num);
+                //part.transform.localPosition = new Vector2(-0.7f, 0.3f);
+                //go.transform.position = part.transform.position;
+                //InvokeRepeating("Make_copy", 0.5f,random_num);
                 break;
 
             case 2:
                 random_num = Random.Range(0.1f, 0.7f);
-                part.transform.localPosition = new Vector2(0.7f, 0.3f);
-                go.transform.position = part.transform.position;
-                InvokeRepeating("Make_copy", 0.5f, random_num);
+                //part.transform.localPosition = new Vector2(0.7f, 0.3f);
+                //go.transform.position = part.transform.position;
+                //InvokeRepeating("Make_copy", 0.5f, random_num);
                 break;
 
             case 3:
                 random_num = Random.Range(0.1f, 0.7f);
-                part.transform.localPosition = new Vector2(-1.0f, -0.3f);
-                go.transform.position = part.transform.position;
-                InvokeRepeating("Make_copy", 0.5f, random_num);
+                //part.transform.localPosition = new Vector2(-1.0f, -0.3f);
+                //go.transform.position = part.transform.position;
+                //InvokeRepeating("Make_copy", 0.5f, random_num);
                 break;
 
             case 4:
                 random_num = Random.Range(0.1f, 0.7f);
-                part.transform.localPosition = new Vector2(0.9f, -0.3f);
-                go.transform.position = part.transform.position;
-                InvokeRepeating("Make_copy", 0.5f, random_num);
+                //part.transform.localPosition = new Vector2(0.9f, -0.3f);
+                //go.transform.position = part.transform.position;
+                //InvokeRepeating("Make_copy", 0.5f, random_num);
                 break;
 
         }
@@ -64,30 +64,30 @@ public class Cloud_movement : MonoBehaviour
         {
             case 1:
                 random_num = Random.Range(0.1f, 0.7f);
-                part_2.transform.localPosition = new Vector2(-0.7f, 0.3f);
-                go2.transform.position = part_2.transform.position;
-                InvokeRepeating("Make_copy_2", 1.0f, random_num_2);
+                //part_2.transform.localPosition = new Vector2(-0.7f, 0.3f);
+                //go2.transform.position = part_2.transform.position;
+                //InvokeRepeating("Make_copy_2", 1.0f, random_num_2);
                 break;
 
             case 2:
                 random_num_2 = Random.Range(0.1f, 0.7f);
-                part_2.transform.localPosition = new Vector2(0.7f, 0.3f);
-                go2.transform.position = part_2.transform.position;
-                InvokeRepeating("Make_copy_2", 1.0f, random_num_2);
+                //part_2.transform.localPosition = new Vector2(0.7f, 0.3f);
+                //go2.transform.position = part_2.transform.position;
+                //InvokeRepeating("Make_copy_2", 1.0f, random_num_2);
                 break;
 
             case 3:
                 random_num = Random.Range(0.1f, 0.7f);
-                part_2.transform.localPosition = new Vector2(-1.0f, -0.3f);
-                go2.transform.position = part_2.transform.position;
-                InvokeRepeating("Make_copy_2", 1.0f, random_num_2);
+                //part_2.transform.localPosition = new Vector2(-1.0f, -0.3f);
+                //go2.transform.position = part_2.transform.position;
+                //InvokeRepeating("Make_copy_2", 1.0f, random_num_2);
                 break;
 
             case 4:
                 random_num = Random.Range(0.1f, 0.7f);
-                part_2.transform.localPosition = new Vector2(0.9f, -0.3f);
-                go2.transform.position = part_2.transform.position;
-                InvokeRepeating("Make_copy_2", 1.0f, random_num_2);
+                //part_2.transform.localPosition = new Vector2(0.9f, -0.3f);
+                //go2.transform.position = part_2.transform.position;
+                //InvokeRepeating("Make_copy_2", 1.0f, random_num_2);
                 break;
 
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEditor.UIElements;
+using TMPro;
 
 public class CloudStorageProfile : MonoBehaviour
 {
@@ -236,7 +237,7 @@ public class CloudStorageProfile : MonoBehaviour
         Image iProfile = Profile.transform.GetChild(0).GetComponent<Image>();
 
         // 나이 이름 직업
-        Text tName = Profile.transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
+        TMP_Text tName = Profile.transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<TMP_Text>();
         Text tAge = Profile.transform.GetChild(3).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
         Text tJob = Profile.transform.GetChild(4).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Text>();
 

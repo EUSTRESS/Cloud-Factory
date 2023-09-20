@@ -223,7 +223,7 @@ public class LobbyUIManager : MonoBehaviour
         //Load_SOWManagerData(); // 로비에 매니저가 없어서, 날씨의 공간 들어와서 로딩할것.
         Load_LetterControllerData();
 
-        Load_History();
+        //Load_History();
 
         // 문자열을 int형으로 파싱해서 빌드 인덱스로 활용한다
         // 현재 빌드 인덱스가 날씨의 공간이 6이므로 6인데 이거 빌드 인덱스 바뀌면 안됨...

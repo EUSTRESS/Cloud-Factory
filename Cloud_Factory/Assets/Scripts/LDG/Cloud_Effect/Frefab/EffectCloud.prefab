@@ -128,7 +128,6 @@ MonoBehaviour:
   - {fileID: 1522201251968495362, guid: 2b3f78303800af44295eede92ad56ca9, type: 3}
   - {fileID: 473225150597847384, guid: b31eba3825fe7794593f6c98a70739a5, type: 3}
   - {fileID: 8482857376320857625, guid: 97132ccd42a9fd04392a7dbd3082b3f7, type: 3}
-  Emotions: 0000000000000000
   IsUsing: 0
 --- !u!70 &7137783222451766403
 CapsuleCollider2D:
@@ -176,7 +175,6 @@ GameObject:
   - component: {fileID: 4497281627634807522}
   - component: {fileID: 6015168567542812642}
   - component: {fileID: 4544785776083274844}
-  - component: {fileID: 4609171399109485960}
   m_Layer: 0
   m_Name: MainMoveCloud
   m_TagString: Untagged
@@ -273,25 +271,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4609171399109485960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8370742697635910144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef2fadde7de4c8e4dac08614e07f23ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ran_num: 0
-  ran_num2: 0
-  Cloud: {fileID: 0}
-  part: {fileID: 0}
-  part_2: {fileID: 0}
-  Parts_fly: {fileID: 0}
-  Parts_fly_2: {fileID: 0}
-  IsUsing: 0
-  random_num: 0
-  random_num_2: 0

@@ -223,7 +223,7 @@ public class LobbyUIManager : MonoBehaviour
         //Load_SOWManagerData(); // 로비에 매니저가 없어서, 날씨의 공간 들어와서 로딩할것.
         Load_LetterControllerData();
 
-        //Load_History();
+        Load_History();
 
         // 문자열을 int형으로 파싱해서 빌드 인덱스로 활용한다
         // 현재 빌드 인덱스가 날씨의 공간이 6이므로 6인데 이거 빌드 인덱스 바뀌면 안됨...
@@ -349,22 +349,30 @@ public class LobbyUIManager : MonoBehaviour
             mInvenManager.ingredientHistoryPath = dHistoryData.mIngredientHistoryPath.ToList();
             mInvenManager.cloudHistoryPath = dHistoryData.mCloudHistoryPath.ToList();
 
-            // dHistoryData에 있는 스프라이트 경로들은 스프라이트 Load함수 따로 만들어서 mInvenManager에 Sprite에 각자 넣어줘야함.     
-            //foreach(List<IngredientData> iList in mInvenManager.ingredientHistory)
+            // dHistoryData에 있는 스프라이트 경로들은 스프라이트 Load함수 따로 만들어서 mInvenManager에 Sprite에 각자 넣어줘야함.                
+            List<string> TempString = new List<string>();
+            for(int i = 0; i < mInvenManager.ingredientHistoryPath.Count; i++)
+            {
+                foreach (KeyValuePair<string, string> TempPair in mInvenManager.ingredientHistoryPath[i])
+                {
+                    TempString.Add(TempPair.Value);
+                }
+            }
+
             for(int i = 0; i < mInvenManager.ingredientHistory.Count; i++)
             {
                 for(int j = 0; j < mInvenManager.ingredientHistory[i].Count; j++)
                 {
-                    foreach (KeyValuePair<string, string> TempPair in mInvenManager.ingredientHistoryPath[i])
-                    {
-                        mInvenManager.ingredientHistory[i][j].image = Resources.Load<Sprite>(TempPair.Value); // 스프라이트 로드하기.          
+                    if (null == mInvenManager.ingredientHistory[i][j].image)
+                    {                        
+                        mInvenManager.ingredientHistory[i][j].image = Resources.Load<Sprite>(TempString[j]); // 스프라이트 로드하기.
                     }
                 }
             }
 
             for(int i = 0; i < mInvenManager.cloudHistoryPath.Count; i++)
             {
-                mInvenManager.cloudHistory[i] = Resources.Load<Sprite>(mInvenManager.cloudHistoryPath[i]);
+                mInvenManager.cloudHistory.Add(Resources.Load<Sprite>(mInvenManager.cloudHistoryPath[i]));
             }
 
         }

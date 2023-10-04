@@ -116,27 +116,7 @@ public class TutorialManager : MonoBehaviour
     {
         if (isTutorial)
         {
-            if (Input.GetKeyDown(KeyCode.L))
-            {
-                for (int num = 0; num < 9; num++)
-                {
-                    isFinishedTutorial[num] = true;
-                }
-                isTutorial = false;
-                DestroyAllObject();
-                if (SceneManager.GetActiveScene().name == "Space Of Weather")
-                {
-	                GameObject.Find("B_Option").transform.SetSiblingIndex(5);
-	                GameObject.Find("UIManager").GetComponent<CommonUIManager>().gOption.transform.SetSiblingIndex(15);
-                }
-                else if (SceneManager.GetActiveScene().name == "Cloud Factory")
-                {
-	                GameObject.Find("B_Option").transform.SetSiblingIndex(7);
-	                GameObject.Find("UIManager").GetComponent<CommonUIManager>().gOption.transform.SetSiblingIndex(13);
-                }
-            }
-
-            // 스토리 소개, 응접실 안내 튜토리얼
+	        // 스토리 소개, 응접실 안내 튜토리얼
             TutorialOfSOW1();
 
             // 응접실 튜토리얼

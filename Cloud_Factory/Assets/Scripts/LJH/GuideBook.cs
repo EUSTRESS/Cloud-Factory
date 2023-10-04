@@ -5,11 +5,14 @@ using UnityEngine.UI;
 
 public class GuideBook : MonoBehaviour
 {
+    private const int DEFAULT_EMOTION_COUNT = 21;
     private static int DEFAULT_MAX_INFO_COUNT = 18;
     private static int DEFAULT_MAX_CLOUD_INFO_COUNT = 12;
     private static int DEFAULT_RARITY_1_COUNT = 12;
     private static int DEFAULT_RARITY_2_COUNT = 4;
     private static int DEFAULT_RARITY_3_COUNT = 8;
+
+    private string[] emotionList;
 
     public Transform ingrViewPort1;
     public Transform ingrViewPort2;
@@ -63,6 +66,30 @@ public class GuideBook : MonoBehaviour
 
     private void Awake()
     {
+        emotionList = new string[DEFAULT_EMOTION_COUNT]
+    {   //PLEASURE부터 0~ 의 값을 갖음
+        "PLEASURE", //기쁨 0
+        "UNREST", //불안 1 
+        "SADNESS", //슬픔 2
+        "IRRITATION", //짜증 3
+        "ACCEPT",//수용 4
+        "SUPCON", //SUPRISE+CONFUSION 논란,혼란 5
+        "DISGUST", //혐오 6
+        "INTEXPEC", //INTERSTING+EXPECTATION 관심,기대 7
+        "LOVE", //8
+        "OBED", //순종. 9
+        "AWE",//10
+        "CONTRAY",//반대 11
+        "BLAME",//12
+        "DESPISE",//13
+        "AGGRESS",//AGGRESSION 공격성 14
+        "OPTIMISM",//낙r관, 낙천 15
+        "BITTER",//16
+        "LOVHAT", //LOVE AND HATRED 17
+        "FREEZE",//18
+        "CHAOTIC",//혼란스러움 19
+        "NONE" //20
+    };
         gPageIndex = 1; // 기본 1 페이지부터 시작
         gChapter[0] = true; // 기본 감정 도감
         gPlantChapter[0] = true; // 기본 희귀도 1
@@ -404,11 +431,11 @@ public class GuideBook : MonoBehaviour
                 temp.transform.GetChild(0).GetComponent<Image>().sprite = ingredientHistory[rarity - 1][i].image;
                 temp.transform.GetChild(1).GetComponent<Text>().text = ingredientHistory[rarity - 1][i].dataName.ToString();
                 temp.transform.GetChild(2).transform.Find("Text0").GetComponent<Text>().text =
-                    ingredientHistory[rarity - 1][i].emotions[0].getKey2Int().ToString();
+                    emotionList[ingredientHistory[rarity - 1][i].emotions[0].getKey2Int()];
                 if(rarity <= 3)
                 {
                     temp.transform.GetChild(2).transform.Find("Text1").GetComponent<Text>().text =
-                        ingredientHistory[rarity - 1][i].emotions[1].getKey2Int().ToString();
+                        emotionList[ingredientHistory[rarity - 1][i].emotions[1].getKey2Int()];
                 }
             }
             else

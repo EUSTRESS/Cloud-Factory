@@ -1,3 +1,4 @@
+using Pathfinding.Examples;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -96,6 +97,9 @@ public class VirtualObjectManager : MonoBehaviour
             obejctP.transform.SetParent(obejct.transform);
 
             obejctP.transform.localPosition = obejctP.transform.position;
+
+            // 파츠 스케일 변경
+            obejctP.transform.localScale = new Vector3(0.7f, 0.7f, 0.12f);
             rectTran = obejctP.GetComponent<RectTransform>();
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Vpart.mHeight);
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Vpart.mWidth);
@@ -147,7 +151,7 @@ public class VirtualObjectManager : MonoBehaviour
             rectTran.localPosition = new Vector3(newX, newY, 1.0f);
 
             // TODO: 파츠의 크기에 따라 LocalScale을 변경해준다.
-            obejctP.transform.localScale = new Vector3(0.27f, 0.27f, 0.12f);
+            obejctP.transform.localScale = new Vector3(0.7f, 0.7f, 0.12f);
 
             obejctP.GetComponent<SpriteRenderer>().size =
                  new Vector2(obejctP.GetComponent<SpriteRenderer>().size.x * 0.9f, obejctP.GetComponent<SpriteRenderer>().size.y * 0.9f);

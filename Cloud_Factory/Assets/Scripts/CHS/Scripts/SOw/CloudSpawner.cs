@@ -131,12 +131,6 @@ public class CloudSpawner : MonoBehaviour
 
         // MoveCloud 관련
         {
-            Make_PartEffect make_PartEffect = MainEffectCloudMove.GetComponent<Make_PartEffect>();
-            if(make_PartEffect == null)
-            {
-                return;
-            }
-
             // TODO : MoveCloud Animator를 종류에 맞게 변경 -> CloudData값을 이용
             // 1. 구름 색상을 지정 (적용 완료)
             // 2. 구름 재료 등급에 따른 애니메이터 나누기
@@ -148,22 +142,20 @@ public class CloudSpawner : MonoBehaviour
 
 #if UNITY_EDITOR
             Debug.Log("구름에 사용된 파츠 개수 : " + IngredientDataNum);
+            Debug.Log("구름 색상 번호 : " + cloudColorNumber);
 #endif
 
             // Prefab수정및 애니메이션 수정한 부분입니다 - 동규 -
             if (IngredientDataNum <= 2)
             {
-                //cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue3[cloudColorNumber];
-                MainEffectCloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue3[cloudColorNumber];
+                MainEffectCloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue2[cloudColorNumber];
             }
             else if (IngredientDataNum == 3)
             {
-                //cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue2[cloudColorNumber];
-                MainEffectCloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue2[cloudColorNumber];
+                MainEffectCloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue3[cloudColorNumber];
             }
             else
             {
-                //cloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue4[cloudColorNumber];
                 MainEffectCloudMove.GetComponent<Animator>().runtimeAnimatorController = animValue4[cloudColorNumber];
             }
 

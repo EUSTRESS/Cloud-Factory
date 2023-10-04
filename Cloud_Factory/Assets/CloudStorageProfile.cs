@@ -8,7 +8,6 @@ using TMPro;
 
 public class CloudStorageProfile : MonoBehaviour
 {
-
     public GameObject[] Profiles;
     SOWManager SOWManager;
     Guest GuestManager;

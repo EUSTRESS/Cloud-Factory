@@ -378,11 +378,12 @@ public class WeatherUIManager : MonoBehaviour
     void Load_SOWManagerData()
     {
         string mSowManagerSaveDataPath = Path.Combine(Application.dataPath + "/Data/", "SOWManagerData.json");
-        // 파일 스트림 개방
-        FileStream SOWmanageSaveStream = new FileStream(Application.dataPath + "/Data/SOWManagerData.json", FileMode.Open);
 
         if (File.Exists(mSowManagerSaveDataPath)) // 해당 파일이 생성되었으면 불러오기
         {
+            // 파일 스트림 개방
+            FileStream SOWmanageSaveStream = new FileStream(Application.dataPath + "/Data/SOWManagerData.json", FileMode.Open);
+
             // 복호화는 나중에 한번에 하기
             // 스트림 배열만큼 바이트 배열 생성
             byte[] bSOWManagerSaveData = new byte[SOWmanageSaveStream.Length];

@@ -38,7 +38,6 @@ public class HistoryData
     public List<string> mCloudHistoryPath;
 }
 
-
 [System.Serializable]
 public class StoragedCloudData
 {

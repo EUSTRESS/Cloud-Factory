@@ -346,20 +346,20 @@ public class CloudStorageProfile : MonoBehaviour
         }
 
         // QA용
-        {
-            if(plusToggle.isOn == true)
-            {
-                sat = 1;
-            }
-            else if(minusToggle.isOn == true)
-            {
-                sat = -1;
-            }
-            else
-            {
-                sat = 0;
-            }
-        }
+        //{
+        //    if(plusToggle.isOn == true)
+        //    {
+        //        sat = 1;
+        //    }
+        //    else if(minusToggle.isOn == true)
+        //    {
+        //        sat = -1;
+        //    }
+        //    else
+        //    {
+        //        sat = 0;
+        //    }
+        //}
 
 		SOWManager.SetCloudData(guestNum, storagedCloudData, sat);
 		SceneManager.LoadScene("Space Of Weather");

@@ -174,16 +174,6 @@ public class Guest : MonoBehaviour
             }
         }
 
-        // 튜토리얼 스킵 핫키
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            TutorialManager tuto = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
-            for(int i = 0; i< tuto.isFinishedTutorial.Length; i++)
-            {
-                tuto.isFinishedTutorial[i] = true;
-            } 
-        }
-
         // 이어하기인 경우 Load해서 받아온 데이터를 SOWManager로 넘겨준다.
         if (isLoad && SceneManager.GetActiveScene().name == "Space Of Weather")
         {

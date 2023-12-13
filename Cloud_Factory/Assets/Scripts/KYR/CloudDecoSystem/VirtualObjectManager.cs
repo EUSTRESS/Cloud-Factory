@@ -33,6 +33,22 @@ public class VirtualObjectManager : MonoBehaviour
     public float PartsRateY = 0.71f;
     public float ObjectScale = 0.3f;
 
+    private static VirtualObjectManager instance = null;
+
+    private void Awake()
+    {
+        if (null == instance)
+        {
+            instance = this;
+
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     public void updatePartsContertRate(GameObject obejct, StoragedCloudData stock)
     {
         RectTransform rectTran = obejct.GetComponent<RectTransform>();
